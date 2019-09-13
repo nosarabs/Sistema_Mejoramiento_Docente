@@ -1,0 +1,42 @@
+﻿@model AppIntegrador.Models.Matricula
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Matricula</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nota)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nota)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estudiante.Apellido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estudiante.Apellido)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MatriculaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

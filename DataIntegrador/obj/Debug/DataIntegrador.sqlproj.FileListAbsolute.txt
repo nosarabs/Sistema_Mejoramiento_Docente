@@ -1,0 +1,6 @@
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dll
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.sqlprojAssemblyReference.cache
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
+C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
