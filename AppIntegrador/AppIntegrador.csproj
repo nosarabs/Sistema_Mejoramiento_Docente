@@ -132,6 +132,7 @@
     <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatriculaController.cs" />
+    <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -158,6 +159,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Opciones_de_seleccion.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta_con_opciones.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta_con_opciones_de_seleccion.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -229,6 +242,11 @@
     <Content Include="Views\Matricula\Details.cshtml" />
     <Content Include="Views\Matricula\Edit.cshtml" />
     <Content Include="Views\Matricula\Index.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\Delete.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\Details.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\Edit.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

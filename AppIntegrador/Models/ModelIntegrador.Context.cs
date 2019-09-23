@@ -28,5 +28,9 @@ namespace AppIntegrador.Models
         public virtual DbSet<Curso> Cursoes { get; set; }
         public virtual DbSet<Estudiante> Estudiantes { get; set; }
         public virtual DbSet<Matricula> Matriculas { get; set; }
+        public virtual DbSet<Opciones_de_seleccion> Opciones_de_seleccion { get; set; }
+        public virtual DbSet<Pregunta> Preguntas { get; set; }
+        public virtual DbSet<Pregunta_con_opciones> Pregunta_con_opciones { get; set; }
+        public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
     }
 }
