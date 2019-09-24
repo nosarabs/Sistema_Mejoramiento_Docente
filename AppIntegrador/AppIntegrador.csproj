@@ -242,6 +242,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Dashboard\Formulario\" />
+    <Folder Include="Views\Dashboard\Formulario\js\" />
+    <Folder Include="Views\Dashboard\Formulario\html\" />
+    <Folder Include="Views\Dashboard\Formulario\styles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
