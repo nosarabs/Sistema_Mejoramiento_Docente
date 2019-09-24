@@ -159,6 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelIntegrador.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Objetivo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
