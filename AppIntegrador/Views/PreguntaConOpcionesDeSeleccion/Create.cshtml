@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Pregunta_con_opciones_de_seleccion</h4>
+
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -39,27 +39,30 @@
         </div>
     </div>
 
-
-    <div class="form-group">
-        <label for="chkPassport">
-            <input type="checkbox" id="chkPassport" onclick="EnableDisableTextBox(this)" />
-            Habilitar campo de justificación.       
-        </label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", id = "txtJustificationNumber" } })
-        </div>
-    </div>
-
-    <br /><br />
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-
-        </div>
-    </div>
 </div>
+    <div class="form-horizontal">
+        <label for="chkPassport">
+            <input type="checkbox" id="chkPassport"  onclick="EnableDisableTextBox(this)" />
+            Incluir campo de justificación.       
+        </label>
+        <p></p>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", id = "txtJustificationNumber", @maxlenght = "50" } })
+            </div>
+        </div>
+
+        <br /><br />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-default" />
+
+            </div>
+        </div>
+    </div>
     }
 
     <div>
