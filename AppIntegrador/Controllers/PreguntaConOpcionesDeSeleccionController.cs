@@ -14,6 +14,20 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        [HttpGet]
+        public ActionResult Pregunta_con_opciones_de_seleccion()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult OpcionesDeSeleccion(int? i)
+        {
+            ViewBag.i = i;
+            return PartialView();
+        }
+
+
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
         {
@@ -37,15 +51,21 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Create
-        public ActionResult Create()
+        public ActionResult OpcionesDeSeleccion()
         {
             ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones, "Codigo", "TituloCampoObservacion");
+            return View();
+        }
+
+        public ActionResult Create()
+        {
             return View();
         }
 
         // POST: PreguntaConOpcionesDeSeleccion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
@@ -64,6 +84,32 @@ namespace AppIntegrador.Controllers
 
             ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
                 "Codigo", "TituloCampoObservacion", pregunta.Codigo);
+            return View(pregunta);
+        }
+        */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
+        {
+            if (ModelState.IsValid)
+            {
+                // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
+                pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
+                // Agregue esa pregunta a la tabla de preguntas
+                db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                // Agregue la pregunta con opciones perse a la table=a
+                db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
+                db.SaveChanges();
+            }
+
+            string codigoPregunta = pregunta.Codigo;
+            foreach (var opcion in opciones)
+            {
+                opcion.Codigo = codigoPregunta;
+            }
+
+            db.Opciones_de_seleccion.AddRange(opciones);
+            db.SaveChanges();
             return View(pregunta);
         }
 

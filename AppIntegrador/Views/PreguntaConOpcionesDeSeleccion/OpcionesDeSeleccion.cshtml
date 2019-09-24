@@ -1,0 +1,16 @@
+﻿@model AppIntegrador.Models.Opciones_de_seleccion
+@{
+    int i = ViewBag.i == null ? 0 : ViewBag.i;
+}
+<p>
+    <b>Texto:</b> @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50" }) <span id="charsLeft">C: </span>
+</p>
+
+<script>
+    $(function () {
+        $("#Texto").keyup(function () {
+            var charsLeft = $(this).attr("maxlength") - $(this).val().length;
+            $("#charsLeft").html(charsLeft + "caracteres restantes");
+        });
+    });
+</script>
