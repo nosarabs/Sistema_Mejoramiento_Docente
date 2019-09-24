@@ -62,6 +62,7 @@
     <Build Include="Estudiante.sql" />
     <Build Include="Matricula.sql" />
     <Build Include="UserProfile.sql" />
+    <Build Include="LoginUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
