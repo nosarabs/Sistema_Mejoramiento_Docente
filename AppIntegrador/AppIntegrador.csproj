@@ -233,10 +233,11 @@
     <Content Include="Views\Matricula\Details.cshtml" />
     <Content Include="Views\Matricula\Edit.cshtml" />
     <Content Include="Views\Matricula\Index.cshtml" />
+    <Content Include="Views\UserLogin\UserLoginView.cshtml" />
+    <Content Include="Views\UserLogin\UserDashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\UserLogin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

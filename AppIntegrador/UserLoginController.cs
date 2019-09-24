@@ -14,7 +14,7 @@ namespace AppIntegrador
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        public ActionResult Login()
+        public ActionResult UserLoginView()
         {
             return View();
         }
