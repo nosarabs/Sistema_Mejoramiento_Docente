@@ -28,5 +28,6 @@ namespace AppIntegrador.Models
         public virtual DbSet<Curso> Cursoes { get; set; }
         public virtual DbSet<Estudiante> Estudiantes { get; set; }
         public virtual DbSet<Matricula> Matriculas { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

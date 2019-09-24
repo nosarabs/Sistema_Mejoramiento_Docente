@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="DataIntegradorModel.Matricula" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="DataIntegradorModel.FK_dbo_Matricula_dbo_Curso_CursoID" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_dbo_Matricula_dbo_Estudiante_EstudianteID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.UserProfile" Width="1.5" PointX="5" PointY="4.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

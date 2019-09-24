@@ -13,3 +13,8 @@ C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\Model.x
 C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\refactor.xml
 C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\postdeploy.sql
 C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\predeploy.sql
+C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dll
+C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
+C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
+C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb

@@ -26,6 +26,14 @@
     <Property Name="CursoID" Type="int" Nullable="false" />
     <Property Name="EstudianteID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+  </EntityType>
   <Association Name="FK_dbo_Matricula_dbo_Curso_CursoID">
     <End Role="Curso" Type="Self.Curso" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -58,6 +66,7 @@
     <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_Matricula_dbo_Curso_CursoID" Association="Self.FK_dbo_Matricula_dbo_Curso_CursoID">
       <End Role="Curso" EntitySet="Curso" />
       <End Role="Matricula" EntitySet="Matricula" />

@@ -70,5 +70,14 @@
       <End Role="Estudiante" EntitySet="Estudiantes" />
       <End Role="Matricula" EntitySet="Matriculas" />
     </AssociationSet>
+    <EntitySet Name="UserProfiles" EntityType="DataIntegradorModel.UserProfile" />
   </EntityContainer>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>
