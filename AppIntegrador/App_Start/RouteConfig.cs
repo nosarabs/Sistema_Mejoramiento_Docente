@@ -18,6 +18,18 @@ namespace AppIntegrador
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "estadisticas",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "PlanMejoramiento", action = "estadisticas", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "planMejoramiento",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "PlanMejoramiento", action = "planMejoramiento", id = UrlParameter.Optional }
+            );
         }
     }
 }
