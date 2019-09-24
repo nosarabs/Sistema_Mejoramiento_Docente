@@ -4,3 +4,12 @@ C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\D
 C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.sqlprojAssemblyReference.cache
 C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
 C:\Users\andre\Documents\repos\ucr\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dll
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\Model.xml
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\refactor.xml
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\postdeploy.sql
+C:\Users\a81379\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\predeploy.sql

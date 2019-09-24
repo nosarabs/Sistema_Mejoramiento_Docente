@@ -48,3 +48,9 @@ ON Target.MatriculaID = Source.MatriculaID
 WHEN NOT MATCHED BY TARGET THEN 
 INSERT (Nota, CursoID, EstudianteID) 
 VALUES (Nota, CursoID, EstudianteID);
+
+MERGE INTO UserProfile AS Target
+USING (VALUES
+  (1, 'admin', 'admin')  )  AS Source ([UserID], UserName, Password)  ON Target.UserID = Source.UserID  WHEN NOT MATCHED BY TARGET THEN
+INSERT (UserName, Password)
+VALUES (UserName, Password);
