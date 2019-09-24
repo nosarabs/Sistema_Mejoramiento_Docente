@@ -25,6 +25,9 @@ namespace AppIntegrador.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<PlanMejora> PlanMejoras { get; set; }
+        public virtual DbSet<Objetivo> Objetivo { get; set; }
+        public virtual DbSet<PlanMejora> PlanMejora { get; set; }
+        public virtual DbSet<Tipo_Objetivo> Tipo_Objetivo { get; set; }
+        public virtual DbSet<Compuesto_Por> Compuesto_Por { get; set; }
     }
 }

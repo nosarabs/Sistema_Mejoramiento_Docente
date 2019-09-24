@@ -4,7 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MosqueterosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlanMejoraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Mosqueteros.dbo.Compuesto_Por' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Compuesto_Por">
+          <Key>
+            <PropertyRef Name="Codigo_Plan" />
+          </Key>
+          <Property Name="Codigo_Plan" Type="int" Nullable="false" />
+          <Property Name="Codigo_Obj" Type="int" />
+        </EntityType>
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="20" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tipo_O" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="PlanMejora">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -14,14 +32,71 @@
           <Property Name="FechaInicio" Type="date" />
           <Property Name="FechaFin" Type="date" />
         </EntityType>
-        <EntityContainer Name="MosqueterosModelStoreContainer">
+        <EntityType Name="Tipo_Objetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Compuesto__Codig__1A14E395">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="0..1" />
+          <End Role="Compuesto_Por" Type="Self.Compuesto_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Compuesto_Por">
+              <PropertyRef Name="Codigo_Obj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objetivo__Tipo_O__1B0907CE">
+          <End Role="Tipo_Objetivo" Type="Self.Tipo_Objetivo" Multiplicity="0..1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Objetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="Tipo_O" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanMejoraModelStoreContainer">
+          <EntitySet Name="Objetivo" EntityType="Self.Objetivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanMejora" EntityType="Self.PlanMejora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Objetivo" EntityType="Self.Tipo_Objetivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compuesto_Por" EntityType="Self.Compuesto_Por" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Compuesto_Por].[Codigo_Plan] AS [Codigo_Plan], 
+    [Compuesto_Por].[Codigo_Obj] AS [Codigo_Obj]
+    FROM [dbo].[Compuesto_Por] AS [Compuesto_Por]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Compuesto__Codig__1A14E395" Association="Self.FK__Compuesto__Codig__1A14E395">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Compuesto_Por" EntitySet="Compuesto_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objetivo__Tipo_O__1B0907CE" Association="Self.FK__Objetivo__Tipo_O__1B0907CE">
+            <End Role="Tipo_Objetivo" EntitySet="Tipo_Objetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MosqueterosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PlanMejoraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo_O" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Compuesto_Por" Relationship="Self.FK__Compuesto__Codig__1A14E395" FromRole="Objetivo" ToRole="Compuesto_Por" />
+          <NavigationProperty Name="Tipo_Objetivo" Relationship="Self.FK__Objetivo__Tipo_O__1B0907CE" FromRole="Objetivo" ToRole="Tipo_Objetivo" />
+        </EntityType>
         <EntityType Name="PlanMejora">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -31,22 +106,97 @@
           <Property Name="FechaInicio" Type="DateTime" Precision="0" />
           <Property Name="FechaFin" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="Tipo_Objetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Objetivo" Relationship="Self.FK__Objetivo__Tipo_O__1B0907CE" FromRole="Tipo_Objetivo" ToRole="Objetivo" />
+        </EntityType>
+        <EntityType Name="Compuesto_Por">
+          <Key>
+            <PropertyRef Name="Codigo_Plan" />
+          </Key>
+          <Property Name="Codigo_Plan" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Obj" Type="Int32" />
+          <NavigationProperty Name="Objetivo" Relationship="Self.FK__Compuesto__Codig__1A14E395" FromRole="Compuesto_Por" ToRole="Objetivo" />
+        </EntityType>
+        <Association Name="FK__Compuesto__Codig__1A14E395">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="0..1" />
+          <End Role="Compuesto_Por" Type="Self.Compuesto_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Compuesto_Por">
+              <PropertyRef Name="Codigo_Obj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objetivo__Tipo_O__1B0907CE">
+          <End Role="Tipo_Objetivo" Type="Self.Tipo_Objetivo" Multiplicity="0..1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Objetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="Tipo_O" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MosqueterosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="PlanMejoras" EntityType="Self.PlanMejora" />
+          <EntitySet Name="Objetivo" EntityType="Self.Objetivo" />
+          <EntitySet Name="PlanMejora" EntityType="Self.PlanMejora" />
+          <EntitySet Name="Tipo_Objetivo" EntityType="Self.Tipo_Objetivo" />
+          <EntitySet Name="Compuesto_Por" EntityType="Self.Compuesto_Por" />
+          <AssociationSet Name="FK__Compuesto__Codig__1A14E395" Association="Self.FK__Compuesto__Codig__1A14E395">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Compuesto_Por" EntitySet="Compuesto_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objetivo__Tipo_O__1B0907CE" Association="Self.FK__Objetivo__Tipo_O__1B0907CE">
+            <End Role="Tipo_Objetivo" EntitySet="Tipo_Objetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MosqueterosModelStoreContainer" CdmEntityContainer="MosqueterosEntities">
-          <EntitySetMapping Name="PlanMejoras">
-            <EntityTypeMapping TypeName="MosqueterosModel.PlanMejora">
+        <EntityContainerMapping StorageEntityContainer="PlanMejoraModelStoreContainer" CdmEntityContainer="MosqueterosEntities">
+          <EntitySetMapping Name="Objetivo">
+            <EntityTypeMapping TypeName="PlanMejoraModel.Objetivo">
+              <MappingFragment StoreEntitySet="Objetivo">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Tipo_O" ColumnName="Tipo_O" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanMejora">
+            <EntityTypeMapping TypeName="PlanMejoraModel.PlanMejora">
               <MappingFragment StoreEntitySet="PlanMejora">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Objetivo">
+            <EntityTypeMapping TypeName="PlanMejoraModel.Tipo_Objetivo">
+              <MappingFragment StoreEntitySet="Tipo_Objetivo">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compuesto_Por">
+            <EntityTypeMapping TypeName="PlanMejoraModel.Compuesto_Por">
+              <MappingFragment StoreEntitySet="Compuesto_Por">
+                <ScalarProperty Name="Codigo_Plan" ColumnName="Codigo_Plan" />
+                <ScalarProperty Name="Codigo_Obj" ColumnName="Codigo_Obj" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -64,7 +214,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

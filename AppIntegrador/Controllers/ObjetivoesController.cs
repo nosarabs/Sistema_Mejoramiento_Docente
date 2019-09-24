@@ -10,107 +10,112 @@ using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
-    public class CursoController : Controller
+    public class ObjetivoesController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private MosqueterosEntities db = new MosqueterosEntities();
 
-        // GET: Curso
+        // GET: Objetivoes
         public ActionResult Index()
         {
-            return View(db.Cursoes.ToList());
+            var objetivo = db.Objetivo.Include(o => o.Tipo_Objetivo);
+            return View(objetivo.ToList());
         }
 
-        // GET: Curso/Details/5
+        // GET: Objetivoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            return View(objetivo);
         }
 
-        // GET: Curso/Create
+        // GET: Objetivoes/Create
         public ActionResult Create()
         {
+            ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre");
             return View();
         }
 
-        // POST: Curso/Create
+        // POST: Objetivoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CursoId,Titulo,Creditos")] Curso curso)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
-                db.Cursoes.Add(curso);
+                db.Objetivo.Add(objetivo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(curso);
+            ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
+            return View(objetivo);
         }
 
-        // GET: Curso/Edit/5
+        // GET: Objetivoes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
+            return View(objetivo);
         }
 
-        // POST: Curso/Edit/5
+        // POST: Objetivoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CursoId,Titulo,Creditos")] Curso curso)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(curso).State = EntityState.Modified;
+                db.Entry(objetivo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(curso);
+            ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
+            return View(objetivo);
         }
 
-        // GET: Curso/Delete/5
+        // GET: Objetivoes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            return View(objetivo);
         }
 
-        // POST: Curso/Delete/5
+        // POST: Objetivoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Curso curso = db.Cursoes.Find(id);
-            db.Cursoes.Remove(curso);
+            Objetivo objetivo = db.Objetivo.Find(id);
+            db.Objetivo.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

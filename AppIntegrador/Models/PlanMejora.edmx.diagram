@@ -4,8 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e6d74f35a11040b68674b9b6ab89239b" Name="Diagram1">
-        <EntityTypeShape EntityType="MosqueterosModel.PlanMejora" Width="1.5" PointX="6" PointY="3.25" IsExpanded="true" />
+      <Diagram DiagramId="40f4a85ba1f64884be252d7eeff2d843" Name="Diagram1">
+        <EntityTypeShape EntityType="PlanMejoraModel.Objetivo" Width="1.5" PointX="7.125" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanMejoraModel.PlanMejora" Width="1.5" PointX="7.125" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanMejoraModel.Tipo_Objetivo" Width="1.5" PointX="10.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanMejoraModel.Compuesto_Por" Width="1.5" PointX="7.125" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="PlanMejoraModel.FK__Compuesto__Codig__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanMejoraModel.FK__Objetivo__Tipo_O__1B0907CE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
