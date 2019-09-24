@@ -58,11 +58,9 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Curso.sql" />
-    <Build Include="Estudiante.sql" />
-    <Build Include="Matricula.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Script.PostDeploymentData.sql" />
+    <Build Include="Compuesto_Por.sql" />
+    <Build Include="Objetivo.sql" />
+    <Build Include="PlanMejora.sql" />
+    <Build Include="Tipo_Objetivo.sql" />
   </ItemGroup>
 </Project>
