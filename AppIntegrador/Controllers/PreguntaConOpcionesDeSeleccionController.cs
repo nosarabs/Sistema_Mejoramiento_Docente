@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
         {
-            var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion.Include(p => p.Pregunta_con_opciones);
+            var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
             return View(pregunta_con_opciones_de_seleccion.ToList());
         }
 
@@ -48,17 +48,23 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Tipo")] Pregunta_con_opciones_de_seleccion pregunta_con_opciones_de_seleccion)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
         {
             if (ModelState.IsValid)
             {
-                db.Pregunta_con_opciones_de_seleccion.Add(pregunta_con_opciones_de_seleccion);
+                // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
+                pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
+                // Agregue esa pregunta a la tabla de preguntas
+                db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                // Agregue la pregunta con opciones perse a la table=a
+                db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones, "Codigo", "TituloCampoObservacion", pregunta_con_opciones_de_seleccion.Codigo);
-            return View(pregunta_con_opciones_de_seleccion);
+            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
+                "Codigo", "TituloCampoObservacion", pregunta.Codigo);
+            return View(pregunta);
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Edit/5
