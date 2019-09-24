@@ -4,15 +4,81 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Crear Pregunta</h2>
 
+<style>
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" onclick="openQuestionType(event, '1')">Selección Única</button>
+        <button class="tablinks" onclick="openQuestionType(event, '2')">Selección Múltiple</button>
+        <button class="tablinks" onclick="openQuestionType(event, '3')">Sí/No</button>
+        <button class="tablinks" onclick="openQuestionType(event, '4')">Texto Libre</button>
+        <button class="tablinks" onclick="openQuestionType(event, '5')">Escalar</button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="1" class="tabcontent">
+        @{Html.RenderAction("Delete");}
+    </div>
+
+    <div id="2" class="tabcontent">
+        <h3>aún no implementada </h3>
+    </div>
+
+    <div id="3" class="tabcontent">
+        <h3>aún no implementada </h3>
+    </div>
+
+    <div id="4" class="tabcontent">
+        <h3>aún no implementada </h3>
+    </div>
+
+    <div id="5" class="tabcontent">
+        <h3>aún no implementada </h3>
+    </div>
+
     <div class="form-horizontal">
-        <h4>Pregunta_con_opciones_de_seleccion</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -24,22 +90,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model =>  model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @class = "text-danger" })
             </div>
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -54,5 +110,29 @@
 </div>
 
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function openQuestionType(evt, QuestionType) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(QuestionType).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
 }
