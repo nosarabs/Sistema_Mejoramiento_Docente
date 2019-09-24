@@ -12,21 +12,17 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Objetivo
+    public partial class Tipo_Objetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Objetivo()
+        public Tipo_Objetivo()
         {
-            this.Compuesto_Por = new HashSet<Compuesto_Por>();
+            this.Objetivo = new HashSet<Objetivo>();
         }
     
-        public int Codigo { get; set; }
         public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public string Tipo_O { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Compuesto_Por> Compuesto_Por { get; set; }
-        public virtual Tipo_Objetivo Tipo_Objetivo { get; set; }
+        public virtual ICollection<Objetivo> Objetivo { get; set; }
     }
 }
