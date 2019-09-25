@@ -14,83 +14,77 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control",@maxlength = "8", required="required"} })
-            @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
-            {
-                htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250",required="required", data_val = "true", data_val_length_max = "250"}
-             }
-           )
-            @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
+                {
+                    htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
+                 }
+               )
+                @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
     <div class="form-horizontal">
         <label for="chkPassport">
-            <input type="checkbox" id="chkPassport"  onclick="EnableDisableTextBox(this)" />
+            <input type="checkbox" id="chkPassport" onclick="EnableDisableTextBox(this)" />
             Incluir campo de justificación.       
         </label>
         <p></p>
         <div class="form-group">
             @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", required="required", id = "txtJustificationNumber", @maxlenght = "50" } })
+                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", required = "required", id = "txtJustificationNumber", @maxlenght = "50" } })
             </div>
         </div>
 
+        <div id="opcionPartial">@{Html.RenderAction("OpcionesDeSeleccion");}</div>
+        <input type="button" value="Agregar nueva opción" id="Add" />
 
-    <input type="button" value="Agregar nueva opción" id="Add" />
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-            @Html.ActionLink("Cancelar", "Create")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Cancelar", "Create")
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
-    @section Scripts {
-
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $(function () {
-                $("#sortable").sortable();
-                $("#sortable").disableSelection();
-            });
-        </script>
-
-        <script type="text/javascript">
-            function EnableDisableTextBox(chkPassport) {
-                var txtPassportNumber = document.getElementById("txtJustificationNumber");
-                txtJustificationNumber.disabled = chkPassport.checked ? false : true;
-                if (!txtJustificationNumber.disabled) {
-                    txtJustificationNumber.focus();
-                }
-            }
-        </script>
-
-
-
-    }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+
+    <script type="text/javascript">
+        function EnableDisableTextBox(chkPassport) {
+            var txtPassportNumber = document.getElementById("txtJustificationNumber");
+            txtJustificationNumber.disabled = chkPassport.checked ? false : true;
+            if (!txtJustificationNumber.disabled) {
+                txtJustificationNumber.focus();
+            }
+        }
+    </script>
 
     <script>
         var i = 1;
