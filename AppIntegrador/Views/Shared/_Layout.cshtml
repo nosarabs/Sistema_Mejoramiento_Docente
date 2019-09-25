@@ -3,37 +3,88 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>ProyectoIntegrador</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+    @if (ViewBag.HTMLCheck != true)
+    {
+        <div class="mainBar">
+            <!-- Logo -->
+            <a href="https://www.ucr.ac.cr/" class="logo" target="_blank">
+                <img src="~/Content/images/ucr_promo.png" alt="ucr logo" />
+            </a>
+            <!-- Proyect -->
+            <p class="uppercase">Proyecto Integrador Bases Inge</p>
+            <div class="MenuSupDer" id>
+                <nav>
+                    <a>
+                        @Html.ActionLink("About", "About", "Home", new { @class = "mainBarText" })
+                </nav>
+
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>Sistema de Evaluación Docente de la Universidad de Costa Rica</p>
-        </footer>
-    </div>
+
+        <div class="wrapper">
+            <div class="projectTitle">
+                <br />
+                <p>Plan de mejoramiento docente</p>
+                <br />
+            </div>
+        </div>
+
+        <!-- Project navigation bar -->
+
+        <nav>
+            <br />
+            <ul class="wrapper">
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Usuarios</button>
+                        <div class="dropdown-content">
+                            <a href="#link1">Link 1</a>
+                            <a href="#link2">Link 2</a>
+                            <a href="#link3">Link 3</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Formularios</button>
+                        <div class="dropdown-content">
+                            <a href="#link1">Link 1</a>
+                            <a href="#link2">Link 2</a>
+                            <a href="#link3">Link 3</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="search">
+                    <div class="dropdown">
+                        <button class="dropbtn">Planes de mejoramiento</button>
+                        <div class="dropdown-content">
+                            @Html.ActionLink("Mis planes de mejoramiento", "planMejoramiento", "PlanMejoramiento")
+                            @Html.ActionLink("Estadisticas de mis planes", "estadisticas", "PlanMejoramiento")
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Visualización</button>
+                        <div class="dropdown-content">
+                            <a href="#link1">Link 1</a>
+                            <a href="#link2">Link 2</a>
+                            <a href="#link3">Link 3</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <br />
+        </nav>
+    }
+
+    @RenderBody()
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
