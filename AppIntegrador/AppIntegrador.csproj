@@ -136,15 +136,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Curso.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Estudiante.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Matricula.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ModelIntegrador.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
