@@ -2,6 +2,67 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <!-- Sidebar -->
+    <ul class="nav justify-content-center flex-column nav-pills nav-fill" id="sidebar">
 
-<h2>Dashboard</h2>
 
+
+        <li class="nav-item">
+            @Html.ActionLink("Formulario","Formulario","Dashboard")
+
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+    </ul>
+
+    <!-- Page Content -->
+    <div id="content">
+
+        <nav class="navbar justify-content-center" style="background-color: #41ade7;">
+            <span style="color: #ffffff;">DASHBOARD</span>
+        </nav>
+
+
+        <div class="container" id="dash">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            2 days ago
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            2 days ago
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
