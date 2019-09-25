@@ -4,7 +4,7 @@
     ViewBag.Title = "UserLoginView";
 }
 
-@using (Html.BeginForm("UserLoginView", "Home", FormMethod.Post))
+@using (Html.BeginForm("UserLoginView", "UserLogin", FormMethod.Post))
 {
     <fieldset>
         <legend>Mvc Simple Login Application Demo</legend>
@@ -17,16 +17,16 @@
                 @ViewBag.Message
             </div>
         }
-        <div class="container">
+        @*<div class="container">
             <h2>Vertical form</h2>
             <form>
                 <div class="form-group"> <label for="email">User Name</label> <input type="email" class="form-control" id="email" placeholder="Enter email"> </div>
                 <div class="form-group"> <label for="pwd">Password</label> <input type="password" class="form-control" id="pwd" placeholder="Enter password"> </div>
                 <div class="checkbox"> <label><input type="checkbox"> Remember me</label> </div> <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-        </div>
+        </div>*@
 
-        @*<table>
+        <table>
             <tr>
                 <td>@Html.LabelFor(a => a.UserName)</td>
                 <td>@Html.TextBoxFor(a => a.UserName)</td>
@@ -50,6 +50,6 @@
                 </td>
                 <td></td>
             </tr>
-        </table>*@
+        </table>
     </fieldset>
 }  
