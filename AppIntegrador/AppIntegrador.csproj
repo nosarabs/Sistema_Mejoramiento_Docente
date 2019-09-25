@@ -237,7 +237,8 @@
     <Content Include="Views\Dashboard\Formulario\bullet_list.js" />
     <Content Include="Views\Dashboard\Formulario\bar_char.js" />
     <Content Include="Views\Dashboard\Formulario\styles.css" />
-    <Content Include="Views\Dashboard\Formulario\expand_collapse_button.html" />
+    <Content Include="Views\Dashboard\Formulario\Formulario.html" />
+    <Content Include="Views\Dashboard\Formulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
