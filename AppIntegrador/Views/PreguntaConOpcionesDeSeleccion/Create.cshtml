@@ -38,7 +38,7 @@
             @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    
     <div id="opcionPartial">@{Html.RenderAction("OpcionesDeSeleccion");}</div>
 
     <input type="button" value="Agregar nueva opción" id="Add" />
@@ -46,8 +46,10 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
+            @Html.ActionLink("Cancelar", "Create")
         </div>
     </div>
+
 </div>
 }
 

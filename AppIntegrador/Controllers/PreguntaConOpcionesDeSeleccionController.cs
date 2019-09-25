@@ -51,9 +51,9 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Create
+        // Metodo usado para el render partial
         public ActionResult OpcionesDeSeleccion()
         {
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones, "Codigo", "TituloCampoObservacion");
             return View();
         }
 
@@ -65,28 +65,7 @@ namespace AppIntegrador.Controllers
         // POST: PreguntaConOpcionesDeSeleccion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        /*
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
-        {
-            if (ModelState.IsValid)
-            {
-                // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
-                pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
-                // Agregue esa pregunta a la tabla de preguntas
-                db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
-                // Agregue la pregunta con opciones perse a la table=a
-                db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
-                "Codigo", "TituloCampoObservacion", pregunta.Codigo);
-            return View(pregunta);
-        }
-        */
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
@@ -102,15 +81,18 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
             }
 
+            // Guardo el codigo en un string
             string codigoPregunta = pregunta.Codigo;
-            foreach (var opcion in opciones)
+            foreach (Opciones_de_seleccion opcion in opciones)
             {
+                // Asigno el codigo a cada opcion de la pregunta
                 opcion.Codigo = codigoPregunta;
             }
 
+            // Guardo todas las opciones en la base de datos de una
             db.Opciones_de_seleccion.AddRange(opciones);
             db.SaveChanges();
-            return View(pregunta);
+            return View();
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Edit/5
