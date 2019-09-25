@@ -128,13 +128,22 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CursoController.cs" />
-    <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MatriculaController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Activa_por.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Escalar.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Formulario.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Formulario_tiene_seccion.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelIntegrador.Context.cs">
       <AutoGen>True</AutoGen>
@@ -154,6 +163,12 @@
     <Compile Include="Models\Opciones_de_seleccion.cs">
       <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Opciones_seleccionadas_respuesta_con_opciones.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Periodo_activa_por.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Pregunta.cs">
       <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
@@ -161,6 +176,27 @@
       <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta_con_opciones_de_seleccion.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta_con_respuesta_libre.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Responde_respuesta_con_opciones.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Responde_respuesta_libre.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Respuestas_a_formulario.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Seccion.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Seccion_tiene_pregunta.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Si_no_nr.cs">
       <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -220,21 +256,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Estudiante\Create.cshtml" />
-    <Content Include="Views\Estudiante\Delete.cshtml" />
-    <Content Include="Views\Estudiante\Details.cshtml" />
-    <Content Include="Views\Estudiante\Edit.cshtml" />
-    <Content Include="Views\Estudiante\Index.cshtml" />
-    <Content Include="Views\Curso\Create.cshtml" />
-    <Content Include="Views\Curso\Delete.cshtml" />
-    <Content Include="Views\Curso\Details.cshtml" />
-    <Content Include="Views\Curso\Edit.cshtml" />
-    <Content Include="Views\Curso\Index.cshtml" />
-    <Content Include="Views\Matricula\Create.cshtml" />
-    <Content Include="Views\Matricula\Delete.cshtml" />
-    <Content Include="Views\Matricula\Details.cshtml" />
-    <Content Include="Views\Matricula\Edit.cshtml" />
-    <Content Include="Views\Matricula\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\Formulario\collapsible.js" />
     <Content Include="Views\Dashboard\Formulario\bullet_list.js" />

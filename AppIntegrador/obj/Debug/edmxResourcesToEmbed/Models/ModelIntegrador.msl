@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="DataIntegradorEntities">
+    <EntitySetMapping Name="Opciones_de_seleccion">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_de_seleccion">
+        <MappingFragment StoreEntitySet="Opciones_de_seleccion">
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preguntas">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta">
+        <MappingFragment StoreEntitySet="Pregunta">
+          <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pregunta_con_opciones">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones">
+        <MappingFragment StoreEntitySet="Pregunta_con_opciones">
+          <ScalarProperty Name="TituloCampoObservacion" ColumnName="TituloCampoObservacion" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pregunta_con_opciones_de_seleccion">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones_de_seleccion">
+        <MappingFragment StoreEntitySet="Pregunta_con_opciones_de_seleccion">
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Escalars">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Escalar">
+        <MappingFragment StoreEntitySet="Escalar">
+          <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+          <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+          <ScalarProperty Name="Incremento" ColumnName="Incremento" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Formularios">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Formulario">
+        <MappingFragment StoreEntitySet="Formulario">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Formulario_tiene_seccion">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Formulario_tiene_seccion">
+        <MappingFragment StoreEntitySet="Formulario_tiene_seccion">
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pregunta_con_respuesta_libre">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_respuesta_libre">
+        <MappingFragment StoreEntitySet="Pregunta_con_respuesta_libre">
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seccions">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Seccion">
+        <MappingFragment StoreEntitySet="Seccion">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seccion_tiene_pregunta">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Seccion_tiene_pregunta">
+        <MappingFragment StoreEntitySet="Seccion_tiene_pregunta">
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+          <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Si_no_nr">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Si_no_nr">
+        <MappingFragment StoreEntitySet="Si_no_nr">
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Activa_por">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Activa_por">
+        <MappingFragment StoreEntitySet="Activa_por">
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Opciones_seleccionadas_respuesta_con_opciones">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones">
+        <MappingFragment StoreEntitySet="Opciones_seleccionadas_respuesta_con_opciones">
+          <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
+          <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Periodo_activa_por">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Periodo_activa_por">
+        <MappingFragment StoreEntitySet="Periodo_activa_por">
+          <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+          <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Responde_respuesta_con_opciones">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_con_opciones">
+        <MappingFragment StoreEntitySet="Responde_respuesta_con_opciones">
+          <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
+          <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Responde_respuesta_libre">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_libre">
+        <MappingFragment StoreEntitySet="Responde_respuesta_libre">
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+          <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Respuestas_a_formulario">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Respuestas_a_formulario">
+        <MappingFragment StoreEntitySet="Respuestas_a_formulario">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
