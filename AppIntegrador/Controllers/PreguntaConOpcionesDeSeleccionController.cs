@@ -52,6 +52,7 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
+                ModelState.AddModelError("Codigo", "");
                 try
                 {
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
@@ -61,11 +62,12 @@ namespace AppIntegrador.Controllers
                     // Agregue la pregunta con opciones perse a la table=a
                     db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Create");
                 }
                 catch(Exception exception)
                 {
                     // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
                     return View(pregunta);
                 }
             }
