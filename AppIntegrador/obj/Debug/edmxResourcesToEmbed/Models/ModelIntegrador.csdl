@@ -70,5 +70,94 @@
       <End Role="Estudiante" EntitySet="Estudiantes" />
       <End Role="Matricula" EntitySet="Matriculas" />
     </AssociationSet>
+    <EntitySet Name="Opciones_de_seleccion" EntityType="DataIntegradorModel.Opciones_de_seleccion" />
+    <EntitySet Name="Preguntas" EntityType="DataIntegradorModel.Pregunta" />
+    <EntitySet Name="Pregunta_con_opciones" EntityType="DataIntegradorModel.Pregunta_con_opciones" />
+    <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" />
+    <AssociationSet Name="FK__Opciones___Codig__440B1D61" Association="DataIntegradorModel.FK__Opciones___Codig__440B1D61">
+      <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+      <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pregunta___Codig__44FF419A" Association="DataIntegradorModel.FK__Pregunta___Codig__44FF419A">
+      <End Role="Pregunta" EntitySet="Preguntas" />
+      <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pregunta___Codig__45F365D3" Association="DataIntegradorModel.FK__Pregunta___Codig__45F365D3">
+      <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+      <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Opciones_de_seleccion">
+    <Key>
+      <PropertyRef Name="Codigo" />
+      <PropertyRef Name="Orden" />
+      <PropertyRef Name="Texto" />
+    </Key>
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Orden" Type="Int32" Nullable="false" />
+    <Property Name="Texto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Opciones___Codig__440B1D61" FromRole="Opciones_de_seleccion" ToRole="Pregunta_con_opciones_de_seleccion" />
+  </EntityType>
+  <EntityType Name="Pregunta">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Enunciado" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pregunta_con_opciones" Relationship="DataIntegradorModel.FK__Pregunta___Codig__44FF419A" FromRole="Pregunta" ToRole="Pregunta_con_opciones" />
+  </EntityType>
+  <EntityType Name="Pregunta_con_opciones">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="TituloCampoObservacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pregunta" Relationship="DataIntegradorModel.FK__Pregunta___Codig__44FF419A" FromRole="Pregunta_con_opciones" ToRole="Pregunta" />
+    <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Pregunta___Codig__45F365D3" FromRole="Pregunta_con_opciones" ToRole="Pregunta_con_opciones_de_seleccion" />
+  </EntityType>
+  <EntityType Name="Pregunta_con_opciones_de_seleccion">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Opciones___Codig__440B1D61" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Opciones_de_seleccion" />
+    <NavigationProperty Name="Pregunta_con_opciones" Relationship="DataIntegradorModel.FK__Pregunta___Codig__45F365D3" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Pregunta_con_opciones" />
+  </EntityType>
+  <Association Name="FK__Opciones___Codig__440B1D61">
+    <End Type="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Role="Pregunta_con_opciones_de_seleccion" Multiplicity="1" />
+    <End Type="DataIntegradorModel.Opciones_de_seleccion" Role="Opciones_de_seleccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pregunta_con_opciones_de_seleccion">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Opciones_de_seleccion">
+        <PropertyRef Name="Codigo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pregunta___Codig__44FF419A">
+    <End Type="DataIntegradorModel.Pregunta" Role="Pregunta" Multiplicity="1" />
+    <End Type="DataIntegradorModel.Pregunta_con_opciones" Role="Pregunta_con_opciones" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Pregunta">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Pregunta_con_opciones">
+        <PropertyRef Name="Codigo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pregunta___Codig__45F365D3">
+    <End Type="DataIntegradorModel.Pregunta_con_opciones" Role="Pregunta_con_opciones" Multiplicity="1" />
+    <End Type="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Role="Pregunta_con_opciones_de_seleccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Pregunta_con_opciones">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Pregunta_con_opciones_de_seleccion">
+        <PropertyRef Name="Codigo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

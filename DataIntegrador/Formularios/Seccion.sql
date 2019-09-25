@@ -1,0 +1,5 @@
+﻿CREATE TABLE Seccion
+(
+	Codigo CHAR(8) NOT NULL PRIMARY KEY,
+	Nombre VARCHAR(50) NOT NULL,
+)
