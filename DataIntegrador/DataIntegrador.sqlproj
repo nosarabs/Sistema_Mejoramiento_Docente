@@ -66,4 +66,10 @@
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeploymentPlanesMejora.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Script.PreDeploymentPlanesMejora.sql" />
+  </ItemGroup>
 </Project>
