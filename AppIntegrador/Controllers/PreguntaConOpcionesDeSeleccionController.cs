@@ -50,7 +50,9 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
         {
-            if (ModelState.IsValid)
+            // Para esta fase del proyecto solo se soportan preguntas de selección única
+            pregunta.Tipo = "U";
+            if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Pregunta_con_opciones.Pregunta.Enunciado.Length > 0)
             {
                 // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
                 pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;

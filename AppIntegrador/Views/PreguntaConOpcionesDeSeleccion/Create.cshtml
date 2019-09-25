@@ -17,25 +17,17 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8" } })
+            @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control",@maxlength = "8", required="required"} })
             @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
         </div>
     </div>
 
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
-        </div>
-    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
             {
-                htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", data_val = "true", data_val_length_max = "250"}
+                htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250",required="required", data_val = "true", data_val_length_max = "250"}
              }
            )
             @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
@@ -52,9 +44,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", id = "txtJustificationNumber", @maxlenght = "50" } })
+                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", required="required", id = "txtJustificationNumber", @maxlenght = "50" } })
             </div>
         </div>
+
 
         <br /><br />
 
