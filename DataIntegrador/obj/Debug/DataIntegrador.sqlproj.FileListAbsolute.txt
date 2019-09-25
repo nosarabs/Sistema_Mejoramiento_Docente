@@ -9,3 +9,8 @@ C:\Users\andre\Documents\REPOS\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataI
 C:\Users\andre\Documents\REPOS\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
 C:\Users\andre\Documents\REPOS\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
 C:\Users\andre\Documents\REPOS\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
+C:\Users\b66605\source\repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+C:\Users\b66605\source\repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.dll
+C:\Users\b66605\source\repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
+C:\Users\b66605\source\repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
+C:\Users\b66605\source\repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
