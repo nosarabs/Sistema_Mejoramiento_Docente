@@ -65,5 +65,9 @@
     <Build Include="Accion_De_Mejora.sql" />
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
+    <Build Include="Evaluado_Por.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DataIntegrador.refactorlog" />
   </ItemGroup>
 </Project>
