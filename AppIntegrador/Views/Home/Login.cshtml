@@ -4,7 +4,7 @@
     ViewBag.Title = "Login";
 }
 
-@using (Html.BeginForm("Login", "UsuarioLogin", FormMethod.Post))
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
 {
     <fieldset>
         <legend>Inicio de sesión</legend>
@@ -21,7 +21,6 @@
             <tr>
                 <td>@Html.LabelFor(a => a.Username)</td>
                 <td>@Html.TextBoxFor(a => a.Username)</td>
-                <td>@Html.ValidationMessageFor(a => a.Username)</td>
             </tr>
             <tr>
                 <td>
@@ -30,6 +29,8 @@
                 <td>
                     @Html.PasswordFor(a => a.Password)
                 </td>
+            </tr>
+            <tr>
                 <td>
                     @Html.ValidationMessageFor(a => a.Password)
                 </td>
