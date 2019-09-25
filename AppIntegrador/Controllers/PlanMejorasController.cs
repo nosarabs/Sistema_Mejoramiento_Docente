@@ -124,11 +124,6 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View("../Home/About");
-        }
     }
 }
