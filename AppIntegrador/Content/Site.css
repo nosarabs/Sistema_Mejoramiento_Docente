@@ -114,4 +114,8 @@ nav {
 }
  /* End of main page styles */
 
+.mainBarText {
+    color: black;
+    font-size: 2em;
+}
 

@@ -18,7 +18,6 @@ namespace AppIntegrador
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
             routes.MapRoute(
                 name: "estadisticas",
                 url: "{controller}/{action}/{id}",
@@ -29,6 +28,11 @@ namespace AppIntegrador
                 name: "planMejoramiento",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "PlanMejoramiento", action = "planMejoramiento", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "About",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "About", id = UrlParameter.Optional }
             );
         }
     }
