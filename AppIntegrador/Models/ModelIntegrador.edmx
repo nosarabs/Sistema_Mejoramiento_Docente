@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Curso">
           <Key>
             <PropertyRef Name="CursoId" />
@@ -31,6 +31,73 @@
           <Property Name="CursoID" Type="int" Nullable="false" />
           <Property Name="EstudianteID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="Texto" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Texto" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Enunciado" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="TituloCampoObservacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Tipo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Opciones___Codig__440B1D61">
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="1" />
+          <End Role="Opciones_de_seleccion" Type="Self.Opciones_de_seleccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__44FF419A">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__45F365D3">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Matricula_dbo_Curso_CursoID">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -63,6 +130,22 @@
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta" EntityType="Self.Pregunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta_con_opciones" EntityType="Self.Pregunta_con_opciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Opciones___Codig__440B1D61" Association="Self.FK__Opciones___Codig__440B1D61">
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+            <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__44FF419A" Association="Self.FK__Pregunta___Codig__44FF419A">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__45F365D3" Association="Self.FK__Pregunta___Codig__45F365D3">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Matricula_dbo_Curso_CursoID" Association="Self.FK_dbo_Matricula_dbo_Curso_CursoID">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Matricula" EntitySet="Matricula" />
@@ -72,8 +155,7 @@
             <End Role="Matricula" EntitySet="Matricula" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -147,7 +229,96 @@
             <End Role="Estudiante" EntitySet="Estudiantes" />
             <End Role="Matricula" EntitySet="Matriculas" />
           </AssociationSet>
+          <EntitySet Name="Opciones_de_seleccion" EntityType="DataIntegradorModel.Opciones_de_seleccion" />
+          <EntitySet Name="Preguntas" EntityType="DataIntegradorModel.Pregunta" />
+          <EntitySet Name="Pregunta_con_opciones" EntityType="DataIntegradorModel.Pregunta_con_opciones" />
+          <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" />
+          <AssociationSet Name="FK__Opciones___Codig__440B1D61" Association="DataIntegradorModel.FK__Opciones___Codig__440B1D61">
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+            <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__44FF419A" Association="DataIntegradorModel.FK__Pregunta___Codig__44FF419A">
+            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__45F365D3" Association="DataIntegradorModel.FK__Pregunta___Codig__45F365D3">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="Texto" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Texto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Opciones___Codig__440B1D61" FromRole="Opciones_de_seleccion" ToRole="Pregunta_con_opciones_de_seleccion" />
+        </EntityType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Enunciado" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="DataIntegradorModel.FK__Pregunta___Codig__44FF419A" FromRole="Pregunta" ToRole="Pregunta_con_opciones" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="TituloCampoObservacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pregunta" Relationship="DataIntegradorModel.FK__Pregunta___Codig__44FF419A" FromRole="Pregunta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Pregunta___Codig__45F365D3" FromRole="Pregunta_con_opciones" ToRole="Pregunta_con_opciones_de_seleccion" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Opciones_de_seleccion" Relationship="DataIntegradorModel.FK__Opciones___Codig__440B1D61" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Opciones_de_seleccion" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="DataIntegradorModel.FK__Pregunta___Codig__45F365D3" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Pregunta_con_opciones" />
+        </EntityType>
+        <Association Name="FK__Opciones___Codig__440B1D61">
+          <End Type="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Role="Pregunta_con_opciones_de_seleccion" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Opciones_de_seleccion" Role="Opciones_de_seleccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__44FF419A">
+          <End Type="DataIntegradorModel.Pregunta" Role="Pregunta" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Pregunta_con_opciones" Role="Pregunta_con_opciones" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__45F365D3">
+          <End Type="DataIntegradorModel.Pregunta_con_opciones" Role="Pregunta_con_opciones" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Role="Pregunta_con_opciones_de_seleccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -180,6 +351,39 @@
                 <ScalarProperty Name="Nota" ColumnName="Nota" />
                 <ScalarProperty Name="CursoID" ColumnName="CursoID" />
                 <ScalarProperty Name="EstudianteID" ColumnName="EstudianteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opciones_de_seleccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_de_seleccion">
+              <MappingFragment StoreEntitySet="Opciones_de_seleccion">
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta">
+              <MappingFragment StoreEntitySet="Pregunta">
+                <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pregunta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones">
+              <MappingFragment StoreEntitySet="Pregunta_con_opciones">
+                <ScalarProperty Name="TituloCampoObservacion" ColumnName="TituloCampoObservacion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pregunta_con_opciones_de_seleccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones_de_seleccion">
+              <MappingFragment StoreEntitySet="Pregunta_con_opciones_de_seleccion">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
