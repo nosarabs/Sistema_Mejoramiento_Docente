@@ -12,11 +12,8 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Compuesto_Por
+    public partial class C__RefactorLog
     {
-        public int Codigo_Plan { get; set; }
-        public Nullable<int> Codigo_Obj { get; set; }
-    
-        public virtual Objetivo Objetivo { get; set; }
+        public System.Guid OperationKey { get; set; }
     }
 }

@@ -10,18 +10,18 @@ using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
-    public class ObjetivoesController : Controller
+    public class ObjetivosController : Controller
     {
         private MosqueterosEntities db = new MosqueterosEntities();
 
-        // GET: Objetivoes
+        // GET: Objetivos
         public ActionResult Index()
         {
             var objetivo = db.Objetivo.Include(o => o.Tipo_Objetivo);
             return View(objetivo.ToList());
         }
 
-        // GET: Objetivoes/Details/5
+        // GET: Objetivos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,14 +36,14 @@ namespace AppIntegrador.Controllers
             return View(objetivo);
         }
 
-        // GET: Objetivoes/Create
+        // GET: Objetivos/Create
         public ActionResult Create()
         {
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre");
             return View();
         }
 
-        // POST: Objetivoes/Create
+        // POST: Objetivos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -61,7 +61,7 @@ namespace AppIntegrador.Controllers
             return View(objetivo);
         }
 
-        // GET: Objetivoes/Edit/5
+        // GET: Objetivos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,7 +77,7 @@ namespace AppIntegrador.Controllers
             return View(objetivo);
         }
 
-        // POST: Objetivoes/Edit/5
+        // POST: Objetivos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,7 +94,7 @@ namespace AppIntegrador.Controllers
             return View(objetivo);
         }
 
-        // GET: Objetivoes/Delete/5
+        // GET: Objetivos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +109,7 @@ namespace AppIntegrador.Controllers
             return View(objetivo);
         }
 
-        // POST: Objetivoes/Delete/5
+        // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

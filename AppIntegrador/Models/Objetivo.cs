@@ -12,20 +12,21 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class Objetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Estudiante()
+        public Objetivo()
         {
-            this.Matriculas = new HashSet<Matricula>();
+            this.PlanMejora = new HashSet<PlanMejora>();
         }
     
-        public int EstudianteID { get; set; }
-        public string Apellido { get; set; }
+        public int Codigo { get; set; }
         public string Nombre { get; set; }
-        public Nullable<System.DateTime> FechaMatricula { get; set; }
+        public string Descripcion { get; set; }
+        public string Tipo_O { get; set; }
     
+        public virtual Tipo_Objetivo Tipo_Objetivo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matricula> Matriculas { get; set; }
+        public virtual ICollection<PlanMejora> PlanMejora { get; set; }
     }
 }

@@ -14,11 +14,12 @@
             <img src="~/Content/images/ucr_promo.png" alt="ucr logo" />
         </a>
         <!-- Proyect -->
-        <p class="uppercase">Proyecto Integrador Bases Inge</p>
-        <div class="MenuSupDer" id>
+        <p class="uppercase mainBarText">Sistema de Mejoramiento Docente</p>
+        <div class="MenuSupDer">
             <nav>
-                <a>
-                @Html.ActionLink("About", "About", "Home", new { @class = "mainBarText" } )
+
+                @Html.ActionLink("About", "About", "Home", new { @class = "mainBarText" })
+
             </nav>
 
         </div>
@@ -27,7 +28,7 @@
     <div class="wrapper">
         <div class="projectTitle">
             <br />
-            <p>Plan de mejoramiento docente</p>
+            <p>Proyecto Integrador de Ingeniería de Software y Bases de Datos</p>
             <br />
         </div>
     </div>
@@ -60,8 +61,7 @@
                 <div class="dropdown">
                     <button class="dropbtn">Planes de mejoramiento</button>
                     <div class="dropdown-content">
-                        @Html.ActionLink("Mis planes de mejoramiento", "planMejoramiento", "PlanMejoramiento")
-                        @Html.ActionLink("Estadisticas de mis planes", "estadisticas", "PlanMejoramiento")
+                        @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanMejoras")
                     </div>
                 </div>
             </li>

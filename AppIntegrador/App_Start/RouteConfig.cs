@@ -31,8 +31,8 @@ namespace AppIntegrador
             );
             routes.MapRoute(
                 name: "About",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "About", id = UrlParameter.Optional }
+                url: "Home/About",
+                defaults: new { controller = "Home", action = "About"}
             );
         }
     }

@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanMejoras
         public ActionResult Index()
         {
-            return View(db.PlanMejoras.ToList());
+            return View(db.PlanMejora.ToList());
         }
 
         // GET: PlanMejoras/Details/5
@@ -27,7 +27,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejoras.Find(id);
+            PlanMejora planMejora = db.PlanMejora.Find(id);
             if (planMejora == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PlanMejoras.Add(planMejora);
+                db.PlanMejora.Add(planMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejoras.Find(id);
+            PlanMejora planMejora = db.PlanMejora.Find(id);
             if (planMejora == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejoras.Find(id);
+            PlanMejora planMejora = db.PlanMejora.Find(id);
             if (planMejora == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PlanMejora planMejora = db.PlanMejoras.Find(id);
-            db.PlanMejoras.Remove(planMejora);
+            PlanMejora planMejora = db.PlanMejora.Find(id);
+            db.PlanMejora.Remove(planMejora);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -123,5 +123,7 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

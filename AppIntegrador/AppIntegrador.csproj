@@ -129,32 +129,37 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ObjetivosController.cs" />
+    <Compile Include="Controllers\PlanMejorasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Curso.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>PlanDeMejoraModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Estudiante.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Objetivo.cs">
+      <DependentUpon>PlanDeMejoraModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Matricula.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelIntegrador.Context.cs">
+    <Compile Include="Models\PlanDeMejoraModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.Context.tt</DependentUpon>
+      <DependentUpon>PlanDeMejoraModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.cs">
+    <Compile Include="Models\PlanDeMejoraModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>PlanDeMejoraModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.Designer.cs">
+    <Compile Include="Models\PlanDeMejoraModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+      <DependentUpon>PlanDeMejoraModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlanMejora.cs">
+      <DependentUpon>PlanDeMejoraModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tipo_Objetivo.cs">
+      <DependentUpon>PlanDeMejoraModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,24 +173,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ModelIntegrador.Context.tt">
+    <Content Include="Models\PlanDeMejoraModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Context.cs</LastGenOutput>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+      <DependentUpon>PlanDeMejoraModel.edmx</DependentUpon>
+      <LastGenOutput>PlanDeMejoraModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModelIntegrador.tt">
+    <Content Include="Models\PlanDeMejoraModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
-      <LastGenOutput>ModelIntegrador.cs</LastGenOutput>
+      <DependentUpon>PlanDeMejoraModel.edmx</DependentUpon>
+      <LastGenOutput>PlanDeMejoraModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ModelIntegrador.edmx">
+    <EntityDeploy Include="Models\PlanDeMejoraModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Designer.cs</LastGenOutput>
+      <LastGenOutput>PlanDeMejoraModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelIntegrador.edmx.diagram">
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    <Content Include="Models\PlanDeMejoraModel.edmx.diagram">
+      <DependentUpon>PlanDeMejoraModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -212,21 +217,16 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Estudiante\Create.cshtml" />
-    <Content Include="Views\Estudiante\Delete.cshtml" />
-    <Content Include="Views\Estudiante\Details.cshtml" />
-    <Content Include="Views\Estudiante\Edit.cshtml" />
-    <Content Include="Views\Estudiante\Index.cshtml" />
-    <Content Include="Views\Curso\Create.cshtml" />
-    <Content Include="Views\Curso\Delete.cshtml" />
-    <Content Include="Views\Curso\Details.cshtml" />
-    <Content Include="Views\Curso\Edit.cshtml" />
-    <Content Include="Views\Curso\Index.cshtml" />
-    <Content Include="Views\Matricula\Create.cshtml" />
-    <Content Include="Views\Matricula\Delete.cshtml" />
-    <Content Include="Views\Matricula\Details.cshtml" />
-    <Content Include="Views\Matricula\Edit.cshtml" />
-    <Content Include="Views\Matricula\Index.cshtml" />
+    <Content Include="Views\PlanMejoras\Create.cshtml" />
+    <Content Include="Views\PlanMejoras\Delete.cshtml" />
+    <Content Include="Views\PlanMejoras\Details.cshtml" />
+    <Content Include="Views\PlanMejoras\Edit.cshtml" />
+    <Content Include="Views\PlanMejoras\Index.cshtml" />
+    <Content Include="Views\Objetivos\Create.cshtml" />
+    <Content Include="Views\Objetivos\Delete.cshtml" />
+    <Content Include="Views\Objetivos\Details.cshtml" />
+    <Content Include="Views\Objetivos\Edit.cshtml" />
+    <Content Include="Views\Objetivos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
