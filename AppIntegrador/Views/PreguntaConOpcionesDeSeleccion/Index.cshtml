@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AppIntegrador.Models.Pregunta_con_opciones_de_seleccion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.TituloCampoObservacion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+            </td>
+        </tr>
+    }
+
+</table>
