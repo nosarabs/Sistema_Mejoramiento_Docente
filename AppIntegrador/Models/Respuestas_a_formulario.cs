@@ -12,23 +12,24 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Pregunta
+    public partial class Respuestas_a_formulario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pregunta()
+        public Respuestas_a_formulario()
         {
-            this.Seccion_tiene_pregunta = new HashSet<Seccion_tiene_pregunta>();
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
             this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
         }
     
-        public string Codigo { get; set; }
-        public string Enunciado { get; set; }
+        public string FCodigo { get; set; }
+        public string Username { get; set; }
+        public string CSigla { get; set; }
+        public int GNumero { get; set; }
+        public int GAnno { get; set; }
+        public int GSemestre { get; set; }
+        public System.DateTime Fecha { get; set; }
     
-        public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }
-        public virtual Pregunta_con_respuesta_libre Pregunta_con_respuesta_libre { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
+        public virtual Formulario Formulario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

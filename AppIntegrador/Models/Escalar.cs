@@ -12,14 +12,13 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Matricula
+    public partial class Escalar
     {
-        public int MatriculaID { get; set; }
-        public Nullable<decimal> Nota { get; set; }
-        public int CursoID { get; set; }
-        public int EstudianteID { get; set; }
+        public string Codigo { get; set; }
+        public int Incremento { get; set; }
+        public int Minimo { get; set; }
+        public int Maximo { get; set; }
     
-        public virtual Curso Curso { get; set; }
-        public virtual Estudiante Estudiante { get; set; }
+        public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }
     }
 }

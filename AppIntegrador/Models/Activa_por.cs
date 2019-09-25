@@ -12,19 +12,22 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Curso
+    public partial class Activa_por
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Curso()
+        public Activa_por()
         {
-            this.Matriculas = new HashSet<Matricula>();
+            this.Periodo_activa_por = new HashSet<Periodo_activa_por>();
         }
     
-        public int CursoId { get; set; }
-        public string Titulo { get; set; }
-        public Nullable<int> Creditos { get; set; }
+        public string FCodigo { get; set; }
+        public string CSigla { get; set; }
+        public int GNumero { get; set; }
+        public int GAnno { get; set; }
+        public int GSemestre { get; set; }
     
+        public virtual Formulario Formulario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matricula> Matriculas { get; set; }
+        public virtual ICollection<Periodo_activa_por> Periodo_activa_por { get; set; }
     }
 }
