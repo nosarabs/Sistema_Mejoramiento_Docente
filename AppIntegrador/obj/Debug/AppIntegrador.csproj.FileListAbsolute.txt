@@ -232,7 +232,6 @@ C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\bin\System.Web.We
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\bin\Newtonsoft.Json.xml
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\bin\Antlr3.Runtime.pdb
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\obj\Debug\AppIntegrador.csprojAssemblyReference.cache
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\obj\Debug\AppIntegrador.csproj.CoreCompileInputs.cache
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\obj\Debug\AppIntegrador.csproj.CopyComplete
 C:\Users\B76144\Documents\Proyecto Integrador\PI\AppIntegrador\obj\Debug\AppIntegrador.dll

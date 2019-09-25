@@ -54,7 +54,8 @@ namespace AppIntegrador.Controllers
             {
                 db.Objetivo.Add(objetivo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //System.Diagnostics.Debug.WriteLine();
+                return Redirect(Request.UrlReferrer.ToString());
             }
 
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
@@ -127,6 +128,11 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult goBack()
+        {
+            return View();
         }
     }
 }

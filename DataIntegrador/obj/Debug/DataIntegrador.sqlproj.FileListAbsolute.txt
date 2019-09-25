@@ -18,3 +18,13 @@ C:\Users\B76144\Documents\PI\DataIntegrador\obj\Debug\postdeploy.sql
 C:\Users\B76144\Documents\PI\DataIntegrador\obj\Debug\predeploy.sql
 C:\Users\B76144\Documents\PI\DataIntegrador\obj\Debug\DataIntegrador.dll
 C:\Users\B76144\Documents\PI\DataIntegrador\obj\Debug\DataIntegrador.pdb
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\bin\Debug\DataIntegrador.dll
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\bin\Debug\DataIntegrador.pdb
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\DataIntegrador.sqlprojAssemblyReference.cache
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\Model.xml
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\refactor.xml
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\postdeploy.sql
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\predeploy.sql
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\DataIntegrador.dll
+C:\Users\B76144\Documents\Proyecto Integrador\PI\DataIntegrador\obj\Debug\DataIntegrador.pdb

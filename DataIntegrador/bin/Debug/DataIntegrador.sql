@@ -40,92 +40,71 @@ USE [$(DatabaseName)];
 
 
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET ANSI_NULLS ON,
-                ANSI_PADDING ON,
-                ANSI_WARNINGS ON,
-                ARITHABORT ON,
-                CONCAT_NULL_YIELDS_NULL ON,
-                QUOTED_IDENTIFIER ON,
-                ANSI_NULL_DEFAULT ON,
-                CURSOR_DEFAULT LOCAL 
-            WITH ROLLBACK IMMEDIATE;
-    END
+PRINT N'Dropping unnamed constraint on [dbo].[Compuesto_Por]...';
 
 
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET PAGE_VERIFY NONE 
-            WITH ROLLBACK IMMEDIATE;
-    END
+ALTER TABLE [dbo].[Compuesto_Por] DROP CONSTRAINT [FK__Compuesto__Codig__1FCDBCEB];
 
 
 GO
-PRINT N'Rename refactoring operation with key 8c8d0231-36d4-423f-90b4-b8ee4aa9e22f is skipped, element [dbo].[Objetivo].[descripcion] (SqlSimpleColumn) will not be renamed to nombre';
+PRINT N'Dropping unnamed constraint on [dbo].[Compuesto_Por]...';
 
 
 GO
-PRINT N'Rename refactoring operation with key a7a804c2-f303-4a3c-ac95-cc51a7eeabe7, 3470b1a8-4cf2-441a-966d-8182f154f472, 864624a0-5386-44c8-abf4-3da9f81e0ab0 is skipped, element [dbo].[Objetivo].[Id] (SqlSimpleColumn) will not be renamed to Codigo';
+ALTER TABLE [dbo].[Compuesto_Por] DROP CONSTRAINT [FK__Compuesto__Codig__20C1E124];
 
 
 GO
-PRINT N'Rename refactoring operation with key 2defa11b-7192-4c9f-875d-99cd65197f42 is skipped, element [dbo].[Objetivo].[descripcion] (SqlSimpleColumn) will not be renamed to Descripcion';
+PRINT N'Dropping unnamed constraint on [dbo].[Objetivo]...';
 
 
 GO
-PRINT N'Rename refactoring operation with key 94ec0259-48b6-4489-8acc-8aa7a82ffd97 is skipped, element [dbo].[Objetivo].[nombre] (SqlSimpleColumn) will not be renamed to Nombre';
+ALTER TABLE [dbo].[Objetivo] DROP CONSTRAINT [FK__Objetivo__Tipo_O__21B6055D];
 
 
 GO
-PRINT N'Rename refactoring operation with key 1eac50c7-8604-43b2-923f-d3bc85927586 is skipped, element [dbo].[Tipo_Objetivo].[Id] (SqlSimpleColumn) will not be renamed to Nombre';
+PRINT N'Starting rebuilding table [dbo].[Compuesto_Por]...';
 
 
 GO
-PRINT N'Rename refactoring operation with key a4e45334-efb5-4b2a-9119-b5a53d8b0502 is skipped, element [dbo].[Compuesto_Por].[Id] (SqlSimpleColumn) will not be renamed to Codigo_Plan';
+BEGIN TRANSACTION;
 
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 
-GO
-PRINT N'Creating [dbo].[Compuesto_Por]...';
+SET XACT_ABORT ON;
 
-
-GO
-CREATE TABLE [dbo].[Compuesto_Por] (
+CREATE TABLE [dbo].[tmp_ms_xx_Compuesto_Por] (
     [Codigo_Plan] INT NOT NULL,
     [Codigo_Obj]  INT NOT NULL
 );
 
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Compuesto_Por])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_Compuesto_Por] ([Codigo_Obj], [Codigo_Plan])
+        SELECT [Codigo_Obj],
+               [Codigo_Plan]
+        FROM   [dbo].[Compuesto_Por];
+    END
+
+DROP TABLE [dbo].[Compuesto_Por];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Compuesto_Por]', N'Compuesto_Por';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
 
 GO
-PRINT N'Creating [dbo].[Objetivo]...';
+PRINT N'Altering [dbo].[Objetivo]...';
 
 
 GO
-CREATE TABLE [dbo].[Objetivo] (
-    [Codigo]      INT           NOT NULL,
-    [Nombre]      NVARCHAR (50) NULL,
-    [Descripcion] NVARCHAR (50) NULL,
-    [Tipo_O]      NVARCHAR (20) NULL,
-    PRIMARY KEY CLUSTERED ([Codigo] ASC)
-);
+ALTER TABLE [dbo].[Objetivo] ALTER COLUMN [Descripcion] NVARCHAR (50) NULL;
 
-
-GO
-PRINT N'Creating [dbo].[Tipo_Objetivo]...';
-
-
-GO
-CREATE TABLE [dbo].[Tipo_Objetivo] (
-    [Nombre] NVARCHAR (20) NOT NULL,
-    PRIMARY KEY CLUSTERED ([Nombre] ASC)
-);
+ALTER TABLE [dbo].[Objetivo] ALTER COLUMN [Tipo_O] NVARCHAR (20) NULL;
 
 
 GO
@@ -134,36 +113,41 @@ PRINT N'Creating unnamed constraint on [dbo].[Compuesto_Por]...';
 
 GO
 ALTER TABLE [dbo].[Compuesto_Por] WITH NOCHECK
-    ADD FOREIGN KEY ([Codigo_Plan]) REFERENCES [dbo].[Objetivo] ([Codigo]);
+    ADD FOREIGN KEY ([Codigo_Obj]) REFERENCES [dbo].[Objetivo] ([Codigo]);
 
 
 GO
--- Refactoring step to update target server with deployed transaction logs
+PRINT N'Creating unnamed constraint on [dbo].[Compuesto_Por]...';
 
-IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
-BEGIN
-    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
-    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
-END
-GO
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'a7a804c2-f303-4a3c-ac95-cc51a7eeabe7')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('a7a804c2-f303-4a3c-ac95-cc51a7eeabe7')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '3470b1a8-4cf2-441a-966d-8182f154f472')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('3470b1a8-4cf2-441a-966d-8182f154f472')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '8c8d0231-36d4-423f-90b4-b8ee4aa9e22f')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('8c8d0231-36d4-423f-90b4-b8ee4aa9e22f')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '2defa11b-7192-4c9f-875d-99cd65197f42')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('2defa11b-7192-4c9f-875d-99cd65197f42')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '94ec0259-48b6-4489-8acc-8aa7a82ffd97')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('94ec0259-48b6-4489-8acc-8aa7a82ffd97')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '864624a0-5386-44c8-abf4-3da9f81e0ab0')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('864624a0-5386-44c8-abf4-3da9f81e0ab0')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '1eac50c7-8604-43b2-923f-d3bc85927586')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('1eac50c7-8604-43b2-923f-d3bc85927586')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'a4e45334-efb5-4b2a-9119-b5a53d8b0502')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('a4e45334-efb5-4b2a-9119-b5a53d8b0502')
 
 GO
+ALTER TABLE [dbo].[Compuesto_Por] WITH NOCHECK
+    ADD FOREIGN KEY ([Codigo_Plan]) REFERENCES [dbo].[PlanMejora] ([Codigo]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Objetivo]...';
+
+
+GO
+ALTER TABLE [dbo].[Objetivo] WITH NOCHECK
+    ADD FOREIGN KEY ([Tipo_O]) REFERENCES [dbo].[Tipo_Objetivo] ([Nombre]);
+
+
+GO
+/*
+Post-Deployment Script Template							
+--------------------------------------------------------------------------------------
+ This file contains SQL statements that will be appended to the build script.		
+ Use SQLCMD syntax to include a file in the post-deployment script.			
+ Example:      :r .\myfile.sql								
+ Use SQLCMD syntax to reference a variable in the post-deployment script.		
+ Example:      :setvar TableName MyTable							
+               SELECT * FROM [$(TableName)]					
+--------------------------------------------------------------------------------------
+*/
+
+INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Profesor');INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Curso');GO
 
 GO
 PRINT N'Checking existing data against newly created constraints';
@@ -189,7 +173,7 @@ DECLARE tableconstraintnames CURSOR LOCAL FORWARD_ONLY
                [name],
                0
         FROM   [sys].[objects]
-        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Compuesto_Por'))
+        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Compuesto_Por'), OBJECT_ID(N'dbo.Objetivo'))
                AND [type] IN (N'F', N'C')
                    AND [object_id] IN (SELECT [object_id]
                                        FROM   [sys].[check_constraints]
