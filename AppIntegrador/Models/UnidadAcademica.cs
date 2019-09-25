@@ -12,22 +12,26 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class UnidadAcademica
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Estudiante()
+        public UnidadAcademica()
         {
-            this.Enfasis = new HashSet<Enfasis>();
-            this.Grupo = new HashSet<Grupo>();
+            this.Carrera = new HashSet<Carrera>();
+            this.UnidadAcademica1 = new HashSet<UnidadAcademica>();
+            this.Funcionario = new HashSet<Funcionario>();
         }
     
-        public string Cedula { get; set; }
-        public string Carne { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
+        public string Superior { get; set; }
     
-        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enfasis> Enfasis { get; set; }
+        public virtual ICollection<Carrera> Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
+        public virtual ICollection<UnidadAcademica> UnidadAcademica1 { get; set; }
+        public virtual UnidadAcademica UnidadAcademica2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Funcionario> Funcionario { get; set; }
     }
 }

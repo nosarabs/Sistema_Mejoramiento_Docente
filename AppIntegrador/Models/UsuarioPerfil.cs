@@ -12,14 +12,15 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Matricula
+    public partial class UsuarioPerfil
     {
-        public int MatriculaID { get; set; }
-        public Nullable<decimal> Nota { get; set; }
-        public int CursoID { get; set; }
-        public int EstudianteID { get; set; }
+        public string Usuario { get; set; }
+        public string Perfil { get; set; }
+        public string CodCarrera { get; set; }
+        public string CodEnfasis { get; set; }
     
-        public virtual Curso Curso { get; set; }
-        public virtual Estudiante Estudiante { get; set; }
+        public virtual Enfasis Enfasis { get; set; }
+        public virtual Perfil Perfil1 { get; set; }
+        public virtual Usuario Usuario1 { get; set; }
     }
 }

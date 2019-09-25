@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c634432927c84885a6ab8ad32c5e253a" Name="Diagram1">
+        <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Curso" Width="1.5" PointX="14.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Enfasis" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Estudiante" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Funcionario" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Grupo" Width="1.5" PointX="16.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Perfil" Width="1.5" PointX="12" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PerfilPermiso" Width="1.5" PointX="14.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Permiso" Width="1.5" PointX="12" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Persona" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Profesor" Width="1.5" PointX="18.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.UnidadAcademica" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.UsuarioPerfil" Width="1.5" PointX="14.25" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Carrera__CodUnid__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Enfasis__CodCarr__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Curso__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Grupo__SiglaCurs__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Estudiant__Cedul__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Funcionar__Cedul__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Profesor__Cedula__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Permi__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Persona__Usuario__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UnidadAca__Super__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Usuar__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.Empadronado_en" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.Imparte" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.Matriculado_en" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

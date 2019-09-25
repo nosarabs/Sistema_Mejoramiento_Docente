@@ -3,7 +3,7 @@
 RETURNS BIT
 BEGIN
 
-	DECLARE @userID INT, @result BIT
+	DECLARE @userID VARCHAR(50), @result BIT
 
 	IF EXISTS (SELECT TOP 1 Username FROM [dbo].[Usuario] WHERE Username=@pLoginName)
 	BEGIN

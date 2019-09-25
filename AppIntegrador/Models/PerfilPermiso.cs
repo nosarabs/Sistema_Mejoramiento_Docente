@@ -12,21 +12,15 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Curso
+    public partial class PerfilPermiso
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Curso()
-        {
-            this.Grupo = new HashSet<Grupo>();
-        }
-    
-        public string Sigla { get; set; }
-        public string Nombre { get; set; }
+        public string Perfil { get; set; }
+        public int PermisoId { get; set; }
         public string CodCarrera { get; set; }
         public string CodEnfasis { get; set; }
     
         public virtual Enfasis Enfasis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
+        public virtual Perfil Perfil1 { get; set; }
+        public virtual Permiso Permiso { get; set; }
     }
 }

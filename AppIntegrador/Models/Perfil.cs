@@ -12,22 +12,20 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class Perfil
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Estudiante()
+        public Perfil()
         {
-            this.Enfasis = new HashSet<Enfasis>();
-            this.Grupo = new HashSet<Grupo>();
+            this.PerfilPermiso = new HashSet<PerfilPermiso>();
+            this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
         }
     
-        public string Cedula { get; set; }
-        public string Carne { get; set; }
+        public string Nombre { get; set; }
     
-        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enfasis> Enfasis { get; set; }
+        public virtual ICollection<PerfilPermiso> PerfilPermiso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
+        public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
     }
 }

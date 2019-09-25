@@ -16,7 +16,7 @@ namespace AppIntegrador
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "UserLogin", action = "UserLoginView", id = UrlParameter.Optional }
+                defaults: new { controller = "UsuarioLogin", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

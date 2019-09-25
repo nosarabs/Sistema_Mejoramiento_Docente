@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "EvalDocente"
 :setvar DefaultFilePrefix "EvalDocente"
-:setvar DefaultDataPath "C:\Users\b76316\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
-:setvar DefaultLogPath "C:\Users\b76316\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
+:setvar DefaultDataPath "C:\Users\Eric\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
+:setvar DefaultLogPath "C:\Users\Eric\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\"
 
 GO
 :on error exit
@@ -36,353 +36,12 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 
 GO
-USE [master];
-
-
-GO
-
-IF (DB_ID(N'$(DatabaseName)') IS NOT NULL) 
-BEGIN
-    ALTER DATABASE [$(DatabaseName)]
-    SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [$(DatabaseName)];
-END
-
-GO
-PRINT N'Creating $(DatabaseName)...'
-GO
-CREATE DATABASE [$(DatabaseName)]
-    ON 
-    PRIMARY(NAME = [$(DatabaseName)], FILENAME = N'$(DefaultDataPath)$(DefaultFilePrefix)_Primary.mdf')
-    LOG ON (NAME = [$(DatabaseName)_log], FILENAME = N'$(DefaultLogPath)$(DefaultFilePrefix)_Primary.ldf') COLLATE SQL_Latin1_General_CP1_CI_AS
-GO
 USE [$(DatabaseName)];
 
 
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET ANSI_NULLS ON,
-                ANSI_PADDING ON,
-                ANSI_WARNINGS ON,
-                ARITHABORT ON,
-                CONCAT_NULL_YIELDS_NULL ON,
-                NUMERIC_ROUNDABORT OFF,
-                QUOTED_IDENTIFIER ON,
-                ANSI_NULL_DEFAULT ON,
-                CURSOR_DEFAULT LOCAL,
-                RECOVERY FULL,
-                CURSOR_CLOSE_ON_COMMIT OFF,
-                AUTO_CREATE_STATISTICS ON,
-                AUTO_SHRINK OFF,
-                AUTO_UPDATE_STATISTICS ON,
-                RECURSIVE_TRIGGERS OFF 
-            WITH ROLLBACK IMMEDIATE;
-        ALTER DATABASE [$(DatabaseName)]
-            SET AUTO_CLOSE OFF 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
+/* Post-Deployment Script Template							 --------------------------------------------------------------------------------------  This file contains SQL statements that will be appended to the build script.		  Use SQLCMD syntax to include a file in the post-deployment script.			  Example:      :r .\myfile.sql								  Use SQLCMD syntax to reference a variable in the post-deployment script.		  Example:      :setvar TableName MyTable							                SELECT * FROM [$(TableName)]					 -------------------------------------------------------------------------------------- */  DELETE FROM Usuario WHERE Username = 'admin';  EXEC dbo.AgregarUsuario 	@pLogin = 'admin', 	@pPassword = 'admin', 	@estado = NULL;
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET ALLOW_SNAPSHOT_ISOLATION OFF;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET READ_COMMITTED_SNAPSHOT OFF 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET AUTO_UPDATE_STATISTICS_ASYNC OFF,
-                PAGE_VERIFY NONE,
-                DATE_CORRELATION_OPTIMIZATION OFF,
-                DISABLE_BROKER,
-                PARAMETERIZATION SIMPLE,
-                SUPPLEMENTAL_LOGGING OFF 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF IS_SRVROLEMEMBER(N'sysadmin') = 1
-    BEGIN
-        IF EXISTS (SELECT 1
-                   FROM   [master].[dbo].[sysdatabases]
-                   WHERE  [name] = N'$(DatabaseName)')
-            BEGIN
-                EXECUTE sp_executesql N'ALTER DATABASE [$(DatabaseName)]
-    SET TRUSTWORTHY OFF,
-        DB_CHAINING OFF 
-    WITH ROLLBACK IMMEDIATE';
-            END
-    END
-ELSE
-    BEGIN
-        PRINT N'The database settings cannot be modified. You must be a SysAdmin to apply these settings.';
-    END
-
-
-GO
-IF IS_SRVROLEMEMBER(N'sysadmin') = 1
-    BEGIN
-        IF EXISTS (SELECT 1
-                   FROM   [master].[dbo].[sysdatabases]
-                   WHERE  [name] = N'$(DatabaseName)')
-            BEGIN
-                EXECUTE sp_executesql N'ALTER DATABASE [$(DatabaseName)]
-    SET HONOR_BROKER_PRIORITY OFF 
-    WITH ROLLBACK IMMEDIATE';
-            END
-    END
-ELSE
-    BEGIN
-        PRINT N'The database settings cannot be modified. You must be a SysAdmin to apply these settings.';
-    END
-
-
-GO
-ALTER DATABASE [$(DatabaseName)]
-    SET TARGET_RECOVERY_TIME = 0 SECONDS 
-    WITH ROLLBACK IMMEDIATE;
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET FILESTREAM(NON_TRANSACTED_ACCESS = OFF),
-                CONTAINMENT = NONE 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET AUTO_CREATE_STATISTICS ON(INCREMENTAL = OFF),
-                MEMORY_OPTIMIZED_ELEVATE_TO_SNAPSHOT = OFF,
-                DELAYED_DURABILITY = DISABLED 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET QUERY_STORE (QUERY_CAPTURE_MODE = ALL, DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_PLANS_PER_QUERY = 200, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 367), MAX_STORAGE_SIZE_MB = 100) 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET QUERY_STORE = OFF 
-            WITH ROLLBACK IMMEDIATE;
-    END
-
-
-GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
-        ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET MAXDOP = PRIMARY;
-        ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
-        ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET LEGACY_CARDINALITY_ESTIMATION = PRIMARY;
-        ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
-        ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET PARAMETER_SNIFFING = PRIMARY;
-        ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
-        ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
-    END
-
-
-GO
-IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
-    EXECUTE sp_fulltext_database 'enable';
-
-
-GO
-PRINT N'Creating [dbo].[Curso]...';
-
-
-GO
-CREATE TABLE [dbo].[Curso] (
-    [CursoId]  INT           IDENTITY (1, 1) NOT NULL,
-    [Titulo]   NVARCHAR (50) NULL,
-    [Creditos] INT           NULL,
-    PRIMARY KEY CLUSTERED ([CursoId] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[Estudiante]...';
-
-
-GO
-CREATE TABLE [dbo].[Estudiante] (
-    [EstudianteID]   INT           IDENTITY (1, 1) NOT NULL,
-    [Apellido]       NVARCHAR (50) NULL,
-    [Nombre]         NVARCHAR (50) NULL,
-    [FechaMatricula] DATETIME      NULL,
-    PRIMARY KEY CLUSTERED ([EstudianteID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[Matricula]...';
-
-
-GO
-CREATE TABLE [dbo].[Matricula] (
-    [MatriculaID]  INT            IDENTITY (1, 1) NOT NULL,
-    [Nota]         DECIMAL (3, 2) NULL,
-    [CursoID]      INT            NOT NULL,
-    [EstudianteID] INT            NOT NULL,
-    PRIMARY KEY CLUSTERED ([MatriculaID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[UserProfile]...';
-
-
-GO
-CREATE TABLE [dbo].[UserProfile] (
-    [UserId]   INT          IDENTITY (1, 1) NOT NULL,
-    [UserName] VARCHAR (50) NULL,
-    [Password] VARCHAR (50) NULL,
-    PRIMARY KEY CLUSTERED ([UserId] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[FK_dbo.Matricula_dbo.Curso_CursoID]...';
-
-
-GO
-ALTER TABLE [dbo].[Matricula]
-    ADD CONSTRAINT [FK_dbo.Matricula_dbo.Curso_CursoID] FOREIGN KEY ([CursoID]) REFERENCES [dbo].[Curso] ([CursoId]) ON DELETE CASCADE;
-
-
-GO
-PRINT N'Creating [dbo].[FK_dbo.Matricula_dbo.Estudiante_EstudianteID]...';
-
-
-GO
-ALTER TABLE [dbo].[Matricula]
-    ADD CONSTRAINT [FK_dbo.Matricula_dbo.Estudiante_EstudianteID] FOREIGN KEY ([EstudianteID]) REFERENCES [dbo].[Estudiante] ([EstudianteID]) ON DELETE CASCADE;
-
-
-GO
-/*
-Post-Deployment Script Template							
---------------------------------------------------------------------------------------
- This file contains SQL statements that will be appended to the build script.		
- Use SQLCMD syntax to include a file in the post-deployment script.			
- Example:      :r .\myfile.sql								
- Use SQLCMD syntax to reference a variable in the post-deployment script.		
- Example:      :setvar TableName MyTable							
-               SELECT * FROM [$(TableName)]					
---------------------------------------------------------------------------------------
-*/
-
-MERGE INTO Curso AS Target 
-USING (VALUES 
-(1, 'Ingenieria de Software', 5), 
-(2, 'Bases de Datos', 5), 
-(3, 'Proyecto', 3) 
-) 
-AS Source ([CursoID], Titulo, Creditos) 
-ON Target.CursoID = Source.CursoID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Titulo, Creditos) 
-VALUES (Titulo, Creditos); 
-
-MERGE INTO Estudiante AS Target 
-USING (VALUES 
-(1, 'Salas', 'Andrea', '2015-09-01'), 
-(2, 'Guzman', 'Luis', '2016-01-13'), 
-(3, 'Ramirez', 'Erick', '2017-09-03') 
-) 
-AS Source (EstudianteID, Apellido, Nombre, FechaMatricula) 
-ON Target.EstudianteID = Source.EstudianteID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Apellido, Nombre, FechaMatricula) 
-VALUES (Apellido, Nombre, FechaMatricula);
-
-MERGE INTO Matricula AS Target 
-USING (VALUES 
-(1, 2.00, 1, 1), 
-(2, 3.50, 1, 2), 
-(3, 4.00, 2, 3),
-(4, 1.80, 2, 1), 
-(5, 3.20, 3, 1), 
-(6, 4.00, 3, 2) 
-) 
-AS Source (MatriculaID, Nota, CursoID, EstudianteID) 
-ON Target.MatriculaID = Source.MatriculaID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Nota, CursoID, EstudianteID) 
-VALUES (Nota, CursoID, EstudianteID);
-
-MERGE INTO UserProfile AS Target
-USING (VALUES
-  (1, 'admin', 'admin')  )  AS Source ([UserID], UserName, Password)  ON Target.UserID = Source.UserID  WHEN NOT MATCHED BY TARGET THEN
-INSERT (UserName, Password)
-VALUES (UserName, Password);
-GO
-
-GO
-DECLARE @VarDecimalSupported AS BIT;
-
-SELECT @VarDecimalSupported = 0;
-
-IF ((ServerProperty(N'EngineEdition') = 3)
-    AND (((@@microsoftversion / power(2, 24) = 9)
-          AND (@@microsoftversion & 0xffff >= 3024))
-         OR ((@@microsoftversion / power(2, 24) = 10)
-             AND (@@microsoftversion & 0xffff >= 1600))))
-    SELECT @VarDecimalSupported = 1;
-
-IF (@VarDecimalSupported > 0)
-    BEGIN
-        EXECUTE sp_db_vardecimal_storage_format N'$(DatabaseName)', 'ON';
-    END
-
 
 GO
 PRINT N'Update complete.';

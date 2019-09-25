@@ -1,13 +1,13 @@
-﻿@model AppIntegrador.Models.UserProfile
+﻿@model AppIntegrador.Models.Usuario
 
 @{
-    ViewBag.Title = "UserLoginView";
+    ViewBag.Title = "Login";
 }
 
-@using (Html.BeginForm("UserLoginView", "Home", FormMethod.Post))
+@using (Html.BeginForm("Login", "UsuarioLogin", FormMethod.Post))
 {
     <fieldset>
-        <legend>Mvc Simple Login Application Demo</legend>
+        <legend>Inicio de sesión</legend>
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -19,9 +19,9 @@
         }
         <table>
             <tr>
-                <td>@Html.LabelFor(a => a.UserName)</td>
-                <td>@Html.TextBoxFor(a => a.UserName)</td>
-                <td>@Html.ValidationMessageFor(a => a.UserName)</td>
+                <td>@Html.LabelFor(a => a.Username)</td>
+                <td>@Html.TextBoxFor(a => a.Username)</td>
+                <td>@Html.ValidationMessageFor(a => a.Username)</td>
             </tr>
             <tr>
                 <td>
