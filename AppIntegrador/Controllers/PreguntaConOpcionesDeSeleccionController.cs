@@ -14,6 +14,20 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        [HttpGet]
+        public ActionResult Pregunta_con_opciones_de_seleccion()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult OpcionesDeSeleccion(int? i)
+        {
+            ViewBag.i = i;
+            return PartialView();
+        }
+
+
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
         {
@@ -37,18 +51,24 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Create
-        public ActionResult Create()
+        // Metodo usado para el render partial
+        public ActionResult OpcionesDeSeleccion()
         {
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones, "Codigo", "TituloCampoObservacion");
+            return View();
+        }
+
+        public ActionResult Create()
+       {
             return View();
         }
 
         // POST: PreguntaConOpcionesDeSeleccion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
         {
             // Para esta fase del proyecto solo se soportan preguntas de selección única
             pregunta.Tipo = "U";
@@ -61,12 +81,20 @@ namespace AppIntegrador.Controllers
                 // Agregue la pregunta con opciones perse a la table=a
                 db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
-                "Codigo", "TituloCampoObservacion", pregunta.Codigo);
-            return View(pregunta);
+            // Guardo el codigo en un string
+            string codigoPregunta = pregunta.Codigo;
+            foreach (Opciones_de_seleccion opcion in opciones)
+            {
+                // Asigno el codigo a cada opcion de la pregunta
+                opcion.Codigo = codigoPregunta;
+            }
+
+            // Guardo todas las opciones en la base de datos de una
+            db.Opciones_de_seleccion.AddRange(opciones);
+            db.SaveChanges();
+            return View();
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Edit/5
