@@ -52,14 +52,22 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
-                pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
-                // Agregue esa pregunta a la tabla de preguntas
-                db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
-                // Agregue la pregunta con opciones perse a la table=a
-                db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
+                    pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
+                    // Agregue esa pregunta a la tabla de preguntas
+                    db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                    // Agregue la pregunta con opciones perse a la table=a
+                    db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch(Exception exception)
+                {
+                    // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
+                    return View(pregunta);
+                }
             }
 
             ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
