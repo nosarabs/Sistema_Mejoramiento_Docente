@@ -1,25 +1,26 @@
-.collapsible {
-  background-color: #0099FF;
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 16px;
+.escala, .seleccion_unica, .seleccion_multiple, .seleccion_cerrada, .texto_abierto {
+    background-color: #0099FF;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
 }
 
-.active, .collapsible:hover {
-  background-color: #0066FF;
+.active, .escala:hover, .seleccion_unica:hover, .seleccion_multiple:hover, .seleccion_cerrada:hover, .texto_abierto:hover {
+        background-color: #0066FF;
+
 }
 
-.collapsible:after {
-  content: '\002B';
-  color: white;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
+.escala:after, .seleccion_unica:after, .seleccion_multiple:after, .seleccion_cerrada:after, .texto_abierto:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
 }
 
 .active:after {
