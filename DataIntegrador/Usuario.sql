@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Usuario]
 (
-	[Username] nvarchar(50) NOT NULL PRIMARY KEY,
-	[Password] nvarchar(50) NOT NULL
+	[Username] varchar(50) NOT NULL PRIMARY KEY,
+	[Password] varchar(64) NOT NULL,
+	[Salt] varchar(64) not null unique
 )

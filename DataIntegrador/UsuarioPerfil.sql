@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UsuarioPerfil]
 (
-	[Usuario] nvarchar(50) NOT NULL,
+	[Usuario] varchar(50) NOT NULL,
 	[Perfil] VARCHAR(50) NOT NULL,
 	[CodCarrera] VARCHAR(10) NOT NULL,
 	[CodEnfasis] VARCHAR(10) NOT NULL,

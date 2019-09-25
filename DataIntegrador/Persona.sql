@@ -6,6 +6,6 @@
     [Nombre2] VARCHAR(15) NULL, 
     [Apellido1] VARCHAR(15) NOT NULL, 
     [Apellido2] VARCHAR(15) NULL, 
-    [Usuario] NVARCHAR(50) NULL,
+    [Usuario] VARCHAR(50) NULL,
 	FOREIGN KEY (Usuario) REFERENCES Usuario (Username)
 )

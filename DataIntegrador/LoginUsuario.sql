@@ -1,5 +1,5 @@
 ﻿CREATE FUNCTION loginUsuario
-	(@pLoginName NVARCHAR(50),@pPassword NVARCHAR(50))
+	(@pLoginName VARCHAR(50),@pPassword VARCHAR(50))
 RETURNS BIT
 BEGIN
 
@@ -8,8 +8,8 @@ BEGIN
 	IF EXISTS (SELECT TOP 1 Username FROM [dbo].[Usuario] WHERE Username=@pLoginName)
 	BEGIN
 		SET @userID=(SELECT Username FROM [dbo].[Usuario] 
-		WHERE Username=@pLoginName AND PasswordHash=HASHBYTES('SHA2_512',
-		@pPassword+CAST(Salt AS NVARCHAR(36))))
+		WHERE Username=@pLoginName AND Password=HASHBYTES('SHA2_256',
+		@pPassword+CAST(Salt AS VARCHAR(36))))
 
 		IF(@userID IS NULL)
 			SET @result=0
