@@ -1,0 +1,64 @@
+﻿@model AppIntegrador.Models.Escalar
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Escalar</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Incremento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Incremento)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Minimo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Minimo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Maximo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Maximo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

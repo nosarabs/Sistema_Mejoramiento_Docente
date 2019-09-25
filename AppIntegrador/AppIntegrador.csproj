@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EscalarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -278,6 +279,11 @@
     <Content Include="Views\Dashboard\Formulario\styles.css" />
     <Content Include="Views\Dashboard\Formulario\Formulario.html" />
     <Content Include="Views\Dashboard\Formulario.cshtml" />
+    <Content Include="Views\Escalar\Create.cshtml" />
+    <Content Include="Views\Escalar\Delete.cshtml" />
+    <Content Include="Views\Escalar\Details.cshtml" />
+    <Content Include="Views\Escalar\Edit.cshtml" />
+    <Content Include="Views\Escalar\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />

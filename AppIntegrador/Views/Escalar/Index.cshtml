@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AppIntegrador.Models.Escalar>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Incremento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Minimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maximo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Incremento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Minimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maximo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.TituloCampoObservacion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Codigo }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Codigo })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@model AppIntegrador.Models.Escalar
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Escalar</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Incremento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Incremento)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Minimo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Minimo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Maximo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Maximo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
