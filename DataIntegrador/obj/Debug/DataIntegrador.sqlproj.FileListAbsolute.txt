@@ -18,3 +18,9 @@ C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataInt
 C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\bin\Debug\DataIntegrador.pdb
 C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.dll
 C:\Users\b76316\Source\Repos\ecci_ci0128_ii2019\DataIntegrador\obj\Debug\DataIntegrador.pdb
+D:\Repos\PI0.2\DataIntegrador\bin\Debug\DataIntegrador.dacpac
+D:\Repos\PI0.2\DataIntegrador\bin\Debug\DataIntegrador.dll
+D:\Repos\PI0.2\DataIntegrador\bin\Debug\DataIntegrador.pdb
+D:\Repos\PI0.2\DataIntegrador\obj\Debug\DataIntegrador.sqlprojAssemblyReference.cache
+D:\Repos\PI0.2\DataIntegrador\obj\Debug\DataIntegrador.dll
+D:\Repos\PI0.2\DataIntegrador\obj\Debug\DataIntegrador.pdb

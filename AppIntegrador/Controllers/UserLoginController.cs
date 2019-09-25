@@ -24,7 +24,7 @@ namespace AppIntegrador
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Login(UserProfile objUser)
+        public ActionResult UserLoginView(UserProfile objUser)
         {
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
@@ -45,13 +45,14 @@ namespace AppIntegrador
 
         public ActionResult UserDashBoard()
         {
+            ViewBag.HTMLCheck = true;
             if (Session["UserID"] != null)
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("UserLoginView");
             }
         }
     }
