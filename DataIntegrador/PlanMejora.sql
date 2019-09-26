@@ -8,7 +8,5 @@ CREATE TABLE [dbo].[PlanMejora]
 	[CodigoF] CHAR(8) NULL, 
     [UserIDA] INT NULL, 
     Primary Key([UserID], Codigo),
-	Foreign key([UserID]) references UserProfile(UserId),
-	Foreign key(CodigoF) references Formulario(Codigo),
-	Foreign key(UserIDA) references UserProfile(UserId)
+	Foreign key(CodigoF) references Formulario(Codigo)
 )

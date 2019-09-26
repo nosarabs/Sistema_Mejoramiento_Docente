@@ -1,0 +1,1180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="proyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Accion_De_Mejora">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFin" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Accionable">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="Progreso" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFin" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asociado_A">
+          <Key>
+            <PropertyRef Name="CodigoO" />
+            <PropertyRef Name="CodigoA" />
+          </Key>
+          <Property Name="CodigoO" Type="int" Nullable="false" />
+          <Property Name="CodigoA" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Compuesto_Por">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="Codigo_Plan" />
+            <PropertyRef Name="Codigo_Obj" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Codigo_Plan" Type="int" Nullable="false" />
+          <Property Name="Codigo_Obj" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Escalar">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Incremento" Type="int" Nullable="false" />
+          <Property Name="Minimo" Type="int" Nullable="false" />
+          <Property Name="Maximo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluado_Por">
+          <Key>
+            <PropertyRef Name="CodigoAM" />
+            <PropertyRef Name="CodigoAC" />
+          </Key>
+          <Property Name="CodigoAM" Type="int" Nullable="false" />
+          <Property Name="CodigoAC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formulario_tiene_seccion">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="SCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tipo_O" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="Texto" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Texto" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanMejora">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nchar" MaxLength="30" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="CodigoF" Type="char" MaxLength="8" />
+          <Property Name="UserIDA" Type="int" />
+        </EntityType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Enunciado" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="TituloCampoObservacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Tipo" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_respuesta_libre">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responsable_De">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Codigo_A" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Codigo_A" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seccion_tiene_pregunta">
+          <Key>
+            <PropertyRef Name="SCodigo" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="SCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Si_no_nr">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tipo_Objetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Asociado___Codig__5CC1BC92">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1" />
+          <End Role="Asociado_A" Type="Self.Asociado_A" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Asociado_A">
+              <PropertyRef Name="CodigoO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Asociado___Codig__5DB5E0CB">
+          <End Role="Accion_De_Mejora" Type="Self.Accion_De_Mejora" Multiplicity="1" />
+          <End Role="Asociado_A" Type="Self.Asociado_A" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accion_De_Mejora">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Asociado_A">
+              <PropertyRef Name="CodigoA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Compuesto__Codig__5EAA0504">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1" />
+          <End Role="Compuesto_Por" Type="Self.Compuesto_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Compuesto_Por">
+              <PropertyRef Name="Codigo_Obj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Compuesto_Por__5F9E293D">
+          <End Role="PlanMejora" Type="Self.PlanMejora" Multiplicity="1" />
+          <End Role="Compuesto_Por" Type="Self.Compuesto_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanMejora">
+              <PropertyRef Name="UserID" />
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Compuesto_Por">
+              <PropertyRef Name="UserID" />
+              <PropertyRef Name="Codigo_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Escalar__Codigo__60924D76">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Escalar" Type="Self.Escalar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Escalar">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Evaluado___Codig__618671AF">
+          <End Role="Accion_De_Mejora" Type="Self.Accion_De_Mejora" Multiplicity="1" />
+          <End Role="Evaluado_Por" Type="Self.Evaluado_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accion_De_Mejora">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Evaluado_Por">
+              <PropertyRef Name="CodigoAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Evaluado___Codig__627A95E8">
+          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1" />
+          <End Role="Evaluado_Por" Type="Self.Evaluado_Por" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Evaluado_Por">
+              <PropertyRef Name="CodigoAC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Formulari__FCodi__636EBA21">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Formulario_tiene_seccion" Type="Self.Formulario_tiene_seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario_tiene_seccion">
+              <PropertyRef Name="FCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Formulari__SCodi__6462DE5A">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Formulario_tiene_seccion" Type="Self.Formulario_tiene_seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario_tiene_seccion">
+              <PropertyRef Name="SCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objetivo__Tipo_O__65570293">
+          <End Role="Tipo_Objetivo" Type="Self.Tipo_Objetivo" Multiplicity="0..1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Objetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="Tipo_O" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Opciones___Codig__664B26CC">
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="1" />
+          <End Role="Opciones_de_seleccion" Type="Self.Opciones_de_seleccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlanMejor__Codig__673F4B05">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="0..1" />
+          <End Role="PlanMejora" Type="Self.PlanMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PlanMejora">
+              <PropertyRef Name="CodigoF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__68336F3E">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__69279377">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__6A1BB7B0">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta_con_respuesta_libre" Type="Self.Pregunta_con_respuesta_libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_respuesta_libre">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Responsab__Codig__6B0FDBE9">
+          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1" />
+          <End Role="Responsable_De" Type="Self.Responsable_De" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responsable_De">
+              <PropertyRef Name="Codigo_A" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seccion_t__PCodi__6CF8245B">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Seccion_tiene_pregunta">
+              <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seccion_t__SCodi__6C040022">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Seccion_tiene_pregunta">
+              <PropertyRef Name="SCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Si_no_nr__Codigo__6DEC4894">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Si_no_nr" Type="Self.Si_no_nr" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Si_no_nr">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="proyModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Accion_De_Mejora" EntityType="Self.Accion_De_Mejora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Accionable" EntityType="Self.Accionable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asociado_A" EntityType="Self.Asociado_A" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compuesto_Por" EntityType="Self.Compuesto_Por" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escalar" EntityType="Self.Escalar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluado_Por" EntityType="Self.Evaluado_Por" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formulario" EntityType="Self.Formulario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formulario_tiene_seccion" EntityType="Self.Formulario_tiene_seccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objetivo" EntityType="Self.Objetivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanMejora" EntityType="Self.PlanMejora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta" EntityType="Self.Pregunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta_con_opciones" EntityType="Self.Pregunta_con_opciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pregunta_con_respuesta_libre" EntityType="Self.Pregunta_con_respuesta_libre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsable_De" EntityType="Self.Responsable_De" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Objetivo" EntityType="Self.Tipo_Objetivo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Asociado___Codig__5CC1BC92" Association="Self.FK__Asociado___Codig__5CC1BC92">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Asociado_A" EntitySet="Asociado_A" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Asociado___Codig__5DB5E0CB" Association="Self.FK__Asociado___Codig__5DB5E0CB">
+            <End Role="Accion_De_Mejora" EntitySet="Accion_De_Mejora" />
+            <End Role="Asociado_A" EntitySet="Asociado_A" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Compuesto__Codig__5EAA0504" Association="Self.FK__Compuesto__Codig__5EAA0504">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Compuesto_Por" EntitySet="Compuesto_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Compuesto_Por__5F9E293D" Association="Self.FK__Compuesto_Por__5F9E293D">
+            <End Role="PlanMejora" EntitySet="PlanMejora" />
+            <End Role="Compuesto_Por" EntitySet="Compuesto_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Escalar__Codigo__60924D76" Association="Self.FK__Escalar__Codigo__60924D76">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Escalar" EntitySet="Escalar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Evaluado___Codig__618671AF" Association="Self.FK__Evaluado___Codig__618671AF">
+            <End Role="Accion_De_Mejora" EntitySet="Accion_De_Mejora" />
+            <End Role="Evaluado_Por" EntitySet="Evaluado_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Evaluado___Codig__627A95E8" Association="Self.FK__Evaluado___Codig__627A95E8">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="Evaluado_Por" EntitySet="Evaluado_Por" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Formulari__FCodi__636EBA21" Association="Self.FK__Formulari__FCodi__636EBA21">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Formulari__SCodi__6462DE5A" Association="Self.FK__Formulari__SCodi__6462DE5A">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objetivo__Tipo_O__65570293" Association="Self.FK__Objetivo__Tipo_O__65570293">
+            <End Role="Tipo_Objetivo" EntitySet="Tipo_Objetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Opciones___Codig__664B26CC" Association="Self.FK__Opciones___Codig__664B26CC">
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+            <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlanMejor__Codig__673F4B05" Association="Self.FK__PlanMejor__Codig__673F4B05">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="PlanMejora" EntitySet="PlanMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__68336F3E" Association="Self.FK__Pregunta___Codig__68336F3E">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__69279377" Association="Self.FK__Pregunta___Codig__69279377">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__6A1BB7B0" Association="Self.FK__Pregunta___Codig__6A1BB7B0">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Responsab__Codig__6B0FDBE9" Association="Self.FK__Responsab__Codig__6B0FDBE9">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="Responsable_De" EntitySet="Responsable_De" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seccion_t__PCodi__6CF8245B" Association="Self.FK__Seccion_t__PCodi__6CF8245B">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seccion_t__SCodi__6C040022" Association="Self.FK__Seccion_t__SCodi__6C040022">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Si_no_nr__Codigo__6DEC4894" Association="Self.FK__Si_no_nr__Codigo__6DEC4894">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Si_no_nr" EntitySet="Si_no_nr" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="proyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Accion_De_Mejora">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Objetivoes" Relationship="Self.Asociado_A" FromRole="Accion_De_Mejora" ToRole="Objetivo" />
+          <NavigationProperty Name="Accionables" Relationship="Self.Evaluado_Por" FromRole="Accion_De_Mejora" ToRole="Accionable" />
+        </EntityType>
+        <EntityType Name="Accionable">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Progreso" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Responsable_De" Relationship="Self.FK__Responsab__Codig__6B0FDBE9" FromRole="Accionable" ToRole="Responsable_De" />
+          <NavigationProperty Name="Accion_De_Mejora" Relationship="Self.Evaluado_Por" FromRole="Accionable" ToRole="Accion_De_Mejora" />
+        </EntityType>
+        <EntityType Name="Escalar">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Incremento" Type="Int32" Nullable="false" />
+          <Property Name="Minimo" Type="Int32" Nullable="false" />
+          <Property Name="Maximo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.FK__Escalar__Codigo__60924D76" FromRole="Escalar" ToRole="Pregunta_con_opciones" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.FK__Formulari__FCodi__636EBA21" FromRole="Formulario" ToRole="Formulario_tiene_seccion" />
+          <NavigationProperty Name="PlanMejoras" Relationship="Self.FK__PlanMejor__Codig__673F4B05" FromRole="Formulario" ToRole="PlanMejora" />
+        </EntityType>
+        <EntityType Name="Formulario_tiene_seccion">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="SCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK__Formulari__FCodi__636EBA21" FromRole="Formulario_tiene_seccion" ToRole="Formulario" />
+          <NavigationProperty Name="Seccion" Relationship="Self.FK__Formulari__SCodi__6462DE5A" FromRole="Formulario_tiene_seccion" ToRole="Seccion" />
+        </EntityType>
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo_O" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tipo_Objetivo" Relationship="Self.FK__Objetivo__Tipo_O__65570293" FromRole="Objetivo" ToRole="Tipo_Objetivo" />
+          <NavigationProperty Name="Accion_De_Mejora" Relationship="Self.Asociado_A" FromRole="Objetivo" ToRole="Accion_De_Mejora" />
+          <NavigationProperty Name="PlanMejoras" Relationship="Self.Compuesto_Por" FromRole="Objetivo" ToRole="PlanMejora" />
+        </EntityType>
+        <EntityType Name="Opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="Texto" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Texto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="Self.FK__Opciones___Codig__664B26CC" FromRole="Opciones_de_seleccion" ToRole="Pregunta_con_opciones_de_seleccion" />
+        </EntityType>
+        <EntityType Name="PlanMejora">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="CodigoF" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="UserIDA" Type="Int32" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK__PlanMejor__Codig__673F4B05" FromRole="PlanMejora" ToRole="Formulario" />
+          <NavigationProperty Name="Objetivoes" Relationship="Self.Compuesto_Por" FromRole="PlanMejora" ToRole="Objetivo" />
+        </EntityType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Enunciado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.FK__Pregunta___Codig__68336F3E" FromRole="Pregunta" ToRole="Pregunta_con_opciones" />
+          <NavigationProperty Name="Pregunta_con_respuesta_libre" Relationship="Self.FK__Pregunta___Codig__6A1BB7B0" FromRole="Pregunta" ToRole="Pregunta_con_respuesta_libre" />
+          <NavigationProperty Name="Seccion_tiene_pregunta" Relationship="Self.FK__Seccion_t__PCodi__6CF8245B" FromRole="Pregunta" ToRole="Seccion_tiene_pregunta" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TituloCampoObservacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Escalar" Relationship="Self.FK__Escalar__Codigo__60924D76" FromRole="Pregunta_con_opciones" ToRole="Escalar" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.FK__Pregunta___Codig__68336F3E" FromRole="Pregunta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="Self.FK__Pregunta___Codig__69279377" FromRole="Pregunta_con_opciones" ToRole="Pregunta_con_opciones_de_seleccion" />
+          <NavigationProperty Name="Si_no_nr" Relationship="Self.FK__Si_no_nr__Codigo__6DEC4894" FromRole="Pregunta_con_opciones" ToRole="Si_no_nr" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_opciones_de_seleccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Opciones_de_seleccion" Relationship="Self.FK__Opciones___Codig__664B26CC" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Opciones_de_seleccion" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.FK__Pregunta___Codig__69279377" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Pregunta_con_opciones" />
+        </EntityType>
+        <EntityType Name="Pregunta_con_respuesta_libre">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.FK__Pregunta___Codig__6A1BB7B0" FromRole="Pregunta_con_respuesta_libre" ToRole="Pregunta" />
+        </EntityType>
+        <EntityType Name="Responsable_De">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Codigo_A" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_A" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accionable" Relationship="Self.FK__Responsab__Codig__6B0FDBE9" FromRole="Responsable_De" ToRole="Accionable" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.FK__Formulari__SCodi__6462DE5A" FromRole="Seccion" ToRole="Formulario_tiene_seccion" />
+          <NavigationProperty Name="Seccion_tiene_pregunta" Relationship="Self.FK__Seccion_t__SCodi__6C040022" FromRole="Seccion" ToRole="Seccion_tiene_pregunta" />
+        </EntityType>
+        <EntityType Name="Seccion_tiene_pregunta">
+          <Key>
+            <PropertyRef Name="SCodigo" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.FK__Seccion_t__PCodi__6CF8245B" FromRole="Seccion_tiene_pregunta" ToRole="Pregunta" />
+          <NavigationProperty Name="Seccion" Relationship="Self.FK__Seccion_t__SCodi__6C040022" FromRole="Seccion_tiene_pregunta" ToRole="Seccion" />
+        </EntityType>
+        <EntityType Name="Si_no_nr">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.FK__Si_no_nr__Codigo__6DEC4894" FromRole="Si_no_nr" ToRole="Pregunta_con_opciones" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Objetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Objetivoes" Relationship="Self.FK__Objetivo__Tipo_O__65570293" FromRole="Tipo_Objetivo" ToRole="Objetivo" />
+        </EntityType>
+        <Association Name="FK__Responsab__Codig__6B0FDBE9">
+          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1" />
+          <End Role="Responsable_De" Type="Self.Responsable_De" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responsable_De">
+              <PropertyRef Name="Codigo_A" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Escalar__Codigo__60924D76">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Escalar" Type="Self.Escalar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Escalar">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Formulari__FCodi__636EBA21">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Formulario_tiene_seccion" Type="Self.Formulario_tiene_seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario_tiene_seccion">
+              <PropertyRef Name="FCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlanMejor__Codig__673F4B05">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="0..1" />
+          <End Role="PlanMejora" Type="Self.PlanMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PlanMejora">
+              <PropertyRef Name="CodigoF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Formulari__SCodi__6462DE5A">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Formulario_tiene_seccion" Type="Self.Formulario_tiene_seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario_tiene_seccion">
+              <PropertyRef Name="SCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objetivo__Tipo_O__65570293">
+          <End Role="Tipo_Objetivo" Type="Self.Tipo_Objetivo" Multiplicity="0..1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Objetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="Tipo_O" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Opciones___Codig__664B26CC">
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="1" />
+          <End Role="Opciones_de_seleccion" Type="Self.Opciones_de_seleccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__68336F3E">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__6A1BB7B0">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta_con_respuesta_libre" Type="Self.Pregunta_con_respuesta_libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_respuesta_libre">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seccion_t__PCodi__6CF8245B">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Seccion_tiene_pregunta">
+              <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pregunta___Codig__69279377">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Pregunta_con_opciones_de_seleccion" Type="Self.Pregunta_con_opciones_de_seleccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Pregunta_con_opciones_de_seleccion">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Si_no_nr__Codigo__6DEC4894">
+          <End Role="Pregunta_con_opciones" Type="Self.Pregunta_con_opciones" Multiplicity="1" />
+          <End Role="Si_no_nr" Type="Self.Si_no_nr" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta_con_opciones">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Si_no_nr">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Seccion_t__SCodi__6C040022">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Seccion_tiene_pregunta">
+              <PropertyRef Name="SCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Asociado_A">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <End Role="Accion_De_Mejora" Type="Self.Accion_De_Mejora" Multiplicity="*" />
+        </Association>
+        <Association Name="Compuesto_Por">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <End Role="PlanMejora" Type="Self.PlanMejora" Multiplicity="*" />
+        </Association>
+        <Association Name="Evaluado_Por">
+          <End Role="Accion_De_Mejora" Type="Self.Accion_De_Mejora" Multiplicity="*" />
+          <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="proyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
+          <EntitySet Name="Accion_De_Mejora" EntityType="Self.Accion_De_Mejora" />
+          <EntitySet Name="Accionables" EntityType="Self.Accionable" />
+          <EntitySet Name="Escalars" EntityType="Self.Escalar" />
+          <EntitySet Name="Formularios" EntityType="Self.Formulario" />
+          <EntitySet Name="Formulario_tiene_seccion" EntityType="Self.Formulario_tiene_seccion" />
+          <EntitySet Name="Objetivoes" EntityType="Self.Objetivo" />
+          <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" />
+          <EntitySet Name="PlanMejoras" EntityType="Self.PlanMejora" />
+          <EntitySet Name="Preguntas" EntityType="Self.Pregunta" />
+          <EntitySet Name="Pregunta_con_opciones" EntityType="Self.Pregunta_con_opciones" />
+          <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" />
+          <EntitySet Name="Pregunta_con_respuesta_libre" EntityType="Self.Pregunta_con_respuesta_libre" />
+          <EntitySet Name="Responsable_De" EntityType="Self.Responsable_De" />
+          <EntitySet Name="Seccions" EntityType="Self.Seccion" />
+          <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" />
+          <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tipo_Objetivo" EntityType="Self.Tipo_Objetivo" />
+          <AssociationSet Name="FK__Responsab__Codig__6B0FDBE9" Association="Self.FK__Responsab__Codig__6B0FDBE9">
+            <End Role="Accionable" EntitySet="Accionables" />
+            <End Role="Responsable_De" EntitySet="Responsable_De" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Escalar__Codigo__60924D76" Association="Self.FK__Escalar__Codigo__60924D76">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Escalar" EntitySet="Escalars" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Formulari__FCodi__636EBA21" Association="Self.FK__Formulari__FCodi__636EBA21">
+            <End Role="Formulario" EntitySet="Formularios" />
+            <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlanMejor__Codig__673F4B05" Association="Self.FK__PlanMejor__Codig__673F4B05">
+            <End Role="Formulario" EntitySet="Formularios" />
+            <End Role="PlanMejora" EntitySet="PlanMejoras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Formulari__SCodi__6462DE5A" Association="Self.FK__Formulari__SCodi__6462DE5A">
+            <End Role="Seccion" EntitySet="Seccions" />
+            <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objetivo__Tipo_O__65570293" Association="Self.FK__Objetivo__Tipo_O__65570293">
+            <End Role="Tipo_Objetivo" EntitySet="Tipo_Objetivo" />
+            <End Role="Objetivo" EntitySet="Objetivoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Opciones___Codig__664B26CC" Association="Self.FK__Opciones___Codig__664B26CC">
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+            <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__68336F3E" Association="Self.FK__Pregunta___Codig__68336F3E">
+            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__6A1BB7B0" Association="Self.FK__Pregunta___Codig__6A1BB7B0">
+            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seccion_t__PCodi__6CF8245B" Association="Self.FK__Seccion_t__PCodi__6CF8245B">
+            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pregunta___Codig__69279377" Association="Self.FK__Pregunta___Codig__69279377">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Si_no_nr__Codigo__6DEC4894" Association="Self.FK__Si_no_nr__Codigo__6DEC4894">
+            <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
+            <End Role="Si_no_nr" EntitySet="Si_no_nr" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Seccion_t__SCodi__6C040022" Association="Self.FK__Seccion_t__SCodi__6C040022">
+            <End Role="Seccion" EntitySet="Seccions" />
+            <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
+          </AssociationSet>
+          <AssociationSet Name="Asociado_A" Association="Self.Asociado_A">
+            <End Role="Objetivo" EntitySet="Objetivoes" />
+            <End Role="Accion_De_Mejora" EntitySet="Accion_De_Mejora" />
+          </AssociationSet>
+          <AssociationSet Name="Compuesto_Por" Association="Self.Compuesto_Por">
+            <End Role="Objetivo" EntitySet="Objetivoes" />
+            <End Role="PlanMejora" EntitySet="PlanMejoras" />
+          </AssociationSet>
+          <AssociationSet Name="Evaluado_Por" Association="Self.Evaluado_Por">
+            <End Role="Accion_De_Mejora" EntitySet="Accion_De_Mejora" />
+            <End Role="Accionable" EntitySet="Accionables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="proyModelStoreContainer" CdmEntityContainer="proyEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="proyModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accion_De_Mejora">
+            <EntityTypeMapping TypeName="proyModel.Accion_De_Mejora">
+              <MappingFragment StoreEntitySet="Accion_De_Mejora">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accionables">
+            <EntityTypeMapping TypeName="proyModel.Accionable">
+              <MappingFragment StoreEntitySet="Accionable">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Progreso" ColumnName="Progreso" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Escalars">
+            <EntityTypeMapping TypeName="proyModel.Escalar">
+              <MappingFragment StoreEntitySet="Escalar">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Incremento" ColumnName="Incremento" />
+                <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+                <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formularios">
+            <EntityTypeMapping TypeName="proyModel.Formulario">
+              <MappingFragment StoreEntitySet="Formulario">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formulario_tiene_seccion">
+            <EntityTypeMapping TypeName="proyModel.Formulario_tiene_seccion">
+              <MappingFragment StoreEntitySet="Formulario_tiene_seccion">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objetivoes">
+            <EntityTypeMapping TypeName="proyModel.Objetivo">
+              <MappingFragment StoreEntitySet="Objetivo">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Tipo_O" ColumnName="Tipo_O" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opciones_de_seleccion">
+            <EntityTypeMapping TypeName="proyModel.Opciones_de_seleccion">
+              <MappingFragment StoreEntitySet="Opciones_de_seleccion">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanMejoras">
+            <EntityTypeMapping TypeName="proyModel.PlanMejora">
+              <MappingFragment StoreEntitySet="PlanMejora">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="CodigoF" ColumnName="CodigoF" />
+                <ScalarProperty Name="UserIDA" ColumnName="UserIDA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="proyModel.Pregunta">
+              <MappingFragment StoreEntitySet="Pregunta">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pregunta_con_opciones">
+            <EntityTypeMapping TypeName="proyModel.Pregunta_con_opciones">
+              <MappingFragment StoreEntitySet="Pregunta_con_opciones">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="TituloCampoObservacion" ColumnName="TituloCampoObservacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pregunta_con_opciones_de_seleccion">
+            <EntityTypeMapping TypeName="proyModel.Pregunta_con_opciones_de_seleccion">
+              <MappingFragment StoreEntitySet="Pregunta_con_opciones_de_seleccion">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pregunta_con_respuesta_libre">
+            <EntityTypeMapping TypeName="proyModel.Pregunta_con_respuesta_libre">
+              <MappingFragment StoreEntitySet="Pregunta_con_respuesta_libre">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsable_De">
+            <EntityTypeMapping TypeName="proyModel.Responsable_De">
+              <MappingFragment StoreEntitySet="Responsable_De">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Codigo_A" ColumnName="Codigo_A" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seccions">
+            <EntityTypeMapping TypeName="proyModel.Seccion">
+              <MappingFragment StoreEntitySet="Seccion">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seccion_tiene_pregunta">
+            <EntityTypeMapping TypeName="proyModel.Seccion_tiene_pregunta">
+              <MappingFragment StoreEntitySet="Seccion_tiene_pregunta">
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Si_no_nr">
+            <EntityTypeMapping TypeName="proyModel.Si_no_nr">
+              <MappingFragment StoreEntitySet="Si_no_nr">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="proyModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Objetivo">
+            <EntityTypeMapping TypeName="proyModel.Tipo_Objetivo">
+              <MappingFragment StoreEntitySet="Tipo_Objetivo">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Asociado_A" TypeName="proyModel.Asociado_A" StoreEntitySet="Asociado_A">
+            <EndProperty Name="Objetivo">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoO" />
+            </EndProperty>
+            <EndProperty Name="Accion_De_Mejora">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoA" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Compuesto_Por" TypeName="proyModel.Compuesto_Por" StoreEntitySet="Compuesto_Por">
+            <EndProperty Name="Objetivo">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Obj" />
+            </EndProperty>
+            <EndProperty Name="PlanMejora">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Plan" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Evaluado_Por" TypeName="proyModel.Evaluado_Por" StoreEntitySet="Evaluado_Por">
+            <EndProperty Name="Accion_De_Mejora">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoAM" />
+            </EndProperty>
+            <EndProperty Name="Accionable">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoAC" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

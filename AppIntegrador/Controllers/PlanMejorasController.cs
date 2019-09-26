@@ -12,22 +12,39 @@ namespace AppIntegrador.Controllers
 {
     public class PlanMejorasController : Controller
     {
-        private MosqueterosEntities db = new MosqueterosEntities();
+        private proyEntities db = new proyEntities();
 
         // GET: PlanMejoras
         public ActionResult Index()
         {
-            return View(db.PlanMejora.ToList());
+            var planMejoras = db.PlanMejoras.Include(p => p.Formulario);
+            return View(planMejoras.ToList());
         }
 
-        // GET: PlanMejoras/Details/5
-        public ActionResult Details(int? id)
+        // GET: PlanMejoras/Objetivos/5
+        public ActionResult Objetivos(int? user_id, int? codigo)
         {
-            if (id == null)
+            if (user_id == null && codigo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejora.Find(id);
+            PlanMejora planMejora = db.PlanMejoras.Find(user_id, codigo);
+            if (planMejora == null)
+            {
+                return HttpNotFound();
+            }
+            var objetivos = planMejora.Objetivoes;
+            return View(objetivos);
+        }
+
+        // GET: PlanMejoras/Details/5
+        public ActionResult Details(int? user_id, int? codigo)
+        {
+            if (user_id == null || codigo == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PlanMejora planMejora = db.PlanMejoras.Find(user_id, codigo);
             if (planMejora == null)
             {
                 return HttpNotFound();
@@ -38,6 +55,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanMejoras/Create
         public ActionResult Create()
         {
+            ViewBag.CodigoF = new SelectList(db.Formularios, "Codigo", "Codigo");
             return View();
         }
 
@@ -46,30 +64,32 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,FechaInicio,FechaFin")] PlanMejora planMejora)
+        public ActionResult Create([Bind(Include = "UserID,Codigo,Nombre,FechaInicio,FechaFin,CodigoF,UserIDA")] PlanMejora planMejora)
         {
             if (ModelState.IsValid)
             {
-                db.PlanMejora.Add(planMejora);
+                db.PlanMejoras.Add(planMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CodigoF = new SelectList(db.Formularios, "Codigo", "Codigo", planMejora.CodigoF);
             return View(planMejora);
         }
 
         // GET: PlanMejoras/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? user_id, int? codigo)
         {
-            if (id == null)
+            if (user_id == null || codigo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejora.Find(id);
+            PlanMejora planMejora = db.PlanMejoras.Find(user_id, codigo);
             if (planMejora == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.CodigoF = new SelectList(db.Formularios, "Codigo", "Codigo", planMejora.CodigoF);
             return View(planMejora);
         }
 
@@ -78,7 +98,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,FechaInicio,FechaFin")] PlanMejora planMejora)
+        public ActionResult Edit([Bind(Include = "UserID,Codigo,Nombre,FechaInicio,FechaFin,CodigoF,UserIDA")] PlanMejora planMejora)
         {
             if (ModelState.IsValid)
             {
@@ -86,17 +106,18 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CodigoF = new SelectList(db.Formularios, "Codigo", "Codigo", planMejora.CodigoF);
             return View(planMejora);
         }
 
         // GET: PlanMejoras/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? user_id, int? codigo)
         {
-            if (id == null)
+            if (user_id == null && codigo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanMejora planMejora = db.PlanMejora.Find(id);
+            PlanMejora planMejora = db.PlanMejoras.Find(user_id, codigo);
             if (planMejora == null)
             {
                 return HttpNotFound();
@@ -107,10 +128,10 @@ namespace AppIntegrador.Controllers
         // POST: PlanMejoras/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int user_id, int codigo)
         {
-            PlanMejora planMejora = db.PlanMejora.Find(id);
-            db.PlanMejora.Remove(planMejora);
+            PlanMejora planMejora = db.PlanMejoras.Find(user_id, codigo);
+            db.PlanMejoras.Remove(planMejora);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -122,12 +143,6 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        [ChildActionOnly]
-        public ActionResult GetObjetivosIndex(string path)
-        {
-            return new FilePathResult(path, "text/cshtml");
         }
     }
 }

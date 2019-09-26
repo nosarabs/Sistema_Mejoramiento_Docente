@@ -12,13 +12,13 @@ namespace AppIntegrador.Controllers
 {
     public class ObjetivosController : Controller
     {
-        private MosqueterosEntities db = new MosqueterosEntities();
+        private proyEntities db = new proyEntities();
 
         // GET: Objetivos
         public ActionResult Index()
         {
-            var objetivo = db.Objetivo.Include(o => o.Tipo_Objetivo);
-            return View(objetivo.ToList());
+            var objetivoes = db.Objetivoes.Include(o => o.Tipo_Objetivo);
+            return View(objetivoes.ToList());
         }
 
         // GET: Objetivos/Details/5
@@ -28,7 +28,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivoes.Find(id);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -43,6 +43,18 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        public ActionResult CrearAsociado(int? user_id, int? codigo)
+        {
+            if (user_id == null && codigo == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.user_id = user_id;
+            ViewBag.codigo = codigo;
+            ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre");
+            return View();
+        }
+
         // POST: Objetivos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -52,10 +64,9 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Objetivo.Add(objetivo);
+                db.Objetivoes.Add(objetivo);
                 db.SaveChanges();
-                //System.Diagnostics.Debug.WriteLine();
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("Index");
             }
 
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
@@ -69,7 +80,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivoes.Find(id);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -102,7 +113,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivoes.Find(id);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -115,8 +126,8 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Objetivo objetivo = db.Objetivo.Find(id);
-            db.Objetivo.Remove(objetivo);
+            Objetivo objetivo = db.Objetivoes.Find(id);
+            db.Objetivoes.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -128,11 +139,6 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult goBack()
-        {
-            return View();
         }
     }
 }

@@ -114,7 +114,13 @@ nav {
 }
 /* End of main page styles */
 
+.centeredText {
+    text-align: center;
+    width: 100%;
+}
+
 .mainBarText {
     color: black;
     font-size: 2em;
 }
+

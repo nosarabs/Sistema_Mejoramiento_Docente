@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d253db35bdd047e38171472555b1f0e8" Name="Diagram1">
+        <EntityTypeShape EntityType="proyModel.C__RefactorLog" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Accion_De_Mejora" Width="1.5" PointX="12.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Accionable" Width="1.5" PointX="14.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Escalar" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Formulario" Width="1.5" PointX="10" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Formulario_tiene_seccion" Width="1.5" PointX="12.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Objetivo" Width="1.5" PointX="10" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Opciones_de_seleccion" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.PlanMejora" Width="1.5" PointX="12.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_opciones" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Responsable_De" Width="1.5" PointX="16.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Seccion" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Seccion_tiene_pregunta" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Si_no_nr" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Tipo_Objetivo" Width="1.5" PointX="7.75" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="proyModel.FK__Responsab__Codig__6B0FDBE9" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Escalar__Codigo__60924D76" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Formulari__FCodi__636EBA21" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__PlanMejor__Codig__673F4B05" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Formulari__SCodi__6462DE5A" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Objetivo__Tipo_O__65570293" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Opciones___Codig__664B26CC" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__68336F3E" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__6A1BB7B0" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Seccion_t__PCodi__6CF8245B" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__69279377" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Si_no_nr__Codigo__6DEC4894" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Seccion_t__SCodi__6C040022" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Asociado_A" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Compuesto_Por" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Evaluado_Por" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

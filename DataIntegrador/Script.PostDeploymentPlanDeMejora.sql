@@ -9,5 +9,5 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
-INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Profesor');INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Curso');
+/*
+INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Profesor');INSERT INTO Tipo_Objetivo(Nombre) VALUES ('Curso');*/

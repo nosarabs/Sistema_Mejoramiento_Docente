@@ -4,6 +4,5 @@
 	[Codigo_A] INT NOT NULL,
 
 	PRIMARY KEY (UserId, Codigo_A),
-	FOREIGN KEY(Codigo_A) REFERENCES Accionable(Codigo),
-	Foreign key(UserId) References UserProfile(UserId)
+	FOREIGN KEY(Codigo_A) REFERENCES Accionable(Codigo)
 )
