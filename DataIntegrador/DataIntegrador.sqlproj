@@ -56,6 +56,7 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Preguntas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Compuesto_Por.sql" />
@@ -66,6 +67,20 @@
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
     <Build Include="Evaluado_Por.sql" />
+    <Build Include="Formulario.sql" />
+    <Build Include="Formulario_tiene_seccion.sql" />
+    <Build Include="LoginUsuario.sql" />
+    <Build Include="Script.PostDeploymentData.sql" />
+    <Build Include="Seccion.sql" />
+    <Build Include="UserProfile.sql" />
+    <Build Include="Preguntas\Escalar.sql" />
+    <Build Include="Preguntas\Opciones_de_seleccion.sql" />
+    <Build Include="Preguntas\Pregunta.sql" />
+    <Build Include="Preguntas\Pregunta_con_opciones.sql" />
+    <Build Include="Preguntas\Pregunta_con_opciones_de_seleccion.sql" />
+    <Build Include="Preguntas\Pregunta_con_respuesta_libre.sql" />
+    <Build Include="Preguntas\Seccion_tiene_pregunta.sql" />
+    <Build Include="Preguntas\Si_no_nr.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
