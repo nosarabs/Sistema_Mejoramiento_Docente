@@ -1,74 +1,469 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="EvalDocenteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__RefactorLog">
+    <Key>
+      <PropertyRef Name="OperationKey" />
+    </Key>
+    <Property Name="OperationKey" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Carrera">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodUnidadAcademica" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UnidadAcademica" Relationship="Self.FK__Carrera__CodUnid__45F365D3" FromRole="Carrera" ToRole="UnidadAcademica" />
+    <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__49C3F6B7" FromRole="Carrera" ToRole="Enfasis" />
+  </EntityType>
   <EntityType Name="Curso">
     <Key>
-      <PropertyRef Name="CursoId" />
+      <PropertyRef Name="Sigla" />
     </Key>
-    <Property Name="CursoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Creditos" Type="Int32" />
-    <NavigationProperty Name="Matriculas" Relationship="Self.FK_dbo_Matricula_dbo_Curso_CursoID" FromRole="Curso" ToRole="Matricula" />
+    <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Enfasis" Relationship="Self.FK__Curso__46E78A0C" FromRole="Curso" ToRole="Enfasis" />
+    <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__4CA06362" FromRole="Curso" ToRole="Grupo" />
+  </EntityType>
+  <EntityType Name="Enfasis">
+    <Key>
+      <PropertyRef Name="CodCarrera" />
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__49C3F6B7" FromRole="Enfasis" ToRole="Carrera" />
+    <NavigationProperty Name="Curso" Relationship="Self.FK__Curso__46E78A0C" FromRole="Enfasis" ToRole="Curso" />
+    <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__534D60F1" FromRole="Enfasis" ToRole="PerfilPermiso" />
+    <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__5AEE82B9" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+    <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
   </EntityType>
   <EntityType Name="Estudiante">
     <Key>
-      <PropertyRef Name="EstudianteID" />
+      <PropertyRef Name="Cedula" />
     </Key>
-    <Property Name="EstudianteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="FechaMatricula" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Matriculas" Relationship="Self.FK_dbo_Matricula_dbo_Estudiante_EstudianteID" FromRole="Estudiante" ToRole="Matricula" />
+    <Property Name="Cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Cedul__4AB81AF0" FromRole="Estudiante" ToRole="Persona" />
+    <NavigationProperty Name="Enfasis" Relationship="Self.Empadronado_en" FromRole="Estudiante" ToRole="Enfasis" />
+    <NavigationProperty Name="Grupo" Relationship="Self.Matriculado_en" FromRole="Estudiante" ToRole="Grupo" />
   </EntityType>
-  <EntityType Name="Matricula">
+  <EntityType Name="Funcionario">
     <Key>
-      <PropertyRef Name="MatriculaID" />
+      <PropertyRef Name="Cedula" />
     </Key>
-    <Property Name="MatriculaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nota" Type="Decimal" Precision="3" Scale="2" />
-    <Property Name="CursoID" Type="Int32" Nullable="false" />
-    <Property Name="EstudianteID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Curso" Relationship="Self.FK_dbo_Matricula_dbo_Curso_CursoID" FromRole="Matricula" ToRole="Curso" />
-    <NavigationProperty Name="Estudiante" Relationship="Self.FK_dbo_Matricula_dbo_Estudiante_EstudianteID" FromRole="Matricula" ToRole="Estudiante" />
+    <Property Name="Cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Cedul__4BAC3F29" FromRole="Funcionario" ToRole="Persona" />
+    <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Cedula__5535A963" FromRole="Funcionario" ToRole="Profesor" />
+    <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
   </EntityType>
-  <Association Name="FK_dbo_Matricula_dbo_Curso_CursoID">
-    <End Role="Curso" Type="Self.Curso" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+  <EntityType Name="Grupo">
+    <Key>
+      <PropertyRef Name="SiglaCurso" />
+      <PropertyRef Name="NumGrupo" />
+      <PropertyRef Name="Semestre" />
+      <PropertyRef Name="Anno" />
+    </Key>
+    <Property Name="SiglaCurso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NumGrupo" Type="Byte" Nullable="false" />
+    <Property Name="Semestre" Type="Byte" Nullable="false" />
+    <Property Name="Anno" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__4CA06362" FromRole="Grupo" ToRole="Curso" />
+    <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
+    <NavigationProperty Name="Estudiante" Relationship="Self.Matriculado_en" FromRole="Grupo" ToRole="Estudiante" />
+  </EntityType>
+  <EntityType Name="Perfil">
+    <Key>
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__5165187F" FromRole="Perfil" ToRole="PerfilPermiso" />
+    <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__59FA5E80" FromRole="Perfil" ToRole="UsuarioPerfil" />
+  </EntityType>
+  <EntityType Name="PerfilPermiso">
+    <Key>
+      <PropertyRef Name="Perfil" />
+      <PropertyRef Name="PermisoId" />
+      <PropertyRef Name="CodCarrera" />
+      <PropertyRef Name="CodEnfasis" />
+    </Key>
+    <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PermisoId" Type="Int32" Nullable="false" />
+    <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__534D60F1" FromRole="PerfilPermiso" ToRole="Enfasis" />
+    <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__5165187F" FromRole="PerfilPermiso" ToRole="Perfil" />
+    <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__52593CB8" FromRole="PerfilPermiso" ToRole="Permiso" />
+  </EntityType>
+  <EntityType Name="Permiso">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__52593CB8" FromRole="Permiso" ToRole="PerfilPermiso" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Cedul__4AB81AF0" FromRole="Persona" ToRole="Estudiante" />
+    <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Cedul__4BAC3F29" FromRole="Persona" ToRole="Funcionario" />
+    <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__5441852A" FromRole="Persona" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Profesor">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Cedula__5535A963" FromRole="Profesor" ToRole="Funcionario" />
+    <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
+  </EntityType>
+  <EntityType Name="UnidadAcademica">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Carrera" Relationship="Self.FK__Carrera__CodUnid__45F365D3" FromRole="UnidadAcademica" ToRole="Carrera" />
+    <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__5812160E" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
+    <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__5812160E" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+    <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__5441852A" FromRole="Usuario" ToRole="Persona" />
+    <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__59063A47" FromRole="Usuario" ToRole="UsuarioPerfil" />
+  </EntityType>
+  <EntityType Name="UsuarioPerfil">
+    <Key>
+      <PropertyRef Name="Usuario" />
+      <PropertyRef Name="Perfil" />
+      <PropertyRef Name="CodCarrera" />
+      <PropertyRef Name="CodEnfasis" />
+    </Key>
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__5AEE82B9" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+    <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__59FA5E80" FromRole="UsuarioPerfil" ToRole="Perfil" />
+    <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__59063A47" FromRole="UsuarioPerfil" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK__Carrera__CodUnid__45F365D3">
+    <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadAcademica">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Carrera">
+        <PropertyRef Name="CodUnidadAcademica" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Enfasis__CodCarr__49C3F6B7">
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+    <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carrera">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Enfasis">
+        <PropertyRef Name="CodCarrera" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Curso__46E78A0C">
+    <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="0..1" />
+    <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enfasis">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Curso">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="CodEnfasis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Grupo__SiglaCurs__4CA06362">
+    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+    <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Curso">
-        <PropertyRef Name="CursoId" />
+        <PropertyRef Name="Sigla" />
       </Principal>
-      <Dependent Role="Matricula">
-        <PropertyRef Name="CursoID" />
+      <Dependent Role="Grupo">
+        <PropertyRef Name="SiglaCurso" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_dbo_Matricula_dbo_Estudiante_EstudianteID">
-    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
+  <Association Name="FK__PerfilPermiso__534D60F1">
+    <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+    <End Role="PerfilPermiso" Type="Self.PerfilPermiso" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Estudiante">
-        <PropertyRef Name="EstudianteID" />
+      <Principal Role="Enfasis">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="Codigo" />
       </Principal>
-      <Dependent Role="Matricula">
-        <PropertyRef Name="EstudianteID" />
+      <Dependent Role="PerfilPermiso">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="CodEnfasis" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsuarioPerfil__5AEE82B9">
+    <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+    <End Role="UsuarioPerfil" Type="Self.UsuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enfasis">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="UsuarioPerfil">
+        <PropertyRef Name="CodCarrera" />
+        <PropertyRef Name="CodEnfasis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estudiant__Cedul__4AB81AF0">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Estudiante">
+        <PropertyRef Name="Cedula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Funcionar__Cedul__4BAC3F29">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Funcionario">
+        <PropertyRef Name="Cedula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Profesor__Cedula__5535A963">
+    <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
+    <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Funcionario">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Profesor">
+        <PropertyRef Name="Cedula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PerfilPer__Perfi__5165187F">
+    <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+    <End Role="PerfilPermiso" Type="Self.PerfilPermiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perfil">
+        <PropertyRef Name="Nombre" />
+      </Principal>
+      <Dependent Role="PerfilPermiso">
+        <PropertyRef Name="Perfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsuarioPe__Perfi__59FA5E80">
+    <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+    <End Role="UsuarioPerfil" Type="Self.UsuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perfil">
+        <PropertyRef Name="Nombre" />
+      </Principal>
+      <Dependent Role="UsuarioPerfil">
+        <PropertyRef Name="Perfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PerfilPer__Permi__52593CB8">
+    <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+    <End Role="PerfilPermiso" Type="Self.PerfilPermiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permiso">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PerfilPermiso">
+        <PropertyRef Name="PermisoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Persona__Usuario__5441852A">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UnidadAca__Super__5812160E">
+    <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
+    <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadAcademica">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="UnidadAcademica1">
+        <PropertyRef Name="Superior" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsuarioPe__Usuar__59063A47">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="UsuarioPerfil" Type="Self.UsuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="UsuarioPerfil">
+        <PropertyRef Name="Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Empadronado_en">
+    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+    <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+  </Association>
+  <Association Name="Imparte">
+    <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+    <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
+  </Association>
+  <Association Name="Matriculado_en">
+    <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+    <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+  </Association>
+  <Association Name="Trabaja_en">
+    <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
+    <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="*" />
   </Association>
   <EntityContainer Name="DataIntegradorEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Cursoes" EntityType="Self.Curso" />
-    <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
-    <EntitySet Name="Matriculas" EntityType="Self.Matricula" />
-    <AssociationSet Name="FK_dbo_Matricula_dbo_Curso_CursoID" Association="Self.FK_dbo_Matricula_dbo_Curso_CursoID">
-      <End Role="Curso" EntitySet="Cursoes" />
-      <End Role="Matricula" EntitySet="Matriculas" />
+    <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
+    <EntitySet Name="Carrera" EntityType="Self.Carrera" />
+    <EntitySet Name="Curso" EntityType="Self.Curso" />
+    <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
+    <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
+    <EntitySet Name="Funcionario" EntityType="Self.Funcionario" />
+    <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+    <EntitySet Name="Perfil" EntityType="Self.Perfil" />
+    <EntitySet Name="PerfilPermiso" EntityType="Self.PerfilPermiso" />
+    <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" />
+    <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+    <EntitySet Name="UnidadAcademica" EntityType="Self.UnidadAcademica" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" />
+    <AssociationSet Name="FK__Carrera__CodUnid__45F365D3" Association="Self.FK__Carrera__CodUnid__45F365D3">
+      <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+      <End Role="Carrera" EntitySet="Carrera" />
     </AssociationSet>
-    <AssociationSet Name="FK_dbo_Matricula_dbo_Estudiante_EstudianteID" Association="Self.FK_dbo_Matricula_dbo_Estudiante_EstudianteID">
-      <End Role="Estudiante" EntitySet="Estudiantes" />
-      <End Role="Matricula" EntitySet="Matriculas" />
+    <AssociationSet Name="FK__Enfasis__CodCarr__49C3F6B7" Association="Self.FK__Enfasis__CodCarr__49C3F6B7">
+      <End Role="Carrera" EntitySet="Carrera" />
+      <End Role="Enfasis" EntitySet="Enfasis" />
     </AssociationSet>
+    <AssociationSet Name="FK__Curso__46E78A0C" Association="Self.FK__Curso__46E78A0C">
+      <End Role="Enfasis" EntitySet="Enfasis" />
+      <End Role="Curso" EntitySet="Curso" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Grupo__SiglaCurs__4CA06362" Association="Self.FK__Grupo__SiglaCurs__4CA06362">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Grupo" EntitySet="Grupo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PerfilPermiso__534D60F1" Association="Self.FK__PerfilPermiso__534D60F1">
+      <End Role="Enfasis" EntitySet="Enfasis" />
+      <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsuarioPerfil__5AEE82B9" Association="Self.FK__UsuarioPerfil__5AEE82B9">
+      <End Role="Enfasis" EntitySet="Enfasis" />
+      <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estudiant__Cedul__4AB81AF0" Association="Self.FK__Estudiant__Cedul__4AB81AF0">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Estudiante" EntitySet="Estudiante" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Funcionar__Cedul__4BAC3F29" Association="Self.FK__Funcionar__Cedul__4BAC3F29">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Funcionario" EntitySet="Funcionario" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Profesor__Cedula__5535A963" Association="Self.FK__Profesor__Cedula__5535A963">
+      <End Role="Funcionario" EntitySet="Funcionario" />
+      <End Role="Profesor" EntitySet="Profesor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PerfilPer__Perfi__5165187F" Association="Self.FK__PerfilPer__Perfi__5165187F">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsuarioPe__Perfi__59FA5E80" Association="Self.FK__UsuarioPe__Perfi__59FA5E80">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PerfilPer__Permi__52593CB8" Association="Self.FK__PerfilPer__Permi__52593CB8">
+      <End Role="Permiso" EntitySet="Permiso" />
+      <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Persona__Usuario__5441852A" Association="Self.FK__Persona__Usuario__5441852A">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UnidadAca__Super__5812160E" Association="Self.FK__UnidadAca__Super__5812160E">
+      <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+      <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsuarioPe__Usuar__59063A47" Association="Self.FK__UsuarioPe__Usuar__59063A47">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="Empadronado_en" Association="Self.Empadronado_en">
+      <End Role="Estudiante" EntitySet="Estudiante" />
+      <End Role="Enfasis" EntitySet="Enfasis" />
+    </AssociationSet>
+    <AssociationSet Name="Imparte" Association="Self.Imparte">
+      <End Role="Grupo" EntitySet="Grupo" />
+      <End Role="Profesor" EntitySet="Profesor" />
+    </AssociationSet>
+    <AssociationSet Name="Matriculado_en" Association="Self.Matriculado_en">
+      <End Role="Estudiante" EntitySet="Estudiante" />
+      <End Role="Grupo" EntitySet="Grupo" />
+    </AssociationSet>
+    <AssociationSet Name="Trabaja_en" Association="Self.Trabaja_en">
+      <End Role="Funcionario" EntitySet="Funcionario" />
+      <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+    </AssociationSet>
+    <FunctionImport Name="AgregarUsuario">
+      <Parameter Name="pLogin" Mode="In" Type="String" />
+      <Parameter Name="pPassword" Mode="In" Type="String" />
+      <Parameter Name="estado" Mode="InOut" Type="Boolean" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

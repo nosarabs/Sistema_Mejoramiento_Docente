@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="29043aa9-c34d-4e50-94f4-43c30bc4516f" ChangeDateTime="09/25/2019 03:12:47">
+    <Property Name="ElementName" Value="[dbo].[Usuario].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Username" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="282f5f48-b87f-40e8-921c-b1e1af700ff7" ChangeDateTime="09/25/2019 03:33:18">
+    <Property Name="ElementName" Value="[dbo].[Persona].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Persona]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="957be5b6-6fde-4fe2-8ea7-921b1d3d3605" ChangeDateTime="09/25/2019 03:41:06">
+    <Property Name="ElementName" Value="[dbo].[Estudiante].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Estudiante]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fcc15226-6eb2-4b82-9fa9-9cc41999d989" ChangeDateTime="09/25/2019 03:43:17">
+    <Property Name="ElementName" Value="[dbo].[Funcionario].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Funcionario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7855c7f4-5ae0-4f24-b5ec-d791dd2e1d14" ChangeDateTime="09/25/2019 03:46:24">
+    <Property Name="ElementName" Value="[dbo].[UnidadAcademica].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UnidadAcademica]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Código" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="46b880a3-ea79-401e-8220-cc0012136028" ChangeDateTime="09/25/2019 03:48:58">
+    <Property Name="ElementName" Value="[dbo].[Carrera].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Carrera]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Codigo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1182e49a-0fd9-4540-b9a1-f4810b14d931" ChangeDateTime="09/25/2019 03:51:22">
+    <Property Name="ElementName" Value="[dbo].[Enfasis].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Enfasis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CodCarrera" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="93044115-19ae-43c5-888a-53aad45bb31a" ChangeDateTime="09/25/2019 03:56:29">
+    <Property Name="ElementName" Value="[dbo].[Grupo].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SiglaCurso" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="50f36d20-279a-46a0-8a50-e4228e902d0c" ChangeDateTime="09/25/2019 03:59:16">
+    <Property Name="ElementName" Value="[dbo].[Perfil].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Perfil]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nombre" />
+  </Operation>
+</Operations>

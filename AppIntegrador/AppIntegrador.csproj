@@ -128,49 +128,69 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CursoController.cs" />
-    <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MatriculaController.cs" />
-    <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Carrera.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Curso.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enfasis.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudiante.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Matricula.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Funcionario.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.Context.tt</DependentUpon>
+    <Compile Include="Models\Grupo.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Perfil.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    <Compile Include="Models\PerfilPermiso.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Opciones_de_seleccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Permiso.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Pregunta.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Persona.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Pregunta_con_opciones.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\Profesor.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Pregunta_con_opciones_de_seleccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\UnidadAcademica.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioPerfil.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,28 +199,29 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\logo_ucr.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ModelIntegrador.Context.tt">
+    <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Context.cs</LastGenOutput>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModelIntegrador.tt">
+    <Content Include="Models\DataIntegradorModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
-      <LastGenOutput>ModelIntegrador.cs</LastGenOutput>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ModelIntegrador.edmx">
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelIntegrador.edmx.diagram">
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -226,7 +247,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Estudiante\Create.cshtml" />
     <Content Include="Views\Estudiante\Delete.cshtml" />
     <Content Include="Views\Estudiante\Details.cshtml" />
@@ -248,6 +268,8 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Edit.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Index.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\UserDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
