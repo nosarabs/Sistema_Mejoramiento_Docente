@@ -74,8 +74,8 @@ namespace AppIntegrador.Controllers
             pregunta.Tipo = "U";
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Pregunta_con_opciones.Pregunta.Enunciado.Length > 0)
             {
-                ModelState.AddModelError("Codigo", "");
-                try
+                //ModelState.AddModelError("Codigo", "");
+                //try
                 {
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
                     pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
@@ -98,11 +98,11 @@ namespace AppIntegrador.Controllers
 
                     return RedirectToAction("Create");
                 }
-                catch(Exception exception)
+                //catch(Exception exception)
                 {
                     // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    //ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    //return View(pregunta);
                 }
             }
 
