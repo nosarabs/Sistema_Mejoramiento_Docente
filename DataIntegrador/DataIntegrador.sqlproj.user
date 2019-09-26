@@ -3,7 +3,7 @@
   <PropertyGroup>
     <StartupScript>(Blank)</StartupScript>
     <StartAction>StartNone</StartAction>
-    <TargetConnectionString>Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=proy;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
-    <TargetDatabase>proy</TargetDatabase>
+    <TargetConnectionString>Data Source=10.1.4.55;Initial Catalog=Mosqueteros;Persist Security Info=True;User ID=testMosqueteros;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
+    <TargetDatabase>Mosqueteros</TargetDatabase>
   </PropertyGroup>
 </Project>
