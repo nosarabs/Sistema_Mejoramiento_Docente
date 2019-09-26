@@ -5,7 +5,7 @@
 <div class="form-group">
     @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50" })
+        @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50", @required="required" })
         @if (i >= 1)
         {
             <input type="button" value="Delete" class="remove"/>
