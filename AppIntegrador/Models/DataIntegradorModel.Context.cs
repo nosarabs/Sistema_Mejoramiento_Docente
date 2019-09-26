@@ -42,6 +42,23 @@ namespace AppIntegrador.Models
         public virtual DbSet<UnidadAcademica> UnidadAcademica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<Opciones_de_seleccion> Opciones_de_seleccion { get; set; }
+        public virtual DbSet<Pregunta> Pregunta { get; set; }
+        public virtual DbSet<Pregunta_con_opciones> Pregunta_con_opciones { get; set; }
+        public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
+        public virtual DbSet<Activa_por> Activa_por { get; set; }
+        public virtual DbSet<Escalar> Escalar { get; set; }
+        public virtual DbSet<Formulario> Formulario { get; set; }
+        public virtual DbSet<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
+        public virtual DbSet<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
+        public virtual DbSet<Periodo_activa_por> Periodo_activa_por { get; set; }
+        public virtual DbSet<Pregunta_con_respuesta_libre> Pregunta_con_respuesta_libre { get; set; }
+        public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
+        public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
+        public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+        public virtual DbSet<Seccion> Seccion { get; set; }
+        public virtual DbSet<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
+        public virtual DbSet<Si_no_nr> Si_no_nr { get; set; }
     
         public virtual int AgregarUsuario(string pLogin, string pPassword, ObjectParameter estado)
         {
