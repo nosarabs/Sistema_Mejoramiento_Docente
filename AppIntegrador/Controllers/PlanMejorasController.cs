@@ -124,6 +124,10 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-
+        [ChildActionOnly]
+        public ActionResult GetObjetivosIndex(string path)
+        {
+            return new FilePathResult(path, "text/cshtml");
+        }
     }
 }

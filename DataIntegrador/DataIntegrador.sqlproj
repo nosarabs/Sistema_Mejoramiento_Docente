@@ -91,4 +91,7 @@
   <ItemGroup>
     <PreDeploy Include="Script.PreDeploymentPlanesMejora.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeploymentPlanDeMejora.sql" />
+  </ItemGroup>
 </Project>
