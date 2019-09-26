@@ -63,4 +63,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CodigoAM" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="48c1bb2e-a901-451e-a9ad-bc49f0ba8dbb" ChangeDateTime="09/26/2019 02:08:15">
+    <Property Name="ElementName" Value="[dbo].[PlanMejora].[Username]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlanMejora]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ad9594ce-7ea5-45b0-8516-ae298d2cef54" ChangeDateTime="09/26/2019 02:09:39">
+    <Property Name="ElementName" Value="[dbo].[PlanMejora].[UsernameA]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlanMejora]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserIDA" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="18802b39-9760-4c23-ad82-fed204daa54b" ChangeDateTime="09/26/2019 02:10:23">
+    <Property Name="ElementName" Value="[dbo].[Compuesto_Por].[Username]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Compuesto_Por]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
 </Operations>

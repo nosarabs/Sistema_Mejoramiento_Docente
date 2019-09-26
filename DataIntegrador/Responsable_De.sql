@@ -1,8 +1,9 @@
 ﻿CREATE TABLE [dbo].[Responsable_De]
 (
-	[Username] VARCHAR(20) NOT NULL,
+	UserId int NOT NULL,
 	[Codigo_A] INT NOT NULL,
 
-	PRIMARY KEY (Username, Codigo_A),
-	FOREIGN KEY(Codigo_A) REFERENCES Accionable(Codigo)
+	PRIMARY KEY (UserId, Codigo_A),
+	FOREIGN KEY(Codigo_A) REFERENCES Accionable(Codigo),
+	Foreign key(UserId) References UserProfile(UserId)
 )
