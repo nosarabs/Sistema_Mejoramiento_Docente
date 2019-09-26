@@ -100,15 +100,14 @@ namespace AppIntegrador.Controllers
                 }
                 catch(Exception exception)
                 {
-                    // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                    {
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
                 }
             }
 
-            // Guardo todas las opciones en la base de datos de una
-            db.Opciones_de_seleccion.AddRange(opciones);
-            db.SaveChanges();
             return View();
         }
 
