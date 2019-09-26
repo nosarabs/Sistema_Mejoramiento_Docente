@@ -13,6 +13,10 @@
             <span class="style-welcome">@Html.Label("Bienvenido " + @Session["Username"].ToString())</span>
         </div>
     </div>
+
+    <div>
+        <span> @Html.ActionLink("Proceder a la página principal", "Index", "Home") </span>
+    </div>
     <footer class="flex-foot">
         <span>Sistema de Evaluación Docente de la Universidad de Costa Rica</span>
     </footer>
