@@ -48,7 +48,10 @@
             </div>
         </div>
 
-        <div id="opcionPartial">@{Html.RenderAction("OpcionesDeSeleccion");}</div>
+        <div id="sortable">
+            <div id="placeholder">@{Html.RenderAction("OpcionesDeSeleccion");}</div>
+        </div>
+        
         <input type="button" value="Agregar nueva opción" id="Add" />
 
         <div class="form-group">
@@ -70,10 +73,21 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function () {
-            $("#sortable").sortable();
-            $("#sortable").disableSelection();
-        });
+        $("#sortable").sortable({
+            axis: "y",
+            update: function (event, ui) {
+                var pos = ui.item.index();
+                var i = 0;
+                $(".orden").each(function () {
+                    console.log(i);
+                      $(this).val(i);
+                      ++i;
+                  });
+
+                console.log(pos);
+            }
+        })
+        $("#sortable").disableSelection();
     </script>
 
     <script type="text/javascript">
@@ -93,7 +107,7 @@
                 url: 'OpcionesDeSeleccion',
                 data: { i: i },
                 success: function (data) {
-                    $("#opcionPartial").append(data);
+                    $("#sortable").append(data);
                 }
             })
             i++;

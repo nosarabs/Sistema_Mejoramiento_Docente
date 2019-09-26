@@ -247,6 +247,7 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Details.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Edit.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Index.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
