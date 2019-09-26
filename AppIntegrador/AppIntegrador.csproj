@@ -258,11 +258,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\Formulario\collapsible.js" />
-    <Content Include="Views\Dashboard\Formulario\bullet_list.js" />
-    <Content Include="Views\Dashboard\Formulario\bar_char.js" />
     <Content Include="Views\Dashboard\Formulario\styles.css" />
     <Content Include="Views\Dashboard\Formulario\Formulario.html" />
     <Content Include="Views\Dashboard\Formulario.cshtml" />
+    <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Chart.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />
