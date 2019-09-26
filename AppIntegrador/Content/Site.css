@@ -130,7 +130,9 @@ nav {
 
 #greybg {
     background-color: #e6e6e6;
-    height: 100%;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
 }
 
 .limiter {
@@ -147,23 +149,19 @@ nav {
     min-width: 390px;
     padding: 15px 15px 5px;
     border: 1px solid black;
-    background: rgb(0,93,164);
+    /*background: rgb(0,93,164);*/
     background: linear-gradient(180deg, rgba(0,93,164,1) 0%, rgba(176,237,253,1) 100%);
-}
-
-#headerlabel {
-    margin-top: 0px;
 }
 
 #login_error {
     color: red;
 }
 
-body {
+/*body {
     min-height: 100vh;
     position: relative;
     margin: 0;
-}
+}*/
 
 .col-centered {
     float: none;
@@ -181,10 +179,14 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background-color: #ebebeb;
 }
 
 .flex-foot {
     display: flex;
     justify-content: center;
+}
+
+.style-welcome {
+    font-size: 400%;
+    color: #005da4;
 }

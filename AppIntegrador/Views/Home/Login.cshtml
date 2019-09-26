@@ -5,7 +5,7 @@
 }
 <body id="greybg">
     <div class="logo-styles">
-        <img class="ucr-logo" src='https://i.postimg.cc/BbQdw3yG/logo-ucr.png' border='0' alt='logo-ucr' />
+        <img class="ucr-logo" src='/Content/images/logo_ucr.png' border='0' alt='logo-ucr' />
     </div>
 
     <div class="container-login100">
@@ -16,7 +16,7 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
                     <div class="form-group">
-                        <label id="headerlabel">Usuario</label>
+                        <label>Usuario</label>
                         @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "nombre.apellido@ucr.ac.cr" })
                         @Html.ValidationMessageFor(m => m.Username)
                     </div>
