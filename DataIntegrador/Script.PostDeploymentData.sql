@@ -9,7 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
+/*
 MERGE INTO Curso AS Target 
 USING (VALUES 
 (1, 'Ingenieria de Software', 5), 
@@ -53,4 +53,4 @@ MERGE INTO UserProfile AS Target
 USING (VALUES
   (1, 'admin', 'admin')  )  AS Source ([UserID], UserName, Password)  ON Target.UserID = Source.UserID  WHEN NOT MATCHED BY TARGET THEN
 INSERT (UserName, Password)
-VALUES (UserName, Password);
+VALUES (UserName, Password);*/

@@ -9,7 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
+/*
 MERGE INTO PlanMejora AS Target
 USING (VALUES
  (1, 'Plan Prueba', '2019-06-06', '2019-12-06'),
@@ -21,3 +21,4 @@ ON Target.Codigo = Source.Codigo
 WHEN NOT MATCHED BY TARGET THEN
 INSERT (Codigo, Nombre, FechaInicio, FechaFin)
 VALUES (Codigo, Nombre, FechaInicio, FechaFin);
+*/

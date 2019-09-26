@@ -81,6 +81,7 @@
     <Build Include="Preguntas\Pregunta_con_respuesta_libre.sql" />
     <Build Include="Preguntas\Seccion_tiene_pregunta.sql" />
     <Build Include="Preguntas\Si_no_nr.sql" />
+    <Build Include="Asociado_A.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
