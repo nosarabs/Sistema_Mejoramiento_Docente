@@ -56,25 +56,36 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Preguntas" />
+    <Folder Include="Formularios\" />
+    <Folder Include="Formularios\Preguntas\" />
+    <Folder Include="Formularios\Respuestas\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Curso.sql" />
+    <Build Include="LoginUsuario.sql" />
+    <Build Include="Usuario.sql" />
+    <Build Include="Persona.sql" />
     <Build Include="Estudiante.sql" />
-    <Build Include="Matricula.sql" />
-    <Build Include="Formulario.sql" />
-    <Build Include="Seccion.sql" />
-    <Build Include="Formulario_tiene_seccion.sql" />
-    <Build Include="Preguntas\Pregunta.sql" />
-    <Build Include="Preguntas\Seccion_tiene_pregunta.sql" />
-    <Build Include="Preguntas\Pregunta_con_respuesta_libre.sql" />
-    <Build Include="Preguntas\Pregunta_con_opciones.sql" />
-    <Build Include="Preguntas\Escalar.sql" />
-    <Build Include="Preguntas\Si_no_nr.sql" />
-    <Build Include="Preguntas\Pregunta_con_opciones_de_seleccion.sql" />
-    <Build Include="Preguntas\Opciones_de_seleccion.sql" />
+    <Build Include="Funcionario.sql" />
+    <Build Include="Profesor.sql" />
+    <Build Include="UnidadAcademica.sql" />
+    <Build Include="Carrera.sql" />
+    <Build Include="Enfasis.sql" />
+    <Build Include="Curso.sql" />
+    <Build Include="Grupo.sql" />
+    <Build Include="Perfil.sql" />
+    <Build Include="Permiso.sql" />
+    <Build Include="Empadronado_en.sql" />
+    <Build Include="Matriculado_en.sql" />
+    <Build Include="Imparte.sql" />
+    <Build Include="Trabaja_en.sql" />
+    <Build Include="UsuarioPerfil.sql" />
+    <Build Include="PerfilPermiso.sql" />
+    <Build Include="AgregarUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DataIntegrador.refactorlog" />
   </ItemGroup>
 </Project>
