@@ -35,6 +35,7 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.HTMLCheck = true;
             return View();
         }
 
@@ -42,6 +43,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(Usuario objUser)
         {
+            ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
             {
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ToString()))
@@ -93,6 +95,7 @@ namespace AppIntegrador.Controllers
 
         public ActionResult UserDashboard()
         {
+            ViewBag.HTMLCheck = true;
             if (Session["Username"] != null)
             {
                 return View();

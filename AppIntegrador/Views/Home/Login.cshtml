@@ -3,45 +3,37 @@
 @{
     ViewBag.Title = "Login";
 }
+<body id="greybg">
+    <div class="logo-styles">
+        <img class="ucr-logo" src='https://i.postimg.cc/BbQdw3yG/logo-ucr.png' border='0' alt='logo-ucr' />
+    </div>
 
-@using (Html.BeginForm("Login", "Home", FormMethod.Post))
-{
-    <fieldset>
-        <legend>Inicio de sesión</legend>
-
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        @if (@ViewBag.Message != null)
-        {
-            <div style="border: 1px solid red">
-                @ViewBag.Message
+    <div class="container-login100">
+        <div class="row">
+            <div class="blue-box">
+                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label id="headerlabel">Usuario</label>
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "nombre.apellido@ucr.ac.cr" })
+                        @Html.ValidationMessageFor(m => m.Username)
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "************", required = "required" })
+                        <p style="color:red;">@Html.ValidationMessageFor(m => m.Password)</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-defaul">Ingresar</button>
+                    </div>
+                }
             </div>
-        }
-        <table>
-            <tr>
-                <td>@Html.LabelFor(a => a.Username)</td>
-                <td>@Html.TextBoxFor(a => a.Username)</td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(a => a.Password)
-                </td>
-                <td>
-                    @Html.PasswordFor(a => a.Password)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ValidationMessageFor(a => a.Password)
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" value="Login" />
-                </td>
-                <td></td>
-            </tr>
-        </table>
-    </fieldset>
-}  
+        </div>
+    </div>
+    <footer class="flex-foot">
+        <span>Sistema de Evaluación Docente de la Universidad de Costa Rica</span>
+    </footer>
+
+</body>

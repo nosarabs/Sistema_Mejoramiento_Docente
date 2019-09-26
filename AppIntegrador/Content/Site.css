@@ -121,6 +121,7 @@ nav {
 
 .ucr-logo {
     width: 30%;
+    min-width: 400px;
 }
 
 .logo-styles {
@@ -132,12 +133,58 @@ nav {
     height: 100%;
 }
 
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 .blue-box {
+    min-width: 390px;
+    padding: 15px 15px 5px;
     border: 1px solid black;
     background: rgb(0,93,164);
     background: linear-gradient(180deg, rgba(0,93,164,1) 0%, rgba(176,237,253,1) 100%);
 }
 
 #headerlabel {
-    margin-top: 15px;
+    margin-top: 0px;
+}
+
+#login_error {
+    color: red;
+}
+
+body {
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 87vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ebebeb;
+}
+
+.flex-foot {
+    display: flex;
+    justify-content: center;
 }
