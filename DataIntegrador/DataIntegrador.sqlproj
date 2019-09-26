@@ -85,4 +85,10 @@
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeploymentPlanesMejora.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Script.PreDeploymentPlanesMejora.sql" />
+  </ItemGroup>
 </Project>
