@@ -92,6 +92,10 @@ namespace AppIntegrador.Controllers
                         opcion.Codigo = codigoPregunta;
                     }
 
+                    // Guardo todas las opciones de una
+                    db.Opciones_de_seleccion.AddRange(opciones);
+                    db.SaveChanges();
+
                     return RedirectToAction("Create");
                 }
                 catch(Exception exception)
