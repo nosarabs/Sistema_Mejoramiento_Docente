@@ -15,8 +15,9 @@ USING (VALUES
  (1, 'Plan Prueba', '2019-06-06', '2019-12-06'),
  (2, 'Plan Prueba', '2019-09-25', '2020-03-20'),
  (3, 'Plan Prueba', '2019-07-01', '2019-10-03')
-)AS Source ([Codigo], Nombre, FechaInicio, FechaFin)
+)
+AS Source ([Codigo], Nombre, FechaInicio, FechaFin)
 ON Target.Codigo = Source.Codigo 
 WHEN NOT MATCHED BY TARGET THEN
 INSERT (Codigo, Nombre, FechaInicio, FechaFin)
-VALUES (Codigo, Nombre, FechaInicio, FechaFin);
+VALUES (Codigo, Nombre, FechaInicio, FechaFin);
