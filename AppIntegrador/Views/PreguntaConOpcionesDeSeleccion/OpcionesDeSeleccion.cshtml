@@ -7,12 +7,10 @@
     <div class="col-md-10">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50" })
         @Html.TextBoxFor(opcion => opcion.Orden, null, new { @Name = "[" + i + "].Orden", @class = "orden", @Value = i })
-
-        <input type="button" value="Delete" class="remove" />
-        
-        <br />
-        @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
-    </div>
+        <button type="button" id="rem@(i)" onclick="func('rem@(i)')">Borrar</button>
+            <br />
+            @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
+</div>
 </div>
 
 <style>
@@ -20,4 +18,14 @@
         display: none;
     }
 </style>
+
+
+    <script>
+    function func(id) {
+        console.log(id);
+        var node = document.getElementById(id);
+        node.parentNode.parentNode.remove();
+    }
+    </script>
+ 
 
