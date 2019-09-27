@@ -16,14 +16,6 @@
     </tr>
 }
 
-@foreach (var item in Model.Cantidad_por_Respuesta)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item)
-        </td>
-    </tr>
-}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
@@ -37,11 +29,11 @@
         var ctx = document.getElementById('bar-chart').getContext('2d');
 
 
-    function creaGrafico(ctx, cursillos, cantCreditos) {
+    function creaGrafico(ctx, cursillos, cantCreditos, type) {
 
          var barChart = new Chart(ctx, {
 
-            type: 'bar',
+            type: type,
             data: {
                 labels: cursillos,      @*Incluyo en los labels, los nombres de los cursos*@
                 datasets: [{
@@ -77,7 +69,8 @@
     }
         // Esta línea siempre tiene que ir, ya que si se le pone la otra que es: var ctx = $("bar-chart"); no sirve la vara
 
-    creaGrafico(ctx, cursillos, cantCreditos);
+    creaGrafico(ctx, cursillos, cantCreditos,'horizontalBar');
+        creaGrafico(ctx, cursillos, cantCreditos,'horizontalBar');
 
 </script>
 
