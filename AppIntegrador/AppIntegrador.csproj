@@ -130,6 +130,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\Visualizacion_Respuestas_EscalarController.cs" />
+    <Compile Include="Controllers\VisualizadorRespuestasEscalarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,6 +201,11 @@
     <Compile Include="Models\Si_no_nr.cs">
       <DependentUpon>ModelIntegrador.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Visualizacion_Respuestas_Escalar.cs">
+      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Visualizador.cs" />
+    <Compile Include="Models\VisualizadorEscalar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
   </ItemGroup>
@@ -211,6 +218,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Models\ModelIntegrador.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ModelIntegrador.Context.cs</LastGenOutput>
@@ -257,11 +265,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Dashboard\Formulario.cshtml" />
-    <Content Include="Scripts\Chart.min.js" />
-    <Content Include="Scripts\Chart.js" />
-    <Content Include="Views\Dashboard\styles.css" />
-    <Content Include="Views\Dashboard\collapsible.js" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Views\VisualizadorRespuestasEscalar\Index.cshtml" />
+    <Content Include="Views\Visualizacion_Respuestas_Escalar\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />

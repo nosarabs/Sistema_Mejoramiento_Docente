@@ -174,5 +174,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Visualizacion_Respuestas_Escalar">
+      <EntityTypeMapping TypeName="DataIntegradorModel.Visualizacion_Respuestas_Escalar">
+        <MappingFragment StoreEntitySet="Visualizacion_Respuestas_Escalar">
+          <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
+          <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+          <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+          <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+          <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+          <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+          <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+          <ScalarProperty Name="Incremento" ColumnName="Incremento" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

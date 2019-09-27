@@ -81,6 +81,7 @@
     <Build Include="Formularios\Respuestas\Responde_respuesta_con_opciones.sql" />
     <Build Include="Formularios\Respuestas\Responde_respuesta_libre.sql" />
     <Build Include="Formularios\Respuestas\Respuestas_a_formulario.sql" />
+    <Build Include="Formularios\Visualizacion_Respuestas_Escalar.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

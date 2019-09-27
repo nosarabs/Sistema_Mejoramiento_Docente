@@ -203,6 +203,38 @@
           </Key>
           <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CodeBakers.dbo.Visualizacion_Respuestas_Escalar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Visualizacion_Respuestas_Escalar">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Incremento" />
+            <PropertyRef Name="Minimo" />
+            <PropertyRef Name="Maximo" />
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="OpcionSeleccionada" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Incremento" Type="int" Nullable="false" />
+          <Property Name="Minimo" Type="int" Nullable="false" />
+          <Property Name="Maximo" Type="int" Nullable="false" />
+          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="GNumero" Type="int" Nullable="false" />
+          <Property Name="GAnno" Type="int" Nullable="false" />
+          <Property Name="GSemestre" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="OpcionSeleccionada" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK__Activa_po__FCodi__49C3F6B7">
           <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
           <End Role="Activa_por" Type="Self.Activa_por" Multiplicity="*" />
@@ -483,6 +515,23 @@
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visualizacion_Respuestas_Escalar" EntityType="Self.Visualizacion_Respuestas_Escalar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Visualizacion_Respuestas_Escalar].[Codigo] AS [Codigo], 
+    [Visualizacion_Respuestas_Escalar].[Incremento] AS [Incremento], 
+    [Visualizacion_Respuestas_Escalar].[Minimo] AS [Minimo], 
+    [Visualizacion_Respuestas_Escalar].[Maximo] AS [Maximo], 
+    [Visualizacion_Respuestas_Escalar].[FCodigo] AS [FCodigo], 
+    [Visualizacion_Respuestas_Escalar].[Username] AS [Username], 
+    [Visualizacion_Respuestas_Escalar].[CSigla] AS [CSigla], 
+    [Visualizacion_Respuestas_Escalar].[GNumero] AS [GNumero], 
+    [Visualizacion_Respuestas_Escalar].[GAnno] AS [GAnno], 
+    [Visualizacion_Respuestas_Escalar].[GSemestre] AS [GSemestre], 
+    [Visualizacion_Respuestas_Escalar].[Fecha] AS [Fecha], 
+    [Visualizacion_Respuestas_Escalar].[PCodigo] AS [PCodigo], 
+    [Visualizacion_Respuestas_Escalar].[OpcionSeleccionada] AS [OpcionSeleccionada]
+    FROM [dbo].[Visualizacion_Respuestas_Escalar] AS [Visualizacion_Respuestas_Escalar]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Activa_po__FCodi__49C3F6B7" Association="Self.FK__Activa_po__FCodi__49C3F6B7">
             <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Activa_por" EntitySet="Activa_por" />
@@ -650,6 +699,7 @@
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
+          <EntitySet Name="Visualizacion_Respuestas_Escalar" EntityType="DataIntegradorModel.Visualizacion_Respuestas_Escalar" />
         </EntityContainer>
         <EntityType Name="Opciones_de_seleccion">
           <Key>
@@ -1147,6 +1197,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Visualizacion_Respuestas_Escalar">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Incremento" />
+            <PropertyRef Name="Minimo" />
+            <PropertyRef Name="Maximo" />
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="OpcionSeleccionada" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Incremento" Type="Int32" Nullable="false" />
+          <Property Name="Minimo" Type="Int32" Nullable="false" />
+          <Property Name="Maximo" Type="Int32" Nullable="false" />
+          <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GNumero" Type="Int32" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="OpcionSeleccionada" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1323,6 +1403,25 @@
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visualizacion_Respuestas_Escalar">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Visualizacion_Respuestas_Escalar">
+              <MappingFragment StoreEntitySet="Visualizacion_Respuestas_Escalar">
+                <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+                <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+                <ScalarProperty Name="Incremento" ColumnName="Incremento" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

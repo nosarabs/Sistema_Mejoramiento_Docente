@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "DataIntegrador"
 :setvar DefaultFilePrefix "DataIntegrador"
-:setvar DefaultDataPath "C:\Users\andre\AppData\Local\Microsoft\VisualStudio\SSDT\DataIntegrador"
-:setvar DefaultLogPath "C:\Users\andre\AppData\Local\Microsoft\VisualStudio\SSDT\DataIntegrador"
+:setvar DefaultDataPath "C:\Users\Daniel\AppData\Local\Microsoft\VisualStudio\SSDT\DataIntegrador"
+:setvar DefaultLogPath "C:\Users\Daniel\AppData\Local\Microsoft\VisualStudio\SSDT\DataIntegrador"
 
 GO
 :on error exit
@@ -51,45 +51,49 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+/*INSERT INTO Formulario (Codigo, Nombre)
+VALUES
+('11111', 'Formulario 1');
 
-MERGE INTO Curso AS Target 
-USING (VALUES 
-(1, 'Ingenieria de Software', 5), 
-(2, 'Bases de Datos', 5), 
-(3, 'Proyecto', 3) 
-) 
-AS Source ([CursoID], Titulo, Creditos) 
-ON Target.CursoID = Source.CursoID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Titulo, Creditos) 
-VALUES (Titulo, Creditos); 
+INSERT INTO Pregunta (Codigo, Enunciado)
+VALUES
+('55555555', 'Prgunta 1'), 
+('44444444', 'Pregunta 2'), 
+('88888888', 'Pregunta 3');
 
-MERGE INTO Estudiante AS Target 
-USING (VALUES 
-(1, 'Salas', 'Andrea', '2015-09-01'), 
-(2, 'Guzman', 'Luis', '2016-01-13'), 
-(3, 'Ramirez', 'Erick', '2017-09-03') 
-) 
-AS Source (EstudianteID, Apellido, Nombre, FechaMatricula) 
-ON Target.EstudianteID = Source.EstudianteID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Apellido, Nombre, FechaMatricula) 
-VALUES (Apellido, Nombre, FechaMatricula);
+INSERT INTO Pregunta_con_opciones(Codigo, TituloCampoObservacion)
+VALUES
+('55555555', 'Titulo1'), 
+('44444444', 'Titulo2'), 
+('88888888', 'Titulo3');
 
-MERGE INTO Matricula AS Target 
-USING (VALUES 
-(1, 2.00, 1, 1), 
-(2, 3.50, 1, 2), 
-(3, 4.00, 2, 3),
-(4, 1.80, 2, 1), 
-(5, 3.20, 3, 1), 
-(6, 4.00, 3, 2) 
-) 
-AS Source (MatriculaID, Nota, CursoID, EstudianteID) 
-ON Target.MatriculaID = Source.MatriculaID 
-WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Nota, CursoID, EstudianteID) 
-VALUES (Nota, CursoID, EstudianteID);
+INSERT INTO Escalar (Codigo, Incremento, Minimo, Maximo)
+VALUES
+('55555555', 1, 1, 10), 
+('44444444', 2, 1, 10), 
+('88888888', 4, 0, 9);*/
+
+/*INSERT INTO Respuestas_a_formulario (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha)
+VALUES 
+('55555555', 'AMesen', 'CI1312', 1, 2017, 2, '2019-09-11'),
+('44444444', 'DEscamilla', 'CI1312', 2, 2019, 2, '2018-09-11'),
+('88888888', 'DAlfaro', 'CI1212', 5, 2011, 2, '2008-09-11');
+
+INSERT INTO Formulario (Codigo, Nombre)
+VALUES
+('111111', 'Formulario4');
+
+INSERT INTO Respuestas_a_formulario (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha)
+VALUES
+('111111', 'DAlfaro', 'CI1312', 1, 2019, 2, '2019-09-11');
+
+INSERT INTO Responde_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, Justificacion)
+VALUES 
+('111111', 'DAlfaro', 'CI1312', 1, 2019, 2, '2019-09-11', '55555555', 'Esta es una justificacion');
+
+INSERT INTO Opciones_seleccionadas_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada)
+VALUES
+('111111', 'DAlfaro', 'CI1312', 1, 2019, 2, '2019-09-11', '55555555', 2);*/
 GO
 
 GO

@@ -90,6 +90,7 @@
       <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
       <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
     </AssociationSet>
+    <EntitySet Name="Visualizacion_Respuestas_Escalar" EntityType="DataIntegradorModel.Visualizacion_Respuestas_Escalar" />
   </EntityContainer>
   <EntityType Name="Opciones_de_seleccion">
     <Key>
@@ -587,4 +588,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Visualizacion_Respuestas_Escalar">
+    <Key>
+      <PropertyRef Name="Codigo" />
+      <PropertyRef Name="Incremento" />
+      <PropertyRef Name="Minimo" />
+      <PropertyRef Name="Maximo" />
+      <PropertyRef Name="FCodigo" />
+      <PropertyRef Name="Username" />
+      <PropertyRef Name="CSigla" />
+      <PropertyRef Name="GNumero" />
+      <PropertyRef Name="GAnno" />
+      <PropertyRef Name="GSemestre" />
+      <PropertyRef Name="Fecha" />
+      <PropertyRef Name="PCodigo" />
+      <PropertyRef Name="OpcionSeleccionada" />
+    </Key>
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Incremento" Type="Int32" Nullable="false" />
+    <Property Name="Minimo" Type="Int32" Nullable="false" />
+    <Property Name="Maximo" Type="Int32" Nullable="false" />
+    <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="GNumero" Type="Int32" Nullable="false" />
+    <Property Name="GAnno" Type="Int32" Nullable="false" />
+    <Property Name="GSemestre" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="OpcionSeleccionada" Type="Int32" Nullable="false" />
+  </EntityType>
 </Schema>
