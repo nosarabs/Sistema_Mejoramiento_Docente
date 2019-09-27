@@ -391,8 +391,8 @@ C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\bin\System.Web.Web
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\bin\Newtonsoft.Json.xml
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\bin\Antlr3.Runtime.pdb
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.csprojAssemblyReference.cache
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.csproj.CoreCompileInputs.cache
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.csproj.CopyComplete
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.dll
 C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.pdb
+C:\Users\Daniel\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\obj\Debug\AppIntegrador.csprojAssemblyReference.cache

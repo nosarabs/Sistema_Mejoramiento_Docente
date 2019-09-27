@@ -24,3 +24,61 @@
         </td>
     </tr>
 }
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+<canvas id="bar-chart" width="400" height="100"></canvas>
+
+<script type="text/javascript">
+
+        @* Convierto cada una de las listas en JSONS, sacando los datos de model*@
+        var cursillos = @Html.Raw(Json.Encode(Model.Opciones_Respuestas));
+        var cantCreditos = @Html.Raw(Json.Encode(Model.Cantidad_por_Respuesta));
+        var ctx = document.getElementById('bar-chart').getContext('2d');
+
+
+    function creaGrafico(ctx, cursillos, cantCreditos) {
+
+         var barChart = new Chart(ctx, {
+
+            type: 'bar',
+            data: {
+                labels: cursillos,      @*Incluyo en los labels, los nombres de los cursos*@
+                datasets: [{
+                    label: "Gráfico Miedo de Ejemplo",
+                    data: cantCreditos, @*Incluyo en los datos, la lista de creditos*@
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#9bed2f"],
+                    borderWidth: 1
+                }]
+            },
+
+            @*Opciones para poder ver los nombres de los ejes y así*@
+            options: {
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Nombre de los Cursos'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Cantidad de Créditos'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+        });
+    }
+        // Esta línea siempre tiene que ir, ya que si se le pone la otra que es: var ctx = $("bar-chart"); no sirve la vara
+
+    creaGrafico(ctx, cursillos, cantCreditos);
+
+</script>
+
+

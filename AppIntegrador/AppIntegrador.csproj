@@ -264,12 +264,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Formulario\collapsible.js" />
-    <Content Include="Views\Dashboard\Formulario\styles.css" />
-    <Content Include="Views\Dashboard\Formulario\Formulario.html" />
     <Content Include="Views\Dashboard\Formulario.cshtml" />
-    <Content Include="Scripts\Chart.min.js" />
-    <Content Include="Scripts\Chart.js" />
     <Content Include="Views\VisualizadorRespuestasEscalar\Index.cshtml" />
     <Content Include="Views\Visualizacion_Respuestas_Escalar\Index.cshtml" />
   </ItemGroup>
