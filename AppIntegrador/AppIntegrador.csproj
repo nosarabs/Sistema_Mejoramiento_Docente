@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AppIntegrador</RootNamespace>
     <AssemblyName>AppIntegrador</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -25,7 +25,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +54,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -63,8 +61,11 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -109,7 +110,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -130,113 +130,150 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
-    <Compile Include="Controllers\Visualizacion_Respuestas_EscalarController.cs" />
-    <Compile Include="Controllers\VisualizadorRespuestasEscalarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activa_por.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Carrera.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Curso.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataIntegradorModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enfasis.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Escalar.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Estudiante.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Formulario.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Formulario_tiene_seccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.Context.tt</DependentUpon>
+    <Compile Include="Models\Funcionario.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelIntegrador.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelIntegrador.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    <Compile Include="Models\Grupo.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_seleccionadas_respuesta_con_opciones.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Perfil.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PerfilPermiso.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Periodo_activa_por.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Permiso.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Persona.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta_con_opciones.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta_con_opciones_de_seleccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta_con_respuesta_libre.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Profesor.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde_respuesta_con_opciones.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde_respuesta_libre.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Respuestas_a_formulario.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seccion.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seccion_tiene_pregunta.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Si_no_nr.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Visualizacion_Respuestas_Escalar.cs">
-      <DependentUpon>ModelIntegrador.tt</DependentUpon>
+    <Compile Include="Models\UnidadAcademica.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Visualizador.cs" />
-    <Compile Include="Models\VisualizadorEscalar.cs" />
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioPerfil.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\DashboardController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\images\ucr_promo.png" />
+    <Content Include="Content\images\logo_ucr.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ModelIntegrador.Context.tt">
+    <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Context.cs</LastGenOutput>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModelIntegrador.tt">
+    <Content Include="Models\DataIntegradorModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
-      <LastGenOutput>ModelIntegrador.cs</LastGenOutput>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ModelIntegrador.edmx">
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelIntegrador.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelIntegrador.edmx.diagram">
-      <DependentUpon>ModelIntegrador.edmx</DependentUpon>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -262,18 +299,17 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Formulario.cshtml" />
-    <Content Include="Views\VisualizadorRespuestasEscalar\Index.cshtml" />
-    <Content Include="Views\Visualizacion_Respuestas_Escalar\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Delete.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Details.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Edit.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Index.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\UserDashboard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -290,9 +326,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -321,11 +354,6 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
-    <MonoDevelop>
-      <Properties>
-        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
-      </Properties>
-    </MonoDevelop>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
