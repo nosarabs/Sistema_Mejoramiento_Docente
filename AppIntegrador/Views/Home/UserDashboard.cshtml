@@ -1,0 +1,19 @@
+﻿@model AppIntegrador.Models.Usuario
+
+@{
+    ViewBag.Title = "UserDashboard";
+}
+<body id="greybg">
+    <div class="logo-styles">
+        <img class="ucr-logo" src='/Content/images/logo_ucr.png' border='0' alt='logo-ucr' />
+    </div>
+
+    <div class="container-login100">
+        <div class="row">
+            <span class="style-welcome">@Html.Label("Bienvenido " + @Session["Username"].ToString())</span>
+        </div>
+    </div>
+    <footer class="flex-foot">
+        <span>Sistema de Evaluación Docente de la Universidad de Costa Rica</span>
+    </footer>
+</body>

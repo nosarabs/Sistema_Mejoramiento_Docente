@@ -1,24 +1,192 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿/* Main page styles */
+
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
+p.uppercase {
+    padding: 1em;
+    text-transform: uppercase;
+}
+
+.logo {
+    height: 5% !important;
+}
+
+.mainBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #41ade7;
+}
+
+ul {
+    list-style: none;
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+}
+
+    .wrapper .projectTitle {
+        flex: 1;
+        text-align: center;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .wrapper > li {
+        flex: 1;
+    }
+
+.search {
+    flex: 1;
+}
+
+nav {
+    background-color: #f0f0f0;
+}
+
+@media all and (max-width: 600px) {
+    .wrapper {
+        flex-wrap: wrap;
+    }
+
+        .wrapper > li {
+            flex-basis: 50%;
+        }
+}
+
+@media all and (max-width: 400px) {
+    .wrapper > li {
+        flex-basis: 100%;
+    }
+
+    .search {
+        order: 1;
+    }
+}
+
+/* Now in order to make a dropdown button */
+.dropbtn {
+    background-color: none;
+    color: black;
+    padding: 20px;
+    border: 0em;
+    width: 100%;
+    font-weight: bold;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: none;
+}
+/* End of main page styles */
+
+.mainBarText {
+    color: black;
+    font-size: 2em;
+}
+
+.ucr-logo {
+    width: 30%;
+    min-width: 400px;
+}
+
+.logo-styles {
     padding-left: 15px;
-    padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+#greybg {
+    background-color: #e6e6e6;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+.blue-box {
+    min-width: 390px;
+    padding: 15px 15px 5px;
+    border: 1px solid black;
+    /*background: rgb(0,93,164);*/
+    background: linear-gradient(180deg, rgba(0,93,164,1) 0%, rgba(176,237,253,1) 100%);
+}
+
+#login_error {
+    color: red;
+}
+
+/*body {
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}*/
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 87vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-foot {
+    display: flex;
+    justify-content: center;
+}
+
+.style-welcome {
+    font-size: 400%;
+    color: #005da4;
 }
