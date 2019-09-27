@@ -37,12 +37,21 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
+<<<<<<< HEAD
             <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")
+=======
+            <input click="javascript:history.go(-1)" type="submit" value="Delete" class="btn btn-default" /> |
+>>>>>>> lucho
         </div>
     }
+    <p>
+        <a href="javascript:history.go(-1)" title="Return to the previous page">&laquo; Regresar al plan de mejora</a>
+    </p>
 </div>

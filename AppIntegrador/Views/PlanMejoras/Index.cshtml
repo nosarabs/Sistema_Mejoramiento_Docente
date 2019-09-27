@@ -4,9 +4,30 @@
     ViewBag.Title = "Planes de Mejora";
 }
 
+<<<<<<< HEAD
     <div class="planesTable">
         <h2 class="text-center">Planes de Mejora</h2>
 
+=======
+<h2>Planes de Mejora</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo Plan de Mejora", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaFin)
+        </th>
+        <th></th>
+    </tr>
+>>>>>>> lucho
 
         @if (Model.Count() != 0)
         {

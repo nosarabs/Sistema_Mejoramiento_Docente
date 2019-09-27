@@ -39,6 +39,7 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Create
         public ActionResult Create()
         {
+            ViewBag.returnUrl = Request.UrlReferrer;
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre");
             return View();
         }
@@ -60,13 +61,17 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Objetivoes.Add(objetivo);
                 db.SaveChanges();
+<<<<<<< HEAD
                 return RedirectToAction("Index");
+=======
+                return Redirect(returnUrl);
+>>>>>>> lucho
             }
 
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
@@ -85,6 +90,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.returnUrl = Request.UrlReferrer;
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
             return View(objetivo);
         }
@@ -94,13 +100,13 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,Tipo_O")] Objetivo objetivo, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(objetivo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);
             return View(objetivo);
@@ -118,18 +124,19 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.returnUrl = Request.UrlReferrer;
             return View(objetivo);
         }
 
         // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string returnUrl)
         {
             Objetivo objetivo = db.Objetivoes.Find(id);
             db.Objetivoes.Remove(objetivo);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect(returnUrl);
         }
 
         protected override void Dispose(bool disposing)

@@ -9,8 +9,9 @@
 
 @using (Html.BeginForm())
 {
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Objetivo</h4>
         <hr />
@@ -50,7 +51,9 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <p>
+        <a href="javascript:history.go(-1)" title="Return to the previous page">&laquo; Regresar al plan de mejora</a>
+    </p>
 </div>
 
 @section Scripts {
