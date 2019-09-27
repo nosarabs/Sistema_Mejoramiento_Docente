@@ -56,6 +56,9 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Formularios\" />
+    <Folder Include="Formularios\Preguntas\" />
+    <Folder Include="Formularios\Respuestas\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -78,6 +81,23 @@
     <Build Include="UsuarioPerfil.sql" />
     <Build Include="PerfilPermiso.sql" />
     <Build Include="AgregarUsuario.sql" />
+    <Build Include="Formularios\Preguntas\Escalar.sql" />
+    <Build Include="Formularios\Preguntas\Opciones_de_seleccion.sql" />
+    <Build Include="Formularios\Preguntas\Pregunta.sql" />
+    <Build Include="Formularios\Preguntas\Pregunta_con_opciones.sql" />
+    <Build Include="Formularios\Preguntas\Pregunta_con_opciones_de_seleccion.sql" />
+    <Build Include="Formularios\Preguntas\Pregunta_con_respuesta_libre.sql" />
+    <Build Include="Formularios\Preguntas\Si_no_nr.sql" />
+    <Build Include="Formularios\Respuestas\Opciones_seleccionadas_respuesta_con_opciones.sql" />
+    <Build Include="Formularios\Respuestas\Responde_respuesta_con_opciones.sql" />
+    <Build Include="Formularios\Respuestas\Responde_respuesta_libre.sql" />
+    <Build Include="Formularios\Respuestas\Respuestas_a_formulario.sql" />
+    <Build Include="Formularios\Activa_por.sql" />
+    <Build Include="Formularios\Formulario.sql" />
+    <Build Include="Formularios\Formulario_tiene_seccion.sql" />
+    <Build Include="Formularios\Periodo_activa_por.sql" />
+    <Build Include="Formularios\Seccion.sql" />
+    <Build Include="Formularios\Seccion_tiene_pregunta.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

@@ -12,14 +12,10 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Pregunta_con_opciones
+    public partial class Si_no_nr
     {
         public string Codigo { get; set; }
-        public string TituloCampoObservacion { get; set; }
     
-        public virtual Pregunta Pregunta { get; set; }
-        public virtual Pregunta_con_opciones_de_seleccion Pregunta_con_opciones_de_seleccion { get; set; }
-        public virtual Escalar Escalar { get; set; }
-        public virtual Si_no_nr Si_no_nr { get; set; }
+        public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }
     }
 }

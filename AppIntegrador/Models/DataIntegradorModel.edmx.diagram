@@ -39,6 +39,41 @@
         <AssociationConnector Association="DataIntegradorModel.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Matriculado_en" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_de_seleccion" Width="1.5" PointX="7.5" PointY="11.875" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta" Width="1.5" PointX="0.75" PointY="12" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones" Width="1.5" PointX="3" PointY="11.875" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="5.25" PointY="11.875" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Opciones___Codig__787EE5A0" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Pregunta___Codig__7F2BE32F" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Pregunta___Codig__00200768" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Activa_por" Width="1.5" PointX="12.625" PointY="24.5" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Escalar" Width="1.5" PointX="5.25" PointY="17" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Formulario" Width="1.5" PointX="10.375" PointY="20.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Formulario_tiene_seccion" Width="1.5" PointX="12.625" PointY="17.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones" Width="1.5" PointX="17.125" PointY="20.375" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Periodo_activa_por" Width="1.5" PointX="14.875" PointY="24.375" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_con_opciones" Width="1.5" PointX="14.875" PointY="16.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_libre" Width="1.5" PointX="17.875" PointY="16.25" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Respuestas_a_formulario" Width="1.5" PointX="12.625" PointY="20.75" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Seccion" Width="1.5" PointX="10.375" PointY="17.25" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Seccion_tiene_pregunta" Width="1.5" PointX="12.625" PointY="13.5" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Si_no_nr" Width="1.5" PointX="5.25" PointY="14.875" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Activa_po__FCodi__693CA210" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Periodo_activa_p__7D439ABD" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Escalar__Codigo__6EF57B66" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Formulari__FCodi__70DDC3D8" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Respuesta__FCodi__06CD04F7" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Formulari__SCodi__71D1E811" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Opciones_selecci__797309D9" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Pregunta___Codig__01142BA1" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Responde___PCodi__03F0984C" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Responde___PCodi__05D8E0BE" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Seccion_t__PCodi__08B54D69" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Si_no_nr__Codigo__09A971A2" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Responde_respues__02FC7413" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Responde_respues__04E4BC85" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Seccion_t__SCodi__07C12930" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

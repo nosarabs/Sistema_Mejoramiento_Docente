@@ -14,6 +14,20 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        [HttpGet]
+        public ActionResult Pregunta_con_opciones_de_seleccion()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult OpcionesDeSeleccion(int? i)
+        {
+            ViewBag.i = i;
+            return PartialView();
+        }
+
+
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
         {
@@ -37,42 +51,64 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Create
+        // Metodo usado para el render partial
+        public ActionResult OpcionesDeSeleccion()
+        {
+            return View();
+        }
+
         public ActionResult Create()
         {
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones, "Codigo", "TituloCampoObservacion");
             return View();
         }
 
         // POST: PreguntaConOpcionesDeSeleccion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
         {
-            if (ModelState.IsValid)
+            // Para esta fase del proyecto solo se soportan preguntas de selección única
+            pregunta.Tipo = "U";
+            if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Pregunta_con_opciones.Pregunta.Enunciado.Length > 0)
             {
+                ModelState.AddModelError("Codigo", "");
                 try
                 {
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
                     pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
                     // Agregue esa pregunta a la tabla de preguntas
-                    db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                    db.Pregunta.Add(pregunta.Pregunta_con_opciones.Pregunta);
                     // Agregue la pregunta con opciones perse a la table=a
                     db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    string codigoPregunta = pregunta.Codigo;
+                    foreach (Opciones_de_seleccion opcion in opciones)
+                    {
+                        // Asigno el codigo a cada opcion de la pregunta
+                        opcion.Codigo = codigoPregunta;
+                    }
+
+                    // Guardo todas las opciones de una
+                    db.Opciones_de_seleccion.AddRange(opciones);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Create");
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
-                    // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
-                    return View(pregunta);
+                    if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                    {
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
                 }
             }
 
-            ViewBag.Codigo = new SelectList(db.Pregunta_con_opciones,
-                "Codigo", "TituloCampoObservacion", pregunta.Codigo);
-            return View(pregunta);
+            return View();
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Edit/5

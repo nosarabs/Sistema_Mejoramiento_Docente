@@ -12,14 +12,16 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Pregunta_con_opciones
+    public partial class Periodo_activa_por
     {
-        public string Codigo { get; set; }
-        public string TituloCampoObservacion { get; set; }
+        public string FCodigo { get; set; }
+        public string CSigla { get; set; }
+        public int GNumero { get; set; }
+        public int GAnno { get; set; }
+        public int GSemestre { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
     
-        public virtual Pregunta Pregunta { get; set; }
-        public virtual Pregunta_con_opciones_de_seleccion Pregunta_con_opciones_de_seleccion { get; set; }
-        public virtual Escalar Escalar { get; set; }
-        public virtual Si_no_nr Si_no_nr { get; set; }
+        public virtual Activa_por Activa_por { get; set; }
     }
 }
