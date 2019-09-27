@@ -14,6 +14,58 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        public class IncompleteOption
+        {
+            public string texto { get; set; }
+            public int orden { get; set; }
+        }
+
+        public List<IncompleteOption> Opciones = new List<IncompleteOption>();
+
+        public ActionResult SaveOptions(List<IncompleteOption> values)
+        {
+            string codigo = values[0].texto;
+            string enunciado = values[1].texto;
+            string justificacion = values[2].texto;
+
+            Pregunta pregunta = new Pregunta();
+            pregunta.Codigo = codigo;
+            pregunta.Enunciado = enunciado;
+
+            db.Pregunta.Add(pregunta);
+            db.SaveChanges();
+
+            Pregunta_con_opciones pregunta2 = new Pregunta_con_opciones();
+            pregunta2.Codigo = codigo;
+            pregunta2.TituloCampoObservacion = justificacion;
+            db.Pregunta_con_opciones.Add(pregunta2);
+            db.SaveChanges();
+
+            Pregunta_con_opciones_de_seleccion pregunta3 = new Pregunta_con_opciones_de_seleccion();
+            pregunta3.Codigo = codigo;
+            pregunta3.Tipo = "U";
+            db.Pregunta_con_opciones_de_seleccion.Add(pregunta3);
+            db.SaveChanges();
+
+            for (int i = 3; i < values.Count; ++i)
+            {
+                IncompleteOption opcion = values[i];
+                // Asigno el codigo a cada opcion de la pregunta
+                Opciones_de_seleccion newOption = new Opciones_de_seleccion
+                {
+                    Codigo = codigo,
+                    Texto = opcion.texto,
+                    Orden = opcion.orden
+                };
+
+                db.Opciones_de_seleccion.Add(newOption);
+                db.SaveChanges();
+            }
+            
+
+            return RedirectToAction("Create");
+        }
+
         [HttpGet]
         public ActionResult Pregunta_con_opciones_de_seleccion()
         {
@@ -26,7 +78,6 @@ namespace AppIntegrador.Controllers
             ViewBag.i = i;
             return PartialView();
         }
-
 
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
@@ -68,7 +119,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opcionesUnused)
         {
             // Para esta fase del proyecto solo se soportan preguntas de selección única
             pregunta.Tipo = "U";
@@ -85,16 +136,25 @@ namespace AppIntegrador.Controllers
                     db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                     db.SaveChanges();
 
-                    string codigoPregunta = pregunta.Codigo;
-                    foreach (Opciones_de_seleccion opcion in opciones)
-                    {
-                        // Asigno el codigo a cada opcion de la pregunta
-                        opcion.Codigo = codigoPregunta;
-                    }
+                    //List<Opciones_de_seleccion> options = new List<Opciones_de_seleccion>();
+                    //string codigoPregunta = pregunta.Codigo;
+                    //for (int i = 0; i < Opciones.Count; i++)
+                    //{
+                    //    IncompleteOption opcion = Opciones[i];
+                    //    // Asigno el codigo a cada opcion de la pregunta
+                    //    Opciones_de_seleccion newOption = new Opciones_de_seleccion
+                    //    {
+                    //        Codigo = codigoPregunta,
+                    //        Texto = opcion.texto,
+                    //        Orden = opcion.orden
+                    //    };
 
-                    // Guardo todas las opciones de una
-                    db.Opciones_de_seleccion.AddRange(opciones);
-                    db.SaveChanges();
+                    //    options.Add(newOption);
+                    //}
+
+                    //// Guardo todas las opciones de una
+                    //db.Opciones_de_seleccion.AddRange(options);
+                    //db.SaveChanges();
 
                     return RedirectToAction("Create");
                 }

@@ -49,14 +49,15 @@
         </div>
 
         <div id="sortable">
-            <div id="placeholder"></div>
+            
         </div>
         
         <input type="button" value="Agregar nueva opción" id="Add" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" id="Create" />
+                <input type="button" value="Create2" class="btn btn-default" id="test" />
                 @Html.ActionLink("Cancelar", "Create")
             </div>
         </div>
@@ -73,20 +74,89 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+
+        $("#test").on("click", function () {
+            var textList = [];
+            var orderList = [];
+            var codigo = $("#Codigo").val();
+            var enunciado = $("#Pregunta_con_opciones_Pregunta_Enunciado").val();
+            var justificacion = $("#txtJustificationNumber").val();
+
+            $(".texto").each(function () {
+                textList.push($(this).val());
+            });
+            $(".orden").each(function () {
+                orderList.push($(this).val());
+            });
+
+            var length = Math.min(textList.length, orderList.length);
+
+            var result = [];
+            result.push({ 'orden': 0, 'texto': codigo });
+            result.push({ 'orden': 0, 'texto': enunciado });
+            result.push({ 'orden': 0, 'texto': justificacion });
+
+            for (var n = 0; n < length; n++) {
+                result.push({ 'orden': orderList[n], 'texto': textList[n] });
+            }
+
+            console.log(JSON.stringify({ 'incompleteOption': result }));
+
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+                url: "/PreguntaConOpcionesDeSeleccion/SaveOptions",
+                data: JSON.stringify(result),
+                dataType: "json",
+                traditional: true,
+                //success: function () {
+                //    $("#Create").click();
+                //}
+            });
+        });
+
+        function fixIndexes() {
+            var i = 0;
+            $(".orden").each(function () {
+                $(this).val(i);
+                ++i;
+            });
+            return i;
+        }
+
         $("#sortable").sortable({
             axis: "y",
-            update: function (event, ui) {
-                var i = 0;
-                $(".orden").each(function () {
-                    console.log(i);
-                      $(this).val(i);
-                      ++i;
-                  });
+            update: function () {
+                fixIndexes();
+            },
+        });
 
-                console.log(pos);
-            }
-        })
         $("#sortable").disableSelection();
+
+        $("#sortable").on("deleteEvent", function () {
+            fixIndexes();
+        });
+
+       
+        $("#Add").click(function () {
+            // Arregle el indice mayor por si se borro algo
+            var i = fixIndexes();
+            $.ajax({
+                url: 'OpcionesDeSeleccion',
+                data: { i: i },
+                success: function (data) {
+                    $("#sortable").append(data);
+                }
+            })
+        });
+
+        function func(id) {
+            var node = document.getElementById(id);
+            node.parentNode.parentNode.remove();
+            $("#sortable").trigger("deleteEvent");
+        }
+
+
     </script>
 
     <script type="text/javascript">
@@ -99,23 +169,5 @@
         }
     </script>
 
-    <script>
-        var i = 0;
-        $("#Add").click(function () {
-            $.ajax({
-                url: 'OpcionesDeSeleccion',
-                data: { i: i },
-                success: function (data) {
-                    $("#sortable").append(data);
-                }
-            })
-            i++;
-
-            var j = 0
-           $(".orden").each(function () {
-              $(this).val(j);
-              ++j;
-           });
-        })
-    </script>
+   
 }
