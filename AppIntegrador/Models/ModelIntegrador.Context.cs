@@ -42,5 +42,6 @@ namespace AppIntegrador.Models
         public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
         public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+        public virtual DbSet<Visualizacion_Respuestas_Escalar> Visualizacion_Respuestas_Escalar { get; set; }
     }
 }

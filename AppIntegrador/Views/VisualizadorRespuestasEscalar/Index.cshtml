@@ -1,0 +1,26 @@
+﻿@model AppIntegrador.Models.VisualizadorEscalar
+
+@{
+    ViewBag.Title = "VisualizadorRespuestasEscalar";
+}
+
+<h2>VisualizadorRespuestasEscalar</h2>
+
+
+@foreach (var item in Model.Opciones_Respuestas)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item)
+        </td>
+    </tr>
+}
+
+@foreach (var item in Model.Cantidad_por_Respuesta)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item)
+        </td>
+    </tr>
+}
