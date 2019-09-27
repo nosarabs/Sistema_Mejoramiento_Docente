@@ -41,11 +41,24 @@ canvas{
 
 .myBox {
 margin: 0 auto;
-border: 2px dotted #000000;
+border: 2px solid #000000;
 padding: 10px;
 font: 18px;
 width: 800px;
 height: 150px;
 overflow: auto;
 background-color: #F9F9F9;
+
 }
+
+li {
+    display:block;
+    list-style: circle;
+}
+
+ul {
+    margin-left: 0;
+}
+
+
+
