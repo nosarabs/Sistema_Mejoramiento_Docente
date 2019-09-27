@@ -211,7 +211,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Models\ModelIntegrador.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ModelIntegrador.Context.cs</LastGenOutput>
@@ -257,12 +256,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Formulario\collapsible.js" />
-    <Content Include="Views\Dashboard\Formulario\styles.css" />
-    <Content Include="Views\Dashboard\Formulario\Formulario.html" />
     <Content Include="Views\Dashboard\Formulario.cshtml" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.js" />
+    <Content Include="Views\Dashboard\styles.css" />
+    <Content Include="Views\Dashboard\collapsible.js" />
+    <Content Include="Content\Site.css" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Create.cshtml" />
