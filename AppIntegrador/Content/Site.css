@@ -5,7 +5,7 @@
     padding: 0%;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     color: black !important;
-    font-size: 20px;
+    font-size: 20px !important;
 }
 
 p.uppercase {

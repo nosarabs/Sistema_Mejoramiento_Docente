@@ -67,11 +67,8 @@ namespace AppIntegrador.Controllers
             {
                 db.Objetivoes.Add(objetivo);
                 db.SaveChanges();
-<<<<<<< HEAD
-                return RedirectToAction("Index");
-=======
+
                 return Redirect(returnUrl);
->>>>>>> lucho
             }
 
             ViewBag.Tipo_O = new SelectList(db.Tipo_Objetivo, "Nombre", "Nombre", objetivo.Tipo_O);

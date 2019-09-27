@@ -4,90 +4,70 @@
     ViewBag.Title = "Planes de Mejora";
 }
 
-<<<<<<< HEAD
-    <div class="planesTable">
-        <h2 class="text-center">Planes de Mejora</h2>
 
-=======
-<h2>Planes de Mejora</h2>
+<div class="planesTable">
+    <h2 class="text-center">Planes de Mejora</h2>
 
-<p>
-    @Html.ActionLink("Crear nuevo Plan de Mejora", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaInicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaFin)
-        </th>
-        <th></th>
-    </tr>
->>>>>>> lucho
 
-        @if (Model.Count() != 0)
-        {
-            <table class="table">
+    @if (Model.Count() != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaFin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserIDA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Formulario.Codigo)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombre)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FechaInicio)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FechaFin)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserIDA)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Formulario.Codigo)
-                    </th>
-                    <th></th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaFin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserIDA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Formulario.Codigo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { user_id = item.UserID, codigo = item.Codigo }) |
+                        @Html.ActionLink("Detalles", "Details", new { user_id = item.UserID, codigo = item.Codigo }) |
+                        @Html.ActionLink("Borrar", "Delete", new { user_id = item.UserID, codigo = item.Codigo }) |
+                        @Html.ActionLink("Objetivos", "Objetivos", new { user_id = item.UserID, codigo = item.Codigo })
+                    </td>
                 </tr>
+            }
+        </table>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaInicio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FechaFin)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserIDA)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Formulario.Codigo)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { user_id = item.UserID, codigo = item.Codigo }) |
-                            @Html.ActionLink("Detalles", "Details", new { user_id = item.UserID, codigo = item.Codigo }) |
-                            @Html.ActionLink("Borrar", "Delete", new { user_id = item.UserID, codigo = item.Codigo }) |
-                            @Html.ActionLink("Objetivos", "Objetivos", new { user_id = item.UserID, codigo = item.Codigo })
-                        </td>
-                    </tr>
-                }
-            </table>
-
-        }
-        else
-        {
-            <div>
-                <h3 class="centeredText">Presione el botón "Crear Nuevo" para agregar un nuevo Plan</h3>
-            </div>
-        }
-        <div style="float:right;">
-            @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary btn-sm" })
+    }
+    else
+    {
+        <div>
+            <h3 class="centeredText">Presione el botón "Crear Nuevo" para agregar un nuevo Plan</h3>
         </div>
+    }
+    <div style="float:right;">
+        @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary btn-sm" })
     </div>
+</div>
 
