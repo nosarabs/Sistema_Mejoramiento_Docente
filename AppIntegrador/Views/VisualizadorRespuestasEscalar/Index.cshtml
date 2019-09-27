@@ -7,15 +7,6 @@
 <h2>VisualizadorRespuestasEscalar</h2>
 
 
-@foreach (var item in Model.Opciones_Respuestas)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item)
-        </td>
-    </tr>
-}
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
@@ -50,13 +41,13 @@
                     xAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Nombre de los Cursos'
+                            labelString: 'Numero respuesta'
                         }
                     }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Cantidad de Créditos'
+                            labelString: 'Cantidad Respuestas'
                         },
                         ticks: {
                             beginAtZero: true
@@ -69,8 +60,7 @@
     }
         // Esta línea siempre tiene que ir, ya que si se le pone la otra que es: var ctx = $("bar-chart"); no sirve la vara
 
-    creaGrafico(ctx, cursillos, cantCreditos,'horizontalBar');
-        creaGrafico(ctx, cursillos, cantCreditos,'horizontalBar');
+    creaGrafico(ctx, cursillos, cantCreditos, 'bar');
 
 </script>
 
