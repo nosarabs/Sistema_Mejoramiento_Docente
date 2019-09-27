@@ -1,8 +1,6 @@
 ﻿CREATE TABLE [dbo].[Estudiante]
 (
-	[EstudianteID]		INT				IDENTITY (1, 1) NOT NULL,
-	[Apellido]			NVARCHAR (50)	NULL,
-	[Nombre]			NVARCHAR (50)	NULL,
-	[FechaMatricula]	DATETIME		NULL,
-	PRIMARY KEY CLUSTERED ([EstudianteID] ASC)
-) 
+	[Cedula] CHAR(10) NOT NULL PRIMARY KEY, 
+    [Carne] NCHAR(6) NOT NULL,
+	FOREIGN KEY (Cedula) REFERENCES Persona (Cedula)
+)

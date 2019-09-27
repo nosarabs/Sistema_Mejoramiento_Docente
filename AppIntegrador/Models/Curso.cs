@@ -17,14 +17,16 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Curso()
         {
-            this.Matriculas = new HashSet<Matricula>();
+            this.Grupo = new HashSet<Grupo>();
         }
     
-        public int CursoId { get; set; }
-        public string Titulo { get; set; }
-        public Nullable<int> Creditos { get; set; }
+        public string Sigla { get; set; }
+        public string Nombre { get; set; }
+        public string CodCarrera { get; set; }
+        public string CodEnfasis { get; set; }
     
+        public virtual Enfasis Enfasis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matricula> Matriculas { get; set; }
+        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

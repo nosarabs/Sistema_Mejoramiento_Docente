@@ -6,13 +6,11 @@
     @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50" })
-        @Html.TextBoxFor(opcion => opcion.Orden, null, new { @Name = "[" + i + "].Orden", @class = "orden"  })
-
-        <input type="button" value="Delete" class="remove" />
-        
-        <br />
-        @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
-    </div>
+        @Html.TextBoxFor(opcion => opcion.Orden, null, new { @Name = "[" + i + "].Orden", @class = "orden", @Value = i })
+        <button type="button" id="rem@(i)" onclick="func('rem@(i)')">Borrar</button>
+            <br />
+            @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
+</div>
 </div>
 
 <style>
@@ -21,19 +19,13 @@
     }
 </style>
 
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        $('input[name="[@(i)].Texto"]').keyup(function (e) {
-            var $this      = $(this),
-            charLength = $this.val().length,
-            charLimit  = $this.attr("maxlength");
-            // Displays count
-            $this.next('span[name="count@(i)"]').html(charLength + "/" + charLimit);
-            console.log(charLength + "/" + charLimit)
-        });
+
+    <script>
+    function func(id) {
+        console.log(id);
+        var node = document.getElementById(id);
+        node.parentNode.parentNode.remove();
+    }
     </script>
-
-
-}
+ 
 
