@@ -3,11 +3,11 @@
 	-- Hay que cambiar varios valores cuando estén las otras tablas.
 	FCodigo CHAR(8) NOT NULL,
 	CSigla VARCHAR(10) NOT NULL,
-	GNumero INT NOT NULL,
+	GNumero TINYINT NOT NULL,
 	GAnno INT NOT NULL,
-	GSemestre INT NOT NULL,
+	GSemestre TINYINT NOT NULL,
 
 	PRIMARY KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre),
 	FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
-	--FOREIGN KEY(CSigla, GNumero, GAnno, GSemestre) REFERENCES Grupo(Sigla, Numero, Anno, Semestre),
+	FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno),
 )
