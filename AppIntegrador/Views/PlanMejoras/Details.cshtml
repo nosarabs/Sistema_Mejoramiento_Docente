@@ -4,55 +4,58 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>PlanMejora</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
+    <div class="planesTable">
+        <h2>Details</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+        <div>
+            <h4>PlanMejora</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaInicio)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaInicio)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaFin)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FechaInicio)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FechaFin)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaFin)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserIDA)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FechaFin)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserIDA)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserIDA)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Formulario.Codigo)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserIDA)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Formulario.Codigo)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Formulario.Codigo)
+                </dt>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                <dd>
+                    @Html.DisplayFor(model => model.Formulario.Codigo)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>

@@ -4,6 +4,8 @@
     margin: 0%;
     padding: 0%;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    color: black !important;
+    font-size: 20px;
 }
 
 p.uppercase {
@@ -17,9 +19,8 @@ p.uppercase {
 
 .mainBar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    background-color: #41ade7;
 }
 
 ul {
@@ -94,16 +95,16 @@ nav {
     z-index: 1;
 }
 
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -119,8 +120,20 @@ nav {
     width: 100%;
 }
 
-.mainBarText {
-    color: black;
-    font-size: 2em;
+.mainBar {
+    background-color: #41ADE7 !important;
 }
 
+/* Estilos para los planes de mejora */
+.planesTable {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.centerImage {
+    width: 100%;
+}
+
+.secondNavBar {
+    font-size: 20px;
+}
