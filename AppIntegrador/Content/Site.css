@@ -124,3 +124,11 @@ nav {
     font-size: 2em;
 }
 
+.MenuSupDer {
+    background-color: #41ade7
+}
+
+li a:hover {
+    background-color: #167eb6;
+    color: black;
+}
