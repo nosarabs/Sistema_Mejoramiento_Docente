@@ -1,4 +1,4 @@
-function drawChart(cvs, chartData, type) {
+function drawBarChart(cvs, chartData) {
 	
 	var dataLength = chartData.DATA.length;
 	var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
@@ -6,15 +6,16 @@ function drawChart(cvs, chartData, type) {
 	
 	new Chart(cvs, {
 		
-		type: type,
+		type: "bar",
 		data: {
 		labels: chartData.LABELS,
 		datasets: [
 			{
 				label: "Cantidad de estudiantes",
                 backgroundColor: colors,
-                borderColor: "rgb(0, 0, 0)",
-                borderWidth: 0.5,
+                hoverBackgroundColor: colors,
+                borderColor: "black",
+                borderWidth: 0,
 				data: chartData.DATA
 			}
 		]
@@ -23,36 +24,45 @@ function drawChart(cvs, chartData, type) {
             legend: {
                 display: true,
                 labels: {
-                    fontColor: "rgb(0, 0, 0)",
+                    fontColor: "black",
                     fontSize: 16,
                 }
             },
 			title: {
 				display: false,
-			},
+            },
+            tooltips: {
+                enabled: false
+            },
 			responsive: false,
-			maintainAspectRatio: false,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "black",
+                        fontSize: 16,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "black",
+                        fontSize: 16,
+                    }
+                }]
+            },
 			plugins: {
 				datalabels: {
                     color: "white",
                     textStrokeColor: "black",
-                    textStrokeWidth: 2,
+                    textStrokeWidth: 0,
 					anchor: "end",
 					align: "start",
 					clamp: true,
-					offset: 16,
+					offset: 8,
 					textAlign: "center",
 					font: {
-						size: "16",
-					},
-					formatter: function(value, ctx) {
-						var sum = 0;
-						var data = ctx.chart.data.datasets[0].data;
-						for (var i = 0; i < data.length; ++i) {
-							sum += data[i];
-						}
-						var percentage = (value * 100 / sum).toFixed(2) + "%";
-						return percentage + "\n\n" + value;
+                        size: "14",
+                        weight: "normal"
 					}
 				}
 			}
@@ -60,6 +70,75 @@ function drawChart(cvs, chartData, type) {
 		
 	});
 	
+}
+
+function drawPieChart(cvs, chartData) {
+
+    var dataLength = chartData.DATA.length;
+    var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+    //chroma.js: https://gka.github.io/chroma.js/
+
+    new Chart(cvs, {
+
+        type: "pie",
+        data: {
+            labels: chartData.LABELS,
+            datasets: [
+                {
+                    label: "Cantidad de estudiantes",
+                    backgroundColor: colors,
+                    hoverBackgroundColor: colors,
+                    borderColor: "white",
+                    borderWidth: 1,
+                    data: chartData.DATA
+                }
+            ]
+        },
+        options: {
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: "black",
+                    fontSize: 16,
+                }
+            },
+            title: {
+                display: false,
+            },
+            tooltips: {
+                enabled: false
+            },
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    color: "white",
+                    textStrokeColor: "black",
+                    textStrokeWidth: 0,
+                    anchor: "end",
+                    align: "start",
+                    clamp: true,
+                    offset: 16,
+                    textAlign: "center",
+                    font: {
+                        size: "14",
+                        weight: "normal"
+                    },
+                    formatter: function (value, ctx) {
+                        var sum = 0;
+                        var data = ctx.chart.data.datasets[0].data;
+                        for (var i = 0; i < data.length; ++i) {
+                            sum += data[i];
+                        }
+                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        return percentage + "\n\n" + value;
+                    }
+                }
+            }
+        }
+
+    });
+
 }
 
 function addChart(cnt, chartData, className) {
@@ -71,19 +150,19 @@ function addChart(cnt, chartData, className) {
 	switch(className) {
 		
 		case classes.ESCALA:
-			drawChart(cvs, chartData, types.ESCALA);
+			drawBarChart(cvs, chartData);
 			break;
 			
 		case classes.SELECCION_UNICA:
-			drawChart(cvs, chartData, types.SELECCION_UNICA);
+			drawPieChart(cvs, chartData);
 			break;
 			
 		case classes.SELECCION_MULTIPLE:
-			drawChart(cvs, chartData, types.SELECCION_MULTIPLE);
+			drawBarChart(cvs, chartData);
 			break;
 			
 		case classes.SELECCION_CERRADA:
-			drawChart(cvs, chartData, types.SELECCION_CERRADA);
+			drawPieChart(cvs, chartData);
 			break;
 			
 		case classes.TEXTO_ABIERTO:
