@@ -14,7 +14,8 @@ function createBullets(parnt, answers) {
 		
 		if (i < (answers.length - 1)) {
 			//Add a line break between items.
-			var br = document.createElement("br");
+            var br = document.createElement("br");
+            list.appendChild(br);
 		}
     }
 	

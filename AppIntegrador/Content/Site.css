@@ -22,13 +22,10 @@ p.uppercase {
     background-color: #41ade7;
 }
 
-ul {
-    list-style: none;
-    text-align: center;
-}
-
 .wrapper {
     display: flex;
+    list-style: none;
+    text-align: center;
 }
 
     .wrapper .projectTitle {
