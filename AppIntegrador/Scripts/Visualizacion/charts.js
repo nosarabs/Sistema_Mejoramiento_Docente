@@ -12,13 +12,21 @@ function drawChart(cvs, chartData, type) {
 		datasets: [
 			{
 				label: "Cantidad de estudiantes",
-				backgroundColor: colors,
+                backgroundColor: colors,
+                borderColor: "rgb(0, 0, 0)",
+                borderWidth: 0.5,
 				data: chartData.DATA
 			}
 		]
 		},
 		options: {
-			legend: { display: true },
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: "rgb(0, 0, 0)",
+                    fontSize: 16,
+                }
+            },
 			title: {
 				display: false,
 			},
@@ -26,15 +34,16 @@ function drawChart(cvs, chartData, type) {
 			maintainAspectRatio: false,
 			plugins: {
 				datalabels: {
-					color: "white",
+                    color: "white",
+                    textStrokeColor: "black",
+                    textStrokeWidth: 2,
 					anchor: "end",
 					align: "start",
 					clamp: true,
 					offset: 16,
 					textAlign: "center",
 					font: {
-						size: "14",
-						weight: "bold"
+						size: "16",
 					},
 					formatter: function(value, ctx) {
 						var sum = 0;
