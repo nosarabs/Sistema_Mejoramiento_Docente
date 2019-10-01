@@ -1,0 +1,59 @@
+* {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+h3 {text-align: center;}
+
+.escala, .seleccion_unica, .seleccion_multiple, .seleccion_cerrada, .texto_abierto {
+    background-color: #41ade7;
+    color: black;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+    .active, .escala:hover, .seleccion_unica:hover, .seleccion_multiple:hover, .seleccion_cerrada:hover, .texto_abierto:hover {
+        background-color: #41ade7;
+    }
+
+.escala:after, .seleccion_unica:after, .seleccion_multiple:after, .seleccion_cerrada:after, .texto_abierto:after {
+	content: '\002B';
+	font-weight: bold;
+	float: right;
+	margin-left: 5px;
+}
+
+.active:after {
+	content: "\2212";
+}
+
+.content {
+	padding: 0 18px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	background-color: #f1f1f1;
+}
+
+canvas{
+    margin: 0 auto;
+}
+
+.myBox {
+    margin: 0 auto;
+    border: 2px solid #000000;
+    padding: 10px;
+    font: 18px;
+    width: 900px;
+    height: 200px;
+    overflow: auto;
+    background-color: #F9F9F9;
+    list-style: circle !important;
+    text-align: left !important;
+}
