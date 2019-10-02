@@ -9,75 +9,77 @@
 </head>
 <body>
     @if (ViewBag.HTMLCheck != true)
-    {
+    {   
         <div class="mainBar">
-            <!-- Logo -->
-            <a href="https://www.ucr.ac.cr/" class="logo" target="_blank">
-                <img src="~/Content/images/ucr_promo.png" alt="ucr logo" />
-            </a>
-            <!-- Proyect -->
-            <p class="uppercase">Sistema de Mejoramiento Docente</p>
-            <div class="MenuSupDer" id>
-                <nav>
-                    @Html.ActionLink("About", "About", "Home")
-                </nav>
-
+            <div class="item">
+                <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
+            </div>
+            <div class="item">
+                Sistema de Mejoramiento Docente
+            </div>
+            <div class="item">
+                <ul>
+                    <li style="float:right"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                </ul>
             </div>
         </div>
 
 
-        <!-- Project navigation bar -->
+        <div class="secondNavBar">
+            <!-- <div class="wrapper">
+            </div>-->
+            <!-- Project navigation bar -->
 
-        <nav>
-            <br />
-            <ul class="wrapper">
-                <li>
-                    <div class="dropdown">
-                        <button class="dropbtn">Usuarios</button>
-                        <div class="dropdown-content">
-                            <a href="#link1">Link 1</a>
-                            <a href="#link2">Link 2</a>
-                            <a href="#link3">Link 3</a>
+            <nav>
+                <br />
+                <ul class="wrapper">
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">Usuarios</button>
+                            <div class="dropdown-content">
+                                <a href="#link1">Link 1</a>
+                                <a href="#link2">Link 2</a>
+                                <a href="#link3">Link 3</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="dropdown">
-                        <button class="dropbtn">Formularios</button>
-                        <div class="dropdown-content">
-                            @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">Formularios</button>
+                            <div class="dropdown-content">
+                                @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="search">
-                    <div class="dropdown">
-                        <button class="dropbtn">Planes de mejoramiento</button>
-                        <div class="dropdown-content">
-                            @Html.ActionLink("Mis planes de mejoramiento", "planMejoramiento", "PlanMejoramiento")
-                            @Html.ActionLink("Estadisticas de mis planes", "estadisticas", "PlanMejoramiento")
+                    </li>
+                    <li class="search">
+                        <div class="dropdown">
+                            <button class="dropbtn">Planes de mejoramiento</button>
+                            <div class="dropdown-content">
+                                @Html.ActionLink("Mis planes de mejoramiento", "planMejoramiento", "PlanMejoramiento")
+                                @Html.ActionLink("Estadisticas de mis planes", "estadisticas", "PlanMejoramiento")
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="dropdown">
-                        <button class="dropbtn">Visualización</button>
-                        <div class="dropdown-content">
-                            <a href="#link1">Link 1</a>
-                            <a href="#link2">Link 2</a>
-                            <a href="#link3">Link 3</a>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">Visualización</button>
+                            <div class="dropdown-content">
+                                <a href="#link1">Link 1</a>
+                                <a href="#link2">Link 2</a>
+                                <a href="#link3">Link 3</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-            <br />
-        </nav>
+                    </li>
+                </ul>
+                <br />
+            </nav>
+        </div>
     }
+        @RenderBody()
 
-    @RenderBody()
 
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
