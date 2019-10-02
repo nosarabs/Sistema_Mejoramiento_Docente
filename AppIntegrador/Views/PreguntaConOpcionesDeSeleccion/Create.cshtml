@@ -82,10 +82,20 @@
         // Set index starting from 0 for each option
         function fixIndexes() {
             var i = 0;
+            // Fix order value and name
             $(".orden").each(function () {
-                $(this).val(i);
+                $(this).val(i);            
+                this.name = "[" + i + "].Orden";
                 ++i;
             });
+
+            // Fix text name
+            i = 0;
+            $(".texto").each(function () {
+                this.name = "[" + i + "].Texto";
+                ++i;
+            });
+
             return i;
         }
 
@@ -114,7 +124,7 @@
 
 
         // Delete option input box(es)
-        function func(id) {
+        function removeOption(id) {
             var node = document.getElementById(id);
             node.parentNode.parentNode.remove();
             // Fix indexes when an input box is deleted

@@ -19,9 +19,9 @@
             @Value = i
         })
 
-        <button type="button" id="rem@(i)" class="remove-button btn btn-default" onclick="func('rem@(i)')">Borrar</button>
-            <br />
-            @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
+        <button type="button" id="rem@(i)" class="remove-button btn btn-default" onclick="removeOption('rem@(i)')">Borrar</button>
+        <br />
+        @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
     </div>
 </div>
 
