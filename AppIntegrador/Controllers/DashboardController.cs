@@ -14,10 +14,5 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        // GET: Formulario
-        public ActionResult Formulario()
-        {
-            return View();
-        }
     }
 }

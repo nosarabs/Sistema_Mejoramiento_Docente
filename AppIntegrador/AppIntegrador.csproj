@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -316,7 +317,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Dashboard\Formulario.cshtml" />
+    <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
