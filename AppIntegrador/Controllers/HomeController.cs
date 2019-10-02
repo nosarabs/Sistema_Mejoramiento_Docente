@@ -46,19 +46,21 @@ namespace AppIntegrador.Controllers
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
             {
+                /* 
+                 * LoginIntegrador es un connection string que no hace uso de metadata, para evitar errores.
+                 * Si da problemas, revisar en Web.config que LoginIntegrador apunta hacia la base de datos utilizada.
+                 */
                 using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ToString()))
                 {
-                    /*El sqlCommand recibe como primer parámetro el nombre del
-                    procedimiento almacenado,
+                    /* El sqlCommand recibe como primer parámetro el nombre del procedimiento almacenado,
                     * de segundo parámetro recibe el sqlConnection
                     */
                     using (SqlCommand cmd = new SqlCommand("SELECT dbo.loginUsuario(@pLoginName, @pPassword)", con))
                     {
                         try
                         {
-                            //Se preparan los parámetros que recibe el procedimiento almacenado
-                            SqlParameter loginName = new SqlParameter("@pLoginName",
-                            SqlDbType.VarChar);
+                            // Se preparan los parámetros que recibe el procedimiento almacenado
+                            SqlParameter loginName = new SqlParameter("@pLoginName", SqlDbType.VarChar);
                             loginName.Value = objUser.Username;
                             loginName.Direction = ParameterDirection.Input;
                             SqlParameter userPassword = new
@@ -67,9 +69,9 @@ namespace AppIntegrador.Controllers
                             userPassword.Direction = ParameterDirection.Input;
                             cmd.Parameters.Add(loginName);
                             cmd.Parameters.Add(userPassword);
-                            /*Se abre la conexión*/
+                            // Se abre la conexión
                             con.Open();
-                            //Se ejecuta el procedimiento almacenado
+                            // Se ejecuta el procedimiento almacenado
                             bool success = (bool)cmd.ExecuteScalar();
                             if (success)
                             {
