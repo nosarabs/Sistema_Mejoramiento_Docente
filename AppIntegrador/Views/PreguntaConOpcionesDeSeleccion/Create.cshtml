@@ -28,7 +28,7 @@
                 @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                 {
                     htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-                 }
+                }
                )
                 @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
             </div>
@@ -49,16 +49,15 @@
         </div>
 
         <div id="sortable">
-            
+
         </div>
-        
-        <input type="button" value="Agregar nueva opción" id="Add" />
+
+        <input type="button" class="btn btn-default" value="Agregar nueva opción" id="Add" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" id="Create" />
-                <input type="button" value="Create2" class="btn btn-default" id="test" />
-                @Html.ActionLink("Cancelar", "Create")
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
             </div>
         </div>
 
@@ -69,52 +68,18 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<style>
+    .orden {
+        display: none;
+    }
+</style>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-
-        $("#test").on("click", function () {
-            var textList = [];
-            var orderList = [];
-            var codigo = $("#Codigo").val();
-            var enunciado = $("#Pregunta_con_opciones_Pregunta_Enunciado").val();
-            var justificacion = $("#txtJustificationNumber").val();
-
-            $(".texto").each(function () {
-                textList.push($(this).val());
-            });
-            $(".orden").each(function () {
-                orderList.push($(this).val());
-            });
-
-            var length = Math.min(textList.length, orderList.length);
-
-            var result = [];
-            result.push({ 'orden': 0, 'texto': codigo });
-            result.push({ 'orden': 0, 'texto': enunciado });
-            result.push({ 'orden': 0, 'texto': justificacion });
-
-            for (var n = 0; n < length; n++) {
-                result.push({ 'orden': orderList[n], 'texto': textList[n] });
-            }
-
-            console.log(JSON.stringify({ 'incompleteOption': result }));
-
-            $.ajax({
-                contentType: "application/json; charset=utf-8",
-                type: "POST",
-                url: "/PreguntaConOpcionesDeSeleccion/SaveOptions",
-                data: JSON.stringify(result),
-                dataType: "json",
-                traditional: true,
-                //success: function () {
-                //    $("#Create").click();
-                //}
-            });
-        });
-
+        // Set index starting from 0 for each option
         function fixIndexes() {
             var i = 0;
             $(".orden").each(function () {
@@ -124,8 +89,10 @@
             return i;
         }
 
+        // Make options inside sortable id sortable
         $("#sortable").sortable({
             axis: "y",
+            // Fix indexes of each input box when an input box is moved
             update: function () {
                 fixIndexes();
             },
@@ -133,13 +100,8 @@
 
         $("#sortable").disableSelection();
 
-        $("#sortable").on("deleteEvent", function () {
-            fixIndexes();
-        });
-
-       
+        // When a new option is added, fix the index (not very efficient)
         $("#Add").click(function () {
-            // Arregle el indice mayor por si se borro algo
             var i = fixIndexes();
             $.ajax({
                 url: 'OpcionesDeSeleccion',
@@ -150,12 +112,14 @@
             })
         });
 
+
+        // Delete option input box(es)
         function func(id) {
             var node = document.getElementById(id);
             node.parentNode.parentNode.remove();
-            $("#sortable").trigger("deleteEvent");
+            // Fix indexes when an input box is deleted
+            fixIndexes();
         }
-
 
     </script>
 
@@ -168,6 +132,4 @@
             }
         }
     </script>
-
-   
 }
