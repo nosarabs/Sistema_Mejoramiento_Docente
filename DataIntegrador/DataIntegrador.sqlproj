@@ -59,6 +59,7 @@
     <Folder Include="Formularios\" />
     <Folder Include="Formularios\Preguntas\" />
     <Folder Include="Formularios\Respuestas\" />
+    <Folder Include="Planes_de_Mejora" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -98,6 +99,16 @@
     <Build Include="Formularios\Periodo_activa_por.sql" />
     <Build Include="Formularios\Seccion.sql" />
     <Build Include="Formularios\Seccion_tiene_pregunta.sql" />
+    <Build Include="Planes_de_Mejora\Accion_de_mejora.sql" />
+    <Build Include="Planes_de_Mejora\Accionable.sql" />
+    <Build Include="Planes_de_Mejora\Asociado_a.sql" />
+    <Build Include="Planes_de_Mejora\Compuesto_por.sql" />
+    <Build Include="Planes_de_Mejora\Evaluado_por.sql" />
+    <Build Include="Planes_de_Mejora\Objetivo.sql" />
+    <Build Include="Planes_de_Mejora\Plan_de_mejora.sql" />
+    <Build Include="Planes_de_Mejora\Responsable_de.sql" />
+    <Build Include="Planes_de_Mejora\Seccion_plan_de_mejora.sql" />
+    <Build Include="Planes_de_Mejora\Tipo_objetivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
