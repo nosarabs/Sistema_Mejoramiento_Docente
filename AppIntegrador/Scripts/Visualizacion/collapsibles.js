@@ -34,11 +34,12 @@ function appendTitle(elmnt, txt) {
 	elmnt.appendChild(title);
 }
 
-function createCollapsible(question, type) {
+function createCollapsible(id, question) {
 	
-	var btn = document.createElement("button");   	// Create a <button> element
-	btn.className = type;							//Set its class as a collapsible
-	btn.innerHTML = question;						// Insert text
+	var btn = document.createElement("button");   	//Create a <button> element
+    btn.className = "escala";   					// Set its class as a collapsible
+    btn.id = id;                                    // Set its id as the question's id
+	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
 	cnt.className = "content";
 	
@@ -86,14 +87,12 @@ function createCollapsible(question, type) {
 
 //Main
 
-var questions = ['¿Qué calificación le daría la profesor?', '¿Qué calificación le daría al curso?'];
-var qTypes = [classes.ESCALA, classes.SELECCION_UNICA];
-
-var titulo = document.createElement("h3");
-titulo.innerHTML = "Formulario: " + codigoFormulario;
-document.body.appendChild(titulo);
+var title = document.createElement("h3");
+title.innerHTML = "Formulario: " + codigoFormulario;
+document.body.appendChild(title);
 
 for (var i = 0; i < questions.length; ++i) {
-	question = String(i + 1) + ". " + questions[i];
-	createCollapsible(question, qTypes[i]);
+    var id = questions[i].Value;
+	var question = String(i + 1) + ". " + questions[i].Text;
+	createCollapsible(id, question);
 }

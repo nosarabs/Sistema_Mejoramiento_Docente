@@ -1,4 +1,5 @@
-﻿
+﻿@model AppIntegrador.Models.ResultadosFormulario
+
 @{
     ViewBag.Title = "Formulario";
     String codigo = ViewBag.codigo;
@@ -11,7 +12,10 @@
 
 <body>
 
-    <script> var codigoFormulario = @Html.Raw(Json.Encode(codigo)); </script>
+    <script>
+        var codigoFormulario = @Html.Raw(Json.Encode(codigo));
+        var questions = @Html.Raw(Json.Encode(Model.Preguntas));
+    </script>
     <script src="~/Scripts/Visualizacion/Chart.js"></script>
     <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
     <script src="~/Scripts/Visualizacion/chroma.js"></script>
