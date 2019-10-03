@@ -12,22 +12,18 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Funcionario
+    public partial class TipoObjetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Funcionario()
+        public TipoObjetivo()
         {
-            this.Responsable_De = new HashSet<Responsable_De>();
-            this.UnidadAcademica = new HashSet<UnidadAcademica>();
+            this.Objetivo = new HashSet<Objetivo>();
         }
     
-        public string Cedula { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
     
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
+        public virtual ICollection<Objetivo> Objetivo { get; set; }
     }
 }

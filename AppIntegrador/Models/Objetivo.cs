@@ -12,25 +12,27 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Objetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Objetivo()
         {
-            this.Persona = new HashSet<Persona>();
-            this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
-            this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
+            this.Accionable = new HashSet<Accionable>();
+            this.AccionDeMejora = new HashSet<AccionDeMejora>();
         }
     
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
+        public int Codigo { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string TipoObjetivo { get; set; }
+        public string CedulaProf { get; set; }
+        public int CodigoPlan { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Persona> Persona { get; set; }
+        public virtual ICollection<Accionable> Accionable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual PlanDeMejora PlanDeMejora { get; set; }
+        public virtual TipoObjetivo TipoObjetivo1 { get; set; }
     }
 }
