@@ -228,6 +228,7 @@
     <Compile Include="Models\Respuestas_a_formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ResultadosFormularioModel.cs" />
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

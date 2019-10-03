@@ -19,14 +19,27 @@ namespace AppIntegrador.Controllers
         {
             String codigoFormulario = ViewBag.codigo;
             ViewBag.codigo = codigo;
-            return View();
+            var modelo = new ResultadosFormulario
+            {
+                Preguntas = ObtenerPreguntas(codigo)
+            };
+            return View(modelo);
         }
 
         // GET: PreguntasFormulario
-        /*[HttpGet]
-        public IEnumerable<SelectListItem> ObtenerPreguntas ()
+        [HttpGet]
+        public IEnumerable<SelectListItem> ObtenerPreguntas (String codigo)
         {
-            return db.Pregunta.Select().toList();
-        }*/
+            var preguntas = from f in db.Formulario
+                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
+                            join s in db.Seccion on fs.SCodigo equals s.Codigo
+                            join sp in db.Seccion_tiene_pregunta on s.Codigo equals sp.SCodigo
+                            join p in db.Pregunta on sp.PCodigo equals p.Codigo
+                            where f.Codigo == codigo
+                            orderby fs.Orden, sp.Orden
+                            select new SelectListItem { Value = p.Codigo, Text = p.Enunciado };
+
+            return preguntas.ToList();
+        }
     }
 }
