@@ -79,4 +79,32 @@ VALUES
 
 INSERT INTO Opciones_seleccionadas_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada)
 VALUES
-('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '23456789', 10);*/
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '23456789', 10);
+
+INSERT INTO Pregunta (Codigo, Enunciado)
+VALUES
+('34567890', '¿Llevaria otro curso con este profesor?');
+
+INSERT INTO Pregunta_con_opciones (Codigo, TituloCampoObservacion)
+VALUES 
+('34567890', 'Justifique');
+
+INSERT INTO Si_no_nr (Codigo)
+VALUES 
+('34567890');
+
+INSERT INTO Responde_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, Justificacion)
+VALUES
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '34567890', 'Sí, me gustaría llevar otro curso con el profesor ya que es muy bueno.');
+
+INSERT INTO Opciones_seleccionadas_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada)
+VALUES
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '34567890', 1);
+
+INSERT INTO Pregunta (Codigo, Enunciado)
+VALUES
+('11111111', '¿Qué comentarios tiene respecto al curso?');
+
+INSERT INTO Pregunta_con_respuesta_libre (Codigo)
+VALUES
+('11111111');*/
