@@ -28,7 +28,7 @@
                 @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                 {
                     htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-                 }
+                }
                )
                 @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
             </div>
@@ -49,17 +49,15 @@
         </div>
 
         <div id="sortable">
-            <div id="placeholder"></div>
+
         </div>
-        
-        <input type="button" value="Agregar nueva opción" id="Add" />
 
-
+        <input type="button" class="btn btn-default" value="Agregar nueva opción" id="Add" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Cancelar", "Create")
+                <input type="submit" value="Create" class="btn btn-default" id="Create" />
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
             </div>
         </div>
 
@@ -70,25 +68,69 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<style>
+    .orden {
+        display: none;
+    }
+</style>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        // Set index starting from 0 for each option
+        function fixIndexes() {
+            var i = 0;
+            // Fix order value and name
+            $(".orden").each(function () {
+                $(this).val(i);            
+                this.name = "[" + i + "].Orden";
+                ++i;
+            });
+
+            // Fix text name
+            i = 0;
+            $(".texto").each(function () {
+                this.name = "[" + i + "].Texto";
+                ++i;
+            });
+
+            return i;
+        }
+
+        // Make options inside sortable id sortable
         $("#sortable").sortable({
             axis: "y",
-            update: function (event, ui) {
-                var i = 0;
-                $(".orden").each(function () {
-                    console.log(i);
-                      $(this).val(i);
-                      ++i;
-                  });
+            // Fix indexes of each input box when an input box is moved
+            update: function () {
+                fixIndexes();
+            },
+        });
 
-                console.log(pos);
-            }
-        })
         $("#sortable").disableSelection();
+
+        // When a new option is added, fix the index (not very efficient)
+        $("#Add").click(function () {
+            var i = fixIndexes();
+            $.ajax({
+                url: 'OpcionesDeSeleccion',
+                data: { i: i },
+                success: function (data) {
+                    $("#sortable").append(data);
+                }
+            })
+        });
+
+
+        // Delete option input box(es)
+        function removeOption(id) {
+            var node = document.getElementById(id);
+            node.parentNode.parentNode.remove();
+            // Fix indexes when an input box is deleted
+            fixIndexes();
+        }
+
     </script>
 
     <script type="text/javascript">
@@ -99,25 +141,5 @@
                 txtJustificationNumber.focus();
             }
         }
-    </script>
-
-    <script>
-        var i = 0;
-        $("#Add").click(function () {
-            $.ajax({
-                url: 'OpcionesDeSeleccion',
-                data: { i: i },
-                success: function (data) {
-                    $("#sortable").append(data);
-                }
-            })
-            i++;
-
-            var j = 0
-           $(".orden").each(function () {
-              $(this).val(j);
-              ++j;
-           });
-        })
     </script>
 }

@@ -27,7 +27,6 @@ namespace AppIntegrador.Controllers
             return PartialView();
         }
 
-
         // GET: PreguntaConOpcionesDeSeleccion
         public ActionResult Index()
         {
@@ -68,7 +67,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> Opciones)
         {
             // Para esta fase del proyecto solo se soportan preguntas de selección única
             pregunta.Tipo = "U";
@@ -86,14 +85,13 @@ namespace AppIntegrador.Controllers
                     db.SaveChanges();
 
                     string codigoPregunta = pregunta.Codigo;
-                    foreach (Opciones_de_seleccion opcion in opciones)
-                    {
-                        // Asigno el codigo a cada opcion de la pregunta
+
+                    // Asigno el codigo a cada opcion de la pregunta
+                    foreach (Opciones_de_seleccion opcion in Opciones)
                         opcion.Codigo = codigoPregunta;
-                    }
 
                     // Guardo todas las opciones de una
-                    db.Opciones_de_seleccion.AddRange(opciones);
+                    db.Opciones_de_seleccion.AddRange(Opciones);
                     db.SaveChanges();
 
                     return RedirectToAction("Create");
