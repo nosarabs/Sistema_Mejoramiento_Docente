@@ -51,4 +51,32 @@ VALUES
 
 INSERT INTO Opciones_seleccionadas_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada)
 VALUES
-('111111', 'DAlfaro', 'CI1312', 1, 2019, 2, '2019-09-11', '55555555', 2);*/
+('111111', 'DAlfaro', 'CI1312', 1, 2019, 2, '2019-09-11', '55555555', 2);
+
+INSERT INTO Formulario (Codigo, Nombre)
+VALUES
+('12345678', 'Formulario 1');
+
+INSERT INTO Pregunta (Codigo, Enunciado)
+VALUES 
+('23456789', 'Del 1 al 10 ¿que nota le daría al profesor?');
+
+INSERT INTO Pregunta_con_opciones (Codigo, TituloCampoObservacion)
+VALUES
+('23456789', 'Justifique');
+
+INSERT INTO Escalar (Codigo, Incremento, Minimo, Maximo)
+VALUES
+('23456789', 1, 1, 10);
+
+INSERT INTO Respuestas_a_formulario (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha)
+VALUES
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10');
+
+INSERT INTO Responde_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, Justificacion)
+VALUES
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '23456789', 'Me parece un buen profesor.');
+
+INSERT INTO Opciones_seleccionadas_respuesta_con_opciones (FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada)
+VALUES
+('12345678', 'dessalfaro', 'CI1312', 3, 2019, 2, '2019-03-10', '23456789', 10);*/
