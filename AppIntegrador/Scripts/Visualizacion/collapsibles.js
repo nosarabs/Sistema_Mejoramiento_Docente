@@ -89,10 +89,6 @@ function createCollapsible(question, type) {
 var questions = ['¿Qué calificación le daría la profesor?', '¿Qué calificación le daría al curso?'];
 var qTypes = [classes.ESCALA, classes.SELECCION_UNICA];
 
-var titulo = document.createElement("h3");
-titulo.innerHTML = "Formulario: " + codigoFormulario;
-document.body.appendChild(titulo);
-
 for (var i = 0; i < questions.length; ++i) {
 	question = String(i + 1) + ". " + questions[i];
 	createCollapsible(question, qTypes[i]);

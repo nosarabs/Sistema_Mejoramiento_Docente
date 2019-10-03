@@ -17,7 +17,6 @@ namespace AppIntegrador.Controllers
         // GET: ResultadosFormulario
         public ActionResult Formulario(String codigo)
         {
-            String codigoFormulario = ViewBag.codigo;
             ViewBag.codigo = codigo;
             return View();
         }
@@ -26,7 +25,7 @@ namespace AppIntegrador.Controllers
         /*[HttpGet]
         public IEnumerable<SelectListItem> ObtenerPreguntas ()
         {
-            return db.Pregunta.Select().toList();
+            return 
         }*/
     }
 }
