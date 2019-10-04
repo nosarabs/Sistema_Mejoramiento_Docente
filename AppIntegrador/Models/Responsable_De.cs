@@ -14,9 +14,9 @@ namespace AppIntegrador.Models
     
     public partial class Responsable_De
     {
-        public int UserId { get; set; }
-        public int Codigo_A { get; set; }
+        public string CedulaFunc { get; set; }
+        public int CodigoA { get; set; }
     
-        public virtual Accionable Accionable { get; set; }
+        public virtual Funcionario Funcionario { get; set; }
     }
 }

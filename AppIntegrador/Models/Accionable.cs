@@ -14,22 +14,13 @@ namespace AppIntegrador.Models
     
     public partial class Accionable
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Accionable()
-        {
-            this.Responsable_De = new HashSet<Responsable_De>();
-            this.Accion_De_Mejora = new HashSet<Accion_De_Mejora>();
-        }
-    
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
-        public int Progreso { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaFin { get; set; }
+        public Nullable<float> Progreso { get; set; }
+        public Nullable<System.DateTime> FechaInicio { get; set; }
+        public Nullable<System.DateTime> FechaFin { get; set; }
+        public int CodigoObj { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accion_De_Mejora> Accion_De_Mejora { get; set; }
+        public virtual Objetivo Objetivo { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿CREATE TABLE [dbo].[Responsable_De]
 (
-	UserId int NOT NULL,
-	[Codigo_A] INT NOT NULL,
+	[CedulaFunc] CHAR(10) NOT NULL 
+		constraint FK_Responsable_De_Func
+			references Funcionario(Cedula), 
+    [CodigoA] INT NOT NULL,
+	constraint PK_Responsable_De
+		primary key(CedulaFunc, CodigoA)
 
-	PRIMARY KEY (UserId, Codigo_A),
-	FOREIGN KEY(Codigo_A) REFERENCES Accionable(Codigo)
 )

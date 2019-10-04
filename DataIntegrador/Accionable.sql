@@ -1,8 +1,17 @@
 ﻿CREATE TABLE [dbo].[Accionable]
 (
-	[Codigo] INT NOT NULL PRIMARY KEY,
-	[Descripcion] NVARCHAR(500),
-	[Progreso] INT NOT NULL CHECK(Progreso >=0 AND Progreso <= 100),
-	[FechaInicio] DATE NOT NULL,
-	[FechaFin] DATE NOT NULL
+	[Codigo] INT NOT NULL 
+		constraint PK_Accionable
+			PRIMARY KEY, 
+    [Descripcion] VARCHAR(500) NULL,
+	Progreso real
+		constraint ProgresoValue
+			check(Progreso <= 100 and Progreso >= 100),
+	FechaInicio date,
+	FechaFin date
+		constraint DateOrderAC
+			check(FechaFin > FechaInicio),
+	CodigoObj int NOT NULL
+		constraint FK_AccionMejCod
+			references Objetivo(Codigo)
 )

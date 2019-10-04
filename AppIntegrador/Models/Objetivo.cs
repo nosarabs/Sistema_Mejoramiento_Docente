@@ -17,19 +17,22 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Objetivo()
         {
-            this.Accion_De_Mejora = new HashSet<Accion_De_Mejora>();
-            this.PlanMejoras = new HashSet<PlanMejora>();
+            this.Accionable = new HashSet<Accionable>();
+            this.AccionDeMejora = new HashSet<AccionDeMejora>();
         }
     
         public int Codigo { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public string Tipo_O { get; set; }
+        public string TipoObjetivo { get; set; }
+        public string CedulaProf { get; set; }
+        public int CodigoPlan { get; set; }
     
-        public virtual Tipo_Objetivo Tipo_Objetivo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accion_De_Mejora> Accion_De_Mejora { get; set; }
+        public virtual ICollection<Accionable> Accionable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanMejora> PlanMejoras { get; set; }
+        public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual PlanDeMejora PlanDeMejora { get; set; }
+        public virtual TipoObjetivo TipoObjetivo1 { get; set; }
     }
 }

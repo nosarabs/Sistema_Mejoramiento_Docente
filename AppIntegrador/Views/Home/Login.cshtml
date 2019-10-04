@@ -1,0 +1,39 @@
+﻿@model AppIntegrador.Models.Usuario
+
+@{
+    ViewBag.Title = "Login";
+}
+<body id="greybg">
+    <div class="logo-styles">
+        <img class="ucr-logo" src='/Content/images/logo_ucr.png' border='0' alt='logo-ucr' />
+    </div>
+
+    <div class="container-login100">
+        <div class="row">
+            <div class="blue-box">
+                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        @Html.TextBoxFor(m => m.Username, new { @maxlength="50", @class = "form-control", placeholder = "nombre.apellido@ucr.ac.cr" })
+                        @Html.ValidationMessageFor(m => m.Username)
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        @Html.PasswordFor(m => m.Password, new { @maxlength="50", @class = "form-control", placeholder = "************", required = "required" })
+                        <p style="color:red;">@Html.ValidationMessageFor(m => m.Password)</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-defaul">Ingresar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <footer class="flex-foot">
+        <span>Sistema de Evaluación Docente de la Universidad de Costa Rica</span>
+    </footer>
+
+</body>

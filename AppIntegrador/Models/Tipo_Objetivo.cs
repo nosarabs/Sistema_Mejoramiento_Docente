@@ -12,17 +12,21 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tipo_Objetivo
+    public partial class Curso
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tipo_Objetivo()
+        public Curso()
         {
-            this.Objetivoes = new HashSet<Objetivo>();
+            this.Grupo = new HashSet<Grupo>();
         }
     
+        public string Sigla { get; set; }
         public string Nombre { get; set; }
+        public string CodCarrera { get; set; }
+        public string CodEnfasis { get; set; }
     
+        public virtual Enfasis Enfasis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivoes { get; set; }
+        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

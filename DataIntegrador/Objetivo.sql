@@ -1,8 +1,15 @@
-CREATE TABLE [dbo].[Objetivo]
+﻿CREATE TABLE [dbo].[Objetivo]
 (
-	[Codigo] INT NOT NULL PRIMARY KEY, 
-    [Nombre] NVARCHAR(50) NULL, 
-    [Descripcion] NVARCHAR(50) NULL, 
-    [Tipo_O] NVARCHAR(20) NULL, 
-	FOREIGN KEY (Tipo_O) REFERENCES Tipo_Objetivo(Nombre)
+	[Codigo] INT NOT NULL 
+		constraint PK_Objetivo
+			PRIMARY KEY, 
+    [Nombre] VARCHAR(20) NULL, 
+    [Descripcion] VARCHAR(500) NULL, 
+    [TipoObjetivo] VARCHAR(20) NULL
+		constraint FK_TipoO
+			references TipoObjetivo(Nombre), 
+    [CedulaProf] CHAR(10) NOT NULL, 
+    [CodigoPlan] INT NOT NULL,
+	constraint FK_PlanDeMejora
+		foreign key(CedulaProf, CodigoPlan) references PlanDeMejora(CedProf, Codigo)
 )

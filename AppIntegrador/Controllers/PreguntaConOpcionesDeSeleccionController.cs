@@ -58,14 +58,14 @@ namespace AppIntegrador.Controllers
         }
 
         public ActionResult Create()
-       {
+        {
             return View();
         }
 
         // POST: PreguntaConOpcionesDeSeleccion/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
@@ -80,7 +80,7 @@ namespace AppIntegrador.Controllers
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
                     pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
                     // Agregue esa pregunta a la tabla de preguntas
-                    db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                    db.Pregunta.Add(pregunta.Pregunta_con_opciones.Pregunta);
                     // Agregue la pregunta con opciones perse a la table=a
                     db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                     db.SaveChanges();
@@ -92,19 +92,22 @@ namespace AppIntegrador.Controllers
                         opcion.Codigo = codigoPregunta;
                     }
 
+                    // Guardo todas las opciones de una
+                    db.Opciones_de_seleccion.AddRange(opciones);
+                    db.SaveChanges();
+
                     return RedirectToAction("Create");
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
-                    // return Content("<script language='javascript' type='text/javascript'>alert('El código ya está en uso');</script>");
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                    {
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
                 }
             }
 
-            // Guardo todas las opciones en la base de datos de una
-            db.Opciones_de_seleccion.AddRange(opciones);
-            db.SaveChanges();
             return View();
         }
 

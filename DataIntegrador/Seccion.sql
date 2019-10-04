@@ -1,4 +1,0 @@
-﻿CREATE TABLE Seccion
-(
-	Codigo CHAR(8) NOT NULL PRIMARY KEY
-)
