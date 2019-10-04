@@ -80,6 +80,11 @@
     .orden {
         display: none;
     }
+
+    .sortable-container:hover {
+        background-color: lightgrey;
+        cursor: grab;
+    }
 </style>
 
 @section Scripts {
@@ -125,7 +130,7 @@
                 url: 'OpcionesDeSeleccion',
                 data: { i: i },
                 success: function (data) {
-                    $("#sortable").append(data);
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
                 }
             })
         });
@@ -134,7 +139,11 @@
         // Delete option input box(es)
         function removeOption(id) {
             var node = document.getElementById(id);
-            node.parentNode.parentNode.remove();
+            var target = node.parentNode.parentNode;
+
+            $(target).animate({'height':0, 'opacity':0}, 200, function () {
+                $(this).remove();   
+            })
             // Fix indexes when an input box is deleted
             fixIndexes();
         }

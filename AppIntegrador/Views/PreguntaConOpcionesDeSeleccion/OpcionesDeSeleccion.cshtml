@@ -2,7 +2,7 @@
 @{
     int i = ViewBag.i == null ? 0 : ViewBag.i;
 }
-<div class="form-group">
+<div class="form-group sortable-container grid">
     @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
