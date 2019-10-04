@@ -28,10 +28,32 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntaConOpcionesDeSeleccion
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
+        //    return View(pregunta_con_opciones_de_seleccion.ToList());
+        //}
+
+        //the first parameter is the option that we choose and the second parameter will use the textbox value  
+        public ActionResult Index(string option, string search)
         {
             var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
-            return View(pregunta_con_opciones_de_seleccion.ToList());
+
+            //if a user choose the radio button option as Subject  
+            if (option == "Tipo" && search.Length > 0)
+            {
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList());
+            }
+            else if (option == "Codigo" && search.Length > 0)
+            {
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList());
+            }
+            else
+            {
+                return View(pregunta_con_opciones_de_seleccion.ToList());
+            }
+
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Details/5
