@@ -12,15 +12,11 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PerfilPermiso
+    public partial class Asociado_A
     {
-        public string Perfil { get; set; }
-        public int PermisoId { get; set; }
-        public string CodCarrera { get; set; }
-        public string CodEnfasis { get; set; }
+        public int CodigoO { get; set; }
+        public int CodigoA { get; set; }
     
-        public virtual Enfasi Enfasi { get; set; }
-        public virtual Perfil Perfil1 { get; set; }
-        public virtual Permiso Permiso { get; set; }
+        public virtual Accion_De_Mejora Accion_De_Mejora { get; set; }
     }
 }

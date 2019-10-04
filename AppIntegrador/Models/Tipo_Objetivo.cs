@@ -12,21 +12,8 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Curso
+    public partial class Tipo_Objetivo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Curso()
-        {
-            this.Grupo = new HashSet<Grupo>();
-        }
-    
-        public string Sigla { get; set; }
         public string Nombre { get; set; }
-        public string CodCarrera { get; set; }
-        public string CodEnfasis { get; set; }
-    
-        public virtual Enfasis Enfasis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoObjetivo()
         {
-            this.Objetivo = new HashSet<Objetivo>();
+            this.Objetivoes = new HashSet<Objetivo>();
         }
     
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivo { get; set; }
+        public virtual ICollection<Objetivo> Objetivoes { get; set; }
     }
 }

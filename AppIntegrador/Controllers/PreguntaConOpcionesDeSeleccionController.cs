@@ -80,7 +80,7 @@ namespace AppIntegrador.Controllers
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
                     pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
                     // Agregue esa pregunta a la tabla de preguntas
-                    db.Pregunta.Add(pregunta.Pregunta_con_opciones.Pregunta);
+                    db.Preguntas.Add(pregunta.Pregunta_con_opciones.Pregunta);
                     // Agregue la pregunta con opciones perse a la table=a
                     db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
                     db.SaveChanges();

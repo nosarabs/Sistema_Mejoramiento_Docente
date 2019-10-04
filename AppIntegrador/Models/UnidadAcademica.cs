@@ -17,9 +17,9 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UnidadAcademica()
         {
-            this.Carrera = new HashSet<Carrera>();
+            this.Carreras = new HashSet<Carrera>();
             this.UnidadAcademica1 = new HashSet<UnidadAcademica>();
-            this.Funcionario = new HashSet<Funcionario>();
+            this.Funcionarios = new HashSet<Funcionario>();
         }
     
         public string Codigo { get; set; }
@@ -27,11 +27,11 @@ namespace AppIntegrador.Models
         public string Superior { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Carrera> Carrera { get; set; }
+        public virtual ICollection<Carrera> Carreras { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAcademica> UnidadAcademica1 { get; set; }
         public virtual UnidadAcademica UnidadAcademica2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Funcionario> Funcionario { get; set; }
+        public virtual ICollection<Funcionario> Funcionarios { get; set; }
     }
 }

@@ -11,37 +11,25 @@ namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PlanMejora
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanMejora()
         {
-            this.Objetivoes = new HashSet<Objetivo>();
+            this.Compuesto_Por = new HashSet<Compuesto_Por>();
         }
     
-        [DisplayName("ID del Usuario")]
         public int UserID { get; set; }
-        [DisplayName("Código del plan")]
         public int Codigo { get; set; }
-        [DisplayName("Nombre del plan")]
-        [DataType(DataType.Text)]
         public string Nombre { get; set; }
-        [DisplayName("Fecha de Inicio")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [DisplayName("Fecha final")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
-        [DisplayName("Código del formulario")]
         public string CodigoF { get; set; }
-        [DisplayName("ID del Usuario responsable")]
         public Nullable<int> UserIDA { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivoes { get; set; }
+        public virtual ICollection<Compuesto_Por> Compuesto_Por { get; set; }
+        public virtual Formulario Formulario { get; set; }
     }
 }

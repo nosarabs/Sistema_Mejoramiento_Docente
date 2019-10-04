@@ -4,91 +4,102 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0f92c9c54eb54e42a502ef4304a1e6ca" Name="Diagram1">
-        <EntityTypeShape EntityType="AppIntegrador.Accionable" Width="1.5" PointX="25.5" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.AccionDeMejora" Width="1.5" PointX="25.5" PointY="25.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Activa_por" Width="1.5" PointX="18.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Carrera" Width="1.5" PointX="9.75" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Curso" Width="1.5" PointX="14.25" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Enfasis" Width="1.5" PointX="12" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Escalar" Width="1.5" PointX="26.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Estudiante" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Formulario" Width="1.5" PointX="16.5" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Formulario_tiene_seccion" Width="1.5" PointX="29" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Funcionario" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Grupo" Width="1.5" PointX="16.5" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Objetivo" Width="1.5" PointX="23.25" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Opciones_de_seleccion" Width="1.5" PointX="28.5" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Opciones_seleccionadas_respuesta_con_opciones" Width="1.5" PointX="26.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Perfil" Width="1.5" PointX="12" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.PerfilPermiso" Width="1.5" PointX="14.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Periodo_activa_por" Width="1.5" PointX="21" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Permiso" Width="1.5" PointX="12" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Persona" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.PlanDeMejora" Width="1.5" PointX="21" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Pregunta" Width="1.5" PointX="21.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Pregunta_con_opciones" Width="1.5" PointX="24" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="26.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Pregunta_con_respuesta_libre" Width="1.5" PointX="24" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Profesor" Width="1.5" PointX="18.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Responde_respuesta_con_opciones" Width="1.5" PointX="24" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Responde_respuesta_libre" Width="1.5" PointX="27" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Responsable_De" Width="1.5" PointX="7.5" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Respuestas_a_formulario" Width="1.5" PointX="21.75" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Seccion" Width="1.5" PointX="21.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Seccion_tiene_pregunta" Width="1.5" PointX="24" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Si_no_nr" Width="1.5" PointX="26.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.TipoObjetivo" Width="1.5" PointX="21" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.UnidadAcademica" Width="1.5" PointX="7.5" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.Usuario" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppIntegrador.UsuarioPerfil" Width="1.5" PointX="14.25" PointY="18.125" IsExpanded="true" />
-        <AssociationConnector Association="AppIntegrador.FK_AccionMejCod" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_PlanDeMejoraCod" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Activa_po__FCodi__15261146" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Activa_por__161A357F" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Periodo_activa_p__2C09769E" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Carrera__CodUnid__170E59B8" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Enfasis__CodCarr__1ADEEA9C" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Curso__18027DF1" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Grupo__SiglaCurs__2097C3F2" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__PerfilPermiso__2B155265" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__UsuarioPerfil__42ECDBF6" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Escalar__Codigo__1BD30ED5" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Estudiant__Cedul__1CC7330E" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Formulari__FCodi__1DBB5747" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Respuesta__FCodi__386F4D83" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Formulari__SCodi__1EAF7B80" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Funcionar__Cedul__1FA39FB9" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Profesor__Cedula__32B6742D" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_Responsable_De_Func" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Respuestas_a_for__3A5795F5" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_PlanDeMejora" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_TipoO" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Opciones___Codig__2744C181" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Opciones_selecci__2838E5BA" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__PerfilPer__Perfi__292D09F3" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__UsuarioPe__Perfi__41F8B7BD" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__PerfilPer__Permi__2A212E2C" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Persona__Usuario__2CFD9AD7" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_CedProf" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK_CedProf_Asig" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Pregunta___Codig__2FDA0782" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Pregunta___Codig__31C24FF4" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Responde___PCodi__349EBC9F" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Responde___PCodi__36870511" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Seccion_t__PCodi__3C3FDE67" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Pregunta___Codig__30CE2BBB" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Si_no_nr__Codigo__3D3402A0" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Responde_respues__33AA9866" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Responde_respues__3592E0D8" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Respuesta__Usern__396371BC" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__Seccion_t__SCodi__3B4BBA2E" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__UnidadAca__Super__40106F4B" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.FK__UsuarioPe__Usuar__41049384" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.Empadronado_en" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.Imparte" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.Matriculado_en" ManuallyRouted="false" />
-        <AssociationConnector Association="AppIntegrador.Trabaja_en" ManuallyRouted="false" />
+      <Diagram DiagramId="e5c176c3b6b64964a8962682df2e54a0" Name="Diagram1">
+        <EntityTypeShape EntityType="proyModel.C__RefactorLog" Width="1.5" PointX="12.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Accion_De_Mejora" Width="1.5" PointX="12.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Accionable" Width="1.5" PointX="10.5" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.AccionDeMejora" Width="1.5" PointX="10.5" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Activa_por" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Asociado_A" Width="1.5" PointX="15" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Carrera" Width="1.5" PointX="1.5" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Compuesto_Por" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Curso" Width="1.5" PointX="1.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Enfasi" Width="1.5" PointX="1.5" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Escalar" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Estudiante" Width="1.5" PointX="1.5" PointY="48.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Evaluado_Por" Width="1.5" PointX="15" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Formulario" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Formulario_tiene_seccion" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Funcionario" Width="1.5" PointX="1.5" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Grupo" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Objetivo" Width="1.5" PointX="8.25" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Opciones_de_seleccion" Width="1.5" PointX="12.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Opciones_seleccionadas_respuesta_con_opciones" Width="1.5" PointX="10.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Perfil" Width="1.5" PointX="1.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.PerfilPermiso" Width="1.5" PointX="3.75" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Periodo_activa_por" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Permiso" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Persona" Width="1.5" PointX="1.5" PointY="40.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.PlanDeMejora" Width="1.5" PointX="6" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.PlanMejora" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_opciones" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="10.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="8.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Profesor" Width="1.5" PointX="3.75" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Responde_respuesta_con_opciones" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Responde_respuesta_libre" Width="1.5" PointX="11.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Responsable_De" Width="1.5" PointX="3.75" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Respuestas_a_formulario" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Seccion" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Seccion_tiene_pregunta" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Si_no_nr" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Tipo_Objetivo" Width="1.5" PointX="13.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.TipoObjetivo" Width="1.5" PointX="6" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.UnidadAcademica" Width="1.5" PointX="1.5" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.Usuario" Width="1.5" PointX="1.5" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="proyModel.UsuarioPerfil" Width="1.5" PointX="3.75" PointY="33.875" IsExpanded="true" />
+        <AssociationConnector Association="proyModel.FK__Asociado___Codig__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Evaluado___Codig__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_AccionMejCod" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_PlanDeMejoraCod" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Activa_po__FCodi__2DE6D218" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Activa_por__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Periodo_activa_p__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Carrera__CodUnid__2FCF1A8A" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Enfasis__CodCarr__339FAB6E" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Compuesto_Por__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Curso__30C33EC3" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Grupo__SiglaCurs__367C1819" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__PerfilPermiso__3E1D39E1" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__UsuarioPerfil__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Escalar__Codigo__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Estudiant__Cedul__3493CFA7" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Formulari__FCodi__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__PlanMejor__Codig__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Respuesta__FCodi__47A6A41B" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Formulari__SCodi__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Funcionar__Cedul__3587F3E0" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Profesor__Cedula__42E1EEFE" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_Responsable_De_Func" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Respuestas_a_for__498EEC8D" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_PlanDeMejora" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_TipoO" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Opciones___Codig__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Opciones_selecci__3B40CD36" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__PerfilPer__Perfi__3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__UsuarioPe__Perfi__4E53A1AA" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__PerfilPer__Permi__3D2915A8" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Persona__Usuario__40058253" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_CedProf" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK_CedProf_Asig" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Responde___PCodi__44CA3770" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Responde___PCodi__46B27FE2" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Seccion_t__PCodi__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Pregunta___Codig__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Si_no_nr__Codigo__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Responde_respues__43D61337" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Responde_respues__45BE5BA9" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Respuesta__Usern__489AC854" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__Seccion_t__SCodi__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__UnidadAca__Super__4C6B5938" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.FK__UsuarioPe__Usuar__4D5F7D71" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Empadronado_en" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Imparte" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Matriculado_en" ManuallyRouted="false" />
+        <AssociationConnector Association="proyModel.Trabaja_en" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

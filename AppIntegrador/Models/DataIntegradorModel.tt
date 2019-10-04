@@ -2,11 +2,7 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
 
-<<<<<<< HEAD:AppIntegrador/Models/PlanDeMejoraModel.tt
-const string inputFile = @"PlanDeMejoraModel.edmx";
-=======
 const string inputFile = @"DataIntegradorModel.edmx";
->>>>>>> nuevoMosqueteros:AppIntegrador/Models/DataIntegradorModel.tt
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);

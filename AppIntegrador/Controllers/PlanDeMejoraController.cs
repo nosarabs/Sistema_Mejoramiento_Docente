@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
+using AppIntegrador.Models;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
@@ -17,7 +18,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora
         public ActionResult Index()
         {
-            var planDeMejora = db.PlanDeMejora.Include(p => p.Profesor).Include(p => p.Profesor1);
+            var planDeMejora = db.PlanDeMejoras.Include(p => p.Profesor).Include(p => p.Profesor1);
             return View(planDeMejora.ToList());
         }
 
@@ -28,7 +29,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -39,8 +40,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula");
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula");
+            ViewBag.CedProf = new SelectList(db.Profesors, "Cedula", "Cedula");
+            ViewBag.CedProfAsig = new SelectList(db.Profesors, "Cedula", "Cedula");
             return View();
         }
 
@@ -53,13 +54,13 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PlanDeMejora.Add(planDeMejora);
+                db.PlanDeMejoras.Add(planDeMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProfAsig);
             return View(planDeMejora);
         }
 
@@ -70,13 +71,13 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProfAsig);
             return View(planDeMejora);
         }
 
@@ -93,8 +94,8 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesors, "Cedula", "Cedula", planDeMejora.CedProfAsig);
             return View(planDeMejora);
         }
 
@@ -105,7 +106,7 @@ namespace AppIntegrador.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -118,8 +119,8 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            db.PlanDeMejora.Remove(planDeMejora);
+            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
+            db.PlanDeMejoras.Remove(planDeMejora);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

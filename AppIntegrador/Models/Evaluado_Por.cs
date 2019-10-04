@@ -10,13 +10,13 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class Evaluado_Por
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int CodigoAM { get; set; }
+        public int CodigoAC { get; set; }
+    
+        public virtual Accion_De_Mejora Accion_De_Mejora { get; set; }
     }
 }

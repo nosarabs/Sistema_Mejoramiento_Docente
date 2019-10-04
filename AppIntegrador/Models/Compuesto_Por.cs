@@ -10,10 +10,14 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class Compuesto_Por
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int UserID { get; set; }
+        public int Codigo_Plan { get; set; }
+        public int Codigo_Obj { get; set; }
+    
+        public virtual PlanMejora PlanMejora { get; set; }
     }
 }

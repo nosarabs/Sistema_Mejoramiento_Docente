@@ -17,8 +17,8 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Accion_De_Mejora()
         {
-            this.Objetivoes = new HashSet<Objetivo>();
-            this.Accionables = new HashSet<Accionable>();
+            this.Asociado_A = new HashSet<Asociado_A>();
+            this.Evaluado_Por = new HashSet<Evaluado_Por>();
         }
     
         public int Codigo { get; set; }
@@ -27,8 +27,8 @@ namespace AppIntegrador.Models
         public System.DateTime FechaFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivoes { get; set; }
+        public virtual ICollection<Asociado_A> Asociado_A { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accionable> Accionables { get; set; }
+        public virtual ICollection<Evaluado_Por> Evaluado_Por { get; set; }
     }
 }
