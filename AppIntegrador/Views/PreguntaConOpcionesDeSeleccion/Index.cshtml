@@ -13,21 +13,15 @@
 {
     //the following are search options
     <b>
-        Search Option:
+        Opciones de búsqueda:
     </b>@Html.RadioButton("option", "Tipo") <text>Tipo</text> @Html.RadioButton("option", "Codigo") <text>Codigo</text>
     @Html.TextBox("search")
     <input type="submit"
            name="submit"
-           value="Filtrar" />
+           value="Filtrar"
+           class="btn"/>
+           <P></P>
 }
-
-
-@*<b>
-        Search Option:
-    </b> @Html.RadioButton("option", "Tipo") <text>Tipo</text>
-    @Html.RadioButton("option", "Codigo") <text>Codigo</text>
-    @Html.TextBox("search")
-    <input type="submit" name="Filtrar" value="Filtrar" />*@
 
 
 <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
