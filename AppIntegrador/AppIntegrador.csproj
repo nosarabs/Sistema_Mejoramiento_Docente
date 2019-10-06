@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
@@ -361,6 +362,11 @@
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
     <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\Create.cshtml" />
+    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
+    <Content Include="Views\AccionDeMejora\Details.cshtml" />
+    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
+    <Content Include="Views\AccionDeMejora\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

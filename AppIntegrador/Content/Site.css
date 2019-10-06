@@ -4,8 +4,8 @@
     margin: 0%;
     padding: 0%;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-    color: black !important;
-    font-size: 20px !important;
+    color: black;
+    font-size: 20px;
 }
 
 p.uppercase {
@@ -22,6 +22,7 @@ p.uppercase {
     justify-content: space-around;
     align-items: center;
 }
+
 
 ul {
     list-style: none;
@@ -118,6 +119,11 @@ nav {
 .mainBarText {
     color: black;
     font-size: 2em;
+}
+
+.mainBarText {
+    color: black;
+    font-size: 1em;
 }
 
 .ucr-logo {
@@ -225,3 +231,40 @@ li a:hover {
     color: black;
 }
 
+.botonCentrado {
+    padding: 10px;
+    text-align:center;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    background-color: #41ade7;
+}
+
+.btn-Nuevo {
+    color: black;
+    background-color: white;
+    border-color: #41ade7;
+    border-width: 2px;
+}
+
+.btn-Nuevo:hover {
+    background-color: #41ade7;
+}
+
+.center_div {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.Info-titulo-fu {
+    color: #204d6f;
+    font-family: Helvetica;
+    font-weight: normal;
+}
+
+.Info-parrafo-fu {
+    font-family: Arial;
+}
