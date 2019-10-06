@@ -51,7 +51,7 @@
 
 
 
-        <div id="sortable" class="vertical">
+        <div id="sortable">
 
         </div>
 
@@ -90,10 +90,6 @@
         background-color: #c4c4c4;
         cursor: grabbing;
     }
-
-    .vertical {
-        top: 50%;
-    }
 </style>
 
 @section Scripts {
@@ -115,13 +111,6 @@
             i = 0;
             $(".texto").each(function () {
                 this.name = "[" + i + "].Texto";
-                ++i;
-            });
-
-            i = 0;
-            $(".counter").each(function () {
-                this.name = ("count" + i);
-                console.log("count" + i);
                 ++i;
             });
 
