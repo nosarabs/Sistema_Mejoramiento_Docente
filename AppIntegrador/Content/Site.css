@@ -225,7 +225,7 @@ li a:hover {
     color: black;
 }
 
-.botonCrearNuevo {
+.botonCentrado {
     padding: 10px;
     text-align:center;
     width: 100%;
@@ -246,4 +246,9 @@ li a:hover {
 
 .btn-Nuevo:hover {
     background-color: #41ade7;
+}
+
+.center_div {
+    margin: 0 auto;
+    width: 80%;
 }
