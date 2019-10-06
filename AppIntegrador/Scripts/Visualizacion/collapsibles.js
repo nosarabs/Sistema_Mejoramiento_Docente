@@ -65,7 +65,7 @@ function createCollapsible(id, question) {
 			
 		}
 		
-		this.classList.toggle("active");
+		this.classList.toggle("activeCollapsible");
 		var content = this.nextElementSibling;
 		
 		if (content.style.maxHeight){

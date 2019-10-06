@@ -18,9 +18,9 @@ h3 {text-align: center;}
     margin-bottom: 1px;
 }
 
-    .active, .escala:hover, .seleccion_unica:hover, .seleccion_multiple:hover, .seleccion_cerrada:hover, .texto_abierto:hover {
-        background-color: #41ade7;
-    }
+.activeCollapsible, .escala:hover, .seleccion_unica:hover, .seleccion_multiple:hover, .seleccion_cerrada:hover, .texto_abierto:hover {
+    background-color: #41ade7;
+}
 
 .escala:after, .seleccion_unica:after, .seleccion_multiple:after, .seleccion_cerrada:after, .texto_abierto:after {
 	content: '\002B';
@@ -29,7 +29,7 @@ h3 {text-align: center;}
 	margin-left: 5px;
 }
 
-.active:after {
+.activeCollapsible:after {
 	content: "\2212";
 }
 
