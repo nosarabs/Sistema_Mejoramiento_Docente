@@ -4,6 +4,8 @@
     margin: 0%;
     padding: 0%;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    color: black !important;
+    font-size: 20px !important;
 }
 
 p.uppercase {
@@ -17,9 +19,8 @@ p.uppercase {
 
 .mainBar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    background-color: #41ade7;
 }
 
 .wrapper {
@@ -187,3 +188,37 @@ nav {
     font-size: 400%;
     color: #005da4;
 }
+
+.centeredText {
+    text-align: center;
+    width: 100%;
+}
+
+.mainBar {
+    background-color: #41ADE7 !important;
+}
+
+/* Estilos para los planes de mejora */
+.planesTable {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.centerImage {
+    width: 100%;
+}
+
+
+.secondNavBar {
+    font-size: 20px;
+}
+
+.MenuSupDer {
+    background-color: #41ade7
+}
+
+li a:hover {
+    background-color: #167eb6;
+    color: black;
+}
+
