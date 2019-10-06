@@ -11,6 +11,27 @@
           </Key>
           <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Accionable">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="Progreso" Type="real" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="CodigoObj" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccionDeMejora">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="CodigoObj" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Activa_por">
           <Key>
             <PropertyRef Name="FCodigo" />
@@ -139,6 +160,17 @@
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
           <Property Name="Anno" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="TipoObjetivo" Type="varchar" MaxLength="20" />
+          <Property Name="CedulaProf" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CodigoPlan" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Opciones_de_seleccion">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -226,6 +258,19 @@
           <Property Name="Apellido2" Type="varchar" MaxLength="15" />
           <Property Name="Usuario" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="PlanDeMejora">
+          <Key>
+            <PropertyRef Name="CedProf" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="CedProf" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="CodigoF" Type="char" MaxLength="8" />
+          <Property Name="CedProfAsig" Type="char" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Pregunta">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -301,6 +346,14 @@
           <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="Observacion" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="Responsable_De">
+          <Key>
+            <PropertyRef Name="CedulaFunc" />
+            <PropertyRef Name="CodigoA" />
+          </Key>
+          <Property Name="CedulaFunc" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CodigoA" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Respuestas_a_formulario">
           <Key>
             <PropertyRef Name="FCodigo" />
@@ -340,6 +393,13 @@
             <PropertyRef Name="Codigo" />
           </Key>
           <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoObjetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Trabaja_en">
           <Key>
@@ -670,6 +730,92 @@
             <Dependent Role="UsuarioPerfil">
               <PropertyRef Name="CodCarrera" />
               <PropertyRef Name="CodEnfasis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccionMejCod">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1" />
+          <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Accionable">
+              <PropertyRef Name="CodigoObj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CedProf">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="PlanDeMejora">
+              <PropertyRef Name="CedProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CedProf_Asig">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="PlanDeMejora">
+              <PropertyRef Name="CedProfAsig" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanDeMejora">
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanDeMejora">
+              <PropertyRef Name="CedProf" />
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="CedulaProf" />
+              <PropertyRef Name="CodigoPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanDeMejoraCod">
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1" />
+          <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="AccionDeMejora">
+              <PropertyRef Name="CodigoObj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Responsable_De_Func">
+          <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
+          <End Role="Responsable_De" Type="Self.Responsable_De" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Responsable_De">
+              <PropertyRef Name="CedulaFunc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoO">
+          <End Role="TipoObjetivo" Type="Self.TipoObjetivo" Multiplicity="0..1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoObjetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="TipoObjetivo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1006,6 +1152,8 @@
         </Function>
         <EntityContainer Name="DataIntegradorModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Accionable" EntityType="Self.Accionable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Activa_por" EntityType="Self.Activa_por" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
@@ -1019,6 +1167,7 @@
           <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Imparte" EntityType="Self.Imparte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matriculado_en" EntityType="Self.Matriculado_en" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objetivo" EntityType="Self.Objetivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opciones_seleccionadas_respuesta_con_opciones" EntityType="Self.Opciones_seleccionadas_respuesta_con_opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
@@ -1026,6 +1175,7 @@
           <EntitySet Name="Periodo_activa_por" EntityType="Self.Periodo_activa_por" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanDeMejora" EntityType="Self.PlanDeMejora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pregunta" EntityType="Self.Pregunta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pregunta_con_opciones" EntityType="Self.Pregunta_con_opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" Schema="dbo" store:Type="Tables" />
@@ -1033,10 +1183,12 @@
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde_respuesta_con_opciones" EntityType="Self.Responde_respuesta_con_opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde_respuesta_libre" EntityType="Self.Responde_respuesta_libre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsable_De" EntityType="Self.Responsable_De" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Respuestas_a_formulario" EntityType="Self.Respuestas_a_formulario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoObjetivo" EntityType="Self.TipoObjetivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trabaja_en" EntityType="Self.Trabaja_en" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnidadAcademica" EntityType="Self.UnidadAcademica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
@@ -1132,6 +1284,34 @@
           <AssociationSet Name="FK__UsuarioPerfil__0F624AF8" Association="Self.FK__UsuarioPerfil__0F624AF8">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionMejCod" Association="Self.FK_AccionMejCod">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Accionable" EntitySet="Accionable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CedProf" Association="Self.FK_CedProf">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CedProf_Asig" Association="Self.FK_CedProf_Asig">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanDeMejora" Association="Self.FK_PlanDeMejora">
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanDeMejoraCod" Association="Self.FK_PlanDeMejoraCod">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Responsable_De_Func" Association="Self.FK_Responsable_De_Func">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Responsable_De" EntitySet="Responsable_De" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoO" Association="Self.FK_TipoO">
+            <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
           </AssociationSet>
           <AssociationSet Name="fkActivaPorFormulario" Association="Self.fkActivaPorFormulario">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -1281,6 +1461,7 @@
           <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Cedul__4BAC3F29" FromRole="Funcionario" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Cedula__5535A963" FromRole="Funcionario" ToRole="Profesor" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="Responsable_De" Relationship="DataIntegradorModel.FK_Responsable_De_Func" FromRole="Funcionario" ToRole="Responsable_De" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
@@ -1352,6 +1533,8 @@
           <Property Name="Cedula" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Cedula__5535A963" FromRole="Profesor" ToRole="Funcionario" />
           <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="DataIntegradorModel.FK_CedProf" FromRole="Profesor" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="PlanDeMejora1" Relationship="DataIntegradorModel.FK_CedProf_Asig" FromRole="Profesor" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="UnidadAcademica">
           <Key>
@@ -1790,6 +1973,40 @@
           <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario">
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
+          </AssociationSet>
+          <EntitySet Name="Accionable" EntityType="DataIntegradorModel.Accionable" />
+          <EntitySet Name="AccionDeMejora" EntityType="DataIntegradorModel.AccionDeMejora" />
+          <EntitySet Name="Objetivo" EntityType="DataIntegradorModel.Objetivo" />
+          <EntitySet Name="PlanDeMejora" EntityType="DataIntegradorModel.PlanDeMejora" />
+          <EntitySet Name="Responsable_De" EntityType="DataIntegradorModel.Responsable_De" />
+          <EntitySet Name="TipoObjetivo" EntityType="DataIntegradorModel.TipoObjetivo" />
+          <AssociationSet Name="FK_AccionMejCod" Association="DataIntegradorModel.FK_AccionMejCod">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="Accionable" EntitySet="Accionable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanDeMejoraCod" Association="DataIntegradorModel.FK_PlanDeMejoraCod">
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Responsable_De_Func" Association="DataIntegradorModel.FK_Responsable_De_Func">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Responsable_De" EntitySet="Responsable_De" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanDeMejora" Association="DataIntegradorModel.FK_PlanDeMejora">
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoO" Association="DataIntegradorModel.FK_TipoO">
+            <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CedProf" Association="DataIntegradorModel.FK_CedProf">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CedProf_Asig" Association="DataIntegradorModel.FK_CedProf_Asig">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Opciones_de_seleccion">
@@ -2339,6 +2556,163 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Accionable">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Progreso" Type="Single" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="CodigoObj" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Objetivo" Relationship="DataIntegradorModel.FK_AccionMejCod" FromRole="Accionable" ToRole="Objetivo" />
+        </EntityType>
+        <EntityType Name="AccionDeMejora">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="CodigoObj" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Objetivo" Relationship="DataIntegradorModel.FK_PlanDeMejoraCod" FromRole="AccionDeMejora" ToRole="Objetivo" />
+        </EntityType>
+        <EntityType Name="Objetivo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TipoObjetivo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CedulaProf" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CodigoPlan" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_AccionMejCod" FromRole="Objetivo" ToRole="Accionable" />
+          <NavigationProperty Name="AccionDeMejora" Relationship="DataIntegradorModel.FK_PlanDeMejoraCod" FromRole="Objetivo" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="DataIntegradorModel.FK_PlanDeMejora" FromRole="Objetivo" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="TipoObjetivo1" Relationship="DataIntegradorModel.FK_TipoO" FromRole="Objetivo" ToRole="TipoObjetivo" />
+        </EntityType>
+        <EntityType Name="PlanDeMejora">
+          <Key>
+            <PropertyRef Name="CedProf" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="CedProf" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="CodigoF" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="CedProfAsig" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Objetivo" Relationship="DataIntegradorModel.FK_PlanDeMejora" FromRole="PlanDeMejora" ToRole="Objetivo" />
+          <NavigationProperty Name="Profesor" Relationship="DataIntegradorModel.FK_CedProf" FromRole="PlanDeMejora" ToRole="Profesor" />
+          <NavigationProperty Name="Profesor1" Relationship="DataIntegradorModel.FK_CedProf_Asig" FromRole="PlanDeMejora" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Responsable_De">
+          <Key>
+            <PropertyRef Name="CedulaFunc" />
+            <PropertyRef Name="CodigoA" />
+          </Key>
+          <Property Name="CedulaFunc" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CodigoA" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Funcionario" Relationship="DataIntegradorModel.FK_Responsable_De_Func" FromRole="Responsable_De" ToRole="Funcionario" />
+        </EntityType>
+        <EntityType Name="TipoObjetivo">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Objetivo" Relationship="DataIntegradorModel.FK_TipoO" FromRole="TipoObjetivo" ToRole="Objetivo" />
+        </EntityType>
+        <Association Name="FK_AccionMejCod">
+          <End Type="DataIntegradorModel.Objetivo" Role="Objetivo" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Accionable">
+              <PropertyRef Name="CodigoObj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanDeMejoraCod">
+          <End Type="DataIntegradorModel.Objetivo" Role="Objetivo" Multiplicity="1" />
+          <End Type="DataIntegradorModel.AccionDeMejora" Role="AccionDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objetivo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="AccionDeMejora">
+              <PropertyRef Name="CodigoObj" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Responsable_De_Func">
+          <End Type="DataIntegradorModel.Funcionario" Role="Funcionario" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Responsable_De" Role="Responsable_De" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Responsable_De">
+              <PropertyRef Name="CedulaFunc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanDeMejora">
+          <End Type="DataIntegradorModel.PlanDeMejora" Role="PlanDeMejora" Multiplicity="1" />
+          <End Type="DataIntegradorModel.Objetivo" Role="Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanDeMejora">
+              <PropertyRef Name="CedProf" />
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="CedulaProf" />
+              <PropertyRef Name="CodigoPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoO">
+          <End Type="DataIntegradorModel.TipoObjetivo" Role="TipoObjetivo" Multiplicity="0..1" />
+          <End Type="DataIntegradorModel.Objetivo" Role="Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoObjetivo">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="TipoObjetivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CedProf">
+          <End Type="DataIntegradorModel.Profesor" Role="Profesor" Multiplicity="1" />
+          <End Type="DataIntegradorModel.PlanDeMejora" Role="PlanDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="PlanDeMejora">
+              <PropertyRef Name="CedProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CedProf_Asig">
+          <End Type="DataIntegradorModel.Profesor" Role="Profesor" Multiplicity="0..1" />
+          <End Type="DataIntegradorModel.PlanDeMejora" Role="PlanDeMejora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="PlanDeMejora">
+              <PropertyRef Name="CedProfAsig" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2688,6 +3062,70 @@
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accionable">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
+              <MappingFragment StoreEntitySet="Accionable">
+                <ScalarProperty Name="CodigoObj" ColumnName="CodigoObj" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="Progreso" ColumnName="Progreso" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccionDeMejora">
+            <EntityTypeMapping TypeName="DataIntegradorModel.AccionDeMejora">
+              <MappingFragment StoreEntitySet="AccionDeMejora">
+                <ScalarProperty Name="CodigoObj" ColumnName="CodigoObj" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objetivo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Objetivo">
+              <MappingFragment StoreEntitySet="Objetivo">
+                <ScalarProperty Name="CodigoPlan" ColumnName="CodigoPlan" />
+                <ScalarProperty Name="CedulaProf" ColumnName="CedulaProf" />
+                <ScalarProperty Name="TipoObjetivo" ColumnName="TipoObjetivo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanDeMejora">
+            <EntityTypeMapping TypeName="DataIntegradorModel.PlanDeMejora">
+              <MappingFragment StoreEntitySet="PlanDeMejora">
+                <ScalarProperty Name="CedProfAsig" ColumnName="CedProfAsig" />
+                <ScalarProperty Name="CodigoF" ColumnName="CodigoF" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CedProf" ColumnName="CedProf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsable_De">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Responsable_De">
+              <MappingFragment StoreEntitySet="Responsable_De">
+                <ScalarProperty Name="CodigoA" ColumnName="CodigoA" />
+                <ScalarProperty Name="CedulaFunc" ColumnName="CedulaFunc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoObjetivo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.TipoObjetivo">
+              <MappingFragment StoreEntitySet="TipoObjetivo">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
