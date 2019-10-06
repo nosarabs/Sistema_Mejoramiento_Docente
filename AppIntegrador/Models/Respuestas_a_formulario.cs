@@ -24,12 +24,14 @@ namespace AppIntegrador.Models
         public string FCodigo { get; set; }
         public string Username { get; set; }
         public string CSigla { get; set; }
-        public int GNumero { get; set; }
+        public byte GNumero { get; set; }
         public int GAnno { get; set; }
-        public int GSemestre { get; set; }
+        public byte GSemestre { get; set; }
         public System.DateTime Fecha { get; set; }
     
         public virtual Formulario Formulario { get; set; }
+        public virtual Grupo Grupo { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

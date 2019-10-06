@@ -4,6 +4,6 @@
 	SCodigo CHAR(8) NOT NULL,
 	Orden INT NOT NULL,
 	PRIMARY KEY(FCodigo, SCodigo),
-	FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
-	FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
+	CONSTRAINT fkFormularioTieneSeccionCodigoFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
+	CONSTRAINT fkFormularioTieneSeccionCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
 )
