@@ -75,7 +75,7 @@ namespace AppIntegrador.Controllers
                             bool success = (bool)cmd.ExecuteScalar();
                             if (success)
                             {
-                                Session["Username"] = objUser.Username.ToString();
+                                Session["Username"] = objUser.Username.ToString();                               
                                 return RedirectToAction("UserDashboard");
                             }
                             else
@@ -84,7 +84,7 @@ namespace AppIntegrador.Controllers
                                 return View(objUser);
                             }
                         }
-                        catch (SqlException ex)
+                        catch (SqlException)
                         {
                             return View(objUser);
                         }
