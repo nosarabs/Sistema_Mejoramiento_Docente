@@ -15,10 +15,10 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DataIntegradorEntities : DbContext
+    public partial class proyEntities : DbContext
     {
-        public DataIntegradorEntities()
-            : base("name=DataIntegradorEntities")
+        public proyEntities()
+            : base("name=proyEntities")
         {
         }
     

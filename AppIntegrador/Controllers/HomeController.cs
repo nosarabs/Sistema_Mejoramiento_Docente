@@ -12,7 +12,7 @@ namespace AppIntegrador.Controllers
 {
     public class HomeController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly DataIntegradorEntities db = new DataIntegradorEntities();
 
         public ActionResult Index()
         {

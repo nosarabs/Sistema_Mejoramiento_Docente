@@ -13,23 +13,23 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
-
+        private readonly DataIntegradorEntities db = new DataIntegradorEntities();
+        
         // GET: PlanDeMejora
         public ActionResult Index()
         {
-            var planDeMejora = db.PlanDeMejoras.Include(p => p.Profesor).Include(p => p.Profesor1);
+            var planDeMejora = db.PlanDeMejora.Include(p => p.Profesor).Include(p => p.Profesor1);
             return View(planDeMejora.ToList());
         }
 
         // GET: PlanDeMejora/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id, string cedula)
         {
-            if (id == null)
+            if (cedula == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -54,7 +54,7 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PlanDeMejoras.Add(planDeMejora);
+                db.PlanDeMejora.Add(planDeMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,13 +65,14 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PlanDeMejora/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id, string cedula)
         {
-            if (id == null)
+            if (cedula == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -100,13 +101,14 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PlanDeMejora/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id, string cedula)
         {
-            if (id == null)
+            if (cedula == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
+
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -117,10 +119,11 @@ namespace AppIntegrador.Controllers
         // POST: PlanDeMejora/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id, string cedula)
         {
-            PlanDeMejora planDeMejora = db.PlanDeMejoras.Find(id);
-            db.PlanDeMejoras.Remove(planDeMejora);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            db.PlanDeMejora.Remove(planDeMejora);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

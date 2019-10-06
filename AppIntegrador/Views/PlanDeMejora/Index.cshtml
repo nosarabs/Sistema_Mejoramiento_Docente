@@ -1,63 +1,80 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Planes de Mejora";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Planes de Mejora</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaInicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaFin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CodigoF)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profesor.Cedula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profesor1.Cedula)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaInicio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaFin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CodigoF)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profesor.Cedula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profesor1.Cedula)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@if (Model.Count() == 0)
+{
+    <div class="centeredText">
+        <p>
+            Aún no se han agregado planes
+        </p>
+    </div>
 }
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor.Cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor1.Cedula)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor.Cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor1.Cedula)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new {  id = item.Codigo, cedula = item.CedProf  }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Codigo, cedula = item.CedProf }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo, cedula = item.CedProf })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+<div class="text-right" style="margin: 5%">
+    <p>
+        @Html.ActionLink("Crear nuevo plan", "Create", null, new { @class = "btn btn-default" })
+    </p>
+</div>
+
+
