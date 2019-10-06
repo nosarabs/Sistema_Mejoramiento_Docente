@@ -51,7 +51,7 @@
 
 
 
-        <div id="sortable">
+        <div id="sortable" class="vertical">
 
         </div>
 
@@ -85,6 +85,15 @@
         background-color: lightgrey;
         cursor: grab;
     }
+
+    .sortable-container:active {
+        background-color: #c4c4c4;
+        cursor: grabbing;
+    }
+
+    .vertical {
+        top: 50%;
+    }
 </style>
 
 @section Scripts {
@@ -106,6 +115,13 @@
             i = 0;
             $(".texto").each(function () {
                 this.name = "[" + i + "].Texto";
+                ++i;
+            });
+
+            i = 0;
+            $(".counter").each(function () {
+                this.name = ("count" + i);
+                console.log("count" + i);
                 ++i;
             });
 
@@ -143,21 +159,30 @@
 
             $(target).animate({'height':0, 'opacity':0}, 200, function () {
                 $(this).remove();   
+
+                // Fix indexes when an input box is deleted
+                fixIndexes();
             })
-            // Fix indexes when an input box is deleted
-            fixIndexes();
+            
         }
 
+        // Hide the text input box in default
+        $('#justificationField').css('display','none'); 
+        function myFunction() {
+           if($('#showField').prop('checked')) {
+                 $('#justificationField').css('display','block');
+               } else {
+                 $('#justificationField').css('display','none');
+               }
+        }
 
-        
-    $('#justificationField').css('display','none'); // Hide the text input box in default
-    function myFunction() {
-       if($('#showField').prop('checked')) {
-             $('#justificationField').css('display','block');
-           } else {
-             $('#justificationField').css('display','none');
-           }
-    }
+        // Count text
+        function charCount(inputBox) {
+            var len = inputBox.value.length;
+            var max = $(inputBox).attr("maxlength")
+            var counterText = $(inputBox).parent().find(".counter");
+            counterText.text(len + "/" + max + " caracteres usados");
+        }
     
     </script>
 
