@@ -17,12 +17,12 @@ namespace AppIntegrador.Models
         public string FCodigo { get; set; }
         public string Username { get; set; }
         public string CSigla { get; set; }
-        public int GNumero { get; set; }
+        public byte GNumero { get; set; }
         public int GAnno { get; set; }
-        public int GSemestre { get; set; }
+        public byte GSemestre { get; set; }
         public System.DateTime Fecha { get; set; }
         public string PCodigo { get; set; }
-        public int OpcionSeleccionada { get; set; }
+        public byte OpcionSeleccionada { get; set; }
     
         public virtual Responde_respuesta_con_opciones Responde_respuesta_con_opciones { get; set; }
     }
