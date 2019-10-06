@@ -86,11 +86,6 @@ function createCollapsible(id, question) {
 }
 
 //Main
-
-var title = document.createElement("h3");
-title.innerHTML = "Formulario: " + codigoFormulario;
-document.body.appendChild(title);
-
 for (var i = 0; i < questions.length; ++i) {
     var id = questions[i].Value;
 	var question = String(i + 1) + ". " + questions[i].Text;
