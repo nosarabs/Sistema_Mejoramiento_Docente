@@ -8,8 +8,8 @@
 	GSemestre TINYINT NOT NULL,
 	FechaInicio DATE NOT NULL,
 	FechaFin DATE NOT NULL,
-	CHECK(FechaInicio<=FechaFin),
+	CONSTRAINT ActivaPorFechaInvalida CHECK(FechaInicio<=FechaFin),
 
 	PRIMARY KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre, FechaInicio, FechaFin),
-	FOREIGN KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre) REFERENCES Activa_por(FCodigo, CSigla, GNumero, GAnno, GSemestre),
+	CONSTRAINT fkPeriodoActivaPor FOREIGN KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre) REFERENCES Activa_por(FCodigo, CSigla, GNumero, GAnno, GSemestre),
 )
