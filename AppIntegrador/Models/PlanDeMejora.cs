@@ -26,18 +26,18 @@ namespace AppIntegrador.Models
         public string CedProf { get; set; }
         [Display(Name = "Código del plan")]
         public int Codigo { get; set; }
-        [Display(Name = "Nombre del plan")]
+        [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
         public string Nombre { get; set; }
-        [Display(Name = "Fecha de inicio del plan")]
+        [Display(Name = "Inicio")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [Display(Name = "Fecha final del plan")]
+        [Display(Name = "Finalización")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
-        [Display(Name = "Código del formulario asignado al plan")]
+        [Display(Name = "Código")]
         public string CodigoF { get; set; }
-        [Display(Name = "Cédula del profesor asignado")]
+        [Display(Name = "Cédula Profesor")]
         public string CedProfAsig { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

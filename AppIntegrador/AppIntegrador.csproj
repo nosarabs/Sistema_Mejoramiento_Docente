@@ -352,6 +352,8 @@
     <Content Include="Views\AccionDeMejora\Details.cshtml" />
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ListaPlanesDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_CrearPlanDeMejora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
