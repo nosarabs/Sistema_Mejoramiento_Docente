@@ -1,9 +1,9 @@
-﻿CREATE FUNCTION loginUsuario
+﻿CREATE FUNCTION LoginUsuario
 	(@pLoginName VARCHAR(50),@pPassword VARCHAR(50))
-RETURNS BIT
+RETURNS INT
 BEGIN
 
-	DECLARE @userID VARCHAR(50), @result BIT
+	DECLARE @userID VARCHAR(50), @result INT
 
 	IF EXISTS (SELECT TOP 1 Username FROM [dbo].[Usuario] WHERE Username=@pLoginName)
 	BEGIN
@@ -12,13 +12,13 @@ BEGIN
 		@pPassword+CAST(Salt AS VARCHAR(36))))
 
 		IF(@userID IS NULL)
-			SET @result=0
+			SET @result=2
 
 		ELSE
-			SET @result=1
+			SET @result=0
 	END
 
 	ELSE
-		SET @result=0
+		SET @result=1
 	RETURN @result
 END;
