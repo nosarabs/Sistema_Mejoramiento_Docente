@@ -12,22 +12,27 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Funcionario
+    public partial class Objetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Funcionario()
+        public Objetivo()
         {
-            this.UnidadAcademica = new HashSet<UnidadAcademica>();
-            this.Responsable_De = new HashSet<Responsable_De>();
+            this.Accionable = new HashSet<Accionable>();
+            this.AccionDeMejora = new HashSet<AccionDeMejora>();
         }
     
-        public string Cedula { get; set; }
+        public int Codigo { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string TipoObjetivo { get; set; }
+        public string CedulaProf { get; set; }
+        public int CodigoPlan { get; set; }
     
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
+        public virtual ICollection<Accionable> Accionable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
+        public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual PlanDeMejora PlanDeMejora { get; set; }
+        public virtual TipoObjetivo TipoObjetivo1 { get; set; }
     }
 }

@@ -27,12 +27,33 @@ namespace AppIntegrador.Controllers
             return PartialView();
         }
 
-
         // GET: PreguntaConOpcionesDeSeleccion
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
+        //    return View(pregunta_con_opciones_de_seleccion.ToList());
+        //}
+
+        //the first parameter is the option that we choose and the second parameter will use the textbox value  
+        public ActionResult Index(string option, string search)
         {
             var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
-            return View(pregunta_con_opciones_de_seleccion.ToList());
+
+            //if a user choose the radio button option as Subject  
+            if (option == "Tipo" && search.Length > 0)
+            {
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList());
+            }
+            else if (option == "Codigo" && search.Length > 0)
+            {
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList());
+            }
+            else
+            {
+                return View(pregunta_con_opciones_de_seleccion.ToList());
+            }
+
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Details/5
@@ -68,7 +89,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> opciones)
+        public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> Opciones)
         {
             // Para esta fase del proyecto solo se soportan preguntas de selección única
             pregunta.Tipo = "U";
@@ -86,14 +107,13 @@ namespace AppIntegrador.Controllers
                     db.SaveChanges();
 
                     string codigoPregunta = pregunta.Codigo;
-                    foreach (Opciones_de_seleccion opcion in opciones)
-                    {
-                        // Asigno el codigo a cada opcion de la pregunta
+
+                    // Asigno el codigo a cada opcion de la pregunta
+                    foreach (Opciones_de_seleccion opcion in Opciones)
                         opcion.Codigo = codigoPregunta;
-                    }
 
                     // Guardo todas las opciones de una
-                    db.Opciones_de_seleccion.AddRange(opciones);
+                    db.Opciones_de_seleccion.AddRange(Opciones);
                     db.SaveChanges();
 
                     return RedirectToAction("Create");

@@ -28,94 +28,180 @@
                 @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                 {
                     htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-                 }
+                }
                )
                 @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
             </div>
         </div>
 
     </div>
+
     <div class="form-horizontal">
-        <label for="chkPassport">
-            <input type="checkbox" id="chkPassport" onclick="EnableDisableTextBox(this)" />
-            Incluir campo de justificación.       
+        <label for="chkPassport" class="col-md-offset-2 col-md-10">
+            <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
+            Incluir campo de justificación.
         </label>
         <p></p>
-        <div class="form-group">
+        <div class="form-group" id="justificationField">
             @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
+                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
             </div>
         </div>
 
+
+
         <div id="sortable">
-            <div id="placeholder"></div>
+
         </div>
-        
-        <input type="button" value="Agregar nueva opción" id="Add" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Cancelar", "Create")
+                <input type="button" class="btn btn-default " value="Agregar nueva opción" id="Add" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" id="Create"/>
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
             </div>
         </div>
 
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+<style>
+    .orden {
+        display: none;
+    }
+
+    .sortable-container:hover {
+        background-color: lightgrey;
+        cursor: grab;
+    }
+
+    .sortable-container:active {
+        background-color: #c4c4c4;
+        cursor: grabbing;
+    }
+</style>
 
 @section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        // Set index starting from 0 for each option
+        function fixIndexes() {
+            var i = 0;
+            // Fix order value and name
+            $(".orden").each(function () {
+                $(this).val(i);
+                this.name = "[" + i + "].Orden";
+                ++i;
+            });
+
+            // Fix text name
+            i = 0;
+            $(".texto").each(function () {
+                this.name = "[" + i + "].Texto";
+                ++i;
+            });
+
+            return i;
+        }
+
+        // Make options inside sortable id sortable
         $("#sortable").sortable({
             axis: "y",
-            update: function (event, ui) {
-                var i = 0;
-                $(".orden").each(function () {
-                    console.log(i);
-                      $(this).val(i);
-                      ++i;
-                  });
+            // Fix indexes of each input box when an input box is moved
+            update: function () {
+                fixIndexes();
+            },
+        });
 
-                console.log(pos);
-            }
-        })
         $("#sortable").disableSelection();
-    </script>
 
-    <script type="text/javascript">
-        function EnableDisableTextBox(chkPassport) {
-            var txtPassportNumber = document.getElementById("txtJustificationNumber");
-            txtJustificationNumber.disabled = chkPassport.checked ? false : true;
-            if (!txtJustificationNumber.disabled) {
-                txtJustificationNumber.focus();
-            }
-        }
-    </script>
-
-    <script>
-        var i = 0;
+        // When a new option is added, fix the index (not very efficient)
         $("#Add").click(function () {
+            var i = fixIndexes();
             $.ajax({
                 url: 'OpcionesDeSeleccion',
                 data: { i: i },
                 success: function (data) {
-                    $("#sortable").append(data);
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
                 }
             })
-            i++;
+        });
 
-            var j = 0
-           $(".orden").each(function () {
-              $(this).val(j);
-              ++j;
-           });
-        })
+
+        // Delete option input box(es)
+        function removeOption(id) {
+            var node = document.getElementById(id);
+            var target = node.parentNode.parentNode;
+
+            $(target).animate({'height':0, 'opacity':0}, 200, function () {
+                $(this).remove();   
+
+                // Fix indexes when an input box is deleted
+                fixIndexes();
+            })
+            
+        }
+
+        // Hide the text input box in default
+        $('#justificationField').css('display','none'); 
+        function myFunction() {
+           if($('#showField').prop('checked')) {
+                 $('#justificationField').css('display','block');
+               } else {
+                 $('#justificationField').css('display','none');
+               }
+        }
+
+        // Count text
+        function charCount(inputBox) {
+            var len = inputBox.value.length;
+            var max = $(inputBox).attr("maxlength")
+            var counterText = $(inputBox).parent().find(".counter");
+            counterText.text(len + "/" + max + " caracteres usados");
+        }
+    </script>
+
+    <script>
+        function pregunta()
+        {  
+            swal({
+                title: "Pregunta creada con éxito!",
+                text: "Puede ser vista en el banco de preguntas",
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
+            },
+            function () {
+                window.location.href = "Create";
+            });
+        } 
+    </script>
+
+
+    <script type="text/javascript">
+        function EnableDisableTextBox(justificationField) {
+            var txtPassportNumber = document.getElementById("txtJustificationNumber");
+            txtJustificationNumber.disabled = justificationField.checked ? false : true;
+            if (!txtJustificationNumber.disabled) {
+                txtJustificationNumber.focus();
+            }
+        }
     </script>
 }
