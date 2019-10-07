@@ -147,6 +147,7 @@ nav {
 
 .blue-box {
     min-width: 390px;
+    max-width: 450px;
     padding: 15px 15px 5px;
     border: 1px solid black;
     /*background: rgb(0,93,164);*/
@@ -189,4 +190,49 @@ nav {
 .style-welcome {
     font-size: 400%;
     color: #005da4;
+}
+
+.centeredText {
+    text-align: center;
+    width: 100%;
+}
+
+.mainBar {
+    background-color: #41ADE7 !important;
+}
+
+/* Estilos para los planes de mejora */
+.planesTable {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.centerImage {
+    width: 100%;
+}
+
+
+.secondNavBar {
+    font-size: 20px;
+}
+
+.MenuSupDer {
+    background-color: #41ade7
+}
+
+li a:hover {
+    background-color: #167eb6;
+    color: black;
+}
+
+.form-group-login-btn {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#system-title h2{
+    text-align: center;
+    font-weight: bold;
+    font-family: Arial;
+    padding-top: 50px;
 }
