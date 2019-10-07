@@ -17,8 +17,8 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Funcionario()
         {
-            this.Responsable_De = new HashSet<Responsable_De>();
             this.UnidadAcademica = new HashSet<UnidadAcademica>();
+            this.Responsable_De = new HashSet<Responsable_De>();
         }
     
         public string Cedula { get; set; }
@@ -26,8 +26,8 @@ namespace AppIntegrador.Models
         public virtual Persona Persona { get; set; }
         public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
     }
 }
