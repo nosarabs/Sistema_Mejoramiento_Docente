@@ -79,6 +79,16 @@
     .orden {
         display: none;
     }
+
+    .sortable-container:hover {
+        background-color: lightgrey;
+        cursor: grab;
+    }
+
+    .sortable-container:active {
+        background-color: #c4c4c4;
+        cursor: grabbing;
+    }
 </style>
 
 @section Scripts {
@@ -138,7 +148,7 @@
                 url: 'OpcionesDeSeleccion',
                 data: { i: i },
                 success: function (data) {
-                    $("#sortable").append(data);
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
                     disableRemoveButton();
                 }
             })
@@ -153,23 +163,35 @@
         // Delete option input box(es)
         function removeOption(id) {
             var node = document.getElementById(id);
-            node.parentNode.parentNode.remove();
-            // Fix indexes when an input box is deleted
-            fixIndexes();
-            disableRemoveButton();
+            var target = node.parentNode.parentNode;
+
+            $(target).animate({'height':0, 'opacity':0}, 200, function () {
+                $(this).remove();   
+
+                // Fix indexes when an input box is deleted
+                fixIndexes();
+                disableRemoveButton();
+            })
+            
         }
 
-
-
-        $('#justificationField').css('display', 'none'); // Hide the text input box in default
+        // Hide the text input box in default
+        $('#justificationField').css('display','none'); 
         function myFunction() {
-            if ($('#showField').prop('checked')) {
-                $('#justificationField').css('display', 'block');
-            } else {
-                $('#justificationField').css('display', 'none');
-            }
+           if($('#showField').prop('checked')) {
+                 $('#justificationField').css('display','block');
+               } else {
+                 $('#justificationField').css('display','none');
+               }
         }
 
+        // Count text
+        function charCount(inputBox) {
+            var len = inputBox.value.length;
+            var max = $(inputBox).attr("maxlength")
+            var counterText = $(inputBox).parent().find(".counter");
+            counterText.text(len + "/" + max + " caracteres usados");
+        }
     </script>
 
     <script>
