@@ -63,4 +63,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Nombre" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="4d493589-8188-4dc7-838d-4aafe1f68dc3" ChangeDateTime="10/03/2019 05:19:58">
+    <Property Name="ElementName" Value="[dbo].[PlanDeMejora].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlanDeMejora]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CedProf" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="50b6dbf1-b925-4f3c-af5c-5be6e5888edf" ChangeDateTime="10/03/2019 05:28:44">
+    <Property Name="ElementName" Value="[dbo].[TipoObjetivo].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TipoObjetivo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nombre" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="75d40f75-351e-4661-9b77-61bcfeae5320" ChangeDateTime="10/03/2019 05:30:08">
+    <Property Name="ElementName" Value="[dbo].[Objetivo].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Objetivo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Codigo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0dae5422-55b3-4724-9e97-37a7ddc5d776" ChangeDateTime="10/03/2019 05:35:08">
+    <Property Name="ElementName" Value="[dbo].[AccionDeMejora].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AccionDeMejora]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Codigo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ca76cfe9-2816-4c8b-a619-56ea5c45060d" ChangeDateTime="10/03/2019 12:12:07">
+    <Property Name="ElementName" Value="[dbo].[Responsable_De].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Responsable_De]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CedulaFunc" />
+  </Operation>
 </Operations>

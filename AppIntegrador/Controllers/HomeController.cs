@@ -76,7 +76,7 @@ namespace AppIntegrador.Controllers
                             if (success)
                             {                              
                                 Session["Username"] = objUser.Username.ToString();
-                                return RedirectToAction("UserDashboard");
+                                return RedirectToAction("Index");
                             }
                             else
                             {

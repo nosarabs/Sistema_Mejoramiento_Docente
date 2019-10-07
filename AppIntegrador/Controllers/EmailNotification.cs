@@ -23,7 +23,7 @@ namespace AppIntegrador.Controllers
 
         /// <summary>This method sends an email notification using the provided info
         /// and Web.config mail settings.</summary>
-        /// <param name="receipients">List of recipients.</param>
+        /// <param name="recipients">List of recipients.</param>
         /// <param name="subject">The email subject.</param>
         /// <param name="bodyPlainText">The email body in plain text.</param>
         /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
@@ -52,7 +52,7 @@ namespace AppIntegrador.Controllers
 
         /// <summary>This method sends an email notification (asynchronously)
         /// using the provided info and Web.config mail settings.</summary>
-        /// <param name="receipients">List of recipients.</param>
+        /// <param name="recipients">List of recipients.</param>
         /// <param name="subject">The email subject.</param>
         /// <param name="bodyPlainText">The email body in plain text.</param>
         /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
