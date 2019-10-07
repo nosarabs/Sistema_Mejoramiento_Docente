@@ -42,7 +42,9 @@ namespace AppIntegrador.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Objetivo> Objetivo { get; set; }
+        [Display(Name = "Cédula Profesor")]
         public virtual Profesor Profesor { get; set; }
+        [Display(Name = "Cédula Profesor1")]
         public virtual Profesor Profesor1 { get; set; }
     }
 }

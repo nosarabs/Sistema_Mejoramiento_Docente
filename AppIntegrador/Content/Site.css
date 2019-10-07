@@ -234,21 +234,19 @@ li a:hover {
 
 .wrapperPlanesDeMejora {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100% !important;
-    height: 5em; 
-    padding-top: 2%;
     padding-left: 5%;
     padding-right: 5%;
 }
 
 
 .listadoPlanesDeMejora {
-    width: 100%;
+    width: 50%;
     order: 2;
 }
 
 .creacionPlanesDeMejora {
-    width: 100%;
+    width: 50%;
     order: 1;
 }

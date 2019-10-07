@@ -14,26 +14,11 @@ namespace AppIntegrador.Controllers
     {
         private readonly DataIntegradorEntities db = new DataIntegradorEntities();
         
-        // GET: PlanDeMejora
+        // GET: de todos los planes de mejora
         public ActionResult Index()
         {
             var planDeMejora = db.PlanDeMejora.Include(p => p.Profesor).Include(p => p.Profesor1);
             return View(planDeMejora.ToList());
-        }
-
-        // GET: PlanDeMejora/Details/5
-        public ActionResult Details(int id, string cedula)
-        {
-            if (cedula == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
-            if (planDeMejora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(planDeMejora);
         }
 
         // GET: PlanDeMejora/Create
@@ -41,7 +26,8 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula");
             ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula");
-            return View();
+            var model = db.PlanDeMejora.Where( x => x.CedProf != null);
+            return View(model.ToList());
         }
 
         // POST: PlanDeMejora/Create
@@ -62,6 +48,33 @@ namespace AppIntegrador.Controllers
             ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
             return View(planDeMejora);
         }
+
+
+
+
+        /////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////
+
+
+        // GET: PlanDeMejora/Details/5
+        public ActionResult Details(int id, string cedula)
+        {
+            if (cedula == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            if (planDeMejora == null)
+            {
+                return HttpNotFound();
+            }
+            return View(planDeMejora);
+        }
+
+        
+
+        
 
         // GET: PlanDeMejora/Edit/5
         public ActionResult Edit(int id, string cedula)
