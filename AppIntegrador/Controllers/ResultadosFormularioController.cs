@@ -17,14 +17,17 @@ namespace AppIntegrador.Controllers
         // GET: ResultadosFormulario
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año)
         {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
+
             var modelo = new ResultadosFormulario
             {
-                CodigoFormulario = codigoFormulario,
-                SiglaCurso = siglaCurso,
-                NumeroGrupo = numeroGrupo,
-                Semestre = semestre,
-                Año = año,
-                Preguntas = ObtenerPreguntas(codigoFormulario)
+                CodigoFormulario = serializer.Serialize(codigoFormulario),
+                SiglaCurso = serializer.Serialize(siglaCurso),
+                NumeroGrupo = serializer.Serialize(numeroGrupo),
+                Semestre = serializer.Serialize(semestre),
+                Año = serializer.Serialize(año),
+                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
             };
             return View(modelo);
         }

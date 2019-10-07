@@ -26,12 +26,12 @@
     </div>
 
     <script>
-        var codigoFormulario = @Html.Raw(Json.Encode(Model.CodigoFormulario));
-        var siglaCurso = @Html.Raw(Json.Encode(Model.SiglaCurso));
-        var numeroGrupo = @Html.Raw(Json.Encode(Model.NumeroGrupo));
-        var semestre = @Html.Raw(Json.Encode(Model.Semestre));
-        var año = @Html.Raw(Json.Encode(Model.Año));
-        var questions = @Html.Raw(Json.Encode(Model.Preguntas));
+        var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
+        var siglaCurso = @Html.Raw(Model.SiglaCurso);
+        var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
+        var semestre = @Html.Raw(Model.Semestre);
+        var año = @Html.Raw(Model.Año);
+        var questions = @Html.Raw(Model.Preguntas);
     </script>
 
     <script src="~/Scripts/Visualizacion/Chart.js"></script>
