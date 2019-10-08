@@ -9,35 +9,49 @@
 <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 
 
+<style>
+    input.QuestionCheckbox {
+        width: 30px;
+        height: 30px;
+    }
+</style>
+
 @using (Html.BeginForm(FormMethod.Get))
 {
     //the following are search options
     <b>
         Opciones de búsqueda:
-    </b>@Html.RadioButton("option", "Tipo") <text>Tipo</text> @Html.RadioButton("option", "Codigo") <text>Codigo</text>
+    </b>
+    @Html.RadioButton("option", "Codigo") <text>Codigo</text>
+    @Html.RadioButton("option", "Tipo") <text>Tipo</text>
+    <select name="tipos">
+        <option value="">Tipos de preguntas</option>
+        <option value="U">Seleccion Unica</option>
+        <option value="M">Seleccion Multiple</option>
+    </select>
+    @Html.RadioButton("option", "Enunciado") <text>Enunciado</text>
+
     @Html.TextBox("search")
     <input type="submit"
            name="submit"
            value="Filtrar"
-           class="btn"/>
-           <P></P>
+           class="btn" />
+    <P></P>
 }
 
 
 <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <col width="50">
     <thead>
         <tr>
+            <th>
+                Seleccionar
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Codigo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
             </th>
             <th>
                 Operaciones
@@ -48,16 +62,18 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
+                <center> 
+                    <input type="checkbox" class="QuestionCheckbox" />
+                </center>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.TituloCampoObservacion)
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
@@ -86,4 +102,4 @@
 
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
-}
+}   
