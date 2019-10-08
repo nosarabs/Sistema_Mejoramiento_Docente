@@ -98,6 +98,17 @@
     <Build Include="Formularios\Periodo_activa_por.sql" />
     <Build Include="Formularios\Seccion.sql" />
     <Build Include="Formularios\Seccion_tiene_pregunta.sql" />
+    <Build Include="PlanDeMejora.sql" />
+    <Build Include="TipoObjetivo.sql" />
+    <Build Include="Objetivo.sql" />
+    <Build Include="AccionDeMejora.sql" />
+    <Build Include="Accionable.sql" />
+    <Build Include="Responsable_De.sql" />
+    <Build Include="AgregarPreguntaConOpcion.sql" />
+    <Build Include="AgregarPreguntaSeleccion.sql" />
+    <Build Include="AgregarOpcion.sql" />
+    <Build Include="AgregarPreguntas.sql" />
+    <Build Include="AgregarSeccion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

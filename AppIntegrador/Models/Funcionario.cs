@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public Funcionario()
         {
             this.UnidadAcademica = new HashSet<UnidadAcademica>();
+            this.Responsable_De = new HashSet<Responsable_De>();
         }
     
         public string Cedula { get; set; }
@@ -26,5 +27,7 @@ namespace AppIntegrador.Models
         public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Responsable_De> Responsable_De { get; set; }
     }
 }

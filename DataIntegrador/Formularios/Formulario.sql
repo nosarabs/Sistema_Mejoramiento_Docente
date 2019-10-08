@@ -1,5 +1,5 @@
 ﻿CREATE TABLE Formulario
 (
 	Codigo CHAR(8) NOT NULL PRIMARY KEY,
-	Nombre VARCHAR(50) NOT NULL,
+	Nombre NVARCHAR(250) NOT NULL,
 )

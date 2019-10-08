@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -99,6 +100,24 @@ namespace AppIntegrador.Controllers
             pregunta.Tipo = "U";
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Pregunta_con_opciones.Pregunta.Enunciado.Length > 0)
             {
+                bool validOptions = Opciones != null;
+                if (validOptions)
+                {
+                    validOptions = false;
+                    foreach (Opciones_de_seleccion opcion in Opciones)
+                    {
+                        if (opcion.Texto != null && opcion.Texto != "")
+                        {
+                            validOptions = true;
+                        }
+                    }
+                }
+
+                if(!validOptions)
+                {
+                    ModelState.AddModelError("", "Una pregunta de selección única necesita al menos una opción");
+                    return View(pregunta);
+                }
                 ModelState.AddModelError("Codigo", "");
                 try
                 {
