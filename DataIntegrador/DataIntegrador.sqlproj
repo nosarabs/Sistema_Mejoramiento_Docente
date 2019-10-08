@@ -108,6 +108,7 @@
     <Build Include="AgregarPreguntaSeleccion.sql" />
     <Build Include="AgregarOpcion.sql" />
     <Build Include="AgregarPreguntas.sql" />
+    <Build Include="AgregarSeccion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
