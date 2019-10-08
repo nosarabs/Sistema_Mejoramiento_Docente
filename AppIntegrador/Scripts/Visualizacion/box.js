@@ -23,6 +23,22 @@ function createBullets(parnt, answers) {
 
 }
 
+function getJustificacion(id) {
+    var justificaciones = [];
+
+    $.ajax({
+        url: "/ResultadosFormulario/getJustificacionPregunta/?codigoPregunta=" + this.id,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (resultados) {
+            justificaciones = resultados;
+        }
+    });
+
+    return justificaciones;
+}
+
 function addBox(cnt, id) {
 	
 	var box = document.createElement("div");
@@ -38,6 +54,11 @@ function addBox(cnt, id) {
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
+
+    /*
+    EVENTUALMENTE SE DEBE ASIGNAR ASI
+    var box_data = getJustificacion(id);
+    */
 
 	createBullets(list, box_data);
 	box.appendChild(list);
