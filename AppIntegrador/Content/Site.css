@@ -235,7 +235,7 @@ li a:hover {
 .wrapperPlanesDeMejora {
     display: flex;
     flex-direction: row;
-    width: 100% !important;
+    width: 80% !important;
     padding-left: 5%;
     padding-right: 5%;
 }
@@ -250,3 +250,49 @@ li a:hover {
     width: 50%;
     order: 1;
 }
+
+
+/*
+    Dashboard planes de mejora
+*/
+
+html, body {
+    height: 100%;
+}
+
+.smallLabel {
+    font-size: 10px !important;
+}
+
+.dashboardPlanesDeMejora {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70%;
+}
+
+.leftPanel {
+    order: 1;
+    flex-grow: 1;
+    margin-right: 5px;
+    border-color: black;
+    border-right: 2px;
+    background-color: #F0F0F0;
+}
+
+.contentPanel {
+    order: 1;
+    flex-grow: 6;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-label {
+    text-indent: 5em !important;
+}
+
+
+/* FIN DE LOS ESTILOS DEL DASHBOARD DE LOS PLANES DE MEJORA*/

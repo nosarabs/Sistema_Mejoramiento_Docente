@@ -4,30 +4,46 @@
     ViewBag.Title = "Planes de Mejora";
 }
 
-<div class="wrapperPlanesDeMejora">
-
-    <!-- Seccion de creacion de los planes de mejora -->
-    <div class="creacionPlanesDeMejora">
-        @Html.Partial("_CrearPlanDeMejora")
-        <hr />
+<div class="dashboardPlanesDeMejora">
+    <div class="leftPanel">
+        <ul>
+            <li>
+                @Html.ActionLink("Ver mis planes de mejora", "Index", null, new { @class = "btn btn-Nuevo"})
+            </li>
+            <li>
+                @Html.ActionLink("Crear nuevo plan de mejora", "Create", null, new { @class = "btn btn-Nuevo" })
+            </li>
+        </ul>
     </div>
+    <div class="contentPanel">
+        <div class="wrapperPlanesDeMejora">
 
-    <!-- Seccion de listado de planes de mejora-->
-    <div class="listadoPlanesDeMejora">
-        <div class="indexPlanesDeMejora">
 
-            @if (Model.Count() == 0)
-            {
-                <h2 class="text-center">Planes de Mejora</h2>
-                <div class="centeredText">
-                    <p>No tiene ningún plan relacionado a usted.</p>
+
+            <!-- Seccion de creacion de los planes de mejora -->
+            <div class="creacionPlanesDeMejora">
+                @Html.Partial("_CrearPlanDeMejora")
+                <hr />
+            </div>
+
+            <!-- Seccion de listado de planes de mejora-->
+            <div class="listadoPlanesDeMejora">
+                <div class="indexPlanesDeMejora">
+
+                    @if (Model.Count() == 0)
+                    {
+                        <h2 class="text-center">Planes de Mejora</h2>
+                        <div class="centeredText">
+                            <p>No tiene ningún plan relacionado a usted.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Partial("_ListaPlanesDeMejora")
+                    }
                 </div>
-            }
-            else
-            {
-                @Html.Partial("_ListaPlanesDeMejora")
-            }
+            </div>
         </div>
     </div>
-
 </div>
+
