@@ -1,24 +1,4 @@
-//Classes and types
-
-const classes = {
-	
-    ESCALA: "escala",
-    SELECCION_UNICA: "seleccion_unica",
-    SELECCION_MULTIPLE: "seleccion_multiple",
-	SELECCION_CERRADA: "seleccion_cerrada",
-    TEXTO_ABIERTO: "texto_abierto"
-	
-}
-
-const types = {
-	
-    ESCALA: "bar",
-    SELECCION_UNICA: "pie",
-    SELECCION_MULTIPLE: "bar",
-	SELECCION_CERRADA: "pie",
-    TEXTO_ABIERTO: "texto_abierto"
-	
-}
+//Auxiliar functions
 
 function appendLineBreaks(elmnt, number) {
 	
@@ -36,9 +16,8 @@ function appendTitle(elmnt, txt) {
 
 function createCollapsible(id, question) {
 	
-	var btn = document.createElement("button");   	//Create a <button> element
-    btn.className = "escala";   					// Set its class as a collapsible
-    btn.id = id;                                    // Set its id as the question's id
+    var btn = document.createElement("button");   	//Create a <button> element
+    btn.className = "collapsible";                  //Set the button as collapsible
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
 	cnt.className = "content";
@@ -47,43 +26,11 @@ function createCollapsible(id, question) {
 		
 		if (this.nextElementSibling.childElementCount == 0) {
 
-            var labels;
-            $.ajax({
-                url: "/ResultadosFormulario/ObtenerEtiquetasEscala/?codigoPregunta=" + this.id,
-                type: 'get',
-                dataType: 'json',
-                async: false,
-                success: function (resultados) {
-                    labels = resultados;
-                }
-            });
-
-
-            var data;
-            $.ajax({
-                url: "/ResultadosFormulario/ObtenerRespuestasEscala/?codigoPregunta=" + this.id,
-                type: 'get',
-                dataType: 'json',
-                async: false,
-                success: function (resultados) {
-                    data = resultados;
-                }
-            });
-
 			appendLineBreaks(cnt, 2);
-			addChart(cnt, {DATA: data, LABELS: labels}, this.className);
+			addChart(cnt, id);
 			appendLineBreaks(cnt, 6);
 			appendTitle(cnt, "Justificación de los resultados");
-            addBox(cnt, ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-                , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."]);
+            addBox(cnt, id);
 			appendLineBreaks(cnt, 2);
 			
 		}
