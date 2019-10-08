@@ -16,7 +16,7 @@
     </div>
 
     <div>
-        <button type="button" id="rem@(i)" class="remove-button btn btn-danger" onclick="removeOption('rem@(i)')">Borrar</button>
+        <button type="button" [disabled]="true" id="rem@(i)" class="remove-button btn btn-danger" onclick="removeOption('rem@(i)')">Borrar</button>
     </div>
     <div style="display: none">
         @Html.TextBoxFor(opcion => opcion.Orden, null, new
