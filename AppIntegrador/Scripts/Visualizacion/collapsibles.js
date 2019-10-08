@@ -44,6 +44,9 @@ function getTipo(id) {
     );
 
     /*
+    OTRA FORMA DE HACERLO
+    SI SE UTILIZA NO SE NECESITA [HTTPGET] EN LA FUNCION DEL .CS
+
     $.ajax({
         url: "/ResultadosFormulario/getTipoPregunta/?id=" + id,
         type: 'get',
@@ -63,7 +66,7 @@ function getJustificacion(id) {
     var justificaciones = [];
 
     $.ajax({
-        url: "/ResultadosFormulario/ObtenerJustificacion/?codigoPregunta=" + this.id,
+        url: "/ResultadosFormulario/getJustificacionPregunta/?codigoPregunta=" + this.id,
         type: 'get',
         dataType: 'json',
         async: false,

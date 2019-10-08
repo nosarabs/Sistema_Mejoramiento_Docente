@@ -84,6 +84,8 @@ namespace AppIntegrador.Controllers
             }
 
             return serializer.Serialize(ejeX);
+        }
+
         [HttpGet]
         public String getTipoPregunta(String id)
         {
@@ -115,6 +117,12 @@ namespace AppIntegrador.Controllers
                                  select pcods).Count() != 0)
                                     tipo = "seleccion_unica";
             return tipo;
+        }
+
+        [HttpGet]
+        public String getJustificacionPregunta(String id)
+        {
+
         }
     }
 }
