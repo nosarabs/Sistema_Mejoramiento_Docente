@@ -46,9 +46,20 @@ function createCollapsible(id, question) {
 	btn.addEventListener("click", function() {		//Add an event listener to the button
 		
 		if (this.nextElementSibling.childElementCount == 0) {
-			
+
+            var results;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerRespuestasPosibles/?codigoPregunta=" + this.id,
+                type: 'get',
+                dataType: 'json',
+                async: false,
+                success: function (resultados) {
+                    results = resultados;
+                }
+            });
+
 			appendLineBreaks(cnt, 2);
-			addChart(cnt, {DATA: [1100, 784, 2200, 5267, 4333, 3500, 6000, 1700, 2900, 1000], LABELS: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}, this.className);
+			addChart(cnt, {DATA: [1100, 784, 2200, 5267, 4333, 3500, 6000, 1700, 2900], LABELS: results}, this.className);
 			appendLineBreaks(cnt, 6);
 			appendTitle(cnt, "Justificación de los resultados");
             addBox(cnt, ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
