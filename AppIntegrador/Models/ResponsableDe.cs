@@ -12,15 +12,11 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Accionable
+    public partial class ResponsableDe
     {
-        public int Codigo { get; set; }
-        public string Descripcion { get; set; }
-        public Nullable<float> Progreso { get; set; }
-        public Nullable<System.DateTime> FechaInicio { get; set; }
-        public Nullable<System.DateTime> FechaFin { get; set; }
-        public int CodigoAM { get; set; }
+        public string CedulaFunc { get; set; }
+        public int CodigoA { get; set; }
     
-        public virtual AccionDeMejora AccionDeMejora { get; set; }
+        public virtual Funcionario Funcionario { get; set; }
     }
 }

@@ -11,38 +11,30 @@ namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PlanDeMejora
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanDeMejora()
         {
+            this.Profesor = new HashSet<Profesor>();
             this.Objetivo = new HashSet<Objetivo>();
+            this.Formulario = new HashSet<Formulario>();
+            this.Formulario1 = new HashSet<Formulario>();
         }
     
-        [Display(Name = "Cédula del profesor")]
-        [MaxLength(10)]
-        public string CedProf { get; set; }
-        [Display(Name = "Código del plan")]
         public int Codigo { get; set; }
-        [Display(Name = "Nombre del plan")]
-        [DataType(DataType.Text)]
         public string Nombre { get; set; }
-        [Display(Name = "Fecha de inicio del plan")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [Display(Name = "Fecha final del plan")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
-        [Display(Name = "Código del formulario asignado al plan")]
-        public string CodigoF { get; set; }
-        [Display(Name = "Cédula del profesor asignado")]
-        public string CedProfAsig { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Profesor> Profesor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Objetivo> Objetivo { get; set; }
-        public virtual Profesor Profesor { get; set; }
-        public virtual Profesor Profesor1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Formulario> Formulario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Formulario> Formulario1 { get; set; }
     }
 }
