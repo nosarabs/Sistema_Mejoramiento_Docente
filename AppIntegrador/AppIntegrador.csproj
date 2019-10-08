@@ -131,6 +131,7 @@
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\SeccionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -339,6 +340,13 @@
     <Content Include="Views\Formularios\Details.cshtml" />
     <Content Include="Views\Formularios\Edit.cshtml" />
     <Content Include="Views\Formularios\Index.cshtml" />
+    <Content Include="Views\Seccions\Create.cshtml" />
+    <Content Include="Views\Seccions\Delete.cshtml" />
+    <Content Include="Views\Seccions\Details.cshtml" />
+    <Content Include="Views\Seccions\Edit.cshtml" />
+    <Content Include="Views\Seccions\Index.cshtml" />
+    <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
+    <Content Include="Views\Seccions\ConjuntoSecciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
