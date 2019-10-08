@@ -49,6 +49,10 @@ namespace AppIntegrador.Controllers
             {
                 return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList());
             }
+            else if (option == "Enunciado" && search.Length > 0)
+            {
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(search)).ToList());
+            }
             else
             {
                 return View(pregunta_con_opciones_de_seleccion.ToList());
