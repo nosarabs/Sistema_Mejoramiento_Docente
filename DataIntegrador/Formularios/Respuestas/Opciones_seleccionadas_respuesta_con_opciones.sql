@@ -13,6 +13,6 @@
 	OpcionSeleccionada TINYINT NOT NULL,
 
 	PRIMARY KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada),
-	FOREIGN KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) 
+	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) 
 		REFERENCES Responde_respuesta_con_opciones(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
 )

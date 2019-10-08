@@ -8,6 +8,6 @@
 	GSemestre TINYINT NOT NULL,
 
 	PRIMARY KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre),
-	FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
-	FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno),
+	CONSTRAINT fkActivaPorFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
+	CONSTRAINT fkActivaPorGrupo FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno),
 )

@@ -12,16 +12,14 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Periodo_activa_por
+    public partial class AccionDeMejora
     {
-        public string FCodigo { get; set; }
-        public string CSigla { get; set; }
-        public byte GNumero { get; set; }
-        public int GAnno { get; set; }
-        public byte GSemestre { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaFin { get; set; }
+        public int Codigo { get; set; }
+        public string Descripcion { get; set; }
+        public Nullable<System.DateTime> FechaInicio { get; set; }
+        public Nullable<System.DateTime> FechaFin { get; set; }
+        public int CodigoObj { get; set; }
     
-        public virtual Activa_por Activa_por { get; set; }
+        public virtual Objetivo Objetivo { get; set; }
     }
 }
