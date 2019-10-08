@@ -21,9 +21,11 @@ namespace AppIntegrador.Models
             this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
         }
-    
+
+        // Historia MSU: Mensaje de error del código en español
         [Required(ErrorMessage = "Código requerido")]
         public string Codigo { get; set; }
+        // Historia MSU: Mensaje de error del enunciado en español
         [Required(ErrorMessage = "Enunciado requerido")]
         public string Enunciado { get; set; }
     

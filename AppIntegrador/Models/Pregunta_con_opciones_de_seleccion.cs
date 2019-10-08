@@ -21,6 +21,7 @@ namespace AppIntegrador.Models
             this.Opciones_de_seleccion = new HashSet<Opciones_de_seleccion>();
         }
     
+        // Historia MSU: Mensaje de error del código en español
         [Required(ErrorMessage = "Código requerido")]
         public string Codigo { get; set; }
         public string Tipo { get; set; }
