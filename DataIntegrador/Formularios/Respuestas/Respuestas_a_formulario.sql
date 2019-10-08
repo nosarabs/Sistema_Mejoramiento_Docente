@@ -9,7 +9,7 @@
 	Fecha DATE NOT NULL,
 
 	PRIMARY KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha),
-	FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
-	FOREIGN KEY(Username) REFERENCES Usuario(Username),
-	FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno),
+	CONSTRAINT fkRespuestasFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
+	CONSTRAINT fkRespuestasUsuario FOREIGN KEY(Username) REFERENCES Usuario(Username),
+	CONSTRAINT fkRespuestasGrupo FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno),
 )

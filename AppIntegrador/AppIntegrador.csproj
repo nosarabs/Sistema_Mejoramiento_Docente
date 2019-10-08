@@ -134,6 +134,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\EmailNotification.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs" />
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,12 +255,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Si_no_nr.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoObjetivo.cs">

@@ -36,9 +36,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">Usuarios</button>
                             <div class="dropdown-content">
-                                <a href="#link1">Link 1</a>
-                                <a href="#link2">Link 2</a>
-                                <a href="#link3">Link 3</a>
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Administración de usuarios", "Index", "Home")
                             </div>
                         </div>
                     </li>
@@ -47,6 +46,7 @@
                             <button class="dropbtn">Formularios</button>
                             <div class="dropdown-content">
                                 @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
+                                @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
                             </div>
                         </div>
                     </li>
@@ -64,9 +64,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                <a href="#link1">Link 1</a>
-                                <a href="#link2">Link 2</a>
-                                <a href="#link3">Link 3</a>
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Visualizar resultados", "Index", "Home")
                             </div>
                         </div>
                     </li>
