@@ -89,68 +89,102 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public String getTipoPregunta(String id)
         {
-            //Console.WriteLine("Entra a getTipoPregunta");
-            //return "escala";
             string tipo = "";
             if ((from pcrl in db.Pregunta_con_respuesta_libre
                  where pcrl.Codigo == id
-                 select pcrl).Count() != 0)
-                tipo = "texto_abierto";
+                 select pcrl).Count() != 0) 
+                 {
+                     tipo = "texto_abierto";
+                 }
             else
                 if ((from e in db.Escalar
                      where e.Codigo == id
                      select e).Count() != 0)
-                    tipo = "escala";
+                     {
+                         tipo = "escala";
+                     }
                 else
                     if ((from snnr in db.Si_no_nr
                          where snnr.Codigo == id
                          select snnr).Count() != 0)
-                        tipo = "seleccion_cerrada";
+                         {
+                            tipo = "seleccion_cerrada";
+                         }
                     else
                         if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                              where pcods.Codigo == id & pcods.Tipo == "M"
                              select pcods).Count() != 0)
-                            tipo = "seleccion_multiple";
+                             {
+                                tipo = "seleccion_multiple";
+                             }
                         else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == id & pcods.Tipo == "U"
                                  select pcods).Count() != 0)
+                                 {
                                     tipo = "seleccion_unica";
+                                 }
             return tipo;
         }
 
-        // [HttpGet]
-        // public String getJustificacionPregunta(String id)
-        // {
-
-        // }
-  
-    public string ObtenerRespuestasEscala(string codigoPregunta)
-    {
-        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-        var minimo = (from f in db.Escalar
-                      where f.Codigo == codigoPregunta
-                      select f.Minimo).First();
-
-        var maximo = (from f in db.Escalar
-                      where f.Codigo == codigoPregunta
-                      select f.Maximo).First();
-        var incremento = (from f in db.Escalar
-                          where f.Codigo == codigoPregunta
-                          select f.Incremento).First();
-
-        List<int> ejeY = new List<int>();
-
-        // Iteracion sobre una lista nueva
-        for (int index = minimo; index <= maximo; index += incremento)
+    /*
+        User Story ID: 4
+        Task:   - Tomar información de respuestas de la base de datos
+                - Pasarla al método de graficación
+    */
+        [HttpGet]
+        public String getJustificacionPregunta(string codigoPregunta)
         {
-            var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                      where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
-                                      select f.OpcionSeleccionada).Count();
-            ejeY.Add(contadorRespuestas);
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<int> justificaciones = new List<int>();
+            int count = 0;
+
+            string tabla = getTipoPregunta(codigoPregunta);
+
+            // Hay que haer un switch dado el tipo de pregunta
+            // que consulte la tabla correspondiente. 
+
+
+            
+
+            // Iteracion sobre una lista nueva
+            for (int index = 0; index <= count; index += 1)
+            {
+                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                        where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                        select f.OpcionSeleccionada).Count();
+                                        
+                justificaciones.Add(contadorRespuestas);
+            }
+            return serializer.Serialize(justificaciones);
         }
-        return serializer.Serialize(ejeY);
-    }
+  
+        public string ObtenerRespuestasEscala(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            var minimo = (from f in db.Escalar
+                        where f.Codigo == codigoPregunta
+                        select f.Minimo).First();
+
+            var maximo = (from f in db.Escalar
+                        where f.Codigo == codigoPregunta
+                        select f.Maximo).First();
+            var incremento = (from f in db.Escalar
+                            where f.Codigo == codigoPregunta
+                            select f.Incremento).First();
+
+            List<int> ejeY = new List<int>();
+
+            // Iteracion sobre una lista nueva
+            for (int index = minimo; index <= maximo; index += incremento)
+            {
+                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                        where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                        select f.OpcionSeleccionada).Count();
+                ejeY.Add(contadorRespuestas);
+            }
+            return serializer.Serialize(ejeY);
+        }
     }
 }

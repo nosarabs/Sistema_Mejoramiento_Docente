@@ -22,23 +22,7 @@ function getTipo(id) {
             tipo = data;
         }
     );
-
-    /*
-    OTRA FORMA DE HACERLO
-    SI SE UTILIZA NO SE NECESITA [HTTPGET] EN LA FUNCION DEL .CS
-
-    $.ajax({
-        url: "/ResultadosFormulario/getTipoPregunta/?id=" + id,
-        type: 'get',
-        dataType: 'html',
-        async: false,
-        success:    function (data)
-                    {
-                        alert(data);
-                    }
-    });
-    */
-
+    
     return tipo;
 }
 

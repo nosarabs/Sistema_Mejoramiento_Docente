@@ -23,6 +23,12 @@ function createBullets(parnt, answers) {
 
 }
 
+/*
+    User Story ID: 4
+    Tasks:   - Tomar información de respuestas de la base de datos
+            - Pasarla al método de graficación
+*/
+
 function getJustificacion(id) {
     var justificaciones = [];
 
@@ -54,6 +60,12 @@ function addBox(cnt, id) {
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
         , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
+
+    /*
+        User Story ID: 4
+        Tasks:   - Tomar información de respuestas de la base de datos
+                - Pasarla al método de graficación
+    */
 
     /*
     EVENTUALMENTE SE DEBE ASIGNAR ASI
