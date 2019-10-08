@@ -17,14 +17,17 @@ namespace AppIntegrador.Controllers
         // GET: ResultadosFormulario
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año)
         {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
+
             var modelo = new ResultadosFormulario
             {
-                CodigoFormulario = codigoFormulario,
-                SiglaCurso = siglaCurso,
-                NumeroGrupo = numeroGrupo,
-                Semestre = semestre,
-                Año = año,
-                Preguntas = ObtenerPreguntas(codigoFormulario)
+                CodigoFormulario = serializer.Serialize(codigoFormulario),
+                SiglaCurso = serializer.Serialize(siglaCurso),
+                NumeroGrupo = serializer.Serialize(numeroGrupo),
+                Semestre = serializer.Serialize(semestre),
+                Año = serializer.Serialize(año),
+                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
             };
             return View(modelo);
         }
@@ -43,6 +46,44 @@ namespace AppIntegrador.Controllers
                             select new SelectListItem { Value = p.Codigo, Text = p.Enunciado };
 
             return preguntas.ToList();
+        }
+
+        // GET: RespuestasFormulario
+        [HttpGet]
+        public IEnumerable<SelectListItem> ObtenerRespuestas(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        {
+            var respuestas = from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                             where f.FCodigo == codigoFormulario && f.CSigla == siglaCurso && f.GNumero == numeroGrupo && f.GSemestre == semestre && f.GAnno == año && f.PCodigo == codigoPregunta
+                             select new SelectListItem { Value = f.OpcionSeleccionada.ToString() };
+
+            return respuestas.ToList();
+        }
+
+        public string ObtenerRespuestasPosibles(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            List<string> ejeX = new List<string>();
+
+            var minimo = (from f in db.Escalar
+                         where f.Codigo == codigoPregunta
+                         select f.Minimo).First();
+
+            var maximo = (from f in db.Escalar
+                         where f.Codigo == codigoPregunta
+                         select f.Maximo).First();
+            var incremento = (from f in db.Escalar
+                             where f.Codigo == codigoPregunta
+                             select f.Incremento).First();
+
+            // Iteracion sobre una lista nueva
+            for (int index = minimo; index < maximo; index+=incremento)
+            {
+                // Agrega la opcion posible a la lista
+                ejeX.Add(index.ToString());
+            }
+
+            return serializer.Serialize(ejeX);
         }
     }
 }
