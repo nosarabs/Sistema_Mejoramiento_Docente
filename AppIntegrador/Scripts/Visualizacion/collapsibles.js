@@ -37,6 +37,45 @@ function appendTitle(elmnt, txt) {
 function createCollapsible(id, question) {
 	
 	var btn = document.createElement("button");   	//Create a <button> element
+
+    var tipo = "seleccion_unica";
+   
+    $.get("Controllers/ResultadosFormulario/getTipoPregunta", { id: this.id },
+ 
+            function (data)
+            {
+                //tipo = data;
+                print(data);
+                alert("Aqui:"+ data);
+            }
+    );
+
+    /*
+    var tipo;
+    $.ajax({
+        url: "/ResultadosFormulario/getTipoPregunta/?id=" + this.id,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success: function (data) {
+                tipo = data;
+            }
+    });
+    */
+    /*
+    $.ajax({
+        url: "/ResultadosFormulario/getTipoPregunta/?id=" + id,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success:    function (data)
+                    {
+                        alert(data);
+                    }
+    });
+    */
+    btn.className = tipo;
+
     btn.className = "escala";   					// Set its class as a collapsible
     btn.id = id;                                    // Set its id as the question's id
 	btn.innerHTML = question;						//Insert text
