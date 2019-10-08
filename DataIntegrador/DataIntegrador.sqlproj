@@ -105,6 +105,7 @@
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
     <Build Include="Mediana.sql" />
+    <Build Include="DesviacionEstandarEscalar.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
