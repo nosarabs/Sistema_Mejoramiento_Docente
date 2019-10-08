@@ -18,7 +18,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año)
         {
 
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             var modelo = new ResultadosFormulario
             {
@@ -66,18 +66,18 @@ namespace AppIntegrador.Controllers
             List<string> ejeX = new List<string>();
 
             var minimo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Minimo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
 
             var maximo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Maximo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
             var incremento = (from f in db.Escalar
-                             where f.Codigo == codigoPregunta
-                             select f.Incremento).First();
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
 
             // Iteracion sobre una lista nueva
-            for (int index = minimo; index < maximo; index+=incremento)
+            for (int index = minimo; index < maximo; index += incremento)
             {
                 // Agrega la opcion posible a la lista
                 ejeX.Add(index.ToString());
@@ -100,29 +100,46 @@ namespace AppIntegrador.Controllers
                 if ((from e in db.Escalar
                      where e.Codigo == id
                      select e).Count() != 0)
-                    tipo = "escala";
-                else
+                tipo = "escala";
+            else
                     if ((from snnr in db.Si_no_nr
                          where snnr.Codigo == id
                          select snnr).Count() != 0)
-                        tipo = "seleccion_cerrada";
-                    else
+                tipo = "seleccion_cerrada";
+            else
                         if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                              where pcods.Codigo == id & pcods.Tipo == "M"
                              select pcods).Count() != 0)
-                            tipo = "seleccion_multiple";
-                        else
+                tipo = "seleccion_multiple";
+            else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == id & pcods.Tipo == "U"
                                  select pcods).Count() != 0)
-                                    tipo = "seleccion_unica";
+                tipo = "seleccion_unica";
             return tipo;
         }
+        /*
+                [HttpGet]
+                public String getJustificacionPregunta(String id)
+                {
 
-        [HttpGet]
-        public String getJustificacionPregunta(String id)
+                }
+        */
+
+        /*
+         Método que recupera las opciones de repuestas a una pregunta de selección múltiple para un formulario
+        */
+        public string ObtenerRespuestasSeleccionMultiple(string codigoPregunta)
         {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            //List<string> opciones = new List<string>();
+            var opciones = from ods in db.Opciones_de_seleccion
+                           join pcods in db.Pregunta_con_opciones_de_seleccion on ods.Codigo equals pcods.Codigo
+                           where (pcods.Tipo.Equals('M')) && (pcods.Codigo == codigoPregunta)
+                           orderby ods.Orden
+                           select ods.Texto;
 
+            return serializer.Serialize(opciones);
         }
     }
 }
