@@ -49,11 +49,15 @@ function getTipo(id) {
 function getJustificacion(id) {
     var justificaciones = [];
 
-     $.get("/ResultadosFormulario/getJustificacionPregunta", { id: id },
-        function (data) {
-            justificaciones = data;
+    $.ajax({
+        url: "/ResultadosFormulario/ObtenerJustificacion/?codigoPregunta=" + this.id,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (resultados) {
+            justificaciones = resultados;
         }
-    );
+    });
 
     return justificaciones;
 }
