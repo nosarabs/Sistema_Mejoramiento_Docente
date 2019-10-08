@@ -10,7 +10,7 @@ h3 {text-align: center;}
     margin-bottom: 1px;
 }
 
-.escala, .seleccion_unica, .seleccion_multiple, .seleccion_cerrada, .texto_abierto {
+.collapsible {
     background-color: #41ade7;
     color: black;
     cursor: pointer;
@@ -24,11 +24,11 @@ h3 {text-align: center;}
     margin-bottom: 1px;
 }
 
-.activeCollapsible, .escala:hover, .seleccion_unica:hover, .seleccion_multiple:hover, .seleccion_cerrada:hover, .texto_abierto:hover {
+.activeCollapsible, .collapsible:hover {
     background-color: #41ade7;
 }
 
-.escala:after, .seleccion_unica:after, .seleccion_multiple:after, .seleccion_cerrada:after, .texto_abierto:after {
+.collapsible:after {
 	content: '\002B';
 	font-weight: bold;
 	float: right;

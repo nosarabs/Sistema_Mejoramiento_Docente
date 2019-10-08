@@ -59,7 +59,7 @@ namespace AppIntegrador.Controllers
             return respuestas.ToList();
         }
 
-        public string ObtenerRespuestasPosibles(string codigoPregunta)
+        public string ObtenerEtiquetasEscala(string codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -76,14 +76,42 @@ namespace AppIntegrador.Controllers
                               where f.Codigo == codigoPregunta
                               select f.Incremento).First();
 
+
             // Iteracion sobre una lista nueva
-            for (int index = minimo; index < maximo; index += incremento)
+            for (int index = minimo; index <= maximo; index+=incremento)
             {
                 // Agrega la opcion posible a la lista
                 ejeX.Add(index.ToString());
             }
-
             return serializer.Serialize(ejeX);
+        }
+  
+        public string ObtenerRespuestasEscala(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            var minimo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
+
+            var maximo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
+            var incremento = (from f in db.Escalar
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
+
+            List<int> ejeY = new List<int>();
+
+            // Iteracion sobre una lista nueva
+            for (int index = minimo; index <= maximo; index += incremento)
+            {
+                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                          where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                          select f.OpcionSeleccionada).Count();
+                ejeY.Add(contadorRespuestas);
+            }
+            return serializer.Serialize(ejeY);
         }
 
         [HttpGet]
@@ -96,35 +124,29 @@ namespace AppIntegrador.Controllers
                  where pcrl.Codigo == id
                  select pcrl).Count() != 0)
                 tipo = "texto_abierto";
-            else
-                if ((from e in db.Escalar
-                     where e.Codigo == id
-                     select e).Count() != 0)
-                tipo = "escala";
-            else
-                    if ((from snnr in db.Si_no_nr
-                         where snnr.Codigo == id
-                         select snnr).Count() != 0)
-                tipo = "seleccion_cerrada";
-            else
-                        if ((from pcods in db.Pregunta_con_opciones_de_seleccion
-                             where pcods.Codigo == id & pcods.Tipo == "M"
-                             select pcods).Count() != 0)
-                tipo = "seleccion_multiple";
-            else
+                else
+                    if ((from e in db.Escalar
+                         where e.Codigo == id
+                         select e).Count() != 0)
+                        tipo = "escala";
+                    else
+                        if ((from snnr in db.Si_no_nr
+                             where snnr.Codigo == id
+                             select snnr).Count() != 0)
+                            tipo = "seleccion_cerrada";
+                        else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                    where pcods.Codigo == id & pcods.Tipo == "M"
+                                    select pcods).Count() != 0)
+                                tipo = "seleccion_multiple";
+                            else
+                                if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == id & pcods.Tipo == "U"
                                  select pcods).Count() != 0)
-                tipo = "seleccion_unica";
+                                tipo = "seleccion_unica";
             return tipo;
         }
-        /*
-                [HttpGet]
-                public String getJustificacionPregunta(String id)
-                {
-
-                }
-        */
+    
 
         /*
          Método que recupera las opciones de repuestas a una pregunta de selección múltiple para un formulario
