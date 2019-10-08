@@ -1,3 +1,25 @@
+//Classes and types
+
+const classes = {
+
+    ESCALA: "escala",
+    SELECCION_UNICA: "seleccion_unica",
+    SELECCION_MULTIPLE: "seleccion_multiple",
+    SELECCION_CERRADA: "seleccion_cerrada",
+    TEXTO_ABIERTO: "texto_abierto"
+
+}
+
+const types = {
+
+    ESCALA: "bar",
+    SELECCION_UNICA: "pie",
+    SELECCION_MULTIPLE: "bar",
+    SELECCION_CERRADA: "pie",
+    TEXTO_ABIERTO: "texto_abierto"
+
+}
+
 function drawBarChart(cvs, chartData) {
 	
 	var dataLength = chartData.DATA.length;
@@ -51,7 +73,10 @@ function drawBarChart(cvs, chartData) {
                 }]
             },
 			plugins: {
-				datalabels: {
+                datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                    },
                     color: "white",
                     textStrokeColor: "black",
                     textStrokeWidth: 0,
@@ -112,6 +137,9 @@ function drawPieChart(cvs, chartData) {
             maintainAspectRatio: false,
             plugins: {
                 datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                    },
                     color: "white",
                     textStrokeColor: "black",
                     textStrokeWidth: 0,
@@ -141,16 +169,43 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function addChart(cnt, chartData, className) {
+function addChart(cnt, id) {
 	
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
-	cvs.setAttribute("height", "650" );
+    cvs.setAttribute("height", "650");
+    var className = "escala";
+    var chartData;
 	
 	switch(className) {
 		
-		case classes.ESCALA:
-			drawBarChart(cvs, chartData);
+        case classes.ESCALA:
+
+            var labels;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerEtiquetasEscala/?codigoPregunta=" + id,
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    labels = resultados;
+                }
+            });
+
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerRespuestasEscala/?codigoPregunta=" + id,
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+
+            chartData = { DATA: data, LABELS: labels };
+            drawBarChart(cvs, chartData);
+
 			break;
 			
 		case classes.SELECCION_UNICA:

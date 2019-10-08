@@ -59,7 +59,7 @@ namespace AppIntegrador.Controllers
             return respuestas.ToList();
         }
 
-        public string ObtenerRespuestasPosibles(string codigoPregunta)
+        public string ObtenerEtiquetasEscala(string codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -76,13 +76,13 @@ namespace AppIntegrador.Controllers
                              where f.Codigo == codigoPregunta
                              select f.Incremento).First();
 
+
             // Iteracion sobre una lista nueva
-            for (int index = minimo; index < maximo; index+=incremento)
+            for (int index = minimo; index <= maximo; index+=incremento)
             {
                 // Agrega la opcion posible a la lista
                 ejeX.Add(index.ToString());
             }
-
             return serializer.Serialize(ejeX);
         }
 
@@ -119,10 +119,38 @@ namespace AppIntegrador.Controllers
             return tipo;
         }
 
-        [HttpGet]
-        public String getJustificacionPregunta(String id)
-        {
+        // [HttpGet]
+        // public String getJustificacionPregunta(String id)
+        // {
 
+        // }
+  
+    public string ObtenerRespuestasEscala(string codigoPregunta)
+    {
+        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+        var minimo = (from f in db.Escalar
+                      where f.Codigo == codigoPregunta
+                      select f.Minimo).First();
+
+        var maximo = (from f in db.Escalar
+                      where f.Codigo == codigoPregunta
+                      select f.Maximo).First();
+        var incremento = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Incremento).First();
+
+        List<int> ejeY = new List<int>();
+
+        // Iteracion sobre una lista nueva
+        for (int index = minimo; index <= maximo; index += incremento)
+        {
+            var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                      where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                      select f.OpcionSeleccionada).Count();
+            ejeY.Add(contadorRespuestas);
         }
+        return serializer.Serialize(ejeY);
+    }
     }
 }
