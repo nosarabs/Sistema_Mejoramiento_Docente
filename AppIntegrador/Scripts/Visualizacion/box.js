@@ -28,16 +28,16 @@ function addBox(cnt, id) {
 	var box = document.createElement("div");
 	box.setAttribute("class", "myBox" );
     var list = document.createElement("div");
-    var box_data = ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
+    var box_data = ["Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."
+        , "Hola esto es una prueba de que se puede scrollear sin ningÃºn problema y que se muestran los bullets de la caja de texto. TambiÃ©n quiero ver cÃ³mo se ven los pÃ¡rrafos de mÃ¡s de una lÃ­nea."];
 
 	createBullets(list, box_data);
 	box.appendChild(list);
