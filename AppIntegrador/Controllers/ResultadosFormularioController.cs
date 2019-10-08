@@ -34,7 +34,7 @@ namespace AppIntegrador.Controllers
 
         // GET: PreguntasFormulario
         [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerPreguntas (String codigoFormulario)
+        public IEnumerable<SelectListItem> ObtenerPreguntas(String codigoFormulario)
         {
             var preguntas = from f in db.Formulario
                             join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
@@ -84,6 +84,37 @@ namespace AppIntegrador.Controllers
             }
 
             return serializer.Serialize(ejeX);
+        [HttpGet]
+        public String getTipoPregunta(String id)
+        {
+            //Console.WriteLine("Entra a getTipoPregunta");
+            //return "escala";
+            string tipo = "";
+            if ((from pcrl in db.Pregunta_con_respuesta_libre
+                 where pcrl.Codigo == id
+                 select pcrl).Count() != 0)
+                tipo = "texto_abierto";
+            else
+                if ((from e in db.Escalar
+                     where e.Codigo == id
+                     select e).Count() != 0)
+                    tipo = "escala";
+                else
+                    if ((from snnr in db.Si_no_nr
+                         where snnr.Codigo == id
+                         select snnr).Count() != 0)
+                        tipo = "seleccion_cerrada";
+                    else
+                        if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                             where pcods.Codigo == id & pcods.Tipo == "M"
+                             select pcods).Count() != 0)
+                            tipo = "seleccion_multiple";
+                        else
+                            if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                 where pcods.Codigo == id & pcods.Tipo == "U"
+                                 select pcods).Count() != 0)
+                                    tipo = "seleccion_unica";
+            return tipo;
         }
     }
 }

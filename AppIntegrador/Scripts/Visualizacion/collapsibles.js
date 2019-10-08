@@ -43,6 +43,19 @@ function getTipo(id) {
         }
     );
 
+    /*
+    $.ajax({
+        url: "/ResultadosFormulario/getTipoPregunta/?id=" + id,
+        type: 'get',
+        dataType: 'html',
+        async: false,
+        success:    function (data)
+                    {
+                        alert(data);
+                    }
+    });
+    */
+
     return tipo;
 }
 
