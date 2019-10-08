@@ -12,6 +12,30 @@
         <img class="ucr-logo" src='/Content/images/logo_ucr.png' border='0' alt='logo-ucr' />
     </div>
 
+    <!-- UserStory 1.5 - Modal for email reset -->
+    <div class="modal fade bannerformmodal" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Restablecer contraseña</h4>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <label class="text-left">Correo</label>
+                        @*<i class="fas fa-user prefix grey-text"></i>*@
+                        <input type="text" id="orangeForm-name" class="form-control validate">
+                    </div>
+                </div>
+                <div class="modal-footer d-flex text-right">
+                    <button class="btn">Enviar</button>
+                    <button class="btn" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- UserStory 1.5 - End of Modal for email reset -->
+
     <div class="container-login100">
         <div class="row">
             <div class="blue-box">
@@ -31,6 +55,11 @@
                         <i class="fa fa-eye" style="position:relative; font-size:25px; left:325px; bottom:30px; cursor:pointer" id="Eye"></i>
                         <p style="color:red;">@Html.ValidationMessageFor(m => m.Password)</p>
                     </div>
+                    <!-- UserStory 1.5 - link to modal -->
+                    <div class="form-group text-right">
+                        <a class="text-right" href="#bannerformmodal" data-toggle="modal" data-target="#bannerformmodal" ><small style="color:white;">¿Has olvidado la contraseña?</small></a>
+                    </div>
+                    <!-- UserStory 1.5 - end of link to modal -->
 
                     <!-- Permite mostrar/ocultar el password cuando se presiona el Ojo -->
                     <script>
