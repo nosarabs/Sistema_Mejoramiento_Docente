@@ -86,32 +86,47 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeX);
         }
   
-    public string ObtenerRespuestasEscala(string codigoPregunta)
-    {
-        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-        var minimo = (from f in db.Escalar
-                      where f.Codigo == codigoPregunta
-                      select f.Minimo).First();
-
-        var maximo = (from f in db.Escalar
-                      where f.Codigo == codigoPregunta
-                      select f.Maximo).First();
-        var incremento = (from f in db.Escalar
-                          where f.Codigo == codigoPregunta
-                          select f.Incremento).First();
-
-        List<int> ejeY = new List<int>();
-
-        // Iteracion sobre una lista nueva
-        for (int index = minimo; index <= maximo; index += incremento)
+        public string ObtenerRespuestasEscala(string codigoPregunta)
         {
-            var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                      where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
-                                      select f.OpcionSeleccionada).Count();
-            ejeY.Add(contadorRespuestas);
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            var minimo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
+
+            var maximo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
+            var incremento = (from f in db.Escalar
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
+
+            List<int> ejeY = new List<int>();
+
+            // Iteracion sobre una lista nueva
+            for (int index = minimo; index <= maximo; index += incremento)
+            {
+                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                          where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                          select f.OpcionSeleccionada).Count();
+                ejeY.Add(contadorRespuestas);
+            }
+            return serializer.Serialize(ejeY);
         }
-        return serializer.Serialize(ejeY);
-    }
+
+        [HttpGet]
+        public IEnumerable<SelectListItem> ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        {
+            var respuestas = from rrl in db.Responde_respuesta_libre
+                             where rrl.FCodigo == codigoFormulario
+                             && rrl.CSigla == siglaCurso
+                             && rrl.GNumero == numeroGrupo
+                             && rrl.GSemestre == semestre
+                             && rrl.GAnno == año
+                             && rrl.PCodigo == codigoPregunta
+                             select new SelectListItem { Value = rrl.Observacion };
+
+            return respuestas;
+        }
     }
 }

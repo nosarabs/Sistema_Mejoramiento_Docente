@@ -26,11 +26,22 @@ function createCollapsible(id, question) {
 		
 		if (this.nextElementSibling.childElementCount == 0) {
 
-			appendLineBreaks(cnt, 2);
-			addChart(cnt, id);
-			appendLineBreaks(cnt, 6);
-			appendTitle(cnt, "JustificaciÃ³n de los resultados");
-            addBox(cnt, id);
+            var tipo = "texto_abierto";
+
+            if (tipo == "texto_abierto") {
+
+                appendLineBreaks(cnt, 2);
+
+            } else {
+
+                appendLineBreaks(cnt, 2);
+                addChart(cnt, id, tipo);
+                appendLineBreaks(cnt, 6);
+                appendTitle(cnt, "Justificación de los resultados");
+
+            }
+
+            addBox(cnt, id, tipo);
 			appendLineBreaks(cnt, 2);
 			
 		}

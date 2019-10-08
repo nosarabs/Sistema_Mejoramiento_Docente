@@ -169,12 +169,12 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function addChart(cnt, id) {
+function addChart(cnt, id, tipo) {
 	
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
-    var className = "escala";
+    var className = "texto_abierto";
     var chartData;
 	
 	switch(className) {
@@ -225,6 +225,7 @@ function addChart(cnt, id) {
 			break;
 			
 	}
-	
-	cnt.appendChild(cvs);
+
+    cnt.appendChild(cvs);
+
 }
