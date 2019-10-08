@@ -21,23 +21,12 @@ namespace AppIntegrador.Models
             this.Objetivo = new HashSet<Objetivo>();
         }
     
-        [Display(Name = "Cédula del profesor")]
-        [MaxLength(10)]
         public string CedProf { get; set; }
-        [Display(Name = "Código del plan")]
         public int Codigo { get; set; }
-        [Display(Name = "Nombre del plan")]
-        [DataType(DataType.Text)]
         public string Nombre { get; set; }
-        [Display(Name = "Fecha de inicio del plan")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [Display(Name = "Fecha final del plan")]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
-        [Display(Name = "Código del formulario asignado al plan")]
         public string CodigoF { get; set; }
-        [Display(Name = "Cédula del profesor asignado")]
         public string CedProfAsig { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

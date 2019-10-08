@@ -17,9 +17,7 @@ namespace AppIntegrador.Models
     {
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
         public int CodigoObj { get; set; }
     
