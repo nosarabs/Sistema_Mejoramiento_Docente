@@ -34,10 +34,35 @@ function appendTitle(elmnt, txt) {
 	elmnt.appendChild(title);
 }
 
+function getTipo(id) {
+    var tipo; 
+
+    $.get("/ResultadosFormulario/getTipoPregunta", { id: id },
+        function (data) {
+            tipo = data;
+        }
+    );
+
+    return tipo;
+}
+
+function getJustificacion(id) {
+    var justificaciones = [];
+
+     $.get("/ResultadosFormulario/getJustificacionPregunta", { id: id },
+        function (data) {
+            justificaciones = data;
+        }
+    );
+
+    return justificaciones;
+}
+
+
 function createCollapsible(id, question) {
-	
-	var btn = document.createElement("button");   	//Create a <button> element
-    btn.className = "escala";   					// Set its class as a collapsible
+
+    var btn = document.createElement("button");     //Create a <button> element
+    btn.className = getTipo(id);   					// Set its class as a collapsible
     btn.id = id;                                    // Set its id as the question's id
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
@@ -47,10 +72,13 @@ function createCollapsible(id, question) {
 		
 		if (this.nextElementSibling.childElementCount == 0) {
 			
-			appendLineBreaks(cnt, 2);
+            appendLineBreaks(cnt, 2);
+            
 			addChart(cnt, {DATA: [1100, 784, 2200, 5267, 4333, 3500, 6000, 1700, 2900, 1000], LABELS: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}, this.className);
-			appendLineBreaks(cnt, 6);
-			appendTitle(cnt, "Justificación de los resultados");
+           
+            appendLineBreaks(cnt, 6);
+            appendTitle(cnt, "Justificación de los resultados");
+            
             addBox(cnt, ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
                 , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
                 , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
@@ -61,7 +89,13 @@ function createCollapsible(id, question) {
                 , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
                 , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
                 , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."]);
-			appendLineBreaks(cnt, 2);
+            
+            /* 
+            EVENTUALMENTE ASI SE VA A ASIGNAR
+            addBox(cnt, getJustificacion(id));
+            */
+
+            appendLineBreaks(cnt, 2);
 			
 		}
 		
