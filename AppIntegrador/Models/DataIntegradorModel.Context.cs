@@ -78,5 +78,18 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuario", pLoginParameter, pPasswordParameter, estado);
         }
+    
+        public virtual int LoginUsuario1(string pLoginName, string pPassword, ObjectParameter result)
+        {
+            var pLoginNameParameter = pLoginName != null ?
+                new ObjectParameter("pLoginName", pLoginName) :
+                new ObjectParameter("pLoginName", typeof(string));
+    
+            var pPasswordParameter = pPassword != null ?
+                new ObjectParameter("pPassword", pPassword) :
+                new ObjectParameter("pPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario1", pLoginNameParameter, pPasswordParameter, result);
+        }
     }
 }

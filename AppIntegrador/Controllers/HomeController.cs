@@ -7,6 +7,7 @@ using System.Linq;
 using AppIntegrador.Models;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity.Core.Objects;
 
 namespace AppIntegrador.Controllers
 {
@@ -46,61 +47,41 @@ namespace AppIntegrador.Controllers
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
             {
-                /* 
-                 * LoginIntegrador es un connection string que no hace uso de metadata, para evitar errores.
-                 * Si da problemas, revisar en Web.config que LoginIntegrador apunta hacia la base de datos utilizada.
-                 */
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ToString()))
+                /* Historia: Página de login -> Refactor del código para utilizar el modelo en el llamado al procedimiento almacenado */
+                try
                 {
-                    /* El sqlCommand recibe como primer parámetro el nombre del procedimiento almacenado,
-                    * de segundo parámetro recibe el sqlConnection
-                    */
-                    using (SqlCommand cmd = new SqlCommand("SELECT dbo.LoginUsuario(@pLoginName, @pPassword)", con))
+                    ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
+
+                    // Se ejecuta el procedimiento almacenado
+                    db.LoginUsuario1(objUser.Username.ToString(), objUser.Password.ToString(), loginResult);
+                    int result = (int)loginResult.Value;
+
+                    // Credenciales correctos
+                    if (result == 0)
                     {
-                        try
+                        Session["Username"] = objUser.Username.ToString();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        // No se encontró el usuario
+                        if (result == 1)
                         {
-                            // Se preparan los parámetros que recibe el procedimiento almacenado
-                            SqlParameter loginName = new SqlParameter("@pLoginName", SqlDbType.VarChar);
-                            loginName.Value = objUser.Username;
-                            loginName.Direction = ParameterDirection.Input;
-                            SqlParameter userPassword = new
-                            SqlParameter("@pPassword", SqlDbType.VarChar);
-                            userPassword.Value = objUser.Password;
-                            userPassword.Direction = ParameterDirection.Input;
-                            cmd.Parameters.Add(loginName);
-                            cmd.Parameters.Add(userPassword);
-                            // Se abre la conexión
-                            con.Open();
-                            // Se ejecuta el procedimiento almacenado
-                            int result = (int)cmd.ExecuteScalar();
-                            // Credenciales correctos
-                            if (result == 0)
-                            {                              
-                                Session["Username"] = objUser.Username.ToString();
-                                return RedirectToAction("Index");
-                            }
-                            else
-                            {
-                                // No se encontró el usuario
-                                if (result == 1)
-                                {
-                                    ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
-                                }
-                                else
-                                {
-                                    ModelState.AddModelError("Password", "Contraseña incorrecta");
-                                }
-                                
-                                return View(objUser);
-                            }
+                            ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
                         }
-                        catch (SqlException ex)
+                        else
                         {
-                            Console.WriteLine(ex);
+                            ModelState.AddModelError("Password", "Contraseña incorrecta");
                         }
 
+                        return View(objUser);
                     }
                 }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
             }
             return View(objUser);
         }
