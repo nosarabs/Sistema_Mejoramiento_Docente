@@ -18,6 +18,5 @@ BEGIN
 			 AND GAnno		= @GAnno
 			 AND GSemestre	= @GSem
 			 AND PCodigo	= @PCod
-
 	RETURN @DEV
 END
