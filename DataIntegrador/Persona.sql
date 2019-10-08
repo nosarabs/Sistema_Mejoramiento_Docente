@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[Persona]
 (
-	[Cedula] CHAR(10) NOT NULL PRIMARY KEY, 
-    [Correo] VARCHAR(50) NOT NULL UNIQUE, 
+	[Correo] VARCHAR(50) NOT NULL PRIMARY KEY, 
+	[CorreoAlt] VARCHAR(50) NULL,
+	[Identificacion] VARCHAR(30) NOT NULL, 
     [Nombre1] VARCHAR(15) NOT NULL, 
     [Nombre2] VARCHAR(15) NULL, 
     [Apellido1] VARCHAR(15) NOT NULL, 
