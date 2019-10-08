@@ -1,10 +1,10 @@
-﻿CREATE TABLE [dbo].[Responsable_De]
+﻿CREATE TABLE [dbo].[ResponsableDe]
 (
 	[CedulaFunc] CHAR(10) NOT NULL 
-		constraint FK_Responsable_De_Func
+		constraint FK_ResponsableDeFunc
 			references Funcionario(Cedula), 
     [CodigoA] INT NOT NULL,
-	constraint PK_Responsable_De
+	constraint PK_ResponsableDe
 		primary key(CedulaFunc, CodigoA)
 
 )

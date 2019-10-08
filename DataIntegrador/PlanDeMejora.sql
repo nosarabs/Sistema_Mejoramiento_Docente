@@ -1,18 +1,9 @@
 ﻿CREATE TABLE [dbo].[PlanDeMejora]
 (
-	[CedProf] CHAR(10) NOT NULL 
-		constraint FK_CedProf
-			references Profesor(Cedula), 
-    [Codigo] INT NOT NULL,
+    [Codigo] INT NOT NULL PRIMARY KEY,
 	Nombre varchar(30),
 	FechaInicio date,
 	FechaFin date
 		constraint DateOrderPM
-		check(FechaFin > FechaInicio),
-	CodigoF char(8),
-	CedProfAsig char(10)
-		constraint FK_CedProf_Asig
-			references Profesor(Cedula)
-	constraint PK_PlanDeMejora
-		primary key(CedProf, Codigo)
+		check(FechaFin > FechaInicio)
 )
