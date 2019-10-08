@@ -20,7 +20,7 @@ namespace AppIntegrador.Models
         {
             this.Objetivo = new HashSet<Objetivo>();
         }
-    
+
         [Display(Name = "Cédula del profesor")]
         [MaxLength(10)]
         public string CedProf { get; set; }
@@ -39,7 +39,7 @@ namespace AppIntegrador.Models
         public string CodigoF { get; set; }
         [Display(Name = "Cédula del profesor asignado")]
         public string CedProfAsig { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Objetivo> Objetivo { get; set; }
         public virtual Profesor Profesor { get; set; }

@@ -22,7 +22,7 @@ namespace AppIntegrador.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
         public int CodigoObj { get; set; }
-    
+
         public virtual Objetivo Objetivo { get; set; }
     }
 }
