@@ -6,12 +6,12 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
 namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Pregunta
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +22,9 @@ namespace AppIntegrador.Models
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
         }
     
+        [Required(ErrorMessage = "Código requerido")]
         public string Codigo { get; set; }
+        [Required(ErrorMessage = "Enunciado requerido")]
         public string Enunciado { get; set; }
     
         public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }
