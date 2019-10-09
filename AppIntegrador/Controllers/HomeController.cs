@@ -55,7 +55,7 @@ namespace AppIntegrador.Controllers
                     /* El sqlCommand recibe como primer parámetro el nombre del procedimiento almacenado,
                     * de segundo parámetro recibe el sqlConnection
                     */
-                    using (SqlCommand cmd = new SqlCommand("SELECT dbo.loginUsuario(@pLoginName, @pPassword)", con))
+                    using (SqlCommand cmd = new SqlCommand("SELECT dbo.LoginUsuario(@pLoginName, @pPassword)", con))
                     {
                         try
                         {
@@ -72,21 +72,31 @@ namespace AppIntegrador.Controllers
                             // Se abre la conexión
                             con.Open();
                             // Se ejecuta el procedimiento almacenado
-                            bool success = (bool)cmd.ExecuteScalar();
-                            if (success)
-                            {
+                            int result = (int)cmd.ExecuteScalar();
+                            // Credenciales correctos
+                            if (result == 0)
+                            {                              
                                 Session["Username"] = objUser.Username.ToString();
-                                return RedirectToAction("UserDashboard");
+                                return RedirectToAction("Index");
                             }
                             else
                             {
-                                ModelState.AddModelError("Password", "Contraseña o nombre de usuario incorrecto");
+                                // No se encontró el usuario
+                                if (result == 1)
+                                {
+                                    ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("Password", "Contraseña incorrecta");
+                                }
+                                
                                 return View(objUser);
                             }
                         }
                         catch (SqlException ex)
                         {
-                            return View(objUser);
+                            Console.WriteLine(ex);
                         }
 
                     }

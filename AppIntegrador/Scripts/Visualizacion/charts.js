@@ -21,7 +21,7 @@ const types = {
 }
 
 function drawBarChart(cvs, chartData) {
-	
+
 	var dataLength = chartData.DATA.length;
 	var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
 	//chroma.js: https://gka.github.io/chroma.js/
@@ -169,43 +169,23 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function getTipoPregunta(id)
-{
-    var tipo;
-    $.ajax(
-        {
-            url: '/ResultadosFormulario/GetTipoPregunta',
-            data: { codigoPregunta: id },
-            type: 'get',
-            dataType: 'json',
-            async: false,
-            success: function (resultados) {
-                tipo = resultados;
-            },
-            error: function ()
-            {
-                alert("No sirve :'(");
-            }
-        });
-    return tipo;
-}
+function addChart(cnt, id, tipo) {
 
-
-function addChart(cnt, id) {
-	
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
-    var tipoPregunta = getTipoPregunta(id)[0];
     var chartData;
-
-    switch (tipoPregunta) {
+	
+	switch(tipo) {
 		
         case classes.ESCALA:
 
             var labels;
             $.ajax({
-                url: "/ResultadosFormulario/ObtenerEtiquetasEscala/?codigoPregunta=" + id,
+                url: "/ResultadosFormulario/ObtenerEtiquetasEscala",
+                data: {
+                    codigoPregunta: id
+                },
                 type: "get",
                 dataType: "json",
                 async: false,
@@ -216,7 +196,15 @@ function addChart(cnt, id) {
 
             var data;
             $.ajax({
-                url: "/ResultadosFormulario/ObtenerRespuestasEscala/?codigoPregunta=" + id,
+                url: "/ResultadosFormulario/ObtenerRespuestasEscala",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
                 type: "get",
                 dataType: "json",
                 async: false,
@@ -247,6 +235,7 @@ function addChart(cnt, id) {
 			break;
 			
 	}
-	
-	cnt.appendChild(cvs);
+
+    cnt.appendChild(cvs);
+
 }

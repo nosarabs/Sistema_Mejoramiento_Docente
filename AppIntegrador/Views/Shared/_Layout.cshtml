@@ -15,8 +15,7 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" )
-                
+                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
             </div>
             <div class="item">
                 <ul>
@@ -37,9 +36,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">Usuarios</button>
                             <div class="dropdown-content">
-                                <a href="#link1">Link 1</a>
-                                <a href="#link2">Link 2</a>
-                                <a href="#link3">Link 3</a>
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Administración de usuarios", "Index", "Home")
                             </div>
                         </div>
                     </li>
@@ -48,6 +46,7 @@
                             <button class="dropbtn">Formularios</button>
                             <div class="dropdown-content">
                                 @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
+                                @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
                             </div>
                         </div>
                     </li>
@@ -55,7 +54,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">Planes de mejoramiento</button>
                             <div class="dropdown-content">
-                                @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanMejoras")
+                                @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanDeMejora")
+                                @Html.ActionLink("Acciones de mejora", "Index", "AccionDeMejora")
                             </div>
                         </div>
                     </li>
@@ -63,7 +63,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI-0128", numeroGrupo = 1, semestre = 2, año = 2019 }, null)
+                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
                     </li>

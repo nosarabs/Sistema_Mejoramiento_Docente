@@ -4,6 +4,6 @@
 	PCodigo CHAR(8) NOT NULL,
 	Orden INT NOT NULL,
 	PRIMARY KEY(SCodigo, PCodigo),
-	FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
-	FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
+	CONSTRAINT fkSeccionTienePreguntaCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
+	CONSTRAINT fkSeccionTienePreguntaCodigoPregunta FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
 )
