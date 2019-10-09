@@ -8,19 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 
-namespace AppIntegrador
+namespace AppIntegrador.Controllers
 {
-    public class SeccionController : Controller
+    // Scaffold para la historia EDF5. Tarea: crear el scaffold de las secciones
+    public class SeccionesController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        // GET: Seccion
+        // GET: Seccions
         public ActionResult Index()
         {
             return View(db.Seccion.ToList());
         }
 
-        // GET: Seccion/Details/5
+        // GET: Seccions/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -35,13 +36,13 @@ namespace AppIntegrador
             return View(seccion);
         }
 
-        // GET: Seccion/Create
+        // GET: Seccions/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Seccion/Create
+        // POST: Seccions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -58,7 +59,7 @@ namespace AppIntegrador
             return View(seccion);
         }
 
-        // GET: Seccion/Edit/5
+        // GET: Seccions/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -73,7 +74,7 @@ namespace AppIntegrador
             return View(seccion);
         }
 
-        // POST: Seccion/Edit/5
+        // POST: Seccions/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,7 +90,7 @@ namespace AppIntegrador
             return View(seccion);
         }
 
-        // GET: Seccion/Delete/5
+        // GET: Seccions/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -104,7 +105,7 @@ namespace AppIntegrador
             return View(seccion);
         }
 
-        // POST: Seccion/Delete/5
+        // POST: Seccions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -122,6 +123,12 @@ namespace AppIntegrador
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult GetData(string id)
+        {
+            List<Seccion> sectionsList = db.Seccion.SqlQuery("SELECT * FROM Seccion WHERE Seccion.Codigo = " + id).ToList();
+            return Json(new { data = sectionsList }, JsonRequestBehavior.AllowGet);
         }
     }
 }
