@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.SqlClient;
 
 namespace AppIntegrador.Controllers
 {
@@ -20,9 +21,16 @@ namespace AppIntegrador.Controllers
             return View(db.Formulario.ToList());
         }
 
-        public ActionResult LlenarFormulario()
+        public ActionResult LlenarFormulario(string id)
         {
-            return View();
+            Formulario formulario = db.Formulario.Find(id);
+
+            if (formulario == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(formulario);
         }
 
         // GET: Formularios/Details/5
@@ -127,6 +135,22 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public class SeccionConOrden
+        {
+            // It is important to declare them public so they get returned
+            public string Nombre { get; set; }
+            public int Orden { get; set; }
+        }
+       
+        [HttpGet]
+        public JsonResult GetSections(string id)
+        {
+            SqlParameter codForm = new SqlParameter("CodForm", id);
+            List<SeccionConOrden> secciones = db.Database.SqlQuery<SeccionConOrden>("EXEC SeccionesDeFormulario @CodForm", codForm).ToList();
+
+            return Json(secciones, JsonRequestBehavior.AllowGet);
         }
     }
 }

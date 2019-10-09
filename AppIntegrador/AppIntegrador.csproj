@@ -345,7 +345,6 @@
     <Content Include="Views\Secciones\Edit.cshtml" />
     <Content Include="Views\Secciones\Index.cshtml" />
     <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
-    <Content Include="Views\Secciones\ConjuntoSecciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

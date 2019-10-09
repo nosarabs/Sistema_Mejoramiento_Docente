@@ -125,10 +125,17 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult GetData(string id)
+        public ActionResult SeccionSimple(string id)
         {
-            List<Seccion> sectionsList = db.Seccion.SqlQuery("SELECT * FROM Seccion WHERE Seccion.Codigo = " + id).ToList();
-            return Json(new { data = sectionsList }, JsonRequestBehavior.AllowGet);
+            Seccion seccion = db.Seccion.Find(id);
+
+            if (seccion == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(seccion);
         }
+
     }
 }
