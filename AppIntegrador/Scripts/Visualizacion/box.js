@@ -23,6 +23,21 @@ function createBullets(parnt, answers) {
 
 }
 
+function getJustificacion(id) {
+    var justificaciones = [];
+
+    $.ajax({
+        url: "/ResultadosFormulario/getJustificacionPregunta/?codigoPregunta=" + this.id,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (resultados) {
+            justificaciones = resultados;
+        }
+    });
+
+    return justificaciones;
+}
 function addBox(cnt, id, tipo) {
 	
 	var box = document.createElement("div");
