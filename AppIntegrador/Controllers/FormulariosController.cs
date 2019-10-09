@@ -20,6 +20,11 @@ namespace AppIntegrador.Controllers
             return View(db.Formulario.ToList());
         }
 
+        public ActionResult LlenarFormulario()
+        {
+            return View();
+        }
+
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
         {
