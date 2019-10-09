@@ -127,11 +127,6 @@ namespace AppIntegrador.Controllers
             return tipo;
         }
 
-    /*
-        User Story ID: 4
-        Task:   - Tomar información de respuestas de la base de datos
-                - Pasarla al método de graficación
-    */
         [HttpGet]
         public String getJustificacionPregunta(string codigoPregunta)
         {
@@ -141,7 +136,7 @@ namespace AppIntegrador.Controllers
 
             string tabla = getTipoPregunta(codigoPregunta);
 
-            // Hay que haer un switch dado el tipo de pregunta
+            // Hay que hacer un switch dado el tipo de pregunta
             // que consulte la tabla correspondiente. 
 
 
