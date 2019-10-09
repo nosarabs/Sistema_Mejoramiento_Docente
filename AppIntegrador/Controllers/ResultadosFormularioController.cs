@@ -18,7 +18,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año)
         {
 
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             var modelo = new ResultadosFormulario
             {
@@ -66,15 +66,15 @@ namespace AppIntegrador.Controllers
             List<string> ejeX = new List<string>();
 
             var minimo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Minimo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
 
             var maximo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Maximo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
             var incremento = (from f in db.Escalar
-                             where f.Codigo == codigoPregunta
-                             select f.Incremento).First();
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
 
 
             // Iteracion sobre una lista nueva
@@ -85,56 +85,93 @@ namespace AppIntegrador.Controllers
             }
             return serializer.Serialize(ejeX);
         }
-
-        [HttpGet]
-        public String getTipoPregunta(String id)
+  
+        public string ObtenerRespuestasEscala(string codigoPregunta)
         {
-            string tipo = "";
-            if ((from pcrl in db.Pregunta_con_respuesta_libre
-                 where pcrl.Codigo == id
-                 select pcrl).Count() != 0) 
-                 {
-                     tipo = "texto_abierto";
-                 }
-            else
-                if ((from e in db.Escalar
-                     where e.Codigo == id
-                     select e).Count() != 0)
-                     {
-                         tipo = "escala";
-                     }
-                else
-                    if ((from snnr in db.Si_no_nr
-                         where snnr.Codigo == id
-                         select snnr).Count() != 0)
-                         {
-                            tipo = "seleccion_cerrada";
-                         }
-                    else
-                        if ((from pcods in db.Pregunta_con_opciones_de_seleccion
-                             where pcods.Codigo == id & pcods.Tipo == "M"
-                             select pcods).Count() != 0)
-                             {
-                                tipo = "seleccion_multiple";
-                             }
-                        else
-                            if ((from pcods in db.Pregunta_con_opciones_de_seleccion
-                                 where pcods.Codigo == id & pcods.Tipo == "U"
-                                 select pcods).Count() != 0)
-                                 {
-                                    tipo = "seleccion_unica";
-                                 }
-            return tipo;
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            var minimo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
+
+            var maximo = (from f in db.Escalar
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
+            var incremento = (from f in db.Escalar
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
+
+            List<int> ejeY = new List<int>();
+
+            // Iteracion sobre una lista nueva
+            for (int index = minimo; index <= maximo; index += incremento)
+            {
+                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                                          where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                          select f.OpcionSeleccionada).Count();
+                ejeY.Add(contadorRespuestas);
+            }
+            return serializer.Serialize(ejeY);
         }
 
         [HttpGet]
+        public string GetTipoPregunta(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<string> tipo =new List<string>();
+            
+            if ((from pcrl in db.Pregunta_con_respuesta_libre
+                 where pcrl.Codigo == codigoPregunta
+                 select pcrl).Count() != 0)
+                tipo.Add("texto_abierto");
+                else
+                    if ((from e in db.Escalar
+                         where e.Codigo == codigoPregunta
+                         select e).Count() != 0)
+                        tipo.Add("escala");
+                    else
+                        if ((from snnr in db.Si_no_nr
+                             where snnr.Codigo == codigoPregunta
+                             select snnr).Count() != 0)
+                            tipo.Add("seleccion_cerrada");
+                        else
+                            if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                    where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
+                                    select pcods).Count() != 0)
+                                tipo.Add("seleccion_multiple");
+                            else
+                                if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                 where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
+                                 select pcods).Count() != 0)
+                                tipo.Add("seleccion_unica");
+
+            return serializer.Serialize(tipo);
+        }
+    
+
+        /*
+         Método que recupera las opciones de repuestas a una pregunta de selección múltiple para un formulario
+        */
+        public string ObtenerRespuestasSeleccionMultiple(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            //List<string> opciones = new List<string>();
+            var opciones = from ods in db.Opciones_de_seleccion
+                           join pcods in db.Pregunta_con_opciones_de_seleccion on ods.Codigo equals pcods.Codigo
+                           where (pcods.Tipo.Equals('M')) && (pcods.Codigo == codigoPregunta)
+                           orderby ods.Orden
+                           select ods.Texto;
+
+            return serializer.Serialize(opciones);
+        }
+
         public String getJustificacionPregunta(string codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
             int count = 0;
 
-            string tabla = getTipoPregunta(codigoPregunta);
+            string tabla = GetTipoPregunta(codigoPregunta);
 
             // Hay que hacer un switch dado el tipo de pregunta
             // que consulte la tabla correspondiente. 
@@ -152,34 +189,6 @@ namespace AppIntegrador.Controllers
                 justificaciones.Add(contadorRespuestas);
             }
             return serializer.Serialize(justificaciones);
-        }
-  
-        public string ObtenerRespuestasEscala(string codigoPregunta)
-        {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-            var minimo = (from f in db.Escalar
-                        where f.Codigo == codigoPregunta
-                        select f.Minimo).First();
-
-            var maximo = (from f in db.Escalar
-                        where f.Codigo == codigoPregunta
-                        select f.Maximo).First();
-            var incremento = (from f in db.Escalar
-                            where f.Codigo == codigoPregunta
-                            select f.Incremento).First();
-
-            List<int> ejeY = new List<int>();
-
-            // Iteracion sobre una lista nueva
-            for (int index = minimo; index <= maximo; index += incremento)
-            {
-                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                        where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
-                                        select f.OpcionSeleccionada).Count();
-                ejeY.Add(contadorRespuestas);
-            }
-            return serializer.Serialize(ejeY);
         }
     }
 }
