@@ -169,17 +169,9 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function getTipoPregunta(id) {
-    //alert(id);
+function getTipoPregunta(id)
+{
     var tipo;
-    //return "escala";
-   /* $.get("/ResultadosFormulario/GetTipoPregunta",
-        { codigoPregunta: id },
-        function (resultado) {
-            tipo = resultado;
-        }
-    );*/
-    //return tipo;
     $.ajax(
         {
             url: '/ResultadosFormulario/GetTipoPregunta',
@@ -189,7 +181,6 @@ function getTipoPregunta(id) {
             async: false,
             success: function (resultados) {
                 tipo = resultados;
-                //alert(tipo);
             },
             error: function ()
             {
@@ -206,7 +197,6 @@ function addChart(cnt, id) {
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
     var tipoPregunta = getTipoPregunta(id)[0];
-    //alert("Class name: " + className);
     var chartData;
 
     switch (tipoPregunta) {

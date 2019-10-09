@@ -117,41 +117,28 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public string GetTipoPregunta(string codigoPregunta)
         {
-            //Console.WriteLine("Entra a getTipoPregunta");
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            //return serializer.Serialize("escala");
-            //JObject json = JObject.Parse("escala");
-            //return "escala";
-
-
-
             List<string> tipo =new List<string>();
             
-            //string tipo;
-
             if ((from pcrl in db.Pregunta_con_respuesta_libre
                  where pcrl.Codigo == codigoPregunta
                  select pcrl).Count() != 0)
                 tipo.Add("texto_abierto");
-                //tipo ="texto_abierto";
                 else
                     if ((from e in db.Escalar
                          where e.Codigo == codigoPregunta
                          select e).Count() != 0)
                         tipo.Add("escala");
-                        //tipo="escala";
                     else
                         if ((from snnr in db.Si_no_nr
                              where snnr.Codigo == codigoPregunta
                              select snnr).Count() != 0)
                             tipo.Add("seleccion_cerrada");
-                            //tipo="seleccion_cerrada";
                         else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                     where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
                                     select pcods).Count() != 0)
                                 tipo.Add("seleccion_multiple");
-                                //tipo="seleccion_multiple";
                             else
                                 if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
@@ -159,7 +146,6 @@ namespace AppIntegrador.Controllers
                                 tipo.Add("seleccion_unica");
 
             return serializer.Serialize(tipo);
-            //return tipo;
         }
     
 
