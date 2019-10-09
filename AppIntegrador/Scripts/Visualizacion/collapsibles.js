@@ -21,7 +21,9 @@ function createCollapsible(id, question) {
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
 	cnt.className = "content";
-	
+    var tipo;//="escala"; 
+    //tipo = getTipoPregunta(id);
+
 	btn.addEventListener("click", function() {		//Add an event listener to the button
 		
 		if (this.nextElementSibling.childElementCount == 0) {

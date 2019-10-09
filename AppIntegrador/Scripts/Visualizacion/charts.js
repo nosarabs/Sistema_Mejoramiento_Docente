@@ -169,15 +169,47 @@ function drawPieChart(cvs, chartData) {
 
 }
 
+function getTipoPregunta(id) {
+    //alert(id);
+    var tipo;
+    //return "escala";
+   /* $.get("/ResultadosFormulario/GetTipoPregunta",
+        { codigoPregunta: id },
+        function (resultado) {
+            tipo = resultado;
+        }
+    );*/
+    //return tipo;
+    $.ajax(
+        {
+            url: '/ResultadosFormulario/GetTipoPregunta',
+            data: { codigoPregunta: id },
+            type: 'get',
+            dataType: 'json',
+            async: false,
+            success: function (resultados) {
+                tipo = resultados;
+                //alert(tipo);
+            },
+            error: function ()
+            {
+                alert("No sirve :'(");
+            }
+        });
+    return tipo;
+}
+
+
 function addChart(cnt, id) {
 	
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
-    var className = "escala";
+    var tipoPregunta = getTipoPregunta(id)[0];
+    //alert("Class name: " + className);
     var chartData;
-	
-	switch(className) {
+
+    switch (tipoPregunta) {
 		
         case classes.ESCALA:
 
