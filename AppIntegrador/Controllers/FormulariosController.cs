@@ -65,10 +65,10 @@ namespace AppIntegrador.Controllers
             {
                 db.Formulario.Add(formulario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(formulario);
+            return View();
         }
 
         // GET: Formularios/Edit/5
