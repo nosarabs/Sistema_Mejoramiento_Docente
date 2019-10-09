@@ -115,8 +115,10 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        public string ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
         {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
             var respuestas = from rrl in db.Responde_respuesta_libre
                              where rrl.FCodigo == codigoFormulario
                              && rrl.CSigla == siglaCurso
@@ -126,7 +128,7 @@ namespace AppIntegrador.Controllers
                              && rrl.PCodigo == codigoPregunta
                              select new SelectListItem { Value = rrl.Observacion };
 
-            return respuestas;
+            return serializer.Serialize(respuestas.ToList());
         }
     }
 }
