@@ -59,6 +59,8 @@
     <Folder Include="Formularios\" />
     <Folder Include="Formularios\Preguntas\" />
     <Folder Include="Formularios\Respuestas\" />
+    <Folder Include="Formularios\Procedimientos" />
+    <Folder Include="Formularios\Funciones" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -109,6 +111,7 @@
     <Build Include="AgregarOpcion.sql" />
     <Build Include="AgregarPreguntas.sql" />
     <Build Include="AgregarSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
