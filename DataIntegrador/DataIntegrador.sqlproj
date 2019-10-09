@@ -106,6 +106,7 @@
     <Build Include="Responsable_De.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
+    <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
