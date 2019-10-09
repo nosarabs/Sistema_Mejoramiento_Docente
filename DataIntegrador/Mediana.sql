@@ -1,16 +1,15 @@
-﻿CREATE FUNCTION [dbo].[Mediana]
+﻿CREATE PROCEDURE [dbo].[Mediana]
 (
 	@codigoFormulario char(8),
 	@siglaCurso varchar(10),
 	@numeroGrupo tinyint,
 	@anio int,
 	@semestre tinyint,
-	@codigoPregunta char(8)
+	@codigoPregunta char(8),
+	@mediana FLOAT OUTPUT
 )
-RETURNS FLOAT
 AS
 BEGIN
-	DECLARE @mediana FLOAT
 	SELECT @mediana =
 		CAST (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY o.OpcionSeleccionada)
 			OVER (PARTITION BY o.FCodigo) AS FLOAT)
@@ -22,6 +21,5 @@ BEGIN
 		  o.GSemestre = @semestre and
 		  o.PCodigo = @codigoPregunta
 	ORDER BY o.FCodigo
-
-	RETURN @mediana
 END
+RETURN 0
