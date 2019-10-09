@@ -9,9 +9,9 @@
 	Fecha DATE NOT NULL,
 	PCodigo CHAR(8) NOT NULL,
 
-	Justificacion VARCHAR(250),
+	Justificacion NVARCHAR(250),
 
 	PRIMARY KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
-	FOREIGN KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha) REFERENCES Respuestas_a_formulario(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha),
-	FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
+	CONSTRAINT fkRespondeOpcionesRespuestasAFormulario FOREIGN KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha) REFERENCES Respuestas_a_formulario(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha),
+	CONSTRAINT fkRespondeOpcionesCodigo FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
 )

@@ -18,8 +18,8 @@ namespace AppIntegrador.Models
         public Usuario()
         {
             this.Persona = new HashSet<Persona>();
-            this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
             this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
+            this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
         }
     
         public string Username { get; set; }
@@ -29,8 +29,8 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
     }
 }
