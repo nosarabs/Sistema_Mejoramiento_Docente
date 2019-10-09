@@ -40,7 +40,7 @@ function addBox(cnt, id, tipo) {
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 año: año,
-                codigoPregunta: id,
+                codigoPregunta: id
             },
             type: "get",
             dataType: "json",

@@ -128,6 +128,8 @@ namespace AppIntegrador.Controllers
                              && rrl.PCodigo == codigoPregunta
                              select new SelectListItem { Value = rrl.Observacion };
 
+            string resultado = serializer.Serialize(respuestas.ToList());
+
             return serializer.Serialize(respuestas.ToList());
         }
     }

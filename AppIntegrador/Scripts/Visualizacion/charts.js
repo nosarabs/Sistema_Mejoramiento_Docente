@@ -174,7 +174,7 @@ function addChart(cnt, id, tipo) {
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
-    var className = "texto_abierto";
+    var className = tipo;
     var chartData;
 	
 	switch(className) {
@@ -183,7 +183,10 @@ function addChart(cnt, id, tipo) {
 
             var labels;
             $.ajax({
-                url: "/ResultadosFormulario/ObtenerEtiquetasEscala/?codigoPregunta=" + id,
+                url: "/ResultadosFormulario/ObtenerEtiquetasEscala",
+                data: {
+                    codigoPregunta: id
+                },
                 type: "get",
                 dataType: "json",
                 async: false,
@@ -194,7 +197,10 @@ function addChart(cnt, id, tipo) {
 
             var data;
             $.ajax({
-                url: "/ResultadosFormulario/ObtenerRespuestasEscala/?codigoPregunta=" + id,
+                url: "/ResultadosFormulario/ObtenerRespuestasEscala",
+                data: {
+                    codigoPregunta: id
+                },
                 type: "get",
                 dataType: "json",
                 async: false,
