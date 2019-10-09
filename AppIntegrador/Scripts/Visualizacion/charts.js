@@ -21,7 +21,7 @@ const types = {
 }
 
 function drawBarChart(cvs, chartData) {
-	
+
 	var dataLength = chartData.DATA.length;
 	var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
 	//chroma.js: https://gka.github.io/chroma.js/
@@ -170,14 +170,13 @@ function drawPieChart(cvs, chartData) {
 }
 
 function addChart(cnt, id, tipo) {
-	
+
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
-    var className = tipo;
     var chartData;
 	
-	switch(className) {
+	switch(tipo) {
 		
         case classes.ESCALA:
 

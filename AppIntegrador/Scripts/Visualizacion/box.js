@@ -28,7 +28,7 @@ function addBox(cnt, id, tipo) {
 	var box = document.createElement("div");
 	box.setAttribute("class", "myBox" );
     var list = document.createElement("div");
-    var box_data;
+    var box_data = [];
 
     if (tipo == "texto_abierto") {
 
@@ -46,7 +46,9 @@ function addBox(cnt, id, tipo) {
             dataType: "json",
             async: false,
             success: function (resultados) {
-                box_data = resultados;
+                for (var i = 0; i < resultados.length; ++i) {
+                    box_data.push(resultados[i].Value);
+                }
             }
         });
         

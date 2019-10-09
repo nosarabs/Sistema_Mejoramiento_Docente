@@ -15,33 +15,30 @@ function appendTitle(elmnt, txt) {
 }
 
 function createCollapsible(id, question) {
-	
     var btn = document.createElement("button");   	//Create a <button> element
     btn.className = "collapsible";                  //Set the button as collapsible
+    btn.id = "escala";
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
-	cnt.className = "content";
+    cnt.className = "content";
 	
 	btn.addEventListener("click", function() {		//Add an event listener to the button
 		
 		if (this.nextElementSibling.childElementCount == 0) {
 
-            var tipo = "texto_abierto";
-
-            if (tipo == "texto_abierto") {
+            if (this.id == "texto_abierto") {
 
                 appendLineBreaks(cnt, 2);
 
             } else {
-
                 appendLineBreaks(cnt, 2);
-                addChart(cnt, id, tipo);
+                addChart(cnt, id, this.id);
                 appendLineBreaks(cnt, 6);
                 appendTitle(cnt, "Justificación de los resultados");
 
             }
 
-            addBox(cnt, id, tipo);
+            addBox(cnt, id, this.id);
 			appendLineBreaks(cnt, 2);
 			
 		}

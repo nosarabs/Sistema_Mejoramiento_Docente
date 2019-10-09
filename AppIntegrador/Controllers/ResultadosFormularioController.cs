@@ -86,7 +86,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeX);
         }
   
-        public string ObtenerRespuestasEscala(string codigoPregunta)
+        public String ObtenerRespuestasEscala(/*String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año,*/ String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -107,7 +107,13 @@ namespace AppIntegrador.Controllers
             for (int index = minimo; index <= maximo; index += incremento)
             {
                 var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                          where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
+                                          where f.OpcionSeleccionada == index
+                                          /*&& f.FCodigo == codigoFormulario
+                                          && f.CSigla == siglaCurso
+                                          && f.GNumero == numeroGrupo
+                                          && f.GSemestre == semestre
+                                          && f.GAnno == año*/
+                                          && f.PCodigo == codigoPregunta
                                           select f.OpcionSeleccionada).Count();
                 ejeY.Add(contadorRespuestas);
             }
@@ -115,7 +121,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public string ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -127,8 +133,6 @@ namespace AppIntegrador.Controllers
                              && rrl.GAnno == año
                              && rrl.PCodigo == codigoPregunta
                              select new SelectListItem { Value = rrl.Observacion };
-
-            string resultado = serializer.Serialize(respuestas.ToList());
 
             return serializer.Serialize(respuestas.ToList());
         }
