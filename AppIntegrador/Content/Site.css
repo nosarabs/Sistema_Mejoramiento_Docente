@@ -23,14 +23,10 @@ p.uppercase {
     align-items: center;
 }
 
-
-ul {
-    list-style: none;
-    text-align: center;
-}
-
 .wrapper {
     display: flex;
+    list-style: none;
+    text-align: center;
 }
 
     .wrapper .projectTitle {
@@ -115,11 +111,6 @@ nav {
     background-color: none;
 }
 /* End of main page styles */
-
-.mainBarText {
-    color: black;
-    font-size: 2em;
-}
 
 .mainBarText {
     color: black;
