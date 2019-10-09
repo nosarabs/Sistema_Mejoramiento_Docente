@@ -17,7 +17,7 @@ function appendTitle(elmnt, txt) {
 function createCollapsible(id, question) {
     var btn = document.createElement("button");   	//Create a <button> element
     btn.className = "collapsible";                  //Set the button as collapsible
-    btn.id = "escala";
+    btn.id = "texto_abierto";
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
     cnt.className = "content";
@@ -34,7 +34,7 @@ function createCollapsible(id, question) {
                 appendLineBreaks(cnt, 2);
                 addChart(cnt, id, this.id);
                 appendLineBreaks(cnt, 6);
-                appendTitle(cnt, "Justificación de los resultados");
+                appendTitle(cnt, "JustificaciÃ³n de los resultados");
 
             }
 

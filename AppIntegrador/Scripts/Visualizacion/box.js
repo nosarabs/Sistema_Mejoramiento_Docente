@@ -39,7 +39,7 @@ function addBox(cnt, id, tipo) {
                 siglaCurso: siglaCurso,
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
-                año: año,
+                ano: ano,
                 codigoPregunta: id
             },
             type: "get",

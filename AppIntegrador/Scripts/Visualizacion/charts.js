@@ -198,6 +198,11 @@ function addChart(cnt, id, tipo) {
             $.ajax({
                 url: "/ResultadosFormulario/ObtenerRespuestasEscala",
                 data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
                     codigoPregunta: id
                 },
                 type: "get",

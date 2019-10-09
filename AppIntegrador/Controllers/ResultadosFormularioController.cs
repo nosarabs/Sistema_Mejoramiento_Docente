@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: ResultadosFormulario
-        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año)
+        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
@@ -26,7 +26,7 @@ namespace AppIntegrador.Controllers
                 SiglaCurso = serializer.Serialize(siglaCurso),
                 NumeroGrupo = serializer.Serialize(numeroGrupo),
                 Semestre = serializer.Serialize(semestre),
-                Año = serializer.Serialize(año),
+                Ano = serializer.Serialize(ano),
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
             };
             return View(modelo);
@@ -50,10 +50,10 @@ namespace AppIntegrador.Controllers
 
         // GET: RespuestasFormulario
         [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerRespuestas(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        public IEnumerable<SelectListItem> ObtenerRespuestas(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var respuestas = from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                             where f.FCodigo == codigoFormulario && f.CSigla == siglaCurso && f.GNumero == numeroGrupo && f.GSemestre == semestre && f.GAnno == año && f.PCodigo == codigoPregunta
+                             where f.FCodigo == codigoFormulario && f.CSigla == siglaCurso && f.GNumero == numeroGrupo && f.GSemestre == semestre && f.GAnno == ano && f.PCodigo == codigoPregunta
                              select new SelectListItem { Value = f.OpcionSeleccionada.ToString() };
 
             return respuestas.ToList();
@@ -86,7 +86,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeX);
         }
   
-        public String ObtenerRespuestasEscala(/*String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año,*/ String codigoPregunta)
+        public String ObtenerRespuestasEscala(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -108,11 +108,11 @@ namespace AppIntegrador.Controllers
             {
                 var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
                                           where f.OpcionSeleccionada == index
-                                          /*&& f.FCodigo == codigoFormulario
+                                          && f.FCodigo == codigoFormulario
                                           && f.CSigla == siglaCurso
                                           && f.GNumero == numeroGrupo
                                           && f.GSemestre == semestre
-                                          && f.GAnno == año*/
+                                          && f.GAnno == ano
                                           && f.PCodigo == codigoPregunta
                                           select f.OpcionSeleccionada).Count();
                 ejeY.Add(contadorRespuestas);
@@ -121,7 +121,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 año, String codigoPregunta)
+        public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -130,7 +130,7 @@ namespace AppIntegrador.Controllers
                              && rrl.CSigla == siglaCurso
                              && rrl.GNumero == numeroGrupo
                              && rrl.GSemestre == semestre
-                             && rrl.GAnno == año
+                             && rrl.GAnno == ano
                              && rrl.PCodigo == codigoPregunta
                              select new SelectListItem { Value = rrl.Observacion };
 
