@@ -15,7 +15,7 @@ namespace AppIntegrador.Models
         public String SiglaCurso { get; set; }
         public String NumeroGrupo { get; set; }
         public String Semestre { get; set; }
-        public String Año { get; set; }
+        public String Ano { get; set; }
         public String Preguntas { get; set; }
     }
 }

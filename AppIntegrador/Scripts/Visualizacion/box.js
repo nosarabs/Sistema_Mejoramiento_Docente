@@ -23,21 +23,64 @@ function createBullets(parnt, answers) {
 
 }
 
-function addBox(cnt, id) {
+function getJustificacion(id) {
+    var justificaciones = [];
+
+    $.ajax({
+        url: "/ResultadosFormulario/getJustificacionPregunta/?codigoPregunta=" + this.id,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (resultados) {
+            justificaciones = resultados;
+        }
+    });
+
+    return justificaciones;
+}
+function addBox(cnt, id, tipo) {
 	
 	var box = document.createElement("div");
 	box.setAttribute("class", "myBox" );
     var list = document.createElement("div");
-    var box_data = ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
-        , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
+    var box_data = [];
+
+    if (tipo == "texto_abierto") {
+
+        $.ajax({
+            url: "/ResultadosFormulario/ObtenerRespuestasTextoAbierto",
+            data: {
+                codigoFormulario: codigoFormulario,
+                siglaCurso: siglaCurso,
+                numeroGrupo: numeroGrupo,
+                semestre: semestre,
+                ano: ano,
+                codigoPregunta: id
+            },
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (resultados) {
+                for (var i = 0; i < resultados.length; ++i) {
+                    box_data.push(resultados[i].Value);
+                }
+            }
+        });
+        
+    } else {
+
+        box_data = ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
+            , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
+
+    }
 
 	createBullets(list, box_data);
 	box.appendChild(list);
