@@ -14,17 +14,33 @@ function appendTitle(elmnt, txt) {
 	elmnt.appendChild(title);
 }
 
+function getTipoPregunta(id) {
+    var tipo;
+    $.ajax({
+        url: '/ResultadosFormulario/GetTipoPregunta',
+        data: { codigoPregunta: id },
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function (resultados) {
+            tipo = resultados;
+        }
+    });
+    return tipo;
+}
+
 function createCollapsible(id, question) {
     var btn = document.createElement("button");   	//Create a <button> element
     btn.className = "collapsible";                  //Set the button as collapsible
-    btn.id = "texto_abierto";
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
     cnt.className = "content";
 	
 	btn.addEventListener("click", function() {		//Add an event listener to the button
 		
-		if (this.nextElementSibling.childElementCount == 0) {
+        if (this.nextElementSibling.childElementCount == 0) {
+
+            this.id = getTipoPregunta(id)[0];
 
             if (this.id == "texto_abierto") {
 

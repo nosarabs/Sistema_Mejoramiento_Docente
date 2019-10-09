@@ -18,7 +18,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano)
         {
 
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer(); 
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             var modelo = new ResultadosFormulario
             {
@@ -34,7 +34,7 @@ namespace AppIntegrador.Controllers
 
         // GET: PreguntasFormulario
         [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerPreguntas (String codigoFormulario)
+        public IEnumerable<SelectListItem> ObtenerPreguntas(String codigoFormulario)
         {
             var preguntas = from f in db.Formulario
                             join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
@@ -66,15 +66,15 @@ namespace AppIntegrador.Controllers
             List<string> ejeX = new List<string>();
 
             var minimo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Minimo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Minimo).First();
 
             var maximo = (from f in db.Escalar
-                         where f.Codigo == codigoPregunta
-                         select f.Maximo).First();
+                          where f.Codigo == codigoPregunta
+                          select f.Maximo).First();
             var incremento = (from f in db.Escalar
-                             where f.Codigo == codigoPregunta
-                             select f.Incremento).First();
+                              where f.Codigo == codigoPregunta
+                              select f.Incremento).First();
 
 
             // Iteracion sobre una lista nueva
@@ -135,6 +135,56 @@ namespace AppIntegrador.Controllers
                              select new SelectListItem { Value = rrl.Observacion };
 
             return serializer.Serialize(respuestas.ToList());
+        }
+
+        [HttpGet]
+        public string GetTipoPregunta(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<string> tipo = new List<string>();
+
+            if ((from pcrl in db.Pregunta_con_respuesta_libre
+                 where pcrl.Codigo == codigoPregunta
+                 select pcrl).Count() != 0)
+                tipo.Add("texto_abierto");
+            else
+                    if ((from e in db.Escalar
+                         where e.Codigo == codigoPregunta
+                         select e).Count() != 0)
+                tipo.Add("escala");
+            else
+                        if ((from snnr in db.Si_no_nr
+                             where snnr.Codigo == codigoPregunta
+                             select snnr).Count() != 0)
+                tipo.Add("seleccion_cerrada");
+            else
+                            if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                 where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
+                                 select pcods).Count() != 0)
+                tipo.Add("seleccion_multiple");
+            else
+                                if ((from pcods in db.Pregunta_con_opciones_de_seleccion
+                                     where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
+                                     select pcods).Count() != 0)
+                tipo.Add("seleccion_unica");
+
+            return serializer.Serialize(tipo);
+        }
+
+        /*
+        Método que recupera las opciones de repuestas a una pregunta de selección múltiple para un formulario
+       */
+        public string ObtenerRespuestasSeleccionMultiple(string codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            //List<string> opciones = new List<string>();
+            var opciones = from ods in db.Opciones_de_seleccion
+                           join pcods in db.Pregunta_con_opciones_de_seleccion on ods.Codigo equals pcods.Codigo
+                           where (pcods.Tipo.Equals('M')) && (pcods.Codigo == codigoPregunta)
+                           orderby ods.Orden
+                           select ods.Texto;
+
+            return serializer.Serialize(opciones);
         }
     }
 }
