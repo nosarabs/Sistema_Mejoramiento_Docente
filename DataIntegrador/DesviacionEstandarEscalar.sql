@@ -7,6 +7,7 @@
 	@GSem TINYINT,
 	@PCod CHAR(8)
 )
+
 RETURNS FLOAT
 AS
 BEGIN
