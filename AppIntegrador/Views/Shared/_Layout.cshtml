@@ -66,8 +66,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                @Html.ActionLink("Visualizar resultados", "Index", "Home")
+                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
                     </li>
