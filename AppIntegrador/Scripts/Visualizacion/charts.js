@@ -58,6 +58,7 @@ function drawBarChart(cvs, chartData) {
             },
 			responsive: false,
             maintainAspectRatio: false,
+            devicePixelRatio: 2,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -136,6 +137,7 @@ function drawPieChart(cvs, chartData) {
             },
             responsive: false,
             maintainAspectRatio: false,
+            devicePixelRatio: 2,
             plugins: {
                 datalabels: {
                     display: function (context) {
