@@ -65,7 +65,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-success" id="Create"/>
-                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default", @onclick="pregunta()" })
             </div>
         </div>
 
@@ -101,6 +101,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
     <script>
         function disableRemoveButton() {
             var nodes = document.getElementsByClassName("remove-button btn btn-danger");
@@ -157,7 +158,11 @@
             
         });
 
-        $(document).ready(function(){
+        $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
             $("#Add").trigger('click');
         });
 
@@ -195,22 +200,6 @@
             var counterText = $(inputBox).parent().find(".counter");
             counterText.text(len + "/" + max + " caracteres usados");
         }
-    </script>
-
-    <script>
-        function pregunta()
-        {  
-            swal({
-                title: "Pregunta creada con éxito!",
-                text: "Puede ser vista en el banco de preguntas",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-            function () {
-                window.location.href = "Create";
-            });
-        } 
     </script>
 
 
