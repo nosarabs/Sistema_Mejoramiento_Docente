@@ -61,6 +61,7 @@ function drawBarChart(cvs, chartData) {
             scales: {
                 yAxes: [{
                     ticks: {
+                        beginAtZero: true,
                         fontColor: "black",
                         fontSize: 16,
                     }
