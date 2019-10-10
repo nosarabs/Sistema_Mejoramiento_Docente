@@ -17,8 +17,8 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Formulario()
         {
-            this.Formulario_tiene_seccion = new HashSet<Formulario_tiene_seccion>();
             this.Activa_por = new HashSet<Activa_por>();
+            this.Formulario_tiene_seccion = new HashSet<Formulario_tiene_seccion>();
             this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
         }
     
@@ -26,9 +26,9 @@ namespace AppIntegrador.Models
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Activa_por> Activa_por { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
     }

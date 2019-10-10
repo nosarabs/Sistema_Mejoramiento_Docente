@@ -53,7 +53,7 @@ namespace AppIntegrador.Controllers
                     ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
 
                     // Se ejecuta el procedimiento almacenado
-                    db.LoginUsuario1(objUser.Username.ToString(), objUser.Password.ToString(), loginResult);
+                    db.LoginUsuario(objUser.Username.ToString(), objUser.Password.ToString(), loginResult);
                     int result = (int)loginResult.Value;
 
                     // Credenciales correctos

@@ -156,7 +156,9 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs" />
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -332,14 +334,12 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\Index.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
-    <Content Include="Views\UserLogin\UserLoginView.cshtml" />
     <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />

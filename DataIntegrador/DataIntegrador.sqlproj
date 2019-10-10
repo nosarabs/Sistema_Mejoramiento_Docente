@@ -104,6 +104,8 @@
     <Build Include="AccionDeMejora.sql" />
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
+    <Build Include="Inscrita_en.sql" />
+    <Build Include="Pertenece_a.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
