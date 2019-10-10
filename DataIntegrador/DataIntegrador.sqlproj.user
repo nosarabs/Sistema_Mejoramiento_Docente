@@ -6,5 +6,6 @@
     <TargetConnectionString>Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DataIntegrador;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <TargetDatabase>
     </TargetDatabase>
+    <CreateNewDatabase>True</CreateNewDatabase>
   </PropertyGroup>
 </Project>
