@@ -197,30 +197,17 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas);
         }
 
-        public String getJustificacionPregunta(String codigoPregunta)
+        public String getJustificacionPregunta(string codigoPregunta, string tipo)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
             int count = 0;
 
-            string tabla = GetTipoPregunta(codigoPregunta);
+            var respuestas =    from rrco in db.Responde_respuesta_con_opciones
+                                where rrco.PCodigo == codigoPregunta
+                                select new SelectListItem { Value = rrco.Justificacion };
 
-            // Hay que hacer un switch dado el tipo de pregunta
-            // que consulte la tabla correspondiente. 
-
-
-            
-
-            // Iteracion sobre una lista nueva
-            for (int index = 0; index <= count; index += 1)
-            {
-                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                        where f.OpcionSeleccionada == index && f.PCodigo == codigoPregunta
-                                        select f.OpcionSeleccionada).Count();
-                                        
-                justificaciones.Add(contadorRespuestas);
-            }
-            return serializer.Serialize(justificaciones);
+            return serializer.Serialize(respuestas.ToList());
         }
     }
 }
