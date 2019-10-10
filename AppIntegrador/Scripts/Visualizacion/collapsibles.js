@@ -50,7 +50,7 @@ function createCollapsible(id, question) {
                 appendLineBreaks(cnt, 2);
                 addChart(cnt, id, this.id);
                 appendLineBreaks(cnt, 6);
-                appendTitle(cnt, "Justificación de los resultados");
+                appendTitle(cnt, "JustificaciÃ³n de los resultados");
 
             }
 

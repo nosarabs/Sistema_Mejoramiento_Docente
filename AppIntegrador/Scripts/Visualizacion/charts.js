@@ -218,15 +218,104 @@ function addChart(cnt, id, tipo) {
 
 			break;
 			
-		case classes.SELECCION_UNICA:
+        case classes.SELECCION_UNICA:
+            var labels;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenterOpcionesPreguntasSeleccion",
+                data: {
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    labels = resultados;
+                }
+            });
+
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: labels.length
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
 			drawPieChart(cvs, chartData);
 			break;
 			
-		case classes.SELECCION_MULTIPLE:
-			drawBarChart(cvs, chartData);
+        case classes.SELECCION_MULTIPLE:
+            var labels;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenterOpcionesPreguntasSeleccion",
+                data: {
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    labels = resultados;
+                }
+            });
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: labels.length
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
+            drawBarChart(cvs, chartData);
 			break;
 			
-		case classes.SELECCION_CERRADA:
+        case classes.SELECCION_CERRADA:
+            var labels = ["No", "Sí", "No responde"];
+
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: 3
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
 			drawPieChart(cvs, chartData);
 			break;
 			
