@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{0f06dff1-647f-488e-89a9-bd1f3714a98d}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -112,6 +112,9 @@
     <Build Include="AgregarPreguntas.sql" />
     <Build Include="AgregarSeccion.sql" />
     <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
+    <Build Include="Mediana.sql" />
+    <Build Include="DesviacionEstandarEscalar.sql" />
+    <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

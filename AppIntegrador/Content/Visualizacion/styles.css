@@ -1,0 +1,64 @@
+* {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+h3 {text-align: center;}
+
+.breadcrumb {
+    background-color: #f0f0f0;
+    margin-top: 2px;
+    margin-bottom: 1px;
+}
+
+.collapsible {
+    background-color: #41ade7;
+    color: black;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.activeCollapsible, .collapsible:hover {
+    background-color: #41ade7;
+}
+
+.collapsible:after {
+	content: '\002B';
+	font-weight: bold;
+	float: right;
+	margin-left: 5px;
+}
+
+.activeCollapsible:after {
+	content: "\2212";
+}
+
+.content {
+	padding: 0 18px;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	background-color: #f1f1f1;
+}
+
+canvas{
+    margin: 0 auto;
+}
+
+.myBox {
+    margin: 0 auto;
+    border: 2px solid #000000;
+    padding: 30px;
+    font: 18px;
+    width: 900px;
+    height: 300px;
+    overflow: auto;
+    background-color: #F9F9F9;
+    list-style-position: inside;
+}
