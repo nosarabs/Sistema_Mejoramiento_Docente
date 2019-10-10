@@ -8,5 +8,6 @@
     [Apellido1] VARCHAR(15) NOT NULL, 
     [Apellido2] VARCHAR(15) NULL, 
     [Usuario] VARCHAR(50) NULL,
-	FOREIGN KEY (Usuario) REFERENCES Usuario (Username)
+	[TipoIdentificacion] VARCHAR(30) NOT NULL, 
+    FOREIGN KEY (Usuario) REFERENCES Usuario (Username)
 )
