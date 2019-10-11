@@ -1,0 +1,45 @@
+﻿@model AppIntegrador.Models.ResultadosFormulario
+
+@{
+    ViewBag.Title = "Formulario";
+}
+
+<head>
+    <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">@Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home")</li>
+                <li class="breadcrumb-item">Visualización</li>
+                <li class="breadcrumb-item">Curso @Model.SiglaCurso</li>
+                <li class="breadcrumb-item">Ano @Model.Ano</li>
+                <li class="breadcrumb-item">Semestre @Model.Semestre</li>
+                <li class="breadcrumb-item">Grupo @Model.NumeroGrupo</li>
+                <li class="breadcrumb-item active" aria-current="page">Formulario @Model.CodigoFormulario</li>
+            </ol>
+        </nav>
+    </div>
+
+    <script>
+        var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
+        var siglaCurso = @Html.Raw(Model.SiglaCurso);
+        var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
+        var semestre = @Html.Raw(Model.Semestre);
+        var ano = @Html.Raw(Model.Ano);
+        var questions = @Html.Raw(Model.Preguntas);
+    </script>
+
+    <script src="~/Scripts/Visualizacion/Chart.js"></script>
+    <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
+    <script src="~/Scripts/Visualizacion/chroma.js"></script>
+    <script src="~/Scripts/Visualizacion/charts.js"></script>
+    <script src="~/Scripts/Visualizacion/box.js"></script>
+    <script src="~/Scripts/Visualizacion/collapsibles.js"></script>
+
+</body>
+

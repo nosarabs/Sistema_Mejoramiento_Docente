@@ -3,74 +3,82 @@
 @{
     ViewBag.Title = "Create";
 }
+<div class="container">
+    <h2>Crear pregunta</h2>
 
-<h2>Crear pregunta</h2>
 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
-                @*Historia MSU: que el mensaje de error salga en rojo*@
-                @Html.ValidationMessageFor(model => model.Codigo, "", new { @style="color:red" })
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
+                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
-           {
-               htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-           }
-    )           @*Historia MSU: que el mensaje de error salga en rojo*@
-            @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
-            </div>
-        </div>
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
+                    {
+                        @class = "form-control long-textbox",
+                        @style = "width: 100%;max-width: 100%",
+                        @maxlength = "250",
+                        required = "required",
+                        data_val = "true",
+                        data_val_length_max = "250"
+                    }
+        )           @*Historia MSU: que el mensaje de error salga en rojo*@
+        @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
     </div>
+</div>
 
+</div>
+
+<div class="form-horizontal">
+    <label for="chkPassport" class="col-md-offset-2 col-md-10">
+        <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
+        Incluir campo de justificación.
+    </label>
+    <p></p>
     <div class="form-horizontal">
-        <label for="chkPassport" class="col-md-offset-2 col-md-10">
-            <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
-            Incluir campo de justificación.
-        </label>
-        <p></p>
         <div class="form-group" id="justificationField">
             @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
             </div>
         </div>
-
-
-
-        <div id="sortable">
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" class="btn btn-default " value="Agregar nueva opción" id="Add" />
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success" id="Create"/>
-                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
-            </div>
-        </div>
-
     </div>
+    <br />
+
+
+    <div id="sortable">
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default " value="Agregar nueva opción" id="Add" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" id="Create" />
+            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+        </div>
+    </div>
+
+</div>
 }
+</div>
 
 @*<div>
         @Html.ActionLink("Back to List", "Index")
@@ -90,7 +98,6 @@
         background-color: #c4c4c4;
         cursor: grabbing;
     }
-
 </style>
 
 @section Scripts {
@@ -154,10 +161,10 @@
                     disableRemoveButton();
                 }
             })
-            
+
         });
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#Add").trigger('click');
         });
 
@@ -169,23 +176,23 @@
 
             $(target).animate({ 'height': 0, 'opacity': 0 }, 200, function () {
                 // Remove div from DOM
-                $(this).remove();   
+                $(this).remove();
                 // Fix indexes when an input box is deleted
                 fixIndexes();
                 // Check if the first button needs to be disabled
                 disableRemoveButton();
             })
-            
+
         }
 
         // Hide the text input box in default
-        $('#justificationField').css('display','none'); 
+        $('#justificationField').css('display', 'none');
         function myFunction() {
-           if($('#showField').prop('checked')) {
-                 $('#justificationField').css('display','block');
-               } else {
-                 $('#justificationField').css('display','none');
-               }
+            if ($('#showField').prop('checked')) {
+                $('#justificationField').css('display', 'block');
+            } else {
+                $('#justificationField').css('display', 'none');
+            }
         }
 
         // Count text
@@ -198,8 +205,7 @@
     </script>
 
     <script>
-        function pregunta()
-        {  
+        function pregunta() {
             swal({
                 title: "Pregunta creada con éxito!",
                 text: "Puede ser vista en el banco de preguntas",
@@ -207,10 +213,10 @@
                 timer: 1000,
                 showConfirmButton: false
             },
-            function () {
-                window.location.href = "Create";
-            });
-        } 
+                function () {
+                    window.location.href = "Create";
+                });
+        }
     </script>
 
 
