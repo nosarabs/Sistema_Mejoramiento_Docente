@@ -72,7 +72,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-success" id="Create" />
-            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default"})
         </div>
     </div>
 
@@ -108,6 +108,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
     <script>
         function disableRemoveButton() {
             var nodes = document.getElementsByClassName("remove-button btn btn-danger");
@@ -165,6 +166,10 @@
         });
 
         $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
             $("#Add").trigger('click');
         });
 
