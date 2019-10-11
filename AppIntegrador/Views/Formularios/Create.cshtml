@@ -1,0 +1,96 @@
+﻿@model AppIntegrador.Models.Formulario
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h>Crear Formulario</h>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", id = "textCode", name = "textCode", @maxlength = "8", required = "required", placeholder = "Código", rows = "5" } })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "pull-right", id = "count_code" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                <form accept-charset="UTF-8" action="" method="POST">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", id = "textName", name = "textName", @maxlength = "250", required = "required", placeholder = "Nombre del formulario", rows = "5" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "pull-right", id = "count_name" })
+                </form>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+
+
+
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function(){
+    $('#myModal').on('show.bs.modal', function(){
+        var myModal = $(this);
+        clearTimeout(myModal.data('hideInterval'));
+        myModal.data('hideInterval', setTimeout(function(){
+            myModal.modal('hide');
+        }, 3000));
+    });
+});
+    </script>
+
+    <script>
+        var name_max = 250;
+        $('#count_name').html("0/" + name_max);
+
+        $('#textName').keyup(function () {
+            var name_length = $('#textName').val().length;
+
+            $('#count_name').html(name_length + "/" + name_max);
+        });
+    </script>
+
+    <script>
+        var code_max = 8;
+        $('#count_code').html("0/" + code_max);
+
+        $('#textCode').keyup(function () {
+            var code_length = $('#textCode').val().length;
+
+            $('#count_code').html(code_length + "/" + code_max);
+        });
+    </script>
+
+    <script>
+        $(function () {
+            var includes = $('[data-include]');
+            jQuery.each(includes, function () {
+                var file = 'views/' + $(this).data('include') + '.html';
+                $(this).load(file);
+            });
+        });
+    </script>
+
+}

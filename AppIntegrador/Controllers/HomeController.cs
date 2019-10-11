@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
 using System.Web.Security;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Controllers
 {
@@ -16,6 +17,11 @@ namespace AppIntegrador.Controllers
     public class HomeController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+
+        /*5 minutes timeout when an user fails to login 3 times in a row.*/
+        private const int LOGIN_TIMEOUT = 300000;
+
+        private const int MAX_FAILED_ATTEMPTS = 3;
 
         public ActionResult Index()
         {
@@ -44,8 +50,20 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Usuario objUser)
+        public async Task<ActionResult> Login(Usuario objUser)
         {
+            /*User story TAM-1.3 Brute-force attack prevention.*/
+            int failedAttempts = 0;
+            if (System.Web.HttpContext.Current.Application[objUser.Username] != null && objUser.Username != "admin")
+            {
+                failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username];
+                if (failedAttempts == MAX_FAILED_ATTEMPTS)
+                {
+                    System.Web.HttpContext.Current.Application.Remove(objUser.Username);
+                    await Task.Delay(LOGIN_TIMEOUT).ConfigureAwait(false);
+                    return RedirectToAction("Login");
+                }
+            }
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
             {
@@ -71,10 +89,32 @@ namespace AppIntegrador.Controllers
                         {
                             ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
                         }
-                        else
+                        else 
                         {
-                            ModelState.AddModelError("Password", "Contraseña incorrecta");
+                            if (System.Web.HttpContext.Current.Application[objUser.Username] == null)
+                            {
+                                System.Web.HttpContext.Current.Application[objUser.Username] = 1;
+                                ModelState.AddModelError("Password", "Contraseña incorrecta");
+                            }
+                            else /*User story TAM-1.3 Brute-force attack prevention.*/
+                            {
+                                failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username] + 1;
+
+                                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin")
+                                {
+                                    ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
+                                        " 5 minutos antes de intentar de nuevo.");         
+                                }
+                                else
+                                {          
+                                    ModelState.AddModelError("Password", "Contraseña incorrecta");
+                                }
+
+                                System.Web.HttpContext.Current.Application[objUser.Username] = failedAttempts;
+                            }
+                            
                         }
+                        /*End of user story.*/
 
                         return View(objUser);
                     }
