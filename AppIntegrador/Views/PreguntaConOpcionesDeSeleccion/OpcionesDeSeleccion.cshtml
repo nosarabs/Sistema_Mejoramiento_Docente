@@ -2,7 +2,7 @@
 @{
     int i = ViewBag.i == null ? 0 : ViewBag.i;
 }
-<div class="sortable-container vertical">
+<div class="sortable-container vertical panel">
     @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-xs-6">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
