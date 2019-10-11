@@ -1,19 +1,19 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPreguntaConOpcion]
 	@cod char(8),
 	@type char,
-	@texto varchar(50),
+	@enunciado nvarchar(250),
 	@justificacion varchar(50) = NULL
 AS
 BEGIN
 	MERGE INTO Pregunta AS Target
 	USING (VALUES
-			(@cod, @texto) 
+			(@cod, @enunciado) 
 	)
 	AS Source ([Codigo],[Enunciado])
 	ON Target.Codigo = Source.Codigo
 	WHEN NOT MATCHED BY TARGET THEN
 	INSERT (Codigo, Enunciado)
-	VALUES (@cod,@texto);
+	VALUES (@cod,@enunciado);
 
 
 	MERGE INTO Pregunta_con_opciones AS Target
