@@ -14,13 +14,15 @@ namespace AppIntegrador.Models
     
     public partial class Persona
     {
-        public string Cedula { get; set; }
         public string Correo { get; set; }
+        public string CorreoAlt { get; set; }
+        public string Identificacion { get; set; }
         public string Nombre1 { get; set; }
         public string Nombre2 { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string Usuario { get; set; }
+        public string TipoIdentificacion { get; set; }
     
         public virtual Estudiante Estudiante { get; set; }
         public virtual Funcionario Funcionario { get; set; }

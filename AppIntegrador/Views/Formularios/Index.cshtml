@@ -25,7 +25,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
             @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo }) |
+            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
         </td>
     </tr>

@@ -1,9 +1,11 @@
-﻿CREATE FUNCTION LoginUsuario
-	(@pLoginName VARCHAR(50),@pPassword VARCHAR(50))
-RETURNS INT
+﻿CREATE PROCEDURE LoginUsuario
+	(@pLoginName VARCHAR(50),
+	 @pPassword VARCHAR(50),
+	  @result INT OUTPUT)
+AS
 BEGIN
 
-	DECLARE @userID VARCHAR(50), @result INT
+	DECLARE @userID VARCHAR(50)
 
 	IF EXISTS (SELECT TOP 1 Username FROM [dbo].[Usuario] WHERE Username=@pLoginName)
 	BEGIN
@@ -20,5 +22,4 @@ BEGIN
 
 	ELSE
 		SET @result=1
-	RETURN @result
 END;

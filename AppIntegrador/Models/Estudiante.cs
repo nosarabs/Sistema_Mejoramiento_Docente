@@ -21,7 +21,7 @@ namespace AppIntegrador.Models
             this.Grupo = new HashSet<Grupo>();
         }
     
-        public string Cedula { get; set; }
+        public string Correo { get; set; }
         public string Carne { get; set; }
     
         public virtual Persona Persona { get; set; }

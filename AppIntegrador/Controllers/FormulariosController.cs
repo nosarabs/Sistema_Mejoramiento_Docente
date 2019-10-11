@@ -155,6 +155,18 @@ namespace AppIntegrador.Controllers
             public string Nombre { get; set; }
             public int Orden { get; set; }
         }
+
+        public class Opcion
+        { 
+            public string Texto { get; set; }
+            public int Orden { get; set; }
+        }
+
+        public class PreguntaConEnunciadoYOpciones
+        {
+            public string Enunciado { get; set; }
+            public List<Opcion> Opciones { get; set; }
+        }
        
         [HttpGet]
         public JsonResult GetSections(string id)
@@ -163,6 +175,35 @@ namespace AppIntegrador.Controllers
             List<SeccionConOrden> secciones = db.Database.SqlQuery<SeccionConOrden>("EXEC SeccionesDeFormulario @CodForm", codForm).ToList();
 
             return Json(secciones, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetQuestions(string id)
+        {
+            SqlParameter sectionCode = new SqlParameter("sectionCode", id);
+
+            // Obtiene los códigos de todas las preguntas relacionadas a la sección
+            List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
+
+            List<PreguntaConEnunciadoYOpciones> preguntasConOpciones = new List<PreguntaConEnunciadoYOpciones>();
+   
+            foreach (string codigo in Codigos)
+            {
+                PreguntaConEnunciadoYOpciones pregunta = new PreguntaConEnunciadoYOpciones();
+
+                SqlParameter questionCode = new SqlParameter("questionCode", codigo);
+
+                // Obtiene el enunciado de una pregunta
+                pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).ToString();
+                
+                // Obtiene las opciones de una pregunta
+                pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode).ToList();
+
+                // Añade la pregunta con sus opciones a la lista
+                preguntasConOpciones.Add(pregunta);
+            }
+
+            return Json(preguntasConOpciones, JsonRequestBehavior.AllowGet);
         }
     }
 }
