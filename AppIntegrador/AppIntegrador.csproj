@@ -340,11 +340,6 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
     <Content Include="Views\UserLogin\UserLoginView.cshtml" />
   </ItemGroup>
   <ItemGroup>
