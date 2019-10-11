@@ -116,6 +116,8 @@
     <Build Include="DesviacionEstandarEscalar.sql" />
     <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
     <Build Include="Formularios\Procedimientos\PopularSeccionesConPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerPreguntasDeSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerPreguntaConOpciones.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

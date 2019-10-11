@@ -155,6 +155,18 @@ namespace AppIntegrador.Controllers
             public string Nombre { get; set; }
             public int Orden { get; set; }
         }
+
+        public class Opcion
+        {
+            public string Texto { get; set; }
+            public int Orden { get; set; }
+        }
+
+        public class PreguntaConEnunciadoYOpciones
+        {
+            public string Enunciado { get; set; }
+            public List<Opcion> Opciones { get; set; }
+        }
        
         [HttpGet]
         public JsonResult GetSections(string id)
@@ -163,6 +175,15 @@ namespace AppIntegrador.Controllers
             List<SeccionConOrden> secciones = db.Database.SqlQuery<SeccionConOrden>("EXEC SeccionesDeFormulario @CodForm", codForm).ToList();
 
             return Json(secciones, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetQuestions(string id)
+        {
+            SqlParameter sectionCode = new SqlParameter("sectionCode", id);
+            List<PreguntaConEnunciadoYOpciones> preguntas = db.Database.SqlQuery<PreguntaConEnunciadoYOpciones>("EXEC PreguntasDeSeccion @sectionCode", sectionCode).ToList();
+
+            return Json(preguntas, JsonRequestBehavior.AllowGet);
         }
     }
 }
