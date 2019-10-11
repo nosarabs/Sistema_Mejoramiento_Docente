@@ -31,10 +31,10 @@ namespace AppIntegrador.Models
     
         public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
-        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

@@ -133,10 +133,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+	<Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\EmailNotification.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -155,7 +159,9 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs" />
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,7 +282,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
-    <Content Include="Content\Visualizacion\styles.css" />
+	<Content Include="Content\Visualizacion\styles.css" />
+	<Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -304,6 +311,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\CharacterCounter.js" />
+    <Content Include="Scripts\custom\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -342,6 +350,22 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
+    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
+    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
+    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
+    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\Create.cshtml" />
+    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
+    <Content Include="Views\PlanDeMejora\Details.cshtml" />
+    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
+    <Content Include="Views\PlanDeMejora\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\Create.cshtml" />
+    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
+    <Content Include="Views\AccionDeMejora\Details.cshtml" />
+    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
+    <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\UserLogin\UserLoginView.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />

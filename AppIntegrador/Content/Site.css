@@ -144,6 +144,7 @@ nav {
 }
 
 .blue-box {
+    max-width: 450px;
     min-width: 390px;
     padding: 15px 15px 5px;
     border: 1px solid black;
@@ -167,7 +168,7 @@ nav {
 }
 
 .container-login100 {
-    width: 100%;
+    /*/width: 100%;*/
     min-height: 87vh;
     display: -webkit-box;
     display: -webkit-flex;
