@@ -36,29 +36,32 @@ namespace AppIntegrador.Controllers
         //}
 
         //the first parameter is the option that we choose and the second parameter will use the textbox value  
-        public ActionResult Index(string option, string search)
+        public ActionResult Index(string inp1, string inp2, string inp3)
         {
             var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
 
+            if (inp2 == null && inp1 == null && inp3 == null)
+            {
+                return View(pregunta_con_opciones_de_seleccion.ToList());
+            }
             //if a user choose the radio button option as Subject  
-            if (option == "Tipo" && search.Length > 0)
+            if (inp2 == null && inp3 == null)
             {
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList());
             }
-            else if (option == "Codigo" && search.Length > 0)
+            else if (inp1 == null && inp3 == null)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList());
             }
-            else if (option == "Enunciado" && search.Length > 0)
+            else if (inp1 == null && inp2 == null)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList());
             }
             else
             {
                 return View(pregunta_con_opciones_de_seleccion.ToList());
             }
-
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Details/5
