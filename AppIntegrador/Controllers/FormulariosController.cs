@@ -192,18 +192,19 @@ namespace AppIntegrador.Controllers
                 PreguntaConEnunciadoYOpciones pregunta = new PreguntaConEnunciadoYOpciones();
 
                 SqlParameter questionCode = new SqlParameter("questionCode", codigo);
+                SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
 
                 // Obtiene el enunciado de una pregunta
-                pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).ToString();
+                pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
                 
                 // Obtiene las opciones de una pregunta
-                pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode).ToList();
+                pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
 
                 // Añade la pregunta con sus opciones a la lista
                 preguntasConOpciones.Add(pregunta);
             }
 
-            return Json(preguntasConOpciones, JsonRequestBehavior.AllowGet);
+            return Json(preguntasConOpciones.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }
