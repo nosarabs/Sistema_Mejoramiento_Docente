@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
@@ -120,34 +122,50 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
-                    pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
-                    // Agregue esa pregunta a la tabla de preguntas
-                    db.Pregunta.Add(pregunta.Pregunta_con_opciones.Pregunta);
-                    // Agregue la pregunta con opciones perse a la table=a
-                    db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
-                    db.SaveChanges();
+                    using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AgregarPreguntaConOpcion";
+                            cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@type", 'U'));
+                            cmd.Parameters.Add(new SqlParameter("@texto", pregunta.Pregunta_con_opciones.Pregunta.Enunciado));
+                            cmd.Parameters.Add(new SqlParameter("@justificacion", pregunta.Pregunta_con_opciones.TituloCampoObservacion));
 
-                    string codigoPregunta = pregunta.Codigo;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
 
-                    // Asigno el codigo a cada opcion de la pregunta
-                    foreach (Opciones_de_seleccion opcion in Opciones)
-                        opcion.Codigo = codigoPregunta;
+                        foreach (Opciones_de_seleccion opcion in Opciones)
+                        {
+                            using (SqlCommand cmd = new SqlCommand())
+                            {
+                                cmd.Connection = con;
+                                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                                cmd.CommandText = "dbo.AgregarOpcion";
+                                cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
+                                cmd.Parameters.Add(new SqlParameter("@orden", opcion.Orden));
+                                cmd.Parameters.Add(new SqlParameter("@texto", opcion.Texto));
 
-                    // Guardo todas las opciones de una
-                    db.Opciones_de_seleccion.AddRange(Opciones);
-                    db.SaveChanges();
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                con.Close();
+                            }
+                        }
+
+                    }
+
 
                     ViewBag.Message = "Exitoso";
                     return View();
                 }
-                catch (Exception exception)
+                catch (System.Data.Entity.Infrastructure.DbUpdateException)
                 {
-                    if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
-                    {
-                        ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
-                    }
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
                 }
             }
 
