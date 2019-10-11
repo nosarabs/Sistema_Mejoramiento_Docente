@@ -11,18 +11,23 @@ namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class AccionDeMejora
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AccionDeMejora()
+        {
+            this.Accionable = new HashSet<Accionable>();
+        }
+    
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaInicio { get; set; }
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaFin { get; set; }
         public int CodigoObj { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accionable> Accionable { get; set; }
         public virtual Objetivo Objetivo { get; set; }
     }
 }

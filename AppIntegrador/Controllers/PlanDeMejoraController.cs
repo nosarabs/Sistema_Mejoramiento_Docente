@@ -58,8 +58,8 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
             return View(planDeMejora);
         }
 
@@ -75,8 +75,8 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
             return View(planDeMejora);
         }
 
@@ -93,8 +93,8 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProf);
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CedProfAsig);
+            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProf);
+            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
             return View(planDeMejora);
         }
 

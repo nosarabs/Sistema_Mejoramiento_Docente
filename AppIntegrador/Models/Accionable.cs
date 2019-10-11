@@ -19,8 +19,8 @@ namespace AppIntegrador.Models
         public Nullable<float> Progreso { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
-        public int CodigoObj { get; set; }
+        public int CodigoAM { get; set; }
     
-        public virtual Objetivo Objetivo { get; set; }
+        public virtual AccionDeMejora AccionDeMejora { get; set; }
     }
 }
