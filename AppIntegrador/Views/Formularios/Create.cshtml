@@ -11,12 +11,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h>Crear Formulario</h>
+        <h2>Crear Formulario</h2>
         <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-2">
                 @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new {
                     @class = "form-control",
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-9">
                 <form accept-charset="UTF-8" action="" method="POST">
                     @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new {
@@ -61,10 +61,19 @@
 
 
 
+
+
     </div>
 }
 
-
+<style>
+    .required:after 
+{
+    content: "*";
+    font-weight: bold;
+    color: red; 
+}
+</style>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
