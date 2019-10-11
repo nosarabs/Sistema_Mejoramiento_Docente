@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
-        private const int LOGIN_TIMEOUT = 1000;
+        private const int LOGIN_TIMEOUT = 300000;
 
         private const int MAX_FAILED_ATTEMPTS = 3;
 
