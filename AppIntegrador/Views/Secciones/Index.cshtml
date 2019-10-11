@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppIntegrador.Models.Pregunta_con_opciones_de_seleccion>
+﻿@model IEnumerable<AppIntegrador.Models.Seccion>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Tipo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pregunta_con_opciones.TituloCampoObservacion)
+            Título
         </th>
         <th></th>
     </tr>
@@ -23,10 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Tipo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.TituloCampoObservacion)
+            @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |

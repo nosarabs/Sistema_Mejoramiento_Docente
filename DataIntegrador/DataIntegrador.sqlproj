@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{0f06dff1-647f-488e-89a9-bd1f3714a98d}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -59,6 +59,8 @@
     <Folder Include="Formularios\" />
     <Folder Include="Formularios\Preguntas\" />
     <Folder Include="Formularios\Respuestas\" />
+    <Folder Include="Formularios\Procedimientos" />
+    <Folder Include="Formularios\Funciones" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -98,6 +100,21 @@
     <Build Include="Formularios\Periodo_activa_por.sql" />
     <Build Include="Formularios\Seccion.sql" />
     <Build Include="Formularios\Seccion_tiene_pregunta.sql" />
+    <Build Include="PlanDeMejora.sql" />
+    <Build Include="TipoObjetivo.sql" />
+    <Build Include="Objetivo.sql" />
+    <Build Include="AccionDeMejora.sql" />
+    <Build Include="Accionable.sql" />
+    <Build Include="Responsable_De.sql" />
+    <Build Include="AgregarPreguntaConOpcion.sql" />
+    <Build Include="AgregarPreguntaSeleccion.sql" />
+    <Build Include="AgregarOpcion.sql" />
+    <Build Include="AgregarPreguntas.sql" />
+    <Build Include="AgregarSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
+    <Build Include="Mediana.sql" />
+    <Build Include="DesviacionEstandarEscalar.sql" />
+    <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

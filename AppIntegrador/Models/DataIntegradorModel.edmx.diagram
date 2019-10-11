@@ -77,6 +77,19 @@
         <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigo" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="25.5" PointY="6.25" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="25.5" PointY="2.375" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Objetivo" Width="1.5" PointX="23.25" PointY="7.375" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PlanDeMejora" Width="1.5" PointX="21" PointY="7.375" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Responsable_De" Width="1.5" PointX="7.5" PointY="6.25" />
+        <EntityTypeShape EntityType="DataIntegradorModel.TipoObjetivo" Width="1.5" PointX="21" PointY="4.125" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionMejCod" />
+        <AssociationConnector Association="DataIntegradorModel.FK_PlanDeMejoraCod" />
+        <AssociationConnector Association="DataIntegradorModel.FK_Responsable_De_Func" />
+        <AssociationConnector Association="DataIntegradorModel.FK_PlanDeMejora" />
+        <AssociationConnector Association="DataIntegradorModel.FK_TipoO" />
+        <AssociationConnector Association="DataIntegradorModel.FK_CedProf" />
+        <AssociationConnector Association="DataIntegradorModel.FK_CedProf_Asig" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

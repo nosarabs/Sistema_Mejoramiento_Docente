@@ -59,6 +59,12 @@ namespace AppIntegrador.Models
         public virtual DbSet<Periodo_activa_por> Periodo_activa_por { get; set; }
         public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
+        public virtual DbSet<Accionable> Accionable { get; set; }
+        public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual DbSet<Objetivo> Objetivo { get; set; }
+        public virtual DbSet<PlanDeMejora> PlanDeMejora { get; set; }
+        public virtual DbSet<Responsable_De> Responsable_De { get; set; }
+        public virtual DbSet<TipoObjetivo> TipoObjetivo { get; set; }
     
         public virtual int AgregarUsuario(string pLogin, string pPassword, ObjectParameter estado)
         {
