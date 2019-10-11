@@ -61,11 +61,23 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Formulario.Add(formulario);
-                db.SaveChanges();
-                return RedirectToAction("Create");
+
+                if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
+                {
+                    db.Formulario.Add(formulario);
+                    db.SaveChanges();
+                    return RedirectToAction("Create");
+                }
+            }
+            catch (Exception exception)
+            {
+                if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                {
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(formulario);
+                }
             }
 
             return View();

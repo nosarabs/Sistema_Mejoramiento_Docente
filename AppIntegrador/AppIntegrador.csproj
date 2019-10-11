@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
@@ -340,12 +341,13 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\UserDashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
     <Content Include="Views\UserLogin\UserLoginView.cshtml" />
+    <Content Include="Views\Formularios\Create.cshtml" />
+    <Content Include="Views\Formularios\Delete.cshtml" />
+    <Content Include="Views\Formularios\Details.cshtml" />
+    <Content Include="Views\Formularios\Edit.cshtml" />
+    <Content Include="Views\Formularios\Index.cshtml" />
+    <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
