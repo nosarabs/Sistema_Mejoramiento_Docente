@@ -44,6 +44,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+
             ViewBag.HTMLCheck = true;
             return View();
         }
