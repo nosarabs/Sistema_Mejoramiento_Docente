@@ -18,11 +18,16 @@
     padding-left: 15px;
 }
 
-#greybg {
+#greybg{
     background-color: #e6e6e6;
     min-height: 100vh;
     position: relative;
     margin: 0;
+}
+
+#system-title {
+    text-align: center;
+    color: red;
 }
 
 .limiter {
@@ -40,7 +45,6 @@
     min-width: 390px;
     padding: 15px 15px 5px;
     border: 1px solid black;
-    /*background: rgb(0,93,164);*/
     background: linear-gradient(180deg, rgba(0,93,164,1) 0%, rgba(176,237,253,1) 100%);
 }
 
