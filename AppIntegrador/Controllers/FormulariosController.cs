@@ -157,7 +157,7 @@ namespace AppIntegrador.Controllers
         }
 
         public class Opcion
-        {
+        { 
             public string Texto { get; set; }
             public int Orden { get; set; }
         }
@@ -181,9 +181,29 @@ namespace AppIntegrador.Controllers
         public JsonResult GetQuestions(string id)
         {
             SqlParameter sectionCode = new SqlParameter("sectionCode", id);
-            List<PreguntaConEnunciadoYOpciones> preguntas = db.Database.SqlQuery<PreguntaConEnunciadoYOpciones>("EXEC PreguntasDeSeccion @sectionCode", sectionCode).ToList();
 
-            return Json(preguntas, JsonRequestBehavior.AllowGet);
+            // Obtiene los códigos de todas las preguntas relacionadas a la sección
+            List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
+
+            List<PreguntaConEnunciadoYOpciones> preguntasConOpciones = new List<PreguntaConEnunciadoYOpciones>();
+   
+            foreach (string codigo in Codigos)
+            {
+                PreguntaConEnunciadoYOpciones pregunta = new PreguntaConEnunciadoYOpciones();
+
+                SqlParameter questionCode = new SqlParameter("questionCode", codigo);
+
+                // Obtiene el enunciado de una pregunta
+                pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).ToString();
+                
+                // Obtiene las opciones de una pregunta
+                pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode).ToList();
+
+                // Añade la pregunta con sus opciones a la lista
+                preguntasConOpciones.Add(pregunta);
+            }
+
+            return Json(preguntasConOpciones, JsonRequestBehavior.AllowGet);
         }
     }
 }

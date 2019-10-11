@@ -117,7 +117,7 @@
     <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
     <Build Include="Formularios\Procedimientos\PopularSeccionesConPreguntas.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerPreguntasDeSeccion.sql" />
-    <Build Include="Formularios\Procedimientos\ObtenerPreguntaConOpciones.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerOpcionesDePregunta.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
