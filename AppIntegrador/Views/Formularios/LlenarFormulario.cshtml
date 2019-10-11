@@ -1,0 +1,46 @@
+﻿@model AppIntegrador.Models.Formulario
+
+@{
+    ViewBag.Title = "Llenar formulario";
+}
+
+    <h2>Llenar @Html.DisplayFor(model => model.Nombre)</h2>
+<div id="section-container">
+
+</div>
+
+
+<input type="button" class="btn btn-default " value="Mostrar" id="show" />
+
+<div id="container">
+
+</div>
+
+@section Scripts{
+    <script>
+        var formID = '@Model.Codigo'.trim();
+
+        $(document).ready(function () {
+
+            $("#show").click(function () {
+                getSections(formID);
+            })
+        })
+
+
+        function getSections(formID) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetSections")',
+                dataType: 'json',
+                data: { id: formID },
+                success: function (data) {
+                    for (var i = 0; i < data.length; ++i) {
+                        var section = "<div class='section'>" + data[i].Nombre + "</div>"
+                        $(section).appendTo("#section-container")
+                    }
+                }
+            });
+        }
+    </script>
+}

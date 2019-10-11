@@ -18,7 +18,8 @@
             @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+                @*Historia MSU: que el mensaje de error salga en rojo*@
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @style="color:red" })
             </div>
         </div>
 
@@ -26,11 +27,11 @@
             @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
-                {
-                    htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-                }
-               )
-                @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
+           {
+               htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
+           }
+    )           @*Historia MSU: que el mensaje de error salga en rojo*@
+            @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
             </div>
         </div>
 
@@ -52,7 +53,6 @@
 
 
         <div id="sortable">
-
         </div>
 
         <div class="form-group">
@@ -90,6 +90,7 @@
         background-color: #c4c4c4;
         cursor: grabbing;
     }
+
 </style>
 
 @section Scripts {
@@ -101,6 +102,16 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        function disableRemoveButton() {
+            var nodes = document.getElementsByClassName("remove-button btn btn-danger");
+            console.log(nodes.length);
+            var disable = nodes.length <= 1;
+
+            Array.prototype.forEach.call(nodes, function (node) {
+                node.disabled = disable;
+            });
+        }
+
         // Set index starting from 0 for each option
         function fixIndexes() {
             var i = 0;
@@ -140,21 +151,29 @@
                 data: { i: i },
                 success: function (data) {
                     $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
+                    disableRemoveButton();
                 }
             })
+            
+        });
+
+        $(document).ready(function(){
+            $("#Add").trigger('click');
         });
 
 
         // Delete option input box(es)
-        function removeOption(id) {
-            var node = document.getElementById(id);
-            var target = node.parentNode.parentNode;
+        function removeOption(deleteNode) {
+            // Get the parent div that contains all the option modules (text, inputbox, and button)
+            var target = deleteNode.parentNode;
 
-            $(target).animate({'height':0, 'opacity':0}, 200, function () {
+            $(target).animate({ 'height': 0, 'opacity': 0 }, 200, function () {
+                // Remove div from DOM
                 $(this).remove();   
-
                 // Fix indexes when an input box is deleted
                 fixIndexes();
+                // Check if the first button needs to be disabled
+                disableRemoveButton();
             })
             
         }

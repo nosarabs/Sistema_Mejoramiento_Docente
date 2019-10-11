@@ -15,9 +15,8 @@
         <div class="counter small pull-right">0/50 caracteres usados</div>
     </div>
 
-    <div>
-        <button type="button" id="rem@(i)" class="remove-button btn btn-danger" onclick="removeOption('rem@(i)')">Borrar</button>
-    </div>
+    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">Borrar</button>
+    
     <div style="display: none">
         @Html.TextBoxFor(opcion => opcion.Orden, null, new
         {
