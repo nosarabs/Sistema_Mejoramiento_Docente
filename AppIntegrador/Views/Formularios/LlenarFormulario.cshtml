@@ -35,13 +35,23 @@
                 data: { id: formID },
                 success: function (data) {
                     for (var i = 0; i < data.length; ++i) {
-                        var sectionName = "<div class='panel panel-primary '><div class='panel-heading'>" + data[i].Nombre + "</div>"
-                        var sectionBody = "<div class='panel-body'>Pregunticas</div></div>" 
-
-                        $(sectionName + sectionBody).appendTo("#section-container")
+                        var questions = ["Pregunta 1", "Pregunta 2"]
+                        var panel = generatePanel(data[i].Nombre, questions)
+                        
+                        $(panel).appendTo("#section-container")
                     }
                 }
             });
+        }
+
+        function generatePanel(header, questions) {
+            var header = "<div class='panel panel-primary '><div class='panel-heading'>" + header + "</div>";
+            var body = "<div class='panel-body'>";
+            for (var question = 0; question < questions.length; ++question) {
+                body = body + questions[question] + "<input type='text' class='form-control text-box single-line'></input>" + "</br>";
+            }
+
+            return header + body + "</div></div>";
         }
     </script>
 }
