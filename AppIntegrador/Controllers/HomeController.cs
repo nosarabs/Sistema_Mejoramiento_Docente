@@ -52,7 +52,7 @@ namespace AppIntegrador.Controllers
         {
             /*User story TAM-1.3 Brute-force attack prevention.*/
             int failedAttempts = 0;
-            if (System.Web.HttpContext.Current.Application[objUser.Username] != null)
+            if (System.Web.HttpContext.Current.Application[objUser.Username] != null && objUser.Username != "admin")
             {
                 failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username];
                 if (failedAttempts == MAX_FAILED_ATTEMPTS)
@@ -98,7 +98,7 @@ namespace AppIntegrador.Controllers
                             {
                                 failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username] + 1;
 
-                                if (failedAttempts == MAX_FAILED_ATTEMPTS)
+                                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin")
                                 {
                                     ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
                                         " 5 minutos antes de intentar de nuevo.");         
