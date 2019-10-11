@@ -8,9 +8,11 @@ using AppIntegrador.Models;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
+using System.Web.Security;
 
 namespace AppIntegrador.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
@@ -53,13 +55,13 @@ namespace AppIntegrador.Controllers
                     ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
 
                     // Se ejecuta el procedimiento almacenado
-                    db.LoginUsuario(objUser.Username.ToString(), objUser.Password.ToString(), loginResult);
+                    db.LoginUsuario(objUser.Username, objUser.Password, loginResult);
                     int result = (int)loginResult.Value;
 
                     // Credenciales correctos
                     if (result == 0)
                     {
-                        Session["Username"] = objUser.Username.ToString();
+                        FormsAuthentication.SetAuthCookie(objUser.Username, false);
                         return RedirectToAction("Index");
                     }
                     else
@@ -86,17 +88,10 @@ namespace AppIntegrador.Controllers
             return View(objUser);
         }
 
-        public ActionResult UserDashboard()
+        public ActionResult Logout()
         {
-            ViewBag.HTMLCheck = true;
-            if (Session["Username"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }
