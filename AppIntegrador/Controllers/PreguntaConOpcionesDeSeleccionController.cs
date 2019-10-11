@@ -118,7 +118,6 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("", "Una pregunta de selección única necesita al menos una opción");
                     return View(pregunta);
                 }
-                ModelState.AddModelError("Codigo", "");
                 try
                 {
                     // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
@@ -139,7 +138,8 @@ namespace AppIntegrador.Controllers
                     db.Opciones_de_seleccion.AddRange(Opciones);
                     db.SaveChanges();
 
-                    return RedirectToAction("Create");
+                    ViewBag.Message = "Exitoso";
+                    return View();
                 }
                 catch (Exception exception)
                 {
