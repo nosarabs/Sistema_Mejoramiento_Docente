@@ -7,8 +7,5 @@
 	FechaInicio date,
 	FechaFin date
 		constraint DateOrderAM
-			check(FechaFin > FechaInicio),
-	CodigoObj int NOT NULL
-		constraint FK_PlanDeMejoraCod
-			references Objetivo(Codigo)
+			check(FechaFin > FechaInicio)
 )

@@ -1,0 +1,74 @@
+﻿@model AppIntegrador.Models.Objetivo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container">
+    <h2>Nuevo objetivo</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container">
+            <div class="row">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.TipoObjetivo, "TipoObjetivo", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("TipoObjetivo", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TipoObjetivo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.CedulaProf, "CedulaProf", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("CedulaProf", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CedulaProf, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextAreaFor(model => model.Descripcion, 3, 100, new { @class = "form-control col-md-12", maxlength = "300" })
+                @*@Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group"> Hay que arreglar un error que tira esta parte
+                @Html.LabelFor(model => model.CodigoPlan, "CodigoPlan", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CodigoPlan", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CodigoPlan, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="botonCentrado">
+            <input type="submit" value="Crear" class="btn btn-success" />
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+    }
+</div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

@@ -136,6 +136,7 @@
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\EmailNotification.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,7 +157,9 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs" />
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +245,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde_respuesta_libre.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ResponsableDe.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responsable_De.cs">
@@ -351,6 +357,11 @@
     <Content Include="Views\AccionDeMejora\Details.cshtml" />
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\Objetivos\Create.cshtml" />
+    <Content Include="Views\Objetivos\Delete.cshtml" />
+    <Content Include="Views\Objetivos\Details.cshtml" />
+    <Content Include="Views\Objetivos\Edit.cshtml" />
+    <Content Include="Views\Objetivos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
