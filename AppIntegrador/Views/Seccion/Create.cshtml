@@ -99,6 +99,7 @@
 
         @using (Html.BeginForm(FormMethod.Get))
         {
+            @Html.AntiForgeryToken()
             //the following are search options
             <b>
                 Opciones de búsqueda:

@@ -35,14 +35,25 @@ namespace AppIntegrador.Controllers
             return View(seccion);
         }
 
-        // GET: Seccion/Create
-        public ActionResult Create()
-        {
 
+
+        // GET: Seccion/Create
+        public ActionResult Create(string option, string search)
+        {
             var crearSeccion = new CrearSeccionModel();
-            //crearSeccion.Seccion = db.Seccion();
-            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();            
-            return View(crearSeccion);
+            if (option == "Tipo" && search.Length > 0)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList();
+                return View(crearSeccion);
+            }
+            else if (option == "Codigo" && search.Length > 0)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList();
+                return View(crearSeccion);
+            }
+            else
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+                return View(crearSeccion);
         }
 
         // POST: Seccion/Create
