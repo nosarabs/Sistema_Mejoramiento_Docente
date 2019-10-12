@@ -105,7 +105,6 @@
     <Build Include="Objetivo.sql" />
     <Build Include="AccionDeMejora.sql" />
     <Build Include="Accionable.sql" />
-    <Build Include="Responsable_De.sql" />
     <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
@@ -120,6 +119,13 @@
     <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
+    <Build Include="AsignadoA.sql" />
+    <Build Include="Evalua.sql" />
+    <Build Include="ResponsableDe.sql" />
+    <Build Include="PlantillaObjetivo.sql" />
+    <Build Include="PlantillaAccionDeMejora.sql" />
+    <Build Include="CreadoPor.sql" />
+    <Build Include="Origina.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

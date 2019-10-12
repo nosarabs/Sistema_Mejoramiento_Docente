@@ -1,11 +1,7 @@
 ﻿CREATE TABLE [dbo].[AsignadoA]
 (
-	[CedulaProf] CHAR(10) NOT NULL 
-		constraint FK_Asignado_A_Prof
-			references Profesor(Cedula), 
-    [CodigoP] INT NOT NULL
-		constraint FK_Asignado_A_Plan
-			references PlanDeMejora(Codigo),
-	constraint PK_AsignadoA
-		primary key(CedulaProf, CodigoP)
+	codPlan int not null,
+	corrProf varchar(50) not null,
+	constraint FK_AsignadoA_PlanDeMejora foreign key(codPlan) references PlanDeMejora(codigo),
+	constraint FK_AsignadoA_Profesor foreign key(corrProf) references Profesor(Correo)
 )

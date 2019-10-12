@@ -1,10 +1,15 @@
-﻿CREATE TABLE [dbo].[Responsable_De]
-(
-	[CorreoFunc] VARCHAR(50) NOT NULL 
-		constraint FK_Responsable_De_Func
-			references Funcionario(Correo), 
-    [CodigoA] INT NOT NULL,
-	constraint PK_Responsable_De
-		primary key(CorreoFunc, CodigoA)
+﻿-- Mosqueteros --
 
+CREATE TABLE [dbo].[Responsable_De]
+(
+	codPlan int not null,
+	nombreObj varchar(50) not null,
+	descripAcMej varchar(250) not null,
+	descripAcci varchar(250) not null,
+	corrFunc varchar(50) not null,
+
+	constraint PK_ResponsableDe primary key(codPlan, nombreObj, descripAcMej, descripAcci, corrFunc),
+	constraint FK_ResponsableDe_Accionable foreign key(codPlan, nombreObj, descripAcMej, descripAcci)
+		references Accionable(codPlan, nombreObj, descripAcMej, descripcion),
+	constraint FK_ResponsableDe_Funcionario foreign key(corrFunc) references Funcionario(Correo)
 )

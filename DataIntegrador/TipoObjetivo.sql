@@ -1,6 +1,7 @@
-﻿CREATE TABLE [dbo].[TipoObjetivo]
+﻿-- Mosqueteros --
+
+CREATE TABLE [dbo].[TipoObjetivo]
 (
-	[Nombre] VARCHAR(20) NOT NULL 
-		constraint PK_TipoObj
-			PRIMARY KEY
+	nombre varchar(50) not null,
+	constraint PK_TipoObj primary key(nombre)
 )
