@@ -133,13 +133,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-	<Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\EmailNotification.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -156,6 +157,8 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -285,8 +288,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
-	<Content Include="Content\Visualizacion\styles.css" />
-	<Content Include="Content\login.css" />
+    <Content Include="Content\Visualizacion\styles.css" />
+    <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -376,6 +379,11 @@
     <Content Include="Views\Formularios\Edit.cshtml" />
     <Content Include="Views\Formularios\Index.cshtml" />
     <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
+    <Content Include="Views\Seccion\Create.cshtml" />
+    <Content Include="Views\Seccion\Delete.cshtml" />
+    <Content Include="Views\Seccion\Details.cshtml" />
+    <Content Include="Views\Seccion\Edit.cshtml" />
+    <Content Include="Views\Seccion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

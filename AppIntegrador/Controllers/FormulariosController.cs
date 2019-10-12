@@ -51,7 +51,9 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
-            return View();
+            var crearFormulario = new CrearFormularioModel();
+            crearFormulario.seccion = db.Seccion.ToList();
+            return View(crearFormulario);
         }
 
         // POST: Formularios/Create
