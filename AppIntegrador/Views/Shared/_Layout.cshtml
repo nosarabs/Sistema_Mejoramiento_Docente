@@ -26,8 +26,17 @@
                 </ul>
             </div>
             <div class="item">
-                <ul>
-                    <li style="float:right"><a class="active">@Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                <ul class="wrapper">
+                    
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
+                            <div class="dropdown-content">
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
