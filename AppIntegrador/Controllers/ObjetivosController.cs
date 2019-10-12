@@ -17,8 +17,10 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos
         public ActionResult Index()
         {
-            var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
-            return View(objetivo.ToList());
+            //var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
+            //return View(objetivo.ToList());
+
+            return View();
         }
 
         // GET: Objetivos/Details/5
@@ -58,7 +60,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
             ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
             return View(objetivo);
         }
@@ -75,7 +77,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
             ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
             return View(objetivo);
         }
@@ -93,7 +95,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
             ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
             return View(objetivo);
         }
