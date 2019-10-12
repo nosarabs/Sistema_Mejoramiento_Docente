@@ -10,10 +10,13 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SeccionesDeFormulario_Result
+    public partial class ResponsableDe
     {
-        public string Nombre { get; set; }
-        public int Orden { get; set; }
+        public string CedulaFunc { get; set; }
+        public int CodigoA { get; set; }
+    
+        public virtual Funcionario Funcionario { get; set; }
     }
 }

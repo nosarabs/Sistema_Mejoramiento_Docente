@@ -18,12 +18,14 @@ namespace AppIntegrador.Models
         public TipoObjetivo()
         {
             this.Objetivo = new HashSet<Objetivo>();
+            this.PlantillaObjetivo = new HashSet<PlantillaObjetivo>();
         }
     
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
+        public string nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Objetivo> Objetivo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlantillaObjetivo> PlantillaObjetivo { get; set; }
     }
 }

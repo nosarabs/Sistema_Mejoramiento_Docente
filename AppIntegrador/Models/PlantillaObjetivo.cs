@@ -12,24 +12,21 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Accionable
+    public partial class PlantillaObjetivo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Accionable()
+        public PlantillaObjetivo()
         {
-            this.Funcionario = new HashSet<Funcionario>();
+            this.Objetivo = new HashSet<Objetivo>();
         }
     
-        public int codPlan { get; set; }
-        public string nombreObj { get; set; }
-        public string descripAcMej { get; set; }
+        public int codigo { get; set; }
+        public string nombre { get; set; }
         public string descripcion { get; set; }
-        public Nullable<System.DateTime> fechaInicio { get; set; }
-        public Nullable<System.DateTime> fechaFin { get; set; }
-        public Nullable<int> progreso { get; set; }
+        public string nombTipoObj { get; set; }
     
-        public virtual AccionDeMejora AccionDeMejora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Funcionario> Funcionario { get; set; }
+        public virtual ICollection<Objetivo> Objetivo { get; set; }
+        public virtual TipoObjetivo TipoObjetivo { get; set; }
     }
 }

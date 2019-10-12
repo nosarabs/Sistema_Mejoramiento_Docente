@@ -11,9 +11,9 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class SeccionesDeFormulario_Result
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public string Nombre { get; set; }
-        public int Orden { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

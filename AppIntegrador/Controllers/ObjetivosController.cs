@@ -10,112 +10,118 @@ using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
-    public class AccionDeMejoraController : Controller
+    public class ObjetivosController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        // GET: AccionDeMejora
+        // GET: Objetivos
         public ActionResult Index()
         {
-            var accionDeMejora = db.AccionDeMejora.Include(a => a.Objetivo);
-            return View(accionDeMejora.ToList());
+            //var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
+            //return View(objetivo.ToList());
+
+            return View();
         }
 
-        // GET: AccionDeMejora/Details/5
+        // GET: Objetivos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            if (accionDeMejora == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            return View(accionDeMejora);
+            return View(objetivo);
         }
 
-        // GET: AccionDeMejora/Create
+        // GET: Objetivos/Create
         public ActionResult Create()
         {
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre");
+            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre");
+            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion");
             return View();
         }
 
-        // POST: AccionDeMejora/Create
+        // POST: Objetivos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
-                db.AccionDeMejora.Add(accionDeMejora);
+                db.Objetivo.Add(objetivo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //@TODO: 
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
-            return View(accionDeMejora);
+
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            return View(objetivo);
         }
 
-        // GET: AccionDeMejora/Edit/5
+        // GET: Objetivos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            if (accionDeMejora == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
-            return View(accionDeMejora);
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            return View(objetivo);
         }
 
-        // POST: AccionDeMejora/Edit/5
+        // POST: Objetivos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(accionDeMejora).State = EntityState.Modified;
+                db.Entry(objetivo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
-            return View(accionDeMejora);
+            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
+            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            return View(objetivo);
         }
 
-        // GET: AccionDeMejora/Delete/5
+        // GET: Objetivos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            if (accionDeMejora == null)
+            Objetivo objetivo = db.Objetivo.Find(id);
+            if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            return View(accionDeMejora);
+            return View(objetivo);
         }
 
-        // POST: AccionDeMejora/Delete/5
+        // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            db.AccionDeMejora.Remove(accionDeMejora);
+            Objetivo objetivo = db.Objetivo.Find(id);
+            db.Objetivo.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -19,6 +19,7 @@ namespace AppIntegrador.Models
         {
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
             this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
+            this.PlanDeMejora = new HashSet<PlanDeMejora>();
         }
     
         public string FCodigo { get; set; }
@@ -36,5 +37,7 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
         public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
     }
 }
