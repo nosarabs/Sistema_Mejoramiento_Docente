@@ -23,45 +23,38 @@
         var formID = '@Model.Codigo'.trim();
 
         $(document).ready(function () {
-            getSections(formID);
-            printData("00000001");
+            getData(formID);
         })
 
-
-        function getSections(formID) {
+        function getData(sectID) {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetSections")',
+                url: '@Url.Action("GetFormContent")',
                 dataType: 'json',
-                data: { id: formID },
+                data: { formID: sectID },
                 success: function (data) {
-                    for (var i = 0; i < data.length; ++i) {
-                        var questions = ["Pregunta 1", "Pregunta 2"]
-                        var panel = generatePanel(data[i].Nombre, questions)
-                        
-                        $(panel).appendTo("#section-container")
-                    }
+                    printData(data)
                 }
             });
         }
 
-        function printData(sectID) {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetQuestions")',
-                dataType: 'json',
-                data: { id: sectID },
-                success: function (data) {
-                    for (var question = 0; question < data.length; ++question) {
-                        console.log(data[question].Enunciado);
-                        for (var option = 0; option < data[question].Opciones.length; ++option) {
-                            console.log(data[question].Opciones[option].Texto);
-                        }
-                    }
+        function printData(data) {
+            // console.log(data)
+            for (var section = 0; section < data.length; ++section) {
+                console.log("Sección: " + data[section].NombreSeccion);
+                // Variable to simplify data access
+                var sectionAux = data[section];
 
-                    console.log(data)
+                for (var question = 0; question < sectionAux.Preguntas.length; ++question) {
+                    console.log("    Pregunta: " + sectionAux.Preguntas[question].Enunciado);
+                    // Variable to simplify data access (again)
+                    var questionAux = sectionAux.Preguntas[question];
+
+                    for (var option = 0; option < questionAux.Opciones.length; ++option) {
+                        console.log("        Opción: " + questionAux.Opciones[option].Texto);
+                    }
                 }
-            });
+            }
         }
 
         function generatePanel(header, questions) {
@@ -69,7 +62,7 @@
             var body = "<div class='panel-body'>";
             for (var question = 0; question < questions.length; ++question) {
                 body = body + questions[question] + "<input type='text' class='form-control text-box single-line'></input>" + "</br>";
-        }
+            }
 
             return header + body + "</div></div>";
         }
