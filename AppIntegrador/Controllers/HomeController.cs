@@ -23,20 +23,33 @@ namespace AppIntegrador.Controllers
 
         private const int MAX_FAILED_ATTEMPTS = 3;
 
+        /*User story TAM-1.6.1 is implemented in each function: returns the requested view if the user is logged in,
+         redirects to login page otherwise.*/
         public ActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
 
         public ActionResult About()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -48,9 +61,11 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            ViewBag.HTMLCheck = true;
-            return View();
+            else 
+            {
+                ViewBag.HTMLCheck = true;
+                return View();
+            }
         }
 
         [HttpPost]
@@ -61,7 +76,7 @@ namespace AppIntegrador.Controllers
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
             {
-                if (isUserLocked(objUser)) 
+                if (IsUserLocked(objUser)) 
                 {
                     ModelState.AddModelError("Password", "Este usuario está bloqueado.\nDebe esperar 5 minutos antes de intentar de nuevo.");
                     return View(objUser);
@@ -90,7 +105,7 @@ namespace AppIntegrador.Controllers
                         }
                         else
                         {
-                            wrongPassword(objUser);
+                            _ = WrongPassword(objUser);
                         }
                         /*End of user story.*/
 
@@ -107,7 +122,7 @@ namespace AppIntegrador.Controllers
         }
 
         /*User story TAM-1.3 Brute-force attack prevention.*/
-        private async Task<ActionResult> wrongPassword(Usuario objUser) {
+        private async Task<ActionResult> WrongPassword(Usuario objUser) {
             int failedAttempts = 0;
             
             if (System.Web.HttpContext.Current.Application[objUser.Username] == null)
@@ -124,7 +139,7 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
                         " 5 minutos antes de intentar de nuevo.");
                     System.Web.HttpContext.Current.Application.Remove(objUser.Username);
-                    await deactivateUserTemporarily(objUser).ConfigureAwait(false);
+                    await DeactivateUserTemporarily(objUser).ConfigureAwait(false);
                     return View(objUser);
                 }
                 else
@@ -137,7 +152,7 @@ namespace AppIntegrador.Controllers
             return null;
         }
 
-        public async Task<Usuario> deactivateUserTemporarily(Usuario objUser) {
+        private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser) {
             using (var context = new DataIntegradorEntities())
             {
                 var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
@@ -160,21 +175,27 @@ namespace AppIntegrador.Controllers
             return null;
         }
 
-        private bool isUserLocked(Usuario objUser) {
+        private static bool IsUserLocked(Usuario objUser) {
             bool locked = false;
             using (var context = new DataIntegradorEntities())
             {
                 var query = context.Usuario
                     .Where(u => u.Username == objUser.Username)
                     .FirstOrDefault<Usuario>();
-                locked = !query.Activo;
+                if(query != null)
+                    locked = !query.Activo;
             }
             return locked;
         }
         /*End of user story.*/
 
+        [Authorize]
         public ActionResult Logout()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
