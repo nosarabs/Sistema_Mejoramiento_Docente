@@ -17,24 +17,20 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanDeMejora()
         {
-            this.Profesor = new HashSet<Profesor>();
             this.Objetivo = new HashSet<Objetivo>();
-            this.Formulario = new HashSet<Formulario>();
-            this.Formulario1 = new HashSet<Formulario>();
         }
     
+        public string CorreoProf { get; set; }
         public int Codigo { get; set; }
         public string Nombre { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
+        public string CodigoF { get; set; }
+        public string CorreoProfAsig { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profesor> Profesor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Objetivo> Objetivo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario> Formulario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario> Formulario1 { get; set; }
+        public virtual Profesor Profesor { get; set; }
+        public virtual Profesor Profesor1 { get; set; }
     }
 }

@@ -5,7 +5,7 @@
     padding: 0%;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     color: black;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 p.uppercase {
@@ -23,14 +23,10 @@ p.uppercase {
     align-items: center;
 }
 
-
-ul {
-    list-style: none;
-    text-align: center;
-}
-
 .wrapper {
     display: flex;
+    list-style: none;
+    text-align: center;
 }
 
     .wrapper .projectTitle {
@@ -118,12 +114,8 @@ nav {
 
 .mainBarText {
     color: black;
-    font-size: 2em;
-}
-
-.mainBarText {
-    color: black;
     font-size: 1em;
+    
 }
 
 .ucr-logo {
@@ -153,6 +145,7 @@ nav {
 }
 
 .blue-box {
+    max-width: 450px;
     min-width: 390px;
     padding: 15px 15px 5px;
     border: 1px solid black;
@@ -176,7 +169,7 @@ nav {
 }
 
 .container-login100 {
-    width: 100%;
+    /*/width: 100%;*/
     min-height: 87vh;
     display: -webkit-box;
     display: -webkit-flex;

@@ -57,7 +57,6 @@ namespace AppIntegrador.Models
         public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
         public virtual DbSet<Responsable_De> Responsable_De { get; set; }
-        public virtual DbSet<ResponsableDe> ResponsableDe { get; set; }
         public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
         public virtual DbSet<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
@@ -67,7 +66,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
     
-        public virtual int AgregarUsuario(string pLogin, string pPassword, ObjectParameter estado)
+        public virtual int AgregarUsuario(string pLogin, string pPassword, Nullable<bool> activo, ObjectParameter estado)
         {
             var pLoginParameter = pLogin != null ?
                 new ObjectParameter("pLogin", pLogin) :
@@ -77,7 +76,24 @@ namespace AppIntegrador.Models
                 new ObjectParameter("pPassword", pPassword) :
                 new ObjectParameter("pPassword", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuario", pLoginParameter, pPasswordParameter, estado);
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("activo", activo) :
+                new ObjectParameter("activo", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuario", pLoginParameter, pPasswordParameter, activoParameter, estado);
+        }
+    
+        public virtual int LoginUsuario(string pLoginName, string pPassword, ObjectParameter result)
+        {
+            var pLoginNameParameter = pLoginName != null ?
+                new ObjectParameter("pLoginName", pLoginName) :
+                new ObjectParameter("pLoginName", typeof(string));
+    
+            var pPasswordParameter = pPassword != null ?
+                new ObjectParameter("pPassword", pPassword) :
+                new ObjectParameter("pPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario", pLoginNameParameter, pPasswordParameter, result);
         }
     }
 }

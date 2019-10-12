@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <title>ProyectoIntegrador</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
+    @if (ViewBag.HTMLCheck != true)
+    {
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    }
+    </head>
 <body>
     @if (ViewBag.HTMLCheck != true)
     {
@@ -15,11 +18,25 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
+                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
             </div>
             <div class="item">
                 <ul>
-                    <li style="float:right"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                    <li style="float:left"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <ul class="wrapper">
+                    
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
+                            <div class="dropdown-content">
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -45,6 +62,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Formularios</button>
                             <div class="dropdown-content">
+                                @Html.ActionLink("Crear Formulario", "Create", "Formularios")
                                 @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
                                 @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
                             </div>
@@ -64,8 +82,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                @Html.ActionLink("Visualizar resultados", "Index", "Home")
+                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
                     </li>
@@ -75,9 +92,11 @@
         </div>
     }
     @RenderBody()
-
+    @if (ViewBag.HTMLCheck != true)
+    {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>

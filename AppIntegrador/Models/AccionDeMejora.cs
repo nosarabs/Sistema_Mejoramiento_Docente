@@ -18,17 +18,16 @@ namespace AppIntegrador.Models
         public AccionDeMejora()
         {
             this.Accionable = new HashSet<Accionable>();
-            this.Objetivo = new HashSet<Objetivo>();
         }
     
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
+        public int CodigoObj { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accionable> Accionable { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivo { get; set; }
+        public virtual Objetivo Objetivo { get; set; }
     }
 }
