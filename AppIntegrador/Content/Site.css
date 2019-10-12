@@ -281,8 +281,8 @@ html, body {
 }
 
 .contentPanel {
-    order: 1;
-    flex-grow: 6;
+    order: 2;
+    flex-grow: 8;
 }
 
 .form-group {
