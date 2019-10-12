@@ -106,17 +106,20 @@
     <Build Include="AccionDeMejora.sql" />
     <Build Include="Accionable.sql" />
     <Build Include="Responsable_De.sql" />
-    <Build Include="AgregarPreguntaConOpcion.sql" />
-    <Build Include="AgregarPreguntaSeleccion.sql" />
-    <Build Include="AgregarOpcion.sql" />
-    <Build Include="AgregarPreguntas.sql" />
-    <Build Include="AgregarSeccion.sql" />
     <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
     <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
-	<Build Include="Inscrita_en.sql" />
+    <Build Include="Formularios\Procedimientos\PopularSeccionesConPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerPreguntasDeSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerOpcionesDePregunta.sql" />
+    <Build Include="Inscrita_en.sql" />
     <Build Include="Pertenece_a.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaConOpcion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

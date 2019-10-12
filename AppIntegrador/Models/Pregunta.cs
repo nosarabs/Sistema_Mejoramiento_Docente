@@ -22,8 +22,6 @@ namespace AppIntegrador.Models
             this.Seccion_tiene_pregunta = new HashSet<Seccion_tiene_pregunta>();
         }
 
-        // Historia MSU: Mensaje de error del código en español
-        [Required(ErrorMessage = "Código requerido")]
         public string Codigo { get; set; }
         // Historia MSU: Mensaje de error del enunciado en español
         [Required(ErrorMessage = "Enunciado requerido")]

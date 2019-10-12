@@ -5,7 +5,7 @@
 	[CodCarrera] VARCHAR(10) NOT NULL,
 	[CodEnfasis] VARCHAR(10) NOT NULL,
 	PRIMARY KEY (Perfil, PermisoId, CodCarrera, CodEnfasis),
-	FOREIGN KEY (Perfil) REFERENCES Perfil (Nombre),
-	FOREIGN KEY (PermisoId) REFERENCES Permiso (Id),
-	FOREIGN KEY (CodCarrera, CodEnfasis) REFERENCES Enfasis (CodCarrera, Codigo)
+	FOREIGN KEY (Perfil) REFERENCES Perfil (Nombre) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (PermisoId) REFERENCES Permiso (Id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (CodCarrera, CodEnfasis) REFERENCES Enfasis (CodCarrera, Codigo) ON UPDATE CASCADE ON DELETE CASCADE
 )
