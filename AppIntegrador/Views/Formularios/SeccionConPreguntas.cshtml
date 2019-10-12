@@ -1,0 +1,14 @@
+﻿@model AppIntegrador.Models.SeccionConPreguntas
+
+@{
+    Layout = null;
+}
+
+<div class="panel panel-primary">
+    <div class='panel-heading'>
+        @Html.DisplayFor(model => model.Nombre)
+    </div>
+    <div class='panel-body'>
+        @Html.Partial("TodasLasPreguntas", Model.Preguntas)
+    </div>
+</div>

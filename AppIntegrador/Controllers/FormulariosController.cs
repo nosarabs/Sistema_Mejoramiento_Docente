@@ -15,23 +15,39 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        //public ActionResult LlenarPreguntaConOpciones(string nombreSecc)
+        //{
+        //    LlenarPreguntaConOpciones pregunta = new LlenarPreguntaConOpciones
+        //    {
+        //        Seccion = nombreSecc,
+        //        Preguntas = null
+        //    };
+
+        //    return View(pregunta);
+        //}
+        public ActionResult LlenarFormulario(string id)
+        {
+            Formulario formulario = db.Formulario.Find(id);
+            if (formulario == null)
+            {
+                return HttpNotFound();
+            }
+
+            LlenarFormulario formulario1 = new LlenarFormulario
+            {
+                Nombre = formulario.Nombre,
+                Secciones = null
+            };
+
+            return View(formulario1);
+        }
         // GET: Formularios
         public ActionResult Index()
         {
             return View(db.Formulario.ToList());
         }
 
-        public ActionResult LlenarFormulario(string id)
-        {
-            Formulario formulario = db.Formulario.Find(id);
 
-            if (formulario == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(formulario);
-        }
 
         // GET: Formularios/Details/5
         public ActionResult Details(string id)

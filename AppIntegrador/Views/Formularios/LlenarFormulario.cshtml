@@ -1,4 +1,4 @@
-﻿@model AppIntegrador.Models.Formulario
+﻿@model AppIntegrador.Models.LlenarFormulario
 
 @{
     ViewBag.Title = "Llenar formulario";
@@ -14,31 +14,55 @@
     #section-container {
         margin-left: 1%;
         margin-right: 1%;
-        
     }
 </style>
 
 @section Scripts{
     <script>
-        var formID = '@Model.Codigo'.trim();
+        //var formID = ''.trim();
 
         $(document).ready(function () {
-            getData(formID);
+            //getData(formID);
+
         })
 
-        function getData(sectID) {
+        function getData(formID) {
+            $.ajax({
+                url: '@Url.Action("ObtenerSecciones")',
+                data: { formID: idForm },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function getData2(sectID) {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetFormContent")',
                 dataType: 'json',
                 data: { formID: sectID },
                 success: function (data) {
-                    printData(data)
+                    imprimirDatos(data);
+                    appendSections(data);
                 }
             });
         }
 
-        function printData(data) {
+        @*function appendSections(data) {
+            for (var section = 0; section < data.length; ++section) {
+                $.ajax({
+                    url: '@Url.Action("LlenarPreguntaConOpciones")',
+                    data: { nombreSecc: data[section].NombreSeccion },
+                    success: function (data) {
+                        console.log(data);
+                        $(data).appendTo("#section-container");
+                    }
+                });
+            }
+        }*@
+
+        function imprimirDatos(data) {
             // console.log(data)
             for (var section = 0; section < data.length; ++section) {
                 console.log("Sección: " + data[section].NombreSeccion);
