@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AppIntegrador.Controllers
+namespace AppIntegrador.Utilities
 {
     public class EmailNotification
     {
@@ -43,7 +43,8 @@ namespace AppIntegrador.Controllers
                     return 0;
                 }
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -78,7 +79,7 @@ namespace AppIntegrador.Controllers
             return -1;
         }
 
-        private MailMessage ConstructMessage (List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        private MailMessage ConstructMessage(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
         {
             MailMessage message = new MailMessage();
             // Add the recipients

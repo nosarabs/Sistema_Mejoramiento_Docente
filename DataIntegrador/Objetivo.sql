@@ -1,15 +1,17 @@
-﻿CREATE TABLE [dbo].[Objetivo]
+﻿-- Mosqueteros --
+
+CREATE TABLE [dbo].[Objetivo]
 (
-	[Codigo] INT NOT NULL 
-		constraint PK_Objetivo
-			PRIMARY KEY, 
-    [Nombre] VARCHAR(20) NULL, 
-    [Descripcion] VARCHAR(500) NULL, 
-    [TipoObjetivo] VARCHAR(20) NULL
-		constraint FK_TipoO
-			references TipoObjetivo(Nombre), 
-    [CedulaProf] CHAR(10) NOT NULL, 
-    [CodigoPlan] INT NOT NULL,
-	constraint FK_PlanDeMejora
-		foreign key(CedulaProf, CodigoPlan) references PlanDeMejora(CedProf, Codigo)
+	codPlan int not null,
+	nombre varchar(50) not null,
+	descripcion varchar(250),
+	fechaInicio date,
+	fechaFin date,
+	nombTipoObj varchar(50),
+	codPlantilla int,
+
+	constraint DateOrderObj check(fechaFin >= fechaInicio),
+	constraint PK_Objetivo primary key(codPlan, nombre),
+	constraint FK_Objetivo_TipoObj foreign key(nombTipoObj) references TipoObjetivo(nombre),
+	constraint FK_Objetivo_PlantillaObjetivo foreign key(codPlantilla) references PlantillaObjetivo(codigo)
 )
