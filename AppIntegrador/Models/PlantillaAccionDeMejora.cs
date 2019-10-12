@@ -17,13 +17,13 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlantillaAccionDeMejora()
         {
-            this.AccionDeMejora = new HashSet<AccionDeMejora>();
+            this.AccionDeMejoras = new HashSet<AccionDeMejora>();
         }
     
         public int codigo { get; set; }
         public string descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual ICollection<AccionDeMejora> AccionDeMejoras { get; set; }
     }
 }

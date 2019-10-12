@@ -17,7 +17,7 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlantillaObjetivo()
         {
-            this.Objetivo = new HashSet<Objetivo>();
+            this.Objetivoes = new HashSet<Objetivo>();
         }
     
         public int codigo { get; set; }
@@ -26,7 +26,7 @@ namespace AppIntegrador.Models
         public string nombTipoObj { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivo { get; set; }
+        public virtual ICollection<Objetivo> Objetivoes { get; set; }
         public virtual TipoObjetivo TipoObjetivo { get; set; }
     }
 }

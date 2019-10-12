@@ -6,12 +6,12 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
 namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Pregunta
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,10 +21,8 @@ namespace AppIntegrador.Models
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
             this.Seccion_tiene_pregunta = new HashSet<Seccion_tiene_pregunta>();
         }
-
+    
         public string Codigo { get; set; }
-        // Historia MSU: Mensaje de error del enunciado en español
-        [Required(ErrorMessage = "Enunciado requerido")]
         public string Enunciado { get; set; }
     
         public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }

@@ -15,10 +15,10 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DataIntegradorEntities : DbContext
+    public partial class MosqueterosEntities : DbContext
     {
-        public DataIntegradorEntities()
-            : base("name=DataIntegradorEntities")
+        public MosqueterosEntities()
+            : base("name=MosqueterosEntities")
         {
         }
     
@@ -28,45 +28,44 @@ namespace AppIntegrador.Models
         }
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Accionable> Accionable { get; set; }
-        public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual DbSet<Accionable> Accionables { get; set; }
+        public virtual DbSet<AccionDeMejora> AccionDeMejoras { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
-        public virtual DbSet<Carrera> Carrera { get; set; }
-        public virtual DbSet<Curso> Curso { get; set; }
-        public virtual DbSet<Enfasis> Enfasis { get; set; }
-        public virtual DbSet<Escalar> Escalar { get; set; }
-        public virtual DbSet<Estudiante> Estudiante { get; set; }
-        public virtual DbSet<Formulario> Formulario { get; set; }
+        public virtual DbSet<Carrera> Carreras { get; set; }
+        public virtual DbSet<Curso> Cursoes { get; set; }
+        public virtual DbSet<Enfasi> Enfasis { get; set; }
+        public virtual DbSet<Escalar> Escalars { get; set; }
+        public virtual DbSet<Estudiante> Estudiantes { get; set; }
+        public virtual DbSet<Formulario> Formularios { get; set; }
         public virtual DbSet<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
-        public virtual DbSet<Funcionario> Funcionario { get; set; }
-        public virtual DbSet<Grupo> Grupo { get; set; }
-        public virtual DbSet<Objetivo> Objetivo { get; set; }
+        public virtual DbSet<Funcionario> Funcionarios { get; set; }
+        public virtual DbSet<Grupo> Grupoes { get; set; }
+        public virtual DbSet<Objetivo> Objetivoes { get; set; }
         public virtual DbSet<Opciones_de_seleccion> Opciones_de_seleccion { get; set; }
         public virtual DbSet<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
-        public virtual DbSet<Perfil> Perfil { get; set; }
-        public virtual DbSet<PerfilPermiso> PerfilPermiso { get; set; }
+        public virtual DbSet<Perfil> Perfils { get; set; }
+        public virtual DbSet<PerfilPermiso> PerfilPermisoes { get; set; }
         public virtual DbSet<Periodo_activa_por> Periodo_activa_por { get; set; }
-        public virtual DbSet<Permiso> Permiso { get; set; }
-        public virtual DbSet<Persona> Persona { get; set; }
-        public virtual DbSet<PlanDeMejora> PlanDeMejora { get; set; }
-        public virtual DbSet<PlantillaAccionDeMejora> PlantillaAccionDeMejora { get; set; }
-        public virtual DbSet<PlantillaObjetivo> PlantillaObjetivo { get; set; }
-        public virtual DbSet<Pregunta> Pregunta { get; set; }
+        public virtual DbSet<Permiso> Permisoes { get; set; }
+        public virtual DbSet<Persona> Personas { get; set; }
+        public virtual DbSet<PlanDeMejora> PlanDeMejoras { get; set; }
+        public virtual DbSet<PlantillaAccionDeMejora> PlantillaAccionDeMejoras { get; set; }
+        public virtual DbSet<PlantillaObjetivo> PlantillaObjetivoes { get; set; }
+        public virtual DbSet<Pregunta> Preguntas { get; set; }
         public virtual DbSet<Pregunta_con_opciones> Pregunta_con_opciones { get; set; }
         public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
         public virtual DbSet<Pregunta_con_respuesta_libre> Pregunta_con_respuesta_libre { get; set; }
-        public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Profesor> Profesors { get; set; }
         public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
         public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
-        public virtual DbSet<Seccion> Seccion { get; set; }
+        public virtual DbSet<Seccion> Seccions { get; set; }
         public virtual DbSet<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
         public virtual DbSet<Si_no_nr> Si_no_nr { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<TipoObjetivo> TipoObjetivo { get; set; }
-        public virtual DbSet<UnidadAcademica> UnidadAcademica { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<TipoObjetivo> TipoObjetivoes { get; set; }
+        public virtual DbSet<UnidadAcademica> UnidadAcademicas { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<UsuarioPerfil> UsuarioPerfils { get; set; }
     
         public virtual int AgregarOpcion(string cod, Nullable<byte> orden, string texto)
         {
@@ -284,109 +283,6 @@ namespace AppIntegrador.Models
                 new ObjectParameter("CodForm", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
-        }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

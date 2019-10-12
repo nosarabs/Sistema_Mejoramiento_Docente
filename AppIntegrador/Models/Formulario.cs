@@ -20,8 +20,7 @@ namespace AppIntegrador.Models
             this.Activa_por = new HashSet<Activa_por>();
             this.Formulario_tiene_seccion = new HashSet<Formulario_tiene_seccion>();
             this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
-            this.PlanDeMejora = new HashSet<PlanDeMejora>();
-            this.PlanDeMejora1 = new HashSet<PlanDeMejora>();
+            this.PlanDeMejoras = new HashSet<PlanDeMejora>();
         }
     
         public string Codigo { get; set; }
@@ -34,8 +33,6 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanDeMejora> PlanDeMejora1 { get; set; }
+        public virtual ICollection<PlanDeMejora> PlanDeMejoras { get; set; }
     }
 }

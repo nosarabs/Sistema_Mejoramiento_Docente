@@ -17,15 +17,15 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Perfil()
         {
-            this.PerfilPermiso = new HashSet<PerfilPermiso>();
-            this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
+            this.PerfilPermisoes = new HashSet<PerfilPermiso>();
+            this.UsuarioPerfils = new HashSet<UsuarioPerfil>();
         }
     
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PerfilPermiso> PerfilPermiso { get; set; }
+        public virtual ICollection<PerfilPermiso> PerfilPermisoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual ICollection<UsuarioPerfil> UsuarioPerfils { get; set; }
     }
 }

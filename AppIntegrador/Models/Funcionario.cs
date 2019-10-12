@@ -17,9 +17,9 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Funcionario()
         {
-            this.PlanDeMejora = new HashSet<PlanDeMejora>();
-            this.Accionable = new HashSet<Accionable>();
-            this.UnidadAcademica = new HashSet<UnidadAcademica>();
+            this.PlanDeMejoras = new HashSet<PlanDeMejora>();
+            this.Accionables = new HashSet<Accionable>();
+            this.UnidadAcademicas = new HashSet<UnidadAcademica>();
         }
     
         public string Correo { get; set; }
@@ -27,10 +27,10 @@ namespace AppIntegrador.Models
         public virtual Persona Persona { get; set; }
         public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
+        public virtual ICollection<PlanDeMejora> PlanDeMejoras { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Accionable> Accionable { get; set; }
+        public virtual ICollection<Accionable> Accionables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
+        public virtual ICollection<UnidadAcademica> UnidadAcademicas { get; set; }
     }
 }

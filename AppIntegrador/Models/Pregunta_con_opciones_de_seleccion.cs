@@ -11,8 +11,7 @@ namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Pregunta_con_opciones_de_seleccion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +20,6 @@ namespace AppIntegrador.Models
             this.Opciones_de_seleccion = new HashSet<Opciones_de_seleccion>();
         }
     
-        // Historia MSU: Mensaje de error del código en español
-        [Required(ErrorMessage = "Código requerido")]
         public string Codigo { get; set; }
         public string Tipo { get; set; }
     
