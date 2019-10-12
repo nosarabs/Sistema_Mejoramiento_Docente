@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AppIntegrador.Models
 {
-    public partial class LlenarPreguntaConOpciones
+    public partial class PreguntaConOpciones
     {
         public string Enunciado { get; set; }
         public IEnumerable<string> Opciones { get; set; }

@@ -8,6 +8,6 @@ namespace AppIntegrador.Models
     public partial class SeccionConPreguntas
     {
         public string Nombre { get; set; }
-        public IEnumerable<TodasLasPreguntas> Preguntas { get; set; }
+        public TodasLasPreguntas Preguntas { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@model AppIntegrador.Models.TodasLasPreguntas
 
 
-@Html.Partial("LlenarPreguntaConOpciones", Model.PreguntasConOpciones);
+@{Html.RenderPartial("PreguntaConOpciones", Model.PreguntasConOpciones);}
 <!--Luego vienen otros partials para los demás tipos de pregunta-->

@@ -15,32 +15,84 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        //public ActionResult LlenarPreguntaConOpciones(string nombreSecc)
-        //{
-        //    LlenarPreguntaConOpciones pregunta = new LlenarPreguntaConOpciones
-        //    {
-        //        Seccion = nombreSecc,
-        //        Preguntas = null
-        //    };
+        private class SeccionYCodigo
+        {
+            // It is important to declare them public so they get returned
+            public string Codigo { get; set; }
+            public string Nombre { get; set; }
+        }
+        private class Opcion
+        {
+            public string Texto { get; set; }
+            public int Orden { get; set; }
+        }
 
-        //    return View(pregunta);
-        //}
         public ActionResult LlenarFormulario(string id)
         {
-            Formulario formulario = db.Formulario.Find(id);
-            if (formulario == null)
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
             {
                 return HttpNotFound();
             }
 
-            LlenarFormulario formulario1 = new LlenarFormulario
+            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
+
+            // Sacar el nombre de cada formulario y el código en el orden definido.
+            SqlParameter codForm = new SqlParameter("CodForm", id);
+            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
+
+            // Agrego cada seccion a la lista de secciones
+            foreach (var seccion in nombresSecciones)
             {
-                Nombre = formulario.Nombre,
-                Secciones = null
+                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
+
+                // Obtiene los códigos de todas las preguntas relacionadas a la sección
+                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
+                // Lista con cada tipo de pregunta
+                TodasLasPreguntas todasLasPreguntas = new TodasLasPreguntas();
+                // Lista que contiene cada pregunta con sus opciones
+                List<PreguntaConOpciones> preguntasConOpciones = new List<PreguntaConOpciones>();
+
+                // Agrego cada pregunta a la lista de preguntas
+                foreach (string codigo in Codigos)
+                {
+                    PreguntaConOpciones pregunta = new PreguntaConOpciones();
+
+                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
+                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
+
+                    // Obtiene el enunciado de una pregunta
+                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
+
+                    // Obtiene las opciones de una pregunta
+                    List<Opcion> opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
+                    pregunta.Opciones = opciones.Select(Opcion => Opcion.Texto);
+
+                    // Añade la pregunta con sus opciones a la lista
+                    preguntasConOpciones.Add(pregunta);
+                }
+
+                todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
+
+                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
+                {
+                    Nombre = seccion.Nombre,
+                    Preguntas = todasLasPreguntas
+                };
+
+                secciones.Add(seccionCompleta);
+            } // Foreach section in nombresSecciones
+
+            LlenarFormulario formularioCompleto = new LlenarFormulario
+            {
+                Nombre = formularioDB.Nombre,
+                Secciones = secciones
             };
 
-            return View(formulario1);
+            return View(formularioCompleto);
         }
+
+
         // GET: Formularios
         public ActionResult Index()
         {
@@ -167,79 +219,6 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        private class SeccionYCodigo
-        {
-            // It is important to declare them public so they get returned
-            public string Codigo { get; set; }
-            public string Nombre { get; set; }
-        }
 
-        private class Opcion
-        { 
-            public string Texto { get; set; }
-            public int Orden { get; set; }
-        }
-
-        private class PreguntaConEnunciadoYOpciones
-        {
-            public string Enunciado { get; set; }
-            public List<Opcion> Opciones { get; set; }
-        }
-       
-        private class SeccionConPreguntas
-        {
-            public string NombreSeccion { get; set; }
-            public List<PreguntaConEnunciadoYOpciones> Preguntas { get; set; }
-        }
-
-        [HttpGet]
-        public JsonResult GetFormContent(string formID)
-        {
-            // Lista con todas las secciones del formulario
-            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
-
-            // Sacar el nombre de cada formulario y el código en el orden definido.
-            SqlParameter codForm = new SqlParameter("CodForm", formID);
-            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
-
-            // Agrego cada seccion a la lista de secciones
-            foreach (var seccion in nombresSecciones)
-            {
-                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
-
-                // Obtiene los códigos de todas las preguntas relacionadas a la sección
-                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
-                // Lista que contiene cada pregunta con sus opciones
-                List<PreguntaConEnunciadoYOpciones> preguntasConOpciones = new List<PreguntaConEnunciadoYOpciones>();
-
-                // Agrego cada pregunta a la lista de preguntas
-                foreach (string codigo in Codigos)
-                {
-                    PreguntaConEnunciadoYOpciones pregunta = new PreguntaConEnunciadoYOpciones();
-
-                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
-                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
-
-                    // Obtiene el enunciado de una pregunta
-                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
-
-                    // Obtiene las opciones de una pregunta
-                    pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
-
-                    // Añade la pregunta con sus opciones a la lista
-                    preguntasConOpciones.Add(pregunta);
-                }
-
-                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
-                {
-                    NombreSeccion = seccion.Nombre,
-                    Preguntas = preguntasConOpciones
-                };
-
-                secciones.Add(seccionCompleta);
-            } // Foreach section in nombresSecciones
-
-            return Json(secciones.ToList(), JsonRequestBehavior.AllowGet);
-        }
     }
 }

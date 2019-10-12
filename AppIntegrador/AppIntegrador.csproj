@@ -202,7 +202,7 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\LlenarPreguntaConOpciones.cs" />
+    <Compile Include="Models\PreguntaConOpciones.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -388,7 +388,7 @@
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Formularios\LlenarPreguntaConOpciones.cshtml" />
+    <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
     <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
   </ItemGroup>

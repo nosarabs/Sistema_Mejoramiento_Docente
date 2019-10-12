@@ -7,7 +7,7 @@
 <h2 id="encabezado" class="text-center">Llenar formulario "@Html.DisplayFor(model => model.Nombre)"</h2>
 
 <div id="section-container">
-
+   @{ Html.RenderPartial("SeccionConPreguntas", Model.Secciones); }
 </div>
 
 <style>
@@ -18,77 +18,5 @@
 </style>
 
 @section Scripts{
-    <script>
-        //var formID = ''.trim();
-
-        $(document).ready(function () {
-            //getData(formID);
-
-        })
-
-        function getData(formID) {
-            $.ajax({
-                url: '@Url.Action("ObtenerSecciones")',
-                data: { formID: idForm },
-                success: function (data) {
-                    console.log(data);
-                }
-            });
-        }
-
-        function getData2(sectID) {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetFormContent")',
-                dataType: 'json',
-                data: { formID: sectID },
-                success: function (data) {
-                    imprimirDatos(data);
-                    appendSections(data);
-                }
-            });
-        }
-
-        @*function appendSections(data) {
-            for (var section = 0; section < data.length; ++section) {
-                $.ajax({
-                    url: '@Url.Action("LlenarPreguntaConOpciones")',
-                    data: { nombreSecc: data[section].NombreSeccion },
-                    success: function (data) {
-                        console.log(data);
-                        $(data).appendTo("#section-container");
-                    }
-                });
-            }
-        }*@
-
-        function imprimirDatos(data) {
-            // console.log(data)
-            for (var section = 0; section < data.length; ++section) {
-                console.log("Sección: " + data[section].NombreSeccion);
-                // Variable to simplify data access
-                var sectionAux = data[section];
-
-                for (var question = 0; question < sectionAux.Preguntas.length; ++question) {
-                    console.log("    Pregunta: " + sectionAux.Preguntas[question].Enunciado);
-                    // Variable to simplify data access (again)
-                    var questionAux = sectionAux.Preguntas[question];
-
-                    for (var option = 0; option < questionAux.Opciones.length; ++option) {
-                        console.log("        Opción: " + questionAux.Opciones[option].Texto);
-                    }
-                }
-            }
-        }
-
-        function generatePanel(header, questions) {
-            var header = "<div class='panel panel-primary '><div class='panel-heading'>" + header + "</div>";
-            var body = "<div class='panel-body'>";
-            for (var question = 0; question < questions.length; ++question) {
-                body = body + questions[question] + "<input type='text' class='form-control text-box single-line'></input>" + "</br>";
-            }
-
-            return header + body + "</div></div>";
-        }
-    </script>
+    <script></script>
 }

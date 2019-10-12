@@ -7,7 +7,7 @@ namespace AppIntegrador.Models
 {
     public class TodasLasPreguntas
     {
-        public IEnumerable<LlenarPreguntaConOpciones> PreguntasConOpciones { get; set; }
+        public IEnumerable<PreguntaConOpciones> PreguntasConOpciones { get; set; }
         // Luego van más atributos aquí con los otros modelos de las preguntas
     }
 }

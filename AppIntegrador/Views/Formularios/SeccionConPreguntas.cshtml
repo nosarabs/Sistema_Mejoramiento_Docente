@@ -1,14 +1,18 @@
-﻿@model AppIntegrador.Models.SeccionConPreguntas
+﻿@model IEnumerable<AppIntegrador.Models.SeccionConPreguntas>
 
 @{
     Layout = null;
 }
 
-<div class="panel panel-primary">
-    <div class='panel-heading'>
-        @Html.DisplayFor(model => model.Nombre)
+@foreach (var item in Model)
+{
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            @Html.DisplayFor(model => item.Nombre)
+        </div>
+        <div class='panel-body'>
+            @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
+        </div>
     </div>
-    <div class='panel-body'>
-        @Html.Partial("TodasLasPreguntas", Model.Preguntas)
-    </div>
-</div>
+}
+
