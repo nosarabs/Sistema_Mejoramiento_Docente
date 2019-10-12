@@ -13,16 +13,21 @@ namespace AppIntegrador.Controllers
 {
     public class FormulariosController : Controller
     {
+        
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        public CrearFormularioModel crearFormulario = new CrearFormularioModel();
+
 
         // GET: Formularios
         public ActionResult Index()
         {
+            crearFormulario.seccion = db.Seccion;
             return View(db.Formulario.ToList());
         }
 
         public ActionResult LlenarFormulario(string id)
         {
+            crearFormulario.seccion = db.Seccion;
             Formulario formulario = db.Formulario.Find(id);
 
             if (formulario == null)
@@ -36,6 +41,7 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
         {
+            crearFormulario.seccion = db.Seccion;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -51,8 +57,7 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
-            var crearFormulario = new CrearFormularioModel();
-            crearFormulario.seccion = db.Seccion.ToList();
+            crearFormulario.seccion = db.Seccion;
             return View(crearFormulario);
         }
 
@@ -60,9 +65,10 @@ namespace AppIntegrador.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario)
         {
+            crearFormulario.seccion = db.Seccion;
             try
             {
 
@@ -78,16 +84,17 @@ namespace AppIntegrador.Controllers
                 if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
                 {
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(formulario);
+                    return View(crearFormulario);
                 }
             }
 
-            return View();
+            return View(crearFormulario);
         }
 
         // GET: Formularios/Edit/5
         public ActionResult Edit(string id)
         {
+            crearFormulario.seccion = db.Seccion;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -107,6 +114,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Formulario formulario)
         {
+            crearFormulario.seccion = db.Seccion;
             if (ModelState.IsValid)
             {
                 db.Entry(formulario).State = EntityState.Modified;
@@ -119,6 +127,7 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
         {
+            crearFormulario.seccion = db.Seccion;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -136,6 +145,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            crearFormulario.seccion = db.Seccion;
             Formulario formulario = db.Formulario.Find(id);
             db.Formulario.Remove(formulario);
             db.SaveChanges();
@@ -144,10 +154,12 @@ namespace AppIntegrador.Controllers
 
         protected override void Dispose(bool disposing)
         {
+            crearFormulario.seccion = db.Seccion;
             if (disposing)
             {
                 db.Dispose();
             }
+            crearFormulario.seccion = db.Seccion;
             base.Dispose(disposing);
         }
 
