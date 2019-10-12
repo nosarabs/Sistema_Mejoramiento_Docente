@@ -2,30 +2,28 @@
 @{
     int i = ViewBag.i == null ? 0 : ViewBag.i;
 }
-<div class="form-group">
+<div class="sortable-container vertical">
     @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(opcion => opcion.Texto, null, new { @Name = "[" + i + "].Texto", @maxlength = "50" })
-        @Html.TextBoxFor(opcion => opcion.Orden, null, new { @Name = "[" + i + "].Orden", @class = "orden", @Value = i })
-        <button type="button" id="rem@(i)" onclick="func('rem@(i)')">Borrar</button>
-            <br />
-            @Html.ValidationMessageFor(opcion => opcion.Texto, "50 caracteres máximo")
+    <div class="col-xs-6">
+        @Html.TextBoxFor(opcion => opcion.Texto, null, new
+        {
+            @Name = "[" + i + "].Texto",
+            @class = "texto form-control col-xs-6",
+            @maxlength = "50",
+            @onkeyup = "charCount(this)"
+        })
+        <div class="counter small pull-right">0/50 caracteres usados</div>
+    </div>
+
+    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">Borrar</button>
+    
+    <div style="display: none">
+        @Html.TextBoxFor(opcion => opcion.Orden, null, new
+        {
+            @Name = "[" + i + "].Orden",
+            @class = "orden",
+            @Value = i
+        })
+    </div>
 </div>
-</div>
-
-<style>
-    .orden{
-        display: none;
-    }
-</style>
-
-
-    <script>
-    function func(id) {
-        console.log(id);
-        var node = document.getElementById(id);
-        node.parentNode.parentNode.remove();
-    }
-    </script>
- 
 

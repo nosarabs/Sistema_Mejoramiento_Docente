@@ -11,40 +11,30 @@ namespace AppIntegrador.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PlanDeMejora
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanDeMejora()
         {
-            this.Objetivo = new HashSet<Objetivo>();
+            this.Funcionario = new HashSet<Funcionario>();
+            this.Formulario = new HashSet<Formulario>();
+            this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
+            this.Profesor = new HashSet<Profesor>();
         }
     
-        [Display(Name = "Cédula del profesor")]
-        [MaxLength(10)]
-        public string CedProf { get; set; }
-        [Display(Name = "Código del plan")]
-        public int Codigo { get; set; }
-        [Display(Name = "Nombre")]
-        [DataType(DataType.Text)]
-        public string Nombre { get; set; }
-        [Display(Name = "Inicio")]
-        [DataType(DataType.Date)]
-        public Nullable<System.DateTime> FechaInicio { get; set; }
-        [Display(Name = "Finalización")]
-        [DataType(DataType.Date)]
-        public Nullable<System.DateTime> FechaFin { get; set; }
-        [Display(Name = "Código")]
-        public string CodigoF { get; set; }
-        [Display(Name = "Cédula Profesor")]
-        public string CedProfAsig { get; set; }
+        public int codigo { get; set; }
+        public string nombre { get; set; }
+        public Nullable<System.DateTime> fechaInicio { get; set; }
+        public Nullable<System.DateTime> fechaFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivo { get; set; }
-        [Display(Name = "Cédula Profesor")]
-        public virtual Profesor Profesor { get; set; }
-        [Display(Name = "Cédula Profesor1")]
-        public virtual Profesor Profesor1 { get; set; }
+        public virtual ICollection<Funcionario> Funcionario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Formulario> Formulario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Profesor> Profesor { get; set; }
     }
 }

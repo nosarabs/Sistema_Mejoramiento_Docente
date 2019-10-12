@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <title>ProyectoIntegrador</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
+    @if (ViewBag.HTMLCheck != true)
+    {
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    }
+    </head>
 <body>
     @if (ViewBag.HTMLCheck != true)
     {
@@ -19,7 +22,21 @@
             </div>
             <div class="item">
                 <ul>
-                    <li style="float:right"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                    <li style="float:left"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                </ul>
+            </div>
+            <div class="item">
+                <ul class="wrapper">
+                    
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
+                            <div class="dropdown-content">
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -36,9 +53,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">Usuarios</button>
                             <div class="dropdown-content">
-                                <a href="#link1">Link 1</a>
-                                <a href="#link2">Link 2</a>
-                                <a href="#link3">Link 3</a>
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Administración de usuarios", "Index", "Home")
                             </div>
                         </div>
                     </li>
@@ -46,7 +62,9 @@
                         <div class="dropdown">
                             <button class="dropbtn">Formularios</button>
                             <div class="dropdown-content">
+                                @Html.ActionLink("Crear Formulario", "Create", "Formularios")
                                 @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
+                                @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
                             </div>
                         </div>
                     </li>
@@ -56,6 +74,7 @@
                             <div class="dropdown-content">
                                 @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanDeMejora")
                                 @Html.ActionLink("Acciones de mejora", "Index", "AccionDeMejora")
+                                @Html.ActionLink("Objetivos", "Index", "Objetivos")
                             </div>
                         </div>
                     </li>
@@ -63,9 +82,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                <a href="#link1">Link 1</a>
-                                <a href="#link2">Link 2</a>
-                                <a href="#link3">Link 3</a>
+                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
                     </li>
@@ -75,9 +92,11 @@
         </div>
     }
     @RenderBody()
-
+    @if (ViewBag.HTMLCheck != true)
+    {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>

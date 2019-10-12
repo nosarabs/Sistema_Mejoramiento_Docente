@@ -3,121 +3,239 @@
 @{
     ViewBag.Title = "Create";
 }
+<div class="container">
+    <h2>Crear pregunta</h2>
+    
 
-<h2>Crear pregunta</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new {
+                       @class = "form-control",
+                       @maxlength = "8",
+                       required = "required",
+                       @onkeyup = "charCount(this)"
+                    }})
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+                    <div class="counter small pull-right">0/8 caracteres usados</div>
+                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
+                </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
+                    {
+                        @class = "form-control long-textbox",
+                        @style = "width: 100%;max-width: 100%",
+                        @maxlength = "250",
+                        required = "required",
+                        data_val = "true",
+                        data_val_length_max = "250",
+                        @onkeyup = "charCount(this)"
+                    })
+
+                    <div class="counter small pull-right">0/250 caracteres usados</div>
+                    @*Historia MSU: que el mensaje de error salga en rojo*@
+
+                    @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
+                </div>
+             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
-                {
-                    htmlAttributes = new { @class = "form-control long-textbox", @style = "width: 100%;max-width: 100%", @maxlength = "250", required = "required", data_val = "true", data_val_length_max = "250" }
-                 }
-               )
-                @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "Cantidad máxima de carácteres es 250", new { @class = "text-danger" })
-            </div>
-        </div>
-
-    </div>
+<div class="form-horizontal">
+    <label for="chkPassport" class="col-md-offset-2 col-md-10">
+        <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
+        Incluir campo de justificación.
+    </label>
+    <p></p>
     <div class="form-horizontal">
-        <label for="chkPassport">
-            <input type="checkbox" id="chkPassport" onclick="EnableDisableTextBox(this)" />
-            Incluir campo de justificación.       
-        </label>
-        <p></p>
-        <div class="form-group">
+        <div class="form-group" id="justificationField">
             @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", disabled = "disabled", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
+                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
             </div>
         </div>
-
-        <div id="sortable">
-            <div id="placeholder"></div>
-        </div>
-        
-        <input type="button" value="Agregar nueva opción" id="Add" />
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Cancelar", "Create")
-            </div>
-        </div>
-
     </div>
-}
+    <br />
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+    <div id="sortable">
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default " value="Agregar nueva opción" id="Add" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" id="Create" />
+            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default"})
+        </div>
+    </div>
+
+</div>
+}
 </div>
 
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+<style>
+    .orden {
+        display: none;
+    }
+
+    .sortable-container:hover {
+        background-color: lightgrey;
+        cursor: grab;
+    }
+
+    .sortable-container:active {
+        background-color: #c4c4c4;
+        cursor: grabbing;
+    }
+</style>
+
 @section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+
     @Scripts.Render("~/bundles/jqueryval")
+   
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
+    <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
     <script>
+        function disableRemoveButton() {
+            var nodes = document.getElementsByClassName("remove-button btn btn-danger");
+            console.log(nodes.length);
+            var disable = nodes.length <= 1;
+
+            Array.prototype.forEach.call(nodes, function (node) {
+                node.disabled = disable;
+            });
+        }
+
+        // Set index starting from 0 for each option
+        function fixIndexes() {
+            var i = 0;
+            // Fix order value and name
+            $(".orden").each(function () {
+                $(this).val(i);
+                this.name = "[" + i + "].Orden";
+                ++i;
+            });
+
+            // Fix text name
+            i = 0;
+            $(".texto").each(function () {
+                this.name = "[" + i + "].Texto";
+                ++i;
+            });
+
+            return i;
+        }
+
+        // Make options inside sortable id sortable
         $("#sortable").sortable({
             axis: "y",
-            update: function (event, ui) {
-                var i = 0;
-                $(".orden").each(function () {
-                    console.log(i);
-                      $(this).val(i);
-                      ++i;
-                  });
+            // Fix indexes of each input box when an input box is moved
+            update: function () {
+                fixIndexes();
+            },
+        });
 
-                console.log(pos);
-            }
-        })
         $("#sortable").disableSelection();
-    </script>
 
-    <script type="text/javascript">
-        function EnableDisableTextBox(chkPassport) {
-            var txtPassportNumber = document.getElementById("txtJustificationNumber");
-            txtJustificationNumber.disabled = chkPassport.checked ? false : true;
-            if (!txtJustificationNumber.disabled) {
-                txtJustificationNumber.focus();
+        // When a new option is added, fix the index (not very efficient)
+        $("#Add").click(function () {
+            var i = fixIndexes();
+            $.ajax({
+                url: 'OpcionesDeSeleccion',
+                data: { i: i },
+                success: function (data) {
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
+                    disableRemoveButton();
+                }
+            })
+
+        });
+
+        $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
+            $("#Add").trigger('click');
+        });
+
+
+        // Delete option input box(es)
+        function removeOption(deleteNode) {
+            // Get the parent div that contains all the option modules (text, inputbox, and button)
+            var target = deleteNode.parentNode;
+
+            $(target).animate({ 'height': 0, 'opacity': 0 }, 200, function () {
+                // Remove div from DOM
+                $(this).remove();
+                // Fix indexes when an input box is deleted
+                fixIndexes();
+                // Check if the first button needs to be disabled
+                disableRemoveButton();
+            })
+
+        }
+
+        // Hide the text input box in default
+        $('#justificationField').css('display', 'none');
+        function myFunction() {
+            if ($('#showField').prop('checked')) {
+                $('#justificationField').css('display', 'block');
+            } else {
+                $('#justificationField').css('display', 'none');
             }
         }
     </script>
 
     <script>
-        var i = 0;
-        $("#Add").click(function () {
-            $.ajax({
-                url: 'OpcionesDeSeleccion',
-                data: { i: i },
-                success: function (data) {
-                    $("#sortable").append(data);
-                }
-            })
-            i++;
+        function pregunta() {
+            swal({
+                title: "Pregunta creada con éxito!",
+                text: "Puede ser vista en el banco de preguntas",
+                type: "success",
+                timer: 1000,
+                showConfirmButton: false
+            },
+                function () {
+                    window.location.href = "Create";
+                });
+        }
+    </script>
 
-            var j = 0
-           $(".orden").each(function () {
-              $(this).val(j);
-              ++j;
-           });
-        })
+
+    <script type="text/javascript">
+        function EnableDisableTextBox(justificationField) {
+            var txtPassportNumber = document.getElementById("txtJustificationNumber");
+            txtJustificationNumber.disabled = justificationField.checked ? false : true;
+            if (!txtJustificationNumber.disabled) {
+                txtJustificationNumber.focus();
+            }
+        }
     </script>
 }

@@ -1,17 +1,15 @@
 ﻿CREATE TABLE [dbo].[Accionable]
 (
-	[Codigo] INT NOT NULL 
-		constraint PK_Accionable
-			PRIMARY KEY, 
-    [Descripcion] VARCHAR(500) NULL,
-	Progreso real
-		constraint ProgresoValue
-			check(Progreso <= 100),
-	FechaInicio date,
-	FechaFin date
-		constraint DateOrderAC
-			check(FechaFin > FechaInicio),
-	CodigoAM int NOT NULL
-		constraint FK_AccionMejCod
-			references AccionDeMejora(Codigo)
+	codPlan int not null,
+	nombreObj varchar(50) not null,
+	descripAcMej varchar(250) not null,
+	descripcion varchar(250) not null,
+	fechaInicio date,
+	fechaFin date,
+	progreso int,
+
+	constraint DateOrderAcci check(fechaFin >= fechaInicio),
+	constraint PK_Accionable primary key(codPlan, nombreObj, descripAcMej, descripcion),
+	constraint FK_Accionable_AccionDeMejora foreign key(codPlan, nombreObj, descripAcMej)
+		references AccionDeMejora(codPlan, nombreObj, descripcion)
 )

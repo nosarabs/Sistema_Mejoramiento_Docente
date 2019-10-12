@@ -1,14 +1,16 @@
-﻿CREATE TABLE [dbo].[AccionDeMejora]
+﻿-- Mosqueteros --
+
+CREATE TABLE [dbo].[AccionDeMejora]
 (
-	[Codigo] INT NOT NULL 
-		constraint PK_AccionDeMejora
-			PRIMARY KEY, 
-    [Descripcion] VARCHAR(500) NULL,
-	FechaInicio date,
-	FechaFin date
-		constraint DateOrderAM
-			check(FechaFin > FechaInicio),
-	CodigoObj int NOT NULL
-		constraint FK_PlanDeMejoraCod
-			references Objetivo(Codigo)
+	codPlan int not null,
+	nombreObj varchar(50) not null,
+	descripcion varchar(250) not null,
+	fechaInicio date,
+	fechaFin date,
+	codPlantilla int,
+
+	constraint DateOrderAM check(fechaFin >= fechaInicio),
+	constraint PK_AccionDeMejora primary key(codPlan, nombreObj, descripcion),
+	constraint FK_AccionDeMejora_Objetivo foreign key(codPlan, nombreObj) references Objetivo(codPlan, nombre),
+	constraint FK_AccionDeMejora_PlantillaAccMej foreign key(codPlantilla) references PlantillaAccionDeMejora(codigo)
 )

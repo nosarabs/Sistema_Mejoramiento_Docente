@@ -19,14 +19,60 @@
         </ul>
 
     </div>
-    <div class="contentPanel">
-        <div class="wrapperPlanesDeMejora">
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor1.Correo)
+            </th>
+            <th></th>
+        </tr>
 
-            <!-- Seccion de listado de los planes de mejora -->
-            @if (ViewBag.pantalla == 1)
-            {
-                <div class="listadoPlanesDeMejora">
-                    <div class="indexPlanesDeMejora">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor.Correo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor1.Correo)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new {  id = item.Codigo, cedula = item.CorreoProf  }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Codigo, cedula = item.CorreoProf }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo, cedula = item.CorreoProf })
+                </td>
+            </tr>
+        }
 
                         @if (Model.Count() == 0)
                         {

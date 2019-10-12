@@ -56,8 +56,8 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+            //@TODO: 
+            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
             return View(accionDeMejora);
         }
 
@@ -73,7 +73,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
             return View(accionDeMejora);
         }
 
@@ -90,7 +90,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
             return View(accionDeMejora);
         }
 
