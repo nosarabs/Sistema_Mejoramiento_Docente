@@ -133,7 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-	<Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\EmailNotification.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
@@ -157,6 +157,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -287,8 +288,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
-	<Content Include="Content\Visualizacion\styles.css" />
-	<Content Include="Content\login.css" />
+    <Content Include="Content\Visualizacion\styles.css" />
+    <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
