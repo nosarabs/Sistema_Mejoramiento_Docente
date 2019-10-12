@@ -140,7 +140,7 @@
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
-    <Compile Include="Controllers\Pregunta_con_opciones_de_seleccionController.cs" />
+    <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\SeccionesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +158,8 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
