@@ -4,8 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <title>ProyectoIntegrador</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @if (ViewBag.HTMLCheck != true)
+    {
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    }
 </head>
 <body>
     @if (ViewBag.HTMLCheck != true)
@@ -15,7 +18,7 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
+                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
             </div>
             <div class="item">
                 <ul>
@@ -24,7 +27,7 @@
             </div>
             <div class="item">
                 <ul class="wrapper">
-                    
+
                     <li>
                         <div class="dropdown">
                             <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
@@ -81,7 +84,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">Visualización</button>
                             <div class="dropdown-content">
-                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
+                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001", siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
                     </li>
@@ -91,9 +94,11 @@
         </div>
     }
     @RenderBody()
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @if (ViewBag.HTMLCheck != true)
+    {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>
