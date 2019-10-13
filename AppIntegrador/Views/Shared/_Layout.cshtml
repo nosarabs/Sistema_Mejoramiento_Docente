@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
-    <title>ProyectoIntegrador</title>
+    <title>Sistema de Mejoramiento Docente</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -18,16 +18,10 @@
                 @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
             </div>
             <div class="item">
-                <ul>
-                    <li style="float:left"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
-                </ul>
-            </div>
-            <div class="item">
                 <ul class="wrapper">
-                    
                     <li>
                         <div class="dropdown">
-                            <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
+                            <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
@@ -84,6 +78,15 @@
                                 @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001",  siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
                             </div>
                         </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">Acerca de</button>
+                            <div class="dropdown-content">
+                                @Html.ActionLink("Acerca del proyecto", "About", "Home")
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
                 <br />

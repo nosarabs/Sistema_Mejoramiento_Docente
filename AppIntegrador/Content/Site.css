@@ -69,13 +69,25 @@ nav {
 
 /* Now in order to make a dropdown button */
 .dropbtn {
-    background-color: none;
-    color: black;
+    background-color: none; 
+    /*background-color: #209fe3;*/
     padding: 20px;
     border: 0em;
     width: 100%;
     font-weight: bold;
 }
+
+.dropbtn_alt {
+    background-color: #209fe3;
+    padding: 20px;
+    border: 0em;
+    width: 100%;
+    font-weight: bold;
+}
+
+    .dropbtn_alt:hover {
+        background-color: #1989c5
+    }
 
 .dropdown {
     position: relative;
