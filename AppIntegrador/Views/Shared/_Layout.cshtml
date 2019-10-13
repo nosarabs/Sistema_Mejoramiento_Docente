@@ -15,7 +15,7 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                <h1>Sistema de Mejoramiento Docente</h1>
+                <h2>Sistema de Mejoramiento Docente</h2>
             </div>
             <div class="item">
                 <ul class="wrapper">
@@ -97,7 +97,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001", siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
+                            <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019" ,>Formulario</a></li>
 
                         </ul>
                     </li>
@@ -116,7 +116,7 @@
                 <!--Menu End Here-->
                 <!--Right Aligned Menu Start-->
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Login</a></li>
+                    @*<li><a href="#">Login</a></li>*@
                 </ul>
                 <!--Right Aligned Menu End-->
 </div>
