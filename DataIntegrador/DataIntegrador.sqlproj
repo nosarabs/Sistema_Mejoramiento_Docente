@@ -126,6 +126,8 @@
     <Build Include="PlantillaAccionDeMejora.sql" />
     <Build Include="CreadoPor.sql" />
     <Build Include="Origina.sql" />
+    <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
