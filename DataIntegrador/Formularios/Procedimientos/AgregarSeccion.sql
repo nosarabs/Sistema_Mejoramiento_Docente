@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarSeccion]
-	@cod varchar(8),
-	@nombre varchar(250)
+	@codigo char(8),
+	@nombre nvarchar(250)
 AS
 BEGIN
-	INSERT INTO Seccion([Codigo],[Nombre])
-	VALUES (@cod, @nombre);
+	INSERT INTO Seccion(Codigo,Nombre)
+	VALUES (@codigo, @nombre);
 END
 

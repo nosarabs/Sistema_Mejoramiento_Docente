@@ -205,6 +205,9 @@
     <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PreguntaConOpciones.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>

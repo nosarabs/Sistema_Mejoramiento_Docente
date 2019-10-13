@@ -128,7 +128,6 @@
     <Build Include="Origina.sql" />
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
-    <Build Include="Formularios\Procedimientos\AgregarSección.sql" />
     <Build Include="Formularios\Procedimientos\AsociarPreguntaConSeccion.sql" />
   </ItemGroup>
   <ItemGroup>
