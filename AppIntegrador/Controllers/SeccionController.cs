@@ -13,6 +13,7 @@ namespace AppIntegrador.Controllers
     public class SeccionController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
         // GET: Seccion
         public ActionResult Index(string inp1, string inp2)
@@ -55,22 +56,10 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Seccion/Create
-        public ActionResult Create(string option, string search)
+        public ActionResult Create()
         {
-            var crearSeccion = new CrearSeccionModel();
-            if (option == "Tipo" && search.Length > 0)
-            {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList();
-                return View(crearSeccion);
-            }
-            else if (option == "Codigo" && search.Length > 0)
-            {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList();
-                return View(crearSeccion);
-            }
-            else
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
-                return View(crearSeccion);
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            return View(crearSeccion);
         }
 
         // POST: Seccion/Create

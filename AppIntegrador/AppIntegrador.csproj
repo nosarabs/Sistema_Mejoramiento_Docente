@@ -338,6 +338,7 @@
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
+    <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\CharacterCounter.js" />
     <Content Include="Scripts\custom\login.js" />
@@ -420,6 +421,7 @@
     <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
     <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
     <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
