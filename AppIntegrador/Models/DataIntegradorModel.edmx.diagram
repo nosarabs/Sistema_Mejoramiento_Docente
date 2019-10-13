@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2815fb0cd00e407ba9762835adca4f40" Name="Diagram1">
+      <Diagram DiagramId="778d2eaa6747417d9c7ce2f7f3dd2d16" Name="Diagram1">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="1.5" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="1.5" PointY="35.125" IsExpanded="true" />
@@ -40,7 +40,6 @@
         <EntityTypeShape EntityType="DataIntegradorModel.Seccion" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Seccion_tiene_pregunta" Width="1.5" PointX="10.5" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Si_no_nr" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.TipoObjetivo" Width="1.5" PointX="1.5" PointY="46.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.UnidadAcademica" Width="1.5" PointX="1.5" PointY="52.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="1.5" PointY="29.875" IsExpanded="true" />
@@ -51,26 +50,26 @@
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorGrupo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkPeriodoActivaPor" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Enfasis__CodCarr__76C185B7" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Grupo__SiglaCurs__7E62A77F" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__0CB0C6D6" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__267098D9" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Enfasis__CodCarr__0F624AF8" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Grupo__SiglaCurs__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__3F115E1A" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkEscalarCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Estudiant__Corre__78A9CE29" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Estudiant__Corre__114A936A" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkFormularioTieneSeccionCodigoFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkFormularioTieneSeccionCodigoSeccion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Funcionar__Corre__7D6E8346" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Profesor__Correo__15460CD7" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Funcionar__Corre__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Profesor__Correo__2DE6D218" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasGrupo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_PlantillaObjetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_TipoObj" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkOpcionesSeleccionadas" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__0AC87E64" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__257C74A0" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Permi__0BBCA29D" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Persona__Usuario__0E990F48" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__3E1D39E1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Permi__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Persona__Usuario__2739D489" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_PlantillaObj_TipoObj" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkResLibreCodigo" ManuallyRouted="false" />
@@ -83,8 +82,9 @@
         <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasUsuario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkSeccionTienePreguntaCodigoSeccion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UnidadAca__Super__23942C2E" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Usuar__24885067" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UnidadAca__Super__3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Usuar__3D2915A8" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.AsignadoA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.CreadoPor" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Empadronado_en" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Evalua" ManuallyRouted="false" />
@@ -95,7 +95,6 @@
         <AssociationConnector Association="DataIntegradorModel.Pertenece_a" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.AsignadoA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
