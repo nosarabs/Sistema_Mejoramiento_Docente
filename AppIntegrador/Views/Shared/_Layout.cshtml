@@ -4,8 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <title>Sistema de Mejoramiento Docente</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @if (ViewBag.HTMLCheck != true)
+    {
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    }
 </head>
 <body>
     @if (ViewBag.HTMLCheck != true)
@@ -19,6 +22,7 @@
             </div>
             <div class="item">
                 <ul class="wrapper">
+                    
                     <li>
                         <div class="dropdown">
                             <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
@@ -94,11 +98,14 @@
         </div>
     }
     @RenderBody()
-
+        @if (ViewBag.HTMLCheck != true)
+    {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    }
     @RenderSection("scripts", required: false)
-
+        @if (ViewBag.HTMLCheck != true)
+    {
     <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-content">
         </div>
@@ -133,5 +140,6 @@
             });
         });
     </script>
+    }
 </body>
 </html>
