@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AppIntegrador.Models.Persona>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Identificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido2)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Identificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido2)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')), 
+                                                   domain = item.Correo.Substring(item.Correo.LastIndexOf('.'))}) |
+            @Html.ActionLink("Details", "Details", new { username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')), 
+                                                   domain = item.Correo.Substring(item.Correo.LastIndexOf('.'))}) |
+            @Html.ActionLink("Delete", "Delete", new { username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')), 
+                                                   domain = item.Correo.Substring(item.Correo.LastIndexOf('.'))})
+        </td>
+    </tr>
+}
+
+</table>

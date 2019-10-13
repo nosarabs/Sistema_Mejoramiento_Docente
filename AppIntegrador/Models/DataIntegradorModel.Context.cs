@@ -221,7 +221,6 @@ public partial class DataIntegradorEntities : DbContext
             new ObjectParameter("activo", activo) :
             new ObjectParameter("activo", typeof(bool));
 
-
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuario", pLoginParameter, pPasswordParameter, activoParameter, estado);
     }
 
