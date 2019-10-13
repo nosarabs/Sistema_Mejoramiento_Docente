@@ -13,28 +13,13 @@ namespace AppIntegrador.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class Periodo_activa_por
+public partial class sp_helpdiagramdefinition_Result
 {
 
-    public string FCodigo { get; set; }
+    public Nullable<int> version { get; set; }
 
-    public string CSigla { get; set; }
-
-    public byte GNumero { get; set; }
-
-    public int GAnno { get; set; }
-
-    public byte GSemestre { get; set; }
-
-    public System.DateTime FechaInicio { get; set; }
-
-    public System.DateTime FechaFin { get; set; }
-
-
-
-    public virtual Activa_por Activa_por { get; set; }
+    public byte[] definition { get; set; }
 
 }
 

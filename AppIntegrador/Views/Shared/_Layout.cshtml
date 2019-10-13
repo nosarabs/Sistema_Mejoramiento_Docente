@@ -4,12 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <title>ProyectoIntegrador</title>
-    @if (ViewBag.HTMLCheck != true)
-    {
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    }
-    </head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
 <body>
     @if (ViewBag.HTMLCheck != true)
     {
@@ -18,7 +15,7 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
+                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
             </div>
             <div class="item">
                 <ul>
@@ -62,9 +59,11 @@
                         <div class="dropdown">
                             <button class="dropbtn">Formularios</button>
                             <div class="dropdown-content">
-                                @Html.ActionLink("Crear Formulario", "Create", "Formularios")
                                 @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
                                 @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
+                                @Html.ActionLink("Crear sección", "Create", "Seccion")
+                                @Html.ActionLink("Banco de secciones", "Index", "Seccion")
+                                @Html.ActionLink("Crear Formulario", "Create", "Formularios")
                             </div>
                         </div>
                     </li>
@@ -92,11 +91,9 @@
         </div>
     }
     @RenderBody()
-    @if (ViewBag.HTMLCheck != true)
-    {
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    }
     @RenderSection("scripts", required: false)
 </body>
 </html>
