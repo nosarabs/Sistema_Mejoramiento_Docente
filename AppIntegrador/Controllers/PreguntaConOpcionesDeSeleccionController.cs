@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
@@ -36,29 +38,32 @@ namespace AppIntegrador.Controllers
         //}
 
         //the first parameter is the option that we choose and the second parameter will use the textbox value  
-        public ActionResult Index(string option, string search)
+        public ActionResult Index(string inp1, string inp2, string inp3)
         {
             var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
 
+            if (inp2 == null && inp1 == null && inp3 == null)
+            {
+                return View(pregunta_con_opciones_de_seleccion.ToList());
+            }
             //if a user choose the radio button option as Subject  
-            if (option == "Tipo" && search.Length > 0)
+            if (inp2 == null && inp3 == null)
             {
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList());
             }
-            else if (option == "Codigo" && search.Length > 0)
+            else if (inp1 == null && inp3 == null)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList());
             }
-            else if (option == "Enunciado" && search.Length > 0)
+            else if (inp1 == null && inp2 == null)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(search)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList());
             }
             else
             {
                 return View(pregunta_con_opciones_de_seleccion.ToList());
             }
-
         }
 
         // GET: PreguntaConOpcionesDeSeleccion/Details/5
@@ -118,37 +123,52 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("", "Una pregunta de selección única necesita al menos una opción");
                     return View(pregunta);
                 }
-                try
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
                 {
-                    // Obtenga el codigo brindado para esa pregunta y asigneselo a la superclases pregunta
-                    pregunta.Pregunta_con_opciones.Pregunta.Codigo = pregunta.Codigo;
-                    // Agregue esa pregunta a la tabla de preguntas
-                    db.Pregunta.Add(pregunta.Pregunta_con_opciones.Pregunta);
-                    // Agregue la pregunta con opciones perse a la table=a
-                    db.Pregunta_con_opciones_de_seleccion.Add(pregunta);
-                    db.SaveChanges();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        try
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AgregarPreguntaConOpcion";
+                            cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@type", 'U'));
+                            cmd.Parameters.Add(new SqlParameter("@enunciado", pregunta.Pregunta_con_opciones.Pregunta.Enunciado));
+                            cmd.Parameters.Add(new SqlParameter("@justificacion", pregunta.Pregunta_con_opciones.TituloCampoObservacion));
 
-                    string codigoPregunta = pregunta.Codigo;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
+                        catch (System.Data.SqlClient.SqlException)
+                        {
+                            ModelState.AddModelError("Codigo", "Código ya en uso.");
+                            return View(pregunta);
+                        }
+                    }
 
-                    // Asigno el codigo a cada opcion de la pregunta
                     foreach (Opciones_de_seleccion opcion in Opciones)
-                        opcion.Codigo = codigoPregunta;
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AgregarOpcion";
+                            cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@orden", opcion.Orden));
+                            cmd.Parameters.Add(new SqlParameter("@texto", opcion.Texto));
 
-                    // Guardo todas las opciones de una
-                    db.Opciones_de_seleccion.AddRange(Opciones);
-                    db.SaveChanges();
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
+                    }
+
+                }
 
                     ViewBag.Message = "Exitoso";
                     return View();
-                }
-                catch (Exception exception)
-                {
-                    if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
-                    {
-                        ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
-                    }
-                }
             }
 
             return View();

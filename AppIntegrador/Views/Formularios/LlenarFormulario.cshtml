@@ -4,27 +4,27 @@
     ViewBag.Title = "Llenar formulario";
 }
 
-    <h2>Llenar @Html.DisplayFor(model => model.Nombre)</h2>
+<h2 id="encabezado" class="text-center">Llenar formulario "@Html.DisplayFor(model => model.Nombre)"</h2>
+
 <div id="section-container">
 
 </div>
 
-
-<input type="button" class="btn btn-default " value="Mostrar" id="show" />
-
-<div id="container">
-
-</div>
+<style>
+    #section-container {
+        margin-left: 1%;
+        margin-right: 1%;
+        
+    }
+</style>
 
 @section Scripts{
     <script>
         var formID = '@Model.Codigo'.trim();
 
         $(document).ready(function () {
-
-            $("#show").click(function () {
-                getSections(formID);
-            })
+            getSections(formID);
+            printData("00000001");
         })
 
 
@@ -36,11 +36,42 @@
                 data: { id: formID },
                 success: function (data) {
                     for (var i = 0; i < data.length; ++i) {
-                        var section = "<div class='section'>" + data[i].Nombre + "</div>"
-                        $(section).appendTo("#section-container")
+                        var questions = ["Pregunta 1", "Pregunta 2"]
+                        var panel = generatePanel(data[i].Nombre, questions)
+                        
+                        $(panel).appendTo("#section-container")
                     }
                 }
             });
+        }
+
+        function printData(sectID) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetQuestions")',
+                dataType: 'json',
+                data: { id: sectID },
+                success: function (data) {
+                    for (var question = 0; question < data.length; ++question) {
+                        console.log(data[question].Enunciado);
+                        for (var option = 0; option < data[question].Opciones.length; ++option) {
+                            console.log(data[question].Opciones[option].Texto);
+                        }
+                    }
+
+                    console.log(data)
+                }
+            });
+        }
+
+        function generatePanel(header, questions) {
+            var header = "<div class='panel panel-primary '><div class='panel-heading'>" + header + "</div>";
+            var body = "<div class='panel-body'>";
+            for (var question = 0; question < questions.length; ++question) {
+                body = body + questions[question] + "<input type='text' class='form-control text-box single-line'></input>" + "</br>";
+        }
+
+            return header + body + "</div></div>";
         }
     </script>
 }

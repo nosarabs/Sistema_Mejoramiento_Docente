@@ -32,10 +32,10 @@ else
                 @Html.DisplayNameFor(model => model.CodigoF)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Profesor.Cedula)
+                @Html.DisplayNameFor(model => model.Profesor.Correo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Profesor1.Cedula)
+                @Html.DisplayNameFor(model => model.Profesor1.Correo)
             </th>
             <th></th>
         </tr>
@@ -56,15 +56,15 @@ else
                     @Html.DisplayFor(modelItem => item.CodigoF)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Profesor.Cedula)
+                    @Html.DisplayFor(modelItem => item.Profesor.Correo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Profesor1.Cedula)
+                    @Html.DisplayFor(modelItem => item.Profesor1.Correo)
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new {  id = item.Codigo, cedula = item.CedProf  }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Codigo, cedula = item.CedProf }) |
-                    @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo, cedula = item.CedProf })
+                    @Html.ActionLink("Editar", "Edit", new {  id = item.Codigo, cedula = item.CorreoProf  }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Codigo, cedula = item.CorreoProf }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo, cedula = item.CorreoProf })
                 </td>
             </tr>
         }

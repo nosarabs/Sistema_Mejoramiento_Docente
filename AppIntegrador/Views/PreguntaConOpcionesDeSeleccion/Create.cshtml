@@ -5,7 +5,7 @@
 }
 <div class="container">
     <h2>Crear pregunta</h2>
-
+    
 
     @using (Html.BeginForm())
     {
@@ -17,7 +17,14 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-2">
-                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control", @maxlength = "8", required = "required" } })
+                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new {
+                       @class = "form-control",
+                       @maxlength = "8",
+                       required = "required",
+                       @onkeyup = "charCount(this)"
+                    }})
+
+                    <div class="counter small pull-right">0/8 caracteres usados</div>
                     @*Historia MSU: que el mensaje de error salga en rojo*@
                     @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
                 </div>
@@ -33,14 +40,17 @@
                         @maxlength = "250",
                         required = "required",
                         data_val = "true",
-                        data_val_length_max = "250"
-                    }
-        )           @*Historia MSU: que el mensaje de error salga en rojo*@
-        @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
-    </div>
-</div>
+                        data_val_length_max = "250",
+                        @onkeyup = "charCount(this)"
+                    })
 
-</div>
+                    <div class="counter small pull-right">0/250 caracteres usados</div>
+                    @*Historia MSU: que el mensaje de error salga en rojo*@
+
+                    @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
+                </div>
+             </div>
+        </div>
 
 <div class="form-horizontal">
     <label for="chkPassport" class="col-md-offset-2 col-md-10">
@@ -72,7 +82,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-success" id="Create" />
-            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default"})
         </div>
     </div>
 
@@ -106,8 +116,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
 
     @Scripts.Render("~/bundles/jqueryval")
+   
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
+    <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
     <script>
         function disableRemoveButton() {
             var nodes = document.getElementsByClassName("remove-button btn btn-danger");
@@ -165,6 +178,10 @@
         });
 
         $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
             $("#Add").trigger('click');
         });
 
@@ -193,14 +210,6 @@
             } else {
                 $('#justificationField').css('display', 'none');
             }
-        }
-
-        // Count text
-        function charCount(inputBox) {
-            var len = inputBox.value.length;
-            var max = $(inputBox).attr("maxlength")
-            var counterText = $(inputBox).parent().find(".counter");
-            counterText.text(len + "/" + max + " caracteres usados");
         }
     </script>
 
