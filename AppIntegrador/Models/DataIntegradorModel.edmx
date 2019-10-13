@@ -1478,10 +1478,6 @@
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
-        <Function Name="ObtenerEmailUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="pUsername" Type="varchar" Mode="In" />
-          <Parameter Name="email" Type="varchar" Mode="InOut" />
-        </Function>
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
         </Function>
@@ -3244,11 +3240,7 @@
           <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
             <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
-                  <FunctionImport Name="ObtenerEmailUsuario">
-            <Parameter Name="pUsername" Mode="In" Type="String" />
-            <Parameter Name="email" Mode="InOut" Type="String" />
-          </FunctionImport>
-		</EntityContainer>
+        </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
@@ -3775,8 +3767,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-        <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
-		</EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
