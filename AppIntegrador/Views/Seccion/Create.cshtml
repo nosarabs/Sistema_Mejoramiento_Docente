@@ -4,87 +4,72 @@
     ViewBag.Title = "Crear sección";
 }
 
+<style>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .split {
-            height: 100%;
-            width: 50%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            overflow-x: hidden;
-            padding-top: 250px;
+    /*This just stops me getting horizontal scrolling if anything overflows the width*/
+    body {
+        overflow-x: hidden;
+    }
+    /*Just removing default browser padding/margin*/
+    html,
+    body {
+        padding:0;
+        margin: 0;
+    }
+    /*Flexbox gives us the flexiness we need. The top just stays put as there is no scrolling on the body due to the page never exceeding viewport height*/
+    .Top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        height: 100px;
+    }
+    /*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
+    .Container {
+        display: flex;
+        overflow: hidden;
+        height: 80vh;
+        position: relative;
+        width: 100%;
+        backface-visibility: hidden;
+        will-change: overflow;
+    }
+    /*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+    WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+    */
+    .Left,
+    .Middle,
+    .Right {
+        overflow: auto;
+        height: auto;
+        padding: .5rem;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;
+    }
+        /*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
+        .Left::-webkit-scrollbar,
+        .Middle::-webkit-scrollbar {
+            display: none;
         }
+    /*  Left and Right are set sizes while the Middle is set to flex one so it occupies all remaining space. This could be set as a width too if prefereable, perhaps using calc.*/
+    .Left {
+        flex: 0.5;
+    }
 
-        .left {
-            left: 0;
-        }
+    .Middle {
+        flex: 1;
+    }
 
-        .right {
-            right: 0;
-        }
-
-        .centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-            .centered img {
-                width: 150px;
-                border-radius: 50%;
-            }
-    </style>
-</head>
-
-
-
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="split left">
+    .Right {
+        flex: 0.5;
+    }
+</style>
+<div class="Top">
+    <div class="Left">
         <h2>Crear Sección</h2>
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
-                    @Html.EditorFor(model => model.Seccion.Codigo, new { htmlAttributes = new { @class = "form-control", id = "textCode", name = "textCode", @maxlength = "8", required = "required", placeholder = "Código", rows = "5" } })
-                    @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-6">
-                    <form accept-charset="UTF-8" action="" method="POST">
-                        @Html.EditorFor(model => model.Seccion.Nombre, new { htmlAttributes = new { @class = "form-control", id = "textName", name = "textName", @maxlength = "80", required = "required", placeholder = "Nombre de la sección", rows = "5" } })
-                        @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
-                    </form>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Crear" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" />
-                </div>
-            </div>
-
-
-        </div>
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
-    <div class="split right">
-
+    <div class="Right">
         <h2>Banco de preguntas</h2>
 
         <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
@@ -99,6 +84,7 @@
 
         @using (Html.BeginForm(FormMethod.Get))
         {
+            @Html.AntiForgeryToken()
             //the following are search options
             <b>
                 Opciones de búsqueda:
@@ -117,10 +103,50 @@
                    name="submit"
                    value="Filtrar"
                    class="btn" />
-            <P></P>
         }
+    </div>
+</div>
+<div class="Container">
+
+    <div class="Left">
+        <div class="form-horizontal">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Seccion.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Seccion.Codigo, new { htmlAttributes = new { @class = "form-control", id = "textCode", name = "textCode", @maxlength = "8", required = "required", placeholder = "Código", rows = "5" } })
+                        @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <form accept-charset="UTF-8" action="" method="POST">
+                            @Html.EditorFor(model => model.Seccion.Nombre, new { htmlAttributes = new { @class = "form-control", id = "textName", name = "textName", @maxlength = "80", required = "required", placeholder = "Nombre de la sección", rows = "5" } })
+                            @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
+                        </form>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Crear" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" />
+                    </div>
+                </div>
 
 
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+    </div>
+    <div class="Right">
         <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <col width="50">
             <thead>
@@ -135,7 +161,7 @@
                         Enunciado
                     </th>
                     <th>
-                       Tipo
+                        Tipo
                     </th>
                     <th>
                         Operaciones
@@ -168,22 +194,25 @@
             }
         </table>
     </div>
+</div>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la sección?</h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la sección?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>
-}
+</div>
+
 
 
 

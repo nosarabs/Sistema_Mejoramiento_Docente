@@ -4,15 +4,9 @@
     ViewBag.Title = "Banco de secciones";
 }
 
-
-
 @using (Html.BeginForm(FormMethod.Get))
 {
     <h2>Banco de secciones</h2>
-    <div class="form-group">
-
-
-    </div>
     //the following are search options
     <b>
         Opciones de búsqueda:
@@ -37,26 +31,30 @@
     </form>
 
 }
-<br />
 
-<table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-    <tr>
-        <th>
-            Seleccionar
-        </th>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Operaciones
-        </th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<div style="height: 400px; overflow: auto;">
+    <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                    
+        <thead>
+
+            <tr>
+    <th>
+        Seleccionar
+    </th>
+    <th>
+        Codigo
+    </th>
+    <th>
+        Nombre
+    </th>
+    <th>
+        Operaciones
+    </th>
+</tr>
+        </thead>
+        @foreach (var item in Model)
+        {
 
         <tr>
             <td>
@@ -78,8 +76,8 @@
         </tr>
     }
 
-</table>
-}
+    </table>
+</div>
 
 
 <style>
