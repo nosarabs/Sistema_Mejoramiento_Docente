@@ -240,24 +240,25 @@ namespace AppIntegrador.Controllers
                         return false;
                     }
                 }
-
-                for(int index = 0; index < secciones.Count; ++index)
+                if (secciones != null)
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    for (int index = 0; index < secciones.Count; ++index)
                     {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AsociarSeccionConFormulario";
-                        cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@orden", index));
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AsociarSeccionConFormulario";
+                            cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@orden", index));
 
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
                     }
                 }
-
             }
             return true;
         }
