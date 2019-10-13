@@ -41,7 +41,7 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
-            return View();
+            return View("_crearObjetivo");
         }
 
         // POST: Objetivos/Create
