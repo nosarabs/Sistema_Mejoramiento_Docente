@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -400,10 +402,6 @@
     <Content Include="Views\Secciones\Details.cshtml" />
     <Content Include="Views\Secciones\Edit.cshtml" />
     <Content Include="Views\Secciones\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Details.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\_crear.cshtml" />
     <Content Include="Views\AccionDeMejora\Create.cshtml" />
@@ -417,6 +415,9 @@
     <Content Include="Views\Objetivo\Edit.cshtml" />
     <Content Include="Views\Objetivo\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\_edit.cshtml" />
+    <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
+    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
+    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

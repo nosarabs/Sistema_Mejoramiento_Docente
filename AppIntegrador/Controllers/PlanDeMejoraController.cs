@@ -20,11 +20,6 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
-        public IEnumerable<Objetivo> totalObjetivos() {
-            var totalObjetivosDePlan = this.db.Objetivo.ToList();
-            return totalObjetivosDePlan;
-        }
-
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {
@@ -127,6 +122,46 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        //////////////////////////////////////////////BI///////////////////////////////////////////////////
+        
+        // Method that creates the plan and sets the next "codigo" automatically
+        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (nombre != null && fechaInicio != null && fechaFin != null) 
+            {
+                var planTemp = new PlanDeMejora();
+                var plans = this.db.PlanDeMejora.ToList();
+                var codigoTemporal = plans.Last().codigo;
+                planTemp.codigo = codigoTemporal + 1;
+                planTemp.nombre = nombre;
+                planTemp.fechaInicio = fechaInicio;
+                planTemp.fechaFin = fechaFin;
+                this.Create(planTemp);
+            }
+            return RedirectToAction("Index");
+        }
+
+        // Method that edits one "PlanDeMejora"
+        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin) {
+            if (codigo != null && nombre != null && fechaInicio != null && fechaFin != null)
+            {
+                var planTemp = new PlanDeMejora();
+                planTemp.codigo = codigo;
+                planTemp.nombre = nombre;
+                planTemp.fechaInicio = fechaInicio;
+                planTemp.fechaFin = fechaFin;
+                this.Edit(planTemp);
+            }
+            return RedirectToAction("Index");
+        }
+
+        // Method that deletes one "PlanDeMejora"
+        public ActionResult BorrarPlan(int codigoPlan) {
+            this.DeleteConfirmed(codigoPlan);
+            return RedirectToAction("Index");
         }
     }
 }
