@@ -69,13 +69,25 @@ nav {
 
 /* Now in order to make a dropdown button */
 .dropbtn {
-    background-color: none;
-    color: black;
+    background-color: none; 
+    /*background-color: #209fe3;*/
     padding: 20px;
     border: 0em;
     width: 100%;
     font-weight: bold;
 }
+
+.dropbtn_alt {
+    background-color: #209fe3;
+    padding: 20px;
+    border: 0em;
+    width: 100%;
+    font-weight: bold;
+}
+
+    .dropbtn_alt:hover {
+        background-color: #1989c5
+    }
 
 .dropdown {
     position: relative;
@@ -260,3 +272,36 @@ li a:hover {
 .Info-parrafo-fu {
     font-family: Arial;
 }
+
+/*Para Tablas*/
+
+.TablasSeccionesPlanesDeMejora {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
+    border: 1px solid #ddd;
+}
+
+.TablasSeccionesPlanesDeMejora th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ddd;
+    color: white;
+}
+
+.FilaTablasSeccionesPlanesDeMejora:hover {
+    background-color: #ddd;
+}
+
+/*Terminan tablas*/
+/*Estilos para modal*/
+
+.modal-content {
+    width: 600px;
+    margin: 30px auto;
+}
+
+/*Termina modal*/
