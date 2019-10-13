@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MosqueterosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1499,7 +1499,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
         <Function Name="SeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodForm" Type="char" Mode="In" />
         </Function>
-        <EntityContainer Name="MosqueterosModelStoreContainer">
+        <EntityContainer Name="DataIntegradorModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Accionable" EntityType="Self.Accionable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" Schema="dbo" store:Type="Tables" />
@@ -1808,7 +1808,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MosqueterosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1830,7 +1830,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
           <Property Name="progreso" Type="Int32" />
           <NavigationProperty Name="AccionDeMejora" Relationship="Self.FK_Accionable_AccionDeMejora" FromRole="Accionable" ToRole="AccionDeMejora" />
-          <NavigationProperty Name="Funcionarios" Relationship="Self.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
         </EntityType>
         <EntityType Name="AccionDeMejora">
           <Key>
@@ -1844,7 +1844,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="fechaInicio" Type="DateTime" Precision="0" />
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
           <Property Name="codPlantilla" Type="Int32" />
-          <NavigationProperty Name="Accionables" Relationship="Self.FK_Accionable_AccionDeMejora" FromRole="AccionDeMejora" ToRole="Accionable" />
+          <NavigationProperty Name="Accionable" Relationship="Self.FK_Accionable_AccionDeMejora" FromRole="AccionDeMejora" ToRole="Accionable" />
           <NavigationProperty Name="Objetivo" Relationship="Self.FK_AccionDeMejora_Objetivo" FromRole="AccionDeMejora" ToRole="Objetivo" />
           <NavigationProperty Name="PlantillaAccionDeMejora" Relationship="Self.FK_AccionDeMejora_PlantillaAccMej" FromRole="AccionDeMejora" ToRole="PlantillaAccionDeMejora" />
         </EntityType>
@@ -1872,7 +1872,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__2704CA5F" FromRole="Carrera" ToRole="Enfasis" />
-          <NavigationProperty Name="UnidadAcademicas" Relationship="Self.Inscrita_en" FromRole="Carrera" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="UnidadAcademica" Relationship="Self.Inscrita_en" FromRole="Carrera" ToRole="UnidadAcademica" />
         </EntityType>
         <EntityType Name="Curso">
           <Key>
@@ -1880,10 +1880,10 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </Key>
           <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Grupoes" Relationship="Self.FK__Grupo__SiglaCurs__2EA5EC27" FromRole="Curso" ToRole="Grupo" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__2EA5EC27" FromRole="Curso" ToRole="Grupo" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Pertenece_a" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
-        <EntityType Name="Enfasi">
+        <EntityType Name="Enfasis">
           <Key>
             <PropertyRef Name="CodCarrera" />
             <PropertyRef Name="Codigo" />
@@ -1892,10 +1892,10 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__2704CA5F" FromRole="Enfasis" ToRole="Carrera" />
-          <NavigationProperty Name="PerfilPermisoes" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="Enfasis" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfils" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="Enfasis" ToRole="UsuarioPerfil" />
-          <NavigationProperty Name="Estudiantes" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
-          <NavigationProperty Name="Cursoes" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="Enfasis" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
+          <NavigationProperty Name="Curso" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
         </EntityType>
         <EntityType Name="Escalar">
           <Key>
@@ -1915,7 +1915,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Corre__28ED12D1" FromRole="Estudiante" ToRole="Persona" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Empadronado_en" FromRole="Estudiante" ToRole="Enfasis" />
-          <NavigationProperty Name="Grupoes" Relationship="Self.Matriculado_en" FromRole="Estudiante" ToRole="Grupo" />
+          <NavigationProperty Name="Grupo" Relationship="Self.Matriculado_en" FromRole="Estudiante" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="Formulario">
           <Key>
@@ -1926,7 +1926,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorFormulario" FromRole="Formulario" ToRole="Activa_por" />
           <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.fkFormularioTieneSeccionCodigoFormulario" FromRole="Formulario" ToRole="Formulario_tiene_seccion" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasFormulario" FromRole="Formulario" ToRole="Respuestas_a_formulario" />
-          <NavigationProperty Name="PlanDeMejoras" Relationship="Self.Evalua" FromRole="Formulario" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.Evalua" FromRole="Formulario" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Formulario_tiene_seccion">
           <Key>
@@ -1946,9 +1946,9 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__2DB1C7EE" FromRole="Funcionario" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__4589517F" FromRole="Funcionario" ToRole="Profesor" />
-          <NavigationProperty Name="PlanDeMejoras" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
-          <NavigationProperty Name="Accionables" Relationship="Self.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
-          <NavigationProperty Name="UnidadAcademicas" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="Accionable" Relationship="Self.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
+          <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
@@ -1964,8 +1964,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorGrupo" FromRole="Grupo" ToRole="Activa_por" />
           <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__2EA5EC27" FromRole="Grupo" ToRole="Curso" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasGrupo" FromRole="Grupo" ToRole="Respuestas_a_formulario" />
-          <NavigationProperty Name="Profesors" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
-          <NavigationProperty Name="Estudiantes" Relationship="Self.Matriculado_en" FromRole="Grupo" ToRole="Estudiante" />
+          <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.Matriculado_en" FromRole="Grupo" ToRole="Estudiante" />
         </EntityType>
         <EntityType Name="Objetivo">
           <Key>
@@ -1979,7 +1979,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
           <Property Name="nombTipoObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="codPlantilla" Type="Int32" />
-          <NavigationProperty Name="AccionDeMejoras" Relationship="Self.FK_AccionDeMejora_Objetivo" FromRole="Objetivo" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="AccionDeMejora" Relationship="Self.FK_AccionDeMejora_Objetivo" FromRole="Objetivo" ToRole="AccionDeMejora" />
           <NavigationProperty Name="PlantillaObjetivo" Relationship="Self.FK_Objetivo_PlantillaObjetivo" FromRole="Objetivo" ToRole="PlantillaObjetivo" />
           <NavigationProperty Name="TipoObjetivo" Relationship="Self.FK_Objetivo_TipoObj" FromRole="Objetivo" ToRole="TipoObjetivo" />
         </EntityType>
@@ -2022,8 +2022,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PerfilPermisoes" Relationship="Self.FK__PerfilPer__Perfi__3B0BC30C" FromRole="Perfil" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfils" Relationship="Self.FK__UsuarioPe__Perfi__55BFB948" FromRole="Perfil" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__3B0BC30C" FromRole="Perfil" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__55BFB948" FromRole="Perfil" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="PerfilPermiso">
           <Key>
@@ -2036,7 +2036,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="PermisoId" Type="Int32" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasi" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="PerfilPermiso" ToRole="Enfasis" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="PerfilPermiso" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__3B0BC30C" FromRole="PerfilPermiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__3BFFE745" FromRole="PerfilPermiso" ToRole="Permiso" />
         </EntityType>
@@ -2065,7 +2065,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PerfilPermisoes" Relationship="Self.FK__PerfilPer__Permi__3BFFE745" FromRole="Permiso" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__3BFFE745" FromRole="Permiso" ToRole="PerfilPermiso" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -2092,10 +2092,10 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaInicio" Type="DateTime" Precision="0" />
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Funcionarios" Relationship="Self.CreadoPor" FromRole="PlanDeMejora" ToRole="Funcionario" />
-          <NavigationProperty Name="Formularios" Relationship="Self.Evalua" FromRole="PlanDeMejora" ToRole="Formulario" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.CreadoPor" FromRole="PlanDeMejora" ToRole="Funcionario" />
+          <NavigationProperty Name="Formulario" Relationship="Self.Evalua" FromRole="PlanDeMejora" ToRole="Formulario" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.Origina" FromRole="PlanDeMejora" ToRole="Respuestas_a_formulario" />
-          <NavigationProperty Name="Profesors" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
+          <NavigationProperty Name="Profesor" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="PlantillaAccionDeMejora">
           <Key>
@@ -2103,7 +2103,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </Key>
           <Property Name="codigo" Type="Int32" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AccionDeMejoras" Relationship="Self.FK_AccionDeMejora_PlantillaAccMej" FromRole="PlantillaAccionDeMejora" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="AccionDeMejora" Relationship="Self.FK_AccionDeMejora_PlantillaAccMej" FromRole="PlantillaAccionDeMejora" ToRole="AccionDeMejora" />
         </EntityType>
         <EntityType Name="PlantillaObjetivo">
           <Key>
@@ -2113,7 +2113,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="nombTipoObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Objetivoes" Relationship="Self.FK_Objetivo_PlantillaObjetivo" FromRole="PlantillaObjetivo" ToRole="Objetivo" />
+          <NavigationProperty Name="Objetivo" Relationship="Self.FK_Objetivo_PlantillaObjetivo" FromRole="PlantillaObjetivo" ToRole="Objetivo" />
           <NavigationProperty Name="TipoObjetivo" Relationship="Self.FK_PlantillaObj_TipoObj" FromRole="PlantillaObjetivo" ToRole="TipoObjetivo" />
         </EntityType>
         <EntityType Name="Pregunta">
@@ -2161,8 +2161,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__4589517F" FromRole="Profesor" ToRole="Funcionario" />
-          <NavigationProperty Name="Grupoes" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
-          <NavigationProperty Name="PlanDeMejoras" Relationship="Self.AsignadoA" FromRole="Profesor" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.AsignadoA" FromRole="Profesor" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Responde_respuesta_con_opciones">
           <Key>
@@ -2233,7 +2233,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_con_opciones" />
           <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_libre" />
           <NavigationProperty Name="Usuario" Relationship="Self.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Usuario" />
-          <NavigationProperty Name="PlanDeMejoras" Relationship="Self.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Seccion">
           <Key>
@@ -2267,8 +2267,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <PropertyRef Name="nombre" />
           </Key>
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Objetivoes" Relationship="Self.FK_Objetivo_TipoObj" FromRole="TipoObjetivo" ToRole="Objetivo" />
-          <NavigationProperty Name="PlantillaObjetivoes" Relationship="Self.FK_PlantillaObj_TipoObj" FromRole="TipoObjetivo" ToRole="PlantillaObjetivo" />
+          <NavigationProperty Name="Objetivo" Relationship="Self.FK_Objetivo_TipoObj" FromRole="TipoObjetivo" ToRole="Objetivo" />
+          <NavigationProperty Name="PlantillaObjetivo" Relationship="Self.FK_PlantillaObj_TipoObj" FromRole="TipoObjetivo" ToRole="PlantillaObjetivo" />
         </EntityType>
         <EntityType Name="UnidadAcademica">
           <Key>
@@ -2279,8 +2279,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__53D770D6" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
           <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__53D770D6" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
-          <NavigationProperty Name="Carreras" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
-          <NavigationProperty Name="Funcionarios" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
+          <NavigationProperty Name="Carrera" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -2290,9 +2290,9 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Personas" Relationship="Self.FK__Persona__Usuario__3EDC53F0" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__3EDC53F0" FromRole="Usuario" ToRole="Persona" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Usuario" ToRole="Respuestas_a_formulario" />
-          <NavigationProperty Name="UsuarioPerfils" Relationship="Self.FK__UsuarioPe__Usuar__54CB950F" FromRole="Usuario" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__54CB950F" FromRole="Usuario" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="UsuarioPerfil">
           <Key>
@@ -2305,7 +2305,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasi" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="UsuarioPerfil" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__55BFB948" FromRole="UsuarioPerfil" ToRole="Perfil" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__54CB950F" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
@@ -2405,7 +2405,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Carrera">
               <PropertyRef Name="Codigo" />
@@ -2430,7 +2430,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PerfilPermiso__3CF40B7E">
-          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="1">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="PerfilPermiso" Type="Self.PerfilPermiso" Multiplicity="*" />
@@ -2446,7 +2446,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UsuarioPerfil__56B3DD81">
-          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="1">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="UsuarioPerfil" Type="Self.UsuarioPerfil" Multiplicity="*" />
@@ -2897,7 +2897,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
         </Association>
         <Association Name="Empadronado_en">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
-          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
         <Association Name="Evalua">
           <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
@@ -2921,7 +2921,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
         </Association>
         <Association Name="Pertenece_a">
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
-          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
         <Association Name="Responsable_De">
           <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
@@ -2935,64 +2935,64 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
           <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="MosqueterosEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DataIntegradorEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
-          <EntitySet Name="Accionables" EntityType="Self.Accionable" />
-          <EntitySet Name="AccionDeMejoras" EntityType="Self.AccionDeMejora" />
+          <EntitySet Name="Accionable" EntityType="Self.Accionable" />
+          <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" />
           <EntitySet Name="Activa_por" EntityType="Self.Activa_por" />
-          <EntitySet Name="Carreras" EntityType="Self.Carrera" />
-          <EntitySet Name="Cursoes" EntityType="Self.Curso" />
-          <EntitySet Name="Enfasis" EntityType="Self.Enfasi" />
-          <EntitySet Name="Escalars" EntityType="Self.Escalar" />
-          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
-          <EntitySet Name="Formularios" EntityType="Self.Formulario" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
+          <EntitySet Name="Escalar" EntityType="Self.Escalar" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
+          <EntitySet Name="Formulario" EntityType="Self.Formulario" />
           <EntitySet Name="Formulario_tiene_seccion" EntityType="Self.Formulario_tiene_seccion" />
-          <EntitySet Name="Funcionarios" EntityType="Self.Funcionario" />
-          <EntitySet Name="Grupoes" EntityType="Self.Grupo" />
-          <EntitySet Name="Objetivoes" EntityType="Self.Objetivo" />
+          <EntitySet Name="Funcionario" EntityType="Self.Funcionario" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="Objetivo" EntityType="Self.Objetivo" />
           <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" />
           <EntitySet Name="Opciones_seleccionadas_respuesta_con_opciones" EntityType="Self.Opciones_seleccionadas_respuesta_con_opciones" />
-          <EntitySet Name="Perfils" EntityType="Self.Perfil" />
-          <EntitySet Name="PerfilPermisoes" EntityType="Self.PerfilPermiso" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" />
+          <EntitySet Name="PerfilPermiso" EntityType="Self.PerfilPermiso" />
           <EntitySet Name="Periodo_activa_por" EntityType="Self.Periodo_activa_por" />
-          <EntitySet Name="Permisoes" EntityType="Self.Permiso" />
-          <EntitySet Name="Personas" EntityType="Self.Persona" />
-          <EntitySet Name="PlanDeMejoras" EntityType="Self.PlanDeMejora" />
-          <EntitySet Name="PlantillaAccionDeMejoras" EntityType="Self.PlantillaAccionDeMejora" />
-          <EntitySet Name="PlantillaObjetivoes" EntityType="Self.PlantillaObjetivo" />
-          <EntitySet Name="Preguntas" EntityType="Self.Pregunta" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="PlanDeMejora" EntityType="Self.PlanDeMejora" />
+          <EntitySet Name="PlantillaAccionDeMejora" EntityType="Self.PlantillaAccionDeMejora" />
+          <EntitySet Name="PlantillaObjetivo" EntityType="Self.PlantillaObjetivo" />
+          <EntitySet Name="Pregunta" EntityType="Self.Pregunta" />
           <EntitySet Name="Pregunta_con_opciones" EntityType="Self.Pregunta_con_opciones" />
           <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" />
           <EntitySet Name="Pregunta_con_respuesta_libre" EntityType="Self.Pregunta_con_respuesta_libre" />
-          <EntitySet Name="Profesors" EntityType="Self.Profesor" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
           <EntitySet Name="Responde_respuesta_con_opciones" EntityType="Self.Responde_respuesta_con_opciones" />
           <EntitySet Name="Responde_respuesta_libre" EntityType="Self.Responde_respuesta_libre" />
           <EntitySet Name="Respuestas_a_formulario" EntityType="Self.Respuestas_a_formulario" />
-          <EntitySet Name="Seccions" EntityType="Self.Seccion" />
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" />
           <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" />
           <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" />
-          <EntitySet Name="TipoObjetivoes" EntityType="Self.TipoObjetivo" />
-          <EntitySet Name="UnidadAcademicas" EntityType="Self.UnidadAcademica" />
-          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
-          <EntitySet Name="UsuarioPerfils" EntityType="Self.UsuarioPerfil" />
+          <EntitySet Name="TipoObjetivo" EntityType="Self.TipoObjetivo" />
+          <EntitySet Name="UnidadAcademica" EntityType="Self.UnidadAcademica" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" />
           <AssociationSet Name="FK_Accionable_AccionDeMejora" Association="Self.FK_Accionable_AccionDeMejora">
-            <End Role="AccionDeMejora" EntitySet="AccionDeMejoras" />
-            <End Role="Accionable" EntitySet="Accionables" />
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
+            <End Role="Accionable" EntitySet="Accionable" />
           </AssociationSet>
           <AssociationSet Name="FK_AccionDeMejora_Objetivo" Association="Self.FK_AccionDeMejora_Objetivo">
-            <End Role="Objetivo" EntitySet="Objetivoes" />
-            <End Role="AccionDeMejora" EntitySet="AccionDeMejoras" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
           </AssociationSet>
           <AssociationSet Name="FK_AccionDeMejora_PlantillaAccMej" Association="Self.FK_AccionDeMejora_PlantillaAccMej">
-            <End Role="PlantillaAccionDeMejora" EntitySet="PlantillaAccionDeMejoras" />
-            <End Role="AccionDeMejora" EntitySet="AccionDeMejoras" />
+            <End Role="PlantillaAccionDeMejora" EntitySet="PlantillaAccionDeMejora" />
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
           </AssociationSet>
           <AssociationSet Name="fkActivaPorFormulario" Association="Self.fkActivaPorFormulario">
-            <End Role="Formulario" EntitySet="Formularios" />
+            <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Activa_por" EntitySet="Activa_por" />
           </AssociationSet>
           <AssociationSet Name="fkActivaPorGrupo" Association="Self.fkActivaPorGrupo">
-            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Activa_por" EntitySet="Activa_por" />
           </AssociationSet>
           <AssociationSet Name="fkPeriodoActivaPor" Association="Self.fkPeriodoActivaPor">
@@ -3000,60 +3000,60 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <End Role="Periodo_activa_por" EntitySet="Periodo_activa_por" />
           </AssociationSet>
           <AssociationSet Name="FK__Enfasis__CodCarr__2704CA5F" Association="Self.FK__Enfasis__CodCarr__2704CA5F">
-            <End Role="Carrera" EntitySet="Carreras" />
+            <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK__Grupo__SiglaCurs__2EA5EC27" Association="Self.FK__Grupo__SiglaCurs__2EA5EC27">
-            <End Role="Curso" EntitySet="Cursoes" />
-            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
           <AssociationSet Name="FK__PerfilPermiso__3CF40B7E" Association="Self.FK__PerfilPermiso__3CF40B7E">
             <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="PerfilPermiso" EntitySet="PerfilPermisoes" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioPerfil__56B3DD81" Association="Self.FK__UsuarioPerfil__56B3DD81">
             <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfils" />
+            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
           <AssociationSet Name="fkEscalarCodigo" Association="Self.fkEscalarCodigo">
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
-            <End Role="Escalar" EntitySet="Escalars" />
+            <End Role="Escalar" EntitySet="Escalar" />
           </AssociationSet>
           <AssociationSet Name="FK__Estudiant__Corre__28ED12D1" Association="Self.FK__Estudiant__Corre__28ED12D1">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
           <AssociationSet Name="fkFormularioTieneSeccionCodigoFormulario" Association="Self.fkFormularioTieneSeccionCodigoFormulario">
-            <End Role="Formulario" EntitySet="Formularios" />
+            <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
           <AssociationSet Name="fkRespuestasFormulario" Association="Self.fkRespuestasFormulario">
-            <End Role="Formulario" EntitySet="Formularios" />
+            <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="fkFormularioTieneSeccionCodigoSeccion" Association="Self.fkFormularioTieneSeccionCodigoSeccion">
-            <End Role="Seccion" EntitySet="Seccions" />
+            <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
           <AssociationSet Name="FK__Funcionar__Corre__2DB1C7EE" Association="Self.FK__Funcionar__Corre__2DB1C7EE">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Funcionario" EntitySet="Funcionarios" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
           <AssociationSet Name="FK__Profesor__Correo__4589517F" Association="Self.FK__Profesor__Correo__4589517F">
-            <End Role="Funcionario" EntitySet="Funcionarios" />
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="fkRespuestasGrupo" Association="Self.fkRespuestasGrupo">
-            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Objetivo_PlantillaObjetivo" Association="Self.FK_Objetivo_PlantillaObjetivo">
-            <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivoes" />
-            <End Role="Objetivo" EntitySet="Objetivoes" />
+            <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
           </AssociationSet>
           <AssociationSet Name="FK_Objetivo_TipoObj" Association="Self.FK_Objetivo_TipoObj">
-            <End Role="TipoObjetivo" EntitySet="TipoObjetivoes" />
-            <End Role="Objetivo" EntitySet="Objetivoes" />
+            <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
           </AssociationSet>
           <AssociationSet Name="fkOpcionesCodigo" Association="Self.fkOpcionesCodigo">
             <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
@@ -3064,43 +3064,43 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <End Role="Opciones_seleccionadas_respuesta_con_opciones" EntitySet="Opciones_seleccionadas_respuesta_con_opciones" />
           </AssociationSet>
           <AssociationSet Name="FK__PerfilPer__Perfi__3B0BC30C" Association="Self.FK__PerfilPer__Perfi__3B0BC30C">
-            <End Role="Perfil" EntitySet="Perfils" />
-            <End Role="PerfilPermiso" EntitySet="PerfilPermisoes" />
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioPe__Perfi__55BFB948" Association="Self.FK__UsuarioPe__Perfi__55BFB948">
-            <End Role="Perfil" EntitySet="Perfils" />
-            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfils" />
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
           <AssociationSet Name="FK__PerfilPer__Permi__3BFFE745" Association="Self.FK__PerfilPer__Permi__3BFFE745">
-            <End Role="Permiso" EntitySet="Permisoes" />
-            <End Role="PerfilPermiso" EntitySet="PerfilPermisoes" />
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK__Persona__Usuario__3EDC53F0" Association="Self.FK__Persona__Usuario__3EDC53F0">
-            <End Role="Usuario" EntitySet="Usuarios" />
-            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
           <AssociationSet Name="FK_PlantillaObj_TipoObj" Association="Self.FK_PlantillaObj_TipoObj">
-            <End Role="TipoObjetivo" EntitySet="TipoObjetivoes" />
-            <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivoes" />
+            <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
+            <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivo" />
           </AssociationSet>
           <AssociationSet Name="fkPregOpcionesCodigo" Association="Self.fkPregOpcionesCodigo">
-            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
           </AssociationSet>
           <AssociationSet Name="fkResLibreCodigo" Association="Self.fkResLibreCodigo">
-            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
           </AssociationSet>
           <AssociationSet Name="fkRespondeLibreCodigo" Association="Self.fkRespondeLibreCodigo">
-            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
           <AssociationSet Name="fkRespondeOpcionesCodigo" Association="Self.fkRespondeOpcionesCodigo">
-            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
           </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoPregunta" Association="Self.fkSeccionTienePreguntaCodigoPregunta">
-            <End Role="Pregunta" EntitySet="Preguntas" />
+            <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
           <AssociationSet Name="fkPregOpcionesSeleccionCodigo" Association="Self.fkPregOpcionesSeleccionCodigo">
@@ -3120,64 +3120,64 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
           <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
-            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoSeccion" Association="Self.fkSeccionTienePreguntaCodigoSeccion">
-            <End Role="Seccion" EntitySet="Seccions" />
+            <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
           <AssociationSet Name="FK__UnidadAca__Super__53D770D6" Association="Self.FK__UnidadAca__Super__53D770D6">
-            <End Role="UnidadAcademica" EntitySet="UnidadAcademicas" />
-            <End Role="UnidadAcademica1" EntitySet="UnidadAcademicas" />
+            <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+            <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioPe__Usuar__54CB950F" Association="Self.FK__UsuarioPe__Usuar__54CB950F">
-            <End Role="Usuario" EntitySet="Usuarios" />
-            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfils" />
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
           <AssociationSet Name="CreadoPor" Association="Self.CreadoPor">
-            <End Role="Funcionario" EntitySet="Funcionarios" />
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejoras" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
           </AssociationSet>
           <AssociationSet Name="Empadronado_en" Association="Self.Empadronado_en">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Evalua" Association="Self.Evalua">
-            <End Role="Formulario" EntitySet="Formularios" />
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejoras" />
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
           </AssociationSet>
           <AssociationSet Name="Imparte" Association="Self.Imparte">
-            <End Role="Grupo" EntitySet="Grupoes" />
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="Inscrita_en" Association="Self.Inscrita_en">
-            <End Role="Carrera" EntitySet="Carreras" />
-            <End Role="UnidadAcademica" EntitySet="UnidadAcademicas" />
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
           </AssociationSet>
           <AssociationSet Name="Matriculado_en" Association="Self.Matriculado_en">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
           <AssociationSet Name="Origina" Association="Self.Origina">
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejoras" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="Pertenece_a" Association="Self.Pertenece_a">
-            <End Role="Curso" EntitySet="Cursoes" />
+            <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Responsable_De" Association="Self.Responsable_De">
-            <End Role="Accionable" EntitySet="Accionables" />
-            <End Role="Funcionario" EntitySet="Funcionarios" />
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
           <AssociationSet Name="Trabaja_en" Association="Self.Trabaja_en">
-            <End Role="UnidadAcademica" EntitySet="UnidadAcademicas" />
-            <End Role="Funcionario" EntitySet="Funcionarios" />
+            <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
           <AssociationSet Name="AsignadoA" Association="Self.AsignadoA">
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejoras" />
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <FunctionImport Name="AgregarOpcion">
             <Parameter Name="cod" Mode="In" Type="String" />
@@ -3228,7 +3228,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(MosqueterosModel.ObtenerOpcionesDePregunta_Result)">
+          <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
             <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
@@ -3244,7 +3244,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(MosqueterosModel.SeccionesDeFormulario_Result)">
+          <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
             <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -3261,16 +3261,16 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MosqueterosModelStoreContainer" CdmEntityContainer="MosqueterosEntities">
+        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="DataIntegradorEntities">
           <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="MosqueterosModel.C__RefactorLog">
+            <EntityTypeMapping TypeName="DataIntegradorModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
                 <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Accionables">
-            <EntityTypeMapping TypeName="MosqueterosModel.Accionable">
+          <EntitySetMapping Name="Accionable">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
               <MappingFragment StoreEntitySet="Accionable">
                 <ScalarProperty Name="codPlan" ColumnName="codPlan" />
                 <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
@@ -3282,8 +3282,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AccionDeMejoras">
-            <EntityTypeMapping TypeName="MosqueterosModel.AccionDeMejora">
+          <EntitySetMapping Name="AccionDeMejora">
+            <EntityTypeMapping TypeName="DataIntegradorModel.AccionDeMejora">
               <MappingFragment StoreEntitySet="AccionDeMejora">
                 <ScalarProperty Name="codPlan" ColumnName="codPlan" />
                 <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
@@ -3295,7 +3295,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Activa_por">
-            <EntityTypeMapping TypeName="MosqueterosModel.Activa_por">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Activa_por">
               <MappingFragment StoreEntitySet="Activa_por">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
@@ -3305,16 +3305,16 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Carreras">
-            <EntityTypeMapping TypeName="MosqueterosModel.Carrera">
+          <EntitySetMapping Name="Carrera">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Carrera">
               <MappingFragment StoreEntitySet="Carrera">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cursoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.Curso">
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3322,7 +3322,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enfasis">
-            <EntityTypeMapping TypeName="MosqueterosModel.Enfasi">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Enfasis">
               <MappingFragment StoreEntitySet="Enfasis">
                 <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
@@ -3330,8 +3330,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Escalars">
-            <EntityTypeMapping TypeName="MosqueterosModel.Escalar">
+          <EntitySetMapping Name="Escalar">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Escalar">
               <MappingFragment StoreEntitySet="Escalar">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Incremento" ColumnName="Incremento" />
@@ -3340,16 +3340,16 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Estudiantes">
-            <EntityTypeMapping TypeName="MosqueterosModel.Estudiante">
+          <EntitySetMapping Name="Estudiante">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Formularios">
-            <EntityTypeMapping TypeName="MosqueterosModel.Formulario">
+          <EntitySetMapping Name="Formulario">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3357,7 +3357,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario_tiene_seccion">
-            <EntityTypeMapping TypeName="MosqueterosModel.Formulario_tiene_seccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Formulario_tiene_seccion">
               <MappingFragment StoreEntitySet="Formulario_tiene_seccion">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
@@ -3365,15 +3365,15 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Funcionarios">
-            <EntityTypeMapping TypeName="MosqueterosModel.Funcionario">
+          <EntitySetMapping Name="Funcionario">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Funcionario">
               <MappingFragment StoreEntitySet="Funcionario">
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Grupoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.Grupo">
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
@@ -3382,8 +3382,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Objetivoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.Objetivo">
+          <EntitySetMapping Name="Objetivo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Objetivo">
               <MappingFragment StoreEntitySet="Objetivo">
                 <ScalarProperty Name="codPlan" ColumnName="codPlan" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -3396,7 +3396,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_de_seleccion">
-            <EntityTypeMapping TypeName="MosqueterosModel.Opciones_de_seleccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_de_seleccion">
               <MappingFragment StoreEntitySet="Opciones_de_seleccion">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -3405,7 +3405,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_seleccionadas_respuesta_con_opciones">
-            <EntityTypeMapping TypeName="MosqueterosModel.Opciones_seleccionadas_respuesta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones">
               <MappingFragment StoreEntitySet="Opciones_seleccionadas_respuesta_con_opciones">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -3419,15 +3419,15 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Perfils">
-            <EntityTypeMapping TypeName="MosqueterosModel.Perfil">
+          <EntitySetMapping Name="Perfil">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PerfilPermisoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.PerfilPermiso">
+          <EntitySetMapping Name="PerfilPermiso">
+            <EntityTypeMapping TypeName="DataIntegradorModel.PerfilPermiso">
               <MappingFragment StoreEntitySet="PerfilPermiso">
                 <ScalarProperty Name="Perfil" ColumnName="Perfil" />
                 <ScalarProperty Name="PermisoId" ColumnName="PermisoId" />
@@ -3437,7 +3437,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Periodo_activa_por">
-            <EntityTypeMapping TypeName="MosqueterosModel.Periodo_activa_por">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Periodo_activa_por">
               <MappingFragment StoreEntitySet="Periodo_activa_por">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
@@ -3449,16 +3449,16 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permisoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.Permiso">
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Personas">
-            <EntityTypeMapping TypeName="MosqueterosModel.Persona">
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="CorreoAlt" ColumnName="CorreoAlt" />
@@ -3472,8 +3472,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PlanDeMejoras">
-            <EntityTypeMapping TypeName="MosqueterosModel.PlanDeMejora">
+          <EntitySetMapping Name="PlanDeMejora">
+            <EntityTypeMapping TypeName="DataIntegradorModel.PlanDeMejora">
               <MappingFragment StoreEntitySet="PlanDeMejora">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -3482,16 +3482,16 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PlantillaAccionDeMejoras">
-            <EntityTypeMapping TypeName="MosqueterosModel.PlantillaAccionDeMejora">
+          <EntitySetMapping Name="PlantillaAccionDeMejora">
+            <EntityTypeMapping TypeName="DataIntegradorModel.PlantillaAccionDeMejora">
               <MappingFragment StoreEntitySet="PlantillaAccionDeMejora">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PlantillaObjetivoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.PlantillaObjetivo">
+          <EntitySetMapping Name="PlantillaObjetivo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.PlantillaObjetivo">
               <MappingFragment StoreEntitySet="PlantillaObjetivo">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -3500,8 +3500,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Preguntas">
-            <EntityTypeMapping TypeName="MosqueterosModel.Pregunta">
+          <EntitySetMapping Name="Pregunta">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta">
               <MappingFragment StoreEntitySet="Pregunta">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
@@ -3509,7 +3509,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pregunta_con_opciones">
-            <EntityTypeMapping TypeName="MosqueterosModel.Pregunta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones">
               <MappingFragment StoreEntitySet="Pregunta_con_opciones">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="TituloCampoObservacion" ColumnName="TituloCampoObservacion" />
@@ -3517,7 +3517,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pregunta_con_opciones_de_seleccion">
-            <EntityTypeMapping TypeName="MosqueterosModel.Pregunta_con_opciones_de_seleccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_opciones_de_seleccion">
               <MappingFragment StoreEntitySet="Pregunta_con_opciones_de_seleccion">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -3525,21 +3525,21 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pregunta_con_respuesta_libre">
-            <EntityTypeMapping TypeName="MosqueterosModel.Pregunta_con_respuesta_libre">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Pregunta_con_respuesta_libre">
               <MappingFragment StoreEntitySet="Pregunta_con_respuesta_libre">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Profesors">
-            <EntityTypeMapping TypeName="MosqueterosModel.Profesor">
+          <EntitySetMapping Name="Profesor">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Responde_respuesta_con_opciones">
-            <EntityTypeMapping TypeName="MosqueterosModel.Responde_respuesta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_con_opciones">
               <MappingFragment StoreEntitySet="Responde_respuesta_con_opciones">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -3554,7 +3554,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Responde_respuesta_libre">
-            <EntityTypeMapping TypeName="MosqueterosModel.Responde_respuesta_libre">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_libre">
               <MappingFragment StoreEntitySet="Responde_respuesta_libre">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -3569,7 +3569,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Respuestas_a_formulario">
-            <EntityTypeMapping TypeName="MosqueterosModel.Respuestas_a_formulario">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Respuestas_a_formulario">
               <MappingFragment StoreEntitySet="Respuestas_a_formulario">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -3581,8 +3581,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Seccions">
-            <EntityTypeMapping TypeName="MosqueterosModel.Seccion">
+          <EntitySetMapping Name="Seccion">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3590,7 +3590,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seccion_tiene_pregunta">
-            <EntityTypeMapping TypeName="MosqueterosModel.Seccion_tiene_pregunta">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Seccion_tiene_pregunta">
               <MappingFragment StoreEntitySet="Seccion_tiene_pregunta">
                 <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
                 <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
@@ -3599,21 +3599,21 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Si_no_nr">
-            <EntityTypeMapping TypeName="MosqueterosModel.Si_no_nr">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Si_no_nr">
               <MappingFragment StoreEntitySet="Si_no_nr">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TipoObjetivoes">
-            <EntityTypeMapping TypeName="MosqueterosModel.TipoObjetivo">
+          <EntitySetMapping Name="TipoObjetivo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.TipoObjetivo">
               <MappingFragment StoreEntitySet="TipoObjetivo">
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UnidadAcademicas">
-            <EntityTypeMapping TypeName="MosqueterosModel.UnidadAcademica">
+          <EntitySetMapping Name="UnidadAcademica">
+            <EntityTypeMapping TypeName="DataIntegradorModel.UnidadAcademica">
               <MappingFragment StoreEntitySet="UnidadAcademica">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3621,8 +3621,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="MosqueterosModel.Usuario">
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -3631,8 +3631,8 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioPerfils">
-            <EntityTypeMapping TypeName="MosqueterosModel.UsuarioPerfil">
+          <EntitySetMapping Name="UsuarioPerfil">
+            <EntityTypeMapping TypeName="DataIntegradorModel.UsuarioPerfil">
               <MappingFragment StoreEntitySet="UsuarioPerfil">
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="Perfil" ColumnName="Perfil" />
@@ -3641,7 +3641,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="CreadoPor" TypeName="MosqueterosModel.CreadoPor" StoreEntitySet="CreadoPor">
+          <AssociationSetMapping Name="CreadoPor" TypeName="DataIntegradorModel.CreadoPor" StoreEntitySet="CreadoPor">
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="Correo" ColumnName="corrFunc" />
             </EndProperty>
@@ -3649,7 +3649,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="codigo" ColumnName="codPlan" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Empadronado_en" TypeName="MosqueterosModel.Empadronado_en" StoreEntitySet="Empadronado_en">
+          <AssociationSetMapping Name="Empadronado_en" TypeName="DataIntegradorModel.Empadronado_en" StoreEntitySet="Empadronado_en">
             <EndProperty Name="Estudiante">
               <ScalarProperty Name="Correo" ColumnName="CorreoEstudiante" />
             </EndProperty>
@@ -3658,7 +3658,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Codigo" ColumnName="CodEnfasis" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Evalua" TypeName="MosqueterosModel.Evalua" StoreEntitySet="Evalua">
+          <AssociationSetMapping Name="Evalua" TypeName="DataIntegradorModel.Evalua" StoreEntitySet="Evalua">
             <EndProperty Name="Formulario">
               <ScalarProperty Name="Codigo" ColumnName="codFormulario" />
             </EndProperty>
@@ -3666,7 +3666,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="codigo" ColumnName="codPlan" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Imparte" TypeName="MosqueterosModel.Imparte" StoreEntitySet="Imparte">
+          <AssociationSetMapping Name="Imparte" TypeName="DataIntegradorModel.Imparte" StoreEntitySet="Imparte">
             <EndProperty Name="Grupo">
               <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
               <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
@@ -3677,7 +3677,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Correo" ColumnName="CorreoProfesor" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Inscrita_en" TypeName="MosqueterosModel.Inscrita_en" StoreEntitySet="Inscrita_en">
+          <AssociationSetMapping Name="Inscrita_en" TypeName="DataIntegradorModel.Inscrita_en" StoreEntitySet="Inscrita_en">
             <EndProperty Name="Carrera">
               <ScalarProperty Name="Codigo" ColumnName="CodCarrera" />
             </EndProperty>
@@ -3685,7 +3685,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Codigo" ColumnName="CodUnidadAc" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Matriculado_en" TypeName="MosqueterosModel.Matriculado_en" StoreEntitySet="Matriculado_en">
+          <AssociationSetMapping Name="Matriculado_en" TypeName="DataIntegradorModel.Matriculado_en" StoreEntitySet="Matriculado_en">
             <EndProperty Name="Estudiante">
               <ScalarProperty Name="Correo" ColumnName="CorreoEstudiante" />
             </EndProperty>
@@ -3696,7 +3696,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Anno" ColumnName="Anno" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Origina" TypeName="MosqueterosModel.Origina" StoreEntitySet="Origina">
+          <AssociationSetMapping Name="Origina" TypeName="DataIntegradorModel.Origina" StoreEntitySet="Origina">
             <EndProperty Name="PlanDeMejora">
               <ScalarProperty Name="codigo" ColumnName="codPlan" />
             </EndProperty>
@@ -3710,7 +3710,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Fecha" ColumnName="Fecha" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Pertenece_a" TypeName="MosqueterosModel.Pertenece_a" StoreEntitySet="Pertenece_a">
+          <AssociationSetMapping Name="Pertenece_a" TypeName="DataIntegradorModel.Pertenece_a" StoreEntitySet="Pertenece_a">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
             </EndProperty>
@@ -3719,7 +3719,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Codigo" ColumnName="CodEnfasis" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Responsable_De" TypeName="MosqueterosModel.Responsable_De" StoreEntitySet="Responsable_De">
+          <AssociationSetMapping Name="Responsable_De" TypeName="DataIntegradorModel.Responsable_De" StoreEntitySet="Responsable_De">
             <EndProperty Name="Accionable">
               <ScalarProperty Name="codPlan" ColumnName="codPlan" />
               <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
@@ -3730,7 +3730,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Correo" ColumnName="corrFunc" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Trabaja_en" TypeName="MosqueterosModel.Trabaja_en" StoreEntitySet="Trabaja_en">
+          <AssociationSetMapping Name="Trabaja_en" TypeName="DataIntegradorModel.Trabaja_en" StoreEntitySet="Trabaja_en">
             <EndProperty Name="UnidadAcademica">
               <ScalarProperty Name="Codigo" ColumnName="CodUnidadAcademica" />
             </EndProperty>
@@ -3738,7 +3738,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Correo" ColumnName="CorreoFuncionario" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="AsignadoA" TypeName="MosqueterosModel.AsignadoA" StoreEntitySet="AsignadoA">
+          <AssociationSetMapping Name="AsignadoA" TypeName="DataIntegradorModel.AsignadoA" StoreEntitySet="AsignadoA">
             <EndProperty Name="PlanDeMejora">
               <ScalarProperty Name="codigo" ColumnName="codPlan" />
             </EndProperty>
@@ -3746,29 +3746,29 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
               <ScalarProperty Name="Correo" ColumnName="corrProf" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="MosqueterosModel.Store.AgregarOpcion" />
-          <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="MosqueterosModel.Store.AgregarPreguntaConOpcion" />
-          <FunctionImportMapping FunctionImportName="AgregarPreguntas" FunctionName="MosqueterosModel.Store.AgregarPreguntas" />
-          <FunctionImportMapping FunctionImportName="AgregarPreguntaSeleccion" FunctionName="MosqueterosModel.Store.AgregarPreguntaSeleccion" />
-          <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="MosqueterosModel.Store.AgregarSeccion" />
-          <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="MosqueterosModel.Store.AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="DesviacionEstandarEscalar" FunctionName="MosqueterosModel.Store.DesviacionEstandarEscalar" />
-          <FunctionImportMapping FunctionImportName="LoginUsuario" FunctionName="MosqueterosModel.Store.LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="Mediana" FunctionName="MosqueterosModel.Store.Mediana" />
-          <FunctionImportMapping FunctionImportName="ObtenerOpcionesDePregunta" FunctionName="MosqueterosModel.Store.ObtenerOpcionesDePregunta">
+          <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaConOpcion" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntas" FunctionName="DataIntegradorModel.Store.AgregarPreguntas" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaSeleccion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaSeleccion" />
+          <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="DataIntegradorModel.Store.AgregarSeccion" />
+          <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="DataIntegradorModel.Store.AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="DesviacionEstandarEscalar" FunctionName="DataIntegradorModel.Store.DesviacionEstandarEscalar" />
+          <FunctionImportMapping FunctionImportName="LoginUsuario" FunctionName="DataIntegradorModel.Store.LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="Mediana" FunctionName="DataIntegradorModel.Store.Mediana" />
+          <FunctionImportMapping FunctionImportName="ObtenerOpcionesDePregunta" FunctionName="DataIntegradorModel.Store.ObtenerOpcionesDePregunta">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="MosqueterosModel.ObtenerOpcionesDePregunta_Result">
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerOpcionesDePregunta_Result">
                 <ScalarProperty Name="Texto" ColumnName="Texto" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="MosqueterosModel.Store.ObtenerPreguntasDeSeccion" />
-          <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="MosqueterosModel.Store.PopularSeccionesConPreguntas" />
-          <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="MosqueterosModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
-          <FunctionImportMapping FunctionImportName="SeccionesDeFormulario" FunctionName="MosqueterosModel.Store.SeccionesDeFormulario">
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion" />
+          <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
+          <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
+          <FunctionImportMapping FunctionImportName="SeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.SeccionesDeFormulario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="MosqueterosModel.SeccionesDeFormulario_Result">
+              <ComplexTypeMapping TypeName="DataIntegradorModel.SeccionesDeFormulario_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
               </ComplexTypeMapping>
@@ -3788,7 +3788,7 @@ warning 6002: The table/view 'Mosqueteros.dbo.AsignadoA' does not have a primary
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

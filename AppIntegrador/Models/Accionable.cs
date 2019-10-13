@@ -17,7 +17,7 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Accionable()
         {
-            this.Funcionarios = new HashSet<Funcionario>();
+            this.Funcionario = new HashSet<Funcionario>();
         }
     
         public int codPlan { get; set; }
@@ -30,6 +30,6 @@ namespace AppIntegrador.Models
     
         public virtual AccionDeMejora AccionDeMejora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Funcionario> Funcionarios { get; set; }
+        public virtual ICollection<Funcionario> Funcionario { get; set; }
     }
 }

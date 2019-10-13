@@ -138,7 +138,6 @@
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
-    <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\Pregunta_con_opciones_de_seleccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
@@ -179,7 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Enfasi.cs">
+    <Compile Include="Models\Enfasis.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Escalar.cs">
@@ -370,11 +369,6 @@
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Details.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
-    <Content Include="Views\PlanDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\Create.cshtml" />
     <Content Include="Views\AccionDeMejora\Delete.cshtml" />
     <Content Include="Views\AccionDeMejora\Details.cshtml" />

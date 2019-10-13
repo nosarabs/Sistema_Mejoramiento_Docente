@@ -17,8 +17,8 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Estudiante()
         {
-            this.Enfasis = new HashSet<Enfasi>();
-            this.Grupoes = new HashSet<Grupo>();
+            this.Enfasis = new HashSet<Enfasis>();
+            this.Grupo = new HashSet<Grupo>();
         }
     
         public string Correo { get; set; }
@@ -26,8 +26,8 @@ namespace AppIntegrador.Models
     
         public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enfasi> Enfasis { get; set; }
+        public virtual ICollection<Enfasis> Enfasis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupoes { get; set; }
+        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

@@ -17,16 +17,16 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Profesor()
         {
-            this.Grupoes = new HashSet<Grupo>();
-            this.PlanDeMejoras = new HashSet<PlanDeMejora>();
+            this.Grupo = new HashSet<Grupo>();
+            this.PlanDeMejora = new HashSet<PlanDeMejora>();
         }
     
         public string Correo { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupoes { get; set; }
+        public virtual ICollection<Grupo> Grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanDeMejora> PlanDeMejoras { get; set; }
+        public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
     }
 }
