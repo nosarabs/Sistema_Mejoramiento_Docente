@@ -222,7 +222,7 @@
         <EntityType Name="Opciones_seleccionadas_respuesta_con_opciones">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -232,7 +232,7 @@
             <PropertyRef Name="OpcionSeleccionada" />
           </Key>
           <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -244,7 +244,7 @@
         <EntityType Name="Origina">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -253,7 +253,7 @@
             <PropertyRef Name="codPlan" />
           </Key>
           <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -389,7 +389,7 @@
         <EntityType Name="Responde_respuesta_con_opciones">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -398,7 +398,7 @@
             <PropertyRef Name="PCodigo" />
           </Key>
           <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -410,7 +410,7 @@
         <EntityType Name="Responde_respuesta_libre">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -419,7 +419,7 @@
             <PropertyRef Name="PCodigo" />
           </Key>
           <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -445,7 +445,7 @@
         <EntityType Name="Respuestas_a_formulario">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -453,7 +453,7 @@
             <PropertyRef Name="Fecha" />
           </Key>
           <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -1047,7 +1047,7 @@
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1056,7 +1056,7 @@
             </Principal>
             <Dependent Role="Origina">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1195,7 +1195,7 @@
           <ReferentialConstraint>
             <Principal Role="Responde_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1205,7 +1205,7 @@
             </Principal>
             <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1295,7 +1295,7 @@
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1304,7 +1304,7 @@
             </Principal>
             <Dependent Role="Responde_respuesta_libre">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1331,7 +1331,7 @@
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1340,7 +1340,7 @@
             </Principal>
             <Dependent Role="Responde_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -1380,14 +1380,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespuestasUsuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Username" />
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
             </Principal>
             <Dependent Role="Respuestas_a_formulario">
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1781,7 +1781,7 @@
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
-            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Persona" EntitySet="Persona" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoPregunta" Association="Self.fkSeccionTienePreguntaCodigoPregunta">
@@ -1990,7 +1990,7 @@
         <EntityType Name="Opciones_seleccionadas_respuesta_con_opciones">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -2000,7 +2000,7 @@
             <PropertyRef Name="OpcionSeleccionada" />
           </Key>
           <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2076,6 +2076,7 @@
           <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Corre__114A936A" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__160F4887" FromRole="Persona" ToRole="Funcionario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__2739D489" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Persona" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="PlanDeMejora">
           <Key>
@@ -2160,7 +2161,7 @@
         <EntityType Name="Responde_respuesta_con_opciones">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -2169,7 +2170,7 @@
             <PropertyRef Name="PCodigo" />
           </Key>
           <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2184,7 +2185,7 @@
         <EntityType Name="Responde_respuesta_libre">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -2193,7 +2194,7 @@
             <PropertyRef Name="PCodigo" />
           </Key>
           <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2207,7 +2208,7 @@
         <EntityType Name="Respuestas_a_formulario">
           <Key>
             <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Username" />
+            <PropertyRef Name="Correo" />
             <PropertyRef Name="CSigla" />
             <PropertyRef Name="GNumero" />
             <PropertyRef Name="GAnno" />
@@ -2215,7 +2216,7 @@
             <PropertyRef Name="Fecha" />
           </Key>
           <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2223,9 +2224,9 @@
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Formulario" Relationship="Self.fkRespuestasFormulario" FromRole="Respuestas_a_formulario" ToRole="Formulario" />
           <NavigationProperty Name="Grupo" Relationship="Self.fkRespuestasGrupo" FromRole="Respuestas_a_formulario" ToRole="Grupo" />
+          <NavigationProperty Name="Persona" Relationship="Self.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Persona" />
           <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_con_opciones" />
           <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_libre" />
-          <NavigationProperty Name="Usuario" Relationship="Self.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Usuario" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Seccion">
@@ -2284,7 +2285,6 @@
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__2739D489" FromRole="Usuario" ToRole="Persona" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Usuario" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__3D2915A8" FromRole="Usuario" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="UsuarioPerfil">
@@ -2608,7 +2608,7 @@
           <ReferentialConstraint>
             <Principal Role="Responde_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -2618,7 +2618,7 @@
             </Principal>
             <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -2679,6 +2679,18 @@
             </Principal>
             <Dependent Role="Persona">
               <PropertyRef Name="Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespuestasUsuario">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="Respuestas_a_formulario">
+              <PropertyRef Name="Correo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2792,7 +2804,7 @@
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -2801,7 +2813,7 @@
             </Principal>
             <Dependent Role="Responde_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -2816,7 +2828,7 @@
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
@@ -2825,24 +2837,12 @@
             </Principal>
             <Dependent Role="Responde_respuesta_libre">
               <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Username" />
+              <PropertyRef Name="Correo" />
               <PropertyRef Name="CSigla" />
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GAnno" />
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespuestasUsuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Username" />
-            </Principal>
-            <Dependent Role="Respuestas_a_formulario">
-              <PropertyRef Name="Username" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3072,6 +3072,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
+          <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlantillaObj_TipoObj" Association="Self.FK_PlantillaObj_TipoObj">
             <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
             <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivo" />
@@ -3111,10 +3115,6 @@
           <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="Self.fkRespondeLibreRespuestasAFormulario">
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoSeccion" Association="Self.fkSeccionTienePreguntaCodigoSeccion">
             <End Role="Seccion" EntitySet="Seccion" />
@@ -3401,7 +3401,7 @@
             <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones">
               <MappingFragment StoreEntitySet="Opciones_seleccionadas_respuesta_con_opciones">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
@@ -3535,7 +3535,7 @@
             <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_con_opciones">
               <MappingFragment StoreEntitySet="Responde_respuesta_con_opciones">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
@@ -3550,7 +3550,7 @@
             <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_libre">
               <MappingFragment StoreEntitySet="Responde_respuesta_libre">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
@@ -3565,7 +3565,7 @@
             <EntityTypeMapping TypeName="DataIntegradorModel.Respuestas_a_formulario">
               <MappingFragment StoreEntitySet="Respuestas_a_formulario">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
@@ -3703,7 +3703,7 @@
             </EndProperty>
             <EndProperty Name="Respuestas_a_formulario">
               <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-              <ScalarProperty Name="Username" ColumnName="Username" />
+              <ScalarProperty Name="Correo" ColumnName="Correo" />
               <ScalarProperty Name="CSigla" ColumnName="CSigla" />
               <ScalarProperty Name="GNumero" ColumnName="GNumero" />
               <ScalarProperty Name="GAnno" ColumnName="GAnno" />
