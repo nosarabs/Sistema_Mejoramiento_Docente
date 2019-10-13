@@ -1480,6 +1480,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="ObtenerEmailUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsername" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
         </Function>
@@ -3038,6 +3042,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
+          <FunctionImport Name="ObtenerEmailUsuario">
+            <Parameter Name="pUsername" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3814,6 +3822,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               <ScalarProperty Name="codigo" ColumnName="codPlan" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
