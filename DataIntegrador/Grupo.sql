@@ -5,5 +5,5 @@
 	[Semestre] TINYINT NOT NULL,
 	[Anno] INT NOT NULL,
 	PRIMARY KEY (SiglaCurso, NumGrupo, Semestre, Anno),
-	FOREIGN KEY (SiglaCurso) REFERENCES Curso (Sigla)
+	FOREIGN KEY (SiglaCurso) REFERENCES Curso (Sigla) ON UPDATE CASCADE ON DELETE CASCADE
 )

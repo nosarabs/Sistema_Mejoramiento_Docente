@@ -134,7 +134,7 @@ namespace AppIntegrador.Controllers
                             cmd.CommandText = "dbo.AgregarPreguntaConOpcion";
                             cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
                             cmd.Parameters.Add(new SqlParameter("@type", 'U'));
-                            cmd.Parameters.Add(new SqlParameter("@texto", pregunta.Pregunta_con_opciones.Pregunta.Enunciado));
+                            cmd.Parameters.Add(new SqlParameter("@enunciado", pregunta.Pregunta_con_opciones.Pregunta.Enunciado));
                             cmd.Parameters.Add(new SqlParameter("@justificacion", pregunta.Pregunta_con_opciones.TituloCampoObservacion));
 
                             con.Open();

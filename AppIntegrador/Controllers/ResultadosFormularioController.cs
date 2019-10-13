@@ -92,7 +92,7 @@ namespace AppIntegrador.Controllers
 
             List<int> ejeY = new List<int>();
 
-            var numOpcion = 1;
+            var numOpcion = 0;
             // Iteracion sobre una lista nueva
             for (int index = minimo; index <= maximo; index += incremento)
             {
@@ -180,7 +180,7 @@ namespace AppIntegrador.Controllers
             List<int> respuestas = new List<int>();
 
 
-            for (int i = 1; i <= numOpciones; ++i)
+            for (int i = 0; i < numOpciones; ++i)
             {
                 respuestas.Add(
                     (from osrco in db.Opciones_seleccionadas_respuesta_con_opciones
@@ -201,7 +201,6 @@ namespace AppIntegrador.Controllers
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
-            int count = 0;
 
             var respuestas =    from rrco in db.Responde_respuesta_con_opciones
                                 where rrco.PCodigo == codigoPregunta
