@@ -202,7 +202,10 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
+    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
+    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

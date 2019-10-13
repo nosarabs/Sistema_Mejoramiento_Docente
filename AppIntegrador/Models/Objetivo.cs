@@ -24,27 +24,18 @@ public partial class Objetivo
 
     }
 
-    [Display(Name = "Código")]
     public int codPlan { get; set; }
     
-    [Display(Name = "Nombre")]
     public string nombre { get; set; }
 
-    [Display(Name = "Descripción")]
     public string descripcion { get; set; }
 
-    [Display(Name = "Inicio")]
-    [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
     public Nullable<System.DateTime> fechaInicio { get; set; }
 
-    [Display(Name = "Fin")]
-    [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
     public Nullable<System.DateTime> fechaFin { get; set; }
 
-    [Display(Name = "Nombre")]
     public string nombTipoObj { get; set; }
 
-    [Display(Name = "Código")]
     public Nullable<int> codPlantilla { get; set; }
 
 
