@@ -158,6 +158,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioPersona.cs" />
     <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">

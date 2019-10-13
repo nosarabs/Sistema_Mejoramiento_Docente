@@ -18,8 +18,20 @@ namespace AppIntegrador
         // GET: Users
         public ActionResult Index()
         {
-            var persona = db.Persona.Include(p => p.Estudiante).Include(p => p.Funcionario).Include(p => p.Usuario1);
-            return View(persona.ToList());
+            List<Usuario> Usuarios = db.Usuario.ToList();
+            List<Persona> Personas = db.Persona.ToList();
+
+            var usuarioPersona = from u in Usuarios
+                                 join p in Personas on u.Username equals p.Correo into table1
+                                 from p in table1.ToList()
+                                 select new UsuarioPersona
+                                 {
+                                     Usuario = u,
+                                     Persona = p
+                                 };
+
+            //var persona = db.Persona.Include(p => p.Estudiante).Include(p => p.Funcionario).Include(p => p.Usuario1);
+            return View(usuarioPersona);
         }
 
         // GET: Users/Details/5
