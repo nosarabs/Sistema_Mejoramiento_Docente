@@ -272,3 +272,36 @@ li a:hover {
 .Info-parrafo-fu {
     font-family: Arial;
 }
+
+/*Para Tablas*/
+
+.TablasSeccionesPlanesDeMejora {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
+    border: 1px solid #ddd;
+}
+
+.TablasSeccionesPlanesDeMejora th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ddd;
+    color: white;
+}
+
+.FilaTablasSeccionesPlanesDeMejora:hover {
+    background-color: #ddd;
+}
+
+/*Terminan tablas*/
+/*Estilos para modal*/
+
+.modal-content {
+    width: 600px;
+    margin: 30px auto;
+}
+
+/*Termina modal*/
