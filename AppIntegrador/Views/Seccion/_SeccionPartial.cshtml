@@ -5,40 +5,6 @@
 }
 
 
-
-@using (Html.BeginForm(FormMethod.Get))
-{
-    <h2>Banco de secciones</h2>
-    <div class="form-group">
-
-
-    </div>
-    //the following are search options
-    <b>
-        Opciones de búsqueda:
-    </b>
-
-    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
-        <input type="radio" name="sel" value="1" id="codigo"
-               onclick="enableElement(this.form.elements['inp1']);"> <text>Codigo</text>
-        <input type="text" name="inp1" disabled="disabled">
-
-        <input type="radio" name="sel" value="2"
-               onclick="enableElement(this.form.elements['inp2']);"><text>Nombre</text>
-        <input type="text" name="inp2" disabled="disabled">
-
-        <input type="submit"
-               name="submit"
-               value="Filtrar"
-               class="btn" />
-
-        <br />
-
-    </form>
-
-}
-<br />
-
 <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <tr>
         <th>
