@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
@@ -66,23 +67,18 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
        
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
         {
             crearFormulario.seccion = db.Seccion;
-            try
+            if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-
-                if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
+                if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
-                    db.Formulario.Add(formulario);
-                    db.SaveChanges();
                     return RedirectToAction("Create");
                 }
-            }
-            catch (Exception exception)
-            {
-                if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                else
                 {
+                    // Notifique que ocurrió un error
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
                     return View(crearFormulario);
                 }
@@ -166,7 +162,7 @@ namespace AppIntegrador.Controllers
         public class SeccionConOrden
         {
             // It is important to declare them public so they get returned
-            public string Nombre { get; set; }
+            public string Codigo { get; set; }
             public int Orden { get; set; }
         }
 
@@ -219,6 +215,51 @@ namespace AppIntegrador.Controllers
             }
 
             return Json(preguntasConOpciones.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "dbo.AgregarFormulario";
+                        cmd.Parameters.Add(new SqlParameter("@codigo", formulario.Codigo));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", formulario.Nombre));
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    catch (System.Data.SqlClient.SqlException)
+                    {
+                        return false;
+                    }
+                }
+
+                for(int index = 0; index < secciones.Count; ++index)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "dbo.AsociarSeccionConFormulario";
+                        cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
+                        cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
+                        cmd.Parameters.Add(new SqlParameter("@orden", index));
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+            }
+            return true;
         }
     }
 }
