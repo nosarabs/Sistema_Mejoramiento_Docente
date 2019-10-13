@@ -1,0 +1,190 @@
+﻿@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.indexPlanMejora = -1;
+}
+
+<div class="horizontalBoxes">
+    <div class="fullWidth">
+        <div class="verticalBoxes">
+            <div class="halfVerticalBox">
+                <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
+            </div>
+
+
+            <!-- Button trigger modal -->
+            <div class="halfVerticalBox">
+                <div class="createPlanButton">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Crear un nuevo Plan de Mejora
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Creación de Plan de Mejora</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="planesTable">
+        <table class='table table-bordered table-condensed table-striped table-hover'>
+            <tr >
+                <th>
+                    @Html.DisplayNameFor(model => model.codigo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaFin)
+                </th>
+                <th>
+                    Creado por:
+                </th>
+                <th>
+                    Asignado a:
+                </th>
+                <th>
+                    Opciones de Edición
+                </th>
+            </tr>
+
+            @foreach (var plan in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaFin)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+
+                    <td>
+                        <div class="verticalBoxes">
+                            <div>
+                                <!-- Boton para editar el plan de mejora -->
+                                <div class="createPlanButton">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar">
+                                        Editar
+                                    </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="exampleModalLabel">Edición del plan de mejora</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", null, new ViewDataDictionary { { "codigoPlan", plan.codigo } })
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <!-- Boton para editar el plan de mejora -->
+                                <div class="createPlanButton">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalBorrar">
+                                        Borrar
+                                    </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalBorrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="exampleModalLabel">Borrado del plan de mejora</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro que quieres borrar el plan de mejora?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Borar Plan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+    </div>
+
+
+    <div class="fullWidth">
+        <p class="impText">Objetivos</p>
+        <hr />
+    </div>
+
+
+    <div class="fullWidth">
+        <p class="impText">Acciones de Mejora</p>
+        <hr />
+    </div>
+
+
+
+    <div class="fullWidth">
+        <p class="impText">Accionables</p>
+        <hr />
+    </div>
+
+    <div class="verticalBoxes planButtons">
+        <button type="button" class="btn btn-warning">Editar</button>
+        <button type="button" class="btn btn-danger">Eliminar</button>
+    </div>
+</div>

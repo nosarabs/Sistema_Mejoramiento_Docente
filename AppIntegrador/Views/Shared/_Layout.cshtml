@@ -12,25 +12,31 @@
     {
         <div class="mainBar">
             <div class="item">
-                <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
+                <a href="https://www.ucr.ac.cr/" class="logo" target="_blank">
+                    <img src="~/Content/images/ucr_promo.png" alt="ucr logo" height="50px" />
+                </a>
             </div>
             <div class="item">
                 @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home" ,  new object { },new { @class = "mainBarText" })
             </div>
             <div class="item">
-                <ul>
-                    <li style="float:left"><a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a></li>
+                <ul class="mainBarList">
+                    <li style="float:left">
+                        <a class="active">@Html.ActionLink("About", "About", "Home", new object { }, new { @class = "mainBarText" })</a>
+                    </li>
                 </ul>
             </div>
             <div class="item">
                 <ul class="wrapper">
-                    
+
                     <li>
                         <div class="dropdown">
-                            <button class="dropbtn">@HttpContext.Current.User.Identity.Name</button>
+                            <button class="dropbtn mainBarDropdown">@HttpContext.Current.User.Identity.Name</button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                                <div class="mainBarText">
+                                    @Html.ActionLink("Salir", "Logout", "Home", new object { })
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -73,7 +79,7 @@
                             <div class="dropdown-content">
                                 @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanDeMejora")
                                 @Html.ActionLink("Acciones de mejora", "Index", "AccionDeMejora")
-                                @Html.ActionLink("Objetivos", "Index", "Objetivos")
+                                @Html.ActionLink("Objetivos", "Index", "Objetivo")
                             </div>
                         </div>
                     </li>

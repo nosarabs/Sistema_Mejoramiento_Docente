@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
         // GET: AccionDeMejora
         public ActionResult Index()
         {
-            var accionDeMejora = db.AccionDeMejora.Include(a => a.Objetivo);
+            var accionDeMejora = db.AccionDeMejora.Include(a => a.Objetivo).Include(a => a.PlantillaAccionDeMejora);
             return View(accionDeMejora.ToList());
         }
 
@@ -39,7 +39,8 @@ namespace AppIntegrador.Controllers
         // GET: AccionDeMejora/Create
         public ActionResult Create()
         {
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre");
+            ViewBag.codPlan = new SelectList(db.Objetivo, "codPlan", "descripcion");
+            ViewBag.codPlantilla = new SelectList(db.PlantillaAccionDeMejora, "codigo", "descripcion");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Create([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -56,8 +57,9 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //@TODO: 
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+
+            ViewBag.codPlan = new SelectList(db.Objetivo, "codPlan", "descripcion", accionDeMejora.codPlan);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaAccionDeMejora, "codigo", "descripcion", accionDeMejora.codPlantilla);
             return View(accionDeMejora);
         }
 
@@ -73,7 +75,8 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+            ViewBag.codPlan = new SelectList(db.Objetivo, "codPlan", "descripcion", accionDeMejora.codPlan);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaAccionDeMejora, "codigo", "descripcion", accionDeMejora.codPlantilla);
             return View(accionDeMejora);
         }
 
@@ -82,7 +85,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +93,8 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+            ViewBag.codPlan = new SelectList(db.Objetivo, "codPlan", "descripcion", accionDeMejora.codPlan);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaAccionDeMejora, "codigo", "descripcion", accionDeMejora.codPlantilla);
             return View(accionDeMejora);
         }
 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1804,7 +1804,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1870,7 +1871,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__2704CA5F" FromRole="Carrera" ToRole="Enfasis" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__0E6E26BF" FromRole="Carrera" ToRole="Enfasis" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Inscrita_en" FromRole="Carrera" ToRole="UnidadAcademica" />
         </EntityType>
         <EntityType Name="Curso">
@@ -1879,7 +1880,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__2EA5EC27" FromRole="Curso" ToRole="Grupo" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__160F4887" FromRole="Curso" ToRole="Grupo" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Pertenece_a" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Enfasis">
@@ -1890,9 +1891,9 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__2704CA5F" FromRole="Enfasis" ToRole="Carrera" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="Enfasis" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__0E6E26BF" FromRole="Enfasis" ToRole="Carrera" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__245D67DE" FromRole="Enfasis" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__3E1D39E1" FromRole="Enfasis" ToRole="UsuarioPerfil" />
           <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
           <NavigationProperty Name="Curso" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
         </EntityType>
@@ -1912,7 +1913,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Corre__28ED12D1" FromRole="Estudiante" ToRole="Persona" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Corre__10566F31" FromRole="Estudiante" ToRole="Persona" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Empadronado_en" FromRole="Estudiante" ToRole="Enfasis" />
           <NavigationProperty Name="Grupo" Relationship="Self.Matriculado_en" FromRole="Estudiante" ToRole="Grupo" />
         </EntityType>
@@ -1924,8 +1925,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorFormulario" FromRole="Formulario" ToRole="Activa_por" />
           <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.fkFormularioTieneSeccionCodigoFormulario" FromRole="Formulario" ToRole="Formulario_tiene_seccion" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasFormulario" FromRole="Formulario" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.Evalua" FromRole="Formulario" ToRole="PlanDeMejora" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.fkRespuestasFormulario" FromRole="Formulario" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="Formulario_tiene_seccion">
           <Key>
@@ -1943,8 +1944,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__2DB1C7EE" FromRole="Funcionario" ToRole="Persona" />
-          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__4589517F" FromRole="Funcionario" ToRole="Profesor" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__151B244E" FromRole="Funcionario" ToRole="Persona" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__2CF2ADDF" FromRole="Funcionario" ToRole="Profesor" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
           <NavigationProperty Name="Accionable" Relationship="Self.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
@@ -1961,10 +1962,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <Property Name="Anno" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorGrupo" FromRole="Grupo" ToRole="Activa_por" />
-          <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__7E62A77F" FromRole="Grupo" ToRole="Curso" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__160F4887" FromRole="Grupo" ToRole="Curso" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasGrupo" FromRole="Grupo" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
           <NavigationProperty Name="Estudiante" Relationship="Self.Matriculado_en" FromRole="Grupo" ToRole="Estudiante" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.fkRespuestasGrupo" FromRole="Grupo" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="Objetivo">
           <Key>
@@ -1993,13 +1994,36 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Texto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="Self.fkOpcionesCodigo" FromRole="Opciones_de_seleccion" ToRole="Pregunta_con_opciones_de_seleccion" />
         </EntityType>
+        <EntityType Name="Opciones_seleccionadas_respuesta_con_opciones">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="OpcionSeleccionada" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OpcionSeleccionada" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkOpcionesSeleccionadas" FromRole="Opciones_seleccionadas_respuesta_con_opciones" ToRole="Responde_respuesta_con_opciones" />
+        </EntityType>
         <EntityType Name="Perfil">
           <Key>
             <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__3B0BC30C" FromRole="Perfil" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__55BFB948" FromRole="Perfil" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__22751F6C" FromRole="Perfil" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__3D2915A8" FromRole="Perfil" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="PerfilPermiso">
           <Key>
@@ -2012,9 +2036,9 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="PermisoId" Type="Int32" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__3CF40B7E" FromRole="PerfilPermiso" ToRole="Enfasis" />
-          <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__3B0BC30C" FromRole="PerfilPermiso" ToRole="Perfil" />
-          <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__3BFFE745" FromRole="PerfilPermiso" ToRole="Permiso" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__245D67DE" FromRole="PerfilPermiso" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__22751F6C" FromRole="PerfilPermiso" ToRole="Perfil" />
+          <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__236943A5" FromRole="PerfilPermiso" ToRole="Permiso" />
         </EntityType>
         <EntityType Name="Periodo_activa_por">
           <Key>
@@ -2041,7 +2065,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__3BFFE745" FromRole="Permiso" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__236943A5" FromRole="Permiso" ToRole="PerfilPermiso" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -2056,10 +2080,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Apellido2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TipoIdentificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Corre__78A9CE29" FromRole="Persona" ToRole="Estudiante" />
-          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__7D6E8346" FromRole="Persona" ToRole="Funcionario" />
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__0E990F48" FromRole="Persona" ToRole="Usuario" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.fkRespuestasUsuario" FromRole="Persona" ToRole="Respuestas_a_formulario" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Corre__10566F31" FromRole="Persona" ToRole="Estudiante" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__151B244E" FromRole="Persona" ToRole="Funcionario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__2645B050" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Persona" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="PlanDeMejora">
           <Key>
@@ -2071,8 +2095,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Funcionario" Relationship="Self.CreadoPor" FromRole="PlanDeMejora" ToRole="Funcionario" />
           <NavigationProperty Name="Formulario" Relationship="Self.Evalua" FromRole="PlanDeMejora" ToRole="Formulario" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.Origina" FromRole="PlanDeMejora" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="Profesor" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.Origina" FromRole="PlanDeMejora" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="PlantillaAccionDeMejora">
           <Key>
@@ -2101,9 +2125,9 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Enunciado" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.fkPregOpcionesCodigo" FromRole="Pregunta" ToRole="Pregunta_con_opciones" />
           <NavigationProperty Name="Pregunta_con_respuesta_libre" Relationship="Self.fkResLibreCodigo" FromRole="Pregunta" ToRole="Pregunta_con_respuesta_libre" />
+          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_libre" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_con_opciones" />
           <NavigationProperty Name="Seccion_tiene_pregunta" Relationship="Self.fkSeccionTienePreguntaCodigoPregunta" FromRole="Pregunta" ToRole="Seccion_tiene_pregunta" />
-          <NavigationProperty Name="Responde_respuesta_libre" Relationship="DataIntegradorModel.fkRespondeLibreCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_libre" />
-          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="DataIntegradorModel.fkRespondeOpcionesCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_con_opciones" />
         </EntityType>
         <EntityType Name="Pregunta_con_opciones">
           <Key>
@@ -2137,9 +2161,80 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__4589517F" FromRole="Profesor" ToRole="Funcionario" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__2CF2ADDF" FromRole="Profesor" ToRole="Funcionario" />
           <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.AsignadoA" FromRole="Profesor" ToRole="PlanDeMejora" />
+        </EntityType>
+        <EntityType Name="Responde_respuesta_con_opciones">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Justificacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opciones_seleccionadas_respuesta_con_opciones" Relationship="Self.fkOpcionesSeleccionadas" FromRole="Responde_respuesta_con_opciones" ToRole="Opciones_seleccionadas_respuesta_con_opciones" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeOpcionesCodigo" FromRole="Responde_respuesta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Responde_respuesta_con_opciones" ToRole="Respuestas_a_formulario" />
+        </EntityType>
+        <EntityType Name="Responde_respuesta_libre">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeLibreCodigo" FromRole="Responde_respuesta_libre" ToRole="Pregunta" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Responde_respuesta_libre" ToRole="Respuestas_a_formulario" />
+        </EntityType>
+        <EntityType Name="Respuestas_a_formulario">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Formulario" Relationship="Self.fkRespuestasFormulario" FromRole="Respuestas_a_formulario" ToRole="Formulario" />
+          <NavigationProperty Name="Grupo" Relationship="Self.fkRespuestasGrupo" FromRole="Respuestas_a_formulario" ToRole="Grupo" />
+          <NavigationProperty Name="Persona" Relationship="Self.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Persona" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_con_opciones" />
+          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_libre" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Seccion">
           <Key>
@@ -2183,8 +2278,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__53D770D6" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
-          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__53D770D6" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__3B40CD36" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
+          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__3B40CD36" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
           <NavigationProperty Name="Carrera" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
           <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
         </EntityType>
@@ -2196,8 +2291,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__0E990F48" FromRole="Usuario" ToRole="Persona" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__24885067" FromRole="Usuario" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__2645B050" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__3C34F16F" FromRole="Usuario" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="UsuarioPerfil">
           <Key>
@@ -2210,9 +2305,9 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__56B3DD81" FromRole="UsuarioPerfil" ToRole="Enfasis" />
-          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__55BFB948" FromRole="UsuarioPerfil" ToRole="Perfil" />
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__54CB950F" FromRole="UsuarioPerfil" ToRole="Usuario" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__3E1D39E1" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__3D2915A8" FromRole="UsuarioPerfil" ToRole="Perfil" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__3C34F16F" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_Accionable_AccionDeMejora">
           <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1" />
@@ -2306,7 +2401,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Enfasis__CodCarr__2704CA5F">
+        <Association Name="FK__Enfasis__CodCarr__0E6E26BF">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2320,7 +2415,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grupo__SiglaCurs__2EA5EC27">
+        <Association Name="FK__Grupo__SiglaCurs__160F4887">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2334,7 +2429,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPermiso__3CF40B7E">
+        <Association Name="FK__PerfilPermiso__245D67DE">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2350,7 +2445,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__56B3DD81">
+        <Association Name="FK__UsuarioPerfil__3E1D39E1">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2380,7 +2475,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Estudiant__Corre__28ED12D1">
+        <Association Name="FK__Estudiant__Corre__10566F31">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2406,6 +2501,18 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkRespuestasFormulario">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Respuestas_a_formulario">
+              <PropertyRef Name="FCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkFormularioTieneSeccionCodigoSeccion">
           <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
           <End Role="Formulario_tiene_seccion" Type="Self.Formulario_tiene_seccion" Multiplicity="*" />
@@ -2418,7 +2525,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Funcionar__Corre__2DB1C7EE">
+        <Association Name="FK__Funcionar__Corre__151B244E">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2432,7 +2539,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profesor__Correo__4589517F">
+        <Association Name="FK__Profesor__Correo__2CF2ADDF">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2443,6 +2550,24 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Principal>
             <Dependent Role="Profesor">
               <PropertyRef Name="Correo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespuestasGrupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="NumGrupo" />
+              <PropertyRef Name="Semestre" />
+              <PropertyRef Name="Anno" />
+            </Principal>
+            <Dependent Role="Respuestas_a_formulario">
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="GAnno" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2484,7 +2609,33 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Perfi__0AC87E64">
+        <Association Name="fkOpcionesSeleccionadas">
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="1" />
+          <End Role="Opciones_seleccionadas_respuesta_con_opciones" Type="Self.Opciones_seleccionadas_respuesta_con_opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responde_respuesta_con_opciones">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="PCodigo" />
+            </Principal>
+            <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PerfilPer__Perfi__22751F6C">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2498,7 +2649,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__55BFB948">
+        <Association Name="FK__UsuarioPe__Perfi__3D2915A8">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2512,7 +2663,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Permi__3BFFE745">
+        <Association Name="FK__PerfilPer__Permi__236943A5">
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2526,7 +2677,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__Usuario__3EDC53F0">
+        <Association Name="FK__Persona__Usuario__2645B050">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2535,6 +2686,18 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Principal>
             <Dependent Role="Persona">
               <PropertyRef Name="Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespuestasUsuario">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="Respuestas_a_formulario">
+              <PropertyRef Name="Correo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2578,6 +2741,30 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkRespondeLibreCodigo">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_libre">
+              <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespondeOpcionesCodigo">
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pregunta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_con_opciones">
+              <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkSeccionTienePreguntaCodigoPregunta">
           <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
           <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
@@ -2618,6 +2805,54 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkRespondeOpcionesRespuestasAFormulario">
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1" />
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Respuestas_a_formulario">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_con_opciones">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespondeLibreRespuestasAFormulario">
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1" />
+          <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Respuestas_a_formulario">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_libre">
+              <PropertyRef Name="FCodigo" />
+              <PropertyRef Name="Correo" />
+              <PropertyRef Name="CSigla" />
+              <PropertyRef Name="GNumero" />
+              <PropertyRef Name="GAnno" />
+              <PropertyRef Name="GSemestre" />
+              <PropertyRef Name="Fecha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkSeccionTienePreguntaCodigoSeccion">
           <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
           <End Role="Seccion_tiene_pregunta" Type="Self.Seccion_tiene_pregunta" Multiplicity="*" />
@@ -2630,7 +2865,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__53D770D6">
+        <Association Name="FK__UnidadAca__Super__3B40CD36">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2642,7 +2877,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__54CB950F">
+        <Association Name="FK__UsuarioPe__Usuar__3C34F16F">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2680,6 +2915,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
         </Association>
+        <Association Name="Origina">
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
+        </Association>
         <Association Name="Pertenece_a">
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
@@ -2696,7 +2935,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="DataIntegradorEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Accionable" EntityType="Self.Accionable" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" />
@@ -2712,6 +2951,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <EntitySet Name="Grupo" EntityType="Self.Grupo" />
           <EntitySet Name="Objetivo" EntityType="Self.Objetivo" />
           <EntitySet Name="Opciones_de_seleccion" EntityType="Self.Opciones_de_seleccion" />
+          <EntitySet Name="Opciones_seleccionadas_respuesta_con_opciones" EntityType="Self.Opciones_seleccionadas_respuesta_con_opciones" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" />
           <EntitySet Name="PerfilPermiso" EntityType="Self.PerfilPermiso" />
           <EntitySet Name="Periodo_activa_por" EntityType="Self.Periodo_activa_por" />
@@ -2725,6 +2965,9 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <EntitySet Name="Pregunta_con_opciones_de_seleccion" EntityType="Self.Pregunta_con_opciones_de_seleccion" />
           <EntitySet Name="Pregunta_con_respuesta_libre" EntityType="Self.Pregunta_con_respuesta_libre" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+          <EntitySet Name="Responde_respuesta_con_opciones" EntityType="Self.Responde_respuesta_con_opciones" />
+          <EntitySet Name="Responde_respuesta_libre" EntityType="Self.Responde_respuesta_libre" />
+          <EntitySet Name="Respuestas_a_formulario" EntityType="Self.Respuestas_a_formulario" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
           <EntitySet Name="Seccion_tiene_pregunta" EntityType="Self.Seccion_tiene_pregunta" />
           <EntitySet Name="Si_no_nr" EntityType="Self.Si_no_nr" />
@@ -2756,19 +2999,19 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Activa_por" EntitySet="Activa_por" />
             <End Role="Periodo_activa_por" EntitySet="Periodo_activa_por" />
           </AssociationSet>
-          <AssociationSet Name="FK__Enfasis__CodCarr__2704CA5F" Association="Self.FK__Enfasis__CodCarr__2704CA5F">
+          <AssociationSet Name="FK__Enfasis__CodCarr__0E6E26BF" Association="Self.FK__Enfasis__CodCarr__0E6E26BF">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grupo__SiglaCurs__2EA5EC27" Association="Self.FK__Grupo__SiglaCurs__2EA5EC27">
+          <AssociationSet Name="FK__Grupo__SiglaCurs__160F4887" Association="Self.FK__Grupo__SiglaCurs__160F4887">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPermiso__3CF40B7E" Association="Self.FK__PerfilPermiso__3CF40B7E">
+          <AssociationSet Name="FK__PerfilPermiso__245D67DE" Association="Self.FK__PerfilPermiso__245D67DE">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__56B3DD81" Association="Self.FK__UsuarioPerfil__56B3DD81">
+          <AssociationSet Name="FK__UsuarioPerfil__3E1D39E1" Association="Self.FK__UsuarioPerfil__3E1D39E1">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -2776,7 +3019,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
             <End Role="Escalar" EntitySet="Escalar" />
           </AssociationSet>
-          <AssociationSet Name="FK__Estudiant__Corre__28ED12D1" Association="Self.FK__Estudiant__Corre__28ED12D1">
+          <AssociationSet Name="FK__Estudiant__Corre__10566F31" Association="Self.FK__Estudiant__Corre__10566F31">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
@@ -2784,17 +3027,25 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
+          <AssociationSet Name="fkRespuestasFormulario" Association="Self.fkRespuestasFormulario">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
+          </AssociationSet>
           <AssociationSet Name="fkFormularioTieneSeccionCodigoSeccion" Association="Self.fkFormularioTieneSeccionCodigoSeccion">
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Funcionar__Corre__2DB1C7EE" Association="Self.FK__Funcionar__Corre__2DB1C7EE">
+          <AssociationSet Name="FK__Funcionar__Corre__151B244E" Association="Self.FK__Funcionar__Corre__151B244E">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profesor__Correo__4589517F" Association="Self.FK__Profesor__Correo__4589517F">
+          <AssociationSet Name="FK__Profesor__Correo__2CF2ADDF" Association="Self.FK__Profesor__Correo__2CF2ADDF">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespuestasGrupo" Association="Self.fkRespuestasGrupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Objetivo_PlantillaObjetivo" Association="Self.FK_Objetivo_PlantillaObjetivo">
             <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivo" />
@@ -2808,21 +3059,29 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
             <End Role="Opciones_de_seleccion" EntitySet="Opciones_de_seleccion" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Perfi__0AC87E64" Association="Self.FK__PerfilPer__Perfi__0AC87E64">
+          <AssociationSet Name="fkOpcionesSeleccionadas" Association="Self.fkOpcionesSeleccionadas">
+            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+            <End Role="Opciones_seleccionadas_respuesta_con_opciones" EntitySet="Opciones_seleccionadas_respuesta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PerfilPer__Perfi__22751F6C" Association="Self.FK__PerfilPer__Perfi__22751F6C">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__55BFB948" Association="Self.FK__UsuarioPe__Perfi__55BFB948">
+          <AssociationSet Name="FK__UsuarioPe__Perfi__3D2915A8" Association="Self.FK__UsuarioPe__Perfi__3D2915A8">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Permi__3BFFE745" Association="Self.FK__PerfilPer__Permi__3BFFE745">
+          <AssociationSet Name="FK__PerfilPer__Permi__236943A5" Association="Self.FK__PerfilPer__Permi__236943A5">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__Usuario__3EDC53F0" Association="Self.FK__Persona__Usuario__3EDC53F0">
+          <AssociationSet Name="FK__Persona__Usuario__2645B050" Association="Self.FK__Persona__Usuario__2645B050">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_PlantillaObj_TipoObj" Association="Self.FK_PlantillaObj_TipoObj">
             <End Role="TipoObjetivo" EntitySet="TipoObjetivo" />
@@ -2836,6 +3095,14 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
           </AssociationSet>
+          <AssociationSet Name="fkRespondeLibreCodigo" Association="Self.fkRespondeLibreCodigo">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespondeOpcionesCodigo" Association="Self.fkRespondeOpcionesCodigo">
+            <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+          </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoPregunta" Association="Self.fkSeccionTienePreguntaCodigoPregunta">
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
@@ -2848,15 +3115,23 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
+          <AssociationSet Name="fkRespondeOpcionesRespuestasAFormulario" Association="Self.fkRespondeOpcionesRespuestasAFormulario">
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
+            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="Self.fkRespondeLibreRespuestasAFormulario">
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
+            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
+          </AssociationSet>
           <AssociationSet Name="fkSeccionTienePreguntaCodigoSeccion" Association="Self.fkSeccionTienePreguntaCodigoSeccion">
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__53D770D6" Association="Self.FK__UnidadAca__Super__53D770D6">
+          <AssociationSet Name="FK__UnidadAca__Super__3B40CD36" Association="Self.FK__UnidadAca__Super__3B40CD36">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__54CB950F" Association="Self.FK__UsuarioPe__Usuar__54CB950F">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__3C34F16F" Association="Self.FK__UsuarioPe__Usuar__3C34F16F">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -2883,6 +3158,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <AssociationSet Name="Matriculado_en" Association="Self.Matriculado_en">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="Origina" Association="Self.Origina">
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
           <AssociationSet Name="Pertenece_a" Association="Self.Pertenece_a">
             <End Role="Curso" EntitySet="Curso" />
@@ -2950,10 +3229,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-          <Parameter Name="questionCode" Mode="In" Type="String" />
+            <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-          <Parameter Name="sectionCode" Mode="In" Type="String" />
+            <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
@@ -2966,78 +3245,8 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
-          <Parameter Name="CodForm" Mode="In" Type="String" />
+            <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DataIntegradorModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DataIntegradorModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="Opciones_seleccionadas_respuesta_con_opciones" EntityType="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones" />
-          <EntitySet Name="Responde_respuesta_con_opciones" EntityType="DataIntegradorModel.Responde_respuesta_con_opciones" />
-          <EntitySet Name="Responde_respuesta_libre" EntityType="DataIntegradorModel.Responde_respuesta_libre" />
-          <EntitySet Name="Respuestas_a_formulario" EntityType="DataIntegradorModel.Respuestas_a_formulario" />
-          <AssociationSet Name="fkRespuestasFormulario" Association="DataIntegradorModel.fkRespuestasFormulario">
-            <End Role="Formulario" EntitySet="Formulario" />
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespuestasGrupo" Association="DataIntegradorModel.fkRespuestasGrupo">
-            <End Role="Grupo" EntitySet="Grupo" />
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-          </AssociationSet>
-          <AssociationSet Name="fkOpcionesSeleccionadas" Association="DataIntegradorModel.fkOpcionesSeleccionadas">
-            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
-            <End Role="Opciones_seleccionadas_respuesta_con_opciones" EntitySet="Opciones_seleccionadas_respuesta_con_opciones" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespuestasUsuario" Association="DataIntegradorModel.fkRespuestasUsuario">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespondeLibreCodigo" Association="DataIntegradorModel.fkRespondeLibreCodigo">
-            <End Role="Pregunta" EntitySet="Pregunta" />
-            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespondeOpcionesCodigo" Association="DataIntegradorModel.fkRespondeOpcionesCodigo">
-            <End Role="Pregunta" EntitySet="Pregunta" />
-            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespondeOpcionesRespuestasAFormulario" Association="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario">
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
-          </AssociationSet>
-          <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario">
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
-          </AssociationSet>
-          <AssociationSet Name="Origina" Association="DataIntegradorModel.Origina">
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
-            <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3047,261 +3256,12 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="Opciones_seleccionadas_respuesta_con_opciones">
-          <Key>
-            <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Correo" />
-            <PropertyRef Name="CSigla" />
-            <PropertyRef Name="GNumero" />
-            <PropertyRef Name="GAnno" />
-            <PropertyRef Name="GSemestre" />
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="PCodigo" />
-            <PropertyRef Name="OpcionSeleccionada" />
-          </Key>
-          <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="GNumero" Type="Byte" Nullable="false" />
-          <Property Name="GAnno" Type="Int32" Nullable="false" />
-          <Property Name="GSemestre" Type="Byte" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="OpcionSeleccionada" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="DataIntegradorModel.fkOpcionesSeleccionadas" FromRole="Opciones_seleccionadas_respuesta_con_opciones" ToRole="Responde_respuesta_con_opciones" />
-        </EntityType>
-        <EntityType Name="Responde_respuesta_con_opciones">
-          <Key>
-            <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Correo" />
-            <PropertyRef Name="CSigla" />
-            <PropertyRef Name="GNumero" />
-            <PropertyRef Name="GAnno" />
-            <PropertyRef Name="GSemestre" />
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="PCodigo" />
-          </Key>
-          <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="GNumero" Type="Byte" Nullable="false" />
-          <Property Name="GAnno" Type="Int32" Nullable="false" />
-          <Property Name="GSemestre" Type="Byte" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Justificacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Opciones_seleccionadas_respuesta_con_opciones" Relationship="DataIntegradorModel.fkOpcionesSeleccionadas" FromRole="Responde_respuesta_con_opciones" ToRole="Opciones_seleccionadas_respuesta_con_opciones" />
-          <NavigationProperty Name="Pregunta" Relationship="DataIntegradorModel.fkRespondeOpcionesCodigo" FromRole="Responde_respuesta_con_opciones" ToRole="Pregunta" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario" FromRole="Responde_respuesta_con_opciones" ToRole="Respuestas_a_formulario" />
-        </EntityType>
-        <EntityType Name="Responde_respuesta_libre">
-          <Key>
-            <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Correo" />
-            <PropertyRef Name="CSigla" />
-            <PropertyRef Name="GNumero" />
-            <PropertyRef Name="GAnno" />
-            <PropertyRef Name="GSemestre" />
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="PCodigo" />
-          </Key>
-          <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="GNumero" Type="Byte" Nullable="false" />
-          <Property Name="GAnno" Type="Int32" Nullable="false" />
-          <Property Name="GSemestre" Type="Byte" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pregunta" Relationship="DataIntegradorModel.fkRespondeLibreCodigo" FromRole="Responde_respuesta_libre" ToRole="Pregunta" />
-          <NavigationProperty Name="Respuestas_a_formulario" Relationship="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" FromRole="Responde_respuesta_libre" ToRole="Respuestas_a_formulario" />
-        </EntityType>
-        <EntityType Name="Respuestas_a_formulario">
-          <Key>
-            <PropertyRef Name="FCodigo" />
-            <PropertyRef Name="Correo" />
-            <PropertyRef Name="CSigla" />
-            <PropertyRef Name="GNumero" />
-            <PropertyRef Name="GAnno" />
-            <PropertyRef Name="GSemestre" />
-            <PropertyRef Name="Fecha" />
-          </Key>
-          <Property Name="FCodigo" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CSigla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="GNumero" Type="Byte" Nullable="false" />
-          <Property Name="GAnno" Type="Int32" Nullable="false" />
-          <Property Name="GSemestre" Type="Byte" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Formulario" Relationship="DataIntegradorModel.fkRespuestasFormulario" FromRole="Respuestas_a_formulario" ToRole="Formulario" />
-          <NavigationProperty Name="Grupo" Relationship="DataIntegradorModel.fkRespuestasGrupo" FromRole="Respuestas_a_formulario" ToRole="Grupo" />
-          <NavigationProperty Name="Persona" Relationship="DataIntegradorModel.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Persona" />
-          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_con_opciones" />
-          <NavigationProperty Name="Responde_respuesta_libre" Relationship="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_libre" />
-          <NavigationProperty Name="PlanDeMejora" Relationship="DataIntegradorModel.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
-        </EntityType>
-        <Association Name="fkRespuestasFormulario">
-          <End Type="DataIntegradorModel.Formulario" Role="Formulario" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Formulario">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Respuestas_a_formulario">
-              <PropertyRef Name="FCodigo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespuestasGrupo">
-          <End Type="DataIntegradorModel.Grupo" Role="Grupo" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Grupo">
-              <PropertyRef Name="SiglaCurso" />
-              <PropertyRef Name="NumGrupo" />
-              <PropertyRef Name="Semestre" />
-              <PropertyRef Name="Anno" />
-            </Principal>
-            <Dependent Role="Respuestas_a_formulario">
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="GAnno" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkOpcionesSeleccionadas">
-          <End Type="DataIntegradorModel.Responde_respuesta_con_opciones" Role="Responde_respuesta_con_opciones" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones" Role="Opciones_seleccionadas_respuesta_con_opciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Responde_respuesta_con_opciones">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-              <PropertyRef Name="PCodigo" />
-            </Principal>
-            <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-              <PropertyRef Name="PCodigo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespuestasUsuario">
-          <End Type="DataIntegradorModel.Persona" Role="Persona" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="Correo" />
-            </Principal>
-            <Dependent Role="Respuestas_a_formulario">
-              <PropertyRef Name="Correo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespondeLibreCodigo">
-          <End Type="DataIntegradorModel.Pregunta" Role="Pregunta" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Responde_respuesta_libre" Role="Responde_respuesta_libre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pregunta">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Responde_respuesta_libre">
-              <PropertyRef Name="PCodigo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespondeOpcionesCodigo">
-          <End Type="DataIntegradorModel.Pregunta" Role="Pregunta" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Responde_respuesta_con_opciones" Role="Responde_respuesta_con_opciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pregunta">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Responde_respuesta_con_opciones">
-              <PropertyRef Name="PCodigo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespondeOpcionesRespuestasAFormulario">
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Responde_respuesta_con_opciones" Role="Responde_respuesta_con_opciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Respuestas_a_formulario">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-            </Principal>
-            <Dependent Role="Responde_respuesta_con_opciones">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkRespondeLibreRespuestasAFormulario">
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="1" />
-          <End Type="DataIntegradorModel.Responde_respuesta_libre" Role="Responde_respuesta_libre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Respuestas_a_formulario">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-            </Principal>
-            <Dependent Role="Responde_respuesta_libre">
-              <PropertyRef Name="FCodigo" />
-              <PropertyRef Name="Correo" />
-              <PropertyRef Name="CSigla" />
-              <PropertyRef Name="GNumero" />
-              <PropertyRef Name="GAnno" />
-              <PropertyRef Name="GSemestre" />
-              <PropertyRef Name="Fecha" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Origina">
-          <End Type="DataIntegradorModel.PlanDeMejora" Role="PlanDeMejora" Multiplicity="*" />
-          <End Type="DataIntegradorModel.Respuestas_a_formulario" Role="Respuestas_a_formulario" Multiplicity="*" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="DataIntegradorEntities">
+        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="C__RefactorLog">
             <EntityTypeMapping TypeName="DataIntegradorModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
@@ -3444,6 +3404,21 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Opciones_seleccionadas_respuesta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones">
+              <MappingFragment StoreEntitySet="Opciones_seleccionadas_respuesta_con_opciones">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Perfil">
             <EntityTypeMapping TypeName="DataIntegradorModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
@@ -3563,6 +3538,49 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Responde_respuesta_con_opciones">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_con_opciones">
+              <MappingFragment StoreEntitySet="Responde_respuesta_con_opciones">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responde_respuesta_libre">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_libre">
+              <MappingFragment StoreEntitySet="Responde_respuesta_libre">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Respuestas_a_formulario">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Respuestas_a_formulario">
+              <MappingFragment StoreEntitySet="Respuestas_a_formulario">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Seccion">
             <EntityTypeMapping TypeName="DataIntegradorModel.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
@@ -3678,6 +3696,20 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               <ScalarProperty Name="Anno" ColumnName="Anno" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="Origina" TypeName="DataIntegradorModel.Origina" StoreEntitySet="Origina">
+            <EndProperty Name="PlanDeMejora">
+              <ScalarProperty Name="codigo" ColumnName="codPlan" />
+            </EndProperty>
+            <EndProperty Name="Respuestas_a_formulario">
+              <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+              <ScalarProperty Name="Correo" ColumnName="Correo" />
+              <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+              <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+              <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+              <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+              <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="Pertenece_a" TypeName="DataIntegradorModel.Pertenece_a" StoreEntitySet="Pertenece_a">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
@@ -3742,79 +3774,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Opciones_seleccionadas_respuesta_con_opciones">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones">
-              <MappingFragment StoreEntitySet="Opciones_seleccionadas_respuesta_con_opciones">
-                <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
-                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Responde_respuesta_con_opciones">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_con_opciones">
-              <MappingFragment StoreEntitySet="Responde_respuesta_con_opciones">
-                <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
-                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Responde_respuesta_libre">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Responde_respuesta_libre">
-              <MappingFragment StoreEntitySet="Responde_respuesta_libre">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Respuestas_a_formulario">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Respuestas_a_formulario">
-              <MappingFragment StoreEntitySet="Respuestas_a_formulario">
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Origina" TypeName="DataIntegradorModel.Origina" StoreEntitySet="Origina">
-            <EndProperty Name="Respuestas_a_formulario">
-              <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-              <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-              <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-              <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-              <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-              <ScalarProperty Name="Correo" ColumnName="Correo" />
-              <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-            </EndProperty>
-            <EndProperty Name="PlanDeMejora">
-              <ScalarProperty Name="codigo" ColumnName="codPlan" />
-            </EndProperty>
-          </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

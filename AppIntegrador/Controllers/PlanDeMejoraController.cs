@@ -10,118 +10,112 @@ using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
-    public class ObjetivosController : Controller
+    public class PlanDeMejoraController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        // GET: Objetivos
+        // GET: PlanDeMejora
         public ActionResult Index()
         {
-            //var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
-            //return View(objetivo.ToList());
-
-            return View();
+            return View(db.PlanDeMejora.ToList());
         }
 
-        // GET: Objetivos/Details/5
+        public IEnumerable<Objetivo> totalObjetivos() {
+            var totalObjetivosDePlan = this.db.Objetivo.ToList();
+            return totalObjetivosDePlan;
+        }
+
+        // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
-            if (objetivo == null)
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            if (planDeMejora == null)
             {
                 return HttpNotFound();
             }
-            return View(objetivo);
+            return View(planDeMejora);
         }
 
-        // GET: Objetivos/Create
+        // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre");
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion");
             return View();
         }
 
-        // POST: Objetivos/Create
+        // POST: PlanDeMejora/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
-                db.Objetivo.Add(objetivo);
+                db.PlanDeMejora.Add(planDeMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
-            return View(objetivo);
+            return View(planDeMejora);
         }
 
-        // GET: Objetivos/Edit/5
+        // GET: PlanDeMejora/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
-            if (objetivo == null)
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            if (planDeMejora == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
-            return View(objetivo);
+            return View(planDeMejora);
         }
 
-        // POST: Objetivos/Edit/5
+        // POST: PlanDeMejora/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Edit([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(objetivo).State = EntityState.Modified;
+                db.Entry(planDeMejora).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
-            return View(objetivo);
+            return View(planDeMejora);
         }
 
-        // GET: Objetivos/Delete/5
+        // GET: PlanDeMejora/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
-            if (objetivo == null)
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            if (planDeMejora == null)
             {
                 return HttpNotFound();
             }
-            return View(objetivo);
+            return View(planDeMejora);
         }
 
-        // POST: Objetivos/Delete/5
+        // POST: PlanDeMejora/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Objetivo objetivo = db.Objetivo.Find(id);
-            db.Objetivo.Remove(objetivo);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            db.PlanDeMejora.Remove(planDeMejora);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppIntegrador.Models.AccionDeMejora>
+﻿@model IEnumerable<AppIntegrador.Models.Objetivo>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,19 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.fechaInicio)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.fechaFin)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Objetivo.descripcion)
+            @Html.DisplayNameFor(model => model.PlantillaObjetivo.nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PlantillaAccionDeMejora.descripcion)
+            @Html.DisplayNameFor(model => model.TipoObjetivo.nombre)
         </th>
         <th></th>
     </tr>
@@ -29,16 +32,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.fechaInicio)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.fechaFin)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Objetivo.descripcion)
+            @Html.DisplayFor(modelItem => item.PlantillaObjetivo.nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PlantillaAccionDeMejora.descripcion)
+            @Html.DisplayFor(modelItem => item.TipoObjetivo.nombre)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

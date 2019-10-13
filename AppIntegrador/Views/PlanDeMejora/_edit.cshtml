@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
+
+@{
+    ViewBag.Title = "Edit";
+    int codigoTemp = this.ViewData.ContainsKey("codigoPlan") ? Convert.ToInt32(this.ViewData["codigoPlan"]) : 0;
+    AppIntegrador.Models.PlanDeMejora planModel = new AppIntegrador.Models.PlanDeMejora();
+    //foreach (var modelito in Model)
+    //{
+    //    if (modelito.codigo == codigoTemp)
+    //    {
+    //        planModel = modelito;
+    //    }
+    //}
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => planModel.nombre, "Nombre")
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => planModel.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => planModel.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => planModel.fechaInicio, "Fecha Inicio")
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => planModel.fechaInicio, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => planModel.fechaFin, "Fecha Finalización")
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => planModel.fechaFin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Editar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+    console.log(@codigoTemp);
+</script>
