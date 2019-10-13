@@ -135,16 +135,27 @@ namespace AppIntegrador
         }
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string username, string domain)
+        
+        public ActionResult DeleteConfirmed(string username, string domain, bool confirmed)
         {
+            if(!confirmed)
+                return RedirectToAction("Index");
             string id = username + domain;
             Persona persona = db.Persona.Find(id);
             Usuario usuario = db.Usuario.Find(persona.Correo);
-            db.Usuario.Remove(usuario);
-            db.Persona.Remove(persona);
-            db.SaveChanges();
+            if (usuario == null)
+                usuario = db.Usuario.Find(persona.Nombre1);
+
+            if (usuario != null && persona != null)
+            {
+                db.Usuario.Remove(usuario);
+                db.Persona.Remove(persona);
+                db.SaveChanges();
+            }
+            else {
+                TempData["Message"] = "No se pudo borrar el usuario!";
+            }
+            
             return RedirectToAction("Index");
         }
 

@@ -100,5 +100,9 @@
         @Scripts.Render("~/bundles/bootstrap")
     }
     @RenderSection("scripts", required: false)
+    <footer>
+        <h3 style="text-align:center; color:red;"><strong>@TempData["Message"]</strong></h3>
+    </footer>
 </body>
+
 </html>

@@ -4,88 +4,94 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+    <div class="container">
+        <h2>Details</h2>
 
-<div>
-    <h4>Persona</h4>
-    <hr />
-    <dl class="dl-horizontal">
+        <div>
+            <h4>Persona</h4>
+            <hr />
+            <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoIdentificacion)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TipoIdentificacion)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TipoIdentificacion)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TipoIdentificacion)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Identificacion)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Identificacion)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Identificacion)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Identificacion)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre1)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre1)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre1)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre1)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre2)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre2)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre2)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre2)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellido1)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Apellido1)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Apellido1)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Apellido1)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellido2)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Apellido2)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Apellido2)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Apellido2)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Estudiante.Carne)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Estudiante.Carne)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Estudiante.Carne)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Estudiante.Carne)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Correo)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Correo)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Correo)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Correo)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CorreoAlt)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CorreoAlt)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CorreoAlt)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CorreoAlt)
+                </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Correo }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new
+                        {
+                            username = Model.Correo.Substring(0, Model.Correo.LastIndexOf('.')),
+                                                               domain = Model.Correo.Substring(Model.Correo.LastIndexOf('.'))
+                        }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
