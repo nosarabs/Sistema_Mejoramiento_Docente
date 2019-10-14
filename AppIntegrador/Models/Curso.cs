@@ -18,15 +18,15 @@ namespace AppIntegrador.Models
         public Curso()
         {
             this.Grupo = new HashSet<Grupo>();
+            this.Enfasis = new HashSet<Enfasis>();
         }
     
         public string Sigla { get; set; }
         public string Nombre { get; set; }
-        public string CodCarrera { get; set; }
-        public string CodEnfasis { get; set; }
     
-        public virtual Enfasis Enfasis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grupo> Grupo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Enfasis> Enfasis { get; set; }
     }
 }

@@ -23,21 +23,28 @@ function createBullets(parnt, answers) {
 
 }
 
-function getJustificacion(id) {
+function getJustificacion(id, tipo) {
     var justificaciones = [];
 
     $.ajax({
-        url: "/ResultadosFormulario/getJustificacionPregunta/?codigoPregunta=" + this.id,
+        url: '/ResultadosFormulario/getJustificacionPregunta',
+        data: {
+            codigoPregunta: id,
+            tipo: tipo
+            },
         type: 'get',
         dataType: 'json',
         async: false,
         success: function (resultados) {
-            justificaciones = resultados;
+            for (var i = 0; i < resultados.length; ++i) {
+                justificaciones.push(resultados[i].Value);
+            }
         }
     });
 
     return justificaciones;
 }
+
 function addBox(cnt, id, tipo) {
 	
 	var box = document.createElement("div");
@@ -69,6 +76,7 @@ function addBox(cnt, id, tipo) {
         
     } else {
 
+        /*
         box_data = ["Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
             , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
             , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
@@ -79,7 +87,8 @@ function addBox(cnt, id, tipo) {
             , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
             , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."
             , "Hola esto es una prueba de que se puede scrollear sin ningún problema y que se muestran los bullets de la caja de texto. También quiero ver cómo se ven los párrafos de más de una línea."];
-
+        */
+        box_data = getJustificacion(id, tipo);
     }
 
 	createBullets(list, box_data);

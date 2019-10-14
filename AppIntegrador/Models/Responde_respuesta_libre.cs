@@ -15,7 +15,7 @@ namespace AppIntegrador.Models
     public partial class Responde_respuesta_libre
     {
         public string FCodigo { get; set; }
-        public string Username { get; set; }
+        public string Correo { get; set; }
         public string CSigla { get; set; }
         public byte GNumero { get; set; }
         public int GAnno { get; set; }

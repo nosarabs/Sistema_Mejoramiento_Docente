@@ -44,7 +44,7 @@ function drawBarChart(cvs, chartData) {
 		},
 		options: {
             legend: {
-                display: true,
+                display: false,
                 labels: {
                     fontColor: "black",
                     fontSize: 16,
@@ -58,9 +58,12 @@ function drawBarChart(cvs, chartData) {
             },
 			responsive: false,
             maintainAspectRatio: false,
+            devicePixelRatio: 2,
             scales: {
                 yAxes: [{
                     ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
                         fontColor: "black",
                         fontSize: 16,
                     }
@@ -86,9 +89,18 @@ function drawBarChart(cvs, chartData) {
 					offset: 8,
 					textAlign: "center",
 					font: {
-                        size: "14",
-                        weight: "normal"
-					}
+                        size: "16",
+                        weight: "bold"
+                    },
+                    formatter: function (value, ctx) {
+                        var sum = 0;
+                        var data = ctx.chart.data.datasets[0].data;
+                        for (var i = 0; i < data.length; ++i) {
+                            sum += data[i];
+                        }
+                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        return percentage + "\n\n" + value;
+                    }
 				}
 			}
 		}
@@ -135,6 +147,7 @@ function drawPieChart(cvs, chartData) {
             },
             responsive: false,
             maintainAspectRatio: false,
+            devicePixelRatio: 2,
             plugins: {
                 datalabels: {
                     display: function (context) {
@@ -149,8 +162,8 @@ function drawPieChart(cvs, chartData) {
                     offset: 16,
                     textAlign: "center",
                     font: {
-                        size: "14",
-                        weight: "normal"
+                        size: "16",
+                        weight: "bold"
                     },
                     formatter: function (value, ctx) {
                         var sum = 0;
@@ -218,15 +231,104 @@ function addChart(cnt, id, tipo) {
 
 			break;
 			
-		case classes.SELECCION_UNICA:
+        case classes.SELECCION_UNICA:
+            var labels;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenterOpcionesPreguntasSeleccion",
+                data: {
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    labels = resultados;
+                }
+            });
+
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: labels.length
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
 			drawPieChart(cvs, chartData);
 			break;
 			
-		case classes.SELECCION_MULTIPLE:
-			drawBarChart(cvs, chartData);
+        case classes.SELECCION_MULTIPLE:
+            var labels;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenterOpcionesPreguntasSeleccion",
+                data: {
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    labels = resultados;
+                }
+            });
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: labels.length
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
+            drawBarChart(cvs, chartData);
 			break;
 			
-		case classes.SELECCION_CERRADA:
+        case classes.SELECCION_CERRADA:
+            var labels = ["No", "Sí", "No responde"];
+
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/ObtenerOpcionesSeleccionadasPreguntasSeleccion",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id,
+                    numOpciones: 3
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            chartData = { DATA: data, LABELS: labels };
 			drawPieChart(cvs, chartData);
 			break;
 			
