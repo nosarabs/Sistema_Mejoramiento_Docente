@@ -1,10 +1,10 @@
-﻿@model IEnumerable<AppIntegrador.Models.Persona>
+﻿@model IEnumerable<AppIntegrador.Models.UsuarioPersona>
 
 @{
     ViewBag.Title = "Index";
 }
     <div class="container">
-        <h2>Index</h2>
+        <h2>Adminstración de usuarios</h2>
 
         <p>
             @Html.ActionLink("Create New", "Create")
@@ -12,69 +12,70 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Identificacion)
+                    @Html.DisplayNameFor(model => model.Persona.Identificacion)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nombre1)
+                    @Html.DisplayNameFor(model => model.Persona.Nombre1)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Apellido1)
+                    @Html.DisplayNameFor(model => model.Persona.Apellido1)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Apellido2)
+                    @Html.DisplayNameFor(model => model.Persona.Apellido2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario.Activo)
                 </th>
                 <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Identificacion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellido1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellido2)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new
-                        {
-                            username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')),
-                                                               domain = item.Correo.Substring(item.Correo.LastIndexOf('.'))
-                        }) |
-                        @Html.ActionLink("Details", "Details", new
-                        {
-                            username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')),
-                                                               domain = item.Correo.Substring(item.Correo.LastIndexOf('.'))
-                        }) |
-                        @Html.ActionLink("Delete", "DeleteConfirmed", new
-                   {
-                       username = item.Correo.Substring(0, item.Correo.LastIndexOf('.')),
-                       domain = item.Correo.Substring(item.Correo.LastIndexOf('.')),
-                       confirmed = true
-                   },
-                   new
-                   {
-                        onclick = "return confirm('¿Está seguro que desea borrar este usuario?')"
-                   }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Persona.Identificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Persona.Nombre1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Persona.Apellido1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Persona.Apellido2)
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => item.Usuario.Activo, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new
+                {
+                    username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
+                                                       domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                }) |
+                @Html.ActionLink("Details", "Details", new
+                {
+                    username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
+                                                       domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                }) |
+                @Html.ActionLink("Delete", "DeleteConfirmed", new
+           {
+               username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
+               domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')),
+               confirmed = true
+           },
+           new
+           {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
+                onclick = "return confirm('¿Está seguro que desea borrar este usuario?')"
+           }
 
 
-            )
-                    </td>
+    )
+            </td>
 
-                </tr>
+        </tr>
             }
 
         </table>
     </div>
-<h3 style="text-align:center; color:red;"><strong>@TempData["Message"]</strong></h3>
-<script>
-    function confirmAction() {
-        return confirm('Está seguro?');
-    }
-</script>
+
