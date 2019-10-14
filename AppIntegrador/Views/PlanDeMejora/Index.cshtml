@@ -3,104 +3,162 @@
 @{
     ViewBag.Title = "Index";
     ViewBag.indexPlanMejora = -1;
+
+    bool objetivosPlan = false;
+    bool accionablesPlan = false;
+    bool accionesDeMejoraPlan = false;
+    int idCodigo = -1;
+    int idObjetivo = -1;
+    int idAccionDeMejora = -1;
+    int idAccionable = -1;
 }
 
-<div class="horizontalBoxes">
-    <div class="fullWidth">
-        <div class="verticalBoxes">
-            <div class="halfVerticalBox">
-                <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
+
+
+
+    <div class="horizontalBoxes">
+        <div class="fullWidth">
+            <div class="verticalBoxes">
+                <div class="halfVerticalBox">
+                    <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
+                </div>
+
+                <!-- Button that hekps create another PlanDeMejora -->
+                @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
+
             </div>
-
-            <!-- Button that hekps create another PlanDeMejora -->
-            @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
-
         </div>
-    </div>
 
-    <br />
+        <br />
 
-    <div class="planesTable">
-        <table class='table table-bordered table-condensed table-striped table-hover'>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.codigo)
-
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaFin)
-                </th>
-                <th>
-                    Creado por:
-                </th>
-                <th>
-                    Asignado a:
-                </th>
-                <th>
-                    Opciones de Edición
-                </th>
-            </tr>
-
-            @foreach (var plan in Model)
-            {
+        <div class="planesTable">
+            <table class='table table-bordered table-condensed table-striped table-hover'>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaFin)
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.codigo)
 
-                    <td>
-                        <div class="verticalBoxes">
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan, new ViewDataDictionary { { "codigoPlan", plan.codigo } })
-                            </div>
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
-                            </div>
-                        </div>
-                    </td>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaFin)
+                    </th>
+                    <th>
+                        Creado por:
+                    </th>
+                    <th>
+                        Asignado a:
+                    </th>
+                    <th>
+                        Opciones de Edición
+                    </th>
                 </tr>
+
+                @foreach (var plan in Model)
+                {
+                    <tr onclick="setCodigo(@plan.codigo)">
+                        <td id="codigoTemporal">
+                            @Html.DisplayFor(modelItem => plan.codigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => plan.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => plan.fechaInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => plan.fechaFin)
+                        </td>
+                        <td>
+                            @HttpContext.Current.User.Identity.Name
+                        </td>
+                        <td>
+                            @HttpContext.Current.User.Identity.Name
+                        </td>
+
+                        <td>
+                            <div class="verticalBoxes">
+                                <div>
+                                    @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
+                                </div>
+                                <div>
+                                    @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <hr />
+        </div>
+
+
+        <div class="fullWidth">
+            <div class="verticalBoxes">
+                <p class="impText">Accionables</p>
+
+                @if (objetivosPlan && idObjetivo != -1)
+                {
+                    @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml", idCodigo)
+                }
+
+                <hr />
+
+            </div>
+        </div>
+
+
+        <div class="fullWidth">
+            <p class="impText">Acciones de Mejora</p>
+
+            @if (accionesDeMejoraPlan && idAccionDeMejora != -1)
+            {
+                @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml", idCodigo)
             }
-        </table>
-        <hr />
+
+            <hr />
+        </div>
+
+
+
+        <div class="fullWidth">
+            <p class="impText">Accionables</p>
+            @if (accionablesPlan && idAccionable != -1)
+            {
+                @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml", idCodigo)
+            }
+            <hr />
+        </div>
+
+        <script>
+            function activarCodigo(codigo) {
+                @idCodigo = codigo;
+            }
+
+            function setCodigo(codigo) {
+                activarCodigo(codigo)
+            }
+        </script>
+
+
     </div>
 
 
-    <div class="fullWidth">
-        <p class="impText">Objetivos</p>
-        <hr />
-    </div>
+
+@*<script>
+    function desactivarTodasLasSubTablas() {
+        @objetivosPlan = false;
+        @accionablesPlan = false;
+        @accionesDeMejoraPlan = false;
+        @idCodigo = -1;
+        @idObjetivo = -1;
+        @idAccionDeMejora = -1;
+        @idAccionable = -1;
+    }
+</script>*@
 
 
-    <div class="fullWidth">
-        <p class="impText">Acciones de Mejora</p>
-        <hr />
-    </div>
-
-
-
-    <div class="fullWidth">
-        <p class="impText">Accionables</p>
-        <hr />
-    </div>
-</div>
