@@ -1,4 +1,4 @@
-﻿@model AppIntegrador.Models.Persona
+﻿@model AppIntegrador.Models.UsuarioPersona
 
 @{
     ViewBag.Title = "Details";
@@ -13,84 +13,95 @@
             <dl class="dl-horizontal">
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.TipoIdentificacion)
+                    @Html.DisplayNameFor(model => model.Persona.TipoIdentificacion)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.TipoIdentificacion)
+                    @Html.DisplayFor(model => model.Persona.TipoIdentificacion)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Identificacion)
+                    @Html.DisplayNameFor(model => model.Persona.Identificacion)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Identificacion)
+                    @Html.DisplayFor(model => model.Persona.Identificacion)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Nombre1)
+                    @Html.DisplayNameFor(model => model.Persona.Nombre1)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Nombre1)
+                    @Html.DisplayFor(model => model.Persona.Nombre1)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Nombre2)
+                    @Html.DisplayNameFor(model => model.Persona.Nombre2)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Nombre2)
+                    @Html.DisplayFor(model => model.Persona.Nombre2)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Apellido1)
+                    @Html.DisplayNameFor(model => model.Persona.Apellido1)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Apellido1)
+                    @Html.DisplayFor(model => model.Persona.Apellido1)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Apellido2)
+                    @Html.DisplayNameFor(model => model.Persona.Apellido2)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Apellido2)
+                    @Html.DisplayFor(model => model.Persona.Apellido2)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Estudiante.Carne)
+                    @Html.DisplayNameFor(model => model.Persona.Estudiante.Carne)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Estudiante.Carne)
+                    @Html.DisplayFor(model => model.Persona.Estudiante.Carne)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Correo)
+                    @Html.DisplayNameFor(model => model.Persona.Correo)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Correo)
+                    @Html.DisplayFor(model => model.Persona.Correo)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.CorreoAlt)
+                    @Html.DisplayNameFor(model => model.Persona.CorreoAlt)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.CorreoAlt)
+                    @Html.DisplayFor(model => model.Persona.CorreoAlt)
                 </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Usuario.Activo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Usuario.Activo)
+                </dd>
+
+                <dt>
+                    <p>Acciones</p>
+                </dt>
 
             </dl>
         </div>
         <p>
             @Html.ActionLink("Edit", "Edit", new
                         {
-                            username = Model.Correo.Substring(0, Model.Correo.LastIndexOf('.')),
-                                                               domain = Model.Correo.Substring(Model.Correo.LastIndexOf('.'))
+                            username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
+                                                               domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
                         }) |
             @Html.ActionLink("Back to List", "Index")
         </p>
