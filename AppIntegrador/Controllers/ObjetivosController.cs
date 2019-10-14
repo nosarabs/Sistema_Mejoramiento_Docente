@@ -64,13 +64,13 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Objetivos/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();

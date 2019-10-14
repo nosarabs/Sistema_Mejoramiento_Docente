@@ -20,13 +20,14 @@ namespace AppIntegrador.Models.Metadata
         public string descripcion { get; set; }
 
         [Display(Name = "Inicio")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
         [Display(Name = "Final")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        //[DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> fechaFin { get; set; }
 
         [Display(Name = "Tipo de objetivo")]
