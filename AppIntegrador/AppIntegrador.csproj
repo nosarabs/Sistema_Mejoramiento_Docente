@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -388,7 +389,7 @@
     <Content Include="Views\Formularios\Index.cshtml" />
     <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-	<Content Include="Views\Seccion\Create.cshtml" />
+    <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
@@ -398,13 +399,13 @@
     <Content Include="Views\Secciones\Details.cshtml" />
     <Content Include="Views\Secciones\Edit.cshtml" />
     <Content Include="Views\Secciones\Index.cshtml" />
-	<Content Include="Views\Objetivos\Create.cshtml" />
+    <Content Include="Views\Objetivos\Create.cshtml" />
     <Content Include="Views\Objetivos\Delete.cshtml" />
     <Content Include="Views\Objetivos\Details.cshtml" />
     <Content Include="Views\Objetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\Index.cshtml" />
     <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
-	<Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -412,6 +413,8 @@
     <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
     <Content Include="Views\PlanDeMejora\_crear.cshtml" />
     <Content Include="Views\PlanDeMejora\_edit.cshtml" />
+    <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
