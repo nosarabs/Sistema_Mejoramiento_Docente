@@ -209,31 +209,32 @@ namespace AppIntegrador
                         db.SaveChanges();
                     }
                 }
-                /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
-                System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
+                
 
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 
              the changes made in the view.*/
 
-            List<Usuario> Usuarios = db.Usuario.ToList();
-            List<Persona> Personas = db.Persona.ToList();
+            string originalMail = (string)System.Web.HttpContext.Current.Application["CurrentEditingUser"];
+            string mailToSearch = usuarioPersona.Persona.Correo == null ? originalMail : usuarioPersona.Persona.Correo;
+            
+            /*Searches the user and person tuples associated to the edited user.*/
+            Usuario usuarioEdited = db.Usuario.Find(mailToSearch);
+            Persona personaEdited = db.Persona.Find(mailToSearch);
 
-            var usuarioPersonaRefreshed = from u in Usuarios
-                            join p in Personas on u.Username equals p.Correo into table1
-                            from p in table1.ToList()
-                            select new UsuarioPersona
-                            {
-                                Usuario = u,
-                                Persona = p
-                            };
-
+            /*Joins the tuples in the UsuarioPersona object to be shown in the view.*/
+            UsuarioPersona usuarioPersonaRefreshed = new UsuarioPersona();
+            usuarioPersonaRefreshed.Persona = personaEdited;
+            usuarioPersonaRefreshed.Usuario = usuarioEdited;
 
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", usuarioPersona.Persona.Correo);
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", usuarioPersona.Persona.Correo);
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
+
+            /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
+            System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
 
             return View(usuarioPersonaRefreshed);
         }
