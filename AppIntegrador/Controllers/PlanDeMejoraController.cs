@@ -126,15 +126,15 @@ namespace AppIntegrador.Controllers
 
 
         //////////////////////////////////////////////BI///////////////////////////////////////////////////
-        
+
         // Method that creates the plan and sets the next "codigo" automatically
         public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
         {
-            if (nombre != null && fechaInicio != null && fechaFin != null) 
+            if (nombre != null && fechaInicio != null && fechaFin != null)
             {
                 var planTemp = new PlanDeMejora();
                 var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Last().codigo;
+                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
                 planTemp.codigo = codigoTemporal + 1;
                 planTemp.nombre = nombre;
                 planTemp.fechaInicio = fechaInicio;
@@ -145,7 +145,8 @@ namespace AppIntegrador.Controllers
         }
 
         // Method that edits one "PlanDeMejora"
-        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin) {
+        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin)
+        {
             if (codigo != null && nombre != null && fechaInicio != null && fechaFin != null)
             {
                 var planTemp = new PlanDeMejora();
@@ -159,7 +160,8 @@ namespace AppIntegrador.Controllers
         }
 
         // Method that deletes one "PlanDeMejora"
-        public ActionResult BorrarPlan(int codigoPlan) {
+        public ActionResult BorrarPlan(int codigoPlan)
+        {
             this.DeleteConfirmed(codigoPlan);
             return RedirectToAction("Index");
         }

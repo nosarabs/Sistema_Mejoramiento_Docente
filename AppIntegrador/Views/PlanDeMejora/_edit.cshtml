@@ -1,26 +1,48 @@
+<<<<<<< HEAD
 ﻿@model AppIntegrador.Models.PlanDeMejora
+=======
+﻿
+@model AppIntegrador.Models.PlanDeMejora
+>>>>>>> nuevoMosqueteros
 
 @{
     ViewBag.Title = "Edit";
     var planFinal = Model;
+<<<<<<< HEAD
+=======
+
+    int codigoInt = Convert.ToInt32(ViewData["codigoPlan"]);
+>>>>>>> nuevoMosqueteros
 }
 
 
 
 <!-- Boton para editar el plan de mejora -->
 <div class="createPlanButton">
+<<<<<<< HEAD
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar" onclick="fillPlan();">
+=======
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@planFinal.codigo">
+>>>>>>> nuevoMosqueteros
         Editar
     </button>
 </div>
 
 <!-- Modal -->
+<<<<<<< HEAD
 <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+=======
+<div class="modal fade" id="@planFinal.codigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+>>>>>>> nuevoMosqueteros
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="exampleModalLabel">Edición del plan de mejora</h3>
+<<<<<<< HEAD
                 <button type="button"  class="close" data-dismiss="modal" aria-label="Close" >
+=======
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+>>>>>>> nuevoMosqueteros
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -49,7 +71,11 @@
                                 @Html.LabelFor(model => planFinal.codigo, "Fecha Inicio")
                             </div>
                             <div class="inputPlace">
+<<<<<<< HEAD
                                 <input type="date"  name="fechaInicio" class="form-control" />
+=======
+                                <input type="date" name="fechaInicio" class="form-control" />
+>>>>>>> nuevoMosqueteros
                             </div>
                         </div>
                         <div class="verticalBoxesCrear">
@@ -57,7 +83,11 @@
                                 @Html.LabelFor(model => planFinal.codigo, "Fecha Fin")
                             </div>
                             <div class="inputPlace">
+<<<<<<< HEAD
                                 <input type="date"  name="fechaFin" class="form-control" />
+=======
+                                <input type="date" name="fechaFin" class="form-control" />
+>>>>>>> nuevoMosqueteros
                             </div>
                         </div>
                     </div>
@@ -76,9 +106,13 @@
 
 
 <script>
+<<<<<<< HEAD
     function fillPlan() {
         console.log("Hola Andres - codigoActual = " + "@planFinal.codigo");
     }
+=======
+    console.log(@codigoInt);
+>>>>>>> nuevoMosqueteros
 </script>
 
 

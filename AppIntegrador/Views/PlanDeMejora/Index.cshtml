@@ -22,10 +22,17 @@
 
     <div class="planesTable">
         <table class='table table-bordered table-condensed table-striped table-hover'>
+<<<<<<< HEAD
             <tr >
                 <th>
                     @Html.DisplayNameFor(model => model.codigo)
                     
+=======
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.codigo)
+
+>>>>>>> nuevoMosqueteros
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.nombre)
@@ -72,7 +79,11 @@
                     <td>
                         <div class="verticalBoxes">
                             <div>
+<<<<<<< HEAD
                                 @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
+=======
+                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan, new ViewDataDictionary { { "codigoPlan", plan.codigo } })
+>>>>>>> nuevoMosqueteros
                             </div>
                             <div>
                                 @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
@@ -84,6 +95,7 @@
         </table>
         <hr />
     </div>
+<<<<<<< HEAD
 
 
     <div class="fullWidth">
@@ -111,3 +123,25 @@
         console.log("Hello")
     }
 </script>
+=======
+
+
+    <div class="fullWidth">
+        <p class="impText">Objetivos</p>
+        <hr />
+    </div>
+
+
+    <div class="fullWidth">
+        <p class="impText">Acciones de Mejora</p>
+        <hr />
+    </div>
+
+
+
+    <div class="fullWidth">
+        <p class="impText">Accionables</p>
+        <hr />
+    </div>
+</div>
+>>>>>>> nuevoMosqueteros

@@ -53,8 +53,6 @@
           <Property Name="GAnno" Type="int" Nullable="false" />
           <Property Name="GSemestre" Type="tinyint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AsignadoA">
           <Key>
             <PropertyRef Name="codPlan" />
@@ -527,7 +525,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="CodCarrera" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CodEnfasis" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Empadrona__Corre__0C85DE4D">
+        <Association Name="FK__Empadrona__Corre__0D7A0286">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -541,7 +539,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Empadronado_en__0D7A0286">
+        <Association Name="FK__Empadronado_en__0E6E26BF">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -557,7 +555,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Enfasis__CodCarr__0E6E26BF">
+        <Association Name="FK__Enfasis__CodCarr__0F624AF8">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -571,7 +569,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Estudiant__Corre__10566F31">
+        <Association Name="FK__Estudiant__Corre__114A936A">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -585,7 +583,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Funcionar__Corre__151B244E">
+        <Association Name="FK__Funcionar__Corre__160F4887">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -599,7 +597,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grupo__SiglaCurs__160F4887">
+        <Association Name="FK__Grupo__SiglaCurs__17036CC0">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -613,7 +611,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__17F790F9">
+        <Association Name="FK__Imparte__18EBB532">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -633,7 +631,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__CorreoP__17036CC0">
+        <Association Name="FK__Imparte__CorreoP__17F790F9">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -647,7 +645,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodCa__19DFD96B">
+        <Association Name="FK__Inscrita___CodCa__1AD3FDA4">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -661,7 +659,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodUn__18EBB532">
+        <Association Name="FK__Inscrita___CodUn__19DFD96B">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -675,7 +673,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matricula__Corre__1AD3FDA4">
+        <Association Name="FK__Matricula__Corre__1BC821DD">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -689,7 +687,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matriculado_en__1BC821DD">
+        <Association Name="FK__Matriculado_en__1CBC4616">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -709,7 +707,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Perfi__22751F6C">
+        <Association Name="FK__PerfilPer__Perfi__236943A5">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -723,7 +721,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Permi__236943A5">
+        <Association Name="FK__PerfilPer__Permi__245D67DE">
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -737,7 +735,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPermiso__245D67DE">
+        <Association Name="FK__PerfilPermiso__25518C17">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -753,7 +751,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__Usuario__2645B050">
+        <Association Name="FK__Persona__Usuario__2739D489">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -765,7 +763,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece__Sigla__282DF8C2">
+        <Association Name="FK__Pertenece__Sigla__29221CFB">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -779,7 +777,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece_a__2739D489">
+        <Association Name="FK__Pertenece_a__282DF8C2">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -795,7 +793,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profesor__Correo__2CF2ADDF">
+        <Association Name="FK__Profesor__Correo__2DE6D218">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -809,7 +807,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__CodUn__3A4CA8FD">
+        <Association Name="FK__Trabaja_e__CodUn__3B40CD36">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -823,7 +821,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__Corre__395884C4">
+        <Association Name="FK__Trabaja_e__Corre__3A4CA8FD">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -837,7 +835,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__3B40CD36">
+        <Association Name="FK__UnidadAca__Super__3C34F16F">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -849,7 +847,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__3D2915A8">
+        <Association Name="FK__UsuarioPe__Perfi__3E1D39E1">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -863,7 +861,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__3C34F16F">
+        <Association Name="FK__UsuarioPe__Usuar__3D2915A8">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -877,7 +875,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__3E1D39E1">
+        <Association Name="FK__UsuarioPerfil__3F115E1A">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1504,6 +1502,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <EntitySet Name="Accionable" EntityType="Self.Accionable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Activa_por" EntityType="Self.Activa_por" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AsignadoA" EntityType="Self.AsignadoA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreadoPor" EntityType="Self.CreadoPor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
@@ -1549,109 +1548,103 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <EntitySet Name="UnidadAcademica" EntityType="Self.UnidadAcademica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AsignadoA" EntityType="Self.AsignadoA" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AsignadoA].[codPlan] AS [codPlan], 
-    [AsignadoA].[corrProf] AS [corrProf]
-    FROM [dbo].[AsignadoA] AS [AsignadoA]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__Empadrona__Corre__0C85DE4D" Association="Self.FK__Empadrona__Corre__0C85DE4D">
+          <AssociationSet Name="FK__Empadrona__Corre__0D7A0286" Association="Self.FK__Empadrona__Corre__0D7A0286">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Empadronado_en__0D7A0286" Association="Self.FK__Empadronado_en__0D7A0286">
+          <AssociationSet Name="FK__Empadronado_en__0E6E26BF" Association="Self.FK__Empadronado_en__0E6E26BF">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Enfasis__CodCarr__0E6E26BF" Association="Self.FK__Enfasis__CodCarr__0E6E26BF">
+          <AssociationSet Name="FK__Enfasis__CodCarr__0F624AF8" Association="Self.FK__Enfasis__CodCarr__0F624AF8">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK__Estudiant__Corre__10566F31" Association="Self.FK__Estudiant__Corre__10566F31">
+          <AssociationSet Name="FK__Estudiant__Corre__114A936A" Association="Self.FK__Estudiant__Corre__114A936A">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
-          <AssociationSet Name="FK__Funcionar__Corre__151B244E" Association="Self.FK__Funcionar__Corre__151B244E">
+          <AssociationSet Name="FK__Funcionar__Corre__160F4887" Association="Self.FK__Funcionar__Corre__160F4887">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grupo__SiglaCurs__160F4887" Association="Self.FK__Grupo__SiglaCurs__160F4887">
+          <AssociationSet Name="FK__Grupo__SiglaCurs__17036CC0" Association="Self.FK__Grupo__SiglaCurs__17036CC0">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__17F790F9" Association="Self.FK__Imparte__17F790F9">
+          <AssociationSet Name="FK__Imparte__18EBB532" Association="Self.FK__Imparte__18EBB532">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__CorreoP__17036CC0" Association="Self.FK__Imparte__CorreoP__17036CC0">
+          <AssociationSet Name="FK__Imparte__CorreoP__17F790F9" Association="Self.FK__Imparte__CorreoP__17F790F9">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodCa__19DFD96B" Association="Self.FK__Inscrita___CodCa__19DFD96B">
+          <AssociationSet Name="FK__Inscrita___CodCa__1AD3FDA4" Association="Self.FK__Inscrita___CodCa__1AD3FDA4">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodUn__18EBB532" Association="Self.FK__Inscrita___CodUn__18EBB532">
+          <AssociationSet Name="FK__Inscrita___CodUn__19DFD96B" Association="Self.FK__Inscrita___CodUn__19DFD96B">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matricula__Corre__1AD3FDA4" Association="Self.FK__Matricula__Corre__1AD3FDA4">
+          <AssociationSet Name="FK__Matricula__Corre__1BC821DD" Association="Self.FK__Matricula__Corre__1BC821DD">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Matriculado_en" EntitySet="Matriculado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matriculado_en__1BC821DD" Association="Self.FK__Matriculado_en__1BC821DD">
+          <AssociationSet Name="FK__Matriculado_en__1CBC4616" Association="Self.FK__Matriculado_en__1CBC4616">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Matriculado_en" EntitySet="Matriculado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Perfi__22751F6C" Association="Self.FK__PerfilPer__Perfi__22751F6C">
+          <AssociationSet Name="FK__PerfilPer__Perfi__236943A5" Association="Self.FK__PerfilPer__Perfi__236943A5">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Permi__236943A5" Association="Self.FK__PerfilPer__Permi__236943A5">
+          <AssociationSet Name="FK__PerfilPer__Permi__245D67DE" Association="Self.FK__PerfilPer__Permi__245D67DE">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPermiso__245D67DE" Association="Self.FK__PerfilPermiso__245D67DE">
+          <AssociationSet Name="FK__PerfilPermiso__25518C17" Association="Self.FK__PerfilPermiso__25518C17">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__Usuario__2645B050" Association="Self.FK__Persona__Usuario__2645B050">
+          <AssociationSet Name="FK__Persona__Usuario__2739D489" Association="Self.FK__Persona__Usuario__2739D489">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece__Sigla__282DF8C2" Association="Self.FK__Pertenece__Sigla__282DF8C2">
+          <AssociationSet Name="FK__Pertenece__Sigla__29221CFB" Association="Self.FK__Pertenece__Sigla__29221CFB">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece_a__2739D489" Association="Self.FK__Pertenece_a__2739D489">
+          <AssociationSet Name="FK__Pertenece_a__282DF8C2" Association="Self.FK__Pertenece_a__282DF8C2">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profesor__Correo__2CF2ADDF" Association="Self.FK__Profesor__Correo__2CF2ADDF">
+          <AssociationSet Name="FK__Profesor__Correo__2DE6D218" Association="Self.FK__Profesor__Correo__2DE6D218">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__CodUn__3A4CA8FD" Association="Self.FK__Trabaja_e__CodUn__3A4CA8FD">
+          <AssociationSet Name="FK__Trabaja_e__CodUn__3B40CD36" Association="Self.FK__Trabaja_e__CodUn__3B40CD36">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__Corre__395884C4" Association="Self.FK__Trabaja_e__Corre__395884C4">
+          <AssociationSet Name="FK__Trabaja_e__Corre__3A4CA8FD" Association="Self.FK__Trabaja_e__Corre__3A4CA8FD">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__3B40CD36" Association="Self.FK__UnidadAca__Super__3B40CD36">
+          <AssociationSet Name="FK__UnidadAca__Super__3C34F16F" Association="Self.FK__UnidadAca__Super__3C34F16F">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__3D2915A8" Association="Self.FK__UsuarioPe__Perfi__3D2915A8">
+          <AssociationSet Name="FK__UsuarioPe__Perfi__3E1D39E1" Association="Self.FK__UsuarioPe__Perfi__3E1D39E1">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__3C34F16F" Association="Self.FK__UsuarioPe__Usuar__3C34F16F">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__3D2915A8" Association="Self.FK__UsuarioPe__Usuar__3D2915A8">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__3E1D39E1" Association="Self.FK__UsuarioPerfil__3E1D39E1">
+          <AssociationSet Name="FK__UsuarioPerfil__3F115E1A" Association="Self.FK__UsuarioPerfil__3F115E1A">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -1871,7 +1864,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__0E6E26BF" FromRole="Carrera" ToRole="Enfasis" />
+=======
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__0F624AF8" FromRole="Carrera" ToRole="Enfasis" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Inscrita_en" FromRole="Carrera" ToRole="UnidadAcademica" />
         </EntityType>
         <EntityType Name="Curso">
@@ -1880,7 +1877,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__160F4887" FromRole="Curso" ToRole="Grupo" />
+=======
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__Grupo__SiglaCurs__17036CC0" FromRole="Curso" ToRole="Grupo" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Enfasis" Relationship="Self.Pertenece_a" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Enfasis">
@@ -1891,9 +1892,15 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__0E6E26BF" FromRole="Enfasis" ToRole="Carrera" />
           <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__245D67DE" FromRole="Enfasis" ToRole="PerfilPermiso" />
           <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__3E1D39E1" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+=======
+          <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__0F624AF8" FromRole="Enfasis" ToRole="Carrera" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__25518C17" FromRole="Enfasis" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__3F115E1A" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
           <NavigationProperty Name="Curso" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
         </EntityType>
@@ -1913,7 +1920,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+<<<<<<< HEAD
           <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Corre__10566F31" FromRole="Estudiante" ToRole="Persona" />
+=======
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Estudiant__Corre__114A936A" FromRole="Estudiante" ToRole="Persona" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Enfasis" Relationship="Self.Empadronado_en" FromRole="Estudiante" ToRole="Enfasis" />
           <NavigationProperty Name="Grupo" Relationship="Self.Matriculado_en" FromRole="Estudiante" ToRole="Grupo" />
         </EntityType>
@@ -1944,8 +1955,13 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__151B244E" FromRole="Funcionario" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__2CF2ADDF" FromRole="Funcionario" ToRole="Profesor" />
+=======
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__160F4887" FromRole="Funcionario" ToRole="Persona" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__2DE6D218" FromRole="Funcionario" ToRole="Profesor" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
           <NavigationProperty Name="Accionable" Relationship="Self.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
@@ -1962,7 +1978,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <Property Name="Anno" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorGrupo" FromRole="Grupo" ToRole="Activa_por" />
+<<<<<<< HEAD
           <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__160F4887" FromRole="Grupo" ToRole="Curso" />
+=======
+          <NavigationProperty Name="Curso" Relationship="Self.FK__Grupo__SiglaCurs__17036CC0" FromRole="Grupo" ToRole="Curso" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasGrupo" FromRole="Grupo" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
           <NavigationProperty Name="Estudiante" Relationship="Self.Matriculado_en" FromRole="Grupo" ToRole="Estudiante" />
@@ -2022,8 +2042,13 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__22751F6C" FromRole="Perfil" ToRole="PerfilPermiso" />
           <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__3D2915A8" FromRole="Perfil" ToRole="UsuarioPerfil" />
+=======
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__236943A5" FromRole="Perfil" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__3E1D39E1" FromRole="Perfil" ToRole="UsuarioPerfil" />
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <EntityType Name="PerfilPermiso">
           <Key>
@@ -2036,9 +2061,15 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="PermisoId" Type="Int32" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__245D67DE" FromRole="PerfilPermiso" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__22751F6C" FromRole="PerfilPermiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__236943A5" FromRole="PerfilPermiso" ToRole="Permiso" />
+=======
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__25518C17" FromRole="PerfilPermiso" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__236943A5" FromRole="PerfilPermiso" ToRole="Perfil" />
+          <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__245D67DE" FromRole="PerfilPermiso" ToRole="Permiso" />
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <EntityType Name="Periodo_activa_por">
           <Key>
@@ -2065,7 +2096,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__236943A5" FromRole="Permiso" ToRole="PerfilPermiso" />
+=======
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__245D67DE" FromRole="Permiso" ToRole="PerfilPermiso" />
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -2080,9 +2115,15 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Apellido2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TipoIdentificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Corre__10566F31" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__151B244E" FromRole="Persona" ToRole="Funcionario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__2645B050" FromRole="Persona" ToRole="Usuario" />
+=======
+          <NavigationProperty Name="Estudiante" Relationship="Self.FK__Estudiant__Corre__114A936A" FromRole="Persona" ToRole="Estudiante" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__160F4887" FromRole="Persona" ToRole="Funcionario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__Persona__Usuario__2739D489" FromRole="Persona" ToRole="Usuario" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Persona" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="PlanDeMejora">
@@ -2093,10 +2134,14 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaInicio" Type="DateTime" Precision="0" />
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Profesor" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
           <NavigationProperty Name="Funcionario" Relationship="Self.CreadoPor" FromRole="PlanDeMejora" ToRole="Funcionario" />
           <NavigationProperty Name="Formulario" Relationship="Self.Evalua" FromRole="PlanDeMejora" ToRole="Formulario" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.Origina" FromRole="PlanDeMejora" ToRole="Respuestas_a_formulario" />
+<<<<<<< HEAD
           <NavigationProperty Name="Profesor" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
+=======
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <EntityType Name="PlantillaAccionDeMejora">
           <Key>
@@ -2161,9 +2206,85 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__2CF2ADDF" FromRole="Profesor" ToRole="Funcionario" />
           <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
+=======
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__2DE6D218" FromRole="Profesor" ToRole="Funcionario" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.AsignadoA" FromRole="Profesor" ToRole="PlanDeMejora" />
+          <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Responde_respuesta_con_opciones">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Justificacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opciones_seleccionadas_respuesta_con_opciones" Relationship="Self.fkOpcionesSeleccionadas" FromRole="Responde_respuesta_con_opciones" ToRole="Opciones_seleccionadas_respuesta_con_opciones" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeOpcionesCodigo" FromRole="Responde_respuesta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Responde_respuesta_con_opciones" ToRole="Respuestas_a_formulario" />
+        </EntityType>
+        <EntityType Name="Responde_respuesta_libre">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="PCodigo" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeLibreCodigo" FromRole="Responde_respuesta_libre" ToRole="Pregunta" />
+          <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Responde_respuesta_libre" ToRole="Respuestas_a_formulario" />
+        </EntityType>
+        <EntityType Name="Respuestas_a_formulario">
+          <Key>
+            <PropertyRef Name="FCodigo" />
+            <PropertyRef Name="Correo" />
+            <PropertyRef Name="CSigla" />
+            <PropertyRef Name="GNumero" />
+            <PropertyRef Name="GAnno" />
+            <PropertyRef Name="GSemestre" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GNumero" Type="Byte" Nullable="false" />
+          <Property Name="GAnno" Type="Int32" Nullable="false" />
+          <Property Name="GSemestre" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Formulario" Relationship="Self.fkRespuestasFormulario" FromRole="Respuestas_a_formulario" ToRole="Formulario" />
+          <NavigationProperty Name="Grupo" Relationship="Self.fkRespuestasGrupo" FromRole="Respuestas_a_formulario" ToRole="Grupo" />
+          <NavigationProperty Name="Persona" Relationship="Self.fkRespuestasUsuario" FromRole="Respuestas_a_formulario" ToRole="Persona" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_con_opciones" />
+          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Respuestas_a_formulario" ToRole="Responde_respuesta_libre" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.Origina" FromRole="Respuestas_a_formulario" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Responde_respuesta_con_opciones">
           <Key>
@@ -2278,8 +2399,13 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__3B40CD36" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
           <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__3B40CD36" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+=======
+          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__3C34F16F" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
+          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__3C34F16F" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+>>>>>>> nuevoMosqueteros
           <NavigationProperty Name="Carrera" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
           <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
         </EntityType>
@@ -2291,8 +2417,13 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__2645B050" FromRole="Usuario" ToRole="Persona" />
           <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__3C34F16F" FromRole="Usuario" ToRole="UsuarioPerfil" />
+=======
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__Usuario__2739D489" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__3D2915A8" FromRole="Usuario" ToRole="UsuarioPerfil" />
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <EntityType Name="UsuarioPerfil">
           <Key>
@@ -2305,9 +2436,15 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+<<<<<<< HEAD
           <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__3E1D39E1" FromRole="UsuarioPerfil" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__3D2915A8" FromRole="UsuarioPerfil" ToRole="Perfil" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__3C34F16F" FromRole="UsuarioPerfil" ToRole="Usuario" />
+=======
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__3F115E1A" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__3E1D39E1" FromRole="UsuarioPerfil" ToRole="Perfil" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__3D2915A8" FromRole="UsuarioPerfil" ToRole="Usuario" />
+>>>>>>> nuevoMosqueteros
         </EntityType>
         <Association Name="FK_Accionable_AccionDeMejora">
           <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1" />
@@ -2401,7 +2538,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Enfasis__CodCarr__0E6E26BF">
+=======
+        <Association Name="FK__Enfasis__CodCarr__0F624AF8">
+>>>>>>> nuevoMosqueteros
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2415,7 +2556,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Grupo__SiglaCurs__160F4887">
+=======
+        <Association Name="FK__Grupo__SiglaCurs__17036CC0">
+>>>>>>> nuevoMosqueteros
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2429,7 +2574,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__PerfilPermiso__245D67DE">
+=======
+        <Association Name="FK__PerfilPermiso__25518C17">
+>>>>>>> nuevoMosqueteros
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2445,7 +2594,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__UsuarioPerfil__3E1D39E1">
+=======
+        <Association Name="FK__UsuarioPerfil__3F115E1A">
+>>>>>>> nuevoMosqueteros
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2475,7 +2628,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Estudiant__Corre__10566F31">
+=======
+        <Association Name="FK__Estudiant__Corre__114A936A">
+>>>>>>> nuevoMosqueteros
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2525,7 +2682,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Funcionar__Corre__151B244E">
+=======
+        <Association Name="FK__Funcionar__Corre__160F4887">
+>>>>>>> nuevoMosqueteros
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2539,7 +2700,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Profesor__Correo__2CF2ADDF">
+=======
+        <Association Name="FK__Profesor__Correo__2DE6D218">
+>>>>>>> nuevoMosqueteros
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2635,7 +2800,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__PerfilPer__Perfi__22751F6C">
+=======
+        <Association Name="FK__PerfilPer__Perfi__236943A5">
+>>>>>>> nuevoMosqueteros
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2649,7 +2818,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__UsuarioPe__Perfi__3D2915A8">
+=======
+        <Association Name="FK__UsuarioPe__Perfi__3E1D39E1">
+>>>>>>> nuevoMosqueteros
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2663,7 +2836,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__PerfilPer__Permi__236943A5">
+=======
+        <Association Name="FK__PerfilPer__Permi__245D67DE">
+>>>>>>> nuevoMosqueteros
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2677,7 +2854,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__Persona__Usuario__2645B050">
+=======
+        <Association Name="FK__Persona__Usuario__2739D489">
+>>>>>>> nuevoMosqueteros
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2865,7 +3046,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__UnidadAca__Super__3B40CD36">
+=======
+        <Association Name="FK__UnidadAca__Super__3C34F16F">
+>>>>>>> nuevoMosqueteros
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2877,7 +3062,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <Association Name="FK__UsuarioPe__Usuar__3C34F16F">
+=======
+        <Association Name="FK__UsuarioPe__Usuar__3D2915A8">
+>>>>>>> nuevoMosqueteros
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2890,6 +3079,10 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               <PropertyRef Name="Usuario" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="AsignadoA">
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
         </Association>
         <Association Name="CreadoPor">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
@@ -2930,10 +3123,6 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
         <Association Name="Trabaja_en">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="*" />
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
-        </Association>
-        <Association Name="AsignadoA">
-          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
-          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
@@ -2999,6 +3188,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Activa_por" EntitySet="Activa_por" />
             <End Role="Periodo_activa_por" EntitySet="Periodo_activa_por" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK__Enfasis__CodCarr__0E6E26BF" Association="Self.FK__Enfasis__CodCarr__0E6E26BF">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
@@ -3012,6 +3202,21 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioPerfil__3E1D39E1" Association="Self.FK__UsuarioPerfil__3E1D39E1">
+=======
+          <AssociationSet Name="FK__Enfasis__CodCarr__0F624AF8" Association="Self.FK__Enfasis__CodCarr__0F624AF8">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Enfasis" EntitySet="Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grupo__SiglaCurs__17036CC0" Association="Self.FK__Grupo__SiglaCurs__17036CC0">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PerfilPermiso__25518C17" Association="Self.FK__PerfilPermiso__25518C17">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPerfil__3F115E1A" Association="Self.FK__UsuarioPerfil__3F115E1A">
+>>>>>>> nuevoMosqueteros
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -3019,7 +3224,11 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
             <End Role="Escalar" EntitySet="Escalar" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK__Estudiant__Corre__10566F31" Association="Self.FK__Estudiant__Corre__10566F31">
+=======
+          <AssociationSet Name="FK__Estudiant__Corre__114A936A" Association="Self.FK__Estudiant__Corre__114A936A">
+>>>>>>> nuevoMosqueteros
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
@@ -3035,11 +3244,19 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK__Funcionar__Corre__151B244E" Association="Self.FK__Funcionar__Corre__151B244E">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
           <AssociationSet Name="FK__Profesor__Correo__2CF2ADDF" Association="Self.FK__Profesor__Correo__2CF2ADDF">
+=======
+          <AssociationSet Name="FK__Funcionar__Corre__160F4887" Association="Self.FK__Funcionar__Corre__160F4887">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesor__Correo__2DE6D218" Association="Self.FK__Profesor__Correo__2DE6D218">
+>>>>>>> nuevoMosqueteros
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
@@ -3063,6 +3280,7 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
             <End Role="Opciones_seleccionadas_respuesta_con_opciones" EntitySet="Opciones_seleccionadas_respuesta_con_opciones" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK__PerfilPer__Perfi__22751F6C" Association="Self.FK__PerfilPer__Perfi__22751F6C">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
@@ -3076,6 +3294,21 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK__Persona__Usuario__2645B050" Association="Self.FK__Persona__Usuario__2645B050">
+=======
+          <AssociationSet Name="FK__PerfilPer__Perfi__236943A5" Association="Self.FK__PerfilPer__Perfi__236943A5">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPe__Perfi__3E1D39E1" Association="Self.FK__UsuarioPe__Perfi__3E1D39E1">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PerfilPer__Permi__245D67DE" Association="Self.FK__PerfilPer__Permi__245D67DE">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Persona__Usuario__2739D489" Association="Self.FK__Persona__Usuario__2739D489">
+>>>>>>> nuevoMosqueteros
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
@@ -3127,13 +3360,25 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
+<<<<<<< HEAD
           <AssociationSet Name="FK__UnidadAca__Super__3B40CD36" Association="Self.FK__UnidadAca__Super__3B40CD36">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioPe__Usuar__3C34F16F" Association="Self.FK__UsuarioPe__Usuar__3C34F16F">
+=======
+          <AssociationSet Name="FK__UnidadAca__Super__3C34F16F" Association="Self.FK__UnidadAca__Super__3C34F16F">
+            <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
+            <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPe__Usuar__3D2915A8" Association="Self.FK__UsuarioPe__Usuar__3D2915A8">
+>>>>>>> nuevoMosqueteros
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="AsignadoA" Association="Self.AsignadoA">
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="CreadoPor" Association="Self.CreadoPor">
             <End Role="Funcionario" EntitySet="Funcionario" />
@@ -3174,10 +3419,6 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
           <AssociationSet Name="Trabaja_en" Association="Self.Trabaja_en">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Funcionario" EntitySet="Funcionario" />
-          </AssociationSet>
-          <AssociationSet Name="AsignadoA" Association="Self.AsignadoA">
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
-            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <FunctionImport Name="AgregarOpcion">
             <Parameter Name="cod" Mode="In" Type="String" />
@@ -3641,6 +3882,14 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="AsignadoA" TypeName="DataIntegradorModel.AsignadoA" StoreEntitySet="AsignadoA">
+            <EndProperty Name="PlanDeMejora">
+              <ScalarProperty Name="codigo" ColumnName="codPlan" />
+            </EndProperty>
+            <EndProperty Name="Profesor">
+              <ScalarProperty Name="Correo" ColumnName="corrProf" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="CreadoPor" TypeName="DataIntegradorModel.CreadoPor" StoreEntitySet="CreadoPor">
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="Correo" ColumnName="corrFunc" />
@@ -3736,14 +3985,6 @@ warning 6002: The table/view 'DataIntegrador.dbo.AsignadoA' does not have a prim
             </EndProperty>
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="Correo" ColumnName="CorreoFuncionario" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AsignadoA" TypeName="DataIntegradorModel.AsignadoA" StoreEntitySet="AsignadoA">
-            <EndProperty Name="PlanDeMejora">
-              <ScalarProperty Name="codigo" ColumnName="codPlan" />
-            </EndProperty>
-            <EndProperty Name="Profesor">
-              <ScalarProperty Name="Correo" ColumnName="corrProf" />
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
