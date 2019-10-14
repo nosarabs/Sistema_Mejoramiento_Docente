@@ -99,13 +99,13 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Objetivos/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -116,9 +116,9 @@ namespace AppIntegrador.Controllers
         // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int plan, string title)
         {
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             db.Objetivo.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index");

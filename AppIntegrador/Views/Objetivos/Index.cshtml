@@ -82,7 +82,7 @@
                         <td class="TablasOpciones botonCentrado">
                             @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary" })
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                            @Html.ActionLink("Borrar", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Borrar", "Delete", new { plan=item.codPlan, title=item.nombre}, new { @class = "modal-link btn btn-danger" })
                         </td>
                     </tr>
                 //}
