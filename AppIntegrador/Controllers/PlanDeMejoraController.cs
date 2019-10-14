@@ -134,7 +134,7 @@ namespace AppIntegrador.Controllers
             {
                 var planTemp = new PlanDeMejora();
                 var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Last().codigo;
+                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
                 planTemp.codigo = codigoTemporal + 1;
                 planTemp.nombre = nombre;
                 planTemp.fechaInicio = fechaInicio;
