@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
-    <title>ProyectoIntegrador</title>
+    <title>Sistema de mejoramiento docente</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -15,7 +15,7 @@
                 <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
             </div>
             <div class="item">
-                <h2>Sistema de Mejoramiento Docente</h2>
+                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
             </div>
             <div class="item">
                 <ul class="wrapper">
