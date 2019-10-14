@@ -39,7 +39,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,7 +48,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -62,9 +60,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -73,12 +68,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -144,15 +133,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-<<<<<<< HEAD
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccionDeMejoraController.cs" />
-=======
->>>>>>> nuevoMosqueteros
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ObjetivoController.cs" />
+    <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
@@ -390,14 +374,11 @@
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
     <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
-<<<<<<< HEAD
-=======
     <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
     <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
->>>>>>> nuevoMosqueteros
     <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />
@@ -416,25 +397,6 @@
     <Content Include="Views\Secciones\Details.cshtml" />
     <Content Include="Views\Secciones\Edit.cshtml" />
     <Content Include="Views\Secciones\Index.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\PlanDeMejora\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crear.cshtml" />
-    <Content Include="Views\AccionDeMejora\Create.cshtml" />
-    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
-    <Content Include="Views\AccionDeMejora\Details.cshtml" />
-    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
-    <Content Include="Views\AccionDeMejora\Index.cshtml" />
-    <Content Include="Views\Objetivo\Create.cshtml" />
-    <Content Include="Views\Objetivo\Delete.cshtml" />
-    <Content Include="Views\Objetivo\Details.cshtml" />
-    <Content Include="Views\Objetivo\Edit.cshtml" />
-    <Content Include="Views\Objetivo\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\_edit.cshtml" />
-    <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
-    <Content Include="Views\PlanDeMejora\_table.cshtml" />
-=======
     <Content Include="Views\Objetivos\Create.cshtml" />
     <Content Include="Views\Objetivos\Delete.cshtml" />
     <Content Include="Views\Objetivos\Details.cshtml" />
@@ -444,7 +406,6 @@
     <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
     <Content Include="Views\PlanDeMejora\_crear.cshtml" />
     <Content Include="Views\PlanDeMejora\_edit.cshtml" />
->>>>>>> nuevoMosqueteros
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
