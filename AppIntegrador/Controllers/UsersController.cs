@@ -181,14 +181,22 @@ namespace AppIntegrador
                         originalUser.Activo = usuarioPersona.Usuario.Activo;
                         db.SaveChanges();
                         /*TO-DO: Stored procedure to change the password of a given user. Need to recalculate the "salt" and the SHA 256.*/
-                        /*TO-DO: Stored procedure to change the username of a given user. Cannot change from controller using EF.*/
                     }
 
                     /*To edit a person, first fetch him from the database using the email passed by the view.*/
-                    var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
+                    var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == formerUserMail);
 
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
+                        /*Stored procedure to change the mail of a given person*/
+                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo);
+                        
+                        if (originalUser != null)
+                        {
+                            /*Stored procedure to change the mail of a given user*/
+                            db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
+                        }
+                        
                         /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
                         originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
                         originalPerson.Nombre2 = usuarioPersona.Persona.Nombre2;
