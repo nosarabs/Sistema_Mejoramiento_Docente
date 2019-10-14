@@ -12,19 +12,19 @@ namespace AppIntegrador.Models.Metadata
         [Required(ErrorMessage = "Este campo es requerido")]
         public int codPlan { get; set; }
 
-        [Display(Name = "Nombre del objetivo")]
+        [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Este campo es requerido")]
         public string nombre { get; set; }
 
-        [Display(Name = "Descripción del objetivo")]
+        [Display(Name = "Descripción")]
         public string descripcion { get; set; }
 
-        [Display(Name = "Fecha de inicio")]
+        [Display(Name = "Inicio")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
-        [Display(Name = "Fecha final")]
+        [Display(Name = "Final")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public Nullable<System.DateTime> fechaFin { get; set; }
