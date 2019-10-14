@@ -59,6 +59,10 @@
     <Folder Include="Formularios\" />
     <Folder Include="Formularios\Preguntas\" />
     <Folder Include="Formularios\Respuestas\" />
+    <Folder Include="Formularios\Procedimientos" />
+    <Folder Include="Formularios\Funciones" />
+    <Folder Include="Usuarios y Perfiles" />
+    <Folder Include="Usuarios y Perfiles\Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -103,10 +107,28 @@
     <Build Include="Objetivo.sql" />
     <Build Include="AccionDeMejora.sql" />
     <Build Include="Accionable.sql" />
-    <Build Include="Responsable_De.sql" />
+    <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
     <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
+    <Build Include="Formularios\Procedimientos\PopularSeccionesConPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerPreguntasDeSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerOpcionesDePregunta.sql" />
+    <Build Include="Inscrita_en.sql" />
+    <Build Include="Pertenece_a.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaConOpcion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
+    <Build Include="AsignadoA.sql" />
+    <Build Include="Evalua.sql" />
+    <Build Include="ResponsableDe.sql" />
+    <Build Include="PlantillaObjetivo.sql" />
+    <Build Include="PlantillaAccionDeMejora.sql" />
+    <Build Include="CreadoPor.sql" />
+    <Build Include="Origina.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

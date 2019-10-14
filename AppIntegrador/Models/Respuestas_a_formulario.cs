@@ -19,10 +19,11 @@ namespace AppIntegrador.Models
         {
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
             this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
+            this.PlanDeMejora = new HashSet<PlanDeMejora>();
         }
     
         public string FCodigo { get; set; }
-        public string Username { get; set; }
+        public string Correo { get; set; }
         public string CSigla { get; set; }
         public byte GNumero { get; set; }
         public int GAnno { get; set; }
@@ -31,10 +32,12 @@ namespace AppIntegrador.Models
     
         public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
     }
 }

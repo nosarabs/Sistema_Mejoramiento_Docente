@@ -2,7 +2,7 @@
 (
 	-- Hay que cambiar varios valores cuando estén las otras tablas.
 	FCodigo CHAR(8) NOT NULL,
-	Username VARCHAR(50) NOT NULL,
+	Correo VARCHAR(50) NOT NULL,
 	CSigla VARCHAR(10) NOT NULL,
 	GNumero TINYINT NOT NULL,
 	GAnno INT NOT NULL,
@@ -12,7 +12,7 @@
 
 	OpcionSeleccionada TINYINT NOT NULL,
 
-	PRIMARY KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada),
-	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) 
-		REFERENCES Responde_respuesta_con_opciones(FCodigo, Username, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
+	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada),
+	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) 
+		REFERENCES Responde_respuesta_con_opciones(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
 )

@@ -48,17 +48,6 @@ namespace AppIntegrador.Controllers
             return preguntas.ToList();
         }
 
-        // GET: RespuestasFormulario
-        [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerRespuestas(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
-        {
-            var respuestas = from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                             where f.FCodigo == codigoFormulario && f.CSigla == siglaCurso && f.GNumero == numeroGrupo && f.GSemestre == semestre && f.GAnno == ano && f.PCodigo == codigoPregunta
-                             select new SelectListItem { Value = f.OpcionSeleccionada.ToString() };
-
-            return respuestas.ToList();
-        }
-
         public string ObtenerEtiquetasEscala(string codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -78,14 +67,14 @@ namespace AppIntegrador.Controllers
 
 
             // Iteracion sobre una lista nueva
-            for (int index = minimo; index <= maximo; index+=incremento)
+            for (int index = minimo; index <= maximo; index += incremento)
             {
                 // Agrega la opcion posible a la lista
                 ejeX.Add(index.ToString());
             }
             return serializer.Serialize(ejeX);
         }
-  
+
         public String ObtenerRespuestasEscala(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -103,11 +92,13 @@ namespace AppIntegrador.Controllers
 
             List<int> ejeY = new List<int>();
 
+            var numOpcion = 0;
             // Iteracion sobre una lista nueva
             for (int index = minimo; index <= maximo; index += incremento)
             {
+                
                 var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
-                                          where f.OpcionSeleccionada == index
+                                          where f.OpcionSeleccionada == numOpcion
                                           && f.FCodigo == codigoFormulario
                                           && f.CSigla == siglaCurso
                                           && f.GNumero == numeroGrupo
@@ -116,6 +107,7 @@ namespace AppIntegrador.Controllers
                                           && f.PCodigo == codigoPregunta
                                           select f.OpcionSeleccionada).Count();
                 ejeY.Add(contadorRespuestas);
+                ++numOpcion;
             }
             return serializer.Serialize(ejeY);
         }
@@ -138,7 +130,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public string GetTipoPregunta(string codigoPregunta)
+        public String GetTipoPregunta(String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<string> tipo = new List<string>();
@@ -171,27 +163,44 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(tipo);
         }
 
-        /*
-        Método que recupera las opciones de repuestas a una pregunta de selección múltiple para un formulario
-       */
-        public string ObtenerRespuestasSeleccionMultiple(string codigoPregunta)
+        public String ObtenterOpcionesPreguntasSeleccion(String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            //List<string> opciones = new List<string>();
+
             var opciones = from ods in db.Opciones_de_seleccion
-                           join pcods in db.Pregunta_con_opciones_de_seleccion on ods.Codigo equals pcods.Codigo
-                           where (pcods.Tipo.Equals('M')) && (pcods.Codigo == codigoPregunta)
+                           where ods.Codigo.Equals(codigoPregunta)
                            orderby ods.Orden
                            select ods.Texto;
-
             return serializer.Serialize(opciones);
+        }
+
+        public String ObtenerOpcionesSeleccionadasPreguntasSeleccion(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta, int numOpciones)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<int> respuestas = new List<int>();
+
+
+            for (int i = 0; i < numOpciones; ++i)
+            {
+                respuestas.Add(
+                    (from osrco in db.Opciones_seleccionadas_respuesta_con_opciones
+                     where osrco.OpcionSeleccionada == i
+                        && osrco.FCodigo == codigoFormulario
+                        && osrco.CSigla == siglaCurso
+                        && osrco.GNumero == numeroGrupo
+                        && osrco.GSemestre == semestre
+                        && osrco.GAnno == ano
+                        && osrco.PCodigo == codigoPregunta
+                     select osrco).Count());
+            }
+                                          
+            return serializer.Serialize(respuestas);
         }
 
         public String getJustificacionPregunta(string codigoPregunta, string tipo)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
-            int count = 0;
 
             var respuestas =    from rrco in db.Responde_respuesta_con_opciones
                                 where rrco.PCodigo == codigoPregunta

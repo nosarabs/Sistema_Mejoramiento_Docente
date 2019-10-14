@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Estudiante]
 (
-	[Cedula] CHAR(10) NOT NULL PRIMARY KEY, 
-    [Carne] NCHAR(6) NOT NULL,
-	FOREIGN KEY (Cedula) REFERENCES Persona (Cedula)
+	[Correo] VARCHAR(50) NOT NULL PRIMARY KEY, 
+    [Carne] NCHAR(6) NULL UNIQUE,
+	FOREIGN KEY (Correo) REFERENCES Persona (Correo) ON UPDATE CASCADE ON DELETE CASCADE
 )
