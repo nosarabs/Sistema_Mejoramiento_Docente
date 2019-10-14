@@ -284,5 +284,14 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
         }
+
+        public virtual int ObtenerEmailUsuario(string pUsername, ObjectParameter email)
+        {
+            var pUsernameParameter = pUsername != null ?
+                new ObjectParameter("pUsername", pUsername) :
+                new ObjectParameter("pUsername", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerEmailUsuario", pUsernameParameter, email);
+        }
     }
 }
