@@ -88,6 +88,35 @@ namespace AppIntegrador.Controllers
 
             return View(crearSeccion);
         }
+        [HttpGet]
+        public ActionResult UpdateFilters(string inp1, string inp2, string inp3)
+        {
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            if (inp2 == null && inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+
+            }
+            //if a user choose the radio button option as Subject  
+            else if (inp2 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList();
+            }
+            else if (inp1 == null && inp2 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList();
+            }
+            else
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+            }
+            return View(crearSeccion);
+        }
 
         // GET: Seccion/Edit/5
         public ActionResult Edit(string id)
