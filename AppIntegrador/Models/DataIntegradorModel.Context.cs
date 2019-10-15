@@ -14,7 +14,7 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class DataIntegradorEntities : DbContext
     {
         public DataIntegradorEntities()
@@ -318,6 +318,19 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nuevo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarUsername", anteriorParameter, nuevoParameter);
+        }
+    
+        public virtual int ChangePassword(string username, string newpassword)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var newpasswordParameter = newpassword != null ?
+                new ObjectParameter("newpassword", newpassword) :
+                new ObjectParameter("newpassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword", usernameParameter, newpasswordParameter);
         }
     }
 }

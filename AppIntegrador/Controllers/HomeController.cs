@@ -220,5 +220,41 @@ namespace AppIntegrador.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+
+        /* User story TAM-1.5 */
+        public ActionResult PasswordReset()
+        {
+            ViewBag.HTMLCheck = true;
+            return View();
+        }
+
+        public ActionResult SendPasswordRequest(string correo)
+        {
+            string message = "";
+            bool status = false;
+
+            var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
+
+            if (user != null)
+            {
+                /* Only for demo purposes, will be changed for a password reset link */
+                Random random = new Random();
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var newPassword = new string(Enumerable.Repeat(chars, 16)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                message = newPassword;
+
+                db.ChangePassword(correo, newPassword);
+                db.SaveChanges();
+            }
+            else
+            {
+                message = "Correo no encontrado";
+            }
+            ViewBag.Message = message;
+            ViewBag.HTMLCheck = true;
+            return View("PasswordReset");
+        }
     }
 }

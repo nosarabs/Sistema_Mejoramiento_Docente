@@ -1455,6 +1455,10 @@
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="estado" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="newpassword" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FCod" Type="char" Mode="In" />
           <Parameter Name="CSigla" Type="varchar" Mode="In" />
@@ -3263,6 +3267,10 @@
             <Parameter Name="anterior" Mode="In" Type="String" />
             <Parameter Name="nuevo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ChangePassword">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="newpassword" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3793,6 +3801,7 @@
           <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
           <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
           <FunctionImportMapping FunctionImportName="ModificarUsername" FunctionName="DataIntegradorModel.Store.ModificarUsername" />
+          <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="DataIntegradorModel.Store.ChangePassword" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
