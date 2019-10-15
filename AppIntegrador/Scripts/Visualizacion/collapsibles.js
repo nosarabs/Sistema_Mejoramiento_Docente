@@ -43,9 +43,9 @@ function createCollapsible(id, question) {
     col1.className = "col-6";
     var col2 = document.createElement("div");
     col2.className = "col-6";
+    cnt.appendChild(row);
     row.appendChild(col1);
     row.appendChild(col2);
-    cont.appendChild(row);
 	
     btn.addEventListener("click", function () {		//Add an event listener to the button
 
@@ -74,8 +74,8 @@ function createCollapsible(id, question) {
 		}
 		
 		this.classList.toggle("activeCollapsible");
-		var content = this.nextElementSibling;
-		
+		/*var content = this.nextElementSibling;
+        
 		if (content.style.maxHeight){
 			
 			content.style.maxHeight = null;
@@ -85,9 +85,10 @@ function createCollapsible(id, question) {
 			content.style.maxHeight = content.scrollHeight + "px";
 			
 		} 
-		
-	});
-	
+		*/
+    });
+    cnt.appendChild(cont);
+    //document.body.appendChild(cont);
 	document.body.appendChild(btn);
 	document.body.appendChild(cnt);
 	

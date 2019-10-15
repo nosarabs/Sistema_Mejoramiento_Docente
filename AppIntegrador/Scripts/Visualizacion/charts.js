@@ -186,6 +186,8 @@ function addChart(cnt, id, tipo) {
 	var cvs = document.createElement("canvas");
 	cvs.setAttribute("width", "690" );
     cvs.setAttribute("height", "420");
+    cvs.setAttribute("margin", "0");
+    cvs.setAttribute("display", "inline");
     var chartData;
 	
 	switch(tipo) {
