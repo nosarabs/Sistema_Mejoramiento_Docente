@@ -61,6 +61,8 @@
     <Folder Include="Formularios\Respuestas\" />
     <Folder Include="Formularios\Procedimientos" />
     <Folder Include="Formularios\Funciones" />
+    <Folder Include="Usuarios y Perfiles" />
+    <Folder Include="Usuarios y Perfiles\Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -129,6 +131,7 @@
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AsociarPreguntaConSeccion.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

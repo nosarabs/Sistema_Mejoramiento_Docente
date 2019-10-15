@@ -12,4 +12,13 @@ namespace AppIntegrador.Models
 
     [MetadataType(typeof(AccionDeMejoraMetadata))]
     public partial class AccionDeMejora { }
+
+    [MetadataType(typeof(ObjetivoMetadata))]
+    public partial class Objetivo { }
+
+    [MetadataType(typeof(TipoObjetivoMetadata))]
+    public partial class TipoObjetivo { }
+
+    [MetadataType(typeof(PlantillaObjetivoMetadata))]
+    public partial class PlantillaObjetivo { }
 }

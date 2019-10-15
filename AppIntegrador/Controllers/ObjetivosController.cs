@@ -17,10 +17,8 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos
         public ActionResult Index()
         {
-            //var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
-            //return View(objetivo.ToList());
-
-            return View();
+            var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
+            return View(objetivo.ToList());
         }
 
         // GET: Objetivos/Details/5
@@ -41,9 +39,9 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Create
         public ActionResult Create()
         {
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre");
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion");
-            return View();
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
+            return View("_crearObjetivo");
         }
 
         // POST: Objetivos/Create
@@ -51,7 +49,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Create([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +58,8 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
@@ -77,8 +75,8 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
@@ -87,7 +85,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Edit([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
@@ -95,8 +93,8 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
