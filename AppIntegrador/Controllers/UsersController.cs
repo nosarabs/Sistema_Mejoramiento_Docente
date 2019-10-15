@@ -163,6 +163,9 @@ namespace AppIntegrador
             return View(usuarioPersona);
         }
 
+        /*Functions to edit a selected user account.*/
+        /*Respond to User Story 2.4.
+          Tasks: Stored procedure ModificarDatosPersona*/
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -199,22 +202,21 @@ namespace AppIntegrador
                             /*Stored procedure to change the mail of a given user*/
                             db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
                         }
-                        
-                        /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
-                        originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
-                        originalPerson.Nombre2 = usuarioPersona.Persona.Nombre2;
-                        originalPerson.Apellido1 = usuarioPersona.Persona.Apellido1;
-                        originalPerson.Apellido2 = usuarioPersona.Persona.Apellido2;
-                        originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
-                        originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
-                        originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
-                        if (originalPerson.Estudiante == null)
-                            originalPerson.Estudiante = new Estudiante();
-                        originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
 
-                        db.SaveChanges();
+                        /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
+                        db.ModificarDatosPersona(usuarioPersona.Persona.Correo,
+                                                 usuarioPersona.Persona.CorreoAlt,
+                                                 usuarioPersona.Persona.Identificacion,
+                                                 usuarioPersona.Persona.Nombre1,
+                                                 usuarioPersona.Persona.Nombre2,
+                                                 usuarioPersona.Persona.Apellido1,
+                                                 usuarioPersona.Persona.Apellido2,
+                                                 usuarioPersona.Persona.TipoIdentificacion,
+                                                 usuarioPersona.Persona.Estudiante.Carne
+                                                 );                        
                     }
                 }
+                return RedirectToAction("Index");
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 

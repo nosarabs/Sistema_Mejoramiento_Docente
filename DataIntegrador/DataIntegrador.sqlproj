@@ -131,6 +131,7 @@
     <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\ModificarCorreo.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\ModificarUsername.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ModificarDatosPersona.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

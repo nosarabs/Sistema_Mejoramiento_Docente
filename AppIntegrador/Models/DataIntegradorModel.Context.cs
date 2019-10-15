@@ -319,5 +319,59 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarUsername", anteriorParameter, nuevoParameter);
         }
+    
+        public virtual int ModificarCarne(string nuevoCarne, string correo)
+        {
+            var nuevoCarneParameter = nuevoCarne != null ?
+                new ObjectParameter("nuevoCarne", nuevoCarne) :
+                new ObjectParameter("nuevoCarne", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCarne", nuevoCarneParameter, correoParameter);
+        }
+    
+        public virtual int ModificarDatosPersona(string correo, string correoAlt, string identificacion, string nombre1, string nombre2, string apellido1, string apellido2, string tipoIdentificacion, string nuevoCarne)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var correoAltParameter = correoAlt != null ?
+                new ObjectParameter("correoAlt", correoAlt) :
+                new ObjectParameter("correoAlt", typeof(string));
+    
+            var identificacionParameter = identificacion != null ?
+                new ObjectParameter("identificacion", identificacion) :
+                new ObjectParameter("identificacion", typeof(string));
+    
+            var nombre1Parameter = nombre1 != null ?
+                new ObjectParameter("nombre1", nombre1) :
+                new ObjectParameter("nombre1", typeof(string));
+    
+            var nombre2Parameter = nombre2 != null ?
+                new ObjectParameter("nombre2", nombre2) :
+                new ObjectParameter("nombre2", typeof(string));
+    
+            var apellido1Parameter = apellido1 != null ?
+                new ObjectParameter("apellido1", apellido1) :
+                new ObjectParameter("apellido1", typeof(string));
+    
+            var apellido2Parameter = apellido2 != null ?
+                new ObjectParameter("apellido2", apellido2) :
+                new ObjectParameter("apellido2", typeof(string));
+    
+            var tipoIdentificacionParameter = tipoIdentificacion != null ?
+                new ObjectParameter("tipoIdentificacion", tipoIdentificacion) :
+                new ObjectParameter("tipoIdentificacion", typeof(string));
+    
+            var nuevoCarneParameter = nuevoCarne != null ?
+                new ObjectParameter("nuevoCarne", nuevoCarne) :
+                new ObjectParameter("nuevoCarne", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarDatosPersona", correoParameter, correoAltParameter, identificacionParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, tipoIdentificacionParameter, nuevoCarneParameter);
+        }
     }
 }

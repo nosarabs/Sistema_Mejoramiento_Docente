@@ -525,7 +525,7 @@
           <Property Name="CodCarrera" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CodEnfasis" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Empadrona__Corre__0D7A0286">
+        <Association Name="FK__Empadrona__Corre__0C85DE4D">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -539,7 +539,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Empadronado_en__0E6E26BF">
+        <Association Name="FK__Empadronado_en__0D7A0286">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -555,7 +555,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Enfasis__CodCarr__0F624AF8">
+        <Association Name="FK__Enfasis__CodCarr__0E6E26BF">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -569,7 +569,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Estudiant__Corre__114A936A">
+        <Association Name="FK__Estudiant__Corre__10566F31">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -583,7 +583,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Funcionar__Corre__160F4887">
+        <Association Name="FK__Funcionar__Corre__151B244E">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -597,7 +597,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grupo__SiglaCurs__17036CC0">
+        <Association Name="FK__Grupo__SiglaCurs__160F4887">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -611,7 +611,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__18EBB532">
+        <Association Name="FK__Imparte__17F790F9">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -631,7 +631,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__CorreoP__17F790F9">
+        <Association Name="FK__Imparte__CorreoP__17036CC0">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -645,7 +645,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodCa__1AD3FDA4">
+        <Association Name="FK__Inscrita___CodCa__19DFD96B">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -659,7 +659,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodUn__19DFD96B">
+        <Association Name="FK__Inscrita___CodUn__18EBB532">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -673,7 +673,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matricula__Corre__1BC821DD">
+        <Association Name="FK__Matricula__Corre__1AD3FDA4">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -687,7 +687,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matriculado_en__1CBC4616">
+        <Association Name="FK__Matriculado_en__1BC821DD">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -707,7 +707,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Perfi__236943A5">
+        <Association Name="FK__PerfilPer__Perfi__22751F6C">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -721,7 +721,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Permi__245D67DE">
+        <Association Name="FK__PerfilPer__Permi__236943A5">
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -735,7 +735,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPermiso__25518C17">
+        <Association Name="FK__PerfilPermiso__245D67DE">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -751,7 +751,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__Usuario__2739D489">
+        <Association Name="FK__Persona__Usuario__2645B050">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -763,7 +763,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece__Sigla__29221CFB">
+        <Association Name="FK__Pertenece__Sigla__282DF8C2">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -777,7 +777,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece_a__282DF8C2">
+        <Association Name="FK__Pertenece_a__2739D489">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -793,7 +793,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profesor__Correo__2DE6D218">
+        <Association Name="FK__Profesor__Correo__2CF2ADDF">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -807,7 +807,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__CodUn__3B40CD36">
+        <Association Name="FK__Trabaja_e__CodUn__3A4CA8FD">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -821,7 +821,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__Corre__3A4CA8FD">
+        <Association Name="FK__Trabaja_e__Corre__395884C4">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -835,7 +835,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__3C34F16F">
+        <Association Name="FK__UnidadAca__Super__3B40CD36">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -847,7 +847,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__3E1D39E1">
+        <Association Name="FK__UsuarioPe__Perfi__3D2915A8">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -861,7 +861,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__3D2915A8">
+        <Association Name="FK__UsuarioPe__Usuar__3C34F16F">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -875,7 +875,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__3F115E1A">
+        <Association Name="FK__UsuarioPerfil__3E1D39E1">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1482,6 +1482,17 @@
           <Parameter Name="anterior" Type="varchar" Mode="In" />
           <Parameter Name="nuevo" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ModificarDatosPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="correoAlt" Type="varchar" Mode="In" />
+          <Parameter Name="identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="nombre1" Type="varchar" Mode="In" />
+          <Parameter Name="nombre2" Type="varchar" Mode="In" />
+          <Parameter Name="apellido1" Type="varchar" Mode="In" />
+          <Parameter Name="apellido2" Type="varchar" Mode="In" />
+          <Parameter Name="tipoIdentificacion" Type="varchar" Mode="In" />
+          <Parameter Name="nuevoCarne" Type="nchar" Mode="In" />
+        </Function>
         <Function Name="ModificarUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="anterior" Type="varchar" Mode="In" />
           <Parameter Name="nuevo" Type="varchar" Mode="In" />
@@ -1560,103 +1571,103 @@
           <EntitySet Name="UnidadAcademica" EntityType="Self.UnidadAcademica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Empadrona__Corre__0D7A0286" Association="Self.FK__Empadrona__Corre__0D7A0286">
+          <AssociationSet Name="FK__Empadrona__Corre__0C85DE4D" Association="Self.FK__Empadrona__Corre__0C85DE4D">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Empadronado_en__0E6E26BF" Association="Self.FK__Empadronado_en__0E6E26BF">
+          <AssociationSet Name="FK__Empadronado_en__0D7A0286" Association="Self.FK__Empadronado_en__0D7A0286">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Enfasis__CodCarr__0F624AF8" Association="Self.FK__Enfasis__CodCarr__0F624AF8">
+          <AssociationSet Name="FK__Enfasis__CodCarr__0E6E26BF" Association="Self.FK__Enfasis__CodCarr__0E6E26BF">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK__Estudiant__Corre__114A936A" Association="Self.FK__Estudiant__Corre__114A936A">
+          <AssociationSet Name="FK__Estudiant__Corre__10566F31" Association="Self.FK__Estudiant__Corre__10566F31">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
-          <AssociationSet Name="FK__Funcionar__Corre__160F4887" Association="Self.FK__Funcionar__Corre__160F4887">
+          <AssociationSet Name="FK__Funcionar__Corre__151B244E" Association="Self.FK__Funcionar__Corre__151B244E">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grupo__SiglaCurs__17036CC0" Association="Self.FK__Grupo__SiglaCurs__17036CC0">
+          <AssociationSet Name="FK__Grupo__SiglaCurs__160F4887" Association="Self.FK__Grupo__SiglaCurs__160F4887">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__18EBB532" Association="Self.FK__Imparte__18EBB532">
+          <AssociationSet Name="FK__Imparte__17F790F9" Association="Self.FK__Imparte__17F790F9">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__CorreoP__17F790F9" Association="Self.FK__Imparte__CorreoP__17F790F9">
+          <AssociationSet Name="FK__Imparte__CorreoP__17036CC0" Association="Self.FK__Imparte__CorreoP__17036CC0">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodCa__1AD3FDA4" Association="Self.FK__Inscrita___CodCa__1AD3FDA4">
+          <AssociationSet Name="FK__Inscrita___CodCa__19DFD96B" Association="Self.FK__Inscrita___CodCa__19DFD96B">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodUn__19DFD96B" Association="Self.FK__Inscrita___CodUn__19DFD96B">
+          <AssociationSet Name="FK__Inscrita___CodUn__18EBB532" Association="Self.FK__Inscrita___CodUn__18EBB532">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matricula__Corre__1BC821DD" Association="Self.FK__Matricula__Corre__1BC821DD">
+          <AssociationSet Name="FK__Matricula__Corre__1AD3FDA4" Association="Self.FK__Matricula__Corre__1AD3FDA4">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Matriculado_en" EntitySet="Matriculado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matriculado_en__1CBC4616" Association="Self.FK__Matriculado_en__1CBC4616">
+          <AssociationSet Name="FK__Matriculado_en__1BC821DD" Association="Self.FK__Matriculado_en__1BC821DD">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Matriculado_en" EntitySet="Matriculado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Perfi__236943A5" Association="Self.FK__PerfilPer__Perfi__236943A5">
+          <AssociationSet Name="FK__PerfilPer__Perfi__22751F6C" Association="Self.FK__PerfilPer__Perfi__22751F6C">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Permi__245D67DE" Association="Self.FK__PerfilPer__Permi__245D67DE">
+          <AssociationSet Name="FK__PerfilPer__Permi__236943A5" Association="Self.FK__PerfilPer__Permi__236943A5">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPermiso__25518C17" Association="Self.FK__PerfilPermiso__25518C17">
+          <AssociationSet Name="FK__PerfilPermiso__245D67DE" Association="Self.FK__PerfilPermiso__245D67DE">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__Usuario__2739D489" Association="Self.FK__Persona__Usuario__2739D489">
+          <AssociationSet Name="FK__Persona__Usuario__2645B050" Association="Self.FK__Persona__Usuario__2645B050">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece__Sigla__29221CFB" Association="Self.FK__Pertenece__Sigla__29221CFB">
+          <AssociationSet Name="FK__Pertenece__Sigla__282DF8C2" Association="Self.FK__Pertenece__Sigla__282DF8C2">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece_a__282DF8C2" Association="Self.FK__Pertenece_a__282DF8C2">
+          <AssociationSet Name="FK__Pertenece_a__2739D489" Association="Self.FK__Pertenece_a__2739D489">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profesor__Correo__2DE6D218" Association="Self.FK__Profesor__Correo__2DE6D218">
+          <AssociationSet Name="FK__Profesor__Correo__2CF2ADDF" Association="Self.FK__Profesor__Correo__2CF2ADDF">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__CodUn__3B40CD36" Association="Self.FK__Trabaja_e__CodUn__3B40CD36">
+          <AssociationSet Name="FK__Trabaja_e__CodUn__3A4CA8FD" Association="Self.FK__Trabaja_e__CodUn__3A4CA8FD">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__Corre__3A4CA8FD" Association="Self.FK__Trabaja_e__Corre__3A4CA8FD">
+          <AssociationSet Name="FK__Trabaja_e__Corre__395884C4" Association="Self.FK__Trabaja_e__Corre__395884C4">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__3C34F16F" Association="Self.FK__UnidadAca__Super__3C34F16F">
+          <AssociationSet Name="FK__UnidadAca__Super__3B40CD36" Association="Self.FK__UnidadAca__Super__3B40CD36">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__3E1D39E1" Association="Self.FK__UsuarioPe__Perfi__3E1D39E1">
+          <AssociationSet Name="FK__UsuarioPe__Perfi__3D2915A8" Association="Self.FK__UsuarioPe__Perfi__3D2915A8">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__3D2915A8" Association="Self.FK__UsuarioPe__Usuar__3D2915A8">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__3C34F16F" Association="Self.FK__UsuarioPe__Usuar__3C34F16F">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__3F115E1A" Association="Self.FK__UsuarioPerfil__3F115E1A">
+          <AssociationSet Name="FK__UsuarioPerfil__3E1D39E1" Association="Self.FK__UsuarioPerfil__3E1D39E1">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -3263,6 +3274,21 @@
             <Parameter Name="anterior" Mode="In" Type="String" />
             <Parameter Name="nuevo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ModificarCarne">
+            <Parameter Name="nuevoCarne" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModificarDatosPersona">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="correoAlt" Mode="In" Type="String" />
+            <Parameter Name="identificacion" Mode="In" Type="String" />
+            <Parameter Name="nombre1" Mode="In" Type="String" />
+            <Parameter Name="nombre2" Mode="In" Type="String" />
+            <Parameter Name="apellido1" Mode="In" Type="String" />
+            <Parameter Name="apellido2" Mode="In" Type="String" />
+            <Parameter Name="tipoIdentificacion" Mode="In" Type="String" />
+            <Parameter Name="nuevoCarne" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3793,6 +3819,7 @@
           <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
           <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
           <FunctionImportMapping FunctionImportName="ModificarUsername" FunctionName="DataIntegradorModel.Store.ModificarUsername" />
+          <FunctionImportMapping FunctionImportName="ModificarDatosPersona" FunctionName="DataIntegradorModel.Store.ModificarDatosPersona" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
