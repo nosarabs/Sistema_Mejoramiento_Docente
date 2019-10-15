@@ -184,7 +184,9 @@ function drawPieChart(cvs, chartData) {
 
 function addChart(cnt, id, tipo) {
 
-	var cvs = document.createElement("canvas");
+    var cvs = document.createElement("canvas");
+    var divDesviacion = document.createElement("div");
+    divDesviacion.className = "desviacion";
 	cvs.setAttribute("width", "900" );
     cvs.setAttribute("height", "650");
     var chartData;
@@ -241,10 +243,22 @@ function addChart(cnt, id, tipo) {
                 dataType: "json",
                 async: false,
                 success: function (resultados) {
-                    desviacion = resultados;
-                    alert(desviacion);
+                    desviacion = resultados.toFixed(2);
                 }
             });
+
+            
+            var desviacionTitulo = document.createElement("h3");
+            desviacionTitulo.innerText = "Desviación Estándar";
+            divDesviacion.appendChild(desviacionTitulo);
+            var desviacionValor = document.createElement("div");
+            desviacionValor.innerText = ("" + desviacion).replace(".",",");
+
+
+            divDesviacion.appendChild(desviacionValor);
+
+
+            //divDesviacion.innerText = desviacion;
 
             chartData = { DATA: data, LABELS: labels };
             drawBarChart(cvs, chartData);
@@ -359,5 +373,5 @@ function addChart(cnt, id, tipo) {
 	}
 
     cnt.appendChild(cvs);
-
+    cnt.appendChild(divDesviacion);
 }

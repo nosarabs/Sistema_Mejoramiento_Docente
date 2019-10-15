@@ -62,3 +62,8 @@ canvas{
     background-color: #F9F9F9;
     list-style-position: inside;
 }
+
+.desviacion {
+    text-align: center;
+    font: 18px;
+}
