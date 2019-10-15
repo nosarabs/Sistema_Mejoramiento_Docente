@@ -1,8 +1,32 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PreguntaConOpciones>
 
-@{ 
+@{
     Layout = null;
 }
 
-<!--Aqui viene el foreach de las opciones junto con los radiobuttons-->
-test pregunta con opciones
+@foreach (var pregunta in Model)
+{
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            @Html.DisplayFor(model => pregunta.Enunciado)
+
+            @foreach (var opcion in pregunta.Opciones)
+            {
+                @Html.DisplayFor(model => opcion.Texto)
+            }
+        </div>
+    </div>
+}
+
+@foreach (var item in Model.Select(i => i.Enunciado).ToList())
+{
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            <header>Group No is @item</header>
+            @foreach (var grpName in Model.Where(i => i.Enunciado == item).ToList())
+            {
+                <p>GroupName: @grpName.Opciones.</p>
+            }
+        </div>
+    </div>
+}
