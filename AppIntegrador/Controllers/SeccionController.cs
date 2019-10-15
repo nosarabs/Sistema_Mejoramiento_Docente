@@ -7,12 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
         // GET: Seccion
         public ActionResult Index(string inp1, string inp2)
@@ -52,13 +55,12 @@ namespace AppIntegrador.Controllers
             return View(seccion);
         }
 
+
+
         // GET: Seccion/Create
         public ActionResult Create()
         {
-
-            var crearSeccion = new CrearSeccionModel();
-            //crearSeccion.Seccion = db.Seccion();
-            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();            
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
             return View(crearSeccion);
         }
 
@@ -67,16 +69,24 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            if (ModelState.IsValid)
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
             {
-                db.Seccion.Add(seccion);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if ( InsertSeccionTienePregunta(seccion, preguntas) )
+                {
+                    return RedirectToAction("Create");
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(crearSeccion);
+                }
             }
 
-            return View(seccion);
+            return View(crearSeccion);
         }
 
         // GET: Seccion/Edit/5
@@ -144,5 +154,51 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "dbo.AgregarSeccion";
+                        cmd.Parameters.Add(new SqlParameter("@codigo", seccion.Codigo));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", seccion.Nombre));
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    catch (System.Data.SqlClient.SqlException)
+                    {
+                        return false;
+                    }
+                }
+                if (preguntas != null)
+                {
+                    for (int index = 0; index < preguntas.Count; ++index)
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AsociarPreguntaConSeccion";
+                            cmd.Parameters.Add(new SqlParameter("@CodigoSeccion", seccion.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@CodigoPregunta", preguntas[index].Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@Orden", index));
+
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 }
