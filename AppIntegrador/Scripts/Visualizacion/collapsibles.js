@@ -40,6 +40,18 @@ function createCollapsible(id, question) {
 		
         if (this.nextElementSibling.childElementCount == 0) {
 
+            var cnt = this.nextElementSibling;
+            var row = document.createElement("div");
+            row.className = "row";
+            var leftCol = document.createElement("div");
+            leftCol.className = "column";
+            var rightCol = document.createElement("div");
+            rightCol.className = "column";
+
+            row.appendChild(leftCol);
+            row.appendChild(rightCol);
+            cnt.appendChild(row);
+
             this.id = getTipoPregunta(id)[0];
 
             if (this.id == "texto_abierto") {
@@ -48,13 +60,13 @@ function createCollapsible(id, question) {
 
             } else {
                 appendLineBreaks(cnt, 2);
-                addChart(cnt, id, this.id);
+                addChart(leftCol, id, this.id);
                 appendLineBreaks(cnt, 6);
                 appendTitle(cnt, "Justificación de los resultados");
 
             }
 
-            addBox(cnt, id, this.id);
+            addBox(rightCol, id, this.id);
 			appendLineBreaks(cnt, 2);
 			
 		}
@@ -73,7 +85,7 @@ function createCollapsible(id, question) {
 		} 
 		
 	});
-	
+
 	document.body.appendChild(btn);
 	document.body.appendChild(cnt);
 	
