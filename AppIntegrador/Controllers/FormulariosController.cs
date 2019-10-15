@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
@@ -19,24 +20,91 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Formularios
-        public ActionResult Index()
+        private class SeccionYCodigo
         {
-            crearFormulario.seccion = db.Seccion;
-            return View(db.Formulario.ToList());
+            // It is important to declare them public so they get returned
+            public string Codigo { get; set; }
+            public string Nombre { get; set; }
+        }
+        private class Opcion
+        {
+            public string Texto { get; set; }
+            public int Orden { get; set; }
         }
 
         public ActionResult LlenarFormulario(string id)
         {
-            crearFormulario.seccion = db.Seccion;
-            Formulario formulario = db.Formulario.Find(id);
-
-            if (formulario == null)
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
 
-            return View(formulario);
+            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
+
+            // Sacar el nombre de cada formulario y el código en el orden definido.
+            SqlParameter codForm = new SqlParameter("CodForm", id);
+            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
+
+            // Agrego cada seccion a la lista de secciones
+            foreach (var seccion in nombresSecciones)
+            {
+                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
+
+                // Obtiene los códigos de todas las preguntas relacionadas a la sección
+                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
+                // Lista con cada tipo de pregunta
+                TodasLasPreguntas todasLasPreguntas = new TodasLasPreguntas();
+                // Lista que contiene cada pregunta con sus opciones
+                List<PreguntaConOpciones> preguntasConOpciones = new List<PreguntaConOpciones>();
+
+                // Agrego cada pregunta a la lista de preguntas
+                foreach (string codigo in Codigos)
+                {
+                    PreguntaConOpciones pregunta = new PreguntaConOpciones();
+
+                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
+                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
+
+                    // Obtiene el enunciado de una pregunta
+                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
+
+                    // Obtiene las opciones de una pregunta
+                    List<Opcion> opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
+                    pregunta.Opciones = opciones.Select(Opcion => Opcion.Texto);
+
+                    // Añade la pregunta con sus opciones a la lista
+                    preguntasConOpciones.Add(pregunta);
+                }
+
+                todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
+
+                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
+                {
+                    Nombre = seccion.Nombre,
+                    Preguntas = todasLasPreguntas
+                };
+
+                secciones.Add(seccionCompleta);
+            } // Foreach section in nombresSecciones
+
+            LlenarFormulario formularioCompleto = new LlenarFormulario
+            {
+                Nombre = formularioDB.Nombre,
+                Secciones = secciones
+            };
+
+            return View(formularioCompleto);
         }
+
+
+        // GET: Formularios
+        public ActionResult Index()
+        {
+            return View(db.Formulario.ToList());
+        }
+
+
 
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
@@ -64,25 +132,19 @@ namespace AppIntegrador.Controllers
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-       
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario)
+        [HttpPost]        
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
         {
             crearFormulario.seccion = db.Seccion;
-            try
+            if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-
-                if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
+                if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
-                    db.Formulario.Add(formulario);
-                    db.SaveChanges();
                     return RedirectToAction("Create");
                 }
-            }
-            catch (Exception exception)
-            {
-                if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                else
                 {
+                    // Notifique que ocurrió un error
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
                     return View(crearFormulario);
                 }
@@ -163,62 +225,53 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        public class SeccionConOrden
+
+        
+
+        private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
-            // It is important to declare them public so they get returned
-            public string Nombre { get; set; }
-            public int Orden { get; set; }
-        }
-
-        public class Opcion
-        { 
-            public string Texto { get; set; }
-            public int Orden { get; set; }
-        }
-
-        public class PreguntaConEnunciadoYOpciones
-        {
-            public string Enunciado { get; set; }
-            public List<Opcion> Opciones { get; set; }
-        }
-       
-        [HttpGet]
-        public JsonResult GetSections(string id)
-        {
-            SqlParameter codForm = new SqlParameter("CodForm", id);
-            List<SeccionConOrden> secciones = db.Database.SqlQuery<SeccionConOrden>("EXEC SeccionesDeFormulario @CodForm", codForm).ToList();
-
-            return Json(secciones, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public JsonResult GetQuestions(string id)
-        {
-            SqlParameter sectionCode = new SqlParameter("sectionCode", id);
-
-            // Obtiene los códigos de todas las preguntas relacionadas a la sección
-            List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
-
-            List<PreguntaConEnunciadoYOpciones> preguntasConOpciones = new List<PreguntaConEnunciadoYOpciones>();
-   
-            foreach (string codigo in Codigos)
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
             {
-                PreguntaConEnunciadoYOpciones pregunta = new PreguntaConEnunciadoYOpciones();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.CommandText = "dbo.AgregarFormulario";
+                        cmd.Parameters.Add(new SqlParameter("@codigo", formulario.Codigo));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", formulario.Nombre));
 
-                SqlParameter questionCode = new SqlParameter("questionCode", codigo);
-                SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    catch (System.Data.SqlClient.SqlException)
+                    {
+                        return false;
+                    }
+                }
+                if (secciones != null)
+                {
+                    for (int index = 0; index < secciones.Count; ++index)
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.CommandText = "dbo.AsociarSeccionConFormulario";
+                            cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
+                            cmd.Parameters.Add(new SqlParameter("@orden", index));
 
-                // Obtiene el enunciado de una pregunta
-                pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
-                
-                // Obtiene las opciones de una pregunta
-                pregunta.Opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
-
-                // Añade la pregunta con sus opciones a la lista
-                preguntasConOpciones.Add(pregunta);
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
+                    }
+                }
             }
-
-            return Json(preguntasConOpciones.ToList(), JsonRequestBehavior.AllowGet);
+            return true;
         }
     }
 }
