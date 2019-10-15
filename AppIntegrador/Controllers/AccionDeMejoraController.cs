@@ -54,25 +54,32 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: AccionDeMejora/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int plan, string obj, string descripcion)
         {
-            return View();
+            if (plan == null || obj == null || descripcion == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(plan, obj, descripcion);
+            if (accionDeMejora == null)
+            {
+                return HttpNotFound();
+            }
+            return View(accionDeMejora);
         }
 
         // POST: AccionDeMejora/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] PlanDeMejora planDeMejora)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                db.Entry(planDeMejora).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(planDeMejora);
         }
 
         // GET: AccionDeMejora/Delete/5

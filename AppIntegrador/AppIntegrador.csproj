@@ -415,6 +415,7 @@
     <Content Include="Views\PlanDeMejora\_edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
