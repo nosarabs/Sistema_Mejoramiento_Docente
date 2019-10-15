@@ -1,0 +1,22 @@
+﻿@model AppIntegrador.Models.LlenarFormulario
+
+@{
+    ViewBag.Title = "Llenar formulario";
+}
+
+<h2 id="encabezado" class="text-center">Llenar formulario "@Html.DisplayFor(model => model.Nombre)"</h2>
+
+<div id="section-container">
+   @{ Html.RenderPartial("SeccionConPreguntas", Model.Secciones); }
+</div>
+
+<style>
+    #section-container {
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+</style>
+
+@section Scripts{
+    <script></script>
+}

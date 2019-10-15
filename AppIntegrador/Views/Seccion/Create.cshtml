@@ -1,0 +1,117 @@
+﻿@model AppIntegrador.Models.CrearSeccionModel
+
+@{
+    ViewBag.Title = "Crear sección";
+}
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <table class="table">
+        <tr>
+            <td style="width:40%">
+                <h2>Crear Sección</h2>
+                <hr />
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Seccion.Codigo, new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               id = "textCode",
+                               name = "textCode",
+                               @maxlength = "8",
+                               required = "required",
+                               placeholder = "Código",
+                               rows = "5",
+                               @onkeyup = "charCount(this)"
+                           }
+                       })
+                            <div class="counter small pull-right">0/8 caracteres usados</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-10">
+                            <form accept-charset="UTF-8" action="" method="POST">
+                                @Html.EditorFor(model => model.Seccion.Nombre, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   id = "textName",
+                                   name = "textName",
+                                   @maxlength = "250",
+                                   required = "required",
+                                   placeholder = "Nombre del formulario",
+                                   rows = "5",
+                                   @onkeyup = "charCount(this)"
+                               }
+                           })
+                                <div class="counter small pull-right">0/250 caracteres usados</div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+
+
+            <td style="width:60%">
+                @Html.Partial("/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", Model.pregunta_Con_Opciones_De_Seleccion)
+
+            </td>
+        </tr>
+    </table>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
+
+    <script>
+        var name_max = 80;
+        $('#count_name').html("0/" + name_max);
+
+        $('#textName').keyup(function () {
+            var name_length = $('#textName').val().length;
+
+            $('#count_name').html(name_length + "/" + name_max);
+        });
+    </script>
+
+    <script>
+        var code_max = 8;
+        $('#count_code').html("0/" + code_max);
+
+        $('#textCode').keyup(function () {
+            var code_length = $('#textCode').val().length;
+
+            $('#count_code').html(code_length + "/" + code_max);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            agregarPreguntas.init();
+        });
+    </script>
+}
