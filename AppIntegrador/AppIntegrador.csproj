@@ -134,7 +134,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
@@ -203,12 +202,15 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
+    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -285,12 +287,6 @@
     <Compile Include="Models\Si_no_nr.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -305,6 +301,7 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -382,21 +379,11 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
     <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
-    <Content Include="Views\AccionDeMejora\Create.cshtml" />
-    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
-    <Content Include="Views\AccionDeMejora\Details.cshtml" />
-    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
-    <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />
@@ -405,26 +392,27 @@
     <Content Include="Views\Formularios\Index.cshtml" />
     <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Objetivos\Create.cshtml" />
-    <Content Include="Views\Objetivos\Delete.cshtml" />
-    <Content Include="Views\Objetivos\Details.cshtml" />
-    <Content Include="Views\Objetivos\Edit.cshtml" />
-    <Content Include="Views\Objetivos\Index.cshtml" />
-    <Content Include="Views\Seccion\Create.cshtml" />
+	<Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Secciones\Create.cshtml" />
-    <Content Include="Views\Secciones\Delete.cshtml" />
-    <Content Include="Views\Secciones\Details.cshtml" />
-    <Content Include="Views\Secciones\Edit.cshtml" />
-    <Content Include="Views\Secciones\Index.cshtml" />
     <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
     <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
     <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
+	<Content Include="Views\Objetivos\Create.cshtml" />
+    <Content Include="Views\Objetivos\Delete.cshtml" />
+    <Content Include="Views\Objetivos\Details.cshtml" />
+    <Content Include="Views\Objetivos\Edit.cshtml" />
+    <Content Include="Views\Objetivos\Index.cshtml" />
+    <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
+	<Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
