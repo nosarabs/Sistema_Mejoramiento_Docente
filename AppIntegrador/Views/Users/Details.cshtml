@@ -5,7 +5,7 @@
 }
 
     <div class="container">
-        <h2>Details</h2>
+        <h2>Detalles</h2>
 
         <div>
             <h4>Persona</h4>
@@ -91,18 +91,21 @@
                     @Html.DisplayFor(model => model.Usuario.Activo)
                 </dd>
 
-                <dt>
-                    <p>Acciones</p>
-                </dt>
-
+             
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Edit", "Edit", new
+            @Html.ActionLink("Editar", "Edit", new
+       {
+           username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
+           domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
+       },
+                        new
                         {
-                            username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
-                                                               domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
-                        }) |
-            @Html.ActionLink("Back to List", "Index")
+                            @class = "btn btn-primary"
+                        }
+
+        ) 
+            @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default"})
         </p>
     </div>

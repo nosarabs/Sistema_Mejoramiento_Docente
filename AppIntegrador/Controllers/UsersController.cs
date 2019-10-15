@@ -22,6 +22,9 @@ namespace AppIntegrador
          /*Responds to User Story TAM-2.1.*/
         public ActionResult Index()
         {
+            string username = HttpContext.User.Identity.Name;
+            if (username != "admin")
+                return RedirectToAction("../Home/Index");
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
              by the key: mail address.*/
             List<Usuario> Usuarios = db.Usuario.ToList();
@@ -36,7 +39,7 @@ namespace AppIntegrador
                                      Usuario = u,
                                      Persona = p
                                  };
-
+            usuarioPersona.OrderBy(up => up.Persona.Identificacion);
             return View(usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
@@ -86,7 +89,7 @@ namespace AppIntegrador
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Correo,CorreoAlt,Identificacion,Nombre1,Nombre2,Apellido1,Apellido2,Usuario,TipoIdentificacion")] Persona persona)
+        public ActionResult Create(Persona persona)
         {
             if (ModelState.IsValid && persona != null)
             {
@@ -181,14 +184,22 @@ namespace AppIntegrador
                         originalUser.Activo = usuarioPersona.Usuario.Activo;
                         db.SaveChanges();
                         /*TO-DO: Stored procedure to change the password of a given user. Need to recalculate the "salt" and the SHA 256.*/
-                        /*TO-DO: Stored procedure to change the username of a given user. Cannot change from controller using EF.*/
                     }
 
                     /*To edit a person, first fetch him from the database using the email passed by the view.*/
-                    var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
+                    var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == formerUserMail);
 
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
+                        /*Stored procedure to change the mail of a given person*/
+                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo);
+                        
+                        if (originalUser != null)
+                        {
+                            /*Stored procedure to change the mail of a given user*/
+                            db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
+                        }
+                        
                         /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
                         originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
                         originalPerson.Nombre2 = usuarioPersona.Persona.Nombre2;
@@ -197,35 +208,36 @@ namespace AppIntegrador
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
                         originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
+                        if (originalPerson.Estudiante == null)
+                            originalPerson.Estudiante = new Estudiante();
+                        originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
 
                         db.SaveChanges();
                     }
                 }
-                /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
-                System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
-
-                return RedirectToAction("Index");
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 
              the changes made in the view.*/
 
-            List<Usuario> Usuarios = db.Usuario.ToList();
-            List<Persona> Personas = db.Persona.ToList();
+            string originalMail = (string)System.Web.HttpContext.Current.Application["CurrentEditingUser"];
+            string mailToSearch = usuarioPersona.Persona.Correo == null ? originalMail : usuarioPersona.Persona.Correo;
+            
+            /*Searches the user and person tuples associated to the edited user.*/
+            Usuario usuarioEdited = db.Usuario.Find(mailToSearch);
+            Persona personaEdited = db.Persona.Find(mailToSearch);
 
-            var usuarioPersonaRefreshed = from u in Usuarios
-                            join p in Personas on u.Username equals p.Correo into table1
-                            from p in table1.ToList()
-                            select new UsuarioPersona
-                            {
-                                Usuario = u,
-                                Persona = p
-                            };
-
+            /*Joins the tuples in the UsuarioPersona object to be shown in the view.*/
+            UsuarioPersona usuarioPersonaRefreshed = new UsuarioPersona();
+            usuarioPersonaRefreshed.Persona = personaEdited;
+            usuarioPersonaRefreshed.Usuario = usuarioEdited;
 
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", usuarioPersona.Persona.Correo);
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", usuarioPersona.Persona.Correo);
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
+
+            /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
+            System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
 
             return View(usuarioPersonaRefreshed);
         }

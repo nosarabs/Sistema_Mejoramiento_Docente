@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1478,6 +1478,18 @@
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="ModificarCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="anterior" Type="varchar" Mode="In" />
+          <Parameter Name="nuevo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModificarUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="anterior" Type="varchar" Mode="In" />
+          <Parameter Name="nuevo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ObtenerEmailUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsername" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
         </Function>
@@ -1797,8 +1809,7 @@
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3222,10 +3233,10 @@
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-            <Parameter Name="questionCode" Mode="In" Type="String" />
+          <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
@@ -3238,7 +3249,19 @@
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
-            <Parameter Name="CodForm" Mode="In" Type="String" />
+          <Parameter Name="CodForm" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModificarCorreo">
+            <Parameter Name="anterior" Mode="In" Type="String" />
+            <Parameter Name="nuevo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerEmailUsuario">
+            <Parameter Name="pUsername" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModificarUsername">
+            <Parameter Name="anterior" Mode="In" Type="String" />
+            <Parameter Name="nuevo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
@@ -3767,6 +3790,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
+          <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
+          <FunctionImportMapping FunctionImportName="ModificarUsername" FunctionName="DataIntegradorModel.Store.ModificarUsername" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
