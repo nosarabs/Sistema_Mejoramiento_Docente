@@ -132,6 +132,7 @@
     <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AsociarPreguntaConSeccion.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
+    <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
