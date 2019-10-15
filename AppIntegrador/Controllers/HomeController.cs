@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
 using System.Web.Security;
 using System.Threading.Tasks;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -243,10 +244,16 @@ namespace AppIntegrador.Controllers
                 var newPassword = new string(Enumerable.Repeat(chars, 16)
                   .Select(s => s[random.Next(s.Length)]).ToArray());
 
-                message = newPassword;
+                message = "El correo ha sido enviado";
 
                 db.ChangePassword(correo, newPassword);
                 db.SaveChanges();
+
+                EmailNotification notification = new EmailNotification();
+
+                List<string> users = new List<string>();
+                users.Add(correo);
+                notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
             }
             else
             {
