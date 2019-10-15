@@ -20,8 +20,8 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
-        public void objetivosDePlan() {
-            int variable = 9;
+        public ActionResult objetivosPlan() {
+            return PartialView("~/Views/PlanDeMejora/_objetivosPlan.cshtml", this.db.Objetivo.ToList());
         }
 
         // GET: PlanDeMejora/Details/5

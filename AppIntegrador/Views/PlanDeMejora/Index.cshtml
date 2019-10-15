@@ -106,10 +106,7 @@
     <div class="fullWidth">
         <p class="impText">Objetivos</p>
 
-        @if (mostrarObjetivos)
-        {
-            <h1>Objetivos del plan</h1>
-        }
+        @Html.Action("objetivosPlan", "PlanDeMejora")
 
         <hr />
     </div>
@@ -117,12 +114,7 @@
 
     <div class="fullWidth">
         <p class="impText">Acciones de Mejora</p>
-
-        @if (mostrarAccionesDeMejora)
-        {
-            <h1>acciones de mejora</h1>
-        }
-
+           <h1>Acciones de mejora</h1>
         <hr />
     </div>
 
