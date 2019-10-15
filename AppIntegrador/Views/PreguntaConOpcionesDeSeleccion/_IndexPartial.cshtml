@@ -28,7 +28,7 @@
 </script>
 
 
-@using (Html.BeginForm("UpdateFilters", "Seccion", FormMethod.Get))
+@using (Html.BeginForm("Create", "Seccion", FormMethod.Get))
 {
     //the following are search options
     <b>
@@ -37,21 +37,21 @@
 
     <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
         <input type="radio" name="sel" value="1" id="codigo"
-               onclick="enableElement(this.form.elements['inp1']);"> <text>Codigo</text>
-        <input type="text" name="inp1" disabled="disabled">
+               onclick="enableElement(this);"> <text>Codigo</text>
+        <input type="text" name="inp1" >
 
 
         <input type="radio" name="sel" value="2"
-               onclick="enableElement(this.form.elements['inp2']);"> <text>Tipo</text>
-        <select type="text" name="inp2" disabled="disabled">            
+               onclick="enableElement(this);"> <text>Tipo</text>
+        <select type="text" name="inp2" >            
             <option value="">Tipos de preguntas</option>
             <option value="U">Seleccion Unica</option>
             <option value="M">Seleccion Multiple</option>
         </select>
 
         <input type="radio" name="sel" value="3"
-               onclick="enableElement(this.form.elements['inp3']);"><text>Enunciado</text>
-        <input type="text" name="inp3" disabled="disabled">
+               onclick="enableElement(this);"><text>Enunciado</text>
+        <input type="text" name="inp3" >
 
         <input type="submit"
                name="submit"
@@ -153,6 +153,7 @@
         <script type="text/javascript">
             var currentEnabled = null;
             function enableElement(elem) {
+                console.log(elem.name);
                 if (currentEnabled) {
                     currentEnabled.disabled = true;
                 }

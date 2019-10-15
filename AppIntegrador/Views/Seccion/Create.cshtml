@@ -34,7 +34,7 @@
                                @onkeyup = "charCount(this)"
                            }
                        })
-                        @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
+                            @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                                    @onkeyup = "charCount(this)"
                                }
                            })
-                            @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
+                                @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
                             </form>
                         </div>
                     </div>
@@ -113,5 +113,17 @@
         $(document).ready(function () {
             agregarPreguntas.init();
         });
+    </script>
+
+    <script type="text/javascript">
+        var currentEnabled = null;
+        function enableElement(elem) {
+            console.log(elem.name);
+            if (currentEnabled) {
+                currentEnabled.disabled = true;
+            }
+            elem.disabled = false;
+            currentEnabled = elem;
+        }
     </script>
 }

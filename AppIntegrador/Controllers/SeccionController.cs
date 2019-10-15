@@ -89,7 +89,7 @@ namespace AppIntegrador.Controllers
             return View(crearSeccion);
         }
         [HttpGet]
-        public ActionResult UpdateFilters(string inp1, string inp2, string inp3)
+        public ActionResult Create(string inp1, string inp2, string inp3)
         {
             crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
             if (inp2 == null && inp1 == null && inp3 == null)
@@ -98,7 +98,7 @@ namespace AppIntegrador.Controllers
 
             }
             //if a user choose the radio button option as Subject  
-            else if (inp2 == null && inp3 == null)
+            else if (inp2 == "" && inp3 == "")
             {
                 crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList();
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
@@ -115,7 +115,7 @@ namespace AppIntegrador.Controllers
             {
                 crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
             }
-            return View(crearSeccion);
+            return View("Create", crearSeccion);
         }
 
         // GET: Seccion/Edit/5
