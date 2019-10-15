@@ -20,6 +20,10 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+        public void objetivosDePlan() {
+            int variable = 9;
+        }
+
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {
