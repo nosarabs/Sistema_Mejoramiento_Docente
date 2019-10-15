@@ -33,9 +33,23 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.TipoIdentificacion, htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            <!--Story TAM-2.2: combobox to select the id type when creating an user.-->
+            <select id="TipoIdentificacion" name="TipoIdentificacion">
+                <option value="Cedula">Cédula</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="Residencia">Número de residencia</option>
+            </select>
+           
+            @Html.ValidationMessageFor(model => model.TipoIdentificacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Identificacion, htmlAttributes: new { @class = "control-label required col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required"} })
             @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -73,14 +87,6 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.TipoIdentificacion, htmlAttributes: new { @class = "control-label required col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TipoIdentificacion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-            @Html.ValidationMessageFor(model => model.TipoIdentificacion, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
         @Html.LabelFor(model => model.Estudiante.Carne, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Estudiante.Carne, new { htmlAttributes = new { @class = "form-control" } })
@@ -109,6 +115,20 @@
         color: red;
     }
 </style>
+
+<script>
+    function validateIdField()
+    {
+        var enteredId = document.getElementById("Identificacion");
+        var selectedType = document.getElementById("TipoIdentificacion");
+
+        switch (selectedType.value) {
+            case "Cedula": alert('Usted selecciono cédula');
+                break;
+            case "Pasaporte": alert('Usted seleccionó pasaporte' + enteredId.value);
+        }
+    }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

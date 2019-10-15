@@ -122,6 +122,7 @@ namespace AppIntegrador
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", persona.Correo);
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", persona.Correo);
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", persona.Usuario);
+ 
             return View(persona);
         }
         /*End of User Story TAM-2.2.*/
