@@ -112,9 +112,24 @@
     <script>
         $(document).ready(function () {
             agregarPreguntas.init();
+            $("#codigotext").attr("disabled", "disabled");
+            if ($("input[name=optradio]:checked").val() == "codigoinput") {
+                $("#EnterRange").click(function () {
+                    $("#codigotext").removeAttr("disabled");
+                });
+            }
+            $('#dtBasicExample').DataTable({
+                "ordering": false // false to disable sorting (or any other option)
+            });
+            $('.dataTables_length').addClass('bs-select');
         });
     </script>
 
+    @*
+        Historia RIP-BKS1
+        Se movieron los scripts de la vista parcial a esta vista, porque las vistas 
+        parciales no pueden tener sus propias secciones (de acuerdo a lo que encontramos).
+    *@
     <script type="text/javascript">
         var currentEnabled = null;
         function enableElement(elem) {
@@ -125,5 +140,19 @@
             elem.disabled = false;
             currentEnabled = elem;
         }
+    </script>
+
+    <script type="text/javascript">
+        function toggleTextbox(opt) {
+            if (opt == 'txtText') {
+                var txtPassportNumber = document.getElementById('txtText');
+                txtJustificationNumber.disabled = opt.checked ? false : true;
+                if (!txtJustificationNumber.disabled) {
+                    txtJustificationNumber.focus();
+                }
+            }
+
+        }
+
     </script>
 }
