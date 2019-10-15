@@ -54,6 +54,7 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: AccionDeMejora/Edit/5
+        // Corresponde a MOS 1.3 (2)
         public ActionResult Edit(int plan, string obj, string descripcion)
         {
             if (plan == null || obj == null || descripcion == null)
@@ -69,6 +70,7 @@ namespace AppIntegrador.Controllers
         }
 
         // POST: AccionDeMejora/Edit/5
+        // Corresponde a MOS 1.3 (2)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] PlanDeMejora planDeMejora)
@@ -83,25 +85,40 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: AccionDeMejora/Delete/5
-        public ActionResult Delete(int id)
+        // Corresponde a MOS 1.3 (2)
+        public ActionResult Delete(int? plan, string nombObj, string descripcion)
         {
-            return View();
+            if (plan == null || nombObj == null || descripcion == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
+            if (accion == null)
+            {
+                return HttpNotFound();
+            }
+            return View(accion);
         }
 
         // POST: AccionDeMejora/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // Corresponde a MOS 1.3 (2)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? plan, string nombObj, string descripcion)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
+            db.AccionDeMejora.Remove(accion);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }
