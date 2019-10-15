@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.Entity.Core.Objects;
 
 namespace AppIntegrador.Controllers
 {
@@ -208,5 +209,15 @@ namespace AppIntegrador.Controllers
 
             return serializer.Serialize(respuestas.ToList());
         }
+
+        public Double getPromedio(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+
+            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultPromedio);
+
+            return Math.Round(Convert.ToDouble(resultPromedio.Value),2);
+        }
+
     }
 }

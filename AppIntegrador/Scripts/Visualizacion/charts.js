@@ -227,6 +227,29 @@ function addChart(cnt, id, tipo) {
             });
 
             chartData = { DATA: data, LABELS: labels };
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/getPromedio",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            var verProm = document.createElement("div");
+            verProm.style.width = "100px";
+            verProm.style.height = "100px";
+            verProm.innerHTML = "Promedio: " + data;
+
             drawBarChart(cvs, chartData);
 
 			break;
@@ -339,5 +362,6 @@ function addChart(cnt, id, tipo) {
 	}
 
     cnt.appendChild(cvs);
+    cnt.appendChild(verProm);
 
 }
