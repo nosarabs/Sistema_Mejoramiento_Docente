@@ -226,6 +226,26 @@ function addChart(cnt, id, tipo) {
                 }
             });
 
+            var desviacion;
+            $.ajax({
+                url: "/ResultadosFormulario/obtenerDesviacionEstandar",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    desviacion = resultados;
+                    alert(desviacion);
+                }
+            });
+
             chartData = { DATA: data, LABELS: labels };
             drawBarChart(cvs, chartData);
 
