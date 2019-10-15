@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity.Core.Objects;
 using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
@@ -207,6 +208,14 @@ namespace AppIntegrador.Controllers
                                 select new SelectListItem { Value = rrco.Justificacion };
 
             return serializer.Serialize(respuestas.ToList());
+        }
+
+
+        public Double getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            ObjectParameter resultadoMediana = new ObjectParameter("mediana", typeof(float));
+            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
+            return Math.Round(Convert.ToDouble(resultadoMediana.Value), 2);
         }
     }
 }

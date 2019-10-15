@@ -226,7 +226,33 @@ function addChart(cnt, id, tipo) {
                 }
             });
 
+            var medianita;
+            $.ajax({
+                url: "/ResultadosFormulario/getMedianaRespuestaEscalar",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    medianita = resultados;
+                }
+            });
+
             chartData = { DATA: data, LABELS: labels };
+
+            var divMediana = document.createElement("div");
+            divMediana.style.width = "100px";
+            divMediana.style.height = "100px";
+            divMediana.innerHTML = "Mediana: " + medianita;
+            divMediana.style.textAlign = "center";
+
             drawBarChart(cvs, chartData);
 
 			break;
@@ -339,5 +365,5 @@ function addChart(cnt, id, tipo) {
 	}
 
     cnt.appendChild(cvs);
-
+    cnt.appendChild(divMediana);
 }
