@@ -22,6 +22,9 @@ namespace AppIntegrador
          /*Responds to User Story TAM-2.1.*/
         public ActionResult Index()
         {
+            string username = HttpContext.User.Identity.Name;
+            if (username != "admin")
+                return RedirectToAction("../Home/Index");
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
              by the key: mail address.*/
             List<Usuario> Usuarios = db.Usuario.ToList();
@@ -36,7 +39,7 @@ namespace AppIntegrador
                                      Usuario = u,
                                      Persona = p
                                  };
-
+            usuarioPersona.OrderBy(up => up.Persona.Identificacion);
             return View(usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
@@ -86,7 +89,7 @@ namespace AppIntegrador
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Correo,CorreoAlt,Identificacion,Nombre1,Nombre2,Apellido1,Apellido2,Usuario,TipoIdentificacion")] Persona persona)
+        public ActionResult Create(Persona persona)
         {
             if (ModelState.IsValid && persona != null)
             {
@@ -205,13 +208,13 @@ namespace AppIntegrador
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
                         originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
+                        if (originalPerson.Estudiante == null)
+                            originalPerson.Estudiante = new Estudiante();
+                        originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
 
                         db.SaveChanges();
                     }
                 }
-                
-
-                //return RedirectToAction("Index");
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 
