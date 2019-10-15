@@ -35,27 +35,41 @@ function createCollapsible(id, question) {
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
     cnt.className = "content";
+    var cont = document.createElement("div");
+    cont.className = "container";
+    var row = document.createElement("div");
+    row.className = "row";
+    var col1 = document.createElement("div");
+    col1.className = "col-6";
+    var col2 = document.createElement("div");
+    col2.className = "col-6";
+    row.appendChild(col1);
+    row.appendChild(col2);
+    cont.appendChild(row);
 	
-	btn.addEventListener("click", function() {		//Add an event listener to the button
-		
+    btn.addEventListener("click", function () {		//Add an event listener to the button
+
+
         if (this.nextElementSibling.childElementCount == 0) {
 
             this.id = getTipoPregunta(id)[0];
 
             if (this.id == "texto_abierto") {
 
-                appendLineBreaks(cnt, 2);
+                //appendLineBreaks(cnt, 2);
 
             } else {
-                appendLineBreaks(cnt, 2);
-                addChart(cnt, id, this.id);
-                appendLineBreaks(cnt, 6);
-                appendTitle(cnt, "Justificación de los resultados");
+                //appendLineBreaks(cnt, 2);
+
+                addChart(col1, id, this.id);
+                //appendLineBreaks(cnt, 6);
+                appendTitle(col2, "Justificación de los resultados");
 
             }
 
-            addBox(cnt, id, this.id);
-			appendLineBreaks(cnt, 2);
+            addBox(col2, id, this.id);
+            //appendLineBreaks(cnt, 2);
+            
 			
 		}
 		

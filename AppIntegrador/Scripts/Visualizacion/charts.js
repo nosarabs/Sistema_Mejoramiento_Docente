@@ -182,11 +182,10 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function addChart(cnt, id, tipo) {
-
+function addChart(cnt, id, tipo) {    
 	var cvs = document.createElement("canvas");
-	cvs.setAttribute("width", "900" );
-    cvs.setAttribute("height", "650");
+	cvs.setAttribute("width", "690" );
+    cvs.setAttribute("height", "420");
     var chartData;
 	
 	switch(tipo) {
