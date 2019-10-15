@@ -65,7 +65,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
+                            <input type="submit" value="Create" class="btn btn-success" id="Create"/>
                             @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
                         </div>
                     </div>
@@ -120,6 +120,31 @@
             });
         });
     </script>
+
+        <script>
+        function pregunta() {
+            swal({
+                title: "Pregunta creada con éxito!",
+                text: "Puede ser vista en el banco de preguntas",
+                type: "success",
+                showConfirmButton: true
+            },
+                function () {
+                    window.location.href = "Create";
+                });
+        }
+
+            $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
+            $("#Add").trigger('click');
+        });
+    </script>
+
+
+
 
     <script type="text/javascript">
         var currentEnabled = null;
