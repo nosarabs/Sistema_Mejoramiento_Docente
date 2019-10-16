@@ -4,15 +4,9 @@
     ViewBag.Title = "Banco de secciones";
 }
 
-
-
-@using (Html.BeginForm(FormMethod.Get))
+@using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
 {
     <h2>Banco de secciones</h2>
-    <div class="form-group">
-
-
-    </div>
     //the following are search options
     <b>
         Opciones de búsqueda:
@@ -37,31 +31,35 @@
     </form>
 
 }
-<br />
 
-<table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-    <tr>
-        <th>
-            Seleccionar
-        </th>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Operaciones
-        </th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<div style="height: 400px; overflow: auto;">
+    <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                    
+        <thead>
+
+            <tr>
+    <th>
+        Seleccionar
+    </th>
+    <th>
+        Codigo
+    </th>
+    <th>
+        Nombre
+    </th>
+    <th>
+        Operaciones
+    </th>
+</tr>
+        </thead>
+        @foreach (var item in Model)
+        {
 
         <tr>
             <td>
                 <center>
-                    <input type="checkbox" class="QuestionCheckbox" />
+                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="addSeccionToFormulario(this)" />
                 </center>
             </td>
             <td>
@@ -78,8 +76,8 @@
         </tr>
     }
 
-</table>
-}
+    </table>
+</div>
 
 
 <style>
@@ -90,26 +88,7 @@
 </style>
 
 @section Scripts {
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
-            }
-            elem.disabled = false;
-            currentEnabled = elem;
-        }
-    </script>
+    
 
-    <script>
-    function filtrar() {
-        var i
-        for (i = 0; i < document.opcionfiltro.sel.length; i++) {
-            if (document.opcionfiltro.sel[i].checked)
-                break;
-        }
-        var opcion = document.opcionfiltro.sel[i].value
-        var text = 
-    }
-</script>
+<script src="~/Scripts/Formularios/agregarsecciones.js"></script>
 }

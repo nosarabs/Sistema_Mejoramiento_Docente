@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
@@ -131,25 +132,19 @@ namespace AppIntegrador.Controllers
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-       
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario)
+        [HttpPost]        
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
         {
             crearFormulario.seccion = db.Seccion;
-            try
+            if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-
-                if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
+                if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
-                    db.Formulario.Add(formulario);
-                    db.SaveChanges();
                     return RedirectToAction("Create");
                 }
-            }
-            catch (Exception exception)
-            {
-                if (exception is System.Data.Entity.Infrastructure.DbUpdateException)
+                else
                 {
+                    // Notifique que ocurrió un error
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
                     return View(crearFormulario);
                 }
@@ -172,6 +167,34 @@ namespace AppIntegrador.Controllers
                 return HttpNotFound();
             }
             return View(formulario);
+        }
+
+        // Historia RIP-CF5
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string inp1, string inp2)
+        {
+            crearFormulario.seccion = db.Seccion;
+            if (inp2 == null && inp1 == null)
+            {
+                crearFormulario.seccion = db.Seccion.ToList();
+
+            }
+            //if a user choose the radio button option as Subject  
+            else if (inp2 == null)
+            {
+                crearFormulario.seccion = db.Seccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (inp1 == null)
+            {
+                crearFormulario.seccion = db.Seccion.Where(x => x.Nombre.Contains(inp2)).ToList();
+            }
+            else
+            {
+                crearFormulario.seccion = db.Seccion.ToList();
+            }
+            return View("Create", crearFormulario);
         }
 
         // POST: Formularios/Edit/5
@@ -231,5 +254,30 @@ namespace AppIntegrador.Controllers
         }
 
 
+        
+
+        private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
+        {
+            try
+            {
+                if (db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
+                {
+                    return false;
+                }
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
+
+            if (secciones != null)
+            {
+                for (int index = 0; index < secciones.Count; ++index)
+                {
+                    db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index].Codigo, index);
+                }
+            }
+            return true;
+        }
     }
 }

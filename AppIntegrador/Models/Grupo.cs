@@ -24,11 +24,11 @@ public partial class Grupo
 
         this.Activa_por = new HashSet<Activa_por>();
 
+        this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
+
         this.Profesor = new HashSet<Profesor>();
 
         this.Estudiante = new HashSet<Estudiante>();
-
-        this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
 
     }
 
@@ -51,15 +51,15 @@ public partial class Grupo
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
+    public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
     public virtual ICollection<Profesor> Profesor { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Estudiante> Estudiante { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
 
 }
 

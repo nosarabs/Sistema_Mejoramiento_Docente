@@ -14,12 +14,12 @@ namespace AppIntegrador.Models
 
 using System;
     
-public partial class sp_helpdiagramdefinition_Result
+public partial class ObtenerSeccionesDeFormulario_Result
 {
 
-    public Nullable<int> version { get; set; }
+    public string Codigo { get; set; }
 
-    public byte[] definition { get; set; }
+    public string Nombre { get; set; }
 
 }
 

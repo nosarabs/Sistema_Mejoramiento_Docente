@@ -7,12 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
         // GET: Seccion
         public ActionResult Index(string inp1, string inp2)
@@ -55,22 +58,10 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Seccion/Create
-        public ActionResult Create(string option, string search)
+        public ActionResult Create()
         {
-            var crearSeccion = new CrearSeccionModel();
-            if (option == "Tipo" && search.Length > 0)
-            {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(search)).ToList();
-                return View(crearSeccion);
-            }
-            else if (option == "Codigo" && search.Length > 0)
-            {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(search)).ToList();
-                return View(crearSeccion);
-            }
-            else
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
-                return View(crearSeccion);
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            return View(crearSeccion);
         }
 
         // POST: Seccion/Create
@@ -78,16 +69,56 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            if (ModelState.IsValid)
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
             {
-                db.Seccion.Add(seccion);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if ( InsertSeccionTienePregunta(seccion, preguntas) )
+                {
+                    return RedirectToAction("Create");
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(crearSeccion);
+                }
             }
 
-            return View(seccion);
+            return View(crearSeccion);
+        }
+
+        // Historia RIP-BKS1
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string inp1, string inp2, string inp3)
+        {
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            if (inp2 == null && inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+
+            }
+            //if a user choose the radio button option as Subject  
+            else if (inp2 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList();
+            }
+            else if (inp1 == null && inp2 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList();
+            }
+            else
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+            }
+            return View("Create", crearSeccion);
         }
 
         // GET: Seccion/Edit/5
@@ -155,5 +186,29 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
+        {
+            try
+            {
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
+                {
+                    return false;
+                }
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
+
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                }
+            }
+            return true;
+        }
+
     }
 }

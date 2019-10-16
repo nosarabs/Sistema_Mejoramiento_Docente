@@ -65,6 +65,8 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<Opciones_de_seleccion> Opciones_de_seleccion { get; set; }
 
+    public virtual DbSet<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
+
     public virtual DbSet<Perfil> Perfil { get; set; }
 
     public virtual DbSet<PerfilPermiso> PerfilPermiso { get; set; }
@@ -91,6 +93,12 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<Profesor> Profesor { get; set; }
 
+    public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
+
+    public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
+
+    public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+
     public virtual DbSet<Seccion> Seccion { get; set; }
 
     public virtual DbSet<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
@@ -104,14 +112,6 @@ public partial class DataIntegradorEntities : DbContext
     public virtual DbSet<Usuario> Usuario { get; set; }
 
     public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
-
-    public virtual DbSet<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
-
-    public virtual DbSet<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
-
-    public virtual DbSet<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
-
-    public virtual DbSet<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
 
 
     public virtual int AgregarOpcion(string cod, Nullable<byte> orden, string texto)
@@ -187,12 +187,12 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual int AgregarSeccion(string cod, string nombre)
+    public virtual int AgregarSeccion(string codigo, string nombre)
     {
 
-        var codParameter = cod != null ?
-            new ObjectParameter("cod", cod) :
-            new ObjectParameter("cod", typeof(string));
+        var codigoParameter = codigo != null ?
+            new ObjectParameter("codigo", codigo) :
+            new ObjectParameter("codigo", typeof(string));
 
 
         var nombreParameter = nombre != null ?
@@ -200,7 +200,7 @@ public partial class DataIntegradorEntities : DbContext
             new ObjectParameter("nombre", typeof(string));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarSeccion", codParameter, nombreParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarSeccion", codigoParameter, nombreParameter);
     }
 
 
@@ -397,137 +397,95 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+    public virtual int AgregarFormulario(string codigo, string nombre)
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
+        var codigoParameter = codigo != null ?
+            new ObjectParameter("codigo", codigo) :
+            new ObjectParameter("codigo", typeof(string));
 
 
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
+        var nombreParameter = nombre != null ?
+            new ObjectParameter("nombre", nombre) :
+            new ObjectParameter("nombre", typeof(string));
 
 
-        var versionParameter = version.HasValue ?
-            new ObjectParameter("version", version) :
-            new ObjectParameter("version", typeof(int));
-
-
-        var definitionParameter = definition != null ?
-            new ObjectParameter("definition", definition) :
-            new ObjectParameter("definition", typeof(byte[]));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarFormulario", codigoParameter, nombreParameter);
     }
 
 
-    public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+    public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta, Nullable<int> orden)
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
+        var codigoSeccionParameter = codigoSeccion != null ?
+            new ObjectParameter("CodigoSeccion", codigoSeccion) :
+            new ObjectParameter("CodigoSeccion", typeof(string));
 
 
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
+        var codigoPreguntaParameter = codigoPregunta != null ?
+            new ObjectParameter("CodigoPregunta", codigoPregunta) :
+            new ObjectParameter("CodigoPregunta", typeof(string));
 
 
-        var versionParameter = version.HasValue ?
-            new ObjectParameter("version", version) :
-            new ObjectParameter("version", typeof(int));
+        var ordenParameter = orden.HasValue ?
+            new ObjectParameter("Orden", orden) :
+            new ObjectParameter("Orden", typeof(int));
 
 
-        var definitionParameter = definition != null ?
-            new ObjectParameter("definition", definition) :
-            new ObjectParameter("definition", typeof(byte[]));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter, ordenParameter);
     }
 
 
-    public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+    public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion, Nullable<int> orden)
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
+        var codigoFormularioParameter = codigoFormulario != null ?
+            new ObjectParameter("codigoFormulario", codigoFormulario) :
+            new ObjectParameter("codigoFormulario", typeof(string));
 
 
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
+        var codigoSeccionParameter = codigoSeccion != null ?
+            new ObjectParameter("codigoSeccion", codigoSeccion) :
+            new ObjectParameter("codigoSeccion", typeof(string));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        var ordenParameter = orden.HasValue ?
+            new ObjectParameter("orden", orden) :
+            new ObjectParameter("orden", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter, ordenParameter);
     }
 
 
-    public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+    public virtual int ObtenerEmailUsuario(string pUsername, ObjectParameter email)
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
+        var pUsernameParameter = pUsername != null ?
+            new ObjectParameter("pUsername", pUsername) :
+            new ObjectParameter("pUsername", typeof(string));
 
 
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerEmailUsuario", pUsernameParameter, email);
     }
 
 
-    public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+    public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
+        var codFormParameter = codForm != null ?
+            new ObjectParameter("CodForm", codForm) :
+            new ObjectParameter("CodForm", typeof(string));
 
 
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerSeccionesDeFormulario_Result>("ObtenerSeccionesDeFormulario", codFormParameter);
     }
 
 
-    public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+    public virtual int PopularFormulariosConSecciones()
     {
 
-        var diagramnameParameter = diagramname != null ?
-            new ObjectParameter("diagramname", diagramname) :
-            new ObjectParameter("diagramname", typeof(string));
-
-
-        var owner_idParameter = owner_id.HasValue ?
-            new ObjectParameter("owner_id", owner_id) :
-            new ObjectParameter("owner_id", typeof(int));
-
-
-        var new_diagramnameParameter = new_diagramname != null ?
-            new ObjectParameter("new_diagramname", new_diagramname) :
-            new ObjectParameter("new_diagramname", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-    }
-
-
-    public virtual int sp_upgraddiagrams()
-    {
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosConSecciones");
     }
 
 }

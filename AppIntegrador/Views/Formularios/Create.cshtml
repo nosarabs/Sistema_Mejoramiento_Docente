@@ -9,100 +9,105 @@
 {
 
     @Html.AntiForgeryToken()
-    
-         <table class="table">
-         <tr>
-             <td style="width:40%">
-        <h2>Crear Formulario</h2>
-        <hr />
-         <div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Formulario.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.Formulario.Codigo, new { htmlAttributes = new {
-                    @class = "form-control",
-                    id = "textCode",
-                    name = "textCode",
-                    @maxlength = "8",
-                    required = "required",
-                    placeholder = "Código",
-                    rows = "5",
-                    @onkeyup = "charCount(this)"
-                } })
-                <div class="counter small pull-right">0/8 caracteres usados</div>
-            </div>
-        </div>
-             
-        <div class="form-group">
-            @Html.LabelFor(model => model.Formulario.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                <form accept-charset="UTF-8" action="" method="POST">
-                    @Html.EditorFor(model => model.Formulario.Nombre, new { htmlAttributes = new {
-                       @class = "form-control",
-                       id = "textName",
-                       name = "textName",
-                       @maxlength = "250",
-                       required = "required",
-                       placeholder = "Nombre del formulario",
-                       rows = "5",
-                       @onkeyup = "charCount(this)"
-                    } })
+    <table class="table">
+        <tr>
+            <td style="width:40%">
+                <h2>Crear Formulario</h2>
+                <hr />
+                <div class="form-horizontal">
 
-                    <div class="counter small pull-right">0/250 caracteres usados</div>
-                </form>
-            </div>
-        </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Formulario.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Formulario.Codigo, new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               id = "textCode",
+                               name = "textCode",
+                               @maxlength = "8",
+                               required = "required",
+                               placeholder = "Código",
+                               rows = "5",
+                               @onkeyup = "charCount(this)"
+                           }
+                       })
+                            <div class="counter small pull-right">0/8 caracteres usados</div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
-                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
-            </div>
-        </div>
-    </div>
-                 </td>
- 
-   
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Formulario.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-10">
+                            <form accept-charset="UTF-8" action="" method="POST">
+                                @Html.EditorFor(model => model.Formulario.Nombre, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   id = "textName",
+                                   name = "textName",
+                                   @maxlength = "250",
+                                   required = "required",
+                                   placeholder = "Nombre del formulario",
+                                   rows = "5",
+                                   @onkeyup = "charCount(this)"
+                               }
+                           })
 
-    <td style="width:60%">
-         @Html.Partial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion)
-        </td>
-             </tr>
+                                <div class="counter small pull-right">0/250 caracteres usados</div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-success" id="Create"/>
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+
+
+            <td style="width:60%">
+                @Html.Partial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion)
+            </td>
+        </tr>
     </table>
 }
 
 
 <style>
-    .required:after 
-{
-    content: "*";
-    font-weight: bold;
-    color: red; 
-}
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
 </style>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
+    <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script>
-        $(function(){
-    $('#myModal').on('show.bs.modal', function(){
-        var myModal = $(this);
-        clearTimeout(myModal.data('hideInterval'));
-        myModal.data('hideInterval', setTimeout(function(){
-            myModal.modal('hide');
-        }, 3000));
-    });
-});
+        $(function () {
+            $('#myModal').on('show.bs.modal', function () {
+                var myModal = $(this);
+                clearTimeout(myModal.data('hideInterval'));
+                myModal.data('hideInterval', setTimeout(function () {
+                    myModal.modal('hide');
+                }, 3000));
+            });
+        });
     </script>
 
     <script>
         $(document).ready(function () {
-            $('#dtBasicExample').DataTable({
-                "ordering": false // false to disable sorting (or any other option)
-            });
-            $('.dataTables_length').addClass('bs-select');
+            agregarsecciones.init();
         });
     </script>
 
@@ -116,16 +121,53 @@
         });
     </script>
 
-    <script type="text/javascript">
-    var currentEnabled = null;
-    function enableElement(elem) {
-        if (currentEnabled) {
-            currentEnabled.disabled = true;
+        <script>
+        function pregunta() {
+            swal({
+                title: "Pregunta creada con éxito!",
+                text: "Puede ser vista en el banco de preguntas",
+                type: "success",
+                showConfirmButton: true
+            },
+                function () {
+                    window.location.href = "Create";
+                });
         }
-        elem.disabled = false;
-        currentEnabled = elem;
-    }
-</script>
+
+            $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
+            $("#Add").trigger('click');
+        });
+    </script>
+
+
+
+
+    <script type="text/javascript">
+        var currentEnabled = null;
+        function enableElement(elem) {
+            if (currentEnabled) {
+                currentEnabled.disabled = true;
+            }
+            elem.disabled = false;
+            currentEnabled = elem;
+        }
+    </script>
+
+    <script>
+        function filtrar() {
+            var i
+            for (i = 0; i < document.opcionfiltro.sel.length; i++) {
+                if (document.opcionfiltro.sel[i].checked)
+                    break;
+            }
+            var opcion = document.opcionfiltro.sel[i].value
+            var text =
+        }
+    </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 

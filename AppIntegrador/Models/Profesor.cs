@@ -22,9 +22,9 @@ public partial class Profesor
     public Profesor()
     {
 
-        this.Grupo = new HashSet<Grupo>();
-
         this.PlanDeMejora = new HashSet<PlanDeMejora>();
+
+        this.Grupo = new HashSet<Grupo>();
 
     }
 
@@ -37,11 +37,11 @@ public partial class Profesor
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<Grupo> Grupo { get; set; }
+    public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
+    public virtual ICollection<Grupo> Grupo { get; set; }
 
 }
 
