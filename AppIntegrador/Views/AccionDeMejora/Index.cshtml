@@ -4,66 +4,63 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="text-center">Acciones de Mejora</h2>
 
 <div class="container">
+    <h2>Acciones de mejora</h2>
+
     @if (Model.Count() == 0)
     {
         <div class="centeredText">
             <p>
-                Aún no se han agregado acciones
+                Aún no se han creado acciones de mejora
             </p>
         </div>
-
     }
     else
     {
-
-        <table class="table">
+        <table class="table TablasSeccionesPlanesDeMejora">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
+                    @Html.DisplayNameFor(model => model.descripcion)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.FechaInicio)
+                    @Html.DisplayNameFor(model => model.fechaInicio)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.FechaFin)
+                    @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Objetivo.Nombre)
+                    Opciones
                 </th>
-                <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
+                //if() {
+                <tr class="FilaTablasSeccionesPlanesDeMejora">
+                    <td class="TablasDescripcion">
+                        @Html.DisplayFor(modelItem => item.descripcion)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                    <td class="TablasFecha">
+                        @Html.DisplayFor(modelItem => item.fechaInicio)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaFin)
+                    <td class="TablasFecha">
+                        @Html.DisplayFor(modelItem => item.fechaFin)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Objetivo.Nombre)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+                    <td class="TablasOpciones botonCentrado">
+                        @Html.ActionLink("Editar", "Edit", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion}, new { @class = "modal-link btn btn-primary" })
+                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })*@
+                        @Html.ActionLink("Borrar", "Delete", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion}, new { @class = "modal-link btn btn-danger" })
                     </td>
                 </tr>
+                //}
             }
 
         </table>
     }
     <div class="botonCentrado">
         <p>
-            @Html.ActionLink("Crear nueva acción", "Create", null, new { @class = "btn btn-Nuevo" })
+            @Html.ActionLink("Agregar", "Create", null, new { @class = "modal-link btn btn-Nuevo" })
         </p>
     </div>
 </div>
