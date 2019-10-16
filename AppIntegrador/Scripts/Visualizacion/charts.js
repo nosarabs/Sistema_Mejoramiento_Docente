@@ -27,7 +27,7 @@ function drawBarChart(cvs, chartData) {
 	//chroma.js: https://gka.github.io/chroma.js/
 	
 	new Chart(cvs, {
-		
+        responsive: true,
 		type: "bar",
 		data: {
 		labels: chartData.LABELS,
@@ -56,8 +56,8 @@ function drawBarChart(cvs, chartData) {
             tooltips: {
                 enabled: false
             },
-			responsive: false,
-            maintainAspectRatio: false,
+			responsive: true,
+            maintainAspectRatio: true,
             devicePixelRatio: 2,
             scales: {
                 yAxes: [{
@@ -116,7 +116,7 @@ function drawPieChart(cvs, chartData) {
     //chroma.js: https://gka.github.io/chroma.js/
 
     new Chart(cvs, {
-
+        
         type: "pie",
         data: {
             labels: chartData.LABELS,
@@ -145,8 +145,8 @@ function drawPieChart(cvs, chartData) {
             tooltips: {
                 enabled: false
             },
-            responsive: false,
-            maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: true,
             devicePixelRatio: 2,
             plugins: {
                 datalabels: {
@@ -187,8 +187,10 @@ function addChart(leftCol, rightCol, id, tipo) {
     var cvs = document.createElement("canvas");
     var divDesviacion = document.createElement("div");
     divDesviacion.className = "desviacion";
-	cvs.setAttribute("width", "800" );
-    cvs.setAttribute("height", "550");
+	cvs.setAttribute("width", "500vw" );
+    cvs.setAttribute("height", "400vh");
+    //cvs.setAttribute("responsive", "true");
+    cvs.setAttribute("position", "relative");
     var chartData;
 	
 	switch(tipo) {

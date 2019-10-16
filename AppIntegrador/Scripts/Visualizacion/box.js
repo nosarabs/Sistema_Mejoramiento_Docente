@@ -11,12 +11,13 @@ function createBullets(parnt, answers) {
 
         // Add it to the list:
         list.appendChild(item);
-		
+		/*
 		if (i < (answers.length - 1)) {
 			//Add a line break between items.
             var br = document.createElement("br");
             list.appendChild(br);
-		}
+        }
+        */
     }
 	
 	parnt.appendChild(list);
@@ -48,7 +49,8 @@ function getJustificacion(id, tipo) {
 function addBox(cnt, id, tipo) {
 	
 	var box = document.createElement("div");
-	box.setAttribute("class", "myBox" );
+    box.setAttribute("class", "myBox");
+    box.setAttribute("width", "100%");
     var list = document.createElement("div");
     var box_data = [];
 

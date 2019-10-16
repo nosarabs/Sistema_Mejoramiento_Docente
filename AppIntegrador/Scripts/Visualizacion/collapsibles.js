@@ -49,17 +49,22 @@ function createCollapsible(id, question) {
                 addBox(cnt, id, this.id);
 
             } else {
-
+                var contenedor = document.createElement("div");
+                contenedor.className = "container";
                 var row = document.createElement("div");
-                row.className = "row";
+                row.className = "row d-flex justify-content-center";
                 var leftCol = document.createElement("div");
-                leftCol.className = "column";
+                leftCol.className = "col";
                 var rightCol = document.createElement("div");
-                rightCol.className = "column";
+                rightCol.className = "col";
 
+                //leftCol.appendChild(wrapper);
                 row.appendChild(leftCol);
                 row.appendChild(rightCol);
-                cnt.appendChild(row);
+                contenedor.appendChild(row);
+                cnt.appendChild(contenedor);
+                //cnt.appendChild(row);
+
 
                 addChart(leftCol, rightCol, id, this.id);
                 appendTitle(rightCol, "Justificación de los resultados");
