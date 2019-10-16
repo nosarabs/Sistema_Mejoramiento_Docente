@@ -4,11 +4,11 @@ BEGIN
 	EXEC dbo.AgregarPreguntas;
 
 	EXEC dbo.AgregarSeccion 
-		@cod = 'INFOPROF',
+		@codigo = 'INFOPROF',
 		@nombre = 'Sobre el profesor';
 
 	EXEC dbo.AgregarSeccion 
-		@cod = 'PERSONAL',
+		@codigo = 'PERSONAL',
 		@nombre = 'Sobre usted como estudiante del curso';
 
 	MERGE INTO Seccion_tiene_pregunta AS Target

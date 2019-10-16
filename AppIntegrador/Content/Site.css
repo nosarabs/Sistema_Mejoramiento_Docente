@@ -52,7 +52,8 @@ p.uppercase {
 }
 
 nav {
-    background-color: #DDDDDD;
+    background-color: #f0f0f0;
+    display: flex;
 }
 
 .mainBarDropdown {
@@ -394,7 +395,6 @@ html, body {
     text-indent: 5em !important;
 }*/
 
-
 /* FIN DE LOS ESTILOS DEL DASHBOARD DE LOS PLANES DE MEJORA*/
 
 .botonCentrado {
@@ -440,6 +440,27 @@ html, body {
 .TablasSeccionesPlanesDeMejora {
     border-collapse: collapse;
     width: 100%;
+    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.TablasDescripcion {
+    width: 44%;
+    word-break: break-all;
+}
+
+.TablasFecha {
+    width: 10%;
+}
+
+.TablasOpciones {
+    width: 14%;
+}
+
+.TablasNombre {
+    width: 20%;
+    word-break: break-all;
 }
 
 .TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
@@ -451,7 +472,7 @@ html, body {
     padding-bottom: 12px;
     text-align: left;
     background-color: #ddd;
-    color: white;
+    color: black;
 }
 
 .FilaTablasSeccionesPlanesDeMejora:hover {
