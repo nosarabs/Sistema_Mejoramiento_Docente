@@ -17,10 +17,8 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos
         public ActionResult Index()
         {
-            //var objetivo = db.Objetivo.Include(o => o.PlanDeMejora).Include(o => o.TipoObjetivo1);
-            //return View(objetivo.ToList());
-
-            return View();
+            var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
+            return View(objetivo.ToList());
         }
 
         // GET: Objetivos/Details/5
@@ -41,9 +39,9 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Create
         public ActionResult Create()
         {
-            ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre");
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion");
-            return View();
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
+            return View("_crearObjetivo");
         }
 
         // POST: Objetivos/Create
@@ -51,7 +49,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Create([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
@@ -60,25 +58,25 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
         // GET: Objetivos/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
@@ -87,7 +85,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Descripcion,TipoObjetivo,CedulaProf,CodigoPlan")] Objetivo objetivo)
+        public ActionResult Edit([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
             if (ModelState.IsValid)
             {
@@ -95,19 +93,19 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CedulaProf = new SelectList(db.PlanDeMejora, "CedProf", "Nombre", objetivo.CedulaProf);
-            ViewBag.TipoObjetivo = new SelectList(db.TipoObjetivo, "Nombre", "Descripcion", objetivo.TipoObjetivo);
+            ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
             return View(objetivo);
         }
 
         // GET: Objetivos/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -118,9 +116,9 @@ namespace AppIntegrador.Controllers
         // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int plan, string title)
         {
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             db.Objetivo.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index");

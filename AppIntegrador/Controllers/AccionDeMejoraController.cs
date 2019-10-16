@@ -17,38 +17,28 @@ namespace AppIntegrador.Controllers
         // GET: AccionDeMejora
         public ActionResult Index()
         {
-            var accionDeMejora = db.AccionDeMejora.Include(a => a.Objetivo);
-            return View(accionDeMejora.ToList());
+            var objetivo = db.AccionDeMejora.Include(o => o.PlantillaAccionDeMejora).Include(o => o.Objetivo);
+            return View(objetivo.ToList());
         }
 
         // GET: AccionDeMejora/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            if (accionDeMejora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accionDeMejora);
+            return View();
         }
 
         // GET: AccionDeMejora/Create
         public ActionResult Create()
         {
-            ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre");
-            return View();
+            ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");
+            ViewBag.nombreObj = new SelectList(db.Objetivo, "nombre", "nombre");
+            return View("_createAccionDeMejora");
         }
 
         // POST: AccionDeMejora/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Create([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -56,70 +46,71 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //@TODO: 
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
+
+            ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");
+            ViewBag.nombreObj = new SelectList(db.Objetivo, "nombre", "nombre");
             return View(accionDeMejora);
+
         }
 
         // GET: AccionDeMejora/Edit/5
-        public ActionResult Edit(int? id)
+        // Corresponde a MOS 1.3 (2)
+        public ActionResult Edit(int plan, string obj, string descripcion)
         {
-            if (id == null)
+            if (plan == null || obj == null || descripcion == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
+            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(plan, obj, descripcion);
             if (accionDeMejora == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
             return View(accionDeMejora);
         }
 
         // POST: AccionDeMejora/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Corresponde a MOS 1.3 (2)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Descripcion,FechaInicio,FechaFin,CodigoObj")] AccionDeMejora accionDeMejora)
+        public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(accionDeMejora).State = EntityState.Modified;
+                db.Entry(planDeMejora).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CodigoObj = new SelectList(db.Objetivo, "Codigo", "Nombre", accionDeMejora.CodigoObj);
-            return View(accionDeMejora);
+            return View(planDeMejora);
         }
 
         // GET: AccionDeMejora/Delete/5
-        public ActionResult Delete(int? id)
+        // Corresponde a MOS 1.3 (2)
+        public ActionResult Delete(int? plan, string nombObj, string descripcion)
         {
-            if (id == null)
+            if (plan == null || nombObj == null || descripcion == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            if (accionDeMejora == null)
+            AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
+            if (accion == null)
             {
                 return HttpNotFound();
             }
-            return View(accionDeMejora);
+            return View(accion);
         }
 
         // POST: AccionDeMejora/Delete/5
+        // Corresponde a MOS 1.3 (2)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? plan, string nombObj, string descripcion)
         {
-            AccionDeMejora accionDeMejora = db.AccionDeMejora.Find(id);
-            db.AccionDeMejora.Remove(accionDeMejora);
+            AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
+            db.AccionDeMejora.Remove(accion);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -128,5 +119,6 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
