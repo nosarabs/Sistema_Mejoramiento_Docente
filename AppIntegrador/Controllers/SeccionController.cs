@@ -89,6 +89,38 @@ namespace AppIntegrador.Controllers
             return View(crearSeccion);
         }
 
+        // Historia RIP-BKS1
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string inp1, string inp2, string inp3)
+        {
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            if (inp2 == null && inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+
+            }
+            //if a user choose the radio button option as Subject  
+            else if (inp2 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (inp1 == null && inp3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList();
+            }
+            else if (inp1 == null && inp2 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList();
+            }
+            else
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+            }
+            return View("Create", crearSeccion);
+        }
+
         // GET: Seccion/Edit/5
         public ActionResult Edit(string id)
         {
@@ -156,45 +188,23 @@ namespace AppIntegrador.Controllers
         }
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
                 {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarSeccion";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", seccion.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", seccion.Nombre));
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                if (preguntas != null)
-                {
-                    for (int index = 0; index < preguntas.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarPreguntaConSeccion";
-                            cmd.Parameters.Add(new SqlParameter("@CodigoSeccion", seccion.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@CodigoPregunta", preguntas[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@Orden", index));
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
 
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
                 }
             }
             return true;
