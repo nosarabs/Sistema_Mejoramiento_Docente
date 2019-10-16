@@ -27,32 +27,29 @@
 
                 // segundo contenedor, envuelve los elementos principales de una pregunta, código, enunciado y justificación
                 <div class="form-horizontal panel-group ">
-                    <div class=" panel panel-default">
-                        <div class="panel-body test2">
-
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-2">
+                    <div class=" panel panel-default test2">
+                        <div class="panel-body">
+                            <div class="row">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="col-xs-2">
                                     @Html.EditorFor(model => model.Codigo, new
-                                    {
-                                        htmlAttributes = new
-                                        {
-                                       @class = "form-control",
-                                       @maxlength = "8",
-                                       required = "required",
-                                       @onkeyup = "charCount(this)"
-                                    }})
+                                   {
+                                       htmlAttributes = new
+                                       {
+                                           @class = "form-control",
+                                           @maxlength = "8",
+                                           required = "required",
+                                           @onkeyup = "charCount(this)",
+                                           @placeholder = "Código"
+                                       }
+                                   })
 
                                     <div class="counter small pull-right">0/8 caracteres usados</div>
                                     @*Historia MSU: que el mensaje de error salga en rojo*@
                                     @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
-                                <div class="col-md-10">
+                                <div class="col-xs-8">
                                     @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                                     {
                                         @class = "form-control long-textbox",
@@ -61,7 +58,8 @@
                                         required = "required",
                                         data_val = "true",
                                         data_val_length_max = "250",
-                                        @onkeyup = "charCount(this)"
+                                        @onkeyup = "charCount(this)",
+                                        @placeholder = "Enunciado de la pregunta"
                                     })
 
                                     <div class="counter small pull-right">0/250 caracteres usados</div>
@@ -70,17 +68,23 @@
                                 </div>
                             </div>
 
-                            <label for="chkPassport" class="col-md-offset-2 col-md-10">
+                            <br />
+                            <label for="chkPassport" class="col-md-10">
                                 <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
-                                Incluir campo de justificación.
+                                Incluir campo de justificación para la pregunta.
                             </label>
-                            <p></p>
-                            <div class="form-horizontal">
-                                <div class="form-group" id="justificationField">
-                                    @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
-                                    </div>
+                            
+                            <div class="form-group" id="justificationField">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new
+                                    {
+                                        @onclick = "checkboxcheck()",
+                                        @class = "form-control",
+                                        required = "required",
+                                        id = "txtJustificationNumber",
+                                        @maxlength = "50",
+                                        @placeholder = "Descripción"
+                                    }})
                                 </div>
                             </div>
                         </div>
@@ -98,6 +102,7 @@
                                 </div>
                                 <div class="custom-control custom-radio control-label col-xs-1 form-horizontal">
                                 </div>
+                                <br/>
                                 <div class="test col-xs-6">
                                     <input type="button" class="btn btn-default " value="Agregar opción +" id="Add" />
                                 </div>
@@ -148,6 +153,7 @@
 
     input[type="radio"] {
         transform: scale(2);
+        margin-left: 10px;
     }
 
     .btn-info {
