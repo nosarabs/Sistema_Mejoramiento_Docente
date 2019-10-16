@@ -42,20 +42,30 @@ function createCollapsible(id, question) {
 
             this.id = getTipoPregunta(id)[0];
 
+            var cnt = this.nextElementSibling;
+
             if (this.id == "texto_abierto") {
 
-                appendLineBreaks(cnt, 2);
+                addBox(cnt, id, this.id);
 
             } else {
-                appendLineBreaks(cnt, 2);
-                addChart(cnt, id, this.id);
-                appendLineBreaks(cnt, 6);
-                appendTitle(cnt, "Justificación de los resultados");
+
+                var row = document.createElement("div");
+                row.className = "row";
+                var leftCol = document.createElement("div");
+                leftCol.className = "column";
+                var rightCol = document.createElement("div");
+                rightCol.className = "column";
+
+                row.appendChild(leftCol);
+                row.appendChild(rightCol);
+                cnt.appendChild(row);
+
+                addChart(leftCol, rightCol, id, this.id);
+                appendTitle(rightCol, "Justificación de los resultados");
+                addBox(rightCol, id, this.id);
 
             }
-
-            addBox(cnt, id, this.id);
-			appendLineBreaks(cnt, 2);
 			
 		}
 		
@@ -73,7 +83,7 @@ function createCollapsible(id, question) {
 		} 
 		
 	});
-	
+
 	document.body.appendChild(btn);
 	document.body.appendChild(cnt);
 	

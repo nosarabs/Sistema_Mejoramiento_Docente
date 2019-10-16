@@ -210,6 +210,16 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
+        public String obtenerDesviacionEstandar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta) {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            ObjectParameter resultado = new ObjectParameter("Desviacion", typeof(float));
+            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultado);
+
+            return serializer.Serialize(resultado.Value);
+
+        }
+
 
         public Double getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
