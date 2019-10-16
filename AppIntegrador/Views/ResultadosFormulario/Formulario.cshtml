@@ -25,21 +25,22 @@
         </nav>
     </div>
 
+    <script src="~/Scripts/Visualizacion/baseRespuestasPlantilla.js"></script>
+    <script src="~/Scripts/Visualizacion/botones.js"></script>
+
     <script>
+
         var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
         var siglaCurso = @Html.Raw(Model.SiglaCurso);
         var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
         var semestre = @Html.Raw(Model.Semestre);
         var ano = @Html.Raw(Model.Ano);
-        var questions = @Html.Raw(Model.Preguntas);
-    </script>
+        var listaPreguntas = @Html.Raw(Model.Preguntas);
 
-    <script src="~/Scripts/Visualizacion/Chart.js"></script>
-    <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
-    <script src="~/Scripts/Visualizacion/chroma.js"></script>
-    <script src="~/Scripts/Visualizacion/charts.js"></script>
-    <script src="~/Scripts/Visualizacion/box.js"></script>
-    <script src="~/Scripts/Visualizacion/collapsibles.js"></script>
+        var botones = new Botones();
+        botones.crearBotones(listaPreguntas);
+
+    </script>
 
 </body>
 

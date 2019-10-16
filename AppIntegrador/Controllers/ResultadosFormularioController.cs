@@ -35,18 +35,25 @@ namespace AppIntegrador.Controllers
 
         // GET: PreguntasFormulario
         [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerPreguntas(String codigoFormulario)
+        public List<Preguntas> ObtenerPreguntas(String codigoFormulario)
         {
-            var preguntas = from f in db.Formulario
-                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
-                            join s in db.Seccion on fs.SCodigo equals s.Codigo
-                            join sp in db.Seccion_tiene_pregunta on s.Codigo equals sp.SCodigo
-                            join p in db.Pregunta on sp.PCodigo equals p.Codigo
-                            where f.Codigo == codigoFormulario
-                            orderby fs.Orden, sp.Orden
-                            select new SelectListItem { Value = p.Codigo, Text = p.Enunciado };
+            var preguntas =     from f in db.Formulario
+                                join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
+                                join s in db.Seccion on fs.SCodigo equals s.Codigo
+                                join sp in db.Seccion_tiene_pregunta on s.Codigo equals sp.SCodigo
+                                join p in db.Pregunta on sp.PCodigo equals p.Codigo
+                                where f.Codigo == codigoFormulario
+                                orderby fs.Orden, sp.Orden
+                                select new Preguntas { codigoPregunta = p.Codigo, textoPregunta = p.Enunciado };
 
-            return preguntas.ToList();
+            var listaPreguntas = preguntas.ToList();
+
+            for (int i = 0; i < preguntas.Count(); ++i)
+            {
+                listaPreguntas[i].tipoPregunta = GetTipoPregunta(listaPreguntas[i].codigoPregunta);
+            }
+
+            return listaPreguntas;
         }
 
         public string ObtenerEtiquetasEscala(string codigoPregunta)
@@ -133,35 +140,34 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public String GetTipoPregunta(String codigoPregunta)
         {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            List<string> tipo = new List<string>();
+            String tipo = "";
 
             if ((from pcrl in db.Pregunta_con_respuesta_libre
                  where pcrl.Codigo == codigoPregunta
                  select pcrl).Count() != 0)
-                tipo.Add("texto_abierto");
+                tipo = "texto_abierto";
             else
                     if ((from e in db.Escalar
                          where e.Codigo == codigoPregunta
                          select e).Count() != 0)
-                tipo.Add("escala");
+                tipo = "escala";
             else
                         if ((from snnr in db.Si_no_nr
                              where snnr.Codigo == codigoPregunta
                              select snnr).Count() != 0)
-                tipo.Add("seleccion_cerrada");
+                tipo = "seleccion_cerrada";
             else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
                                  select pcods).Count() != 0)
-                tipo.Add("seleccion_multiple");
+                tipo = "seleccion_multiple";
             else
                                 if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                      where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
                                      select pcods).Count() != 0)
-                tipo.Add("seleccion_unica");
+                tipo = "seleccion_unica";
 
-            return serializer.Serialize(tipo);
+            return tipo;
         }
 
         public String ObtenterOpcionesPreguntasSeleccion(String codigoPregunta)

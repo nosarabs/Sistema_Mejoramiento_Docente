@@ -273,6 +273,7 @@ function addChart(leftCol, rightCol, id, tipo) {
                 async: false,
                 success: function (resultados) {
                     medianita = resultados;
+                    alert(medianita);
                 }
             });
 
@@ -293,6 +294,7 @@ function addChart(leftCol, rightCol, id, tipo) {
                 async: false,
                 success: function (resultados) {
                     data = resultados;
+                    alert(data);
                 }
             });
             var verProm = document.createElement("div");
