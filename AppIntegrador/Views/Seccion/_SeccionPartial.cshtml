@@ -6,7 +6,7 @@
 
 @using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
 {
-    <h2>Banco de secciones</h2>
+    <h2>Agregar secciones al formulario</h2>
     //the following are search options
     <b>
         Opciones de búsqueda:
@@ -33,14 +33,14 @@
 }
 
 
-<div style="height: 400px; overflow: auto;">
+<div style="height: 300px; overflow: auto;">
     <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
                     
         <thead>
 
             <tr>
     <th>
-        Seleccionar
+        
     </th>
     <th>
         Codigo
@@ -48,30 +48,22 @@
     <th>
         Nombre
     </th>
-    <th>
-        Operaciones
-    </th>
 </tr>
         </thead>
         @foreach (var item in Model)
         {
 
         <tr>
-            <td>
+            <td style="width:10%;">
                 <center>
                     <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="addSeccionToFormulario(this)" />
                 </center>
             </td>
-            <td>
+            <td style="width:20%">
                 @Html.DisplayFor(modelItem => item.Codigo)
             </td>
-            <td>
+            <td style="width:70%">
                 @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
             </td>
         </tr>
     }
@@ -85,6 +77,8 @@
         width: 30px;
         height: 30px;
     }
+
+
 </style>
 
 @section Scripts {
