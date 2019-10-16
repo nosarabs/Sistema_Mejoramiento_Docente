@@ -42,7 +42,7 @@ function drawBarChart(cvs, chartData) {
 			}
 		]
 		},
-		options: {
+        options: {
             legend: {
                 display: false,
                 labels: {
@@ -98,7 +98,7 @@ function drawBarChart(cvs, chartData) {
                         for (var i = 0; i < data.length; ++i) {
                             sum += data[i];
                         }
-                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
                         return percentage + "\n\n" + value;
                     }
 				}
@@ -171,7 +171,7 @@ function drawPieChart(cvs, chartData) {
                         for (var i = 0; i < data.length; ++i) {
                             sum += data[i];
                         }
-                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
                         return percentage + "\n\n" + value;
                     }
                 }
@@ -182,13 +182,13 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function addChart(cnt, id, tipo) {
+function addChart(leftCol, rightCol, id, tipo) {
 
     var cvs = document.createElement("canvas");
     var divDesviacion = document.createElement("div");
     divDesviacion.className = "desviacion";
-	cvs.setAttribute("width", "900" );
-    cvs.setAttribute("height", "650");
+	cvs.setAttribute("width", "800" );
+    cvs.setAttribute("height", "550");
     var chartData;
 	
 	switch(tipo) {
@@ -256,9 +256,6 @@ function addChart(cnt, id, tipo) {
 
 
             divDesviacion.appendChild(desviacionValor);
-
-
-            //divDesviacion.innerText = desviacion;
 
             chartData = { DATA: data, LABELS: labels };
             drawBarChart(cvs, chartData);
@@ -372,6 +369,6 @@ function addChart(cnt, id, tipo) {
 			
 	}
 
-    cnt.appendChild(cvs);
-    cnt.appendChild(divDesviacion);
+    leftCol.appendChild(cvs);
+    rightCol.appendChild(divDesviacion);
 }
