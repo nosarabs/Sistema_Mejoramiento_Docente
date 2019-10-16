@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.Entity.Core.Objects;
 
 namespace AppIntegrador.Controllers
 {
