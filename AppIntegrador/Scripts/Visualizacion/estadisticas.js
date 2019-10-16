@@ -15,7 +15,7 @@
                 ano: ano,
                 codigoPregunta: codigoPregunta
             },
-            type: "get",
+            type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
@@ -40,7 +40,7 @@
                 ano: ano,
                 codigoPregunta: codigoPregunta
             },
-            type: "get",
+            type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
@@ -65,7 +65,7 @@
                 ano: ano,
                 codigoPregunta: codigoPregunta
             },
-            type: "get",
+            type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
@@ -83,9 +83,9 @@
         var mediana = this.recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
         var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
 
-        var colMedia = row.firstChildElement();
-        var colMediana = colMedia.nextSiblingElement();
-        var colDesviacion = colMediana.nextSiblingElement();
+        var colMedia = row.firstElementChild;
+        var colMediana = colMedia.nextElementSibling;
+        var colDesviacion = colMediana.nextElementSibling;
 
         var mediaTitulo = document.createElement("h3");
         mediaTitulo.innerText = "Promedio";
@@ -95,10 +95,13 @@
         desviacionTitulo.innerText = "Desviación Estándar";
 
         var mediaDiv = document.createElement("div");
+        mediaDiv.className = "estadisticas";
         mediaDiv.innerText = ("" + media).replace(".", ",");
         var medianaDiv = document.createElement("div");
+        medianaDiv.className = "estadisticas";
         medianaDiv.innerText = ("" + mediana).replace(".", ",");
         var desviacionDiv = document.createElement("div");
+        desviacionDiv.className = "estadisticas";
         desviacionDiv.innerText = ("" + desviacion).replace(".", ",");
 
 

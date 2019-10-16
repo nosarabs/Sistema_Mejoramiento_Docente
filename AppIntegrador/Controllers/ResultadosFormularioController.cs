@@ -34,7 +34,6 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntasFormulario
-        [HttpGet]
         public List<Preguntas> ObtenerPreguntas(String codigoFormulario)
         {
             var preguntas =     from f in db.Formulario
@@ -120,7 +119,6 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeY);
         }
 
-        [HttpGet]
         public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -137,7 +135,6 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
-        [HttpGet]
         public String GetTipoPregunta(String codigoPregunta)
         {
             String tipo = "";
@@ -204,13 +201,18 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas);
         }
 
-        public String getJustificacionPregunta(string codigoPregunta, string tipo)
+        public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
 
             var respuestas =    from rrco in db.Responde_respuesta_con_opciones
-                                where rrco.PCodigo == codigoPregunta
+                                where rrco.FCodigo == codigoFormulario
+                                && rrco.CSigla == siglaCurso
+                                && rrco.GNumero == numeroGrupo
+                                && rrco.GSemestre == semestre
+                                && rrco.GAnno == ano
+                                && rrco.PCodigo == codigoPregunta
                                 select new SelectListItem { Value = rrco.Justificacion };
 
             return serializer.Serialize(respuestas.ToList());

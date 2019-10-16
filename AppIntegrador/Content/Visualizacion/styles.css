@@ -56,27 +56,21 @@ canvas{
     border: 2px solid #000000;
     padding: 30px;
     font: 18px;
-    width: 750px;
-    height: 280px;
     overflow: auto;
     background-color: #F9F9F9;
     list-style-position: inside;
 }
 
-.desviacion {
+.estadisticas {
     text-align: center;
     font: 18px;
 }
 
 .col {
-    margin: 10px;
-    padding: 10px;
-    background-color: aqua;
+
 }
 
 /* Clear floats after the columns */
 .row {
-    margin: 10px;
-    padding: 10px;
-    background-color: rebeccapurple;
+
 }

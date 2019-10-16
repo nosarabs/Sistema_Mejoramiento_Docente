@@ -354,14 +354,13 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
     <Content Include="Scripts\Visualizacion\botones.js" />
-    <Content Include="Scripts\Visualizacion\box.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />
-    <Content Include="Scripts\Visualizacion\charts.js" />
     <Content Include="Scripts\Visualizacion\chroma.js" />
-    <Content Include="Scripts\Visualizacion\collapsibles.js" />
     <Content Include="Scripts\Visualizacion\estadisticas.js" />
+    <Content Include="Scripts\Visualizacion\graficos.js" />
     <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
+    <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -417,6 +416,7 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Scripts\Visualizacion\jquery-3.4.1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

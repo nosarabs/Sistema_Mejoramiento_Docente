@@ -26,13 +26,27 @@ class BaseDosCol extends BaseRespuesta{
         this.rightCol = document.createElement("div");
         this.rightCol.className = "col";
         this.canvas = document.createElement("canvas");
+        this.canvas.setAttribute("width", "800"); //Ancho canvas
+        this.canvas.setAttribute("height", "550"); //Largo canvas
         this.justificacion = document.createElement("div");
-        this.justificacion.className = "row";
+        this.justificacion.className = "row myBox";
 
         this.rightCol.appendChild(this.justificacion);
         this.leftCol.appendChild(this.canvas);
         this.base.appendChild(this.leftCol);
         this.base.appendChild(this.rightCol);
+
+    }
+
+    getCanvas() {
+
+        return this.canvas;
+
+    }
+
+    getElementoJustificacion() {
+
+        return this.justificacion;
 
     }
 
@@ -60,7 +74,30 @@ class BaseConEstadisticas extends BaseDosCol {
     }
 
     getElementoEstadisticas() {
+
         return this.estadisticas;
+
     }
 
+}
+
+
+class BaseTexto extends BaseRespuesta {
+
+    constructor(tipo) {
+
+        super(tipo);
+        this.textoAbierto = document.createElement("div");
+        this.textoAbierto.className = "myBox";
+
+        this.base.appendChild(this.textoAbierto);
+
+
+    }
+
+    getTextoAbierto() {
+
+        return this.textoAbierto;
+
+    }
 }

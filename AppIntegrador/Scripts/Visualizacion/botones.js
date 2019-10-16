@@ -43,21 +43,40 @@
 
             var base;
 
-            if (tipoPregunta == "texto_abierto") {
+            switch (tipoPregunta) {
 
-                base = new BaseRespuesta("texto_abierto");
+                case "texto_abierto":
+                    base = new BaseTexto(tipoPregunta);
+                    insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    break;
+
+                case "escala":
+                    base = new BaseConEstadisticas(tipoPregunta);
+                    insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    break;
+
+                case "seleccion_unica":
+                    base = new BaseDosCol(tipoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    break;
+
+                case "seleccion_multiple":
+                    base = new BaseDosCol(tipoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    break;
+
+                case "seleccion_cerrada":
+                    base = new BaseDosCol(tipoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    break;
 
             }
-            else if (tipoPregunta == "escala") {
 
-                base = new BaseConEstadisticas("escala");
-                insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+            if (tipoPregunta != "texto_abierto")
+            {
 
-            }
-            else {
-
-                base = new BaseDosCol("seleccion_cerrada");
-
+                insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
             }
 
             document.body.appendChild(base.getBase());
