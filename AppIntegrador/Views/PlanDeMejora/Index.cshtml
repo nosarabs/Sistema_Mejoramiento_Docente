@@ -1,80 +1,106 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
 
 @{
-    ViewBag.Title = "Planes de Mejora";
+    ViewBag.Title = "Index";
+    ViewBag.indexPlanMejora = -1;
 }
 
-<h2 class="text-center">Planes de Mejora</h2>
+<div class="horizontalBoxes">
+    <div class="fullWidth">
+        <div class="verticalBoxes">
+            <div class="halfVerticalBox">
+                <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
+            </div>
 
+            <!-- Button that hekps create another PlanDeMejora -->
+            @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
 
-@if (Model.Count() == 0)
-{
-    <div class="centeredText">
-        <p>
-            Aún no se han agregado planes
-        </p>
+        </div>
     </div>
-}
-else
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoF)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profesor.Correo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profesor1.Correo)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+    <br />
+
+    <div class="planesTable">
+        <table class='table table-bordered table-condensed table-striped table-hover'>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaFin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodigoF)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Profesor.Correo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Profesor1.Correo)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new {  id = item.Codigo, cedula = item.CorreoProf  }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Codigo, cedula = item.CorreoProf }) |
-                    @Html.ActionLink("Borrar", "Delete", new { id = item.Codigo, cedula = item.CorreoProf })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.codigo)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaFin)
+                </th>
+                <th>
+                    Creado por:
+                </th>
+                <th>
+                    Asignado a:
+                </th>
+                <th>
+                    Opciones de Edición
+                </th>
             </tr>
-        }
 
-    </table>
-}
-<div class="text-right" style="margin: 5%">
-    <p>
-        @Html.ActionLink("Crear nuevo plan", "Create", null, new { @class = "btn btn-default" })
-    </p>
+            @foreach (var plan in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaFin)
+                    </td>
+                    <td>
+                        @HttpContext.Current.User.Identity.Name
+                    </td>
+                    <td>
+                        @HttpContext.Current.User.Identity.Name
+                    </td>
+
+                    <td>
+                        <div class="verticalBoxes">
+                            <div>
+                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan, new ViewDataDictionary { { "codigoPlan", plan.codigo } })
+                            </div>
+                            <div>
+                                @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+    </div>
+
+
+    <div class="fullWidth">
+        <p class="impText">Objetivos</p>
+        <hr />
+    </div>
+
+
+    <div class="fullWidth">
+        <p class="impText">Acciones de Mejora</p>
+        <hr />
+    </div>
+
+
+
+    <div class="fullWidth">
+        <p class="impText">Accionables</p>
+        <hr />
+    </div>
 </div>
-
-
