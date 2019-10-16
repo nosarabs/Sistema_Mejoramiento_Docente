@@ -20,9 +20,15 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+        /*
+            Modificado por: Johan Córdoba
+            Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+            Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
+            Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
+        */
         public ActionResult objetivosPlan(int id) {
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == id);
-            return PartialView("~/Views/PlanDeMejora/_objetivosPlan.cshtml", objetivosDePlan);
+            return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
         }
 
         // GET: PlanDeMejora/Details/5
