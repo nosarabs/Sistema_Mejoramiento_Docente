@@ -95,6 +95,7 @@
         <AssociationConnector Association="DataIntegradorModel.Pertenece_a" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_Plan" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
