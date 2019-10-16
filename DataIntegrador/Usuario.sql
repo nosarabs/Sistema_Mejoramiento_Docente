@@ -4,7 +4,4 @@
 	[Password] varchar(64) NOT NULL,
 	[Salt] varchar(64) not null unique, 
     [Activo] BIT NOT NULL DEFAULT 1,
-	Foreign key (Username) references Persona(Correo)
-	on delete cascade
-	on update cascade
 )

@@ -29,30 +29,6 @@ BEGIN
 
 END
 
-go
-CREATE TRIGGER [dbo].[CrearUsuarioDespuesdePersona]
-	ON [dbo].[Persona]
-	AFTER INSERT
-AS
-BEGIN
-	DECLARE
-	@correoactual varchar(50),
-	@output bit
-	DECLARE
-	personasAgregadas CURSOR FOR
-	SELECT Correo
-	FROM inserted
 
-	OPEN personasAgregadas
-	FETCH NEXT FROM personasAgregadas into @correoactual;
-
-	while @@FETCH_STATUS=0
-	begin
-		EXEC AgregarUsuario @pLogin=@correoactual, @pPassword=@correoactual, @activo=1, @estado=@output
-		FETCH NEXT FROM personasAgregadas into @correoactual;
-	end
-	close personasAgregadas
-	deallocate personasAgregadas
-end
 
 	

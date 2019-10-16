@@ -147,7 +147,7 @@ namespace AppIntegrador.Utilities
             foreach (var user in recipients)
             {
                 // Ejecuta el procedimiento que obtiene el correo dado un usuario
-                db.ObtenerEmailUsuario(user, obtainedEmail);
+                //db.ObtenerEmailUsuario(user, obtainedEmail);
                 string email = obtainedEmail.Value.ToString();
                 userEmail.Add(email);
             }
