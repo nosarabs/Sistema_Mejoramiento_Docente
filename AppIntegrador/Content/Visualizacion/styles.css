@@ -12,7 +12,7 @@ h3 {text-align: center;}
 
 .collapsible {
     background-color: #41ade7;
-    color: black;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -25,14 +25,24 @@ h3 {text-align: center;}
 }
 
 .activeCollapsible, .collapsible:hover {
-    background-color: #41ade7;
+    background-color: #34a5e2;
 }
 
+#sistema {
+    color: #34a5e2;
+    background-color: transparent;
+}
+
+    #sistema:hover {
+        color: #00659b;
+        background-color: transparent;
+    }
+
 .collapsible:after {
-	content: '\002B';
-	font-weight: bold;
-	float: right;
-	margin-left: 5px;
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
 }
 
 .activeCollapsible:after {
@@ -53,15 +63,31 @@ canvas{
 
 .myBox {
     margin: 30px auto;
-    border: 2px solid #000000;
-    padding: 30px;
+    margin-top: 0;
+    border: 2px solid #ababab;
+    padding: 0px;
     font: 18px;
     width: 750px;
-    height: 280px;
+    height: auto;
     overflow: auto;
     background-color: #F9F9F9;
     list-style-position: inside;
+    border-radius: 10px;
+    margin-right: 50px;
+      
 }
+
+.myBox ul li {
+    background-color: #ddd;
+    padding: 20px;
+    margin-bottom: 10px;
+
+}
+
+.myBox ul {
+    margin-bottom: 0;
+}
+
 
 .desviacion {
     text-align: center;

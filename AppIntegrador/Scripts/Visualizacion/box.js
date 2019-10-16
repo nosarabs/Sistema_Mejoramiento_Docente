@@ -12,11 +12,6 @@ function createBullets(parnt, answers) {
         // Add it to the list:
         list.appendChild(item);
 		
-		if (i < (answers.length - 1)) {
-			//Add a line break between items.
-            var br = document.createElement("br");
-            list.appendChild(br);
-		}
     }
 	
 	parnt.appendChild(list);
