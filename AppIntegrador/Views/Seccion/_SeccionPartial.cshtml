@@ -4,7 +4,7 @@
     ViewBag.Title = "Banco de secciones";
 }
 
-@using (Html.BeginForm(FormMethod.Get))
+@using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
 {
     <h2>Banco de secciones</h2>
     //the following are search options
@@ -88,28 +88,7 @@
 </style>
 
 @section Scripts {
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
-            }
-            elem.disabled = false;
-            currentEnabled = elem;
-        }
-    </script>
-
-    <script>
-    function filtrar() {
-        var i
-        for (i = 0; i < document.opcionfiltro.sel.length; i++) {
-            if (document.opcionfiltro.sel[i].checked)
-                break;
-        }
-        var opcion = document.opcionfiltro.sel[i].value
-        var text = 
-    }
-</script>
+    
 
 <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
 }

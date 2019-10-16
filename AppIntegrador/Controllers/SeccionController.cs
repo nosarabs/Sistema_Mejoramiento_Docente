@@ -188,7 +188,14 @@ namespace AppIntegrador.Controllers
         }
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
+            try
+            {
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
+                {
+                    return false;
+                }
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
             {
                 return false;
             }

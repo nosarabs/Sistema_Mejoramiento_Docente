@@ -169,6 +169,34 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
+        // Historia RIP-CF5
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string inp1, string inp2)
+        {
+            crearFormulario.seccion = db.Seccion;
+            if (inp2 == null && inp1 == null)
+            {
+                crearFormulario.seccion = db.Seccion.ToList();
+
+            }
+            //if a user choose the radio button option as Subject  
+            else if (inp2 == null)
+            {
+                crearFormulario.seccion = db.Seccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (inp1 == null)
+            {
+                crearFormulario.seccion = db.Seccion.Where(x => x.Nombre.Contains(inp2)).ToList();
+            }
+            else
+            {
+                crearFormulario.seccion = db.Seccion.ToList();
+            }
+            return View("Create", crearFormulario);
+        }
+
         // POST: Formularios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -230,11 +258,18 @@ namespace AppIntegrador.Controllers
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
-            if(db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
+            try
+            {
+                if (db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
+                {
+                    return false;
+                }
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
             {
                 return false;
             }
-            
+
             if (secciones != null)
             {
                 for (int index = 0; index < secciones.Count; ++index)
