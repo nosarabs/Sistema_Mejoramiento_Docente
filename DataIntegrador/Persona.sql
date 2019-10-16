@@ -7,7 +7,5 @@
     [Nombre2] VARCHAR(15) NULL, 
     [Apellido1] VARCHAR(15) NOT NULL, 
     [Apellido2] VARCHAR(15) NULL, 
-    [Usuario] VARCHAR(50) NULL,
-	[TipoIdentificacion] VARCHAR(30) NOT NULL, 
-    FOREIGN KEY (Usuario) REFERENCES Usuario (Username) ON UPDATE CASCADE ON DELETE SET NULL
+	[TipoIdentificacion] VARCHAR(30) NOT NULL
 )
