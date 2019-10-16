@@ -16,16 +16,19 @@ namespace AppIntegrador.Models.Metadata
         [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
         [MaxLength(30, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
+        [Required]
         public string nombre { get; set; }
 
         [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
         [Display(Name = "Fecha Finalización")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required]
         public Nullable<System.DateTime> fechaFin { get; set; }
 
     }

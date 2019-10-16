@@ -15,15 +15,16 @@
 
 <div class="horizontalBoxes">
     <div class="fullWidth">
-        <div class="verticalBoxes">
+        <div class="horizontalBoxes">
             <div class="halfVerticalBox">
                 <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
             </div>
-
+        </div>
+        <div>
             <!-- Button that hekps create another PlanDeMejora -->
             @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
-
         </div>
+
     </div>
 
     <br />
@@ -106,7 +107,7 @@
     <div class="fullWidth">
         <p class="impText">Objetivos</p>
 
-        @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan });
+        @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan })
 
         <hr />
     </div>

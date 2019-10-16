@@ -418,6 +418,10 @@
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crear.cshtml" />
+    <Content Include="Views\PlanDeMejora\_edit.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
