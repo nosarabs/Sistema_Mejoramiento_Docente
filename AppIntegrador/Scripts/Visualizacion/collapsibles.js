@@ -35,47 +35,43 @@ function createCollapsible(id, question) {
 	btn.innerHTML = question;						//Insert text
 	var cnt = document.createElement("div");
     cnt.className = "content";
-    var cont = document.createElement("div");
-    cont.className = "container";
-    var row = document.createElement("div");
-    row.className = "row";
-    var col1 = document.createElement("div");
-    col1.className = "col-6";
-    var col2 = document.createElement("div");
-    col2.className = "col-6";
-    cnt.appendChild(row);
-    row.appendChild(col1);
-    row.appendChild(col2);
 	
-    btn.addEventListener("click", function () {		//Add an event listener to the button
-
-
+	btn.addEventListener("click", function() {		//Add an event listener to the button
+		
         if (this.nextElementSibling.childElementCount == 0) {
 
             this.id = getTipoPregunta(id)[0];
 
+            var cnt = this.nextElementSibling;
+
             if (this.id == "texto_abierto") {
 
-                //appendLineBreaks(cnt, 2);
+                addBox(cnt, id, this.id);
 
             } else {
-                //appendLineBreaks(cnt, 2);
 
-                addChart(col1, id, this.id);
-                //appendLineBreaks(cnt, 6);
-                appendTitle(col2, "Justificación de los resultados");
+                var row = document.createElement("div");
+                row.className = "row";
+                var leftCol = document.createElement("div");
+                leftCol.className = "column";
+                var rightCol = document.createElement("div");
+                rightCol.className = "column";
+
+                row.appendChild(leftCol);
+                row.appendChild(rightCol);
+                cnt.appendChild(row);
+
+                addChart(leftCol, rightCol, id, this.id);
+                appendTitle(rightCol, "Justificación de los resultados");
+                addBox(rightCol, id, this.id);
 
             }
-
-            addBox(col2, id, this.id);
-            //appendLineBreaks(cnt, 2);
-            
 			
 		}
 		
 		this.classList.toggle("activeCollapsible");
-		/*var content = this.nextElementSibling;
-        
+		var content = this.nextElementSibling;
+		
 		if (content.style.maxHeight){
 			
 			content.style.maxHeight = null;
@@ -85,10 +81,9 @@ function createCollapsible(id, question) {
 			content.style.maxHeight = content.scrollHeight + "px";
 			
 		} 
-		*/
-    });
-    cnt.appendChild(cont);
-    //document.body.appendChild(cont);
+		
+	});
+
 	document.body.appendChild(btn);
 	document.body.appendChild(cnt);
 	
