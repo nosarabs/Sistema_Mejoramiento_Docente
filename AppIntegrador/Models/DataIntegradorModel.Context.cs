@@ -284,14 +284,53 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
         }
-
+    
+        public virtual int ModificarCorreo(string anterior, string nuevo)
+        {
+            var anteriorParameter = anterior != null ?
+                new ObjectParameter("anterior", anterior) :
+                new ObjectParameter("anterior", typeof(string));
+    
+            var nuevoParameter = nuevo != null ?
+                new ObjectParameter("nuevo", nuevo) :
+                new ObjectParameter("nuevo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter);
+        }
+    
         public virtual int ObtenerEmailUsuario(string pUsername, ObjectParameter email)
         {
             var pUsernameParameter = pUsername != null ?
                 new ObjectParameter("pUsername", pUsername) :
                 new ObjectParameter("pUsername", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerEmailUsuario", pUsernameParameter, email);
+        }
+    
+        public virtual int ModificarUsername(string anterior, string nuevo)
+        {
+            var anteriorParameter = anterior != null ?
+                new ObjectParameter("anterior", anterior) :
+                new ObjectParameter("anterior", typeof(string));
+    
+            var nuevoParameter = nuevo != null ?
+                new ObjectParameter("nuevo", nuevo) :
+                new ObjectParameter("nuevo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarUsername", anteriorParameter, nuevoParameter);
+        }
+    
+        public virtual int ChangePassword(string username, string newpassword)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var newpasswordParameter = newpassword != null ?
+                new ObjectParameter("newpassword", newpassword) :
+                new ObjectParameter("newpassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword", usernameParameter, newpasswordParameter);
         }
     }
 }

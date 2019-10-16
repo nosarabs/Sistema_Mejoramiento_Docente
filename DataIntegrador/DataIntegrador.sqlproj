@@ -129,6 +129,9 @@
     <Build Include="CreadoPor.sql" />
     <Build Include="Origina.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ModificarCorreo.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ModificarUsername.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ChangePassword.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

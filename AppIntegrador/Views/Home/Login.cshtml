@@ -58,10 +58,10 @@
                         <p style="color:red;">@Html.ValidationMessageFor(m => m.Password)</p>
                         <!-- End of UserStory  -->
                     </div>
-                    <!-- UserStory 1.5 - link to modal -->
+                    <!-- UserStory 1.5 - link to new page -->
                     <div class="form-row justify-content-between mx-1 pb-3">
                         <button type="submit" class="btn btn-default">Ingresar</button>
-                        <a class="align-self-start" href="#bannerformmodal" data-toggle="modal" data-target="#bannerformmodal"><small style="color:gray;">¿Has olvidado la contraseña?</small></a>
+                        @Html.ActionLink("¿Has olvidado la contraseña?", "PasswordReset", "Home", new object { }, new { @class = "align-self-start text-secondary" })
                         <!-- End of UserStory  -->
                     </div>
                 }
