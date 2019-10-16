@@ -227,5 +227,19 @@ namespace AppIntegrador.Controllers
             db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
             return Math.Round(Convert.ToDouble(resultadoMediana.Value), 2);
         }
+
+        //Denisse Alfaro P. Josue Zeledon R.
+        //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
+        //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 
+        //Cumplimiento: 7/10
+        public Double getPromedio(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+
+            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultPromedio);
+
+            return Math.Round(Convert.ToDouble(resultPromedio.Value),2);
+        }
+
     }
 }

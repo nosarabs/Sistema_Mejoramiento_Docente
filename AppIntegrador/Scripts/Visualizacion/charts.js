@@ -277,12 +277,28 @@ function addChart(leftCol, rightCol, id, tipo) {
             });
 
             chartData = { DATA: data, LABELS: labels };
-
-            var divMediana = document.createElement("div");
-            divMediana.style.width = "100px";
-            divMediana.style.height = "100px";
-            divMediana.innerHTML = "Mediana: " + medianita;
-            divMediana.style.textAlign = "center";
+            var data;
+            $.ajax({
+                url: "/ResultadosFormulario/getPromedio",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    data = resultados;
+                }
+            });
+            var verProm = document.createElement("div");
+            verProm.style.width = "100px";
+            verProm.style.height = "100px";
+            verProm.innerHTML = "Promedio: " + data;
 
             drawBarChart(cvs, chartData);
 
