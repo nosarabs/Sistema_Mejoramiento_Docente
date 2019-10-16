@@ -1,113 +1,32 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
 
 @{
-    ViewBag.Title = "Index";
-
-    var mostrarObjetivos = false;
-    var mostrarAccionesDeMejora = false;
-    var mostrarAccionables = false;
-
-    var idPlan = -1;
+    ViewBag.Title = "Planes de Mejora";
 }
-
-
 
 
 <div class="horizontalBoxes">
     <div class="fullWidth">
         <div class="horizontalBoxes">
-            <div class="halfVerticalBox">
+            <div>
                 <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
             </div>
+            <div>
+                @Html.Partial("~/Views/PlanDeMejora/_tablaPlanesDeMejora.cshtml")
+            </div>
+            <div class="fullWidth">
+                @Html.ActionLink("Agregar Plan de Mejora", "Create", null, new { @class = "modal-link btn btn-Nuevo" })
+            </div>
         </div>
-        <div>
-            <!-- Button that hekps create another PlanDeMejora -->
-            @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
-        </div>
-
     </div>
 
     <br />
-
-    <div class="planesTable">
-        <table class='table table-bordered table-condensed table-striped table-hover'>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.codigo)
-
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaFin)
-                </th>
-                <th>
-                    Creado por:
-                </th>
-                <th>
-                    Asignado a:
-                </th>
-                <th>
-                    Opciones de Edición
-                </th>
-            </tr>
-
-            @foreach (var plan in Model)
-            {
-                <tr onclick="@idPlan=plan.codigo;">
-                    <td id="codigoTemporal">
-                        @Html.DisplayFor(modelItem => plan.codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaFin)
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
-
-                    <td>
-                        <div class="verticalBoxes">
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
-                            </div>
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
-                            </div>
-                            <div>
-                                <div class="createPlanButton">
-                                    <form action="objetivosDePlan" method="get">
-                                        <input type="submit" 
-                                               value="Objetivos de Plan" 
-                                               class="btn btn-info" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </table>
-        <hr />
-    </div>
 
 
     <div class="fullWidth">
         <p class="impText">Objetivos</p>
 
-        @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan })
+        <h1>Objetivos de un plan de mejora</h1>
 
         <hr />
     </div>
@@ -123,17 +42,7 @@
 
     <div class="fullWidth">
         <p class="impText">Accionables</p>
-        @if (mostrarAccionables)
-        {
-            <h1>accionables</h1>
-        }
+        <h1>accionables</h1>
         <hr />
     </div>
 </div>
-
-<script>
-    function setCodigoPlan(codigoPlan, idPlan) {
-        idPlan = codigoPlan;
-        console.log(idPlan);
-    }
-</script>

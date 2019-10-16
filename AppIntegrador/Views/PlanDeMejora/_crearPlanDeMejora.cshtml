@@ -1,0 +1,82 @@
+﻿@model AppIntegrador.Models.PlanDeMejora
+
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+<div class="modal-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <!-- input del nombre -->
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => model.codigo, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- input del nombre -->
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- input de la fecha inicio -->
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- input de la fecha de finalizacion -->
+        <div class="form-group">
+            <div class="verticalBoxesCrear">
+                <div class="labelPlace">
+                    @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="inputPlace">
+                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Boton de Submit del form -->
+        <div class="form-group">
+            <div class="row">
+
+                <div class="botonCentrado">
+                    <!-- Boton para la creacion de un nuevo plan de mejora -->
+                    <input type="submit" id="success" value="Crear" class="btn btn-success" />
+                    <!-- Boton para salirse del modal -->
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIN DEL FORM DE CREACION DE PLANES DE MEJORA -->
+    }
+</div>

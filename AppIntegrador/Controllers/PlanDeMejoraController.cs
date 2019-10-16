@@ -20,6 +20,11 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+
+
+
+
+
         public ActionResult objetivosPlan(int id) {
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == id);
             return PartialView("~/Views/PlanDeMejora/_objetivosPlan.cshtml", objetivosDePlan);
@@ -43,7 +48,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View();
+            return View("_crearPlanDeMejora");
         }
 
         // POST: PlanDeMejora/Create
@@ -60,7 +65,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(planDeMejora);
+            return RedirectToAction("Index");
         }
 
         // GET: PlanDeMejora/Edit/5
@@ -91,7 +96,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(planDeMejora);
+            return View("_editPlanDeMejora");
         }
 
         // GET: PlanDeMejora/Delete/5
@@ -106,7 +111,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(planDeMejora);
+            return View("_borrarPlanDeMejora");
         }
 
         // POST: PlanDeMejora/Delete/5

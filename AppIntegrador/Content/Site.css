@@ -265,6 +265,10 @@ li a:hover {
     flex-direction: column;
 }
 
+.flexItemPlanes {
+    padding-left: 2px;
+}
+
 p.impText {
     font-weight: bold !important;
 }
