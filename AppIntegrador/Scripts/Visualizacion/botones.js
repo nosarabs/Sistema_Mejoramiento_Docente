@@ -31,6 +31,8 @@
 
     crearBotones(listaPreguntas) {
 
+        var insertaContenidos = new InsertaContenidos();
+
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
             var codigoPregunta = listaPreguntas[i].codigoPregunta;
@@ -49,6 +51,7 @@
             else if (tipoPregunta == "escala") {
 
                 base = new BaseConEstadisticas("escala");
+                insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
 
             }
             else {

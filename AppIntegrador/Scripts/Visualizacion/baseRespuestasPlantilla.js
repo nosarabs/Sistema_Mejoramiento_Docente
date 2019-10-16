@@ -59,4 +59,8 @@ class BaseConEstadisticas extends BaseDosCol {
 
     }
 
+    getElementoEstadisticas() {
+        return this.estadisticas;
+    }
+
 }

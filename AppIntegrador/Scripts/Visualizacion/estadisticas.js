@@ -84,7 +84,30 @@
         var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
 
         var colMedia = row.firstChildElement();
-        var colMediana = 
+        var colMediana = colMedia.nextSiblingElement();
+        var colDesviacion = colMediana.nextSiblingElement();
+
+        var mediaTitulo = document.createElement("h3");
+        mediaTitulo.innerText = "Promedio";
+        var medianaTitulo = document.createElement("h3");
+        medianaTitulo.innerText = "Mediana";
+        var desviacionTitulo = document.createElement("h3");
+        desviacionTitulo.innerText = "Desviación Estándar";
+
+        var mediaDiv = document.createElement("div");
+        mediaDiv.innerText = ("" + media).replace(".", ",");
+        var medianaDiv = document.createElement("div");
+        medianaDiv.innerText = ("" + mediana).replace(".", ",");
+        var desviacionDiv = document.createElement("div");
+        desviacionDiv.innerText = ("" + desviacion).replace(".", ",");
+
+
+        colMedia.appendChild(mediaTitulo);
+        colMedia.appendChild(mediaDiv);
+        colMediana.appendChild(medianaTitulo);
+        colMediana.appendChild(medianaDiv);
+        colDesviacion.appendChild(desviacionTitulo);
+        colDesviacion.appendChild(desviacionDiv);
 
     }
 
