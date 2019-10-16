@@ -230,45 +230,16 @@ namespace AppIntegrador.Controllers
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            if(db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
             {
-                using (SqlCommand cmd = new SqlCommand())
+                return false;
+            }
+            
+            if (secciones != null)
+            {
+                for (int index = 0; index < secciones.Count; ++index)
                 {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarFormulario";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", formulario.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", formulario.Nombre));
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
-                }
-                if (secciones != null)
-                {
-                    for (int index = 0; index < secciones.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarSeccionConFormulario";
-                            cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@orden", index));
-
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+                    db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index].Codigo, index);
                 }
             }
             return true;

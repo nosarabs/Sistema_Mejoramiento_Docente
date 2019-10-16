@@ -188,45 +188,16 @@ namespace AppIntegrador.Controllers
         }
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
             {
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarSeccion";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", seccion.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", seccion.Nombre));
+                return false;
+            }
 
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
-                }
-                if (preguntas != null)
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
                 {
-                    for (int index = 0; index < preguntas.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarPreguntaConSeccion";
-                            cmd.Parameters.Add(new SqlParameter("@CodigoSeccion", seccion.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@CodigoPregunta", preguntas[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@Orden", index));
-
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
                 }
             }
             return true;
