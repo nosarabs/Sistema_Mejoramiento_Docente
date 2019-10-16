@@ -14,7 +14,7 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class DataIntegradorEntities : DbContext
     {
         public DataIntegradorEntities()
@@ -123,17 +123,17 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaSeleccion", codigoParameter, tipoParameter);
         }
     
-        public virtual int AgregarSeccion(string cod, string nombre)
+        public virtual int AgregarSeccion(string codigo, string nombre)
         {
-            var codParameter = cod != null ?
-                new ObjectParameter("cod", cod) :
-                new ObjectParameter("cod", typeof(string));
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(string));
     
             var nombreParameter = nombre != null ?
                 new ObjectParameter("nombre", nombre) :
                 new ObjectParameter("nombre", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarSeccion", codParameter, nombreParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarSeccion", codigoParameter, nombreParameter);
         }
     
         public virtual int AgregarUsuario(string pLogin, string pPassword, Nullable<bool> activo, ObjectParameter estado)
@@ -151,6 +151,19 @@ namespace AppIntegrador.Models
                 new ObjectParameter("activo", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuario", pLoginParameter, pPasswordParameter, activoParameter, estado);
+        }
+    
+        public virtual int ChangePassword(string username, string newpassword)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var newpasswordParameter = newpassword != null ?
+                new ObjectParameter("newpassword", newpassword) :
+                new ObjectParameter("newpassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword", usernameParameter, newpasswordParameter);
         }
     
         public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, string pCod, ObjectParameter desviacion)
@@ -224,6 +237,19 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, codigoPreguntaParameter, mediana);
         }
     
+        public virtual int ModificarCorreo(string anterior, string nuevo)
+        {
+            var anteriorParameter = anterior != null ?
+                new ObjectParameter("anterior", anterior) :
+                new ObjectParameter("anterior", typeof(string));
+    
+            var nuevoParameter = nuevo != null ?
+                new ObjectParameter("nuevo", nuevo) :
+                new ObjectParameter("nuevo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter);
+        }
+    
         public virtual ObjectResult<ObtenerOpcionesDePregunta_Result> ObtenerOpcionesDePregunta(string questionCode)
         {
             var questionCodeParameter = questionCode != null ?
@@ -283,41 +309,6 @@ namespace AppIntegrador.Models
                 new ObjectParameter("CodForm", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
-        }
-    
-        public virtual int ModificarCorreo(string anterior, string nuevo)
-        {
-            var anteriorParameter = anterior != null ?
-                new ObjectParameter("anterior", anterior) :
-                new ObjectParameter("anterior", typeof(string));
-    
-            var nuevoParameter = nuevo != null ?
-                new ObjectParameter("nuevo", nuevo) :
-                new ObjectParameter("nuevo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter);
-        }
-    
-        public virtual int ObtenerEmailUsuario(string pUsername, ObjectParameter email)
-        {
-            var pUsernameParameter = pUsername != null ?
-                new ObjectParameter("pUsername", pUsername) :
-                new ObjectParameter("pUsername", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerEmailUsuario", pUsernameParameter, email);
-        }
-    
-        public virtual int ModificarUsername(string anterior, string nuevo)
-        {
-            var anteriorParameter = anterior != null ?
-                new ObjectParameter("anterior", anterior) :
-                new ObjectParameter("anterior", typeof(string));
-    
-            var nuevoParameter = nuevo != null ?
-                new ObjectParameter("nuevo", nuevo) :
-                new ObjectParameter("nuevo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarUsername", anteriorParameter, nuevoParameter);
         }
     }
 }

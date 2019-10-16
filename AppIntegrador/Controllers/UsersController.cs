@@ -23,7 +23,7 @@ namespace AppIntegrador
         public ActionResult Index()
         {
             string username = HttpContext.User.Identity.Name;
-            if (username != "admin")
+            if (username != "admin@mail.com")
                 return RedirectToAction("../Home/Index");
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
              by the key: mail address.*/
@@ -97,9 +97,7 @@ namespace AppIntegrador
                  using as username the principal mail provided, and as password the first name.*/
                 /*TO-DO: modify the view to allow custom password setting.*/
 
-                ObjectParameter createResult = new ObjectParameter("estado", typeof(Boolean));
-                db.AgregarUsuario(persona.Correo, persona.Nombre1, true, createResult);
-                persona.Usuario = persona.Correo;
+                ObjectParameter createResult = new ObjectParameter("estado", typeof(Boolean));            
                 db.Persona.Add(persona);
                 
                 /*Takes the output from the stored procedure. Returns 1 if all went right. 0 if the primary key constraint
@@ -198,7 +196,7 @@ namespace AppIntegrador
                         if (originalUser != null)
                         {
                             /*Stored procedure to change the mail of a given user*/
-                            db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
+                            //db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
                         }
                         
                         /*Updates each editable field of the selected user, and then stores the data back to the DB.*/

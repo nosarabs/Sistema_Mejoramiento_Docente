@@ -63,6 +63,7 @@
     <Folder Include="Formularios\Funciones" />
     <Folder Include="Usuarios y Perfiles" />
     <Folder Include="Usuarios y Perfiles\Procedures" />
+    <Folder Include="Usuarios y Perfiles\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -84,7 +85,6 @@
     <Build Include="Trabaja_en.sql" />
     <Build Include="UsuarioPerfil.sql" />
     <Build Include="PerfilPermiso.sql" />
-    <Build Include="AgregarUsuario.sql" />
     <Build Include="Formularios\Preguntas\Escalar.sql" />
     <Build Include="Formularios\Preguntas\Opciones_de_seleccion.sql" />
     <Build Include="Formularios\Preguntas\Pregunta.sql" />
@@ -107,7 +107,7 @@
     <Build Include="Objetivo.sql" />
     <Build Include="AccionDeMejora.sql" />
     <Build Include="Accionable.sql" />
-    <Build Include="Formularios\Procedimientos\SeccionesDeFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerSeccionesDeFormulario.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
     <Build Include="PromedioRespuestasPreguntaEscalaNumerica.sql" />
@@ -128,9 +128,13 @@
     <Build Include="PlantillaAccionDeMejora.sql" />
     <Build Include="CreadoPor.sql" />
     <Build Include="Origina.sql" />
-    <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
+    <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\AsociarPreguntaConSeccion.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\ModificarCorreo.sql" />
-    <Build Include="Usuarios y Perfiles\Procedures\ModificarUsername.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ChangePassword.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\AddingPersonsNUsers.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
