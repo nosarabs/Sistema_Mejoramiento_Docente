@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = null;
 }
 
 
@@ -86,7 +87,7 @@
     }
     <div class="botonCentrado">
         <p>
-            @Html.ActionLink("Agregar", "Create", null, new { @class = "modal-link btn btn-Nuevo" })
+            @Html.ActionLink("Agregar", "Create","Objetivos", null, new { @class = "modal-link btn btn-Nuevo" })
         </p>
     </div>
 </div>

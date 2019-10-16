@@ -20,8 +20,9 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
-        public ActionResult objetivosPlan() {
-            return PartialView("~/Views/PlanDeMejora/_objetivosPlan.cshtml", this.db.Objetivo.ToList());
+        public ActionResult objetivosPlan(int id) {
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == id);
+            return PartialView("~/Views/PlanDeMejora/_objetivosPlan.cshtml", objetivosDePlan);
         }
 
         // GET: PlanDeMejora/Details/5

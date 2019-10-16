@@ -57,7 +57,7 @@
 
             @foreach (var plan in Model)
             {
-                <tr>
+                <tr onclick="@idPlan=plan.codigo;">
                     <td id="codigoTemporal">
                         @Html.DisplayFor(modelItem => plan.codigo)
                     </td>
@@ -106,7 +106,7 @@
     <div class="fullWidth">
         <p class="impText">Objetivos</p>
 
-        @Html.Action("objetivosPlan", "PlanDeMejora")
+        @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan });
 
         <hr />
     </div>
