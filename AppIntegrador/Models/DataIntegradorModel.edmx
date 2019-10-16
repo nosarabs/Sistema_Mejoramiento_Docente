@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1429,6 +1429,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AgregarFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="AgregarOpcion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="char" Mode="In" />
           <Parameter Name="orden" Type="tinyint" Mode="In" />
@@ -1446,14 +1450,24 @@
           <Parameter Name="tipo" Type="char" Mode="In" />
         </Function>
         <Function Name="AgregarSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="cod" Type="varchar" Mode="In" />
-          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pLogin" Type="varchar" Mode="In" />
           <Parameter Name="pPassword" Type="varchar" Mode="In" />
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="estado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="AsociarPreguntaConSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoSeccion" Type="char" Mode="In" />
+          <Parameter Name="CodigoPregunta" Type="char" Mode="In" />
+          <Parameter Name="Orden" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AsociarSeccionConFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="codigoSeccion" Type="char" Mode="In" />
+          <Parameter Name="orden" Type="int" Mode="In" />
         </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FCod" Type="char" Mode="In" />
@@ -1478,12 +1492,20 @@
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="ObtenerEmailUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsername" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObtenerPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerSeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodForm" Type="char" Mode="In" />
+        </Function>
+        <Function Name="PopularFormulariosConSecciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
@@ -1493,9 +1515,6 @@
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
-        </Function>
-        <Function Name="SeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodForm" Type="char" Mode="In" />
         </Function>
         <EntityContainer Name="DataIntegradorModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
@@ -1797,8 +1816,7 @@
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3189,7 +3207,7 @@
             <Parameter Name="tipo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AgregarSeccion">
-            <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AgregarUsuario">
@@ -3222,10 +3240,10 @@
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-            <Parameter Name="questionCode" Mode="In" Type="String" />
+          <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
@@ -3240,6 +3258,28 @@
           <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
             <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarFormulario">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AsociarPreguntaConSeccion">
+            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
+            <Parameter Name="CodigoPregunta" Mode="In" Type="String" />
+            <Parameter Name="Orden" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AsociarSeccionConFormulario">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
+            <Parameter Name="orden" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerEmailUsuario">
+            <Parameter Name="pUsername" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
+            <Parameter Name="CodForm" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PopularFormulariosConSecciones" />
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3248,6 +3288,10 @@
         <ComplexType Name="SeccionesDeFormulario_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerSeccionesDeFormulario_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3759,14 +3803,19 @@
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
           <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
-          <FunctionImportMapping FunctionImportName="SeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.SeccionesDeFormulario">
+          <FunctionImportMapping FunctionImportName="AgregarFormulario" FunctionName="DataIntegradorModel.Store.AgregarFormulario" />
+          <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
+          <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
+          <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.SeccionesDeFormulario_Result">
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PopularFormulariosConSecciones" FunctionName="DataIntegradorModel.Store.PopularFormulariosConSecciones" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

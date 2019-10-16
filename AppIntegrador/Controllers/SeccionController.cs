@@ -188,45 +188,23 @@ namespace AppIntegrador.Controllers
         }
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
                 {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarSeccion";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", seccion.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", seccion.Nombre));
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                if (preguntas != null)
-                {
-                    for (int index = 0; index < preguntas.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarPreguntaConSeccion";
-                            cmd.Parameters.Add(new SqlParameter("@CodigoSeccion", seccion.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@CodigoPregunta", preguntas[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@Orden", index));
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
 
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
                 }
             }
             return true;
