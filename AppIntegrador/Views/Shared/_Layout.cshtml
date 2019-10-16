@@ -22,7 +22,7 @@
             </div>
             <div class="item">
                 <ul class="wrapper">
-                    
+
                     <li>
                         <div class="dropdown">
                             <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
@@ -35,68 +35,101 @@
                 </ul>
             </div>
         </div>
+        <!--Inverted Navbar Start Here-->
+        <!--<nav> tag  start with classes .navbar and .navbar-inverse -->
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <!--Navbar Header Start Here-->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"></a>
+                </div>
+                <!--Navbar Header End Here-->
+                <!--Menu Start Here-->
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Index">Inicio</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Usuarios
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Users/Index" ,>Administración de usuarios</a></li>
+                        </ul>
+                    </li>
+                    <!--dropdown Menu Start-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formularios<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formulario</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                    <li><a href="/Formularios/Index">Ver Formularios</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sección</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Seccion/Create">Crear Sección</a></li>
+                                    <li><a href="/Seccion/Index">Ver Secciones</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pregunta</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Preguntas</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Planes de mejoramiento
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/PlanDeMejora/Index" ,>Mis planes de mejoramiento</a></li>
+                            <li><a href="/AccionDeMejora/Index" ,>Acciones de mejora</a></li>
+                            <li><a href="/Objetivos/Index" ,>Objetivos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Visualización
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019" ,>Formulario</a></li>
 
-        <div class="secondNavBar">
-            <!-- <div class="wrapper">
-            </div>-->
-            <!-- Project navigation bar -->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Acerca de
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Home/About" ,>Acerca del proyecto</a></li>
+                        </ul>
+                    </li>
 
-            <nav>
-                <br />
-                <ul class="wrapper">
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Usuarios</button>
-                            <div class="dropdown-content">
-                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                @Html.ActionLink("Administración de usuarios", "Index", "Users")
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Formularios</button>
-                            <div class="dropdown-content">
-                                @Html.ActionLink("Crear pregunta", "Create", "PreguntaConOpcionesDeSeleccion")
-                                @Html.ActionLink("Banco de preguntas", "Index", "PreguntaConOpcionesDeSeleccion")
-                                @Html.ActionLink("Crear sección", "Create", "Seccion")
-                                @Html.ActionLink("Banco de secciones", "Index", "Seccion")
-                                @Html.ActionLink("Crear Formulario", "Create", "Formularios")
-                                @Html.ActionLink("Llenar Formulario","LlenarFormulario", "Formularios")
-                            </div>
-                        </div>
-                    </li>
-                    <li class="search">
-                        <div class="dropdown">
-                            <button class="dropbtn">Planes de mejoramiento</button>
-                            <div class="dropdown-content">
-                                @Html.ActionLink("Mis planes de mejoramiento", "Index", "PlanDeMejora")
-                                @Html.ActionLink("Acciones de mejora", "Index", "AccionDeMejora")
-                                @Html.ActionLink("Objetivos", "Index", "Objetivos")
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Visualización</button>
-                            <div class="dropdown-content">
-                                @Html.ActionLink("Formulario", "Formulario", "ResultadosFormulario", new { codigoFormulario = "00000001", siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019 }, null)
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">Acerca de</button>
-                            <div class="dropdown-content">
-                                @Html.ActionLink("Acerca del proyecto", "About", "Home")
-                            </div>
-                        </div>
-
-                    </li>
                 </ul>
-                <br />
-            </nav>
-        </div>
+                <!--Menu End Here-->
+                <!--Menu End Here-->
+                <!--Right Aligned Menu Start-->
+                <ul class="nav navbar-nav navbar-right">
+                    @*<li><a href="#">Login</a></li>*@
+                </ul>
+                <!--Right Aligned Menu End-->
+</div>
+        </nav>
+        <!--<nav> tag end-->
+        <!--Inverted Navbar End Here-->
+        <script src="js/jquery-2.1.4.min.js"></script>
+
+        <script src="js/bootstrap.min.js"></script>
+
     }
     @RenderBody()
     @if (ViewBag.HTMLCheck != true)
@@ -105,6 +138,22 @@
         @Scripts.Render("~/bundles/bootstrap")
     }
     @RenderSection("scripts", required: false)
+
+
+    <script>
+(function($){
+	$(document).ready(function(){
+		$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+			event.preventDefault(); 
+			event.stopPropagation(); 
+			$(this).parent().siblings().removeClass('open');
+			$(this).parent().toggleClass('open');
+		});
+	});
+})(jQuery);
+    </script>
+
+
 
     <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-content">
