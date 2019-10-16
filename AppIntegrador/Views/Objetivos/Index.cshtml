@@ -90,9 +90,17 @@
 
         </table>
     }
+
+    
+    @*
+    Modificado por: Johan Córdoba
+    Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+    Cambio para que redireccione al create de objetivo
+    *@
+    
     <div class="botonCentrado">
         <p>
-            @Html.ActionLink("Agregar", "Create", null, new { @class = "modal-link btn btn-Nuevo" })
+            @Html.ActionLink("Agregar", "Create", "Objetivos", null, new { @class = "modal-link btn btn-Nuevo" })
         </p>
     </div>
 </div>
