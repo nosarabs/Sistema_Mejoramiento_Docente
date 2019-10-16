@@ -1,34 +1,3 @@
-//Auxiliar functions
-
-function appendLineBreaks(elmnt, number) {
-	
-	for (var i = 0; i < number; ++i) {
-		elmnt.appendChild(document.createElement("br"));
-	}
-	
-}
-
-function appendTitle(elmnt, txt) {
-	var title = document.createElement("h3");
-	title.innerHTML = txt;
-	elmnt.appendChild(title);
-}
-
-function getTipoPregunta(id) {
-    var tipo;
-    $.ajax({
-        url: '/ResultadosFormulario/GetTipoPregunta',
-        data: { codigoPregunta: id },
-        type: 'get',
-        dataType: 'json',
-        async: false,
-        success: function (resultados) {
-            tipo = resultados;
-        }
-    });
-    return tipo;
-}
-
 function createCollapsible(id, question) {
     var btn = document.createElement("button");   	//Create a <button> element
     btn.className = "collapsible";                  //Set the button as collapsible

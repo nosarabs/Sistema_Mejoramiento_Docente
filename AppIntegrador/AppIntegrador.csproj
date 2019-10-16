@@ -360,6 +360,8 @@
     <Content Include="Scripts\Visualizacion\charts.js" />
     <Content Include="Scripts\Visualizacion\chroma.js" />
     <Content Include="Scripts\Visualizacion\collapsibles.js" />
+    <Content Include="Scripts\Visualizacion\estadisticas.js" />
+    <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
