@@ -210,6 +210,24 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
+        public String obtenerDesviacionEstandar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta) {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            ObjectParameter resultado = new ObjectParameter("Desviacion", typeof(float));
+            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultado);
+
+            return serializer.Serialize(resultado.Value);
+
+        }
+
+
+        public Double getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            ObjectParameter resultadoMediana = new ObjectParameter("mediana", typeof(float));
+            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
+            return Math.Round(Convert.ToDouble(resultadoMediana.Value), 2);
+        }
+
         //Denisse Alfaro P. Josue Zeledon R.
         //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
         //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 
