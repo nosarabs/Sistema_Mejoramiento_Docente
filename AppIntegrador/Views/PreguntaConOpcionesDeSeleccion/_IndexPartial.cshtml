@@ -27,8 +27,11 @@
     }
 </script>
 
-
-@using (Html.BeginForm("UpdateFilters", "Seccion", FormMethod.Get))
+@*
+    Historia RIP-BKS1
+    Se llama al ActionResult Create que filtra preguntas.
+*@
+@using (Html.BeginForm("Create", "Seccion", FormMethod.Get))
 {
     //the following are search options
     <b>
@@ -37,12 +40,12 @@
 
     <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
         <input type="radio" name="sel" value="1" id="codigo"
-               onclick="enableElement(this.form.elements['inp1']);"> <text>Codigo</text>
+               onclick="enableElement(this.form.elements['inp1'])"> <text>Codigo</text>
         <input type="text" name="inp1" disabled="disabled">
 
 
         <input type="radio" name="sel" value="2"
-               onclick="enableElement(this.form.elements['inp2']);"> <text>Tipo</text>
+               onclick="enableElement(this.form.elements['inp2'])"> <text>Tipo</text>
         <select type="text" name="inp2" disabled="disabled">            
             <option value="">Tipos de preguntas</option>
             <option value="U">Seleccion Unica</option>
@@ -50,7 +53,7 @@
         </select>
 
         <input type="radio" name="sel" value="3"
-               onclick="enableElement(this.form.elements['inp3']);"><text>Enunciado</text>
+               onclick="enableElement(this.form.elements['inp3'])"><text>Enunciado</text>
         <input type="text" name="inp3" disabled="disabled">
 
         <input type="submit"
@@ -117,49 +120,10 @@
 
     @section Scripts {
         <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#codigotext").attr("disabled", "disabled");
-                if ($("input[name=optradio]:checked").val() == "codigoinput") {
-                    $("#EnterRange").click(function () {
-                        $("#codigotext").removeAttr("disabled");
-                    });
-                }
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('#dtBasicExample').DataTable({
-                    "ordering": false // false to disable sorting (or any other option)
-                });
-                $('.dataTables_length').addClass('bs-select');
-            });
-        </script>
+        
 
-        <script type="text/javascript">
-            function toggleTextbox(opt) {
-                if (opt == 'txtText') {
-                    var txtPassportNumber = document.getElementById('txtText');
-                    txtJustificationNumber.disabled = opt.checked ? false : true;
-                    if (!txtJustificationNumber.disabled) {
-                        txtJustificationNumber.focus();
-                    }
-                }
+        
 
-            }
-
-        </script>
-
-        <script type="text/javascript">
-            var currentEnabled = null;
-            function enableElement(elem) {
-                if (currentEnabled) {
-                    currentEnabled.disabled = true;
-                }
-                elem.disabled = false;
-                currentEnabled = elem;
-            }
-        </script>
         <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 
         <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>

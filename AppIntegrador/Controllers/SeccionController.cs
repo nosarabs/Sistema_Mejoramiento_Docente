@@ -88,8 +88,11 @@ namespace AppIntegrador.Controllers
 
             return View(crearSeccion);
         }
+
+        // Historia RIP-BKS1
+        // Se copió la función para filtrar preguntas.
         [HttpGet]
-        public ActionResult UpdateFilters(string inp1, string inp2, string inp3)
+        public ActionResult Create(string inp1, string inp2, string inp3)
         {
             crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
             if (inp2 == null && inp1 == null && inp3 == null)
@@ -115,7 +118,7 @@ namespace AppIntegrador.Controllers
             {
                 crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
             }
-            return View(crearSeccion);
+            return View("Create", crearSeccion);
         }
 
         // GET: Seccion/Edit/5
