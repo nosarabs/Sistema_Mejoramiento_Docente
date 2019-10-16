@@ -8,21 +8,28 @@ namespace AppIntegrador.Models.Metadata
 {
     public class AccionDeMejoraMetadata
     {
-        [Display(Name = "Codigo de la acción de mejora")]
-        [Required(ErrorMessage = "Este campo es necesario")]
-        [Range(0, int.MaxValue, ErrorMessage = "Este valor debe ser un entero no negativo")]
-        public int Codigo { get; set; }
-        [MaxLength(500, ErrorMessage = "Este campo acepta un máximo de 500 caracteres")]
-        public string Descripcion { get; set; }
-        [Display(Name = "Fecha de inicio")]
+        [Display(Name = "Código del Plan")]
+        [Required(ErrorMessage = "Este campo es requerido")]
+        public int codPlan { get; set; }
+
+        [Display(Name = "Nombre del objetivo")]
+        [Required(ErrorMessage = "Este campo es requerido")]
+        public string nombreObj { get; set; }
+        [MaxLength(250, ErrorMessage = "Este campo acepta un máximo de 250 caracteres")]
+
+        [Display(Name = "Descripción")]
+        public string descripcion { get; set; }
+
+        [Display(Name = "Inicio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> FechaInicio { get; set; }
-        [Display(Name = "Fecha de cierre")]
+        public Nullable<System.DateTime> fechaInicio { get; set; }
+
+        [Display(Name = "Fin")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> FechaFin { get; set; }
-        [Display(Name = "Código del objetivo")]
-        [Range(0, int.MaxValue, ErrorMessage = "Este valor debe ser un entero no negativo")]
-        public int CodigoObj { get; set; }
+        public Nullable<System.DateTime> fechaFin { get; set; }
+        public int codPlantilla { get; set; }
 
         public virtual Objetivo Objetivo { get; set; }
     }

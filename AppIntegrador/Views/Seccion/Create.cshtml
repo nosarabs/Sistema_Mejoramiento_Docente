@@ -4,193 +4,88 @@
     ViewBag.Title = "Crear sección";
 }
 
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .split {
-            height: 100%;
-            width: 50%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            overflow-x: hidden;
-            padding-top: 250px;
-        }
-
-        .left {
-            left: 0;
-        }
-
-        .right {
-            right: 0;
-        }
-
-        .centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-            .centered img {
-                width: 150px;
-                border-radius: 50%;
-            }
-    </style>
-</head>
-
-
-
-
-
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
-    <div class="split left">
-        <h2>Crear Sección</h2>
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
-                    @Html.EditorFor(model => model.Seccion.Codigo, new { htmlAttributes = new { @class = "form-control", id = "textCode", name = "textCode", @maxlength = "8", required = "required", placeholder = "Código", rows = "5" } })
-                    @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
+
+    <table class="table">
+        <tr>
+            <td style="width:40%">
+                <h2>Crear Sección</h2>
+                <hr />
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Seccion.Codigo, new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               id = "textCode",
+                               name = "textCode",
+                               @maxlength = "8",
+                               required = "required",
+                               placeholder = "Código",
+                               rows = "5",
+                               @onkeyup = "charCount(this)"
+                           }
+                       })
+                            <div class="counter small pull-right">0/8 caracteres usados</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
+                        <div class="col-md-10">
+                            <form accept-charset="UTF-8" action="" method="POST">
+                                @Html.EditorFor(model => model.Seccion.Nombre, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   id = "textName",
+                                   name = "textName",
+                                   @maxlength = "250",
+                                   required = "required",
+                                   placeholder = "Nombre del formulario",
+                                   rows = "5",
+                                   @onkeyup = "charCount(this)"
+                               }
+                           })
+                                <div class="counter small pull-right">0/250 caracteres usados</div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-6">
-                    <form accept-charset="UTF-8" action="" method="POST">
-                        @Html.EditorFor(model => model.Seccion.Nombre, new { htmlAttributes = new { @class = "form-control", id = "textName", name = "textName", @maxlength = "80", required = "required", placeholder = "Nombre de la sección", rows = "5" } })
-                        @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
-                    </form>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Crear" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" />
-                </div>
-            </div>
+            </td>
 
 
-        </div>
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    </div>
-    <div class="split right">
 
-        <h2>Banco de preguntas</h2>
+            <td style="width:60%">
+                @Html.Partial("/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", Model.pregunta_Con_Opciones_De_Seleccion)
 
-        <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
-
-
-        <style>
-            input.QuestionCheckbox {
-                width: 30px;
-                height: 30px;
-            }
-        </style>
-
-        @using (Html.BeginForm(FormMethod.Get))
-        {
-            //the following are search options
-            <b>
-                Opciones de búsqueda:
-            </b>
-            @Html.RadioButton("option", "Codigo") <text>Codigo</text>
-            @Html.RadioButton("option", "Tipo") <text>Tipo</text>
-            <select name="tipos">
-                <option value="">Tipos de preguntas</option>
-                <option value="U">Seleccion Unica</option>
-                <option value="M">Seleccion Multiple</option>
-            </select>
-            @Html.RadioButton("option", "Enunciado") <text>Enunciado</text>
-
-            @Html.TextBox("search")
-            <input type="submit"
-                   name="submit"
-                   value="Filtrar"
-                   class="btn" />
-            <P></P>
-        }
-
-
-        <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-            <col width="50">
-            <thead>
-                <tr>
-                    <th>
-                        Seleccionar
-                    </th>
-                    <th>
-                        Codigo
-                    </th>
-                    <th>
-                        Enunciado
-                    </th>
-                    <th>
-                       Tipo
-                    </th>
-                    <th>
-                        Operaciones
-                    </th>
-                </tr>
-            </thead>
-            @foreach (var item in Model.pregunta_Con_Opciones_De_Seleccion)
-            {
-                <tr>
-                    <td>
-                        <center>
-                            <input type="checkbox" class="QuestionCheckbox" />
-                        </center>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la sección?</h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 }
-
 
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
 
     <script>
         var name_max = 80;
@@ -215,28 +110,8 @@
     </script>
 
     <script>
-        $(function () {
-            var includes = $('[data-include]');
-            jQuery.each(includes, function () {
-                var file = 'views/' + $(this).data('include') + '.html';
-                $(this).load(file);
-            });
-        });
-    </script>
-
-    <script>
         $(document).ready(function () {
-            $('#dtBasicExample').DataTable({
-                "ordering": false // false to disable sorting (or any other option)
-            });
-            $('.dataTables_length').addClass('bs-select');
+            agregarPreguntas.init();
         });
     </script>
-
-    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
-
-    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
-
-    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
-
 }

@@ -3,6 +3,13 @@
 	@tipo char
 AS
 BEGIN 
-	INSERT INTO Pregunta_con_opciones_de_seleccion([Codigo],[Tipo])
-	VALUES (@codigo, @tipo);
+	MERGE INTO Pregunta_con_opciones_de_seleccion AS Target
+	USING (VALUES
+			(@codigo, @tipo) 
+	)
+	AS Source ([Codigo],[Tipo])
+	ON Target.Codigo = Source.Codigo
+	WHEN NOT MATCHED BY TARGET THEN
+	INSERT (Codigo, Tipo)
+	VALUES (@codigo,@tipo);
 END
