@@ -42,7 +42,7 @@ function drawBarChart(cvs, chartData) {
 			}
 		]
 		},
-		options: {
+        options: {
             legend: {
                 display: false,
                 labels: {
@@ -98,7 +98,7 @@ function drawBarChart(cvs, chartData) {
                         for (var i = 0; i < data.length; ++i) {
                             sum += data[i];
                         }
-                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
                         return percentage + "\n\n" + value;
                     }
 				}
@@ -171,7 +171,7 @@ function drawPieChart(cvs, chartData) {
                         for (var i = 0; i < data.length; ++i) {
                             sum += data[i];
                         }
-                        var percentage = (value * 100 / sum).toFixed(2) + "%";
+                        var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
                         return percentage + "\n\n" + value;
                     }
                 }
@@ -182,11 +182,13 @@ function drawPieChart(cvs, chartData) {
 
 }
 
-function addChart(cnt, id, tipo) {
+function addChart(leftCol, rightCol, id, tipo) {
 
-	var cvs = document.createElement("canvas");
-	cvs.setAttribute("width", "900" );
-    cvs.setAttribute("height", "650");
+    var cvs = document.createElement("canvas");
+    var divDesviacion = document.createElement("div");
+    divDesviacion.className = "desviacion";
+	cvs.setAttribute("width", "800" );
+    cvs.setAttribute("height", "550");
     var chartData;
 	
 	switch(tipo) {
@@ -223,6 +225,54 @@ function addChart(cnt, id, tipo) {
                 async: false,
                 success: function (resultados) {
                     data = resultados;
+                }
+            });
+
+            var desviacion;
+            $.ajax({
+                url: "/ResultadosFormulario/obtenerDesviacionEstandar",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    desviacion = resultados.toFixed(2);
+                }
+            });
+
+            
+            var desviacionTitulo = document.createElement("h3");
+            desviacionTitulo.innerText = "Desviación Estándar";
+            divDesviacion.appendChild(desviacionTitulo);
+            var desviacionValor = document.createElement("div");
+            desviacionValor.innerText = ("" + desviacion).replace(".",",");
+
+
+            divDesviacion.appendChild(desviacionValor);
+
+            var medianita;
+            $.ajax({
+                url: "/ResultadosFormulario/getMedianaRespuestaEscalar",
+                data: {
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    codigoPregunta: id
+                },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (resultados) {
+                    medianita = resultados;
                 }
             });
 
@@ -361,7 +411,6 @@ function addChart(cnt, id, tipo) {
 			
 	}
 
-    cnt.appendChild(cvs);
-    cnt.appendChild(verProm);
-
+    leftCol.appendChild(cvs);
+    rightCol.appendChild(divDesviacion);
 }
