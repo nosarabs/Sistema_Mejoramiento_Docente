@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,6 +206,11 @@
     <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
     <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
+    <Compile Include="Models\LlenarFormulario.cs" />
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PreguntaConOpciones.cs" />
     <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
@@ -276,6 +282,7 @@
     <Compile Include="Models\SeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SeccionConPreguntas.cs" />
     <Compile Include="Models\Seccion_tiene_pregunta.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -285,6 +292,7 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TodasLasPreguntas.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -332,6 +340,8 @@
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
+    <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
+    <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\CharacterCounter.js" />
     <Content Include="Scripts\custom\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -371,11 +381,6 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Create.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Delete.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Details.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Edit.cshtml" />
-    <Content Include="Views\Pregunta_con_opciones_de_seleccion\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
@@ -394,11 +399,11 @@
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Secciones\Create.cshtml" />
-    <Content Include="Views\Secciones\Delete.cshtml" />
-    <Content Include="Views\Secciones\Details.cshtml" />
-    <Content Include="Views\Secciones\Edit.cshtml" />
-    <Content Include="Views\Secciones\Index.cshtml" />
+    <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
+    <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
+    <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
+    <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
+    <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
     <Content Include="Views\Objetivos\Create.cshtml" />
     <Content Include="Views\Objetivos\Delete.cshtml" />
     <Content Include="Views\Objetivos\Details.cshtml" />
@@ -410,7 +415,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Home\PasswordReset.cshtml" />
+    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
+    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
+    <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+	<Content Include="Views\Home\PasswordReset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
