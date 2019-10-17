@@ -18,19 +18,18 @@
     }
 }();
 
-function addSeccionToFormulario(element) {
+function selectSeccion(element) {
     if (element.checked) {
-        element.name = "secciones[" + agregarsecciones.current() + "].Codigo";
-        element.id = element.name;
+        element.id = "secciones[" + agregarsecciones.current() + "].Codigo";
         agregarsecciones.add();
     }
     else {
-        removeSeccion(element.value);
+        deselectSeccion(element.value);
         agregarsecciones.remove();
     }
 }
 
-function removeSeccion(codigo) {
+function deselectSeccion(codigo) {
     var index = 0;
     var beforeElement = true;
     while (index < agregarsecciones.current() && beforeElement) {
@@ -46,8 +45,19 @@ function removeSeccion(codigo) {
     while (index < agregarsecciones.current()) {
         var newIndex = index - 1;
         var seccion = document.getElementById("secciones[" + index + "].Codigo");
-        seccion.setAttribute("name", "secciones[" + newIndex + "].Codigo");
-        seccion.id = seccion.name;
+        seccion.id = "secciones[" + newIndex + "].Codigo";
+        ++index;
+    }
+}
+
+function addSeccionToFormulario() {
+    var index = 0;
+
+    while (index < agregarsecciones.current()) {
+        var seccion = document.getElementById("secciones[" + index + "].Codigo");
+        seccion.setAttribute("name", seccion.id);
+        var tupla = document.getElementById("sec(" + seccion.value + ")");
+        tupla.setAttribute("hidden", "hidden");
         ++index;
     }
 }

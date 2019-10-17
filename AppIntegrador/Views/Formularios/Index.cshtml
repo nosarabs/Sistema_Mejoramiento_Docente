@@ -4,17 +4,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Formularios Creados</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear un nuevo formulario", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            Operaciones
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -23,9 +28,11 @@
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) |
-            @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) 
+
         </td>
     </tr>
 }
