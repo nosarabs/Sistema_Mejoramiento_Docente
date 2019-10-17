@@ -14,9 +14,8 @@ namespace AppIntegrador.Models
 
 using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class Pregunta
+    
+public partial class Pregunta
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,9 +30,9 @@ using System;
 
     }
 
-    
+
     public string Codigo { get; set; }
-    [Required(ErrorMessage = "Enunciado requerido")]
+
     public string Enunciado { get; set; }
 
 

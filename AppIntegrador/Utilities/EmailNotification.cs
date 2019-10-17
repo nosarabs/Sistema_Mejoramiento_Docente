@@ -22,45 +22,9 @@ namespace AppIntegrador.Utilities
             db = new DataIntegradorEntities();
         }
 
-        /// <summary>This method sends an email notification
-        /// using the provided info and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients' usernames.</param>
-        /// <param name="subject">The email subject.</param>
-        /// <param name="bodyPlainText">The email body in plain text.</param>
-        /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
-        /// <returns>0 on success, -1 otherwise</returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public int SendNotificationUser(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
-        {
-
-            // Llama a método que hace uso de un procedimiento almacenado que obtiene los correos dados los usernames
-            List<string> userEmail = getEmail(recipients);
-            // Ahora que tiene directamente el correo, puede utilizar un método ya implementado
-            return SendNotification(userEmail, subject, bodyPlainText, bodyAlternateHtml);
-        }
-
-        /// <summary>This method sends an email notification (asynchronously)
-        /// using the provided info and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients' usernames.</param>
-        /// <param name="subject">The email subject.</param>
-        /// <param name="bodyPlainText">The email body in plain text.</param>
-        /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
-        /// <returns>0 on success, -1 otherwise</returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<int> SendNotificationUserAsync(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
-        {
-
-            // Llama a método que hace uso de un procedimiento almacenado que obtiene los correos dados los usernames
-            List<string> userEmail = getEmail(recipients);
-            // Ahora que tiene directamente el correo, puede utilizar un método ya implementado
-            return await SendNotificationAsync(userEmail, subject, bodyPlainText, bodyAlternateHtml).ConfigureAwait(false);
-        }
-
         /// <summary>This method sends an email notification using the provided info
         /// and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients' email addresses.</param>
+        /// <param name="recipients">List of recipients.</param>
         /// <param name="subject">The email subject.</param>
         /// <param name="bodyPlainText">The email body in plain text.</param>
         /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
@@ -90,7 +54,7 @@ namespace AppIntegrador.Utilities
 
         /// <summary>This method sends an email notification (asynchronously)
         /// using the provided info and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients' email addresses.</param>
+        /// <param name="recipients">List of recipients.</param>
         /// <param name="subject">The email subject.</param>
         /// <param name="bodyPlainText">The email body in plain text.</param>
         /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
@@ -147,7 +111,7 @@ namespace AppIntegrador.Utilities
             foreach (var user in recipients)
             {
                 // Ejecuta el procedimiento que obtiene el correo dado un usuario
-                db.ObtenerEmailUsuario(user, obtainedEmail);
+                //db.ObtenerEmailUsuario(user, obtainedEmail);
                 string email = obtainedEmail.Value.ToString();
                 userEmail.Add(email);
             }

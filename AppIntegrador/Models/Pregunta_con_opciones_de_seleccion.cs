@@ -14,9 +14,8 @@ namespace AppIntegrador.Models
 
 using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class Pregunta_con_opciones_de_seleccion
+    
+public partial class Pregunta_con_opciones_de_seleccion
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,7 +26,7 @@ using System;
 
     }
 
-    [Required(ErrorMessage = "Código requerido")]
+
     public string Codigo { get; set; }
 
     public string Tipo { get; set; }
