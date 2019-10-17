@@ -99,11 +99,27 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Formularios
-        public ActionResult Index()
+        public ActionResult Index(string inp1, string inp2)
         {
-            return View(db.Formulario.ToList());
+            if (inp2 == null && inp1 == null)
+            {
+                return View(db.Formulario.ToList());
+            }
+            //if a user choose the radio button option as Subject  
+            if (inp2 == null)
+            {
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(db.Formulario.Where(x => x.Codigo.Contains(inp1)).ToList());
+            }
+            else if (inp1 == null)
+            {
+                return View(db.Formulario.Where(x => x.Nombre.Contains(inp2)).ToList());
+            }
+            else
+            {
+                return View(db.Formulario.ToList());
+            }
         }
-
 
 
         // GET: Formularios/Details/5

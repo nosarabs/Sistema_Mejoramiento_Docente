@@ -158,8 +158,6 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CrearFormularioModel.cs" />
-    <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -202,20 +200,14 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
-    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
-    <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
-    <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PreguntaConOpciones.cs" />
-    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
-    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -224,7 +216,6 @@
     <Compile Include="Models\Opciones_seleccionadas_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -270,18 +261,15 @@
     <Compile Include="Models\Responde_respuesta_libre.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ResponsableDe.cs" />
     <Compile Include="Models\Respuestas_a_formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ResultadosFormularioModel.cs" />
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SeccionConPreguntas.cs" />
     <Compile Include="Models\Seccion_tiene_pregunta.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -291,7 +279,6 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TodasLasPreguntas.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -301,6 +288,21 @@
     <Compile Include="Models\UsuarioPerfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioPersona.cs" />
+    <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearSeccionModel.cs" />
+    <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
+    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
+    <Compile Include="Models\LlenarFormulario.cs" />
+    <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
+    <Compile Include="Models\ResponsableDe.cs" />
+    <Compile Include="Models\ResultadosFormularioModel.cs" />
+    <Compile Include="Models\SeccionConPreguntas.cs" />
+    <Compile Include="Models\TodasLasPreguntas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
@@ -341,7 +343,7 @@
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
-    <Content Include="Scripts\Formularios\CharacterCounter.js" />
+    <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\custom\login.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -419,6 +421,7 @@
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+    <Content Include="Views\Home\PasswordReset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
