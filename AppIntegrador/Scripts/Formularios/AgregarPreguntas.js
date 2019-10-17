@@ -18,19 +18,18 @@
     }
 }();
 
-function addPreguntaToSeccion(element) {
+function selectPregunta(element) {
     if (element.checked) {
-        element.name = "preguntas[" + agregarPreguntas.current() + "].Codigo";
-        element.id = element.name;
+        element.id = "preguntas[" + agregarPreguntas.current() + "].Codigo";
         agregarPreguntas.add();
     }
     else {
-        removePregunta(element.value);
+        deselectPregunta(element.value);
         agregarPreguntas.remove();
     }
 }
 
-function removePregunta(codigo) {
+function deselectPregunta(codigo) {
     var index = 0;
     var beforeElement = true;
     while (index < agregarPreguntas.current() && beforeElement) {
@@ -46,8 +45,19 @@ function removePregunta(codigo) {
     while (index < agregarPreguntas.current()) {
         var newIndex = index - 1;
         var pregunta = document.getElementById("preguntas[" + index + "].Codigo");
-        pregunta.setAttribute("name", "preguntas[" + newIndex + "].Codigo");
-        pregunta.id = pregunta.name;
+        pregunta.id = "preguntas[" + newIndex + "].Codigo";
+        ++index;
+    }
+}
+
+function addPreguntaToSeccion() {
+    var index = 0;
+
+    while (index < agregarPreguntas.current()) {
+        var seccion = document.getElementById("preguntas[" + index + "].Codigo");
+        seccion.setAttribute("name", seccion.id);
+        var tupla = document.getElementById("preg(" + seccion.value + ")");
+        tupla.setAttribute("hidden", "hidden");
         ++index;
     }
 }
