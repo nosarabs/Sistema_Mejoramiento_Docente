@@ -310,5 +310,14 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
         }
+    
+        public virtual int CheckID(string identificacion, ObjectParameter result)
+        {
+            var identificacionParameter = identificacion != null ?
+                new ObjectParameter("identificacion", identificacion) :
+                new ObjectParameter("identificacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID", identificacionParameter, result);
+        }
     }
 }
