@@ -83,3 +83,10 @@
     position: relative;
     z-index: 2;
 }
+
+#container_users {
+    padding-right: 0px;
+    padding-left: 7%;
+    margin-right: auto;
+    margin-left: auto;
+}
