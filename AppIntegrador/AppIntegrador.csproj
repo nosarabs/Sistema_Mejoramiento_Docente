@@ -343,6 +343,7 @@
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\CharacterCounter.js" />
     <Content Include="Scripts\custom\login.js" />
+    <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
