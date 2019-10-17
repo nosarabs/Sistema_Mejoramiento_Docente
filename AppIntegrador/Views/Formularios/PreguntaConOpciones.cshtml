@@ -13,11 +13,10 @@
 
             @foreach (var opcion in pregunta.Opciones)
             {
-                <div class='panel-body'>
-                  
-                    @Html.RadioButtonFor(model => opcion, "" )
-                    @Html.DisplayFor(model => opcion)
-                </div>
+            <div class='panel-body'>
+                <input type="radio" asp-for="Gender" value="@opcion" />@opcion<br />
+                
+            </div>
             }
         </div>
     </div>
@@ -40,12 +39,12 @@
 
     .panel-primary > .panel-heading {
     color: #000;
-    background-color: #cecece;
+    background-color: #41ADE7;
     border-color: #888b8f;
 
     .panel-body { padding: 10px;
     padding-bottom: 10px;
-    background-color: #998f8f;
+    background-color: #c4c4c4;
     padding-bottom: 5px;
     } 
 
