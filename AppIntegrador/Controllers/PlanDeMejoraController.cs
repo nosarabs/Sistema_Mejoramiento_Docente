@@ -157,10 +157,14 @@ namespace AppIntegrador.Controllers
         }
         // -------------------------- END OF DELETE --------------------------------
 
+        // -------------------------------------------------------------------------
+        public ActionResult GoToObjectives() 
+        {
+            var objetivos = this.db.Objetivo.ToList();
+            return RedirectToRoute("~/Views/Objetivos/Index", objetivos);
+        }
 
-
-
-
+        // -------------------------------------------------------------------------
 
         protected override void Dispose(bool disposing)
         {

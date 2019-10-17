@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Planes de Mejora";
-    AppIntegrador.Models.PlanDeMejora planTemp = new AppIntegrador.Models.PlanDeMejora(); 
+    AppIntegrador.Models.PlanDeMejora planTemp = new AppIntegrador.Models.PlanDeMejora();
 }
 
 
@@ -19,6 +19,7 @@
                 @Html.Partial("~/Views/PlanDeMejora/_crearPlanDeMejora.cshtml", planTemp)
             </div>
         </div>
+        <hr />
     </div>
 
     <br />
@@ -26,16 +27,15 @@
 
     <div class="fullWidth">
         <p class="impText">Objetivos</p>
-
-        <h1>Objetivos de un plan de mejora</h1>
-
+        <input type="button" class="btn btn-primary" value="Objetivos" onclick="location.href='@Url.Action("Index", "Objetivos", new { idPlan: 5 })'" />
+        </div>
         <hr />
     </div>
 
 
     <div class="fullWidth">
         <p class="impText">Acciones de Mejora</p>
-           <h1>Acciones de mejora</h1>
+        <input type="button" class="btn btn-primary" value="Accion De Mejora" onclick="location.href='@Url.Action("Index", "AccionDeMejora")'" />
         <hr />
     </div>
 

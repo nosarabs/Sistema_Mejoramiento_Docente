@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: Objetivos
-        public ActionResult Index()
+        public ActionResult Index(int idPlan)
         {
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
