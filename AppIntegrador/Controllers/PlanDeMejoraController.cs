@@ -26,7 +26,8 @@ namespace AppIntegrador.Controllers
             Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
             Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
         */
-        public ActionResult objetivosPlan(string id) {
+        public ActionResult objetivosPlan(string id)
+        {
             var idPlan = -1;
             Int32.TryParse(id, out idPlan);
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
@@ -51,7 +52,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View("_crear");
+            return View("_crearPlanDeMejora");
         }
 
         // POST: PlanDeMejora/Create

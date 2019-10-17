@@ -73,7 +73,7 @@
                     <td>
                         <div class="verticalBoxes">
                             <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
+                                @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
                             </div>
                             <!-- Boton para editar el plan de mejora -->
                             <div class="createPlanButton">
@@ -82,7 +82,7 @@
                                 </button>
                             </div>
                             <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
+                                @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
                             </div>
                         </div>
                     </td>
@@ -100,6 +100,8 @@
     </div>
 
     <div class="objetivosPlan">
+        <h2>Objetivos</h2>
+        <hr />
     </div>
 
 
@@ -110,15 +112,18 @@
 
 
 
-    <div class="fullWidth">
+    @*<div class="fullWidth">
         <h2 class="impText">Accionables</h2>
         @if (mostrarAccionables)
         {
             <h2>Accionables</h2>
         }
         <hr />
-    </div>
+    </div>*@
 </div>
+
+
+
 @section Scripts{
     <script>
         function myFunction() { 
