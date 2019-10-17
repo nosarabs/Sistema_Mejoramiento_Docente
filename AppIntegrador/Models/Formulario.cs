@@ -14,8 +14,9 @@ namespace AppIntegrador.Models
 
 using System;
     using System.Collections.Generic;
-    
-public partial class Formulario
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class Formulario
 {
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -32,9 +33,10 @@ public partial class Formulario
 
     }
 
-
+    [Required(ErrorMessage = "El código es un campo requerido")]
     public string Codigo { get; set; }
-
+    
+    [Required(ErrorMessage = "El nombre es un campo requerido")]
     public string Nombre { get; set; }
 
 

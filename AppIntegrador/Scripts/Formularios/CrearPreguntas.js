@@ -67,8 +67,7 @@ function pregunta() {
         title: "Pregunta creada con éxito!",
         text: "Puede ser vista en el banco de preguntas",
         type: "success",
-        timer: 1000,
-        showConfirmButton: false
+        showConfirmButton: true
     },
         function () {
             window.location.href = "Create";

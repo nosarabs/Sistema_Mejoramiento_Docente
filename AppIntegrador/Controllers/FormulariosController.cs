@@ -161,7 +161,7 @@ namespace AppIntegrador.Controllers
                 else
                 {
                     // Notifique que ocurrió un error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    ModelState.AddModelError("Código", "Código ya en uso.");
                     return View(crearFormulario);
                 }
             }
