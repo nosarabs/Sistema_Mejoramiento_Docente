@@ -67,13 +67,13 @@
 
 }
 <br />
-<div style="height: 400px; overflow: auto;">
-    <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <col width="50">
+<div style="height: 300px; overflow: auto;">
+    <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+        
         <thead>
             <tr>
                 <th>
-                    Seleccionar
+
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Codigo)
@@ -84,38 +84,30 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Tipo)
                 </th>
-                <th>
-                    Operaciones
-                </th>
             </tr>
         </thead>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
+            <tr id="preg(@item.Codigo)">
+                <td style="width:10%">
                     <center>
-                        <input type="checkbox" class="QuestionCheckbox" value="@item.Codigo" onclick="addPreguntaToSeccion(this)"/>
+                        <input type="checkbox" class="QuestionCheckbox" value="@item.Codigo" onclick="selectPregunta(this)" />
                     </center>
                 </td>
-                <td>
+                <td style="width:15%">
                     @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
                 </td>
-                <td>
+                <td style="width:60%">
                     @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
                 </td>
-                <td>
+                <td style="width:15%">
                     @*@Html.DisplayFor(modelItem => item.Tipo)*@
                     Selección única
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
-                </td>
             </tr>
         }
-        </table>
-    </div>
+    </table>
+</div>
 
 
     @section Scripts {
