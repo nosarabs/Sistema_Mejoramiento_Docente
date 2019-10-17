@@ -237,7 +237,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, codigoPreguntaParameter, mediana);
         }
     
-        public virtual int ModificarCorreo(string anterior, string nuevo)
+        public virtual int ModificarCorreo(string anterior, string nuevo, ObjectParameter resultado)
         {
             var anteriorParameter = anterior != null ?
                 new ObjectParameter("anterior", anterior) :
@@ -247,7 +247,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nuevo", nuevo) :
                 new ObjectParameter("nuevo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter, resultado);
         }
     
         public virtual ObjectResult<ObtenerOpcionesDePregunta_Result> ObtenerOpcionesDePregunta(string questionCode)

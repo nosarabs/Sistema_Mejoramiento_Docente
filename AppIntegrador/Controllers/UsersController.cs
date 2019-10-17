@@ -220,7 +220,16 @@ namespace AppIntegrador
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
                         /*Stored procedure to change the mail of a given person*/
-                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo);
+                        ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
+                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
+                        bool modificationResult = (bool)modResult.Value;
+                        
+                        /*No pudo modificarse el correo por ya estar en la base de datos*/
+                        if (modificationResult == false)
+                        {
+                            ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
+                            return View(usuarioPersona);
+                        }
                         
                         if (originalUser != null)
                         {
