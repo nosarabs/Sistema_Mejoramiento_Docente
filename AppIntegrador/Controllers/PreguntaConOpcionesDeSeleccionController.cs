@@ -120,7 +120,7 @@ namespace AppIntegrador.Controllers
                     validOptions = false;
                     foreach (Opciones_de_seleccion opcion in Opciones)
                     {
-                        if (opcion.Texto != null && opcion.Texto != "")
+                        if (opcion.Texto != null && opcion.Texto.Length > 0)
                         {
                             validOptions = true;
                         }
@@ -132,48 +132,23 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("", "Una pregunta de selección única necesita al menos una opción");
                     return View(pregunta);
                 }
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+                try
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if(db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Pregunta_con_opciones.Pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
                     {
-                        try
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AgregarPreguntaConOpcion";
-                            cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@type", 'U'));
-                            cmd.Parameters.Add(new SqlParameter("@enunciado", pregunta.Pregunta_con_opciones.Pregunta.Enunciado));
-                            cmd.Parameters.Add(new SqlParameter("@justificacion", pregunta.Pregunta_con_opciones.TituloCampoObservacion));
-
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                        catch (System.Data.SqlClient.SqlException)
-                        {
-                            ModelState.AddModelError("Codigo", "Código ya en uso.");
-                            return View(pregunta);
-                        }
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
                     }
+                }
+                catch (System.Data.SqlClient.SqlException)
+                {
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
+                }
 
-                    foreach (Opciones_de_seleccion opcion in Opciones)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AgregarOpcion";
-                            cmd.Parameters.Add(new SqlParameter("@cod", pregunta.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@orden", opcion.Orden));
-                            cmd.Parameters.Add(new SqlParameter("@texto", opcion.Texto));
-
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
-
+                foreach (Opciones_de_seleccion opcion in Opciones)
+                {
+                    db.AgregarOpcion(pregunta.Codigo, (byte)opcion.Orden, opcion.Texto);
                 }
 
                     ViewBag.Message = "Exitoso";
