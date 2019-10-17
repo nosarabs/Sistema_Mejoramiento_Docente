@@ -148,7 +148,7 @@ namespace AppIntegrador.Controllers
                 failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username] + 1;
 
                 /*If the counter reached the max failed attempts count, lock the account, except for the admin.*/
-                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin")
+                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin@mail.com")
                 {
                     ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
                         " 5 minutos antes de intentar de nuevo.");
