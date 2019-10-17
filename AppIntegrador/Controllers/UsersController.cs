@@ -230,7 +230,9 @@ namespace AppIntegrador
                             ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
                             return View(usuarioPersona);
                         }
-                        
+
+                        originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
+
                         if (originalUser != null)
                         {
                             /*Stored procedure to change the mail of a given user*/
@@ -245,9 +247,18 @@ namespace AppIntegrador
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
                         originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
-                        if (originalPerson.Estudiante == null)
-                            originalPerson.Estudiante = new Estudiante();
-                        originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
+                        
+                        //Si hay un cambio en el Carne entonces agregar el atributo Estudiante a la persona original para poder editarlo
+                        if(usuarioPersona.Persona.Estudiante.Carne != null)
+                        {
+                            if (originalPerson.Estudiante == null)
+                            {
+                                originalPerson.Estudiante = new Estudiante();
+                            }
+                            originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
+                            originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
+                        }
+                        
 
                         db.SaveChanges();
                     }
