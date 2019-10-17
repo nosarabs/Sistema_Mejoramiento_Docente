@@ -6,8 +6,6 @@
     var mostrarObjetivos = false;
     var mostrarAccionesDeMejora = false;
     var mostrarAccionables = false;
-
-    var idPlan = -1;
 }
 
 
@@ -16,7 +14,7 @@
 <div class="fullWidth">
     <div class="fullWidth">
         <div class="horizontalBoxes">
-                <h1 class="impText">Planes de Mejora - @Model.Count() asignados</h1>
+            <h1 class="impText">Planes de Mejora - @Model.Count() asignados</h1>
         </div>
 
     </div>
@@ -52,7 +50,7 @@
 
             @foreach (var plan in Model)
             {
-                <tr onclick="@idPlan=plan.codigo;">
+                <tr>
                     <td id="codigoTemporal">
                         @Html.DisplayFor(modelItem => plan.codigo)
                     </td>
@@ -77,6 +75,12 @@
                             <div>
                                 @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
                             </div>
+                            <!-- Boton para editar el plan de mejora -->
+                            <div class="createPlanButton">
+                                <button type="button" onclick="clickObjetivo(@plan.codigo)" class="btn btn-primary" id="verObjetivos">
+                                    Ver objetivos
+                                </button>
+                            </div>
                             <div>
                                 @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
                             </div>
@@ -95,12 +99,7 @@
 
     </div>
 
-
-    <div class="fullWidth">
-
-        @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan })
-
-        <hr />
+    <div class="objetivosPlan">
     </div>
 
 
@@ -120,10 +119,17 @@
         <hr />
     </div>
 </div>
-
-<script>
-    function setCodigoPlan(codigoPlan, idPlan) {
-        idPlan = codigoPlan;
-        console.log(idPlan);
-    }
-</script>
+@section Scripts{
+    <script>
+        function myFunction() { 
+            var x = document.getElementById("codigoPlan").value;
+            console.log(x);
+        } 
+        clickObjetivo = function(id) {
+            $(".objetivosPlan").load("objetivosPlan",
+                { id: id });
+        };
+        $(document).ready(function () {
+        });
+    </script>
+}
