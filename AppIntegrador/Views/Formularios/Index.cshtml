@@ -4,30 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+    <div class="grid_12">
+        <div class ="div-with-padding">
+            <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
+            <p>
+                @Html.ActionLink("Crear nuevo formulario", "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th></th>
+                </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) |
-            @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
-        </td>
-    </tr>
-}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) |
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+                        </td>
+                    </tr>
+                }
 
-</table>
+            </table>
+        </div>
+    </div>
+
+<style>
+    .div-with-padding {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+</style>
