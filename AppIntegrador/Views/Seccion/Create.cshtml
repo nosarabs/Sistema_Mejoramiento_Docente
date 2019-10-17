@@ -21,20 +21,20 @@
                         @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
                         <div class="col-md-4">
                             @Html.EditorFor(model => model.Seccion.Codigo, new
-                       {
-                           htmlAttributes = new
-                           {
-                               @class = "form-control",
-                               id = "textCode",
-                               name = "textCode",
-                               @maxlength = "8",
-                               required = "required",
-                               placeholder = "Código",
-                               rows = "5",
-                               @onkeyup = "charCount(this)"
-                           }
-                       })
-                            @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
+                            {
+                                htmlAttributes = new
+                                {
+                                    @class = "form-control",
+                                    id = "textCode",
+                                    name = "textCode",
+                                    @maxlength = "8",
+                                    required = "required",
+                                    placeholder = "Código",
+                                    rows = "5",
+                                    @onkeyup = "contarCaracteres(this)"
+                                }
+                            })
+                            <div class="contador small pull-right">0/8 caracteres usados</div>
                         </div>
                     </div>
 
@@ -43,20 +43,21 @@
                         <div class="col-md-10">
                             <form accept-charset="UTF-8" action="" method="POST">
                                 @Html.EditorFor(model => model.Seccion.Nombre, new
-                           {
-                               htmlAttributes = new
-                               {
-                                   @class = "form-control",
-                                   id = "textName",
-                                   name = "textName",
-                                   @maxlength = "250",
-                                   required = "required",
-                                   placeholder = "Nombre del formulario",
-                                   rows = "5",
-                                   @onkeyup = "charCount(this)"
-                               }
-                           })
-                                @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control",
+                                        id = "textName",
+                                        name = "textName",
+                                        @maxlength = "250",
+                                        required = "required",
+                                        placeholder = "Nombre del formulario",
+                                        rows = "5",
+                                        @onkeyup = "contarCaracteres(this)"
+                                    }
+                                })
+
+                                <div class="contador small pull-right">0/250 caracteres usados</div>
                             </form>
                         </div>
                     </div>
@@ -86,28 +87,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
-
-    <script>
-        var name_max = 250;
-        $('#count_name').html("0/" + name_max);
-
-        $('#textName').keyup(function () {
-            var name_length = $('#textName').val().length;
-
-            $('#count_name').html(name_length + "/" + name_max);
-        });
-    </script>
-
-    <script>
-        var code_max = 8;
-        $('#count_code').html("0/" + code_max);
-
-        $('#textCode').keyup(function () {
-            var code_length = $('#textCode').val().length;
-
-            $('#count_code').html(code_length + "/" + code_max);
-        });
-    </script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -127,7 +107,7 @@
 
     @*
         Historia RIP-BKS1
-        Se movieron los scripts de la vista parcial a esta vista, porque las vistas 
+        Se movieron los scripts de la vista parcial a esta vista, porque las vistas
         parciales no pueden tener sus propias secciones (de acuerdo a lo que encontramos).
     *@
     <script type="text/javascript">
