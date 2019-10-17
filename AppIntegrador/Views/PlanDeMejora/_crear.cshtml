@@ -35,7 +35,7 @@
                                     @Html.LabelFor(model => planModel.nombre, "Nombre")
                                 </div>
                                 <div class="inputPlace">
-                                    <input type="text" name="nombre" placeholder="nombre del plan .." class="form-control" />
+                                    <input type="text" name="nombre" placeholder="Nombre del Plan de Mejora" class="form-control" />
                                 </div>
                             </div>
                             <div class="verticalBoxesCrear">
@@ -55,14 +55,13 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="Salvar Plan de Mejora" class="btn btn-success" />
+                        <div class="modal-footer">
+                            <div class="botonCentrado">
+                                <input type="submit" value="Salvar Plan de Mejora" class="btn btn-success" />
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
                     </form>
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

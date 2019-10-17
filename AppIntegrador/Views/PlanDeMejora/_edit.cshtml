@@ -49,29 +49,28 @@
                         </div>
                         <div class="verticalBoxesCrear">
                             <div class="labelPlace">
-                                @Html.LabelFor(model => planFinal.codigo, "Fecha Inicio")
+                                @Html.LabelFor(model => planFinal.codigo, "Fecha de inicio")
                             </div>
                             <div class="inputPlace">
-                                <input type="date"  name="fechaInicio" class="form-control" />
+                                <input type="date" name="fechaInicio" value="@string.Format("{0:yyyy-MM-dd}", planFinal.fechaInicio)" class="form-control" />
                             </div>
                         </div>
                         <div class="verticalBoxesCrear">
                             <div class="labelPlace">
-                                @Html.LabelFor(model => planFinal.codigo, "Fecha Fin")
+                                @Html.LabelFor(model => planFinal.codigo, "Fecha de fin")
                             </div>
                             <div class="inputPlace">
-                                <input type="date"  name="fechaFin" class="form-control" />
+                                <input type="date" name="fechaFin" value="@string.Format("{0:yyyy-MM-dd}", planFinal.fechaFin)" class="form-control" />
                             </div>
                         </div>
                     </div>
-                    <input type="submit" value="Editar Plan de Mejora" class="btn btn-success" />
+                    <div class="modal-footer">
+                        <div class="botonCentrado">
+                            <input type="submit" value="Editar Plan de Mejora" class="btn btn-success" />
+                            <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
                 </form>
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

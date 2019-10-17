@@ -61,15 +61,16 @@
 
                     </dl>
                 </div>
-                <form action="BorrarPlan" method="post">
-                    <div class="verticalBoxes">
-                        <input name="codigoPlan" class="form-control" value=@planFinal.codigo type="hidden" />
-                        <input type="submit" value="Borrar Plan" class="btn btn-danger" />
-                    </div>
-                </form>
+
             </div>
             <div class="modal-footer">
-                <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form action="BorrarPlan" method="post">
+                    <div class="botonCentrado">
+                        <input name="codigoPlan" class="form-control" value=@planFinal.codigo type="hidden" />
+                        <input type="submit" value="Borrar Plan" class="btn btn-danger" />
+                        <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
