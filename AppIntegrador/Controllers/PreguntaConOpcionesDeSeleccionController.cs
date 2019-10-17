@@ -38,30 +38,39 @@ namespace AppIntegrador.Controllers
         //}
 
         //the first parameter is the option that we choose and the second parameter will use the textbox value  
-        public ActionResult Index(string inp1, string inp2, string inp3)
+        public ActionResult Index(string input0, string input1, string input2, string input3)
         {
             var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
 
-            if (inp2 == null && inp1 == null && inp3 == null)
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null && input3 == null)
             {
+                ViewBag.filtro = "Ninguno";
                 return View(pregunta_con_opciones_de_seleccion.ToList());
             }
-            //if a user choose the radio button option as Subject  
-            if (inp2 == null && inp3 == null)
+            // si se selecionó el código  
+            if (input1.Length > 0)
             {
+                ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList());
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(input1)).ToList());
             }
-            else if (inp1 == null && inp3 == null)
+            // si se selecionó el enunciado 
+            else if ( input2.Length > 0)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList());
+                ViewBag.filtro = "Enunciado: " + input2;
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(input2)).ToList());
             }
-            else if (inp1 == null && inp2 == null)
+            // si se seleccionó el tipo
+            else if (input3.Length > 0)
             {
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList());
+                var aux = input3 == "U" ? "Selección Única" : "Seleción Múltiple";
+                ViewBag.filtro = "Tipo: " + aux;
+                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(input3)).ToList());
             }
             else
             {
+                ViewBag.filtro = "Ninguno";
                 return View(pregunta_con_opciones_de_seleccion.ToList());
             }
         }
