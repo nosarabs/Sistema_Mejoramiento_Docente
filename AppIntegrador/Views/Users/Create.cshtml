@@ -20,7 +20,8 @@
                 @Html.LabelFor(model => model.TipoIdentificacion, "Tipo de identificación", htmlAttributes: new { @class = "control-label required col-md-2" })
                 <div class="col-md-4">
                     <!--Story TAM-2.2: combobox to select the id type when creating an user.-->
-                    <select id="Persona_TipoIdentificacion" name="Persona.TipoIdentificacion" class="form-control">
+                    <select id="TipoIdentificacion" name="TipoIdentificacion" class="form-control">
+                        <option disabled selected value> -- Seleccione una opción -- </option>
                         <option value="Cedula">Cédula</option>
                         <option value="Pasaporte">Pasaporte</option>
                         <option value="Residencia">Número de residencia</option>
@@ -138,9 +139,10 @@
     function validateIdField() {
         var enteredId = document.getElementById("Identificacion");
         var selectedType = document.getElementById("TipoIdentificacion");
+        var idField = document.getElementById("Identificacion");
 
         switch (selectedType.value) {
-            case "Cedula": alert('Usted selecciono cédula');
+            case "Cedula": idField.placeholder = "Ingrese 9 dígitos";
                 break;
             case "Pasaporte": alert('Usted seleccionó pasaporte' + enteredId.value);
         }

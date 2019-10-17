@@ -8,11 +8,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AppIntegrador
 {
     public class UsersController : Controller
     {
+        private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
+
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: Users
@@ -196,6 +200,9 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
+            if (!this.validateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+                return View(usuarioPersona);
+
             if (ModelState.IsValid && 
                 usuarioPersona != null && 
                 usuarioPersona.Persona != null || 
@@ -335,6 +342,49 @@ namespace AppIntegrador
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool validateInputFields(Persona persona, Estudiante estudiante)
+        {
+            if (persona.Estudiante != null && persona.Estudiante.Carne != null)
+            {
+                string pattern = "[a-z][0-9][0-9][0-9][0-9][0-9]$";
+                Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                MatchCollection matches = r.Matches(persona.Estudiante.Carne);
+                if (matches.Count == 0)
+                {
+                    ModelState.AddModelError("Persona.Estudiante.Carne", "El formato es inválido.");
+                    return false;
+                }
+            }
+
+            switch (persona.TipoIdentificacion)
+            {
+                case "Cédula":
+                    return validarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
+                case "Pasaporte":
+                    return validarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
+                case "Número de residencia":
+                    return validarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
+            }
+
+            return true;
+        }
+
+        private bool validarIdentificacion(string id, TIPO_ID tipo)
+        {
+            switch (tipo) {
+                case TIPO_ID.CEDULA:
+                    string pattern = @"\d{9}$";
+                    Regex r = new Regex(pattern);
+                    if (id.Length != 9 || r.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "El formato es inválido.");
+                        return false;
+                    }
+                    break;
+            }
+            return true;
         }
     }
 }
