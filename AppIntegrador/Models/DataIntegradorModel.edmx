@@ -1191,7 +1191,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkOpcionesSeleccionadas">
-          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="1" />
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Opciones_seleccionadas_respuesta_con_opciones" Type="Self.Opciones_seleccionadas_respuesta_con_opciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Responde_respuesta_con_opciones">
@@ -1279,7 +1281,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespondeLibreCodigo">
-          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pregunta">
@@ -1291,7 +1295,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespondeLibreRespuestasAFormulario">
-          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
@@ -1315,7 +1321,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespondeOpcionesCodigo">
-          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1" />
+          <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pregunta">
@@ -1327,7 +1335,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespondeOpcionesRespuestasAFormulario">
-          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1" />
+          <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Respuestas_a_formulario">
@@ -1351,7 +1361,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespuestasFormulario">
-          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Formulario">
@@ -1363,7 +1375,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespuestasGrupo">
-          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grupo">
@@ -1381,7 +1395,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fkRespuestasUsuario">
-          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Persona">
