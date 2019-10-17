@@ -2,10 +2,9 @@
 
 @{
     ViewBag.Title = "Index";
+    //var idPlanAMostrar = ViewBag.idPlanAMostrar;
 
-    var mostrarObjetivos = false;
-    var mostrarAccionesDeMejora = false;
-    var mostrarAccionables = false;
+    var idPlan = (ViewData["idPlanDeMejora"] == null) ? Convert.ToInt32(ViewData["idPlanDeMejora"]) : -1;
 }
 
 

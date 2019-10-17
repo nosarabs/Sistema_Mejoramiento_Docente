@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: Objetivos
-        public ActionResult Index(int idPlan)
+        public ActionResult Index()
         {
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
@@ -55,7 +55,7 @@ namespace AppIntegrador.Controllers
             {
                 db.Objetivo.Add(objetivo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "PlanDeMejora") ;
             }
 
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
