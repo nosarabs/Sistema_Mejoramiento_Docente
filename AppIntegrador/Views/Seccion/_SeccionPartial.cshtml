@@ -53,10 +53,10 @@
         @foreach (var item in Model)
         {
 
-        <tr>
+        <tr id="sec(@item.Codigo)">
             <td style="width:10%;">
                 <center>
-                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="addSeccionToFormulario(this)" />
+                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
                 </center>
             </td>
             <td style="width:20%">
@@ -73,16 +73,10 @@
 
 
 <style>
-    input.QuestionCheckbox {
+    input.SectionCheckbox {
         width: 30px;
         height: 30px;
     }
 
 
 </style>
-
-@section Scripts {
-    
-
-<script src="~/Scripts/Formularios/agregarsecciones.js"></script>
-}

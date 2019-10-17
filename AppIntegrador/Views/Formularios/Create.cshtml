@@ -84,7 +84,7 @@
                 <br />
                 <br />
                 <br />
-                <button type="button" class="btn btn-primary btn-arrow-left">Agregar sección></button>
+                <button type="button" class="btn btn-primary btn-arrow-left" onclick="addSeccionToFormulario()">Agregar</button>
 
             </td>
 
@@ -122,22 +122,21 @@
 .btn-arrow-right,
 .btn-arrow-left {
    position: relative;
-   padding-left: 18px;
+   padding-left: 13px;
    padding-right: 18px;
 }
 
 .btn-arrow-right {
-   padding-left: 36px;
+   padding-left: 20px;
 }
 
 .btn-arrow-left {
-   padding-right: 36px;
+   padding-right: 10px;
 }
 
 .btn-arrow-right:before,
 .btn-arrow-right:after,
-.btn-arrow-left:before,
-.btn-arrow-left:after {
+.btn-arrow-left:before {
    /* make two squares (before and after), looking similar to the button */
    
    content: "";
@@ -286,18 +285,6 @@
             }
             elem.disabled = false;
             currentEnabled = elem;
-        }
-    </script>
-
-    <script>
-        function filtrar() {
-            var i
-            for (i = 0; i < document.opcionfiltro.sel.length; i++) {
-                if (document.opcionfiltro.sel[i].checked)
-                    break;
-            }
-            var opcion = document.opcionfiltro.sel[i].value
-            var text =
         }
     </script>
 
