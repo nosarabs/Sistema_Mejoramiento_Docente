@@ -263,11 +263,19 @@ namespace AppIntegrador
                             originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
                             originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
                         }
-                        
 
+                        ViewBag.resultmessage = "Los cambios han sido guardados";
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        ViewBag.resultmessage = "No se pudo guardar los cambios";
+                    }
                 }
+            }
+            else
+            {
+                ViewBag.resultmessage = "No se pudo guardar los cambios";
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 
@@ -290,7 +298,9 @@ namespace AppIntegrador
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
 
             /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
-            System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
+            //System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
+            System.Web.HttpContext.Current.Application["CurrentEditingUser"] = mailToSearch;
+
 
             return View(usuarioPersonaRefreshed);
         }
@@ -348,12 +358,12 @@ namespace AppIntegrador
         {
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
-                string pattern = "[a-z][0-9][0-9][0-9][0-9][0-9]$";
+                string pattern = @"^[A-Z1-9]\d{5}$";
                 Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
                 MatchCollection matches = r.Matches(persona.Estudiante.Carne);
                 if (matches.Count == 0)
                 {
-                    ModelState.AddModelError("Persona.Estudiante.Carne", "El formato es inválido.");
+                    ModelState.AddModelError("Persona.Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayuscula o un numero, los demas solo numeros");
                     return false;
                 }
             }
@@ -373,13 +383,33 @@ namespace AppIntegrador
 
         private bool validarIdentificacion(string id, TIPO_ID tipo)
         {
+            string pattern;
+            Regex regexResult;
             switch (tipo) {
                 case TIPO_ID.CEDULA:
-                    string pattern = @"\d{9}$";
-                    Regex r = new Regex(pattern);
-                    if (id.Length != 9 || r.Matches(id).Count == 0)
+                    pattern = @"^[1-9]\d{8}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
                     {
-                        ModelState.AddModelError("Persona.Identificacion", "El formato es inválido.");
+                        ModelState.AddModelError("Persona.Identificacion", "El numero de cedula debe ser de 9 digitos, el primero no puede ser 0 y no debe tener guiones.");
+                        return false;
+                    }
+                    break;
+                case TIPO_ID.PASAPORTE:
+                    pattern = @"^\d{9}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "El pasaporte debe ser de 9 digitos y no tener guiones.");
+                        return false;
+                    }
+                    break;
+                case TIPO_ID.RESIDENCIA:
+                    pattern = @"^\d{12}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "La cedula de residencia debe ser de 12 digitos y no tener guiones.");
                         return false;
                     }
                     break;
