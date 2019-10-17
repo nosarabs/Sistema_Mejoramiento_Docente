@@ -32,10 +32,10 @@
                                required = "required",
                                placeholder = "Código",
                                rows = "5",
-                               @onkeyup = "charCount(this)"
+                               @onkeyup = "contarCaracteres(this)"
                            }
                        })
-                            <div class="counter small pull-right">0/8 caracteres usados</div>
+                            <div class="contador small pull-right">0/8 caracteres usados</div>
                         </div>
                     </div>
 
@@ -54,11 +54,11 @@
                                    required = "required",
                                    placeholder = "Nombre del formulario",
                                    rows = "5",
-                                   @onkeyup = "charCount(this)"
+                                   @onkeyup = "contarCaracteres(this)"
                                }
                            })
 
-                                <div class="counter small pull-right">0/250 caracteres usados</div>
+                                <div class="contador small pull-right">0/250 caracteres usados</div>
                             </form>
                         </div>
                     </div>
@@ -222,7 +222,7 @@
 </style>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script>
         $(function () {
