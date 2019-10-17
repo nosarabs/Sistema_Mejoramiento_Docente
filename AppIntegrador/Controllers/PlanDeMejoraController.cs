@@ -14,23 +14,12 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
-        // GET: PlanDeMejora
+        // -------------------------- READ - Planes de mejora ---------------
         public ActionResult Index()
         {
-            return View(db.PlanDeMejora.ToList());
+            var totalPlanesDeMejora = this.db.PlanDeMejora.ToList();
+            return View(totalPlanesDeMejora);
         }
-
-        /*
-            Modificado por: Johan Córdoba
-            Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
-            Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
-            Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
-        */
-        public ActionResult objetivosPlan(int id) {
-            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == id);
-            return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
-        }
-
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {
@@ -45,30 +34,43 @@ namespace AppIntegrador.Controllers
             }
             return View(planDeMejora);
         }
+        // -------------------------- END OF READ --------------------------
 
-        // GET: PlanDeMejora/Create
+
+
+
+
+
+        // -------------------------- CREATE - Planes de mejora ---------------
         public ActionResult Create()
         {
-            return View();
+            return View("_crearPlanDeMejora");
         }
-
-        // POST: PlanDeMejora/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para emplear este create se requiere todo el cuerpo de un plan de mejora
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        public ActionResult Create([Bind(Include = "nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
+                var plans = this.db.PlanDeMejora.ToList();
+                var codigoTemporal = plans.Count == 0 ? 1000 : plans.Last().codigo;
+                planDeMejora.codigo = codigoTemporal + 1;
                 db.PlanDeMejora.Add(planDeMejora);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(planDeMejora);
+            return View("_crearPlanDeMejora");
         }
+        // -------------------------- END OF CREATE -----------------------------
 
+
+
+
+
+
+        // -------------------------- UPDATE - Planes de Mejora -----------------
         // GET: PlanDeMejora/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -99,7 +101,29 @@ namespace AppIntegrador.Controllers
             }
             return View(planDeMejora);
         }
+        // Method that edits one "PlanDeMejora"
+        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (codigo != null && nombre != null && fechaInicio != null && fechaFin != null)
+            {
+                var planTemp = new PlanDeMejora();
+                planTemp.codigo = codigo;
+                planTemp.nombre = nombre;
+                planTemp.fechaInicio = fechaInicio;
+                planTemp.fechaFin = fechaFin;
+                this.Edit(planTemp);
+            }
+            return RedirectToAction("Index");
+        }
+        // -------------------------- END OF UPDATE -----------------------------
 
+
+
+
+
+
+
+        // -------------------------- DELETE - Planes de Mejora --------------------
         // GET: PlanDeMejora/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -125,6 +149,18 @@ namespace AppIntegrador.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        // Method that deletes one "PlanDeMejora"
+        public ActionResult BorrarPlan(int codigoPlan)
+        {
+            this.DeleteConfirmed(codigoPlan);
+            return RedirectToAction("Index");
+        }
+        // -------------------------- END OF DELETE --------------------------------
+
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -133,48 +169,6 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        //////////////////////////////////////////////BI///////////////////////////////////////////////////
-
-        // Method that creates the plan and sets the next "codigo" automatically
-        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
-        {
-            if (nombre != null && fechaInicio != null && fechaFin != null)
-            {
-                var planTemp = new PlanDeMejora();
-                var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                planTemp.codigo = codigoTemporal + 1;
-                planTemp.nombre = nombre;
-                planTemp.fechaInicio = fechaInicio;
-                planTemp.fechaFin = fechaFin;
-                this.Create(planTemp);
-            }
-            return RedirectToAction("Index");
-        }
-
-        // Method that edits one "PlanDeMejora"
-        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin)
-        {
-            if (codigo != null && nombre != null && fechaInicio != null && fechaFin != null)
-            {
-                var planTemp = new PlanDeMejora();
-                planTemp.codigo = codigo;
-                planTemp.nombre = nombre;
-                planTemp.fechaInicio = fechaInicio;
-                planTemp.fechaFin = fechaFin;
-                this.Edit(planTemp);
-            }
-            return RedirectToAction("Index");
-        }
-
-        // Method that deletes one "PlanDeMejora"
-        public ActionResult BorrarPlan(int codigoPlan)
-        {
-            this.DeleteConfirmed(codigoPlan);
-            return RedirectToAction("Index");
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace AppIntegrador.Models.Metadata
+namespace AppIntegrador.Models
 {
-    public class PlanDeMejoraMetadata
+    public class PlanMejora
     {
         public int codigo { get; set; }
 
@@ -27,6 +27,5 @@ namespace AppIntegrador.Models.Metadata
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fechaFin { get; set; }
-
     }
 }

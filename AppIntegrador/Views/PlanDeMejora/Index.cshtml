@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Planes de Mejora";
+    AppIntegrador.Models.PlanDeMejora planTemp = new AppIntegrador.Models.PlanDeMejora(); 
 }
 
 
@@ -15,7 +16,7 @@
                 @Html.Partial("~/Views/PlanDeMejora/_tablaPlanesDeMejora.cshtml")
             </div>
             <div class="fullWidth">
-                @Html.ActionLink("Agregar Plan de Mejora", "Create", null, new { @class = "modal-link btn btn-Nuevo" })
+                @Html.Partial("~/Views/PlanDeMejora/_crearPlanDeMejora.cshtml", planTemp)
             </div>
         </div>
     </div>

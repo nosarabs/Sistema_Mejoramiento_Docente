@@ -1,85 +1,77 @@
 ﻿@model AppIntegrador.Models.PlanDeMejora
 
-@{
-    ViewBag.Title = "Creación de Plan de Mejora";
-}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearPlanModal">
+    Crear Plan de Mejora
+</button>
 
-<h4>Creación de Plan de Mejora</h4>
-
-
-@*@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CorreoProf, "CorreoProf", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.DropDownList("CorreoProf", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CorreoProf, "", new { @class = "text-danger" })
+<!-- Modal -->
+<div class="modal fade" id="crearPlanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Creación de Plan de Mejora</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
+            <div class="modal-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <div class="verticalBoxesCrear">
+                                <div class="labelPlace">
+                                    @Html.LabelFor(model => model.nombre)
+                                </div>
+                                <div class="inputPlace">
+                                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <div class="verticalBoxesCrear">
+                                <div class="labelPlace">
+                                    @Html.LabelFor(model => model.fechaInicio)
+                                </div>
+                                <div class="inputPlace">
+                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CodigoF, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.CodigoF, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CodigoF, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <div class="verticalBoxesCrear">
+                                <div class="labelPlace">
+                                    @Html.LabelFor(model => model.fechaFin)
+                                </div>
+                                <div class="inputPlace">
+                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CorreoProfAsig, "CorreoProfAsig", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.DropDownList("CorreoProfAsig", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CorreoProfAsig, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Crear Plan de Mejora" class="btn btn-success" />
+                                <input type="submit" value="Cancelar" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
-}*@
-
-<div>
-    @Html.ActionLink("Regresar a la lista de planes", "Index")
 </div>
 
 @section Scripts {
