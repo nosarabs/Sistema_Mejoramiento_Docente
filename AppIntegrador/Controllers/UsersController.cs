@@ -97,20 +97,36 @@ namespace AppIntegrador
                  using as username the principal mail provided, and as password the first name.*/
                 /*TO-DO: modify the view to allow custom password setting.*/
 
-                ObjectParameter createResult = new ObjectParameter("estado", typeof(Boolean));            
-                db.Persona.Add(persona);
-                
-                /*Takes the output from the stored procedure. Returns 1 if all went right. 0 if the primary key constraint
-                 could not be held.*/
-                bool status = (bool)createResult.Value;
+                List<Persona> Personas = db.Persona.ToList();
 
-                if (status)
+                if (db.Persona.Find(persona.Correo) == null)
                 {
-                    db.SaveChanges();
+                    ObjectParameter result = new ObjectParameter("result", typeof(bool));
+                    db.CheckID(persona.Identificacion, result);
+                    bool checkResult = (bool)result.Value;                    
+                    if (checkResult == false)
+                    {
+                        if(persona.Estudiante.Carne != null)
+                        {
+                            persona.Estudiante.Correo = persona.Correo;
+                        }
+                        else
+                        {
+                            persona.Estudiante = null;
+                        }
+
+                        db.Persona.Add(persona);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Identificacion", "Ya existe un usuario en el sistema con esta identificación.");
+                        return View(persona);
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("Correo", "¡Ya existe un usuario en el sistema con ese correo!");
+                    ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
                     return View(persona);
                 }
 

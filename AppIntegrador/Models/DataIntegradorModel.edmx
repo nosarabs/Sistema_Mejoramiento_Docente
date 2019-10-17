@@ -1460,6 +1460,10 @@
           <Parameter Name="username" Type="varchar" Mode="In" />
           <Parameter Name="newpassword" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="CheckID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FCod" Type="char" Mode="In" />
           <Parameter Name="CSigla" Type="varchar" Mode="In" />
@@ -3260,6 +3264,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
+          <FunctionImport Name="CheckID">
+            <Parameter Name="identificacion" Mode="In" Type="String" />
+            <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3794,6 +3802,7 @@
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorEntities.Store.ObtenerPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorEntities.Store.PopularSeccionesConPreguntas" />
           <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorEntities.Store.PromedioRespuestasPreguntaEscalaNumerica" />
+          <FunctionImportMapping FunctionImportName="CheckID" FunctionName="DataIntegradorEntities.Store.CheckID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
