@@ -32,7 +32,7 @@
                         @* campo de filtrado para ingresar el código *@
                         <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true">
                         <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength="8">
-                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="25">
+                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="250">
 
                         @* campo de filtrado para seleccionar el Tipo *@
                         <select class="form-control" type="text" name="input3" id="type-option" style="display:none;">
@@ -72,9 +72,6 @@
                 <th>
                     Tipo
                 </th>
-                <th>
-                    Operaciones
-                </th>
             </tr>
         </thead>
         @foreach (var item in Model)
@@ -96,11 +93,6 @@
                         <p>Seleción Múltiple</p>
                     }
                     @**@
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
                 </td>
             </tr>
         }

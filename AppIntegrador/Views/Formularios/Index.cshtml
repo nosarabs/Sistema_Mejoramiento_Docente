@@ -5,7 +5,8 @@
 }
 
 <div class="container">
-    <h2>Banco de Formularios</h2>
+    <h2>Banco de formularios</h2>
+
     @using (Html.BeginForm(FormMethod.Get))
     {
         <div class="form-horizontal panel-group">
@@ -18,17 +19,18 @@
                     </b>
 
                     <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
-                        @* campo de filtrado para ingresar el código *@
-                        <input type="radio" name="sel" value="1" id="codigo"
-                               onclick="enableElement(this.form.elements['inp1']);">
-                        <label for="codigo">Codigo</label>
-                        <input type="text" name="inp1" disabled="disabled">
 
-                        @* campo de filtrado para ingresar el enunciado *@
-                        <input type="radio" name="sel" value="3" id="enunciado"
-                               onclick="enableElement(this.form.elements['inp2']);">
-                        <label for="enunciado">Enunciado</label>
-                        <input type="text" name="inp2" disabled="disabled">
+                        <select class="form-control my-form-control" id="mySelect" onChange="check(this);">
+                            <option value="-">Sin filtro </option>
+                            <option value="C">Código </option>
+                            <option value="E">Nombre</option>
+                        </select>
+
+                        @* campo de filtrado para ingresar el código *@
+                        <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true">
+                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength="8">
+                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="250">
+
                         @* Enviar el filtrado al controlador *@
                         <input type="submit"
                                name="submit"
@@ -36,6 +38,11 @@
                                class="btn" />
                         <br />
                     </form>
+                    @if (@ViewBag.filtro != "Ninguno")
+                    {
+                        <h5><span class="label label-default">@ViewBag.filtro</span></h5>
+                    }
+
                 </div>
             </div>
         </div>
@@ -48,9 +55,6 @@
             <th>
                 Nombre
             </th>
-            <th>
-                Operaciones
-            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -62,31 +66,93 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
-                </td>
             </tr>
         }
     </table>
 </div>
 
+
 <style>
     .test2 {
         background: #fbfbfb;
     }
+
+    input.QuestionCheckbox {
+        width: 30px;
+        height: 30px;
+    }
+
+    .form-control {
+        width: 25%;
+    }
+
+    .my-form-control {
+        width: 10%;
+        display: inline
+    }
+
+    .btn {
+        border: 1px solid #ccc;
+    }
+
+    .panel-body {
+        padding: 10px;
+    }
 </style>
 
+
 @section Scripts {
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
+
+    <script src="~/Scripts/Formularios/Banco.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#codigotext").attr("disabled", "disabled");
+            if ($("input[name=optradio]:checked").val() == "codigoinput") {
+                $("#EnterRange").click(function () {
+                    $("#codigotext").removeAttr("disabled");
+                });
             }
-            elem.disabled = false;
-            currentEnabled = elem;
+        });
+    </script>
+    <script>
+        function check(elem) {
+            // use one of possible conditions
+            // if (elem.value == 'Other')
+            if (elem.selectedIndex == 0) {
+                document.getElementById("other-option").style.display = 'inline';
+
+                document.getElementById("codigo-option").style.display = 'none';
+                document.getElementById("codigo-option").value = "";
+
+                document.getElementById("enunciado-option").style.display = 'none';
+                document.getElementById("enunciado-option").value = "";
+            }
+            else if (elem.selectedIndex == 1) {
+                document.getElementById("other-option").style.display = 'none';
+                document.getElementById("other-option").value = "";
+
+                document.getElementById("codigo-option").style.display = 'inline';
+
+                document.getElementById("enunciado-option").style.display = 'none';
+                document.getElementById("enunciado-option").value = "";
+            }
+            else if (elem.selectedIndex == 2) {
+                document.getElementById("other-option").style.display = 'none';
+                document.getElementById("other-option").value = "";
+
+                document.getElementById("codigo-option").style.display = 'none';
+                document.getElementById("codigo-option").value = "";
+
+                document.getElementById("enunciado-option").style.display = 'inline';
+            }
         }
     </script>
+
+    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
 }

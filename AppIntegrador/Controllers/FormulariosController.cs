@@ -99,28 +99,35 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Formularios
-        public ActionResult Index(string inp1, string inp2)
+        public ActionResult Index(string input0, string input1, string input2)
         {
-            if (inp2 == null && inp1 == null)
+            var formulario = db.Formulario;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
             {
-                return View(db.Formulario.ToList());
+                ViewBag.filtro = "Ninguno";
+                return View(formulario.ToList());
             }
-            //if a user choose the radio button option as Subject  
-            if (inp2 == null)
+            // si se selecionó el código  
+            if (input1.Length > 0)
             {
+                ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(db.Formulario.Where(x => x.Codigo.Contains(inp1)).ToList());
+                return View(formulario.Where(x => x.Codigo.Contains(input1)).ToList());
             }
-            else if (inp1 == null)
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
             {
-                return View(db.Formulario.Where(x => x.Nombre.Contains(inp2)).ToList());
+                ViewBag.filtro = "Enunciado: " + input2;
+                return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
-                return View(db.Formulario.ToList());
+                ViewBag.filtro = "Ninguno";
+                return View(formulario.ToList());
             }
         }
-
 
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
