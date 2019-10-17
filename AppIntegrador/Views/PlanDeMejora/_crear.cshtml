@@ -4,69 +4,50 @@
 @{
     ViewBag.Title = "Create";
     AppIntegrador.Models.PlanDeMejora planModel = new AppIntegrador.Models.PlanDeMejora();
+    Layout = null;
 }
 
+<!-- Modal -->
+    <div class="modal-body">
 
-
-<div class="halfVerticalBox">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="createPlanButton">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Crear un nuevo Plan de Mejora
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Creación de Plan de Mejora</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <h4>Creación de Plan de Mejora</h4>
+        <hr />
+        <form action="CrearPlanDeMejora" method="post">
+            <div class="form-group">
+                <div class="verticalBoxesCrear">
+                    <div class="labelPlace">
+                        @Html.LabelFor(model => planModel.nombre, "Nombre")
+                    </div>
+                    <div class="inputPlace">
+                        <input type="text" name="nombre" placeholder="Nombre del Plan de Mejora" class="form-control" />
+                    </div>
                 </div>
-                <div class="modal-body">
-
-                    <form action="CrearPlanDeMejora" method="post">
-                        <div class="form-group">
-                            <div class="verticalBoxesCrear">
-                                <div class="labelPlace">
-                                    @Html.LabelFor(model => planModel.nombre, "Nombre")
-                                </div>
-                                <div class="inputPlace">
-                                    <input type="text" name="nombre" placeholder="Nombre del Plan de Mejora" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="verticalBoxesCrear">
-                                <div class="labelPlace">
-                                    @Html.LabelFor(model => planModel.codigo, "Fecha Inicio")
-                                </div>
-                                <div class="inputPlace">
-                                    <input type="date" name="fechaInicio" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="verticalBoxesCrear">
-                                <div class="labelPlace">
-                                    @Html.LabelFor(model => planModel.codigo, "Fecha Fin")
-                                </div>
-                                <div class="inputPlace">
-                                    <input type="date" name="fechaFin" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="botonCentrado">
-                                <input type="submit" value="Salvar Plan de Mejora" class="btn btn-success" />
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="verticalBoxesCrear">
+                    <div class="labelPlace">
+                        @Html.LabelFor(model => planModel.codigo, "Fecha Inicio")
+                    </div>
+                    <div class="inputPlace">
+                        <input type="date" name="fechaInicio" class="form-control" />
+                    </div>
+                </div>
+                <div class="verticalBoxesCrear">
+                    <div class="labelPlace">
+                        @Html.LabelFor(model => planModel.codigo, "Fecha Fin")
+                    </div>
+                    <div class="inputPlace">
+                        <input type="date" name="fechaFin" class="form-control" />
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="modal-footer">
+                <div class="botonCentrado">
+                    <input type="submit" value="Crear Plan de Mejora" class="btn btn-success" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </form>
     </div>
-</div>
+
 
 
 @section Scripts {

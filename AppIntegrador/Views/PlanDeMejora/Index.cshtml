@@ -13,16 +13,10 @@
 
 
 
-<div class="horizontalBoxes">
+<div class="fullWidth">
     <div class="fullWidth">
         <div class="horizontalBoxes">
-            <div class="halfVerticalBox">
-                <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
-            </div>
-        </div>
-        <div>
-            <!-- Button that hekps create another PlanDeMejora -->
-            @Html.Partial("~/Views/PlanDeMejora/_crear.cshtml")
+                <h1 class="impText">Planes de Mejora - @Model.Count() asignados</h1>
         </div>
 
     </div>
@@ -86,26 +80,23 @@
                             <div>
                                 @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
                             </div>
-                            <div>
-                                <div class="createPlanButton">
-                                    <form action="objetivosDePlan" method="get">
-                                        <input type="submit" 
-                                               value="Objetivos de Plan" 
-                                               class="btn btn-info" />
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                     </td>
                 </tr>
             }
         </table>
         <hr />
+
+        <div class="botonCentrado">
+            <p>
+                @Html.ActionLink("Agregar Plan de Mejora", "Create", "PlanDeMejora", null, new { @class = "modal-link btn btn-Nuevo" })
+            </p>
+        </div>
+
     </div>
 
 
     <div class="fullWidth">
-        <p class="impText">Objetivos</p>
 
         @Html.Action("objetivosPlan", "PlanDeMejora", new { id = idPlan })
 
@@ -114,18 +105,17 @@
 
 
     <div class="fullWidth">
-        <p class="impText">Acciones de Mejora</p>
-           <h1>Acciones de mejora</h1>
+        <h2>Acciones de mejora</h2>
         <hr />
     </div>
 
 
 
     <div class="fullWidth">
-        <p class="impText">Accionables</p>
+        <h2 class="impText">Accionables</h2>
         @if (mostrarAccionables)
         {
-            <h1>accionables</h1>
+            <h2>Accionables</h2>
         }
         <hr />
     </div>

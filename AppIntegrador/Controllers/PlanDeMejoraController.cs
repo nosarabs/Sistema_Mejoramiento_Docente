@@ -49,7 +49,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View();
+            return View("_crear");
         }
 
         // POST: PlanDeMejora/Create

@@ -337,6 +337,7 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
+    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -380,7 +381,6 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
     <Content Include="Views\PlanDeMejora\Edit.cshtml" />
