@@ -209,7 +209,6 @@
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\PreguntaConOpciones.cs" />
     <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
@@ -338,6 +337,7 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
+    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -415,11 +415,11 @@
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
-    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
