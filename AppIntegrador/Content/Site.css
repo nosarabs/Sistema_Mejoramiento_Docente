@@ -481,6 +481,7 @@ html, body {
 
 .FilaTablasSeccionesPlanesDeMejora:hover {
     background-color: #ddd;
+    cursor: pointer;
 }
 
 /*Terminan tablas*/
