@@ -22,9 +22,18 @@ namespace AppIntegrador
          /*Responds to User Story TAM-2.1.*/
         public ActionResult Index()
         {
+            //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
+            if (TempData["alertmessage"] != null)
+            {
+                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+            }
+
             string username = HttpContext.User.Identity.Name;
             if (username != "admin@mail.com")
+            {
+                TempData["alertmessage"] = "Solo el administrador puede accesar esta pagina";
                 return RedirectToAction("../Home/Index");
+            }
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
              by the key: mail address.*/
             List<Usuario> Usuarios = db.Usuario.ToList();
@@ -99,22 +108,26 @@ namespace AppIntegrador
 
                 List<Persona> Personas = db.Persona.ToList();
 
+                //Primero confirmamos si alguna persona existe con ese correo
                 if (db.Persona.Find(persona.Correo) == null)
                 {
                     ObjectParameter result = new ObjectParameter("result", typeof(bool));
                     db.CheckID(persona.Identificacion, result);
-                    bool checkResult = (bool)result.Value;                    
+                    bool checkResult = (bool)result.Value;
+                    //Una vez confirmado verificamos si existe otra persona con ese mismo numero de identificacion
                     if (checkResult == false)
                     {
+                        //Ahora verificamos si el usuario introdujo un Carne, si si lo introdujo entonces agregamos el correo a los datos que van a ser insertados en Estudiante, si no
+                        //borramos todos los datos de estudiante para que el framework no itente añadirlo
                         if(persona.Estudiante.Carne != null)
                         {
                             persona.Estudiante.Correo = persona.Correo;
                         }
                         else
-                        {
+                        {                            
                             persona.Estudiante = null;
                         }
-
+                        //Nadie repetido, añadir a la BD
                         db.Persona.Add(persona);
                         db.SaveChanges();
                     }
@@ -207,7 +220,16 @@ namespace AppIntegrador
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
                         /*Stored procedure to change the mail of a given person*/
-                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo);
+                        ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
+                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
+                        bool modificationResult = (bool)modResult.Value;
+                        
+                        /*No pudo modificarse el correo por ya estar en la base de datos*/
+                        if (modificationResult == false)
+                        {
+                            ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
+                            return View(usuarioPersona);
+                        }
                         
                         if (originalUser != null)
                         {
@@ -270,21 +292,27 @@ namespace AppIntegrador
 
             /*If it was confirmed, then delete the user and its related person.*/
             string id = username + domain;
-            Persona persona = db.Persona.Find(id);
-            Usuario usuario = db.Usuario.Find(persona.Correo);
+            Usuario usuario = db.Usuario.Find(id);
 
-            if (usuario != null && persona != null)
+            if (usuario != null)
             {
-                /*Both user and person tuples are deleted from the database.*/
-                /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
-                db.Usuario.Remove(usuario);
-                db.Persona.Remove(persona);
-                db.SaveChanges();
+                if(id != "admin@mail.com")
+                {
+                    /*Both user and person tuples are deleted from the database.*/
+                    /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
+                    db.Usuario.Remove(usuario);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    TempData["alertmessage"] = "No se puede borrar el Administrador";
+                }
+
             }
             else {
                 /*Error message to be shown at page footer.*/
                 /*TO-DO: find a better way of showing errors.*/
-                TempData["Message"] = "No se pudo borrar el usuario!";
+                TempData["alertmessage"] = "No se pudo borrar el usuario";
             }
             
             return RedirectToAction("Index");

@@ -27,9 +27,16 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Index()
         {
+            //Si hay informacion de alerta en TempData entonces pasarla al viewbag
+            if (TempData["alertmessage"] != null)
+            {
+                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+            }
+
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login");
+
             }
             return View();
         }
