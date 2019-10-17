@@ -48,6 +48,7 @@
         @Html.LabelFor(model => model.Persona.CorreoAlt, "Correo alternativo", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-4">
             @Html.EditorFor(model => model.Persona.CorreoAlt, new { htmlAttributes = new { @class = "form-control" } })
+            
             @Html.ValidationMessageFor(model => model.Persona.CorreoAlt, "", new { @class = "text-danger" })
         </div>
     </div>

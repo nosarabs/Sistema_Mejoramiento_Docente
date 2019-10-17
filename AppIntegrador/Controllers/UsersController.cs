@@ -217,27 +217,25 @@ namespace AppIntegrador
                     /*To edit a person, first fetch him from the database using the email passed by the view.*/
                     var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == formerUserMail);
 
+                    bool mailChanged = formerUserMail != usuarioPersona.Persona.Correo ? true : false;
+
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
-                        /*Stored procedure to change the mail of a given person*/
-                        ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
-                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
-                        bool modificationResult = (bool)modResult.Value;
-                        
-                        /*No pudo modificarse el correo por ya estar en la base de datos*/
-                        if (modificationResult == false)
+                        if (mailChanged)
                         {
-                            ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
-                            return View(usuarioPersona);
-                        }
+                            /*Stored procedure to change the mail of a given person*/
+                            ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
+                            db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
+                            bool modificationResult = (bool)modResult.Value;
 
+                            /*No pudo modificarse el correo por ya estar en la base de datos*/
+                            if (modificationResult == false)
+                            {
+                                ModelState.AddModelError("Persona.Correo", "Ya existe un usuario en el sistema con este correo.");
+                                return View(usuarioPersona);
+                            }
+                        }
                         originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
-
-                        if (originalUser != null)
-                        {
-                            /*Stored procedure to change the mail of a given user*/
-                            //db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
-                        }
                         
                         /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
                         originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
