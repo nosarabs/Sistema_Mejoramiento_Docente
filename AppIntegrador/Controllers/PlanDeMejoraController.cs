@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,6 +18,11 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora
         public ActionResult Index()
         {
+            HttpContext context = System.Web.HttpContext.Current;
+            ObjectParameter count = new ObjectParameter("count", 999);
+            db.ContarPlanesUsuario(context.User.Identity.Name, count);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = context.User.Identity.Name;
             return View(db.PlanDeMejora.ToList());
         }
 

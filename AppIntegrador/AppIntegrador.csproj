@@ -206,16 +206,13 @@
     <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PreguntaConOpciones.cs" />
-    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
-    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -224,7 +221,6 @@
     <Compile Include="Models\Opciones_seleccionadas_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -252,6 +248,10 @@
     <Compile Include="Models\Pregunta.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Pregunta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -276,9 +276,6 @@
     </Compile>
     <Compile Include="Models\ResultadosFormularioModel.cs" />
     <Compile Include="Models\Seccion.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SeccionConPreguntas.cs" />
@@ -330,6 +327,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Index.cshtml" />
+    <Content Include=".editorconfig" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
@@ -337,7 +335,6 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
-    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -422,6 +419,10 @@
     <Content Include="Views\PlanDeMejora\_crear.cshtml" />
     <Content Include="Views\PlanDeMejora\_edit.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

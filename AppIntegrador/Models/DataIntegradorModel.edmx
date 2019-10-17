@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1501,6 +1501,10 @@
           <Parameter Name="codigoSeccion" Type="char" Mode="In" />
           <Parameter Name="orden" Type="int" Mode="In" />
         </Function>
+        <Function Name="ContarPlanesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="count" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FCod" Type="char" Mode="In" />
           <Parameter Name="CSigla" Type="varchar" Mode="In" />
@@ -1851,7 +1855,8 @@
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2026,9 +2031,9 @@
           <Property Name="nombTipoObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="codPlantilla" Type="Int32" />
           <NavigationProperty Name="AccionDeMejora" Relationship="Self.FK_AccionDeMejora_Objetivo" FromRole="Objetivo" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="PlanDeMejora" Relationship="Self.FK_Objetivo_Plan" FromRole="Objetivo" ToRole="PlanDeMejora" />
           <NavigationProperty Name="PlantillaObjetivo" Relationship="Self.FK_Objetivo_PlantillaObjetivo" FromRole="Objetivo" ToRole="PlantillaObjetivo" />
           <NavigationProperty Name="TipoObjetivo" Relationship="Self.FK_Objetivo_TipoObj" FromRole="Objetivo" ToRole="TipoObjetivo" />
-          <NavigationProperty Name="PlanDeMejora" Relationship="DataIntegradorModel.FK_Objetivo_Plan" FromRole="Objetivo" ToRole="PlanDeMejora" />
         </EntityType>
         <EntityType Name="Opciones_de_seleccion">
           <Key>
@@ -2140,11 +2145,11 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaInicio" Type="DateTime" Precision="0" />
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Objetivo" Relationship="Self.FK_Objetivo_Plan" FromRole="PlanDeMejora" ToRole="Objetivo" />
           <NavigationProperty Name="Profesor" Relationship="Self.AsignadoA" FromRole="PlanDeMejora" ToRole="Profesor" />
           <NavigationProperty Name="Funcionario" Relationship="Self.CreadoPor" FromRole="PlanDeMejora" ToRole="Funcionario" />
           <NavigationProperty Name="Formulario" Relationship="Self.Evalua" FromRole="PlanDeMejora" ToRole="Formulario" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.Origina" FromRole="PlanDeMejora" ToRole="Respuestas_a_formulario" />
-          <NavigationProperty Name="Objetivo" Relationship="DataIntegradorModel.FK_Objetivo_Plan" FromRole="PlanDeMejora" ToRole="Objetivo" />
         </EntityType>
         <EntityType Name="PlantillaAccionDeMejora">
           <Key>
@@ -2358,7 +2363,9 @@
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__3D2915A8" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_Accionable_AccionDeMejora">
-          <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1" />
+          <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccionDeMejora">
@@ -2374,7 +2381,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AccionDeMejora_Objetivo">
-          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1" />
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Objetivo">
@@ -2616,6 +2625,20 @@
               <PropertyRef Name="GNumero" />
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="GAnno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objetivo_Plan">
+          <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanDeMejora">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Objetivo">
+              <PropertyRef Name="codPlan" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3095,6 +3118,10 @@
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
           </AssociationSet>
+          <AssociationSet Name="FK_Objetivo_Plan" Association="Self.FK_Objetivo_Plan">
+            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
+            <End Role="Objetivo" EntitySet="Objetivo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Objetivo_PlantillaObjetivo" Association="Self.FK_Objetivo_PlantillaObjetivo">
             <End Role="PlantillaObjetivo" EntitySet="PlantillaObjetivo" />
             <End Role="Objetivo" EntitySet="Objetivo" />
@@ -3227,6 +3254,10 @@
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <FunctionImport Name="AgregarFormulario">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="AgregarOpcion">
             <Parameter Name="cod" Mode="In" Type="String" />
             <Parameter Name="orden" Mode="In" Type="Byte" />
@@ -3253,6 +3284,20 @@
             <Parameter Name="activo" Mode="In" Type="Boolean" />
             <Parameter Name="estado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="AsociarPreguntaConSeccion">
+            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
+            <Parameter Name="CodigoPregunta" Mode="In" Type="String" />
+            <Parameter Name="Orden" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AsociarSeccionConFormulario">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
+            <Parameter Name="orden" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ContarPlanesUsuario">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="count" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DesviacionEstandarEscalar">
             <Parameter Name="FCod" Mode="In" Type="String" />
             <Parameter Name="CSigla" Mode="In" Type="String" />
@@ -3276,11 +3321,18 @@
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerEmailUsuario">
+            <Parameter Name="pUsername" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="InOut" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-          <Parameter Name="questionCode" Mode="In" Type="String" />
+            <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-          <Parameter Name="sectionCode" Mode="In" Type="String" />
+            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
+            <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
@@ -3292,57 +3344,11 @@
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="SeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.SeccionesDeFormulario_Result)">
-            <Parameter Name="CodForm" Mode="In" Type="String" />
-          </FunctionImport>
-          <AssociationSet Name="FK_Objetivo_Plan" Association="DataIntegradorModel.FK_Objetivo_Plan">
-            <End Role="PlanDeMejora" EntitySet="PlanDeMejora" />
-            <End Role="Objetivo" EntitySet="Objetivo" />
-          </AssociationSet>
-          <FunctionImport Name="AgregarFormulario">
-            <Parameter Name="codigo" Mode="In" Type="String" />
-            <Parameter Name="nombre" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="AsociarPreguntaConSeccion">
-            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
-            <Parameter Name="CodigoPregunta" Mode="In" Type="String" />
-            <Parameter Name="Orden" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="AsociarSeccionConFormulario">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
-            <Parameter Name="orden" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ObtenerEmailUsuario">
-            <Parameter Name="pUsername" Mode="In" Type="String" />
-            <Parameter Name="email" Mode="InOut" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
-            <Parameter Name="CodForm" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="SeccionesDeFormulario_Result">
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
-          <Property Type="Int32" Name="Orden" Nullable="false" />
-        </ComplexType>
-        <Association Name="FK_Objetivo_Plan">
-          <End Type="DataIntegradorModel.PlanDeMejora" Role="PlanDeMejora" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DataIntegradorModel.Objetivo" Role="Objetivo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlanDeMejora">
-              <PropertyRef Name="codigo" />
-            </Principal>
-            <Dependent Role="Objetivo">
-              <PropertyRef Name="codPlan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="ObtenerSeccionesDeFormulario_Result">
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
@@ -3837,15 +3843,20 @@
               <ScalarProperty Name="Correo" ColumnName="CorreoFuncionario" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="AgregarFormulario" FunctionName="DataIntegradorModel.Store.AgregarFormulario" />
           <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaConOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntas" FunctionName="DataIntegradorModel.Store.AgregarPreguntas" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaSeleccion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaSeleccion" />
           <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="DataIntegradorModel.Store.AgregarSeccion" />
           <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="DataIntegradorModel.Store.AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
+          <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
+          <FunctionImportMapping FunctionImportName="ContarPlanesUsuario" FunctionName="DataIntegradorModel.Store.ContarPlanesUsuario" />
           <FunctionImportMapping FunctionImportName="DesviacionEstandarEscalar" FunctionName="DataIntegradorModel.Store.DesviacionEstandarEscalar" />
           <FunctionImportMapping FunctionImportName="LoginUsuario" FunctionName="DataIntegradorModel.Store.LoginUsuario" />
           <FunctionImportMapping FunctionImportName="Mediana" FunctionName="DataIntegradorModel.Store.Mediana" />
+          <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
           <FunctionImportMapping FunctionImportName="ObtenerOpcionesDePregunta" FunctionName="DataIntegradorModel.Store.ObtenerOpcionesDePregunta">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerOpcionesDePregunta_Result">
@@ -3855,12 +3866,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion" />
-          <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
-          <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
-          <FunctionImportMapping FunctionImportName="AgregarFormulario" FunctionName="DataIntegradorModel.Store.AgregarFormulario" />
-          <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
-          <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
-          <FunctionImportMapping FunctionImportName="ObtenerEmailUsuario" FunctionName="DataIntegradorModel.Store.ObtenerEmailUsuario" />
           <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
@@ -3869,6 +3874,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
+          <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

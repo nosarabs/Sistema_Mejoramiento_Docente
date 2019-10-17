@@ -14,7 +14,7 @@
 <div class="fullWidth">
     <div class="fullWidth">
         <div class="horizontalBoxes">
-            <h1 class="impText">Planes de Mejora - @Model.Count() asignados</h1>
+            <h1 class="impText">Planes de Mejora - @ViewBag.cantidad asignados</h1>
         </div>
 
     </div>
@@ -73,7 +73,7 @@
                     <td>
                         <div class="verticalBoxes">
                             <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_edit.cshtml", plan)
+                                @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
                             </div>
                             <!-- Boton para editar el plan de mejora -->
                             <div class="createPlanButton">
@@ -82,7 +82,7 @@
                                 </button>
                             </div>
                             <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_borrar.cshtml", plan)
+                                @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
                             </div>
                         </div>
                     </td>
@@ -93,7 +93,7 @@
 
         <div class="botonCentrado">
             <p>
-                @Html.ActionLink("Agregar Plan de Mejora", "Create", "PlanDeMejora", null, new { @class = "modal-link btn btn-Nuevo" })
+                @Html.ActionLink("Agregar Plan de Mejora", "Create", "PlanDeMejora", new { usuarioCreador = ViewBag.nombre }, new { @class = "modal-link btn btn-Nuevo" })
             </p>
         </div>
 
@@ -107,8 +107,6 @@
         <h2>Acciones de mejora</h2>
         <hr />
     </div>
-
-
 
     <div class="fullWidth">
         <h2 class="impText">Accionables</h2>
