@@ -63,9 +63,9 @@
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+                    @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo }) |
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
                 </td>
             </tr>
         }
@@ -90,3 +90,10 @@
         }
     </script>
 }
+
+<style>
+    .div-with-padding {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+</style>
