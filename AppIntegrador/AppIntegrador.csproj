@@ -378,9 +378,6 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Details.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
     <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
@@ -415,9 +412,6 @@
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
-    <Content Include="Views\PlanDeMejora\_borrar.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crear.cshtml" />
-    <Content Include="Views\PlanDeMejora\_edit.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
