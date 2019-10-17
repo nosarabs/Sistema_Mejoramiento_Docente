@@ -30,7 +30,7 @@ namespace AppIntegrador
           "~/Content/login.css"));
             // Custom bundles
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                      "~/Scripts/custom/login.js"));
+                      "~/Scripts/UsuariosYPerfiles/login.js"));
 
         }
     }
