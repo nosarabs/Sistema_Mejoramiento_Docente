@@ -4,30 +4,89 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <h2>Banco de Formularios</h2>
+    @using (Html.BeginForm(FormMethod.Get))
+    {
+        <div class="form-horizontal panel-group">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
+            <div class=" panel panel-default">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo.Trim() }) |
-            @Html.ActionLink("Editar", "Edit", new { id = item.Codigo }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
-        </td>
-    </tr>
+                <div class="panel-body test2">
+                    <b>
+                        Búsqueda:
+                    </b>
+
+                    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
+                        @* campo de filtrado para ingresar el código *@
+                        <input type="radio" name="sel" value="1" id="codigo"
+                               onclick="enableElement(this.form.elements['inp1']);">
+                        <label for="codigo">Codigo</label>
+                        <input type="text" name="inp1" disabled="disabled">
+
+                        @* campo de filtrado para ingresar el enunciado *@
+                        <input type="radio" name="sel" value="3" id="enunciado"
+                               onclick="enableElement(this.form.elements['inp2']);">
+                        <label for="enunciado">Enunciado</label>
+                        <input type="text" name="inp2" disabled="disabled">
+                        @* Enviar el filtrado al controlador *@
+                        <input type="submit"
+                               name="submit"
+                               value="Filtrar"
+                               class="btn" />
+                        <br />
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <tr>
+            <th>
+                Código
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Operaciones
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<style>
+    .test2 {
+        background: #fbfbfb;
+    }
+</style>
+
+@section Scripts {
+    <script type="text/javascript">
+        var currentEnabled = null;
+        function enableElement(elem) {
+            if (currentEnabled) {
+                currentEnabled.disabled = true;
+            }
+            elem.disabled = false;
+            currentEnabled = elem;
+        }
+    </script>
 }
-
-</table>
