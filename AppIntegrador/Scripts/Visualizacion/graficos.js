@@ -38,8 +38,8 @@
                 tooltips: {
                     enabled: false
                 },
-                responsive: false,
-                maintainAspectRatio: false,
+                responsive: true,
+                maintainAspectRatio: true,
                 devicePixelRatio: 2,
                 scales: {
                     yAxes: [{
@@ -127,8 +127,8 @@
                 tooltips: {
                     enabled: false
                 },
-                responsive: false,
-                maintainAspectRatio: false,
+                responsive: true,
+                maintainAspectRatio: true,
                 devicePixelRatio: 2,
                 plugins: {
                     datalabels: {

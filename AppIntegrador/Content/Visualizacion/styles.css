@@ -12,7 +12,7 @@ h3 {text-align: center;}
 
 .collapsible {
     background-color: #41ade7;
-    color: black;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -47,19 +47,56 @@ h3 {text-align: center;}
 	background-color: #f1f1f1;
 }
 
+/*Llugar donde se dibuja el gráfico*/
 canvas{
     margin: 50px auto;
+    height: inherit;
+    min-height: inherit;
+    width: inherit;
+    min-width: inherit;
 }
 
+/*Cuadro para las justificaciones*/
 .myBox {
+    position: relative;
+    vertical-align: middle;
     margin: 30px auto;
-    border: 2px solid #000000;
-    padding: 30px;
+    margin-top: 0;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 0;
     font: 18px;
+    width: inherit;
+    height: inherit;
     overflow: auto;
-    background-color: #F9F9F9;
+    /*padding: 30px;*/
+    background-color: lightgray;
     list-style-position: inside;
+    position: inherit;
 }
+
+.myBox ul 
+{
+    background-color: inherit;
+    padding: 8px;
+    width: 100%;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.myBox ul li 
+{
+    background-color: dimgrey;
+    /*padding: 20px;*/
+    /*border: 1px solid #000000;*/
+    border-radius: 8px;
+    height: auto;
+    color: white;
+    margin: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+
 
 .estadisticas {
     text-align: center;
@@ -67,10 +104,27 @@ canvas{
 }
 
 .col {
-
+    /*width: 50%;*/
+    align-self: center;
+    margin: 2% !important;
 }
 
 /* Clear floats after the columns */
 .row {
+    vertical-align: middle;
+    /*display: inherit;*/
+}
 
+.row:after 
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row h3 
+{
+    padding:3%;
+    text-align: center;
+    width: 100%;
 }

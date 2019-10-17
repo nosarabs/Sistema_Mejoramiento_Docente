@@ -2,8 +2,12 @@
 
     constructor(tipo) {
 
+        /*var fila = document.createElement("div");
+        fila.className = "row";*/
         this.base = document.createElement("div");
         this.base.className = "row content";
+    
+  
         this.base.id = "tipo";
 
     }
@@ -26,10 +30,14 @@ class BaseDosCol extends BaseRespuesta{
         this.rightCol = document.createElement("div");
         this.rightCol.className = "col";
         this.canvas = document.createElement("canvas");
-        this.canvas.setAttribute("width", "800"); //Ancho canvas
-        this.canvas.setAttribute("height", "550"); //Largo canvas
+        this.canvas.setAttribute("width", "500vw"); //Ancho canvas
+        this.canvas.setAttribute("height", "400vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
+
+        var tituloJustificacion = document.createElement("h3");
+        tituloJustificacion.innerText = "Justificación de los resultados";
+        this.rightCol.appendChild(tituloJustificacion);    
 
         this.rightCol.appendChild(this.justificacion);
         this.leftCol.appendChild(this.canvas);
@@ -90,6 +98,10 @@ class BaseTexto extends BaseRespuesta {
         this.textoAbierto = document.createElement("div");
         this.textoAbierto.className = "myBox";
 
+        var tituloJustificacion = document.createElement("h3");
+        tituloJustificacion.innerText = "Justificación de los resultados";
+
+        this.base.appendChild(tituloJustificacion);    
         this.base.appendChild(this.textoAbierto);
 
 
