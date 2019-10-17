@@ -23,6 +23,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <h3>Plan de Mejora a ser borrado:</h3>
                 <div>
                     <dl class="dl-horizontal">
                         <dt>
@@ -59,13 +60,14 @@
 
                     </dl>
                 </div>
+
+            </div>
+            <div class="modal-footer">
                 <form action="BorrarPlan" method="post">
-                    <div class="horizontalBoxes">
-                        <div class="centeredButtons">
-                            <input name="codigoPlan" class="form-control" value=@planFinal.codigo type="hidden" />
-                            <input type="submit" value="Borrar" class="btn btn-danger" />
-                            <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
+                    <div class="botonCentrado">
+                        <input name="codigoPlan" class="form-control" value=@planFinal.codigo type="hidden" />
+                        <input type="submit" value="Borrar Plan" class="btn btn-danger" />
+                        <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
             </div>

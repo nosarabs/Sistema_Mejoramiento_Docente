@@ -1,49 +1,140 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
 
 @{
-    ViewBag.Title = "Planes de Mejora";
-    AppIntegrador.Models.PlanDeMejora planTemp = new AppIntegrador.Models.PlanDeMejora();
+    ViewBag.Title = "Index";
+
+    var mostrarObjetivos = false;
+    var mostrarAccionesDeMejora = false;
+    var mostrarAccionables = false;
 }
 
 
-<div class="horizontalBoxes">
+
+
+<div class="fullWidth">
     <div class="fullWidth">
         <div class="horizontalBoxes">
-            <div>
-                <p class="impText">Planes de Mejora - @Model.Count() asignados</p>
-            </div>
-            <div>
-                @Html.Partial("~/Views/PlanDeMejora/_tablaPlanesDeMejora.cshtml")
-            </div>
-            <div class="fullWidth">
-                @Html.Partial("~/Views/PlanDeMejora/_crearPlanDeMejora.cshtml", planTemp)
-            </div>
+            <h1 class="impText">Planes de Mejora - @Model.Count() asignados</h1>
         </div>
-        <hr />
+
     </div>
 
     <br />
 
+    <div class="planesTable">
+        <table class='table table-bordered table-condensed table-striped table-hover'>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.codigo)
 
-    <div class="fullWidth">
-        <p class="impText">Objetivos</p>
-        <input type="button" class="btn btn-primary" value="Objetivos" onclick="location.href='@Url.Action("Index", "Objetivos")'" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaFin)
+                </th>
+                <th>
+                    Creado por:
+                </th>
+                <th>
+                    Asignado a:
+                </th>
+                <th>
+                    Opciones de Edición
+                </th>
+            </tr>
+
+            @foreach (var plan in Model)
+            {
+                <tr>
+                    <td id="codigoTemporal">
+                        @Html.DisplayFor(modelItem => plan.codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => plan.fechaFin)
+                    </td>
+                    <td>
+                        @HttpContext.Current.User.Identity.Name
+                    </td>
+                    <td>
+                        @HttpContext.Current.User.Identity.Name
+                    </td>
+
+                    <td>
+                        <div class="verticalBoxes">
+                            <div>
+                                @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+                            </div>
+                            <!-- Boton para editar el plan de mejora -->
+                            <div class="createPlanButton">
+                                <button type="button" onclick="clickObjetivo(@plan.codigo)" class="btn btn-primary" id="verObjetivos">
+                                    Ver objetivos
+                                </button>
+                            </div>
+                            <div>
+                                @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+
+        <div class="botonCentrado">
+            <p>
+                @Html.ActionLink("Agregar Plan de Mejora", "Create", "PlanDeMejora", null, new { @class = "modal-link btn btn-Nuevo" })
+            </p>
         </div>
+
+    </div>
+
+    <div class="objetivosPlan">
+        <h2>Objetivos</h2>
         <hr />
     </div>
 
 
     <div class="fullWidth">
-        <p class="impText">Acciones de Mejora</p>
-        <input type="button" class="btn btn-primary" value="Accion De Mejora" onclick="location.href='@Url.Action("Index", "AccionDeMejora")'" />
+        <h2>Acciones de mejora</h2>
         <hr />
     </div>
 
 
 
-    <div class="fullWidth">
-        <p class="impText">Accionables</p>
-        <h1>accionables</h1>
+    @*<div class="fullWidth">
+        <h2 class="impText">Accionables</h2>
+        @if (mostrarAccionables)
+        {
+            <h2>Accionables</h2>
+        }
         <hr />
-    </div>
+    </div>*@
 </div>
+
+
+
+@section Scripts{
+    <script>
+        function myFunction() { 
+            var x = document.getElementById("codigoPlan").value;
+            console.log(x);
+        } 
+        clickObjetivo = function(id) {
+            $(".objetivosPlan").load("objetivosPlan",
+                { id: id });
+        };
+        $(document).ready(function () {
+        });
+    </script>
+}
