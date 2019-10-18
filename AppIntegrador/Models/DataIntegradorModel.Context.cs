@@ -27,7 +27,6 @@ namespace AppIntegrador.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Accionable> Accionable { get; set; }
         public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
@@ -95,6 +94,27 @@ namespace AppIntegrador.Models
                 new ObjectParameter("texto", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarOpcion", codParameter, ordenParameter, textoParameter);
+        }
+    
+        public virtual int AgregarPlan(Nullable<int> codigo, string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", codigoParameter, nombreParameter, fechaInicioParameter, fechaFinParameter);
         }
     
         public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion)

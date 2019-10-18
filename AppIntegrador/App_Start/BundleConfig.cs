@@ -24,7 +24,8 @@ namespace AppIntegrador
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/Navbar/navbar.css"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
           "~/Content/login.css"));

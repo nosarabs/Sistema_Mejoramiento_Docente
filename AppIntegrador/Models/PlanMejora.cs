@@ -4,32 +4,28 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace AppIntegrador.Models.Metadata
+namespace AppIntegrador.Models
 {
-    public class PlanDeMejoraMetadata
+    public class PlanMejora
     {
-        [Display(Name = "Código")]
-        [Required(ErrorMessage = "Este campo es necesario")]
-        [Range(0, int.MaxValue, ErrorMessage = "Este valor debe ser un número entero no negativo")]
         public int codigo { get; set; }
 
+        [Required(ErrorMessage = "Este campo es requerido!!")]
         [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
         [MaxLength(30, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
-        [Required]
         public string nombre { get; set; }
 
-        [Display(Name = "Inicio")]
+        [Required(ErrorMessage = "Este campo es requerido!!")]
+        [Display(Name = "Fecha Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [Required]
-        public Nullable<System.DateTime> fechaInicio { get; set; }
+        public DateTime fechaInicio { get; set; }
 
-        [Display(Name = "Fin")]
+        [Required(ErrorMessage = "Este campo es requerido!!")]
+        [Display(Name = "Fecha Finalización")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [Required]
-        public Nullable<System.DateTime> fechaFin { get; set; }
-
+        public DateTime fechaFin { get; set; }
     }
 }
