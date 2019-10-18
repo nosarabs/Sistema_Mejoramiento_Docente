@@ -44,7 +44,7 @@ namespace AppIntegrador.Controllers
             {
                 db.AccionDeMejora.Add(accionDeMejora);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "PlanDeMejora");
             }
 
             ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");

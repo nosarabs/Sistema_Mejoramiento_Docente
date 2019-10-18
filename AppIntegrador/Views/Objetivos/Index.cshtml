@@ -95,5 +95,13 @@
 </div>
 
 
+<script>
+    $("#dataObj tr").click(function () {
+        var selected = $(this).hasClass("highlight2");
+        $("#dataObj tr").removeClass("highlight2");
+        if (!selected)
+            $(this).addClass("highlight2");
+    });
+</script>
 
 
