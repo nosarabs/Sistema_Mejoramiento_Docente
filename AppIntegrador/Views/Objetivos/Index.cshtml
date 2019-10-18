@@ -1,29 +1,46 @@
 ﻿@model IEnumerable<AppIntegrador.Models.Objetivo>
-
 @{
     ViewBag.Title = "Index";
 }
 
+<div>
+    @*
+        Modificado por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+        Cambio para que se adapte a la vista parcial de planes de mejoras.
+    *@
 
-<div class="fullWidth">
-    <h2>Objetivos</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="impText">Objetivos</h2>
+        </div>
+        <div class="col-md-2">
 
-    @*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+        </div>
+        <div class="col-md-2">
+            <br />
+            @*
+                Modificado por: Johan Córdoba
+                Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+                Cambio para que redireccione al create de objetivo
+            *@
+            @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
+        </div>
+
+    </div>
 
     @if (Model.Count() == 0)
     {
         <div class="centeredText">
             <p>
-                Aún no se han creado objetivos
+                Aún no se han creado objetivos en el plan seleccionado
             </p>
         </div>
     }
     else
     {
-        <table class="table table-bordered table-condensed table-striped table-hover">
-            <tr>
+        <table class="table">
+            <tr class="EncabezadoTabla">
                 <th>
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
@@ -40,67 +57,38 @@
                     Opciones
                 </th>
             </tr>
-            @*
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PlantillaObjetivo.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TipoObjetivo.nombre)
-                </th>
-                <th></th>
-            </tr>
 
-            @foreach (var item in Model)
+            @foreach (var obj in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PlantillaObjetivo.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TipoObjetivo.nombre)
-                    </td>
-                </tr>
-            }*@
-
-            @foreach (var item in Model)
-            {
-                //if(item.codPlan == 0001) { 
-                    <tr class="FilaTablasSeccionesPlanesDeMejora">
+                <tbody id="dataObj">
+                    <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@obj.codPlan, `@obj.nombre`);">
                         <td class="TablasNombre">
-                            @Html.DisplayFor(modelItem => item.nombre)
+                            @Html.DisplayFor(modelItem => obj.nombre)
                         </td>
                         <td class="TablasDescripcion">
-                            @Html.DisplayFor(modelItem => item.descripcion)
+                            @Html.DisplayFor(modelItem => obj.descripcion)
                         </td>
                         <td class="TablasFecha">
-                            @Html.DisplayFor(modelItem => item.fechaInicio)
+                            @Html.DisplayFor(modelItem => obj.fechaInicio)
                         </td>
                         <td class="TablasFecha">
-                            @Html.DisplayFor(modelItem => item.fechaFin)
+                            @Html.DisplayFor(modelItem => obj.fechaFin)
                         </td>
                         <td class="TablasOpciones botonCentrado">
-                            @Html.ActionLink("Editar", "Edit", "Objetivos",new { plan=item.codPlan, title=item.nombre }, new { @class = "modal-link btn btn-primary" })
+                            @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                            @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan=item.codPlan, title=item.nombre}, new { @class = "modal-link btn btn-danger" })
+                            @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })
                         </td>
                     </tr>
-                //}
+                </tbody>
             }
 
         </table>
     }
 
-    
-    @*
-    Modificado por: Johan Córdoba
-    Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
-    Cambio para que redireccione al create de objetivo
-    *@
-    
-    <div class="botonCentrado">
-        <p>
-            @Html.ActionLink("Agregar objetivo", "Create", "Objetivos", null, new { @class = "modal-link btn btn-Nuevo" })
-        </p>
-    </div>
+
+    <hr />
 </div>
+
+
+

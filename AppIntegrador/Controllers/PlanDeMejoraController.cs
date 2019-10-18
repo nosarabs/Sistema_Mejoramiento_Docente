@@ -39,6 +39,18 @@ namespace AppIntegrador.Controllers
             return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
         }
 
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            if (Int32.TryParse(id, out idPlan))
+            {
+                IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+                return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+            }
+            return null;
+        }
+
+
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {

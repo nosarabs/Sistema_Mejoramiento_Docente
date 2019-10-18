@@ -20,6 +20,14 @@ namespace AppIntegrador.Controllers
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
         }
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            Int32.TryParse(id, out idPlan);
+            IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+            return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+        }
+
 
         // GET: Objetivos/Details/5
         public ActionResult Details(int? id)

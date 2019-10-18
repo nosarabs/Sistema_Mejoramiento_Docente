@@ -8,25 +8,28 @@ namespace AppIntegrador.Models.Metadata
 {
     public class PlanDeMejoraMetadata
     {
+        [Display(Name = "Código")]
+        [Required(ErrorMessage = "Este campo es necesario")]
+        [Range(0, int.MaxValue, ErrorMessage = "Este valor debe ser un número entero no negativo")]
         public int codigo { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido!!")]
         [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
         [MaxLength(30, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
+        [Required]
         public string nombre { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido!!")]
-        [Display(Name = "Fecha Inicio")]
+        [Display(Name = "Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime fechaInicio { get; set; }
+        [Required]
+        public Nullable<System.DateTime> fechaInicio { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido!!")]
-        [Display(Name = "Fecha Finalización")]
+        [Display(Name = "Fin")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime fechaFin { get; set; }
+        [Required]
+        public Nullable<System.DateTime> fechaFin { get; set; }
 
     }
 }
