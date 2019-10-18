@@ -20,7 +20,6 @@ namespace AppIntegrador.Controllers
         {
             HttpContext context = System.Web.HttpContext.Current;
             ObjectParameter count = new ObjectParameter("count", 999);
-            db.ContarPlanesUsuario(context.User.Identity.Name, count);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
             return View(db.PlanDeMejora.ToList());
