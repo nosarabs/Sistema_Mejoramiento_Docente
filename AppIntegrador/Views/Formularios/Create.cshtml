@@ -12,10 +12,10 @@
 
     <table class="table">
         <tr>
-            <td style="width:40%">
+            <td style="width:48%">
                 <h2>Crear Formulario</h2>
                 <hr />
-                <div class="form-horizontal">
+  
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
@@ -32,10 +32,10 @@
                                required = "required",
                                placeholder = "Código",
                                rows = "5",
-                               @onkeyup = "charCount(this)"
+                               @onkeyup = "contarCaracteres(this)"
                            }
                        })
-                            <div class="counter small pull-right">0/8 caracteres usados</div>
+                            <div class="contador small pull-right">0/8 caracteres usados</div>
                         </div>
                     </div>
 
@@ -54,27 +54,41 @@
                                    required = "required",
                                    placeholder = "Nombre del formulario",
                                    rows = "5",
-                                   @onkeyup = "charCount(this)"
+                                   @onkeyup = "contarCaracteres(this)"
                                }
                            })
 
-                                <div class="counter small pull-right">0/250 caracteres usados</div>
+                                <div class="contador small pull-right">0/250 caracteres usados</div>
                             </form>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-success" id="Create" data-toggle="modal" data-target="#myModal" />
+                            <input type="submit" value="Crear" class="btn btn-info" id="Create"/>
                             @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
                         </div>
                     </div>
-                </div>
+
+
+            
+            </td>
+           
+            <td class="align-middle center-block">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <button type="button" class="btn btn-primary btn-arrow-left" onclick="addSeccionToFormulario()">Agregar</button>
+
             </td>
 
-
-
-            <td style="width:60%">
+            <td style="width:48%">
                 @Html.Partial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion)
             </td>
         </tr>
@@ -83,15 +97,132 @@
 
 
 <style>
+
+    .btn-info {
+        color: #fff;
+        background-color: #41ade7;
+    }
+
     .required:after {
         content: "*";
         font-weight: bold;
         color: red;
     }
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td 
+    {
+       padding:3%;
+    }
+
+        .btn {
+   /* just for this demo. */
+   
+   margin-top: 5px;
+}
+
+.btn-arrow-right,
+.btn-arrow-left {
+   position: relative;
+   padding-left: 13px;
+   padding-right: 18px;
+}
+
+.btn-arrow-right {
+   padding-left: 20px;
+}
+
+.btn-arrow-left {
+   padding-right: 10px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after,
+.btn-arrow-left:before {
+   /* make two squares (before and after), looking similar to the button */
+   
+   content: "";
+   position: absolute;
+   top: 5px;
+   /* move it down because of rounded corners */
+   
+   width: 22px;
+   /* same as height */
+   
+   height: 22px;
+   /* button_outer_height / sqrt(2) */
+   
+   background: inherit;
+   /* use parent background */
+   
+   border: inherit;
+   /* use parent border */
+   
+   border-left-color: transparent;
+   /* hide left border */
+   
+   border-bottom-color: transparent;
+   /* hide bottom border */
+   
+   border-radius: 0px 4px 0px 0px;
+   /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
+   
+   -webkit-border-radius: 0px 4px 0px 0px;
+   -moz-border-radius: 0px 4px 0px 0px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after {
+   transform: rotate(45deg);
+   /* rotate right arrow squares 45 deg to point right */
+   
+   -webkit-transform: rotate(45deg);
+   -moz-transform: rotate(45deg);
+   -o-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+}
+
+.btn-arrow-left:before,
+.btn-arrow-left:after {
+   transform: rotate(225deg);
+   /* rotate left arrow squares 225 deg to point left */
+   
+   -webkit-transform: rotate(225deg);
+   -moz-transform: rotate(225deg);
+   -o-transform: rotate(225deg);
+   -ms-transform: rotate(225deg);
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:before {
+   /* align the "before" square to the left */
+   
+   left: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:after {
+   /* align the "after" square to the right */
+   
+   right: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:before {
+   /* bring arrow pointers to front */
+   
+   z-index: 1;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:after {
+   /* hide arrow tails background */
+   
+   background-color: white;
+}
+
 </style>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script>
         $(function () {
@@ -120,6 +251,31 @@
             });
         });
     </script>
+
+        <script>
+        function pregunta() {
+            swal({
+                title: "Pregunta creada con éxito!",
+                text: "Puede ser vista en el banco de preguntas",
+                type: "success",
+                showConfirmButton: true
+            },
+                function () {
+                    window.location.href = "Create";
+                });
+        }
+
+            $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
+            $("#Add").trigger('click');
+        });
+    </script>
+
+
+
 
     <script type="text/javascript">
         var currentEnabled = null;

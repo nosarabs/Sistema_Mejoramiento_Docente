@@ -83,3 +83,19 @@
     position: relative;
     z-index: 2;
 }
+
+#container_users {
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-details-header {
+    text-align: right;
+    font-weight:bold;
+}
+
+.container-details-data {
+    text-align: left;
+}
