@@ -200,6 +200,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -352,8 +353,9 @@
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
-    <Content Include="Scripts\custom\login.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
