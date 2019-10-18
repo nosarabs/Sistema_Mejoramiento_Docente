@@ -359,7 +359,7 @@ namespace AppIntegrador
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
                 string pattern = @"^[A-Z1-9]\d{5}$";
-                Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                Regex r = new Regex(pattern);
                 MatchCollection matches = r.Matches(persona.Estudiante.Carne);
                 if (matches.Count == 0)
                 {
