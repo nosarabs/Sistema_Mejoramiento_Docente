@@ -3,18 +3,13 @@
 @{
     ViewBag.Title = "Index";
 
-    var mostrarObjetivos = false;
-    var mostrarAccionesDeMejora = false;
-    var mostrarAccionables = false;
-
     @*
         Añadido por: Johan Córdoba
         Historia a la que pertenece: MOS-1.3 "agregar, modificar, borrar y consultar las acciones de mejora de un objetivo"
         Permite pasar más de un pármetro al javascrip que actualiza las acciones de un plan.
     *@
     dynamic item = new System.Dynamic.ExpandoObject();
-    item.MultiLineString = @"a multi-line
-     string";
+    item.MultiLineString = @"a multi-line string";
     item.SingleLineString = "a single-line string";
 }
 
@@ -38,16 +33,15 @@
         </div>
 
     </div>
-
-    <br />
+   
 
     <div>
         <table class="table">
             <tr class="EncabezadoTabla">
-                <th>
-                    @Html.DisplayNameFor(model => model.codigo)
+                @*<th>
+                        @Html.DisplayNameFor(model => model.codigo)
 
-                </th>
+                    </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
@@ -72,10 +66,10 @@
             {
                 <tbody id="data">
                     <tr class="FilaTablasPlanesDeMejora" onclick="clickPlan(@plan.codigo)">
-                        <td id="codigoTemporal" class="TablasCodigo">
-                            @Html.DisplayFor(modelItem => plan.codigo)
-                        </td>
-                        <td class="TablasNombre">
+                        @*<td id="codigoTemporal" class="TablasCodigo">
+                                @Html.DisplayFor(modelItem => plan.codigo)
+                            </td>*@
+                        <td class="TablasNombrePlan">
                             @Html.DisplayFor(modelItem => plan.nombre)
                         </td>
                         <td class="TablasUsuario">
@@ -90,15 +84,10 @@
                         <td class="TablasFecha">
                             @Html.DisplayFor(modelItem => plan.fechaFin)
                         </td>
-                        <td>
-                            <div class="verticalBoxes">
-                                <div>
-                                    @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
-                                </div>
-                                <div>
-                                    @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                                </div>
-                            </div>
+                        <td class="TablasOpciones botonCentrado">
+                            @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+
+                            @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
                         </td>
                     </tr>
                 </tbody>
@@ -151,16 +140,16 @@
             $(".objetivosPlan").load("objetivosPlan",
                 { id: id });
             var content = '<div class="row">\
-                    <div class="col-md-8">\
-                        <h2 class="impText">Acciones de mejora</h2>\
+                        <div class="col-md-8">\
+                            <h2 class="impText">Acciones de mejora</h2>\
+                        </div>\
                     </div>\
-                </div>\
-                <div class="centeredText">\
-                    <p>\
-                        Seleccione un Objetivo\
-                    </p>\
-                </div>\
-                <hr />';
+                    <div class="centeredText">\
+                        <p>\
+                            Seleccione un Objetivo\
+                        </p>\
+                    </div>\
+                    <hr />';
             document.getElementById('acciones').innerHTML = content;
         };
 

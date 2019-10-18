@@ -24,7 +24,7 @@
                 Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
                 Cambio para que redireccione al create de objetivo
             *@
-            @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
+            @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", new { id = ViewBag.idPlan }, new { @class = "modal-link btn btn-Nuevo col-md-12" })
         </div>
 
     </div>
@@ -74,10 +74,14 @@
                         <td class="TablasFecha">
                             @Html.DisplayFor(modelItem => obj.fechaFin)
                         </td>
-                        <td class="TablasOpciones botonCentrado">
-                            @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
+                        <td class="TablasOpciones">
+                            <div class="col-md-6">
+                                @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })
+                            </div>
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                            @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })
                         </td>
                     </tr>
                 </tbody>
@@ -89,6 +93,7 @@
 
     <hr />
 </div>
+
 
 
 

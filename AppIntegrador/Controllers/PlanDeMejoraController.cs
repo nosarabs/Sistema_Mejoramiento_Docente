@@ -40,6 +40,7 @@ namespace AppIntegrador.Controllers
         {
             var idPlan = -1;
             Int32.TryParse(id, out idPlan);
+            ViewBag.idPlan = idPlan;
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
             return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
         }
@@ -169,14 +170,21 @@ namespace AppIntegrador.Controllers
         {
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
-                var planTemp = new PlanDeMejora();
-                var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                planTemp.codigo = codigoTemporal + 1;
-                planTemp.nombre = nombre;
-                planTemp.fechaInicio = fechaInicio;
-                planTemp.fechaFin = fechaFin;
-                this.Create(planTemp);
+                if( DateTime.Compare(fechaInicio, fechaFin) < 0)
+                {
+                    var planTemp = new PlanDeMejora();
+                    var plans = this.db.PlanDeMejora.ToList();
+                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
+                    planTemp.codigo = codigoTemporal + 1;
+                    planTemp.nombre = nombre;
+                    planTemp.fechaInicio = fechaInicio;
+                    planTemp.fechaFin = fechaFin;
+                    this.Create(planTemp);
+                }
+                else
+                {
+                    return RedirectToAction("Index", ViewBag.Fecha = -1);
+                }
             }
             return RedirectToAction("Index");
         }
