@@ -64,7 +64,7 @@ function validateEmail(input, warningOutput)
     }
     else
     {
-        warningOutput.innerHTML = "<p>El correo no posee un formato valido</p>";
+        warningOutput.innerHTML = "<p>El correo no posee un formato válido</p>";
         return false;
     }
 }

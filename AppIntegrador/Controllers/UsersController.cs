@@ -363,7 +363,7 @@ namespace AppIntegrador
                 MatchCollection matches = r.Matches(persona.Estudiante.Carne);
                 if (matches.Count == 0)
                 {
-                    ModelState.AddModelError("Persona.Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayuscula o un numero, los demas solo numeros");
+                    ModelState.AddModelError("Persona.Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayúscula o un número, los demás solo números");
                     return false;
                 }
             }
@@ -391,7 +391,7 @@ namespace AppIntegrador
                     regexResult = new Regex(pattern);
                     if (regexResult.Matches(id).Count == 0)
                     {
-                        ModelState.AddModelError("Persona.Identificacion", "El numero de cedula debe ser de 9 digitos, el primero no puede ser 0 y no debe tener guiones.");
+                        ModelState.AddModelError("Persona.Identificacion", "El número de cédula debe ser de 9 dígitos, el primero no puede ser 0 y no debe tener guiones.");
                         return false;
                     }
                     break;
@@ -400,7 +400,7 @@ namespace AppIntegrador
                     regexResult = new Regex(pattern);
                     if (regexResult.Matches(id).Count == 0)
                     {
-                        ModelState.AddModelError("Persona.Identificacion", "El pasaporte debe ser de 9 digitos y no tener guiones.");
+                        ModelState.AddModelError("Persona.Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
                         return false;
                     }
                     break;
@@ -409,7 +409,7 @@ namespace AppIntegrador
                     regexResult = new Regex(pattern);
                     if (regexResult.Matches(id).Count == 0)
                     {
-                        ModelState.AddModelError("Persona.Identificacion", "La cedula de residencia debe ser de 12 digitos y no tener guiones.");
+                        ModelState.AddModelError("Persona.Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
                         return false;
                     }
                     break;
