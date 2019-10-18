@@ -18,9 +18,11 @@
             <div>
                 <div class="mainBar">
                     <div class="item">
-                        <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
+                        <a href="https://www.ucr.ac.cr/" class="logo" target="_blank">
+                            <img height="50" src="~/Content/images/ucr_promo.png" alt="ucr logo" />
+                        </a>
                     </div>
-                    <div class="item">
+                    <div class="item nombreProyecto">
                         @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
                     </div>
                     <div class="item">
@@ -44,30 +46,30 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <li>
-                            <a  href="/Users/Index">Usuarios</a>
+                            <a href="/Users/Index">Usuarios &#9660;</a>
                             <ul>
                                 <li><a href="/Users/Index">Administración de usuarios</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="">Formularios</a>
+                            <a href="">Formularios &#9660;</a>
                             <ul>
                                 <li>
-                                    <a href="">Formulario</a>
+                                    <a href="">Formulario &#9658;</a>
                                     <ul>
                                         <li><a href="/Formularios/Create">Crear Formulario</a></li>
                                         <li><a href="/Formularios/Index">Ver Formulario</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="">Sección</a>
+                                    <a href="">Sección &#9658;</a>
                                     <ul>
                                         <li><a href="/Seccion/Create">Crear Sección</a></li>
                                         <li><a href="/Seccion/Index">Ver Sección</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="">Preguntas</a>
+                                    <a href="">Preguntas &#9658;</a>
                                     <ul>
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
@@ -76,13 +78,15 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="">Planes de Mejora</a>
+                            <a href="">Planes de Mejora &#9660;</a>
                             <ul>
-                                <li><a href="/PlanDeMejora/Index">Mis Planes de Mejora</a></li>
-                            </ul>
+                                <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
+                                <li><a href="#">Banco de Objetivos</a></li>
+                                <li><a href="#">Banco de Acciones de Mejora</a></li>
+                            </ul>       
                         </li>
                         <li>
-                            <a href="">Formulario</a>
+                            <a href="">Formulario &#9660;</a>
                             <ul>
                                 <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
                             </ul>

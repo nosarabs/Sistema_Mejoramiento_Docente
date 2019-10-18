@@ -1,4 +1,10 @@
-﻿* {
+﻿-- root {
+    --alturaNavBars: 50px;
+    --AzulUcr: #41ADE7;
+    --colorSegundoNavbar: #F5F5F5;
+}
+
+* {
     margin: 0px;
     padding: 0px;
 }
@@ -14,7 +20,8 @@ ul, ol {
 }
 
 .nav {
-    background-color: #F5F5F5;
+    background-color: #F5F5F5 !important;
+    width: 100%;
 }
 
 .nav > li {
@@ -52,4 +59,14 @@ ul, ol {
 .nav li ul li ul {
     right: -140px;
     top: 0px;
+}
+
+.barraNavegacionLogos {
+    max-height: var(--alturaNavBars);
+    width: 100%;
+    display: flex;
+}
+
+.nombreProyecto {
+    font-size: 2em !important;
 }

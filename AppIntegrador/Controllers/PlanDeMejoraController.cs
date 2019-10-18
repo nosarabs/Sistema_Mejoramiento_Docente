@@ -57,7 +57,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View("_crearPlanDeMejora");
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("_crearPlanDeMejora", plan);
         }
 
         // POST: PlanDeMejora/Create

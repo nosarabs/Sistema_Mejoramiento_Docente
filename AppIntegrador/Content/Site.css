@@ -92,10 +92,11 @@ nav {
 }
 
 .dropbtn_alt {
-    background-color: #209fe3;
+    background-color: #41ADE7;
     padding: 20px;
     border: 0em;
     width: 100%;
+    height: 100%;
     font-weight: bold;
 }
 
@@ -140,12 +141,12 @@ nav {
 .mainBarText {
     color: black;
     font-size: 1em;
-    
 }
 
 .ucr-logo {
     width: 30%;
-    min-width: 400px;
+    max-width: 200px;
+    max-height: 50px;
 }
 
 .logo-styles {
