@@ -208,6 +208,9 @@
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -265,9 +268,6 @@
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Seccion_tiene_pregunta.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -311,6 +311,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
@@ -341,8 +342,8 @@
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
-    <Content Include="Scripts\Formularios\CharacterCounter.js" />
-    <Content Include="Scripts\Plugins\jquery.dirrty.js" />
+    <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
+    <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -355,12 +356,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Visualizacion\box.js" />
+    <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
+    <Content Include="Scripts\Visualizacion\botones.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />
-    <Content Include="Scripts\Visualizacion\charts.js" />
     <Content Include="Scripts\Visualizacion\chroma.js" />
-    <Content Include="Scripts\Visualizacion\collapsibles.js" />
+    <Content Include="Scripts\Visualizacion\estadisticas.js" />
+    <Content Include="Scripts\Visualizacion\graficos.js" />
+    <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
+    <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -416,6 +420,7 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Scripts\Visualizacion\jquery-3.4.1.min.js" />
     <Content Include="Views\AccionDeMejora\Delete.cshtml" />
     <Content Include="Views\AccionDeMejora\Edit.cshtml" />
     <Content Include="Views\AccionDeMejora\Index.cshtml" />

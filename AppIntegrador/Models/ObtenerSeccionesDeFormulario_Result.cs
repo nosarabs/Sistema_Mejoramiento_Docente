@@ -11,9 +11,9 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class SeccionesDeFormulario_Result
+    public partial class ObtenerSeccionesDeFormulario_Result
     {
+        public string Codigo { get; set; }
         public string Nombre { get; set; }
-        public int Orden { get; set; }
     }
 }
