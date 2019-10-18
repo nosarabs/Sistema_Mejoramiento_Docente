@@ -163,12 +163,13 @@ namespace AppIntegrador.Controllers
             {
                 if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
+                    ViewBag.Message = "Exitoso";
                     return RedirectToAction("Create");
                 }
                 else
                 {
                     // Notifique que ocurrió un error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
                     return View(crearFormulario);
                 }
             }
