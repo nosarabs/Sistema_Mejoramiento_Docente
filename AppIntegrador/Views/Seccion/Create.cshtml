@@ -13,61 +13,70 @@
         <tr>
             <td style="width:36%">
                 <h2>Crear Sección</h2>
-                <hr />
-                <div class="form-horizontal">
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.Seccion.Codigo, new
-                            {
-                                htmlAttributes = new
-                                {
-                                    @class = "validar form-control",
-                                    id = "textCode",
-                                    name = "textCode",
-                                    @maxlength = "8",
-                                    required = "required",
-                                    placeholder = "Código",
-                                    rows = "5",
-                                    @onkeyup = "contarCaracteres(this)"
-                                }
-                            })
-                            <div class="contador small pull-right">0/8 caracteres usados</div>
-                            @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @style = "color:red" })
-                        </div>
-                    </div>
+                <div class="form-horizontal panel-group">
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
-                        <div class="col-md-10">
-                            <form accept-charset="UTF-8" action="" method="POST">
-                                @Html.EditorFor(model => model.Seccion.Nombre, new
-                                {
-                                    htmlAttributes = new
-                                    {
-                                        @class = "validar form-control",
-                                        id = "textName",
-                                        name = "textName",
-                                        @maxlength = "250",
-                                        required = "required",
-                                        placeholder = "Nombre del formulario",
-                                        rows = "5",
-                                        @onkeyup = "contarCaracteres(this)"
-                                    }
-                                })
+                    <div class="panel panel-default">
 
-                                <div class="contador small pull-right">0/250 caracteres usados</div>
-                                @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @style = "color:red" })
-                            </form>
-                        </div>
-                    </div>
+                        <div class="panel-body test2">
+                            <hr />
+                            <div class="form-horizontal">
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Crear" class="btn btn-info" id="Create" data-toggle="modal" data-target="#myModal" />
-                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.Seccion.Codigo, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                @class = "validar form-control",
+                                                id = "textCode",
+                                                name = "textCode",
+                                                @maxlength = "8",
+                                                required = "required",
+                                                placeholder = "Código",
+                                                rows = "5",
+                                                @onkeyup = "contarCaracteres(this)"
+                                            }
+                                        })
+                                        <div class="contador small pull-right">0/8 caracteres usados</div>
+                                        @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
+                                    <div class="col-md-10">
+                                        <form accept-charset="UTF-8" action="" method="POST">
+                                            @Html.EditorFor(model => model.Seccion.Nombre, new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "validar form-control",
+                                                    id = "textName",
+                                                    name = "textName",
+                                                    @maxlength = "250",
+                                                    required = "required",
+                                                    placeholder = "Nombre del formulario",
+                                                    rows = "5",
+                                                    @onkeyup = "contarCaracteres(this)"
+                                                }
+                                            })
+
+                                            <div class="contador small pull-right">0/250 caracteres usados</div>
+                                            @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @style = "color:red" })
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Crear" class="btn btn-info" id="Create" data-toggle="modal" data-target="#myModal" />
+                                        @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,10 +105,16 @@
 }
 
 <style>
-.btn-info {
+    .btn-info {
         color: #fff;
         background-color: #41ade7;
-}
+    }
+
+    .btn-primary {
+        background-color: #f0f0f0;
+        color: black;
+        border-color: #a2a6aa;
+   }
 
 .required:after {
     content: "*";
