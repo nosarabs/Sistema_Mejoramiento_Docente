@@ -6,64 +6,6 @@
 
 <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 
-<script>
-function check(elem) {
-      // use one of possible conditions
-      // if (elem.value == 'Other')
-    if (elem.selectedIndex == 0){
-        document.getElementById("other-option").style.display = 'inline';
-
-        document.getElementById("codigo-option").style.display = 'none';
-        document.getElementById("codigo-option").value="";
-
-        document.getElementById("enunciado-option").style.display = 'none';
-        document.getElementById("enunciado-option").value="";
-
-        document.getElementById("type-option").style.display = 'none';
-        document.getElementById("type-option").value="";
-
-    }
-    else if (elem.selectedIndex == 1 ) {
-        document.getElementById("other-option").style.display = 'none';
-        document.getElementById("other-option").value="";
-
-        document.getElementById("codigo-option").style.display = 'inline';
-
-        document.getElementById("enunciado-option").style.display = 'none';
-        document.getElementById("enunciado-option").value="";
-
-        document.getElementById("type-option").style.display = 'none';
-        document.getElementById("type-option").value="";
-    }
-    else if (elem.selectedIndex == 2) {
-        document.getElementById("other-option").style.display = 'none';
-        document.getElementById("other-option").value="";
-
-        document.getElementById("codigo-option").style.display = 'none';
-        document.getElementById("codigo-option").value = "";
-
-        document.getElementById("enunciado-option").style.display = 'inline';
-
-        document.getElementById("type-option").style.display = 'none';
-        document.getElementById("type-option").value="";
-    }
-    else {
-        document.getElementById("other-option").style.display = 'none';
-        document.getElementById("other-option").value = "";
-
-        document.getElementById("codigo-option").style.display = 'none';
-        document.getElementById("codigo-option").value = "";
-
-        document.getElementById("enunciado-option").style.display = 'none';
-        document.getElementById("enunciado-option").value = "";
-
-        document.getElementById("type-option").style.display = 'inline';
-
-    }
-}
-
-
-</script>
 <div class="container">
     <h2>Banco de preguntas</h2>
 
@@ -88,16 +30,16 @@ function check(elem) {
                         </select>
 
                         @* campo de filtrado para ingresar el código *@
-                        <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true" >
-                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength = "8">
-                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength = "25">
+                        <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true">
+                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength="8">
+                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="250">
 
                         @* campo de filtrado para seleccionar el Tipo *@
                         <select class="form-control" type="text" name="input3" id="type-option" style="display:none;">
                             >
                             <option value="">Tipos de preguntas</option>
-                            <option value="U">Seleccion Unica</option>
-                            <option value="M">Seleccion Multiple</option>
+                            <option value="U">Selección Única</option>
+                            <option value="M">Selección Múltiple</option>
                         </select>
 
                         @* Enviar el filtrado al controlador *@
@@ -130,9 +72,6 @@ function check(elem) {
                 <th>
                     Tipo
                 </th>
-                <th>
-                    Operaciones
-                </th>
             </tr>
         </thead>
         @foreach (var item in Model)
@@ -145,13 +84,15 @@ function check(elem) {
                     @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
                 </td>
                 <td>
-                    @*@Html.DisplayFor(modelItem => item.Tipo)*@
-                    Selección única
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+                    @if (item.Tipo == "U")
+                    {
+                        <p>Seleción Única</p>
+                    }
+                    else
+                    {
+                        <p>Seleción Múltiple</p>
+                    }
+                    @**@
                 </td>
             </tr>
         }
@@ -167,25 +108,30 @@ function check(elem) {
         width: 30px;
         height: 30px;
     }
-    .form-control{
+
+    .form-control {
         width: 25%;
     }
-     .my-form-control{
+
+    .my-form-control {
         width: 10%;
         display: inline
     }
 
-     .btn{
-         border: 1px solid #ccc;
-     }
+    .btn {
+        border: 1px solid #ccc;
+    }
 
-     .panel-body {
-    padding: 10px;
-}
+    .panel-body {
+        padding: 10px;
+    }
 </style>
 
 
 @section Scripts {
+
+    <script src="~/Scripts/Formularios/Banco.js"></script>
+
     <script>
         $(document).ready(function () {
             $("#codigotext").attr("disabled", "disabled");
@@ -196,28 +142,61 @@ function check(elem) {
             }
         });
     </script>
-
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
-            }
-            elem.disabled = false;
-            currentEnabled = elem;
-        }
-    </script>
-
     <script>
-        function filtrar() {
-            var i
-            for (i = 0; i < document.opcionfiltro.sel.length; i++) {
-                if (document.opcionfiltro.sel[i].checked)
-                    break;
+        function check(elem) {
+            // use one of possible conditions
+            // if (elem.value == 'Other')
+            if (elem.selectedIndex == 0) {
+                document.getElementById("other-option").style.display = 'inline';
+
+                document.getElementById("codigo-option").style.display = 'none';
+                document.getElementById("codigo-option").value = "";
+
+                document.getElementById("enunciado-option").style.display = 'none';
+                document.getElementById("enunciado-option").value = "";
+
+                document.getElementById("type-option").style.display = 'none';
+                document.getElementById("type-option").value = "";
+
             }
-            var opcion = document.opcionfiltro.sel[i].value
-            var text =
+            else if (elem.selectedIndex == 1) {
+                document.getElementById("other-option").style.display = 'none';
+                document.getElementById("other-option").value = "";
+
+                document.getElementById("codigo-option").style.display = 'inline';
+
+                document.getElementById("enunciado-option").style.display = 'none';
+                document.getElementById("enunciado-option").value = "";
+
+                document.getElementById("type-option").style.display = 'none';
+                document.getElementById("type-option").value = "";
             }
+            else if (elem.selectedIndex == 2) {
+                document.getElementById("other-option").style.display = 'none';
+                document.getElementById("other-option").value = "";
+
+                document.getElementById("codigo-option").style.display = 'none';
+                document.getElementById("codigo-option").value = "";
+
+                document.getElementById("enunciado-option").style.display = 'inline';
+
+                document.getElementById("type-option").style.display = 'none';
+                document.getElementById("type-option").value = "";
+            }
+            else {
+                document.getElementById("other-option").style.display = 'none';
+                document.getElementById("other-option").value = "";
+
+                document.getElementById("codigo-option").style.display = 'none';
+                document.getElementById("codigo-option").value = "";
+
+                document.getElementById("enunciado-option").style.display = 'none';
+                document.getElementById("enunciado-option").value = "";
+
+                document.getElementById("type-option").style.display = 'inline';
+
+            }
+        }
     </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
