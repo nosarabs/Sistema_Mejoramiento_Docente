@@ -65,6 +65,10 @@ namespace AppIntegrador.Controllers
 
                     SqlParameter questionCode = new SqlParameter("questionCode", codigo);
                     SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
+               
+                    // Se asigna el código de la pregunta y de sección, que serán usados para identificar la pregunta luego
+                    pregunta.CodigoPregunta = codigo;
+                    pregunta.CodigoSeccion = seccion.Codigo;
 
                     // Obtiene el enunciado de una pregunta
                     pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
@@ -78,9 +82,11 @@ namespace AppIntegrador.Controllers
                 }
 
                 todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
+                todasLasPreguntas.CodigoSeccion = seccion.Codigo;
 
                 SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
                 {
+                    CodigoSeccion = seccion.Codigo,
                     Nombre = seccion.Nombre,
                     Preguntas = todasLasPreguntas
                 };
@@ -92,6 +98,7 @@ namespace AppIntegrador.Controllers
             {
                 Nombre = formularioDB.Nombre,
                 Secciones = secciones
+
             };
 
             return View(formularioCompleto);
@@ -185,7 +192,7 @@ namespace AppIntegrador.Controllers
 
             //Console.WriteLine(HttpContext.Current.User.Identity.Name);
 
-            return View();
+           return View();
         }
 
         // GET: Formularios/Edit/5

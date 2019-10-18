@@ -7,6 +7,7 @@ namespace AppIntegrador.Models
 {
     public partial class SeccionConPreguntas
     {
+        public string CodigoSeccion { get; set; }
         public string Nombre { get; set; }
         public TodasLasPreguntas Preguntas { get; set; }
     }

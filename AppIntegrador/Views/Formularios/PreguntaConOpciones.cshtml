@@ -6,10 +6,12 @@
 
 @*RIP-EDF6*@
 
-@{int indicePregunta = 0; }
-@{string radname = "rad" + indicePregunta; }
+@{string radname = "rad"; }
 @foreach (var pregunta in Model)
 {
+    // Variable que para poner el name que identifique los radiobuttons dentor de una pregunta
+    { radname = "rad" + pregunta.CodigoSeccion + pregunta.CodigoPregunta; }
+
     <div class="panel panel-primary">
         <div class='panel-heading'>
             @Html.DisplayFor(model => pregunta.Enunciado)
@@ -18,7 +20,6 @@
             {
                 <div class='panel-body'>
 
-
                     <input type="radio" name="@radname" value="@opcion" />
 
                     @Html.DisplayFor(model => opcion)
@@ -26,8 +27,6 @@
             }
         </div>
     </div>
-
-    ++indicePregunta;
 }
 
 @if (!Request["rad"].IsEmpty())
@@ -80,7 +79,6 @@
 
     .panel-primary {
         border-color: #646464;
-       
         background-color: #c4c4c4;
         .panel-body
 
