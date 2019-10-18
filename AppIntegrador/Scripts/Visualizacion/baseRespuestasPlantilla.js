@@ -30,8 +30,8 @@ class BaseDosCol extends BaseRespuesta{
         this.rowCanvas = document.createElement("div");
         this.rowCanvas.className = "row";
         this.canvas = document.createElement("canvas");
-        this.canvas.setAttribute("width", "500vw"); //Ancho canvas
-        this.canvas.setAttribute("height", "400vh"); //Largo canvas
+        this.canvas.setAttribute("width", "250vw"); //Ancho canvas
+        this.canvas.setAttribute("height", "150vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
