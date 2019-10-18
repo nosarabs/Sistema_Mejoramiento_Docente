@@ -87,11 +87,11 @@
         var colMediana = colMedia.nextElementSibling;
         var colDesviacion = colMediana.nextElementSibling;
 
-        var mediaTitulo = document.createElement("h3");
+        var mediaTitulo = document.createElement("h5");
         mediaTitulo.innerText = "Promedio";
-        var medianaTitulo = document.createElement("h3");
+        var medianaTitulo = document.createElement("h5");
         medianaTitulo.innerText = "Mediana";
-        var desviacionTitulo = document.createElement("h3");
+        var desviacionTitulo = document.createElement("h5");
         desviacionTitulo.innerText = "Desviación Estándar";
 
         var mediaDiv = document.createElement("div");

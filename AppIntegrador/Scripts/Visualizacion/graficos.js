@@ -25,6 +25,14 @@
                 ]
             },
             options: {
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 30,
+                        bottom: 0
+                    }
+                },
                 legend: {
                     display: false,
                     labels: {
@@ -62,17 +70,17 @@
                         display: function (context) {
                             return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
                         },
-                        color: "white",
+                        color: "#747474",
                         textStrokeColor: "black",
                         textStrokeWidth: 0,
                         anchor: "end",
                         align: "start",
                         clamp: true,
-                        offset: 8,
+                        offset: -30,
                         textAlign: "center",
                         font: {
                             size: "16",
-                            weight: "bold"
+                            weight: "normal"
                         },
                         formatter: function (value, ctx) {
                             var sum = 0;
@@ -81,7 +89,7 @@
                                 sum += data[i];
                             }
                             var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
-                            return percentage + "\n\n" + value;
+                            return percentage;
                         }
                     }
                 }
