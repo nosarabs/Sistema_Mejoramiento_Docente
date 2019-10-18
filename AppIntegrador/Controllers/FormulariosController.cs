@@ -163,7 +163,8 @@ namespace AppIntegrador.Controllers
             {
                 if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
-                    return RedirectToAction("Create");
+                    ViewBag.Message = "Exitoso";
+                    return View(crearFormulario);
                 }
                 else
                 {
