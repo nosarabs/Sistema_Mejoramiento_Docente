@@ -19,13 +19,13 @@ namespace AppIntegrador.Models.Metadata
         [Required]
         public string nombre { get; set; }
 
-        [Display(Name = "Fecha Inicio")]
+        [Display(Name = "Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
-        [Display(Name = "Fecha Finalización")]
+        [Display(Name = "Fin")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required]

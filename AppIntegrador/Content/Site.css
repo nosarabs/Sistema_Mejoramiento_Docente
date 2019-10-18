@@ -271,6 +271,7 @@ li a:hover {
 
 p.impText {
     font-weight: bold !important;
+    text-align: left;
 }
 
 .verticalBoxes {
@@ -324,7 +325,6 @@ p.impText {
     padding-left: 5%;
     padding-right: 5%;
     width: 100%;
-    text-align: center;
 }
 
 
@@ -449,6 +449,15 @@ html, body {
     overflow-x: scroll;
 }
 
+.EncabezadoTabla {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    text-align: left;
+    background-color: #095fa3;
+    color: white;
+}
+
 .TablasDescripcion {
     width: 44%;
     word-break: break-all;
@@ -459,27 +468,56 @@ html, body {
 }
 
 .TablasOpciones {
-    width: 14%;
+    width: 18%;
+}
+
+.TablasCodigo {
+    width: 10%;
+    text-align: right;
+}
+
+.TablasNombrePlan {
+    width: 12%;
+    word-break: break-all;
+    text-align: left;
+}
+
+.TablasUsuario {
+    width: 19%;
+    word-break: break-all;
+    text-align: left;
 }
 
 .TablasNombre {
     width: 20%;
     word-break: break-all;
+    text-align: left;
 }
 
-.TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
+.FilaTablasPlanesDeMejora td {
+    padding-top: 12px;
+    padding-bottom: 12px;
     border: 1px solid #ddd;
+    border-collapse: collapse;
 }
 
 .TablasSeccionesPlanesDeMejora th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #ddd;
+    background-color: #41ade7;
     color: black;
 }
 
-.FilaTablasSeccionesPlanesDeMejora:hover {
+.highlight {
+    background-color: #ddd;
+}
+
+.highlight2 {
+    background-color: #ddd;
+}
+
+.FilaTablasPlanesDeMejora:hover {
     background-color: #ddd;
     cursor: pointer;
 }
