@@ -4,79 +4,169 @@
     ViewBag.Title = "Banco de secciones";
 }
 
-@using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
-{
-    <h2>Agregar secciones al formulario</h2>
-    //the following are search options
-    <b>
-        Opciones de búsqueda:
-    </b>
+<script>
+    function check(elem) {
+        // use one of possible conditions
+        // if (elem.value == 'Other')
+        if (elem.selectedIndex == 0) {
+            document.getElementById("other-option").style.display = 'inline';
 
-    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
-        <input type="radio" name="sel" value="1" id="codigo"
-               onclick="enableElement(this.form.elements['inp1']);"> <text>Codigo</text>
-        <input type="text" name="inp1" disabled="disabled">
+            document.getElementById("codigo-option").style.display = 'none';
+            document.getElementById("codigo-option").value = "";
 
-        <input type="radio" name="sel" value="2"
-               onclick="enableElement(this.form.elements['inp2']);"><text>Nombre</text>
-        <input type="text" name="inp2" disabled="disabled">
+            document.getElementById("enunciado-option").style.display = 'none';
+            document.getElementById("enunciado-option").value = "";
+        }
+        else if (elem.selectedIndex == 1) {
+            document.getElementById("other-option").style.display = 'none';
+            document.getElementById("other-option").value = "";
 
-        <input type="submit"
-               name="submit"
-               value="Filtrar"
-               class="btn" />
+            document.getElementById("codigo-option").style.display = 'inline';
 
-        <br />
+            document.getElementById("enunciado-option").style.display = 'none';
+            document.getElementById("enunciado-option").value = "";
+        }
+        else if (elem.selectedIndex == 2) {
+            document.getElementById("other-option").style.display = 'none';
+            document.getElementById("other-option").value = "";
 
-    </form>
+            document.getElementById("codigo-option").style.display = 'none';
+            document.getElementById("codigo-option").value = "";
 
-}
-
-
-<div style="height: 300px; overflow: auto;">
-    <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
-                    
-        <thead>
-
-            <tr>
-    <th>
-        
-    </th>
-    <th>
-        Codigo
-    </th>
-    <th>
-        Nombre
-    </th>
-</tr>
-        </thead>
-        @foreach (var item in Model)
-        {
-
-        <tr id="sec(@item.Codigo)">
-            <td style="width:10%;">
-                <center>
-                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
-                </center>
-            </td>
-            <td style="width:20%">
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td style="width:70%">
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-        </tr>
+            document.getElementById("enunciado-option").style.display = 'inline';
+        }
     }
+</script>
 
-    </table>
+<div class="form-horizontal panel-group">
+    <div class=" panel panel-default">
+        <div class="panel-body test3">
+            <h2>Agregar secciones al formulario</h2>
+            @using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
+            {
+
+                <div class="form-horizontal panel-group">
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body test2">
+                            <b>
+                                Búsqueda:
+                            </b>
+
+                            <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
+
+                                <select class="form-control my-form-control" id="mySelect"
+                                        style="width: 17%; display: inline;" onChange="check(this);">
+                                    <option value="-">Sin filtro </option>
+                                    <option value="C">Código </option>
+                                    <option value="E">Enunciado</option>
+                                </select>
+
+                                @* campo de filtrado para ingresar el código *@
+                                <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline; width: 45%;" disabled="true">
+                                <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none; width: 45%;" maxlength="8">
+                                <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none; width: 45%;" maxlength="250">
+
+                                @* Enviar el filtrado al controlador *@
+                                <input type="submit"
+                                       name="submit"
+                                       value="Filtrar"
+                                       class="btn" />
+                                <br />
+                            </form>
+                            @if (@ViewBag.filtro != "Ninguno")
+                            {
+                                <h5><span class="label label-default">@ViewBag.filtro</span></h5>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div style="height: 300px; overflow: auto;">
+                <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                Codigo
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr id="sec(@item.Codigo)">
+                            <td style="width:10%;">
+                                <center>
+                                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
+                                </center>
+                            </td>
+                            <td style="width:20%">
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td style="width:70%">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <style>
-    input.SectionCheckbox {
+    .test3 {
+        background: #fdfdfd;
+    }
+
+    .test2 {
+        background: #fbfbfb;
+    }
+
+    input.QuestionCheckbox {
         width: 30px;
         height: 30px;
     }
 
-
+    .my-form-control {
+        width: 10%;
+        display: inline
+    }
 </style>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#codigotext").attr("disabled", "disabled");
+            if ($("input[name=optradio]:checked").val() == "codigoinput") {
+                $("#EnterRange").click(function () {
+                    $("#codigotext").removeAttr("disabled");
+                });
+            }
+        });
+    </script>
+
+
+
+    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
+}
