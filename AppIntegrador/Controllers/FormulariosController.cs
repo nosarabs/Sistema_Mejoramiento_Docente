@@ -176,6 +176,12 @@ namespace AppIntegrador.Controllers
             return View(crearFormulario);
         }
 
+        [HttpPost]
+        public ActionResult GuardarRespuestas(PreguntaConOpciones objUser)
+        {
+            return View();
+        }
+
         // GET: Formularios/Edit/5
         public ActionResult Edit(string id)
         {
@@ -280,8 +286,6 @@ namespace AppIntegrador.Controllers
             crearFormulario.seccion = db.Seccion;
             base.Dispose(disposing);
         }
-
-
         
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)

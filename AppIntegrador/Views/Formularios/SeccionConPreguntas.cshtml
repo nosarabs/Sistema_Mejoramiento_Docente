@@ -16,3 +16,13 @@
     </div>
 }
 
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        
+        @using (Html.BeginForm("GuardarRespuestas", "Formularios", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-info" >Submit</button>
+        }
+        @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn btn-default" })
+    </div>
+</div>
