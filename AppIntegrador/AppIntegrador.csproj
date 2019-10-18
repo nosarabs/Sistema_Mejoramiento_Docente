@@ -346,6 +346,7 @@
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
+    <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
