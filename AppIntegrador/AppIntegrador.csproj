@@ -161,9 +161,6 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -311,6 +308,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
@@ -427,6 +425,11 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
+    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
+    <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,6 +20,37 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+        public ActionResult Index2(int idPlanDeMejora)
+        {
+            return PartialView("~/Views/PlanDeMejora/Index.cshtml", new ViewDataDictionary { { "idPlan", idPlanDeMejora } });
+        }
+
+        /*
+            Modificado por: Johan Córdoba
+            Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+            Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
+            Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
+        */
+        public ActionResult objetivosPlan(string id)
+        {
+            var idPlan = -1;
+            Int32.TryParse(id, out idPlan);
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
+            return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
+        }
+
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            if (Int32.TryParse(id, out idPlan))
+            {
+                IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+                return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+            }
+            return null;
+        }
+
+
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,7 +69,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View();
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("_crearPlanDeMejora", plan);
         }
 
         // POST: PlanDeMejora/Create
