@@ -24,7 +24,7 @@
                 Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
                 Cambio para que redireccione al create de objetivo
             *@
-            @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
+            @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", new { id = ViewBag.idPlan }, new { @class = "modal-link btn btn-Nuevo col-md-12" })
         </div>
 
     </div>
@@ -89,6 +89,7 @@
 
     <hr />
 </div>
+
 
 
 

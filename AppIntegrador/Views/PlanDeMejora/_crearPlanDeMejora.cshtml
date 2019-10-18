@@ -6,20 +6,26 @@
     AppIntegrador.Models.PlanDeMejora planModel = new AppIntegrador.Models.PlanDeMejora();
     Layout = null;
 }
-
 <!-- Modal -->
-<div class="modal-body">
 
-    <h4>Creación de Plan de Mejora</h4>
-    <hr />
-    <form action="CrearPlanDeMejora" method="post">
+<div class="modal-header">
+    <h4 class="modal-title">Crear Plan de Mejora</h4>
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        Los campos con ** son obligatorios. <br>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        La fecha de inicio debe ser mayor que la fecha de finalización.
+    </div>
+</div>
+<div class="modal-body">
+    <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
         <div class="form-group">
             <div class="verticalBoxesCrear">
                 <div class="labelPlace">
                     @Html.LabelFor(model => planModel.nombre, "Nombre")
                 </div>
                 <div class="inputPlace">
-                    <input type="text" name="nombre" placeholder="Nombre del Plan de Mejora" class="form-control" />
+                    <input type="text" name="nombre" placeholder="Máximo 50 caracteres" class="form-control" maxlength="50" c />
                 </div>
             </div>
             <div class="verticalBoxesCrear">
@@ -47,11 +53,7 @@
         </div>
     </form>
 </div>
+        
 
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
 
 

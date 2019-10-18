@@ -468,7 +468,7 @@ html, body {
 }
 
 .TablasOpciones {
-    width: 18%;
+    width: 16%;
 }
 
 .TablasCodigo {
@@ -477,7 +477,7 @@ html, body {
 }
 
 .TablasNombrePlan {
-    width: 12%;
+    width: 26%;
     word-break: break-all;
     text-align: left;
 }

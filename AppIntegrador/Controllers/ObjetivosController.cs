@@ -45,8 +45,9 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Objetivos/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            ViewBag.id = id;
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
             return View("_crearObjetivo");

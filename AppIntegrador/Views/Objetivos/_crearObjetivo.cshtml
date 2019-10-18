@@ -16,7 +16,7 @@
         @Html.AntiForgeryToken()
 
         @*<div class="form-horizontal">*@
-        <h4>Creación de objetivo</h4>
+        <h4>Creación de objetivo @*@ViewBag.id*@ </h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
