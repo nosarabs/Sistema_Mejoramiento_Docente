@@ -119,7 +119,7 @@ namespace AppIntegrador.Controllers
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
-                ViewBag.filtro = "Enunciado: " + input2;
+                ViewBag.filtro = "Nombre: " + input2;
                 return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
@@ -195,26 +195,31 @@ namespace AppIntegrador.Controllers
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
         [HttpGet]
-        public ActionResult Create(string inp1, string inp2)
+        public ActionResult Create(string input0, string input1, string input2)
         {
             crearFormulario.seccion = db.Seccion;
-            if (inp2 == null && inp1 == null)
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
             {
                 crearFormulario.seccion = db.Seccion.ToList();
-
+                return View("Create", crearFormulario);
             }
             //if a user choose the radio button option as Subject  
-            else if (inp2 == null)
+            if (input1.Length > 0)
             {
-                crearFormulario.seccion = db.Seccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                ViewBag.filtro = "Por código: " + input1;
+                crearFormulario.seccion = db.Seccion.Where(x => x.Codigo.Contains(input1)).ToList();
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
             }
-            else if (inp1 == null)
+            else if (input2.Length > 0)
             {
-                crearFormulario.seccion = db.Seccion.Where(x => x.Nombre.Contains(inp2)).ToList();
+                ViewBag.filtro = "Nombre: " + input2;
+                crearFormulario.seccion = db.Seccion.Where(x => x.Nombre.Contains(input2)).ToList();
             }
             else
             {
+                ViewBag.filtro = "Ninguno";
                 crearFormulario.seccion = db.Seccion.ToList();
             }
             return View("Create", crearFormulario);

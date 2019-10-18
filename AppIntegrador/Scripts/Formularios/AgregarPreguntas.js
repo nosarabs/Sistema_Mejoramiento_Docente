@@ -61,3 +61,6 @@ function addPreguntaToSeccion() {
         ++index;
     }
 }
+
+
+

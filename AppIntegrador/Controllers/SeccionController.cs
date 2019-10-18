@@ -38,7 +38,7 @@ namespace AppIntegrador.Controllers
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
-                ViewBag.filtro = "Enunciado: " + input2;
+                ViewBag.filtro = "Nombre: " + input2;
                 return View(seccion.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
@@ -98,30 +98,36 @@ namespace AppIntegrador.Controllers
         // Historia RIP-BKS1
         // Se copió la función para filtrar preguntas.
         [HttpGet]
-        public ActionResult Create(string inp1, string inp2, string inp3)
+        public ActionResult Create(string input0, string input1, string input2, string input3)
         {
             crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
-            if (inp2 == null && inp1 == null && inp3 == null)
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null && input3 == null)
             {
                 crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
-
+                return View("Create", crearSeccion);
             }
             //if a user choose the radio button option as Subject  
-            else if (inp2 == null && inp3 == null)
+            if (input1.Length > 0)
             {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(inp1)).ToList();
+                ViewBag.filtro = "Por código: " + input1;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(input1)).ToList();
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
             }
-            else if (inp1 == null && inp3 == null)
+            else if (input2.Length > 0)
             {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(inp2)).ToList();
+                ViewBag.filtro = "Enunciado: " + input2;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(input2)).ToList();
             }
-            else if (inp1 == null && inp2 == null)
+            else if (input3.Length > 0)
             {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(inp3)).ToList();
+                var aux = input3 == "U" ? "Selección Única" : "Seleción Múltiple";
+                ViewBag.filtro = "Tipo: " + aux;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(input3)).ToList();
             }
             else
             {
+                ViewBag.filtro = "Ninguno";
                 crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
             }
             return View("Create", crearSeccion);
