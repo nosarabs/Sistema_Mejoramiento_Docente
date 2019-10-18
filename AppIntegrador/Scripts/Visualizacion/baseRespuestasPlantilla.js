@@ -4,6 +4,8 @@
 
         this.base = document.createElement("div");
         this.base.className = "row content";
+    
+  
         this.base.id = "tipo";
 
     }
@@ -25,14 +27,21 @@ class BaseDosCol extends BaseRespuesta{
         this.leftCol.className = "col";
         this.rightCol = document.createElement("div");
         this.rightCol.className = "col";
+        this.rowCanvas = document.createElement("div");
+        this.rowCanvas.className = "row";
         this.canvas = document.createElement("canvas");
-        this.canvas.setAttribute("width", "800"); //Ancho canvas
-        this.canvas.setAttribute("height", "550"); //Largo canvas
+        this.canvas.setAttribute("width", "250vw"); //Ancho canvas
+        this.canvas.setAttribute("height", "150vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
+        var tituloJustificacion = document.createElement("h3");
+        tituloJustificacion.innerText = "Justificación de los resultados";
+        this.rightCol.appendChild(tituloJustificacion);    
+
         this.rightCol.appendChild(this.justificacion);
-        this.leftCol.appendChild(this.canvas);
+        this.rowCanvas.appendChild(this.canvas);
+        this.leftCol.appendChild(this.rowCanvas);
         this.base.appendChild(this.leftCol);
         this.base.appendChild(this.rightCol);
 
@@ -58,7 +67,7 @@ class BaseConEstadisticas extends BaseDosCol {
 
         super(tipo);
         this.estadisticas = document.createElement("div");
-        this.estadisticas.className = "row";
+        this.estadisticas.className = "row estadisticas";
         this.media = document.createElement("div");
         this.media.className = "col";
         this.mediana = document.createElement("div");
@@ -88,8 +97,12 @@ class BaseTexto extends BaseRespuesta {
 
         super(tipo);
         this.textoAbierto = document.createElement("div");
-        this.textoAbierto.className = "myBox";
+        this.textoAbierto.className = "myBox textoAbierto";
 
+        var tituloJustificacion = document.createElement("h3");
+        tituloJustificacion.innerText = "Justificación de los resultados";
+
+        this.base.appendChild(tituloJustificacion);    
         this.base.appendChild(this.textoAbierto);
 
 

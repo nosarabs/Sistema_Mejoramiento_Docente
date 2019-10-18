@@ -15,12 +15,6 @@
 
 
             list.appendChild(item);
-
-            if (i < (respuestas.length - 1)) {
-
-                var br = document.createElement("br");
-                list.appendChild(br);
-            }
         }
 
         caja.appendChild(list);

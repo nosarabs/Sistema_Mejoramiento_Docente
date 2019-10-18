@@ -33,13 +33,16 @@
 
         var insertaContenidos = new InsertaContenidos();
 
+        var cuerpoPrincipal = document.createElement("div");
+        cuerpoPrincipal.className = "cuerpoPrincipal";
+
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
             var codigoPregunta = listaPreguntas[i].codigoPregunta;
             var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
             var tipoPregunta = listaPreguntas[i].tipoPregunta;
             var boton = this.crearBoton(codigoPregunta, textoPregunta);
-            document.body.appendChild(boton);
+            cuerpoPrincipal.appendChild(boton);
 
             var base;
 
@@ -79,7 +82,8 @@
                 insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
             }
 
-            document.body.appendChild(base.getBase());
+            cuerpoPrincipal.appendChild(base.getBase());
+            document.body.appendChild(cuerpoPrincipal);
 
         }
 

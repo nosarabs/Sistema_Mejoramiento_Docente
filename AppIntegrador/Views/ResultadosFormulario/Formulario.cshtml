@@ -4,39 +4,41 @@
     ViewBag.Title = "Formulario";
 }
 
-<head>
-    <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
-</head>
+    <head>
+        <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
+        <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<body>
 
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">@Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home")</li>
-                <li class="breadcrumb-item">Visualización</li>
-                <li class="breadcrumb-item">Curso @Model.SiglaCurso</li>
-                <li class="breadcrumb-item">Año @Model.Ano</li>
-                <li class="breadcrumb-item">Semestre @Model.Semestre</li>
-                <li class="breadcrumb-item">Grupo @Model.NumeroGrupo</li>
-                <li class="breadcrumb-item active" aria-current="page">Formulario @Model.CodigoFormulario</li>
-            </ol>
-        </nav>
-    </div>
+    </head>
 
-    <script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/Visualizacion/Chart.js"></script>
-    <script src="~/Scripts/Visualizacion/chroma.js"></script>
-    <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
-    <script src="~/Scripts/Visualizacion/baseRespuestasPlantilla.js"></script>
-    <script src="~/Scripts/Visualizacion/graficos.js"></script>
-    <script src="~/Scripts/Visualizacion/estadisticas.js"></script>
-    <script src="~/Scripts/Visualizacion/TextoLibre.js"></script>
-    <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
-    <script src="~/Scripts/Visualizacion/botones.js"></script>
+    <body>
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">@Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home")</li>
+                    <li class="breadcrumb-item">Visualización</li>
+                    <li class="breadcrumb-item">Curso @Model.SiglaCurso</li>
+                    <li class="breadcrumb-item">Año @Model.Ano</li>
+                    <li class="breadcrumb-item">Semestre @Model.Semestre</li>
+                    <li class="breadcrumb-item">Grupo @Model.NumeroGrupo</li>
+                    <li class="breadcrumb-item active" aria-current="page">Formulario @Model.CodigoFormulario</li>
+                </ol>
+            </nav>
+        </div>
 
-    <script>
+        <script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/Visualizacion/Chart.js"></script>
+        <script src="~/Scripts/Visualizacion/chroma.js"></script>
+        <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
+        <script src="~/Scripts/Visualizacion/baseRespuestasPlantilla.js"></script>
+        <script src="~/Scripts/Visualizacion/graficos.js"></script>
+        <script src="~/Scripts/Visualizacion/estadisticas.js"></script>
+        <script src="~/Scripts/Visualizacion/TextoLibre.js"></script>
+        <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
+        <script src="~/Scripts/Visualizacion/botones.js"></script>
+
+        <script>
 
         var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
         var siglaCurso = @Html.Raw(Model.SiglaCurso);
@@ -48,7 +50,7 @@
         var botones = new Botones();
         botones.crearBotones(listaPreguntas);
 
-    </script>
+        </script>
 
-</body>
+    </body>
 
