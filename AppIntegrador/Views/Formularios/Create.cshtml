@@ -25,7 +25,7 @@
                        {
                            htmlAttributes = new
                            {
-                               @class = "form-control",
+                               @class = "validar form-control",
                                id = "textCode",
                                name = "textCode",
                                @maxlength = "8",
@@ -47,7 +47,7 @@
                            {
                                htmlAttributes = new
                                {
-                                   @class = "form-control",
+                                   @class = "validar form-control",
                                    id = "textName",
                                    name = "textName",
                                    @maxlength = "250",
@@ -233,6 +233,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
     <script>
         $(function () {
             $('#myModal').on('show.bs.modal', function () {
@@ -274,7 +275,8 @@
                 });
         }
 
-            $(document).ready(function () {
+        $(document).ready(function () {
+            validarEntradas();
             var msg = '@ViewBag.Message';
             if (msg && msg.length > 0) {
                 pregunta();

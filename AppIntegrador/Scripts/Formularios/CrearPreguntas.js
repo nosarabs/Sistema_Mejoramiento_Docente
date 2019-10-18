@@ -49,6 +49,7 @@ function removeOption(deleteNode) {
         fixIndexes();
         // Check if the first button needs to be disabled
         disableRemoveButton();
+        validarEntradas();
     })
 
 }

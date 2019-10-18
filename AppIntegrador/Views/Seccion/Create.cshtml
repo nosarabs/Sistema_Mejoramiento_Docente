@@ -24,7 +24,7 @@
                             {
                                 htmlAttributes = new
                                 {
-                                    @class = "form-control",
+                                    @class = "validar form-control",
                                     id = "textCode",
                                     name = "textCode",
                                     @maxlength = "8",
@@ -46,7 +46,7 @@
                                 {
                                     htmlAttributes = new
                                     {
-                                        @class = "form-control",
+                                        @class = "validar form-control",
                                         id = "textName",
                                         name = "textName",
                                         @maxlength = "250",
@@ -221,9 +221,11 @@ margin-top: 5px;
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
 
     <script>
         $(document).ready(function () {
+            validarEntradas();
             agregarPreguntas.init();
             $("#codigotext").attr("disabled", "disabled");
             if ($("input[name=optradio]:checked").val() == "codigoinput") {
