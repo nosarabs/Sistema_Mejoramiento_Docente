@@ -24,4 +24,7 @@ namespace AppIntegrador.Models
 
     [MetadataType(typeof(PersonaMetadata))]
     public partial class Persona { }
+
+    [MetadataType(typeof(EstudianteMetadata))]
+    public partial class Estudiante { }
 }

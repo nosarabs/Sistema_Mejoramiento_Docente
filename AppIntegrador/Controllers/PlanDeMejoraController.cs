@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,8 +18,46 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora
         public ActionResult Index()
         {
+            HttpContext context = System.Web.HttpContext.Current;
+            ObjectParameter count = new ObjectParameter("count", 999);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = context.User.Identity.Name;
             return View(db.PlanDeMejora.ToList());
         }
+
+        public ActionResult Index2(int idPlanDeMejora)
+        {
+            return PartialView("~/Views/PlanDeMejora/Index.cshtml", new ViewDataDictionary { { "idPlan", idPlanDeMejora } });
+        }
+
+        /*
+            Modificado por: Johan Córdoba
+            Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+            Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
+            Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
+        */
+        public ActionResult objetivosPlan(string id)
+        {
+            var idPlan = -1;
+            Int32.TryParse(id, out idPlan);
+            ViewBag.idPlan = idPlan;
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
+            return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
+        }
+
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            if (Int32.TryParse(id, out idPlan))
+            {
+                Session["id"] = idPlan;
+                Session["name"] = nomb;
+                IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+                return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+            }
+            return null;
+        }
+
 
         // GET: PlanDeMejora/Details/5
         public ActionResult Details(int? id)
@@ -38,7 +77,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View();
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("_crearPlanDeMejora", plan);
         }
 
         // POST: PlanDeMejora/Create
@@ -86,7 +126,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(planDeMejora);
+            return View("Index");
         }
 
         // GET: PlanDeMejora/Delete/5
@@ -132,14 +172,21 @@ namespace AppIntegrador.Controllers
         {
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
-                var planTemp = new PlanDeMejora();
-                var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                planTemp.codigo = codigoTemporal + 1;
-                planTemp.nombre = nombre;
-                planTemp.fechaInicio = fechaInicio;
-                planTemp.fechaFin = fechaFin;
-                this.Create(planTemp);
+                if( DateTime.Compare(fechaInicio, fechaFin) < 0)
+                {
+                    var planTemp = new PlanDeMejora();
+                    var plans = this.db.PlanDeMejora.ToList();
+                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
+                    planTemp.codigo = codigoTemporal + 1;
+                    planTemp.nombre = nombre;
+                    planTemp.fechaInicio = fechaInicio;
+                    planTemp.fechaFin = fechaFin;
+                    this.Create(planTemp);
+                }
+                else
+                {
+                    return RedirectToAction("Index", ViewBag.Fecha = -1);
+                }
             }
             return RedirectToAction("Index");
         }

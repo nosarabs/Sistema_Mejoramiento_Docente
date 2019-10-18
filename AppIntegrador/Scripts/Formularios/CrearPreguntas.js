@@ -49,6 +49,7 @@ function removeOption(deleteNode) {
         fixIndexes();
         // Check if the first button needs to be disabled
         disableRemoveButton();
+        validarEntradas();
     })
 
 }
@@ -67,8 +68,7 @@ function pregunta() {
         title: "Pregunta creada con éxito!",
         text: "Puede ser vista en el banco de preguntas",
         type: "success",
-        timer: 1000,
-        showConfirmButton: false
+        showConfirmButton: true
     },
         function () {
             window.location.href = "Create";
