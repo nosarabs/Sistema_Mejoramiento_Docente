@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="DataIntegradorEntities.PerfilPermiso" Width="1.5" PointX="10.5" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorEntities.Periodo_activa_por" Width="1.5" PointX="15.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorEntities.Permiso" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorEntities.Persona" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorEntities.PlanDeMejora" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorEntities.PlantillaAccionDeMejora" Width="1.5" PointX="1.5" PointY="37.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorEntities.PlantillaObjetivo" Width="1.5" PointX="1.5" PointY="31" IsExpanded="true" />
@@ -55,11 +54,9 @@
         <AssociationConnector Association="DataIntegradorEntities.FK__PerfilPermiso__25518C17" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK__UsuarioPerfil__3F115E1A" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkEscalarCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorEntities.FK__Estudiant__Corre__114A936A" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkFormularioTieneSeccionCodigoFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkRespuestasFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkFormularioTieneSeccionCodigoSeccion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorEntities.FK__Funcionar__Corre__160F4887" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK__Profesor__Correo__2CF2ADDF" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkRespuestasGrupo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK_Objetivo_PlantillaObjetivo" ManuallyRouted="false" />
@@ -69,8 +66,6 @@
         <AssociationConnector Association="DataIntegradorEntities.FK__PerfilPer__Perfi__236943A5" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK__UsuarioPe__Perfi__3E1D39E1" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK__PerfilPer__Permi__245D67DE" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorEntities.FK__Usuario__Usernam__3C34F16F" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorEntities.fkRespuestasUsuario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.FK_PlantillaObj_TipoObj" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkPregOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.fkResLibreCodigo" ManuallyRouted="false" />
@@ -95,9 +90,12 @@
         <AssociationConnector Association="DataIntegradorEntities.Pertenece_a" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorEntities.Trabaja_en" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorEntities.FK__Persona__Correo__282DF8C2" />
-        <AssociationConnector Association="DataIntegradorEntities.FK__Persona__Usuario__2739D489" />
-      </Diagram>
+        <EntityTypeShape EntityType="DataIntegradorEntities.Persona" Width="1.5" PointX="5.25" PointY="7.375" />
+        <AssociationConnector Association="DataIntegradorEntities.fkEstudentAPersonaCorreo" />
+        <AssociationConnector Association="DataIntegradorEntities.FK__Funcionar__Corre__17036CC0" />
+        <AssociationConnector Association="DataIntegradorEntities.fkPersonaAUsuarioUsername" />
+        <AssociationConnector Association="DataIntegradorEntities.fkRespuestasUsuario" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

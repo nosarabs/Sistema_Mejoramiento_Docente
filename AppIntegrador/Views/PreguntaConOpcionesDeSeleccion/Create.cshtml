@@ -36,7 +36,7 @@
                                    {
                                        htmlAttributes = new
                                        {
-                                           @class = "form-control",
+                                           @class = "validar form-control",
                                            @maxlength = "8",
                                            required = "required",
                                            @onkeyup = "contarCaracteres(this)",
@@ -52,7 +52,7 @@
                                 <div class="col-md-10">
                                     @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                                     {
-                                        @class = "form-control long-textbox",
+                                        @class = "validar form-control long-textbox",
                                         @style = "width: 100%;max-width: 100%",
                                         @maxlength = "250",
                                         required = "required",
@@ -83,8 +83,7 @@
                                     {
                                         htmlAttributes = new
                                         {
-                                            @onclick = "checkboxcheck()",
-                                            @class = "form-control",
+                                            @class = "validar-opc form-control",
                                             required = "required",
                                             id = "txtJustificationNumber",
                                             @maxlength = "50",
@@ -147,8 +146,6 @@
         cursor: grabbing;
     }
 
-
-
     .test {
         background: #e9e9e9;
     }
@@ -189,27 +186,61 @@
 
         $("#sortable").disableSelection();
 
+        // Tiene que hacérsele el evento a document para que las futuras opciones
+        // que agrega AJAX sean incluidas también en el trigger del evento
+        $(document).on("keyup", ".validar", function () {
+            validarEntradas();
+        })
+
+        $("#txtJustificationNumber").on("keyup", function () {
+            validarEntradas();
+        })
+
+        function validarEntradas() {
+            var todoLleno = true;
+            if ($("#showField").is(':checked') === true) {
+                if ($("#txtJustificationNumber").val() == '') {
+                    todoLleno = false;
+                }
+            }
+
+            if (todoLleno == true) {
+                $(".validar").each(function () {
+                    if ($(this).val() == '') {
+                        todoLleno = false;
+                        // Equivalente a un break, pero JQuery ocupa que sea 
+                        // con un return por la nueva función que se "crea"
+                        return false;
+                    }
+                })
+            }
+
+            $('#Create').prop('disabled', !todoLleno);
+        }
+
         // When a new option is added, fix the index (not very efficient)
         $("#Add").click(function () {
-        var i = fixIndexes();
-        $.ajax({
-            url: 'OpcionesDeSeleccion',
-            data: { i: i },
-            success: function (data) {
-                $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
-                $("#sortable").find(".texto").focus();
-                disableRemoveButton();
-            }
-        })
+            var i = fixIndexes();
+            $.ajax({
+                url: 'OpcionesDeSeleccion',
+                data: { i: i },
+                success: function (data) {
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
+                    $("#sortable").find(".texto").focus();
+                    disableRemoveButton();
+                    $('#Create').prop('disabled', true);
+                }
+            })
 
         });
 
         $(document).ready(function () {
-        var msg = '@ViewBag.Message';
-        if (msg && msg.length > 0) {
-            pregunta();
-        }
-        $("#Add").trigger('click');
+            validarEntradas();
+            var msg = '@ViewBag.Message';
+            if (msg && msg.length > 0) {
+                pregunta();
+            }
+            $("#Add").trigger('click');
         });
 
         // Hide the text input box in default
@@ -224,6 +255,7 @@
             if (!txtJustificationNumber.disabled) {
                 txtJustificationNumber.focus();
             }
+            validarEntradas();
         }
     </script>
 }
