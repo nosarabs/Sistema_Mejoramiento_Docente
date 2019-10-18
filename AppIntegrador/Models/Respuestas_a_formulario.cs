@@ -51,8 +51,6 @@ public partial class Respuestas_a_formulario
 
     public virtual Grupo Grupo { get; set; }
 
-    public virtual Persona Persona { get; set; }
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
@@ -64,6 +62,8 @@ public partial class Respuestas_a_formulario
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<PlanDeMejora> PlanDeMejora { get; set; }
+
+    public virtual Persona Persona { get; set; }
 
 }
 
