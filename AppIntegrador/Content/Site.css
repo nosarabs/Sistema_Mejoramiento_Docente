@@ -431,12 +431,12 @@ html, body {
 .btn-Nuevo {
     color: black;
     background-color: white;
-    border-color: #41ade7;
+    border-color: #5FC44F;
     border-width: 2px;
 }
 
 .btn-Nuevo:hover {
-    background-color: #41ade7;
+    background-color: #5FC44F;
 }
 
 .center_div {
@@ -478,6 +478,11 @@ html, body {
     word-break: break-all;
 }
 
+.TablasDescripcionAccionable {
+    width: 64%;
+    word-break: break-all;
+}
+
 .TablasFecha {
     width: 10%;
 }
@@ -510,6 +515,13 @@ html, body {
 }
 
 .FilaTablasPlanesDeMejora td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.FilaAccioneblePlanesDeMejora td {
     padding-top: 12px;
     padding-bottom: 12px;
     border: 1px solid #ddd;

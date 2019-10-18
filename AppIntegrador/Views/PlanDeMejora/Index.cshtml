@@ -9,8 +9,7 @@
         Permite pasar más de un pármetro al javascrip que actualiza las acciones de un plan.
     *@
     dynamic item = new System.Dynamic.ExpandoObject();
-    item.MultiLineString = @"a multi-line
-string";
+    item.MultiLineString = @"a multi-line string";
     item.SingleLineString = "a single-line string";
 }
 
@@ -85,15 +84,10 @@ string";
                         <td class="TablasFecha">
                             @Html.DisplayFor(modelItem => plan.fechaFin)
                         </td>
-                        <td>
-                            <div class="verticalBoxes">
-                                <div>
-                                    @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
-                                </div>
-                                <div>
-                                    @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                                </div>
-                            </div>
+                        <td class="TablasOpciones botonCentrado">
+                            @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+
+                            @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
                         </td>
                     </tr>
                 </tbody>

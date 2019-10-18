@@ -163,7 +163,7 @@ namespace AppIntegrador.Controllers
         // Method that creates the plan and sets the next "codigo" automatically
         public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
         {
-            if (nombre != null && fechaInicio != null && fechaFin != null && fechaInicio > fechaFin)
+            if (nombre != null && fechaInicio != null && fechaFin != null)
             {
                 if( DateTime.Compare(fechaInicio, fechaFin) < 0)
                 {

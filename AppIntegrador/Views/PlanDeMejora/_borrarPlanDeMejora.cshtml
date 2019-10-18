@@ -6,7 +6,7 @@
 }
 
 <!-- Boton para editar el plan de mejora -->
-<div class="createPlanButton">
+<div class="col-md-6">
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-@planFinal.codigo">
         Borrar
     </button>
@@ -16,12 +16,12 @@
 <div class="modal fade" id="borrar-@planFinal.codigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
-                Seguro que desea borrar este Plan de mejora. Esta acción es irreversible.
-            </div>
             <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    Seguro que desea borrar este Plan de mejora. Esta acción es irreversible.
+                </div>
                 <h4>Plan De Mejora</h4>
                 <div>
                     <dl class="dl-horizontal">

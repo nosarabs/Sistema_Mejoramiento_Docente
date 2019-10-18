@@ -74,10 +74,14 @@
                         <td class="TablasFecha">
                             @Html.DisplayFor(modelItem => obj.fechaFin)
                         </td>
-                        <td class="TablasOpciones botonCentrado">
-                            @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
+                        <td class="TablasOpciones">
+                            <div class="col-md-6">
+                                @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })
+                            </div>
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                            @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })
                         </td>
                     </tr>
                 </tbody>
