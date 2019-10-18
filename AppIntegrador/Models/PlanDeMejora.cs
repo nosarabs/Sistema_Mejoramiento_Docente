@@ -17,11 +17,11 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlanDeMejora()
         {
+            this.Objetivo = new HashSet<Objetivo>();
             this.Profesor = new HashSet<Profesor>();
             this.Funcionario = new HashSet<Funcionario>();
             this.Formulario = new HashSet<Formulario>();
             this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
-            this.Objetivo = new HashSet<Objetivo>();
         }
     
         public int codigo { get; set; }
@@ -30,6 +30,8 @@ namespace AppIntegrador.Models
         public Nullable<System.DateTime> fechaFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Objetivo> Objetivo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profesor> Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Funcionario> Funcionario { get; set; }
@@ -37,7 +39,5 @@ namespace AppIntegrador.Models
         public virtual ICollection<Formulario> Formulario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Objetivo> Objetivo { get; set; }
     }
 }
