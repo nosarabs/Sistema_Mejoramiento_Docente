@@ -17,27 +17,22 @@
         <div class="">
             <div>
                 <div class="mainBar">
-                    <div class="item">
-                        <a href="https://www.ucr.ac.cr/" class="logo" target="_blank">
-                            <img height="50" src="~/Content/images/ucr_promo.png" alt="ucr logo" />
+                    <div class="smallItem">
+                        <a href="https://www.ucr.ac.cr" class="svg" id="firma-ucr" target="_blank" tabindex="2">
+                            <img height="50" src="~/Content/images/logo_ucr.png" alt="Logo Universidad de Costa Rica">
                         </a>
                     </div>
-                    <div class="item nombreProyecto">
+                    <div class="nombreProyecto biggeritem">
                         @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
                     </div>
-                    <div class="item">
-                        <ul class="wrapper">
-
-                            <li>
-                                <div class="dropdown">
-                                    <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
-                                    <div class="dropdown-content">
-                                        <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                        @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="smallItem">
+                        <div class="dropdown">
+                            <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
+                            <div class="dropdown-content">
+                                <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
+                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
