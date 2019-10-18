@@ -35,7 +35,7 @@ namespace AppIntegrador
             string username = HttpContext.User.Identity.Name;
             if (username != "admin@mail.com")
             {
-                TempData["alertmessage"] = "Solo el administrador puede accesar esta pagina";
+                TempData["alertmessage"] = "Solo el administrador puede accesar esta página";
                 return RedirectToAction("../Home/Index");
             }
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
@@ -111,8 +111,11 @@ namespace AppIntegrador
                 /*TO-DO: modify the view to allow custom password setting.*/
 
                 List<Persona> Personas = db.Persona.ToList();
+                // Validamos campos de Identificación según su tipo y el formato del Carné
+                if (!this.ValidateInputFields(persona, persona.Estudiante))
+                    return View(persona);
 
-                //Primero confirmamos si alguna persona existe con ese correo
+                //Confirmamos si alguna persona existe con ese correo
                 if (db.Persona.Find(persona.Correo) == null)
                 {
                     ObjectParameter result = new ObjectParameter("result", typeof(bool));
@@ -123,7 +126,7 @@ namespace AppIntegrador
                     {
                         //Ahora verificamos si el usuario introdujo un Carne, si si lo introdujo entonces agregamos el correo a los datos que van a ser insertados en Estudiante, si no
                         //borramos todos los datos de estudiante para que el framework no itente añadirlo
-                        if(persona.Estudiante.Carne != null)
+                        if (persona.Estudiante.Carne != null)
                         {
                             persona.Estudiante.Correo = persona.Correo;
                         }
@@ -131,6 +134,7 @@ namespace AppIntegrador
                         {                            
                             persona.Estudiante = null;
                         }
+
                         //Nadie repetido, añadir a la BD
                         db.Persona.Add(persona);
                         db.SaveChanges();
@@ -200,7 +204,7 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
-            if (!this.validateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+            if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
                 return View(usuarioPersona);
 
             if (ModelState.IsValid && 
@@ -354,7 +358,7 @@ namespace AppIntegrador
             base.Dispose(disposing);
         }
 
-        private bool validateInputFields(Persona persona, Estudiante estudiante)
+        private bool ValidateInputFields(Persona persona, Estudiante estudiante)
         {
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
@@ -364,6 +368,7 @@ namespace AppIntegrador
                 if (matches.Count == 0)
                 {
                     ModelState.AddModelError("Persona.Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayúscula o un número, los demás solo números");
+                    ModelState.AddModelError("Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayúscula o un número, los demás solo números");
                     return false;
                 }
             }
@@ -371,17 +376,17 @@ namespace AppIntegrador
             switch (persona.TipoIdentificacion)
             {
                 case "Cédula":
-                    return validarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
                 case "Pasaporte":
-                    return validarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
                 case "Número de residencia":
-                    return validarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
             }
 
             return true;
         }
 
-        private bool validarIdentificacion(string id, TIPO_ID tipo)
+        private bool ValidarIdentificacion(string id, TIPO_ID tipo)
         {
             string pattern;
             Regex regexResult;
@@ -392,6 +397,7 @@ namespace AppIntegrador
                     if (regexResult.Matches(id).Count == 0)
                     {
                         ModelState.AddModelError("Persona.Identificacion", "El número de cédula debe ser de 9 dígitos, el primero no puede ser 0 y no debe tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El número de cédula debe ser de 9 dígitos, el primero no puede ser 0 y no debe tener guiones.");
                         return false;
                     }
                     break;
@@ -401,6 +407,7 @@ namespace AppIntegrador
                     if (regexResult.Matches(id).Count == 0)
                     {
                         ModelState.AddModelError("Persona.Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
                         return false;
                     }
                     break;
@@ -410,6 +417,7 @@ namespace AppIntegrador
                     if (regexResult.Matches(id).Count == 0)
                     {
                         ModelState.AddModelError("Persona.Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
                         return false;
                     }
                     break;
