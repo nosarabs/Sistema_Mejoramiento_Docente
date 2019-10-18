@@ -32,98 +32,109 @@
         </div>
 
     </div>
-   
 
-    <div>
-        <table class="table">
-            <tr class="EncabezadoTabla">
-                @*<th>
-                        @Html.DisplayNameFor(model => model.codigo)
-
-                    </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    Creado por
-                </th>
-                <th>
-                    Asignado a
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.fechaFin)
-                </th>
-                <th>
-                    Opciones
-                </th>
-            </tr>
-
-            @foreach (var plan in Model)
-            {
-                <tbody id="data">
-                    <tr class="FilaTablasPlanesDeMejora" onclick="clickPlan(@plan.codigo)">
-                        @*<td id="codigoTemporal" class="TablasCodigo">
-                                @Html.DisplayFor(modelItem => plan.codigo)
-                            </td>*@
-                        <td class="TablasNombrePlan">
-                            @Html.DisplayFor(modelItem => plan.nombre)
-                        </td>
-                        <td class="TablasUsuario">
-                            @HttpContext.Current.User.Identity.Name
-                        </td>
-                        <td class="TablasUsuario">
-                            @HttpContext.Current.User.Identity.Name
-                        </td>
-                        <td class="TablasFecha">
-                            @Html.DisplayFor(modelItem => plan.fechaInicio)
-                        </td>
-                        <td class="TablasFecha">
-                            @Html.DisplayFor(modelItem => plan.fechaFin)
-                        </td>
-                        <td class="TablasOpciones botonCentrado">
-                            @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
-
-                            @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                        </td>
-                    </tr>
-                </tbody>
-            }
-        </table>
-
-        <hr />
-    </div>
-
-    <div class="objetivosPlan">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="impText">Objetivos</h2>
-            </div>
-        </div>
+    @if (Model.Count() == 0)
+    {
         <div class="centeredText">
             <p>
-                Seleccione un plan de mejora
+                Aún no se han creado planes de mejora
             </p>
         </div>
-        <hr />
+    }
+    else
+    {
+        <div>
+            <table class="table">
+                <tr class="EncabezadoTabla">
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.codigo)
 
-    </div>
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </th>
+                    <th>
+                        Creado por
+                    </th>
+                    <th>
+                        Asignado a
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaFin)
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
 
-    <div class="accionesObjetivo" id="acciones">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="impText">Acciones de mejora</h2>
+                @foreach (var plan in Model)
+                {
+                    <tbody id="data">
+                        <tr class="FilaTablasPlanesDeMejora" onclick="clickPlan(@plan.codigo)">
+                            @*<td id="codigoTemporal" class="TablasCodigo">
+                                    @Html.DisplayFor(modelItem => plan.codigo)
+                                </td>*@
+                            <td class="TablasNombrePlan">
+                                @Html.DisplayFor(modelItem => plan.nombre)
+                            </td>
+                            <td class="TablasUsuario">
+                                @HttpContext.Current.User.Identity.Name
+                            </td>
+                            <td class="TablasUsuario">
+                                @HttpContext.Current.User.Identity.Name
+                            </td>
+                            <td class="TablasFecha">
+                                @Html.DisplayFor(modelItem => plan.fechaInicio)
+                            </td>
+                            <td class="TablasFecha">
+                                @Html.DisplayFor(modelItem => plan.fechaFin)
+                            </td>
+                            <td class="TablasOpciones botonCentrado">
+                                @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+
+                                @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+
+            <hr />
+        </div>
+
+        <div class="objetivosPlan">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="impText">Objetivos</h2>
+                </div>
             </div>
+            <div class="centeredText">
+                <p>
+                    Seleccione un plan de mejora
+                </p>
+            </div>
+            <hr />
+
         </div>
-        <div class="centeredText">
-            <p>
-                Seleccione un Objetivo
-            </p>
+
+        <div class="accionesObjetivo" id="acciones">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="impText">Acciones de mejora</h2>
+                </div>
+            </div>
+            <div class="centeredText">
+                <p>
+                    Seleccione un Objetivo
+                </p>
+            </div>
+            <hr />
         </div>
-        <hr />
-    </div>
+
+    }
 </div>
 
 
@@ -139,16 +150,16 @@
             $(".objetivosPlan").load("objetivosPlan",
                 { id: id });
             var content = '<div class="row">\
-                        <div class="col-md-8">\
-                            <h2 class="impText">Acciones de mejora</h2>\
-                        </div>\
-                    </div>\
-                    <div class="centeredText">\
-                        <p>\
-                            Seleccione un Objetivo\
-                        </p>\
-                    </div>\
-                    <hr />';
+                                    <div class="col-md-8">\
+                                        <h2 class="impText">Acciones de mejora</h2>\
+                                    </div>\
+                                </div>\
+                                <div class="centeredText">\
+                                    <p>\
+                                        Seleccione un Objetivo\
+                                    </p>\
+                                </div>\
+                                <hr />';
             document.getElementById('acciones').innerHTML = content;
         };
 
@@ -178,6 +189,39 @@
             if (!selected)
                 $(this).addClass("highlight2");
         });
+    </script>
+
+    <script>
+        var nomb = 0;
+        var ini = 0;
+        var fin = 0;
+
+        activarEnvio = function () {
+            var button = document.getElementById("send");
+            if ((nomb + ini + fin) == 3) {
+                button.disabled = false;
+            }
+        };
+    </script>
+    <script>
+        nombreDelPlan = function () { nomb = 1; activarEnvio(); };
+        inicio = function () { ini = 1; activarEnvio(); };
+        fina = function () { fin = 1; activarEnvio(); };
+
+    </script>
+
+    <script>
+        crearObjetivoVal = function () {
+            var button = document.getElementById("crearObjetivo");
+            button.disabled = false;
+        };
+    </script>
+
+    <script>
+        crearAccionMejora = function () {
+            var button = document.getElementById("crearAccion");
+            button.disabled = false;
+        };
     </script>
 
 }

@@ -40,16 +40,27 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
         {
-            if (ModelState.IsValid)
-            {
-                db.AccionDeMejora.Add(accionDeMejora);
-                db.SaveChanges();
-                return RedirectToAction("Index", "PlanDeMejora");
-            }
+            bool error = false;
 
+            if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
+            {
+                if ((DateTime.Compare(accionDeMejora.fechaInicio.Value, accionDeMejora.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if (!error)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.AccionDeMejora.Add(accionDeMejora);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "PlanDeMejora");
+                }
+            }
             ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");
             ViewBag.nombreObj = new SelectList(db.Objetivo, "nombre", "nombre");
-            return View(accionDeMejora);
+            return RedirectToAction("Index", "PlanDeMejora");
 
         }
 
@@ -73,15 +84,27 @@ namespace AppIntegrador.Controllers
         // Corresponde a MOS 1.3 (2)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] PlanDeMejora planDeMejora)
+        public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] AccionDeMejora accionDeMejora)
         {
-            if (ModelState.IsValid)
+            bool error = false;
+
+            if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
             {
-                db.Entry(planDeMejora).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if ((DateTime.Compare(accionDeMejora.fechaInicio.Value, accionDeMejora.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
             }
-            return View(planDeMejora);
+            if (!error)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(accionDeMejora).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "PlanDeMejora");
+                }
+            }
+            return RedirectToAction("Index", "PlanDeMejora"); 
         }
 
         // GET: AccionDeMejora/Delete/5
@@ -109,7 +132,7 @@ namespace AppIntegrador.Controllers
             AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
             db.AccionDeMejora.Remove(accion);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PlanDeMejora");
         }
         protected override void Dispose(bool disposing)
         {
