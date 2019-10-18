@@ -18,28 +18,36 @@ namespace AppIntegrador.Controllers
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
         // GET: Seccion
-        public ActionResult Index(string inp1, string inp2)
+        public ActionResult Index(string input0, string input1, string input2)
         {
-            if (inp2 == null && inp1 == null)
+            var seccion = db.Seccion;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
             {
-                return View(db.Seccion.ToList());
+                ViewBag.filtro = "Ninguno";
+                return View(seccion.ToList());
             }
-            //if a user choose the radio button option as Subject  
-            if (inp2 == null)
+            // si se selecionó el código  
+            if (input1.Length > 0)
             {
+                ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(db.Seccion.Where(x => x.Codigo.Contains(inp1)).ToList());
+                return View(seccion.Where(x => x.Codigo.Contains(input1)).ToList());
             }
-            else if (inp1 == null )
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
             {
-                return View(db.Seccion.Where(x => x.Nombre.Contains(inp2)).ToList());
+                ViewBag.filtro = "Nombre: " + input2;
+                return View(seccion.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
-                return View(db.Seccion.ToList());
+                ViewBag.filtro = "Ninguno";
+                return View(seccion.ToList());
             }
         }
-
+       
         // GET: Seccion/Details/5
         public ActionResult Details(string id)
         {
@@ -54,8 +62,6 @@ namespace AppIntegrador.Controllers
             }
             return View(seccion);
         }
-
-
 
         // GET: Seccion/Create
         public ActionResult Create()
@@ -87,6 +93,44 @@ namespace AppIntegrador.Controllers
             }
 
             return View(crearSeccion);
+        }
+
+        // Historia RIP-BKS1
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string input0, string input1, string input2, string input3)
+        {
+            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null && input3 == null)
+            {
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+                return View("Create", crearSeccion);
+            }
+            //if a user choose the radio button option as Subject  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(input1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Enunciado: " + input2;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(input2)).ToList();
+            }
+            else if (input3.Length > 0)
+            {
+                var aux = input3 == "U" ? "Selección Única" : "Seleción Múltiple";
+                ViewBag.filtro = "Tipo: " + aux;
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(input3)).ToList();
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+            }
+            return View("Create", crearSeccion);
         }
 
         // GET: Seccion/Edit/5
@@ -156,45 +200,23 @@ namespace AppIntegrador.Controllers
         }
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
                 {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarSeccion";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", seccion.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", seccion.Nombre));
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                if (preguntas != null)
-                {
-                    for (int index = 0; index < preguntas.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarPreguntaConSeccion";
-                            cmd.Parameters.Add(new SqlParameter("@CodigoSeccion", seccion.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@CodigoPregunta", preguntas[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@Orden", index));
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
 
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
                 }
             }
             return true;

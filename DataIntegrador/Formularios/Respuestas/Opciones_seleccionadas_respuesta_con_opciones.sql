@@ -14,5 +14,5 @@
 
 	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, OpcionSeleccionada),
 	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) 
-		REFERENCES Responde_respuesta_con_opciones(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
+		REFERENCES Responde_respuesta_con_opciones(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo) on delete cascade,
 )

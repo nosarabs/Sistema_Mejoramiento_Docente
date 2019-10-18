@@ -299,7 +299,7 @@ p.impText {
 .equalSpaceVertical {
     display: flex;
     flex-direction: row;
-    justify-cSontent: flex-end;
+    justify-content: flex-end;
 }
 
 .halfVerticalBox {
