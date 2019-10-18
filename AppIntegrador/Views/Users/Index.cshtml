@@ -95,14 +95,15 @@
                         if (item.Persona.Correo != "admin@mail.com")
                         {
                             @Html.ActionLink("Borrar", "DeleteConfirmed", new
-                            {
-                                username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                                domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')),
-                                confirmed = true
-                            },
+                       {
+                           username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
+                           domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')),
+                           confirmed = true
+                       },
                             new
                             {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
-                                onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "?')",
+                                onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
+                                "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
                                 @class = "btn btn-danger"
                             })
                         }

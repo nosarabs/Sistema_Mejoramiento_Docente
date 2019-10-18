@@ -35,6 +35,8 @@ public partial class Funcionario
 
 
 
+    public virtual Persona Persona { get; set; }
+
     public virtual Profesor Profesor { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -48,8 +50,6 @@ public partial class Funcionario
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<UnidadAcademica> UnidadAcademica { get; set; }
-
-    public virtual Persona Persona { get; set; }
 
 }
 

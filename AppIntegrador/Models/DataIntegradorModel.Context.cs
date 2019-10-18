@@ -75,6 +75,8 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<Permiso> Permiso { get; set; }
 
+    public virtual DbSet<Persona> Persona { get; set; }
+
     public virtual DbSet<PlanDeMejora> PlanDeMejora { get; set; }
 
     public virtual DbSet<PlantillaAccionDeMejora> PlantillaAccionDeMejora { get; set; }
@@ -111,7 +113,22 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
 
-    public virtual DbSet<Persona> Persona { get; set; }
+
+    public virtual int AgregarFormulario(string codigo, string nombre)
+    {
+
+        var codigoParameter = codigo != null ?
+            new ObjectParameter("codigo", codigo) :
+            new ObjectParameter("codigo", typeof(string));
+
+
+        var nombreParameter = nombre != null ?
+            new ObjectParameter("nombre", nombre) :
+            new ObjectParameter("nombre", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarFormulario", codigoParameter, nombreParameter);
+    }
 
 
     public virtual int AgregarOpcion(string cod, Nullable<byte> orden, string texto)
@@ -226,240 +243,6 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual int ChangePassword(string username, string newpassword)
-    {
-
-        var usernameParameter = username != null ?
-            new ObjectParameter("username", username) :
-            new ObjectParameter("username", typeof(string));
-
-
-        var newpasswordParameter = newpassword != null ?
-            new ObjectParameter("newpassword", newpassword) :
-            new ObjectParameter("newpassword", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword", usernameParameter, newpasswordParameter);
-    }
-
-
-    public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, string pCod, ObjectParameter desviacion)
-    {
-
-        var fCodParameter = fCod != null ?
-            new ObjectParameter("FCod", fCod) :
-            new ObjectParameter("FCod", typeof(string));
-
-
-        var cSiglaParameter = cSigla != null ?
-            new ObjectParameter("CSigla", cSigla) :
-            new ObjectParameter("CSigla", typeof(string));
-
-
-        var grupoParameter = grupo.HasValue ?
-            new ObjectParameter("Grupo", grupo) :
-            new ObjectParameter("Grupo", typeof(byte));
-
-
-        var gAnnoParameter = gAnno.HasValue ?
-            new ObjectParameter("GAnno", gAnno) :
-            new ObjectParameter("GAnno", typeof(int));
-
-
-        var gSemParameter = gSem.HasValue ?
-            new ObjectParameter("GSem", gSem) :
-            new ObjectParameter("GSem", typeof(byte));
-
-
-        var pCodParameter = pCod != null ?
-            new ObjectParameter("PCod", pCod) :
-            new ObjectParameter("PCod", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, pCodParameter, desviacion);
-    }
-
-
-    public virtual int LoginUsuario(string pLoginName, string pPassword, ObjectParameter result)
-    {
-
-        var pLoginNameParameter = pLoginName != null ?
-            new ObjectParameter("pLoginName", pLoginName) :
-            new ObjectParameter("pLoginName", typeof(string));
-
-
-        var pPasswordParameter = pPassword != null ?
-            new ObjectParameter("pPassword", pPassword) :
-            new ObjectParameter("pPassword", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario", pLoginNameParameter, pPasswordParameter, result);
-    }
-
-
-    public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, string codigoPregunta, ObjectParameter mediana)
-    {
-
-        var codigoFormularioParameter = codigoFormulario != null ?
-            new ObjectParameter("codigoFormulario", codigoFormulario) :
-            new ObjectParameter("codigoFormulario", typeof(string));
-
-
-        var siglaCursoParameter = siglaCurso != null ?
-            new ObjectParameter("siglaCurso", siglaCurso) :
-            new ObjectParameter("siglaCurso", typeof(string));
-
-
-        var numeroGrupoParameter = numeroGrupo.HasValue ?
-            new ObjectParameter("numeroGrupo", numeroGrupo) :
-            new ObjectParameter("numeroGrupo", typeof(byte));
-
-
-        var anioParameter = anio.HasValue ?
-            new ObjectParameter("anio", anio) :
-            new ObjectParameter("anio", typeof(int));
-
-
-        var semestreParameter = semestre.HasValue ?
-            new ObjectParameter("semestre", semestre) :
-            new ObjectParameter("semestre", typeof(byte));
-
-
-        var codigoPreguntaParameter = codigoPregunta != null ?
-            new ObjectParameter("codigoPregunta", codigoPregunta) :
-            new ObjectParameter("codigoPregunta", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, codigoPreguntaParameter, mediana);
-    }
-
-
-    public virtual int ModificarCorreo(string anterior, string nuevo, ObjectParameter resultado)
-    {
-
-        var anteriorParameter = anterior != null ?
-            new ObjectParameter("anterior", anterior) :
-            new ObjectParameter("anterior", typeof(string));
-
-
-        var nuevoParameter = nuevo != null ?
-            new ObjectParameter("nuevo", nuevo) :
-            new ObjectParameter("nuevo", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter, resultado);
-    }
-
-
-    public virtual ObjectResult<ObtenerOpcionesDePregunta_Result> ObtenerOpcionesDePregunta(string questionCode)
-    {
-
-        var questionCodeParameter = questionCode != null ?
-            new ObjectParameter("questionCode", questionCode) :
-            new ObjectParameter("questionCode", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesDePregunta_Result>("ObtenerOpcionesDePregunta", questionCodeParameter);
-    }
-
-
-    public virtual ObjectResult<string> ObtenerPreguntasDeSeccion(string sectionCode)
-    {
-
-        var sectionCodeParameter = sectionCode != null ?
-            new ObjectParameter("sectionCode", sectionCode) :
-            new ObjectParameter("sectionCode", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
-    }
-
-
-    public virtual int PopularSeccionesConPreguntas()
-    {
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
-    }
-
-
-    public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, string codigoPregunta, ObjectParameter promedio)
-    {
-
-        var codigoFormularioParameter = codigoFormulario != null ?
-            new ObjectParameter("codigoFormulario", codigoFormulario) :
-            new ObjectParameter("codigoFormulario", typeof(string));
-
-
-        var siglaCursoParameter = siglaCurso != null ?
-            new ObjectParameter("siglaCurso", siglaCurso) :
-            new ObjectParameter("siglaCurso", typeof(string));
-
-
-        var numeroGrupoParameter = numeroGrupo.HasValue ?
-            new ObjectParameter("numeroGrupo", numeroGrupo) :
-            new ObjectParameter("numeroGrupo", typeof(byte));
-
-
-        var annoParameter = anno.HasValue ?
-            new ObjectParameter("anno", anno) :
-            new ObjectParameter("anno", typeof(int));
-
-
-        var semestreParameter = semestre.HasValue ?
-            new ObjectParameter("semestre", semestre) :
-            new ObjectParameter("semestre", typeof(byte));
-
-
-        var codigoPreguntaParameter = codigoPregunta != null ?
-            new ObjectParameter("codigoPregunta", codigoPregunta) :
-            new ObjectParameter("codigoPregunta", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
-    }
-
-
-    public virtual ObjectResult<SeccionesDeFormulario_Result> SeccionesDeFormulario(string codForm)
-    {
-
-        var codFormParameter = codForm != null ?
-            new ObjectParameter("CodForm", codForm) :
-            new ObjectParameter("CodForm", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeccionesDeFormulario_Result>("SeccionesDeFormulario", codFormParameter);
-    }
-
-
-    public virtual int CheckID(string identificacion, ObjectParameter result)
-    {
-
-        var identificacionParameter = identificacion != null ?
-            new ObjectParameter("identificacion", identificacion) :
-            new ObjectParameter("identificacion", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID", identificacionParameter, result);
-    }
-
-
-    public virtual int AgregarFormulario(string codigo, string nombre)
-    {
-
-        var codigoParameter = codigo != null ?
-            new ObjectParameter("codigo", codigo) :
-            new ObjectParameter("codigo", typeof(string));
-
-
-        var nombreParameter = nombre != null ?
-            new ObjectParameter("nombre", nombre) :
-            new ObjectParameter("nombre", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarFormulario", codigoParameter, nombreParameter);
-    }
-
-
     public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta, Nullable<int> orden)
     {
 
@@ -504,38 +287,7 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual int ObtenerEmailUsuario(string pUsername, ObjectParameter email)
-    {
-
-        var pUsernameParameter = pUsername != null ?
-            new ObjectParameter("pUsername", pUsername) :
-            new ObjectParameter("pUsername", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerEmailUsuario", pUsernameParameter, email);
-    }
-
-
-    public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
-    {
-
-        var codFormParameter = codForm != null ?
-            new ObjectParameter("CodForm", codForm) :
-            new ObjectParameter("CodForm", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerSeccionesDeFormulario_Result>("ObtenerSeccionesDeFormulario", codFormParameter);
-    }
-
-
-    public virtual int PopularFormulariosConSecciones()
-    {
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosConSecciones");
-    }
-
-
-    public virtual int ChangePassword1(string username, string newpassword)
+    public virtual int ChangePassword(string username, string newpassword)
     {
 
         var usernameParameter = username != null ?
@@ -548,11 +300,11 @@ public partial class DataIntegradorEntities : DbContext
             new ObjectParameter("newpassword", typeof(string));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword1", usernameParameter, newpasswordParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangePassword", usernameParameter, newpasswordParameter);
     }
 
 
-    public virtual int CheckID1(string identificacion, ObjectParameter result)
+    public virtual int CheckID(string identificacion, ObjectParameter result)
     {
 
         var identificacionParameter = identificacion != null ?
@@ -560,7 +312,44 @@ public partial class DataIntegradorEntities : DbContext
             new ObjectParameter("identificacion", typeof(string));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID1", identificacionParameter, result);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID", identificacionParameter, result);
+    }
+
+
+    public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, string pCod, ObjectParameter desviacion)
+    {
+
+        var fCodParameter = fCod != null ?
+            new ObjectParameter("FCod", fCod) :
+            new ObjectParameter("FCod", typeof(string));
+
+
+        var cSiglaParameter = cSigla != null ?
+            new ObjectParameter("CSigla", cSigla) :
+            new ObjectParameter("CSigla", typeof(string));
+
+
+        var grupoParameter = grupo.HasValue ?
+            new ObjectParameter("Grupo", grupo) :
+            new ObjectParameter("Grupo", typeof(byte));
+
+
+        var gAnnoParameter = gAnno.HasValue ?
+            new ObjectParameter("GAnno", gAnno) :
+            new ObjectParameter("GAnno", typeof(int));
+
+
+        var gSemParameter = gSem.HasValue ?
+            new ObjectParameter("GSem", gSem) :
+            new ObjectParameter("GSem", typeof(byte));
+
+
+        var pCodParameter = pCod != null ?
+            new ObjectParameter("PCod", pCod) :
+            new ObjectParameter("PCod", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, pCodParameter, desviacion);
     }
 
 
@@ -673,7 +462,61 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual int ModificarCorreo1(string anterior, string nuevo, ObjectParameter resultado)
+    public virtual int LoginUsuario(string pLoginName, string pPassword, ObjectParameter result)
+    {
+
+        var pLoginNameParameter = pLoginName != null ?
+            new ObjectParameter("pLoginName", pLoginName) :
+            new ObjectParameter("pLoginName", typeof(string));
+
+
+        var pPasswordParameter = pPassword != null ?
+            new ObjectParameter("pPassword", pPassword) :
+            new ObjectParameter("pPassword", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario", pLoginNameParameter, pPasswordParameter, result);
+    }
+
+
+    public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, string codigoPregunta, ObjectParameter mediana)
+    {
+
+        var codigoFormularioParameter = codigoFormulario != null ?
+            new ObjectParameter("codigoFormulario", codigoFormulario) :
+            new ObjectParameter("codigoFormulario", typeof(string));
+
+
+        var siglaCursoParameter = siglaCurso != null ?
+            new ObjectParameter("siglaCurso", siglaCurso) :
+            new ObjectParameter("siglaCurso", typeof(string));
+
+
+        var numeroGrupoParameter = numeroGrupo.HasValue ?
+            new ObjectParameter("numeroGrupo", numeroGrupo) :
+            new ObjectParameter("numeroGrupo", typeof(byte));
+
+
+        var anioParameter = anio.HasValue ?
+            new ObjectParameter("anio", anio) :
+            new ObjectParameter("anio", typeof(int));
+
+
+        var semestreParameter = semestre.HasValue ?
+            new ObjectParameter("semestre", semestre) :
+            new ObjectParameter("semestre", typeof(byte));
+
+
+        var codigoPreguntaParameter = codigoPregunta != null ?
+            new ObjectParameter("codigoPregunta", codigoPregunta) :
+            new ObjectParameter("codigoPregunta", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, codigoPreguntaParameter, mediana);
+    }
+
+
+    public virtual int ModificarCorreo(string anterior, string nuevo, ObjectParameter resultado)
     {
 
         var anteriorParameter = anterior != null ?
@@ -686,7 +529,94 @@ public partial class DataIntegradorEntities : DbContext
             new ObjectParameter("nuevo", typeof(string));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo1", anteriorParameter, nuevoParameter, resultado);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarCorreo", anteriorParameter, nuevoParameter, resultado);
+    }
+
+
+    public virtual ObjectResult<ObtenerOpcionesDePregunta_Result> ObtenerOpcionesDePregunta(string questionCode)
+    {
+
+        var questionCodeParameter = questionCode != null ?
+            new ObjectParameter("questionCode", questionCode) :
+            new ObjectParameter("questionCode", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesDePregunta_Result>("ObtenerOpcionesDePregunta", questionCodeParameter);
+    }
+
+
+    public virtual ObjectResult<string> ObtenerPreguntasDeSeccion(string sectionCode)
+    {
+
+        var sectionCodeParameter = sectionCode != null ?
+            new ObjectParameter("sectionCode", sectionCode) :
+            new ObjectParameter("sectionCode", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
+    }
+
+
+    public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
+    {
+
+        var codFormParameter = codForm != null ?
+            new ObjectParameter("CodForm", codForm) :
+            new ObjectParameter("CodForm", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerSeccionesDeFormulario_Result>("ObtenerSeccionesDeFormulario", codFormParameter);
+    }
+
+
+    public virtual int PopularFormulariosConSecciones()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosConSecciones");
+    }
+
+
+    public virtual int PopularSeccionesConPreguntas()
+    {
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
+    }
+
+
+    public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, string codigoPregunta, ObjectParameter promedio)
+    {
+
+        var codigoFormularioParameter = codigoFormulario != null ?
+            new ObjectParameter("codigoFormulario", codigoFormulario) :
+            new ObjectParameter("codigoFormulario", typeof(string));
+
+
+        var siglaCursoParameter = siglaCurso != null ?
+            new ObjectParameter("siglaCurso", siglaCurso) :
+            new ObjectParameter("siglaCurso", typeof(string));
+
+
+        var numeroGrupoParameter = numeroGrupo.HasValue ?
+            new ObjectParameter("numeroGrupo", numeroGrupo) :
+            new ObjectParameter("numeroGrupo", typeof(byte));
+
+
+        var annoParameter = anno.HasValue ?
+            new ObjectParameter("anno", anno) :
+            new ObjectParameter("anno", typeof(int));
+
+
+        var semestreParameter = semestre.HasValue ?
+            new ObjectParameter("semestre", semestre) :
+            new ObjectParameter("semestre", typeof(byte));
+
+
+        var codigoPreguntaParameter = codigoPregunta != null ?
+            new ObjectParameter("codigoPregunta", codigoPregunta) :
+            new ObjectParameter("codigoPregunta", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
     }
 
 }

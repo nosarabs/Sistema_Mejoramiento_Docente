@@ -35,6 +35,8 @@ public partial class Estudiante
 
 
 
+    public virtual Persona Persona { get; set; }
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Enfasis> Enfasis { get; set; }
@@ -42,8 +44,6 @@ public partial class Estudiante
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Grupo> Grupo { get; set; }
-
-    public virtual Persona Persona { get; set; }
 
 }
 
