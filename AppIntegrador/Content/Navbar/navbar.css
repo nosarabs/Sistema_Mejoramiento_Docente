@@ -1,0 +1,76 @@
+﻿-- root {
+    --alturaNavBars: 50px;
+    --AzulUcr: #41ADE7;
+    --colorSegundoNavbar: #F5F5F5;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#header {
+    margin: auto;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.nav {
+    z-index: 5;
+    background-color: #F5F5F5 !important;
+    width: 100%;
+}
+
+    .nav > li {
+        float: left;
+    }
+
+    .nav li a {
+        background-color: #F5F5F5;
+        color: black;
+        text-decoration: none;
+        padding: 10px 12px;
+        display: block;
+        z-index: 5 !important;
+    }
+
+        .nav li a:hover {
+            background-color: #434343;
+            color: white;
+            z-index: 5 !important;
+        }
+
+    .nav li ul {
+        display: none;
+        position: absolute;
+        min-width: 150px;
+    }
+
+    .nav li:hover > ul {
+        display: block;
+    }
+
+    .nav li ul li {
+        position: relative;
+        z-index: 5 !important;
+    }
+
+        .nav li ul li ul {
+            right: -140px;
+            top: 0px;
+            z-index: 5 !important;
+        }
+
+.barraNavegacionLogos {
+    max-height: var(--alturaNavBars);
+    width: 100%;
+    display: flex;
+}
+
+.nombreProyecto {
+    font-size: 2em !important;
+}

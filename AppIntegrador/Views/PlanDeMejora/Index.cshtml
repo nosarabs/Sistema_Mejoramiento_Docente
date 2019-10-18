@@ -6,24 +6,44 @@
     var mostrarObjetivos = false;
     var mostrarAccionesDeMejora = false;
     var mostrarAccionables = false;
+
+    @*
+        Añadido por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.3 "agregar, modificar, borrar y consultar las acciones de mejora de un objetivo"
+        Permite pasar más de un pármetro al javascrip que actualiza las acciones de un plan.
+    *@
+    dynamic item = new System.Dynamic.ExpandoObject();
+    item.MultiLineString = @"a multi-line
+     string";
+    item.SingleLineString = "a single-line string";
 }
 
 
-
-
 <div class="fullWidth">
-    <div class="fullWidth">
-        <div class="horizontalBoxes">
-            <h1 class="impText">Planes de Mejora - @ViewBag.cantidad asignados</h1>
+    @*
+        Modificado por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.1 "agregar, modificar, borrar y consultar los planes de mejora"
+        Diversos cambios para que todas las vistas tengan la misma forma.
+    *@
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="impText">Planes de Mejora - @Model.Count() asignados</h2>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-2">
+            <br />
+            @Html.ActionLink("Nuevo Plan de Mejora", "Create", "PlanDeMejora", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
         </div>
 
     </div>
 
     <br />
 
-    <div class="planesTable">
-        <table class='table table-bordered table-condensed table-striped table-hover'>
-            <tr>
+    <div>
+        <table class="table">
+            <tr class="EncabezadoTabla">
                 <th>
                     @Html.DisplayNameFor(model => model.codigo)
 
@@ -32,109 +52,146 @@
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
                 <th>
+                    Creado por
+                </th>
+                <th>
+                    Asignado a
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.fechaInicio)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
                 <th>
-                    Creado por:
-                </th>
-                <th>
-                    Asignado a:
-                </th>
-                <th>
-                    Opciones de Edición
+                    Opciones
                 </th>
             </tr>
 
             @foreach (var plan in Model)
             {
-                <tr>
-                    <td id="codigoTemporal">
-                        @Html.DisplayFor(modelItem => plan.codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => plan.fechaFin)
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
-                    <td>
-                        @HttpContext.Current.User.Identity.Name
-                    </td>
-
-                    <td>
-                        <div class="verticalBoxes">
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+                <tbody id="data">
+                    <tr class="FilaTablasPlanesDeMejora" onclick="clickPlan(@plan.codigo)">
+                        <td id="codigoTemporal" class="TablasCodigo">
+                            @Html.DisplayFor(modelItem => plan.codigo)
+                        </td>
+                        <td class="TablasNombre">
+                            @Html.DisplayFor(modelItem => plan.nombre)
+                        </td>
+                        <td class="TablasUsuario">
+                            @HttpContext.Current.User.Identity.Name
+                        </td>
+                        <td class="TablasUsuario">
+                            @HttpContext.Current.User.Identity.Name
+                        </td>
+                        <td class="TablasFecha">
+                            @Html.DisplayFor(modelItem => plan.fechaInicio)
+                        </td>
+                        <td class="TablasFecha">
+                            @Html.DisplayFor(modelItem => plan.fechaFin)
+                        </td>
+                        <td>
+                            <div class="verticalBoxes">
+                                <div>
+                                    @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+                                </div>
+                                <div>
+                                    @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
+                                </div>
                             </div>
-                            <!-- Boton para editar el plan de mejora -->
-                            <div class="createPlanButton">
-                                <button type="button" onclick="clickObjetivo(@plan.codigo)" class="btn btn-primary" id="verObjetivos">
-                                    Ver objetivos
-                                </button>
-                            </div>
-                            <div>
-                                @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                </tbody>
             }
         </table>
+
         <hr />
-
-        <div class="botonCentrado">
-            <p>
-                @Html.ActionLink("Agregar Plan de Mejora", "Create", "PlanDeMejora", new { usuarioCreador = ViewBag.nombre }, new { @class = "modal-link btn btn-Nuevo" })
-            </p>
-        </div>
-
     </div>
 
     <div class="objetivosPlan">
-        <h2>Objetivos</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="impText">Objetivos</h2>
+            </div>
+        </div>
+        <div class="centeredText">
+            <p>
+                Seleccione un plan de mejora
+            </p>
+        </div>
         <hr />
+
     </div>
 
-
-    <div class="fullWidth">
-        <h2>Acciones de mejora</h2>
+    <div class="accionesObjetivo" id="acciones">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="impText">Acciones de mejora</h2>
+            </div>
+        </div>
+        <div class="centeredText">
+            <p>
+                Seleccione un Objetivo
+            </p>
+        </div>
         <hr />
     </div>
-
-
-
-    @*<div class="fullWidth">
-        <h2 class="impText">Accionables</h2>
-        @if (mostrarAccionables)
-        {
-            <h2>Accionables</h2>
-        }
-        <hr />
-    </div>*@
 </div>
 
 
 
 @section Scripts{
     <script>
-        function myFunction() { 
-            var x = document.getElementById("codigoPlan").value;
+
+        function myFunction() {
+            var x = document.getElementById("objetivosPlan").value;
             console.log(x);
-        } 
-        clickObjetivo = function(id) {
+        }
+        clickPlan = function (id) {
             $(".objetivosPlan").load("objetivosPlan",
                 { id: id });
+            var content = '<div class="row">\
+                    <div class="col-md-8">\
+                        <h2 class="impText">Acciones de mejora</h2>\
+                    </div>\
+                </div>\
+                <div class="centeredText">\
+                    <p>\
+                        Seleccione un Objetivo\
+                    </p>\
+                </div>\
+                <hr />';
+            document.getElementById('acciones').innerHTML = content;
         };
-        $(document).ready(function () {
+
+    </script>
+
+    <script>
+        clickObjetivo = function (id, ida) {
+            //alert(id + " nombre: " + ida); //para debug
+            $(".accionesObjetivo").load("accionesObjetivo",
+                { id: id, nomb: ida });
+        };
+    </script>
+
+    <script>
+        $("#data tr").click(function () {
+            var selected = $(this).hasClass("highlight");
+            $("#data tr").removeClass("highlight");
+            if (!selected)
+                $(this).addClass("highlight");
         });
     </script>
+
+    <script>
+        $("#dataObj tr").click(function () {
+            var selected = $(this).hasClass("highlight2");
+            $("#dataObj tr").removeClass("highlight2");
+            if (!selected)
+                $(this).addClass("highlight2");
+        });
+    </script>
+
 }
+
+

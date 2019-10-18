@@ -26,8 +26,18 @@ p.uppercase {
 
 .mainBar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+.smallItem {
+    flex-grow: 1;
+}
+
+.biggeritem {
+    flex-grow: 3;
 }
 
 .wrapper {
@@ -92,10 +102,11 @@ nav {
 }
 
 .dropbtn_alt {
-    background-color: #209fe3;
+    background-color: #41ADE7;
     padding: 20px;
     border: 0em;
     width: 100%;
+    height: 100%;
     font-weight: bold;
 }
 
@@ -140,12 +151,12 @@ nav {
 .mainBarText {
     color: black;
     font-size: 1em;
-    
 }
 
 .ucr-logo {
     width: 30%;
-    min-width: 400px;
+    max-width: 200px;
+    max-height: 50px;
 }
 
 .logo-styles {
@@ -271,6 +282,7 @@ li a:hover {
 
 p.impText {
     font-weight: bold !important;
+    text-align: left;
 }
 
 .verticalBoxes {
@@ -287,7 +299,7 @@ p.impText {
 .equalSpaceVertical {
     display: flex;
     flex-direction: row;
-    justify-cSontent: flex-end;
+    justify-content: flex-end;
 }
 
 .halfVerticalBox {
@@ -324,7 +336,6 @@ p.impText {
     padding-left: 5%;
     padding-right: 5%;
     width: 100%;
-    text-align: center;
 }
 
 
@@ -395,15 +406,19 @@ html, body {
     flex-direction: column;
 }
 
+.centeredButtons {
+    width: 100%;
+    align-items: center;
+}
+
+
 /*.control-label {
     text-indent: 5em !important;
 }*/
-
 /* FIN DE LOS ESTILOS DEL DASHBOARD DE LOS PLANES DE MEJORA*/
-
 .botonCentrado {
     padding: 10px;
-    text-align:center;
+    text-align: center;
     width: 100%;
     height: 50px;
     margin: 0 auto;
@@ -449,6 +464,15 @@ html, body {
     overflow-x: scroll;
 }
 
+.EncabezadoTabla {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    text-align: left;
+    background-color: #095fa3;
+    color: white;
+}
+
 .TablasDescripcion {
     width: 44%;
     word-break: break-all;
@@ -459,28 +483,58 @@ html, body {
 }
 
 .TablasOpciones {
-    width: 14%;
+    width: 18%;
+}
+
+.TablasCodigo {
+    width: 10%;
+    text-align: right;
+}
+
+.TablasNombrePlan {
+    width: 12%;
+    word-break: break-all;
+    text-align: left;
+}
+
+.TablasUsuario {
+    width: 19%;
+    word-break: break-all;
+    text-align: left;
 }
 
 .TablasNombre {
     width: 20%;
     word-break: break-all;
+    text-align: left;
 }
 
-.TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
+.FilaTablasPlanesDeMejora td {
+    padding-top: 12px;
+    padding-bottom: 12px;
     border: 1px solid #ddd;
+    border-collapse: collapse;
 }
 
 .TablasSeccionesPlanesDeMejora th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #ddd;
+    background-color: #41ade7;
     color: black;
 }
 
-.FilaTablasSeccionesPlanesDeMejora:hover {
+.highlight {
     background-color: #ddd;
+}
+
+.highlight2 {
+    background-color: #ddd;
+}
+
+.FilaTablasPlanesDeMejora:hover {
+    background-color: #ddd;
+    cursor: pointer;
 }
 
 /*Terminan tablas*/

@@ -18,4 +18,11 @@ namespace AppIntegrador.Models
         public String Ano { get; set; }
         public String Preguntas { get; set; }
     }
+
+    public class Preguntas
+    {
+        public String codigoPregunta { get; set; }
+        public String textoPregunta { get; set; }
+        public String tipoPregunta { get; set; }
+    }
 }

@@ -24,13 +24,17 @@ namespace AppIntegrador
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/Navbar/navbar.css"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
           "~/Content/login.css"));
             // Custom bundles
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                      "~/Scripts/custom/login.js"));
+                      "~/Scripts/Plugins/jquery.dirrty.js",
+                "~/Scripts/UsuariosYPerfiles/login.js",
+                      "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js"
+                      ));
 
         }
     }

@@ -1,9 +1,7 @@
-﻿
-@model IEnumerable<AppIntegrador.Models.PlanDeMejora>
+﻿@model AppIntegrador.Models.Metadata.PlanDeMejoraMetadata
 
 @{
     ViewBag.Title = "Create";
-    AppIntegrador.Models.PlanDeMejora planModel = new AppIntegrador.Models.PlanDeMejora();
     Layout = null;
 }
 
@@ -16,7 +14,7 @@
         <div class="form-group">
             <div class="verticalBoxesCrear">
                 <div class="labelPlace">
-                    @Html.LabelFor(model => planModel.nombre, "Nombre")
+                    @Html.LabelFor(model => model.nombre, "Nombre")
                 </div>
                 <div class="inputPlace">
                     <input type="text" name="nombre" placeholder="Nombre del Plan de Mejora" class="form-control" />
@@ -24,7 +22,7 @@
             </div>
             <div class="verticalBoxesCrear">
                 <div class="labelPlace">
-                    @Html.LabelFor(model => planModel.codigo, "Fecha Inicio")
+                    @Html.LabelFor(model => model.fechaInicio, "Fecha Inicio")
                 </div>
                 <div class="inputPlace">
                     <input type="date" name="fechaInicio" class="form-control" />
@@ -32,7 +30,7 @@
             </div>
             <div class="verticalBoxesCrear">
                 <div class="labelPlace">
-                    @Html.LabelFor(model => planModel.codigo, "Fecha Fin")
+                    @Html.LabelFor(model => model.fechaFin, "Fecha Fin")
                 </div>
                 <div class="inputPlace">
                     <input type="date" name="fechaFin" class="form-control" />
