@@ -87,7 +87,7 @@ namespace AppIntegrador.Controllers
                 else
                 {
                     // Notifique que ocurrió un error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
                     return View(crearSeccion);
                 }
             }

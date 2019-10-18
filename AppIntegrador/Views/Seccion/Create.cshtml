@@ -35,6 +35,7 @@
                                 }
                             })
                             <div class="contador small pull-right">0/8 caracteres usados</div>
+                            @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @style = "color:red" })
                         </div>
                     </div>
 
@@ -58,6 +59,7 @@
                                 })
 
                                 <div class="contador small pull-right">0/250 caracteres usados</div>
+                                @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @style = "color:red" })
                             </form>
                         </div>
                     </div>

@@ -33,10 +33,10 @@ using System;
 
     }
 
-    [Required(ErrorMessage = "El código es un campo requerido")]
+    [Required(ErrorMessage = "Campo requerido")]
     public string Codigo { get; set; }
     
-    [Required(ErrorMessage = "El nombre es un campo requerido")]
+    [Required(ErrorMessage = "Campo requerido")]
     public string Nombre { get; set; }
 
 
