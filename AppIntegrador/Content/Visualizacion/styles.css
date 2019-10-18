@@ -116,12 +116,11 @@ canvas{
 .estadisticas {
     background-color: #e6e6e6;
     font: 15px;
-    margin-left: 20px;
-    color: #747474
+    color: #747474;
+    text-align: center;
 }
 
 .col{
-    /*width: 50%;*/
     align-self: center;
     margin: 2% !important;
     align-items:center;
@@ -131,7 +130,6 @@ canvas{
 /* Clear floats after the columns */
 .row {
     vertical-align: middle;
-    /*display: inherit;*/
 }
 
 .row:after 
@@ -146,4 +144,12 @@ canvas{
     padding:3%;
     text-align: center;
     width: 100%;
+}
+
+.navbar-nav {
+    display: inline !important;
+}
+
+.caret {
+    display: none;
 }

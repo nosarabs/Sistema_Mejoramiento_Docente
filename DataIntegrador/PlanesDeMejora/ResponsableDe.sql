@@ -10,6 +10,6 @@ CREATE TABLE [dbo].[Responsable_De]
 
 	constraint PK_ResponsableDe primary key(codPlan, nombreObj, descripAcMej, descripAcci, corrFunc),
 	constraint FK_ResponsableDe_Accionable foreign key(codPlan, nombreObj, descripAcMej, descripAcci)
-		references Accionable(codPlan, nombreObj, descripAcMej, descripcion),
-	constraint FK_ResponsableDe_Funcionario foreign key(corrFunc) references Funcionario(Correo)
+		references Accionable(codPlan, nombreObj, descripAcMej, descripcion) on delete cascade,
+	constraint FK_ResponsableDe_Funcionario foreign key(corrFunc) references Funcionario(Correo) on delete cascade
 )

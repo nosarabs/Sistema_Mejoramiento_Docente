@@ -11,7 +11,7 @@
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
         {
             @Name = "[" + i + "].Texto",
-            @class = "texto form-control",
+            @class = "validar texto form-control",
             @maxlength = "50",
             @onkeyup = "contarCaracteres(this)",
             @placeholder = "Texto de opción"

@@ -54,13 +54,13 @@
                         ticks: {
                             beginAtZero: true,
                             stepSize: 1,
-                            fontColor: "black",
+                            fontColor: "#747474",
                             fontSize: 16,
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            fontColor: "black",
+                            fontColor: "#747474",
                             fontSize: 16,
                         }
                     }]
@@ -68,7 +68,7 @@
                 plugins: {
                     datalabels: {
                         display: function (context) {
-                            return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                            return context.dataset.data[context.dataIndex] !== 0;
                         },
                         color: "#747474",
                         textStrokeColor: "black",
@@ -125,7 +125,7 @@
                 legend: {
                     display: true,
                     labels: {
-                        fontColor: "black",
+                        fontColor: "#747474",
                         fontSize: 16,
                     }
                 },
@@ -267,6 +267,21 @@
 
     }
 
+    ordenarDatos(etiquetas, valores) {
+
+        var arregloObjetos = etiquetas.map(function (d, i) {
+            return {
+                etiqueta: d,
+                valor: valores[i] || 0
+            };
+        });
+
+        var arregloOrdenadoObjetos = arregloObjetos.sort((a, b) => (a.valor < b.valor) ? 1 : (a.valor === b.valor) ? ((a.etiqueta > b.etiqueta) ? 1 : -1) : -1);
+
+        return arregloOrdenadoObjetos;
+
+    }
+
     generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
 
         var etiquetas = this.recuperarEtiquetasEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
@@ -289,7 +304,18 @@
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta, etiquetas.length);
-        var datos = { DATA: valores, LABELS: etiquetas };
+
+        var arregloOrdenadoObjetos = this.ordenarDatos(etiquetas, valores);
+
+        var etiquetasOrdenadas = [];
+        var valoresOrdenados = [];
+
+        arregloOrdenadoObjetos.forEach(function (d) {
+            etiquetasOrdenadas.push(d.etiqueta);
+            valoresOrdenados.push(d.valor);
+        });
+
+        var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
         this.generarGraficoBarras(canvas, datos);
 
     }

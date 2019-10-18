@@ -64,6 +64,8 @@
     <Folder Include="Usuarios y Perfiles" />
     <Folder Include="Usuarios y Perfiles\Procedures" />
     <Folder Include="Usuarios y Perfiles\Triggers" />
+    <Folder Include="PlanesDeMejora" />
+    <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -102,11 +104,6 @@
     <Build Include="Formularios\Periodo_activa_por.sql" />
     <Build Include="Formularios\Seccion.sql" />
     <Build Include="Formularios\Seccion_tiene_pregunta.sql" />
-    <Build Include="PlanDeMejora.sql" />
-    <Build Include="TipoObjetivo.sql" />
-    <Build Include="Objetivo.sql" />
-    <Build Include="AccionDeMejora.sql" />
-    <Build Include="Accionable.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerSeccionesDeFormulario.sql" />
     <Build Include="Mediana.sql" />
     <Build Include="DesviacionEstandarEscalar.sql" />
@@ -121,12 +118,6 @@
     <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
-    <Build Include="AsignadoA.sql" />
-    <Build Include="Evalua.sql" />
-    <Build Include="ResponsableDe.sql" />
-    <Build Include="PlantillaObjetivo.sql" />
-    <Build Include="PlantillaAccionDeMejora.sql" />
-    <Build Include="CreadoPor.sql" />
     <Build Include="Origina.sql" />
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
@@ -137,6 +128,20 @@
     <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\CheckID.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPregunta.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAFormulario.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlan.sql" />
+    <Build Include="PlanesDeMejora\Accionable.sql" />
+    <Build Include="PlanesDeMejora\AccionDeMejora.sql" />
+    <Build Include="PlanesDeMejora\AsignadoA.sql" />
+    <Build Include="PlanesDeMejora\CreadoPor.sql" />
+    <Build Include="PlanesDeMejora\Evalua.sql" />
+    <Build Include="PlanesDeMejora\Objetivo.sql" />
+    <Build Include="PlanesDeMejora\PlanDeMejora.sql" />
+    <Build Include="PlanesDeMejora\PlantillaAccionDeMejora.sql" />
+    <Build Include="PlanesDeMejora\PlantillaObjetivo.sql" />
+    <Build Include="PlanesDeMejora\ResponsableDe.sql" />
+    <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

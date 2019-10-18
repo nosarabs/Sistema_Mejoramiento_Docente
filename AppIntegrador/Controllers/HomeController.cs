@@ -64,15 +64,8 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.HTMLCheck = true;
-                return View();
-            }
+            ViewBag.HTMLCheck = true;
+            return View();
         }
 
         [HttpPost]
@@ -221,12 +214,13 @@ namespace AppIntegrador.Controllers
         [Authorize]
         public ActionResult Logout()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login");
-            }
+            /*TAM 1.1.1: Modificado para que no guarde la sesión del usuario la siguiente vez que se ingrese al sistema.*/
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login");
+            Session.Clear();
+            Session.Abandon();
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            return RedirectToAction("Index");
         }
 
         /* User story TAM-1.5 */

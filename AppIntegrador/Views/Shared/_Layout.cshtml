@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
     <title>Sistema de Mejoramiento Docente</title>
     @if (ViewBag.HTMLCheck != true)
     {
@@ -11,19 +12,21 @@
     }
 </head>
 <body>
+
     @if (ViewBag.HTMLCheck != true)
     {
-        <div class="mainBar">
-            <div class="item">
-                <a href="https://www.ucr.ac.cr/" class="logo" target="_blank"><img src="~/Content/images/ucr_promo.png" alt="ucr logo" /></a>
-            </div>
-            <div class="item">
-                @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
-            </div>
-            <div class="item">
-                <ul class="wrapper">
-
-                    <li>
+        <div class="">
+            <div>
+                <div class="mainBar">
+                    <div class="smallItem">
+                        <a href="https://www.ucr.ac.cr" class="svg" id="firma-ucr" target="_blank" tabindex="2">
+                            <img height="50" src="~/Content/images/logo_ucr.png" alt="Logo Universidad de Costa Rica">
+                        </a>
+                    </div>
+                    <div class="nombreProyecto biggeritem">
+                        @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
+                    </div>
+                    <div class="smallItem">
                         <div class="dropdown">
                             <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
                             <div class="dropdown-content">
@@ -31,106 +34,68 @@
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!--Inverted Navbar Start Here-->
-        <!--<nav> tag  start with classes .navbar and .navbar-inverse -->
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <!--Navbar Header Start Here-->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"></a>
+                    </div>
                 </div>
-                <!--Navbar Header End Here-->
-                <!--Menu Start Here-->
-                <ul class="nav navbar-nav">
-                    <li><a href="/Home/Index">Inicio</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Usuarios
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Users/Index" ,>Administración de usuarios</a></li>
-                        </ul>
-                    </li>
-                    <!--dropdown Menu Start-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formularios<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formulario</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                    <li><a href="/Formularios/Index">Ver Formularios</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sección</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Seccion/Create">Crear Sección</a></li>
-                                    <li><a href="/Seccion/Index">Ver Secciones</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pregunta</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
-                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Preguntas</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Planes de mejoramiento
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/PlanDeMejora/Index" ,>Mis planes de mejoramiento</a></li>
-                            <li><a href="/AccionDeMejora/Index" ,>Acciones de mejora</a></li>
-                            <li><a href="/Objetivos/Index" ,>Objetivos</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Visualización
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019" ,>Formulario</a></li>
+            </div>
+            <div>
+                <div id="header">
+                    <ul class="nav">
+                        <li><a href="/Home/Index">Inicio</a></li>
+                        <li>
+                            <a href="/Users/Index">Usuarios &#9660;</a>
+                            <ul>
+                                <li><a href="/Users/Index">Administración de usuarios</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Formularios &#9660;</a>
+                            <ul>
+                                <li>
+                                    <a href="">Formulario &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Sección &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Seccion/Create">Crear Sección</a></li>
+                                        <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Preguntas &#9658;</a>
+                                    <ul>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Planes de Mejora &#9660;</a>
+                            <ul>
+                                <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
+                                <li><a href="#">Banco de Objetivos</a></li>
+                                <li><a href="#">Banco de Acciones de Mejora</a></li>
+                            </ul>       
+                        </li>
+                        <li>
+                            <a href="">Visualización &#9660;</a>
+                            <ul>
+                                <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/Home/About">Acerca de</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>   
+    
+        <br />
+     }
 
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Acerca de
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Home/About" ,>Acerca del proyecto</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-                <!--Menu End Here-->
-                <!--Menu End Here-->
-                <!--Right Aligned Menu Start-->
-                <ul class="nav navbar-nav navbar-right">
-                    @*<li><a href="#">Login</a></li>*@
-                </ul>
-                <!--Right Aligned Menu End-->
-</div>
-        </nav>
-        <!--<nav> tag end-->
-        <!--Inverted Navbar End Here-->
-        <script src="js/jquery-2.1.4.min.js"></script>
-
-        <script src="js/bootstrap.min.js"></script>
-
-    }
     @RenderBody()
     @if (ViewBag.HTMLCheck != true)
     {
@@ -141,16 +106,16 @@
 
 
     <script>
-(function($){
-	$(document).ready(function(){
-		$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
-			event.preventDefault(); 
-			event.stopPropagation(); 
-			$(this).parent().siblings().removeClass('open');
-			$(this).parent().toggleClass('open');
-		});
-	});
-})(jQuery);
+        (function ($) {
+            $(document).ready(function () {
+                $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $(this).parent().siblings().removeClass('open');
+                    $(this).parent().toggleClass('open');
+                });
+            });
+        })(jQuery);
     </script>
 
 
