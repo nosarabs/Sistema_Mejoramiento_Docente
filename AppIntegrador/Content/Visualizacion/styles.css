@@ -145,3 +145,11 @@ canvas{
     text-align: center;
     width: 100%;
 }
+
+.navbar-nav {
+    display: inline !important;
+}
+
+.caret {
+    display: none;
+}

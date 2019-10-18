@@ -54,13 +54,13 @@
                         ticks: {
                             beginAtZero: true,
                             stepSize: 1,
-                            fontColor: "black",
+                            fontColor: "#747474",
                             fontSize: 16,
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            fontColor: "black",
+                            fontColor: "#747474",
                             fontSize: 16,
                         }
                     }]
@@ -68,7 +68,7 @@
                 plugins: {
                     datalabels: {
                         display: function (context) {
-                            return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                            return context.dataset.data[context.dataIndex] !== 0;
                         },
                         color: "#747474",
                         textStrokeColor: "black",
@@ -125,7 +125,7 @@
                 legend: {
                     display: true,
                     labels: {
-                        fontColor: "black",
+                        fontColor: "#747474",
                         fontSize: 16,
                     }
                 },
