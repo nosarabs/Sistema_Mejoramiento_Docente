@@ -27,7 +27,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
-                <th >
+                <th>
                     @Html.DisplayNameFor(model => model.descripcion)
                 </th>
                 <th>
@@ -65,26 +65,27 @@
 
             @foreach (var item in Model)
             {
-                <tr class="FilaTablasSeccionesPlanesDeMejora">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaFin)
-                    </td>
-                    
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary" }) |
-                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                        @Html.ActionLink("Borrar", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
-                    </td>
-                </tr>
+                //if(item.codPlan == 0001) { 
+                    <tr class="FilaTablasSeccionesPlanesDeMejora">
+                        <td class="TablasNombre">
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td class="TablasDescripcion">
+                            @Html.DisplayFor(modelItem => item.descripcion)
+                        </td>
+                        <td class="TablasFecha">
+                            @Html.DisplayFor(modelItem => item.fechaInicio)
+                        </td>
+                        <td class="TablasFecha">
+                            @Html.DisplayFor(modelItem => item.fechaFin)
+                        </td>
+                        <td class="TablasOpciones botonCentrado">
+                            @Html.ActionLink("Editar", "Edit", new { plan=item.codPlan, title=item.nombre }, new { @class = "modal-link btn btn-primary" })
+                            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                            @Html.ActionLink("Borrar", "Delete", new { plan=item.codPlan, title=item.nombre}, new { @class = "modal-link btn btn-danger" })
+                        </td>
+                    </tr>
+                //}
             }
 
         </table>

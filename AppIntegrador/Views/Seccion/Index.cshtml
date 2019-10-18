@@ -4,68 +4,81 @@
     ViewBag.Title = "Banco de secciones";
 }
 
-<h2>Banco de secciones</h2>
 
-@using (Html.BeginForm(FormMethod.Get))
-{
-    //the following are search options
-    <b>
-        Opciones de búsqueda:
-    </b>
-
-    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
-        <input type="radio" name="sel" value="1" id="codigo"
-               onclick="enableElement(this.form.elements['inp1']);"> <text>Codigo</text>
-        <input type="text" name="inp1" disabled="disabled">
-
-        <input type="radio" name="sel" value="2"
-               onclick="enableElement(this.form.elements['inp2']);"><text>Nombre</text>
-        <input type="text" name="inp2" disabled="disabled">
-
-        <input type="submit"
-               name="submit"
-               value="Filtrar"
-               class="btn" />
-
-        <br />
-
-    </form>
-
-}
-<br />
-
-<table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Codigo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            Operaciones
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
+<div class="container">
+    <h2>Banco de secciones</h2>
+    @using (Html.BeginForm(FormMethod.Get))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
-            </td>
-        </tr>
+        <div class="form-horizontal panel-group">
+
+            <div class=" panel panel-default">
+
+                <div class="panel-body test2">
+                    <b>
+                        Búsqueda:
+                    </b>
+
+                    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
+                        @* campo de filtrado para ingresar el código *@
+                        <input type="radio" name="sel" value="1" id="codigo"
+                               onclick="enableElement(this.form.elements['inp1']);">
+                        <label for="codigo">Codigo</label>
+                        <input type="text" name="inp1" disabled="disabled">
+
+                        @* campo de filtrado para ingresar el enunciado *@
+                        <input type="radio" name="sel" value="3" id="enunciado"
+                               onclick="enableElement(this.form.elements['inp2']);">
+                        <label for="enunciado">Enunciado</label>
+                        <input type="text" name="inp2" disabled="disabled">
+                        @* Enviar el filtrado al controlador *@
+                        <input type="submit"
+                               name="submit"
+                               value="Filtrar"
+                               class="btn" />
+                        <br />
+                    </form>
+                </div>
+            </div>
+        </div>
     }
 
-</table>
+    <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <tr>
+            <th>
+                Código
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Operaciones
+            </th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<style>
+    .test2 {
+        background: #fbfbfb;
+    }
+</style>
 
 @section Scripts {
     <script type="text/javascript">

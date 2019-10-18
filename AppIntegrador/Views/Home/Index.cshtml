@@ -7,3 +7,11 @@
         <div class="col-1"></div>
     </div>
 </div>
+
+@*//Si hay un mensaje de alerta en el Viewbag mostrarlo como alerta*@
+@if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.AlertMessage");
+    </script>
+}

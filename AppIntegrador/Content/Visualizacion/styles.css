@@ -1,8 +1,15 @@
+body {
+    overflow-x:hidden;
+}
+
 * {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
 }
 
-h3 {text-align: center;}
+h3 {
+    text-align: center;
+    color: #747474;
+}
 
 .breadcrumb {
     background-color: #f0f0f0;
@@ -10,9 +17,16 @@ h3 {text-align: center;}
     margin-bottom: 1px;
 }
 
+.cuerpoPrincipal {
+    margin-right: 2px;
+    margin-left: 3px;
+    padding-bottom: 10%;
+    background-color: #f1f1f1;
+}
+
 .collapsible {
     background-color: #41ade7;
-    color: black;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -47,35 +61,89 @@ h3 {text-align: center;}
 	background-color: #f1f1f1;
 }
 
+/*Llugar donde se dibuja el gráfico*/
 canvas{
     margin: 50px auto;
+    height: inherit;
+    min-height: inherit;
+    width: inherit;
+    min-width: inherit;
 }
 
+/*Cuadro para las justificaciones*/
 .myBox {
+    position: relative;
+    vertical-align: middle;
     margin: 30px auto;
-    border: 2px solid #000000;
-    padding: 30px;
+    margin-top: 0;
     font: 18px;
-    width: 750px;
-    height: 280px;
+    width: inherit;
+    height: inherit;
     overflow: auto;
-    background-color: #F9F9F9;
+    background-color: lightgray;
     list-style-position: inside;
+    position: inherit;
 }
 
-.desviacion {
-    text-align: center;
-    font: 18px;
+.myBox ul 
+{
+    background-color: inherit;
+    padding: 0px;
+    width: inherit;
+    list-style: none;
+    margin-bottom: 0;
+    max-height: 35.3vh;
 }
 
-.column {
-    float: left;
-    width: 50%;
+.myBox ul li {
+    background-color: white;
+    height: auto;
+    color: #6b6b6b;
+    margin: 4px;
+    padding: 8px;
+}
+
+.textoAbierto ul {
+    background-color: inherit;
+    padding: 0px;
+    width: 70vw;
+    list-style: none;
+    margin-bottom: 0;
+    max-height: 35.3vh;
+}
+
+
+.estadisticas {
+    background-color: #e6e6e6;
+    font: 15px;
+    margin-left: 20px;
+    color: #747474
+}
+
+.col{
+    /*width: 50%;*/
+    align-self: center;
+    margin: 2% !important;
+    align-items:center;
+
 }
 
 /* Clear floats after the columns */
-.row:after {
+.row {
+    vertical-align: middle;
+    /*display: inherit;*/
+}
+
+.row:after 
+{
     content: "";
     display: table;
     clear: both;
+}
+
+.row h3 
+{
+    padding:3%;
+    text-align: center;
+    width: 100%;
 }
