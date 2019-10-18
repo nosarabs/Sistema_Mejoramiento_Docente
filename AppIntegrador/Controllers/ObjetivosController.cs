@@ -64,7 +64,7 @@ namespace AppIntegrador.Controllers
             {
                 db.Objetivo.Add(objetivo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "PlanDeMejora") ;
             }
 
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);

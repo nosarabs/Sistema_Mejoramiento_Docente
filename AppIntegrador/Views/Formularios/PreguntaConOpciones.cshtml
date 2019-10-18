@@ -1,8 +1,71 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PreguntaConOpciones>
 
-@{ 
+@{
     Layout = null;
 }
 
-<!--Aqui viene el foreach de las opciones junto con los radiobuttons-->
-test pregunta con opciones
+@*RIP-EDF6*@
+@foreach (var pregunta in Model)
+{
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            @Html.DisplayFor(model => pregunta.Enunciado)
+
+            @foreach (var opcion in pregunta.Opciones)
+            {
+            <div class='panel-body'>
+                <input type="radio" asp-for="Option" value="@opcion" />@opcion<br />
+                
+            </div>
+            }
+        </div>
+    </div>
+}
+
+@*RIP-EDF6*@
+<style>
+    .panel {
+
+    margin-bottom: 20px;
+    background-color: white;
+    border: 1px solid #939393;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin-left: 20%;
+    margin-right: 20%;
+
+    }
+
+    .panel-primary > .panel-heading {
+    color: #000;
+    background-color: lightgray;
+    border-color: #888b8f;
+
+    .panel-body { padding: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    padding-bottom: 5px;
+    } 
+
+    .panel-primary > .panel-heading {
+    color: #000;
+
+    .panel-body {
+
+    padding: 10px;
+        padding-bottom: 10px;
+    background-color: white;
+    padding-bottom: 5px;
+    }   
+
+    .panel-primary {
+    border-color: #646464;
+
+    .panel-body {
+    padding: 5px;
+}
+
+}
+
+</style>

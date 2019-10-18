@@ -63,6 +63,7 @@
     <Folder Include="Formularios\Funciones" />
     <Folder Include="Usuarios y Perfiles" />
     <Folder Include="Usuarios y Perfiles\Procedures" />
+    <Folder Include="Usuarios y Perfiles\Triggers" />
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
   </ItemGroup>
@@ -86,7 +87,6 @@
     <Build Include="Trabaja_en.sql" />
     <Build Include="UsuarioPerfil.sql" />
     <Build Include="PerfilPermiso.sql" />
-    <Build Include="AgregarUsuario.sql" />
     <Build Include="Formularios\Preguntas\Escalar.sql" />
     <Build Include="Formularios\Preguntas\Opciones_de_seleccion.sql" />
     <Build Include="Formularios\Preguntas\Pregunta.sql" />
@@ -122,7 +122,15 @@
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AgregarFormulario.sql" />
     <Build Include="Formularios\Procedimientos\AsociarPreguntaConSeccion.sql" />
-    <Build Include="Usuarios y Perfiles\Procedures\ObtenerEmailUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ModificarCorreo.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ChangePassword.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\AddingPersonsNUsers.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\CheckID.sql" />
+    <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPregunta.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAFormulario.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlan.sql" />
     <Build Include="PlanesDeMejora\Accionable.sql" />
     <Build Include="PlanesDeMejora\AccionDeMejora.sql" />
     <Build Include="PlanesDeMejora\AsignadoA.sql" />

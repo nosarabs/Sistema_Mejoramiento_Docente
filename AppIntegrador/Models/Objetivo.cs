@@ -30,8 +30,8 @@ namespace AppIntegrador.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
+        public virtual PlanDeMejora PlanDeMejora { get; set; }
         public virtual PlantillaObjetivo PlantillaObjetivo { get; set; }
         public virtual TipoObjetivo TipoObjetivo { get; set; }
-        public virtual PlanDeMejora PlanDeMejora { get; set; }
     }
 }

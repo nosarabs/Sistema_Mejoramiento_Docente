@@ -26,8 +26,18 @@ p.uppercase {
 
 .mainBar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+.smallItem {
+    flex-grow: 1;
+}
+
+.biggeritem {
+    flex-grow: 3;
 }
 
 .wrapper {
@@ -92,10 +102,11 @@ nav {
 }
 
 .dropbtn_alt {
-    background-color: #209fe3;
+    background-color: #41ADE7;
     padding: 20px;
     border: 0em;
     width: 100%;
+    height: 100%;
     font-weight: bold;
 }
 
@@ -140,12 +151,12 @@ nav {
 .mainBarText {
     color: black;
     font-size: 1em;
-    
 }
 
 .ucr-logo {
     width: 30%;
-    min-width: 400px;
+    max-width: 200px;
+    max-height: 50px;
 }
 
 .logo-styles {
@@ -288,7 +299,7 @@ p.impText {
 .equalSpaceVertical {
     display: flex;
     flex-direction: row;
-    justify-cSontent: flex-end;
+    justify-content: flex-end;
 }
 
 .halfVerticalBox {
@@ -395,15 +406,19 @@ html, body {
     flex-direction: column;
 }
 
+.centeredButtons {
+    width: 100%;
+    align-items: center;
+}
+
+
 /*.control-label {
     text-indent: 5em !important;
 }*/
-
 /* FIN DE LOS ESTILOS DEL DASHBOARD DE LOS PLANES DE MEJORA*/
-
 .botonCentrado {
     padding: 10px;
-    text-align:center;
+    text-align: center;
     width: 100%;
     height: 50px;
     margin: 0 auto;

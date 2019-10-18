@@ -20,6 +20,11 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+        public ActionResult Index2(int idPlanDeMejora)
+        {
+            return PartialView("~/Views/PlanDeMejora/Index.cshtml", new ViewDataDictionary { { "idPlan", idPlanDeMejora } });
+        }
+
         /*
             Modificado por: Johan Córdoba
             Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
@@ -65,7 +70,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            return View("_crearPlanDeMejora");
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("_crearPlanDeMejora", plan);
         }
 
         // POST: PlanDeMejora/Create
