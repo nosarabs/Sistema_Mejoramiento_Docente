@@ -179,6 +179,12 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarRespuestas(PreguntaConOpciones objUser)
         {
+            DateTime today = DateTime.Today;
+
+            Console.WriteLine(today);
+
+            //Console.WriteLine(HttpContext.Current.User.Identity.Name);
+
             return View();
         }
 

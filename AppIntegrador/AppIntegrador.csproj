@@ -342,6 +342,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
+    <Content Include="Scripts\Formularios\agregarrespuestas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\custom\login.js" />
