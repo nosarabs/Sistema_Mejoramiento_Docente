@@ -10,48 +10,62 @@
     <h4 class="modal-title">Crear Plan de Mejora</h4>
     <div class="alert alert-warning">
         <span class="glyphicon glyphicon-warning-sign"></span>
-        Los campos con ** son obligatorios. <br>
+        Todos los campos son obligatorios. <br>
         <span class="glyphicon glyphicon-warning-sign"></span>
         La fecha de inicio debe ser mayor que la fecha de finalización.
     </div>
 </div>
 <div class="modal-body">
     <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
+
         <div class="form-group">
-            <div class="verticalBoxesCrear">
-                <div class="labelPlace">
+            <div class="row">
+                <div class="col-md-10">
                     @Html.LabelFor(model => model.nombre, "Nombre")
-                </div>
-                <div class="inputPlace">
-                    <input type="text" name="nombre" placeholder="Máximo 50 caracteres" class="form-control" maxlength="50"/>
-                </div>
-            </div>
-            <div class="verticalBoxesCrear">
-                <div class="labelPlace">
-                    @Html.LabelFor(model => model.fechaInicio, "Fecha Inicio")
-                </div>
-                <div class="inputPlace">
-                    <input type="date" name="fechaInicio" class="form-control" />
-                </div>
-            </div>
-            <div class="verticalBoxesCrear">
-                <div class="labelPlace">
-                    @Html.LabelFor(model => model.fechaFin, "Fecha Fin")
-                </div>
-                <div class="inputPlace">
-                    <input type="date" name="fechaFin" class="form-control" />
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @onkeyup = "nombreDelPlan()", placeholder = "Máximo 50 caracteres", maxlength = "50" } })
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <div class="botonCentrado">
-                <input type="submit" value="Crear Plan de Mejora" class="btn btn-success" />
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.fechaInicio, "Fecha Inicio")
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control", @oninput = "inicio()" } })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.fechaFin, "Fecha Fin")
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control", @oninput = "fina()" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="botonCentrado">
+                    <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" disabled="disabled" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </form>
 </div>
-        
+
+@section Scripts{
+    <script>
+      
+    </script>
+
+}
 
 
 

@@ -60,7 +60,7 @@
 
             @foreach (var obj in Model)
             {
-                <tbody id="dataObj">
+                <tbody id="dataOb">
                     <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@obj.codPlan, `@obj.nombre`);">
                         <td class="TablasNombre">
                             @Html.DisplayFor(modelItem => obj.nombre)
@@ -93,6 +93,15 @@
 
     <hr />
 </div>
+
+<script>
+    $("#dataOb tr").click(function () {
+        var selected = $(this).hasClass("highlight2");
+        $("#dataOb tr").removeClass("highlight2");
+        if (!selected)
+            $(this).addClass("highlight2");
+    });
+</script>
 
 
 

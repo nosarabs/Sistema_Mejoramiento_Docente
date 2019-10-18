@@ -50,6 +50,8 @@ namespace AppIntegrador.Controllers
             var idPlan = -1;
             if (Int32.TryParse(id, out idPlan))
             {
+                Session["id"] = idPlan;
+                Session["name"] = nomb;
                 IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
                 return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
             }
@@ -124,7 +126,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(planDeMejora);
+            return View("Index");
         }
 
         // GET: PlanDeMejora/Delete/5
