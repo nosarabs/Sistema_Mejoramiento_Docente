@@ -55,7 +55,6 @@ function completarCorreo() {
     var username = document.getElementById("username-input");
     if (!verificarSiContieneArroba(username.value)) {
         username.value += "@ucr.ac.cr";
-        //input.value = username;
     }
 }
 
