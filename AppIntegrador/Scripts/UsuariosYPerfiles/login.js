@@ -50,14 +50,20 @@ function verificarSiContieneArroba(username) {
     return re.test(username);
 }
 
+//TAM-1.1.1 - Autocompletar el correo cuando el usuario solo pone un username, en perdida de foco
+function completarCorreo() {
+    var username = document.getElementById("username-input");
+    if (!verificarSiContieneArroba(username.value)) {
+        username.value += "@ucr.ac.cr";
+        //input.value = username;
+    }
+}
+
 //Si no tiene un @ entonces se le agrega @ucr.ac.cr, despues se confirma si la entrada tiene un formato adecuado de correo y se presenta un mensaje de error si no.
 function validateEmail(input, warningOutput)
-{
+{   
     var username = input.value;
-    if (!verificarSiContieneArroba(username)) {
-        username += "@ucr.ac.cr";
-        input.value = username;
-    }
+
     if (verificarSiCorreoBienFormateado(username)) {
         warningOutput.innerHTML = "";
         return true;
