@@ -1,0 +1,89 @@
+﻿@model IEnumerable<AppIntegrador.Models.PreguntaConOpciones>
+
+@{
+    Layout = null;
+}
+
+@*RIP-EDF6*@
+
+@{string radname = "rad"; }
+@foreach (var pregunta in Model)
+{
+    // Variable que para poner el name que identifique los radiobuttons dentor de una pregunta
+    { radname = "rad" + pregunta.CodigoSeccion + pregunta.CodigoPregunta; }
+
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            @Html.DisplayFor(model => pregunta.Enunciado)
+
+            @foreach (var opcion in pregunta.Opciones)
+            {
+                <div class='panel-body'>
+
+                    <input type="radio" name="@radname" value="@opcion" />
+
+                    @Html.DisplayFor(model => opcion)
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (!Request["rad"].IsEmpty())
+{
+    <ul>
+
+        @foreach (var selection in Request["rad"].Split(','))
+        {
+            <li>@selection</li>
+        }
+    </ul>
+}
+
+@*RIP-EDF6*@
+<style>
+    .panel {
+        margin-bottom: 20px;
+        background-color: white;
+        border: 1px solid #939393;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+    .panel-primary > .panel-heading {
+        color: #000;
+        background-color: #c4c4c4;
+        border-color: #888b8f;
+        .panel-body
+
+    {
+        padding: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+        padding-bottom: 5px;
+    }
+
+    .panel-primary > .panel-heading {
+        color: #000;
+        .panel-body
+
+    {
+        padding: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+        padding-bottom: 5px;
+    }
+
+    .panel-primary {
+        border-color: #646464;
+        background-color: #c4c4c4;
+        .panel-body
+
+    {
+        padding: 5px;
+    }
+    }
+</style>

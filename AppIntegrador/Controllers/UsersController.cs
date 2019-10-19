@@ -8,11 +8,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AppIntegrador
 {
     public class UsersController : Controller
     {
+        private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
+
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: Users
@@ -22,17 +26,28 @@ namespace AppIntegrador
          /*Responds to User Story TAM-2.1.*/
         public ActionResult Index()
         {
+            //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
+            if (TempData["alertmessage"] != null)
+            {
+                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+            }
+
             string username = HttpContext.User.Identity.Name;
-            if (username != "admin")
+            if (username != "admin@mail.com")
+            {
+                TempData["alertmessage"] = "Solo el administrador puede accesar esta página";
                 return RedirectToAction("../Home/Index");
+            }
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
              by the key: mail address.*/
             List<Usuario> Usuarios = db.Usuario.ToList();
             List<Persona> Personas = db.Persona.ToList();
 
             /*Creates a list with the joiner entity "usuarioPersona", and then sends them to the view.*/
+            /*Keep admin out of the list to avoid loss of access*/
             var usuarioPersona = from u in Usuarios
                                  join p in Personas on u.Username equals p.Correo into table1
+                                 where u.Username != "admin@mail.com"
                                  from p in table1.ToList()
                                  select new UsuarioPersona
                                  {
@@ -97,22 +112,44 @@ namespace AppIntegrador
                  using as username the principal mail provided, and as password the first name.*/
                 /*TO-DO: modify the view to allow custom password setting.*/
 
-                ObjectParameter createResult = new ObjectParameter("estado", typeof(Boolean));
-                db.AgregarUsuario(persona.Correo, persona.Nombre1, true, createResult);
-                persona.Usuario = persona.Correo;
-                db.Persona.Add(persona);
-                
-                /*Takes the output from the stored procedure. Returns 1 if all went right. 0 if the primary key constraint
-                 could not be held.*/
-                bool status = (bool)createResult.Value;
+                List<Persona> Personas = db.Persona.ToList();
+                // Validamos campos de Identificación según su tipo y el formato del Carné
+                if (!this.ValidateInputFields(persona, persona.Estudiante))
+                    return View(persona);
 
-                if (status)
+                //Confirmamos si alguna persona existe con ese correo
+                if (db.Persona.Find(persona.Correo) == null)
                 {
-                    db.SaveChanges();
+                    ObjectParameter result = new ObjectParameter("result", typeof(bool));
+                    db.CheckID(persona.Identificacion, result);
+                    bool checkResult = (bool)result.Value;
+                    //Una vez confirmado verificamos si existe otra persona con ese mismo numero de identificacion
+                    if (checkResult == false)
+                    {
+                        //Ahora verificamos si el usuario introdujo un Carne, si si lo introdujo entonces agregamos el correo a los datos que van a ser insertados en Estudiante, si no
+                        //borramos todos los datos de estudiante para que el framework no itente añadirlo
+                        if (persona.Estudiante.Carne != null)
+                        {
+                            persona.Estudiante.Correo = persona.Correo;
+                        }
+                        else
+                        {                            
+                            persona.Estudiante = null;
+                        }
+
+                        //Nadie repetido, añadir a la BD
+                        db.Persona.Add(persona);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Identificacion", "Ya existe un usuario en el sistema con esta identificación.");
+                        return View(persona);
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("Correo", "¡Ya existe un usuario en el sistema con ese correo!");
+                    ModelState.AddModelError("Correo", "Ya existe un usuario en el sistema con este correo.");
                     return View(persona);
                 }
 
@@ -122,6 +159,7 @@ namespace AppIntegrador
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", persona.Correo);
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", persona.Correo);
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", persona.Usuario);
+ 
             return View(persona);
         }
         /*End of User Story TAM-2.2.*/
@@ -163,14 +201,14 @@ namespace AppIntegrador
             return View(usuarioPersona);
         }
 
-        /*Functions to edit a selected user account.*/
-        /*Respond to User Story 2.4.
-          Tasks: Stored procedure ModificarDatosPersona*/
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
+            if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+                return View(usuarioPersona);
+
             if (ModelState.IsValid && 
                 usuarioPersona != null && 
                 usuarioPersona.Persona != null || 
@@ -192,31 +230,58 @@ namespace AppIntegrador
                     /*To edit a person, first fetch him from the database using the email passed by the view.*/
                     var originalPerson = db.Persona.SingleOrDefault(p => p.Correo == formerUserMail);
 
+                    bool mailChanged = formerUserMail != usuarioPersona.Persona.Correo ? true : false;
+
                     if (originalPerson != null && usuarioPersona != null && usuarioPersona.Persona != null)
                     {
-                        /*Stored procedure to change the mail of a given person*/
-                        db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo);
-                        
-                        if (originalUser != null)
+                        if (mailChanged)
                         {
-                            /*Stored procedure to change the mail of a given user*/
-                            db.ModificarUsername(formerUserMail, usuarioPersona.Persona.Correo);
+                            /*Stored procedure to change the mail of a given person*/
+                            ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
+                            db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
+                            bool modificationResult = (bool)modResult.Value;
+
+                            /*No pudo modificarse el correo por ya estar en la base de datos*/
+                            if (modificationResult == false)
+                            {
+                                ModelState.AddModelError("Persona.Correo", "Ya existe un usuario en el sistema con este correo.");
+                                return View(usuarioPersona);
+                            }
+                        }
+                        originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
+                        
+                        /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
+                        originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
+                        originalPerson.Nombre2 = usuarioPersona.Persona.Nombre2;
+                        originalPerson.Apellido1 = usuarioPersona.Persona.Apellido1;
+                        originalPerson.Apellido2 = usuarioPersona.Persona.Apellido2;
+                        originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
+                        originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
+                        originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
+                        
+                        //Si hay un cambio en el Carne entonces agregar el atributo Estudiante a la persona original para poder editarlo
+                        if(usuarioPersona.Persona.Estudiante.Carne != null)
+                        {
+                            if (originalPerson.Estudiante == null)
+                            {
+                                originalPerson.Estudiante = new Estudiante();
+                            }
+                            originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
+                            originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
                         }
 
-                        /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
-                        db.ModificarDatosPersona(usuarioPersona.Persona.Correo,
-                                                 usuarioPersona.Persona.CorreoAlt,
-                                                 usuarioPersona.Persona.Identificacion,
-                                                 usuarioPersona.Persona.Nombre1,
-                                                 usuarioPersona.Persona.Nombre2,
-                                                 usuarioPersona.Persona.Apellido1,
-                                                 usuarioPersona.Persona.Apellido2,
-                                                 usuarioPersona.Persona.TipoIdentificacion,
-                                                 usuarioPersona.Persona.Estudiante.Carne
-                                                 );                        
+                        ViewBag.resultmessage = "Los cambios han sido guardados";
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ViewBag.resultmessage = "No se pudo guardar los cambios";
                     }
                 }
-                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.resultmessage = "No se pudo guardar los cambios";
             }
 
             /*Since the joint view "UsuarioPersona" is not a database entity, we have to rebuild the view, to show 
@@ -239,7 +304,9 @@ namespace AppIntegrador
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
 
             /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
-            System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
+            //System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
+            System.Web.HttpContext.Current.Application["CurrentEditingUser"] = mailToSearch;
+
 
             return View(usuarioPersonaRefreshed);
         }
@@ -257,21 +324,27 @@ namespace AppIntegrador
 
             /*If it was confirmed, then delete the user and its related person.*/
             string id = username + domain;
-            Persona persona = db.Persona.Find(id);
-            Usuario usuario = db.Usuario.Find(persona.Correo);
+            Usuario usuario = db.Usuario.Find(id);
 
-            if (usuario != null && persona != null)
+            if (usuario != null)
             {
-                /*Both user and person tuples are deleted from the database.*/
-                /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
-                db.Usuario.Remove(usuario);
-                db.Persona.Remove(persona);
-                db.SaveChanges();
+                if(id != "admin@mail.com")
+                {
+                    /*Both user and person tuples are deleted from the database.*/
+                    /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
+                    db.Usuario.Remove(usuario);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    TempData["alertmessage"] = "No se puede borrar el Administrador";
+                }
+
             }
             else {
                 /*Error message to be shown at page footer.*/
                 /*TO-DO: find a better way of showing errors.*/
-                TempData["Message"] = "No se pudo borrar el usuario!";
+                TempData["alertmessage"] = "No se pudo borrar el usuario";
             }
             
             return RedirectToAction("Index");
@@ -285,6 +358,73 @@ namespace AppIntegrador
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool ValidateInputFields(Persona persona, Estudiante estudiante)
+        {
+            if (persona.Estudiante != null && persona.Estudiante.Carne != null)
+            {
+                string pattern = @"^[A-Z1-9]\d{5}$";
+                Regex r = new Regex(pattern);
+                MatchCollection matches = r.Matches(persona.Estudiante.Carne);
+                if (matches.Count == 0)
+                {
+                    ModelState.AddModelError("Persona.Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayúscula o un número, los demás solo números");
+                    ModelState.AddModelError("Estudiante.Carne", "El Carné debe tener 6 caracteres, el primero puede ser una letra en mayúscula o un número, los demás solo números");
+                    return false;
+                }
+            }
+
+            switch (persona.TipoIdentificacion)
+            {
+                case "Cédula":
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
+                case "Pasaporte":
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
+                case "Residencia":
+                    return ValidarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
+            }
+
+            return true;
+        }
+
+        private bool ValidarIdentificacion(string id, TIPO_ID tipo)
+        {
+            string pattern;
+            Regex regexResult;
+            switch (tipo) {
+                case TIPO_ID.CEDULA:
+                    pattern = @"^[1-9]\d{8}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "El número de cédula debe ser de 9 dígitos, el primero no puede ser 0 y no debe tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El número de cédula debe ser de 9 dígitos, el primero no puede ser 0 y no debe tener guiones.");
+                        return false;
+                    }
+                    break;
+                case TIPO_ID.PASAPORTE:
+                    pattern = @"^\d{9}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        return false;
+                    }
+                    break;
+                case TIPO_ID.RESIDENCIA:
+                    pattern = @"^\d{12}$";
+                    regexResult = new Regex(pattern);
+                    if (regexResult.Matches(id).Count == 0)
+                    {
+                        ModelState.AddModelError("Persona.Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        return false;
+                    }
+                    break;
+            }
+            return true;
         }
     }
 }

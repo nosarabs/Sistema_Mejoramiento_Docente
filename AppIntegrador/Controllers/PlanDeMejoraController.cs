@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,24 +13,60 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private readonly DataIntegradorEntities db = new DataIntegradorEntities();
-        
+        private DataIntegradorEntities db = new DataIntegradorEntities();
+
         // GET: PlanDeMejora
         public ActionResult Index()
         {
-            //var planDeMejora = db.PlanDeMejora.Include(p => p.Profesor).Include(p => p.Profesor1);
-            //return View(planDeMejora.ToList());
-            return View();
+            HttpContext context = System.Web.HttpContext.Current;
+            ObjectParameter count = new ObjectParameter("count", 999);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = context.User.Identity.Name;
+            return View(db.PlanDeMejora.ToList());
         }
 
-        // GET: PlanDeMejora/Details/5
-        public ActionResult Details(int id, string cedula)
+        public ActionResult Index2(int idPlanDeMejora)
         {
-            if (cedula == null)
+            return PartialView("~/Views/PlanDeMejora/Index.cshtml", new ViewDataDictionary { { "idPlan", idPlanDeMejora } });
+        }
+
+        /*
+            Modificado por: Johan Córdoba
+            Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+            Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
+            Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
+        */
+        public ActionResult objetivosPlan(string id)
+        {
+            var idPlan = -1;
+            Int32.TryParse(id, out idPlan);
+            ViewBag.idPlan = idPlan;
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
+            return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
+        }
+
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            if (Int32.TryParse(id, out idPlan))
+            {
+                Session["id"] = idPlan;
+                Session["name"] = nomb;
+                IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+                return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+            }
+            return null;
+        }
+
+
+        // GET: PlanDeMejora/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -40,9 +77,8 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula");
-            ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula");
-            return View();
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("_crearPlanDeMejora", plan);
         }
 
         // POST: PlanDeMejora/Create
@@ -50,7 +86,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CedProf,Codigo,Nombre,FechaInicio,FechaFin,CodigoF,CedProfAsig")] PlanDeMejora planDeMejora)
+        public ActionResult Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -59,25 +95,21 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.corrProf);
-            //ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
             return View(planDeMejora);
         }
 
         // GET: PlanDeMejora/Edit/5
-        public ActionResult Edit(int id, string cedula)
+        public ActionResult Edit(int? id)
         {
-            if (cedula == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProf);
-            //ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
             return View(planDeMejora);
         }
 
@@ -86,7 +118,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CedProf,Codigo,Nombre,FechaInicio,FechaFin,CodigoF,CedProfAsig")] PlanDeMejora planDeMejora)
+        public ActionResult Edit([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -94,19 +126,17 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CedProf = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProf);
-            //ViewBag.CedProfAsig = new SelectList(db.Profesor, "Cedula", "Cedula", planDeMejora.CorreoProfAsig);
-            return View(planDeMejora);
+            return View("Index");
         }
 
         // GET: PlanDeMejora/Delete/5
-        public ActionResult Delete(int id, string cedula)
+        public ActionResult Delete(int? id)
         {
-            if (cedula == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             if (planDeMejora == null)
             {
                 return HttpNotFound();
@@ -117,9 +147,9 @@ namespace AppIntegrador.Controllers
         // POST: PlanDeMejora/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id, string cedula)
+        public ActionResult DeleteConfirmed(int id)
         {
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(cedula, id);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             db.PlanDeMejora.Remove(planDeMejora);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -132,6 +162,55 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        //////////////////////////////////////////////BI///////////////////////////////////////////////////
+
+        // Method that creates the plan and sets the next "codigo" automatically
+        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (nombre != null && fechaInicio != null && fechaFin != null)
+            {
+                if( DateTime.Compare(fechaInicio, fechaFin) < 0)
+                {
+                    var planTemp = new PlanDeMejora();
+                    var plans = this.db.PlanDeMejora.ToList();
+                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
+                    planTemp.codigo = codigoTemporal + 1;
+                    planTemp.nombre = nombre;
+                    planTemp.fechaInicio = fechaInicio;
+                    planTemp.fechaFin = fechaFin;
+                    this.Create(planTemp);
+                }
+                else
+                {
+                    return RedirectToAction("Index", ViewBag.Fecha = -1);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        // Method that edits one "PlanDeMejora"
+        public ActionResult ModificarPlan(int codigo, string nombre, DateTime fechaInicio, DateTime fechaFin)
+        {
+            if (codigo != null && nombre != null && fechaInicio != null && fechaFin != null)
+            {
+                var planTemp = new PlanDeMejora();
+                planTemp.codigo = codigo;
+                planTemp.nombre = nombre;
+                planTemp.fechaInicio = fechaInicio;
+                planTemp.fechaFin = fechaFin;
+                this.Edit(planTemp);
+            }
+            return RedirectToAction("Index");
+        }
+
+        // Method that deletes one "PlanDeMejora"
+        public ActionResult BorrarPlan(int codigoPlan)
+        {
+            this.DeleteConfirmed(codigoPlan);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -4,228 +4,252 @@
     ViewBag.Title = "Crear sección";
 }
 
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .split {
-            height: 100%;
-            width: 50%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            overflow-x: hidden;
-            padding-top: 250px;
-        }
-
-        .left {
-            left: 0;
-        }
-
-        .right {
-            right: 0;
-        }
-
-        .centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-            .centered img {
-                width: 150px;
-                border-radius: 50%;
-            }
-    </style>
-</head>
-
-
-
-
-
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
-    <div class="split left">
-        <h2>Crear Sección</h2>
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
-                    @Html.EditorFor(model => model.Seccion.Codigo, new { htmlAttributes = new { @class = "form-control", id = "textCode", name = "textCode", @maxlength = "8", required = "required", placeholder = "Código", rows = "5" } })
-                    @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @class = "pull-right", id = "count_code" })
+
+    <table class="table">
+        <tr>
+            <td style="width:36%">
+
+                <div class="form-horizontal panel-group">
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body test2">
+                            <hr />
+                            <h2>Crear Sección</h2>
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Seccion.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.Seccion.Codigo, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                @class = "validar form-control",
+                                                id = "textCode",
+                                                name = "textCode",
+                                                @maxlength = "8",
+                                                required = "required",
+                                                placeholder = "Código",
+                                                rows = "5",
+                                                @onkeyup = "contarCaracteres(this)"
+                                            }
+                                        })
+                                        <div class="contador small pull-right">0/8 caracteres usados</div>
+                                        @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
+                                    <div class="col-md-10">
+                                        <form accept-charset="UTF-8" action="" method="POST">
+                                            @Html.EditorFor(model => model.Seccion.Nombre, new
+                                            {
+                                                htmlAttributes = new
+                                                {
+                                                    @class = "validar form-control",
+                                                    id = "textName",
+                                                    name = "textName",
+                                                    @maxlength = "250",
+                                                    required = "required",
+                                                    placeholder = "Nombre del formulario",
+                                                    rows = "5",
+                                                    @onkeyup = "contarCaracteres(this)"
+                                                }
+                                            })
+
+                                            <div class="contador small pull-right">0/250 caracteres usados</div>
+                                            @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @style = "color:red" })
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Crear" class="btn btn-info" id="Create" data-toggle="modal" data-target="#myModal" />
+                                        @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </td>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seccion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-6">
-                    <form accept-charset="UTF-8" action="" method="POST">
-                        @Html.EditorFor(model => model.Seccion.Nombre, new { htmlAttributes = new { @class = "form-control", id = "textName", name = "textName", @maxlength = "80", required = "required", placeholder = "Nombre de la sección", rows = "5" } })
-                        @Html.ValidationMessageFor(model => model.Seccion.Nombre, "", new { @class = "pull-right", id = "count_name" })
-                    </form>
-                </div>
-            </div>
+            <td class="align-middle center-block">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <button type="button" class="btn btn-primary btn-arrow-left" onclick="addPreguntaToSeccion()">Agregar</button>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Crear" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" />
-                </div>
-            </div>
+            </td>
 
+            <td style="width:60%">
+                @Html.Partial("/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", Model.pregunta_Con_Opciones_De_Seleccion)
 
-        </div>
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    </div>
-    <div class="split right">
-
-        <h2>Banco de preguntas</h2>
-
-        <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
-
-
-        <style>
-            input.QuestionCheckbox {
-                width: 30px;
-                height: 30px;
-            }
-        </style>
-
-        @using (Html.BeginForm(FormMethod.Get))
-        {
-            //the following are search options
-            <b>
-                Opciones de búsqueda:
-            </b>
-            @Html.RadioButton("option", "Codigo") <text>Codigo</text>
-            @Html.RadioButton("option", "Tipo") <text>Tipo</text>
-            <select name="tipos">
-                <option value="">Tipos de preguntas</option>
-                <option value="U">Seleccion Unica</option>
-                <option value="M">Seleccion Multiple</option>
-            </select>
-            @Html.RadioButton("option", "Enunciado") <text>Enunciado</text>
-
-            @Html.TextBox("search")
-            <input type="submit"
-                   name="submit"
-                   value="Filtrar"
-                   class="btn" />
-            <P></P>
-        }
-
-
-        <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-            <col width="50">
-            <thead>
-                <tr>
-                    <th>
-                        Seleccionar
-                    </th>
-                    <th>
-                        Codigo
-                    </th>
-                    <th>
-                        Enunciado
-                    </th>
-                    <th>
-                       Tipo
-                    </th>
-                    <th>
-                        Operaciones
-                    </th>
-                </tr>
-            </thead>
-            @foreach (var item in Model.pregunta_Con_Opciones_De_Seleccion)
-            {
-                <tr>
-                    <td>
-                        <center>
-                            <input type="checkbox" class="QuestionCheckbox" />
-                        </center>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Codigo }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Codigo })
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la sección?</h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 }
 
+<style>
+    .btn-info {
+        color: #fff;
+        background-color: #41ade7;
+    }
 
+    .btn-primary {
+        background-color: #f0f0f0;
+        color: black;
+        border-color: #a2a6aa;
+   }
 
+.required:after {
+    content: "*";
+    font-weight: bold;
+    color: red;
+}
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td 
+{
+    padding:3%;
+}
+
+    .btn {
+/* just for this demo. */
+   
+margin-top: 5px;
+}
+
+.btn-arrow-right,
+.btn-arrow-left {
+   position: relative;
+   padding-left: 13px;
+   padding-right: 18px;
+}
+
+.btn-arrow-right {
+   padding-left: 20px;
+}
+
+.btn-arrow-left {
+   padding-right: 10px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after,
+.btn-arrow-left:before {
+   /* make two squares (before and after), looking similar to the button */
+   
+   content: "";
+   position: absolute;
+   top: 5px;
+   /* move it down because of rounded corners */
+   
+   width: 22px;
+   /* same as height */
+   
+   height: 22px;
+   /* button_outer_height / sqrt(2) */
+   
+   background: inherit;
+   /* use parent background */
+   
+   border: inherit;
+   /* use parent border */
+   
+   border-left-color: transparent;
+   /* hide left border */
+   
+   border-bottom-color: transparent;
+   /* hide bottom border */
+   
+   border-radius: 0px 4px 0px 0px;
+   /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
+   
+   -webkit-border-radius: 0px 4px 0px 0px;
+   -moz-border-radius: 0px 4px 0px 0px;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-right:after {
+   transform: rotate(45deg);
+   /* rotate right arrow squares 45 deg to point right */
+   
+   -webkit-transform: rotate(45deg);
+   -moz-transform: rotate(45deg);
+   -o-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+}
+
+.btn-arrow-left:before,
+.btn-arrow-left:after {
+   transform: rotate(225deg);
+   /* rotate left arrow squares 225 deg to point left */
+   
+   -webkit-transform: rotate(225deg);
+   -moz-transform: rotate(225deg);
+   -o-transform: rotate(225deg);
+   -ms-transform: rotate(225deg);
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:before {
+   /* align the "before" square to the left */
+   
+   left: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:after {
+   /* align the "after" square to the right */
+   
+   right: -11px;
+}
+
+.btn-arrow-right:after,
+.btn-arrow-left:before {
+   /* bring arrow pointers to front */
+   
+   z-index: 1;
+}
+
+.btn-arrow-right:before,
+.btn-arrow-left:after {
+   /* hide arrow tails background */
+   
+   background-color: white;
+}
+</style>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-    <script>
-        var name_max = 80;
-        $('#count_name').html("0/" + name_max);
-
-        $('#textName').keyup(function () {
-            var name_length = $('#textName').val().length;
-
-            $('#count_name').html(name_length + "/" + name_max);
-        });
-    </script>
-
-    <script>
-        var code_max = 8;
-        $('#count_code').html("0/" + code_max);
-
-        $('#textCode').keyup(function () {
-            var code_length = $('#textCode').val().length;
-
-            $('#count_code').html(code_length + "/" + code_max);
-        });
-    </script>
-
-    <script>
-        $(function () {
-            var includes = $('[data-include]');
-            jQuery.each(includes, function () {
-                var file = 'views/' + $(this).data('include') + '.html';
-                $(this).load(file);
-            });
-        });
-    </script>
+    <script src="~/Scripts/Formularios/AgregarPreguntas.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
 
     <script>
         $(document).ready(function () {
+            validarEntradas();
+            agregarPreguntas.init();
+            $("#codigotext").attr("disabled", "disabled");
+            if ($("input[name=optradio]:checked").val() == "codigoinput") {
+                $("#EnterRange").click(function () {
+                    $("#codigotext").removeAttr("disabled");
+                });
+            }
             $('#dtBasicExample').DataTable({
                 "ordering": false // false to disable sorting (or any other option)
             });
@@ -233,10 +257,34 @@
         });
     </script>
 
-    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+    @*
+        Historia RIP-BKS1
+        Se movieron los scripts de la vista parcial a esta vista, porque las vistas
+        parciales no pueden tener sus propias secciones (de acuerdo a lo que encontramos).
+    *@
+    <script type="text/javascript">
+        var currentEnabled = null;
+        function enableElement(elem) {
+            console.log(elem.name);
+            if (currentEnabled) {
+                currentEnabled.disabled = true;
+            }
+            elem.disabled = false;
+            currentEnabled = elem;
+        }
+    </script>
 
-    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript">
+        function toggleTextbox(opt) {
+            if (opt == 'txtText') {
+                var txtPassportNumber = document.getElementById('txtText');
+                txtJustificationNumber.disabled = opt.checked ? false : true;
+                if (!txtJustificationNumber.disabled) {
+                    txtJustificationNumber.focus();
+                }
+            }
 
-    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+        }
 
+    </script>
 }

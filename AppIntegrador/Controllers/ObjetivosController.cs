@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.UI;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 
@@ -20,6 +21,14 @@ namespace AppIntegrador.Controllers
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
         }
+        public ActionResult accionesObjetivo(string id, string nomb)
+        {
+            var idPlan = -1;
+            Int32.TryParse(id, out idPlan);
+            IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
+            return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
+        }
+
 
         // GET: Objetivos/Details/5
         public ActionResult Details(int? id)
@@ -37,8 +46,9 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Objetivos/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            ViewBag.id = id;
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
             return View("_crearObjetivo");
@@ -51,26 +61,36 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
-            if (ModelState.IsValid)
-            {
-                db.Objetivo.Add(objetivo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            bool error = false;
 
+            if (objetivo.fechaInicio != null && objetivo.fechaFin != null) {
+                if ((DateTime.Compare(objetivo.fechaInicio.Value, objetivo.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if( !error)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Objetivo.Add(objetivo);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "PlanDeMejora");
+                }
+            }
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
-            return View(objetivo);
+            return RedirectToAction("Index","PlanDeMejora");
         }
 
         // GET: Objetivos/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -87,25 +107,37 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
-            if (ModelState.IsValid)
+            bool error = false;
+
+            if (objetivo.fechaInicio != null && objetivo.fechaFin != null)
             {
-                db.Entry(objetivo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if ((DateTime.Compare(objetivo.fechaInicio.Value, objetivo.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if ( !error)
+            { 
+                if (ModelState.IsValid)
+                {
+                    db.Entry(objetivo).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "PlanDeMejora");
+                }
             }
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
-            return View(objetivo);
+            return View("Index", "PlanDeMejora");
         }
 
         // GET: Objetivos/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? plan, string title)
         {
-            if (id == null)
+            if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             if (objetivo == null)
             {
                 return HttpNotFound();
@@ -116,12 +148,12 @@ namespace AppIntegrador.Controllers
         // POST: Objetivos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int plan, string title)
         {
-            Objetivo objetivo = db.Objetivo.Find(id);
+            Objetivo objetivo = db.Objetivo.Find(plan, title);
             db.Objetivo.Remove(objetivo);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PlanDeMejora");
         }
 
         protected override void Dispose(bool disposing)

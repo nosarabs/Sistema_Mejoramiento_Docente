@@ -2,121 +2,192 @@
 @{
     ViewBag.Title = "Editar";
 }
+@Styles.Render("~/Content/users&profiles")
+<div id="container_users">
+    <h2>Editar</h2>
 
-    <div class="container">
-        <h2>Editar</h2>
+    @using (Html.BeginForm("Edit", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { action = "#", id = "dirrty-form" }))
+    {
+        @Html.AntiForgeryToken()
 
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+        <div class="form-inline">
+            <h4>Persona</h4>
 
     <div class="form-horizontal">
-        <h4>Persona</h4>
+        @Html.LabelFor(model => model.Persona.TipoIdentificacion, "Tipo de identificación", htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-4">
+            <!--Story TAM-2.2: combobox to select the id type when creating an user.-->
+            <select id="Persona_TipoIdentificacion" name="Persona.TipoIdentificacion" class="form-control", required="required">
+                <option value="Cédula">Cédula</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="Número de residencia">Número de residencia</option>
+            </select>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Correo, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Correo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Persona.Correo, "", new { @class = "text-danger" })
+
+                </div>
             </div>
+
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Identificacion, "Identificación", htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete="off" } })
+
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.CorreoAlt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.CorreoAlt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Persona.CorreoAlt, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div>
+        <div class="col-md-6">
+            @Html.ValidationMessageFor(model => model.Persona.TipoIdentificacion, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Identificacion, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Persona.Identificacion, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-6">
+            @Html.ValidationMessageFor(model => model.Persona.Identificacion, "", new { @class = "text-danger" })
         </div>
+    </div>
+    <br /><br />
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Correo, htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Correo, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete="off" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Nombre1, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Nombre1, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Persona.Nombre1, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.CorreoAlt, "Correo alternativo", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.CorreoAlt, new { htmlAttributes = new { @class = "form-control", autocomplete="off" } })
+
+
+                </div>
+            </div>
+
+    <div>
+        <div class="col-md-6">
+            @Html.ValidationMessageFor(model => model.Persona.Correo, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Nombre2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Nombre2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Persona.Nombre2, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-6">
+            @Html.ValidationMessageFor(model => model.Persona.CorreoAlt, "", new { @class = "text-danger" })
         </div>
+    </div>
+    <br /><br />
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Nombre1, "Primer nombre", htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Nombre1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete="off" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Apellido1, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Apellido1, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Persona.Apellido1, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Apellido2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Apellido2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Persona.Apellido2, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Nombre2, "Segundo nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Nombre2, new { htmlAttributes = new { @class = "form-control", autocomplete="off" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.TipoIdentificacion, htmlAttributes: new { @class = "control-label required col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.TipoIdentificacion, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Persona.TipoIdentificacion, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Persona.Estudiante.Carne, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Persona.Estudiante.Carne, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Persona.Estudiante.Carne, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Usuario.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Usuario.Activo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Usuario.Activo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-success" />
-                @Html.ActionLink("Cancelar", "Index", "Index", new { @class = "btn btn-danger" })
-            </div>
             <div>
-                @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
+                <div class="col-md-6">
+                    @Html.ValidationMessageFor(model => model.Persona.Nombre1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.ValidationMessageFor(model => model.Persona.Nombre2, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+    <br /><br />
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Apellido1, "Primer apellido", htmlAttributes: new { @class = "control-label required col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Apellido1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete="off" } })
+
+                </div>
+            </div>
+
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Apellido2, "Segundo apellido", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Apellido2, new { htmlAttributes = new { @class = "form-control", autocomplete="off" } })
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-md-6">
+                    @Html.ValidationMessageFor(model => model.Persona.Apellido1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.ValidationMessageFor(model => model.Persona.Apellido2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+    <br /><br />
+    <div class="form-horizontal">
+        @Html.LabelFor(model => model.Persona.Estudiante.Carne, "Carné", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Persona.Estudiante.Carne, new { htmlAttributes = new { @class = "form-control", autocomplete="off" } })
+           
         </div>
-    </div>
-        }
 
-        
-    </div>
+            </div>
 
-    <style>
-        .required:after {
-            content: "*";
-            font-weight: bold;
-            color: red;
-        }
-    </style>
+            <div class="form-horizontal">
+                @Html.LabelFor(model => model.Usuario.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Usuario.Activo, "", new { @class = "form-control" })
+
+                </div>
+            </div>
+
+            <div>
+                <div class="col-md-7">
+                    @Html.ValidationMessageFor(model => model.Persona.Estudiante.Carne, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div>
+                <div>
+                    <br />
+                </div>
+                <div>
+                    <br />
+                </div>
+                <div class="col-md-6">
+                    <p>Los campos marcados con <span style="color:red; font-weight:bold;">*</span> son requeridos.</p>
+                </div>
+
+                <div class="col-md-offset-4 col-md-4" style="text-align:center;">
+                    <input id="dirrty-save" type="submit" value="Guardar" class="btn btn-success" disabled="disabled"/>
+                    @Html.ActionLink("Salir", "Index", "Index", new { @class = "btn btn-default", id="dirrty-cancel" })
+                   
+                </div>
+                <div>
+                    <span class="text-success h4">@ViewBag.resultmessage</span>                </div>
+
+            </div>
+
+        </div>
+    }
+
+    <br />
+    <br />
+    <br />
+
+</div>
+
+
+
+
+<style>
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom")
 }

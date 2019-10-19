@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
 using System.Web.Security;
 using System.Threading.Tasks;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -26,9 +27,16 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Index()
         {
+            //Si hay informacion de alerta en TempData entonces pasarla al viewbag
+            if (TempData["alertmessage"] != null)
+            {
+                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+            }
+
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login");
+
             }
             return View();
         }
@@ -56,15 +64,8 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.HTMLCheck = true;
-                return View();
-            }
+            ViewBag.HTMLCheck = true;
+            return View();
         }
 
         [HttpPost]
@@ -140,7 +141,7 @@ namespace AppIntegrador.Controllers
                 failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username] + 1;
 
                 /*If the counter reached the max failed attempts count, lock the account, except for the admin.*/
-                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin")
+                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin@mail.com")
                 {
                     ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
                         " 5 minutos antes de intentar de nuevo.");
@@ -213,12 +214,60 @@ namespace AppIntegrador.Controllers
         [Authorize]
         public ActionResult Logout()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login");
-            }
+            /*TAM 1.1.1: Modificado para que no guarde la sesión del usuario la siguiente vez que se ingrese al sistema.*/
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login");
+            Session.Clear();
+            Session.Abandon();
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            return RedirectToAction("Index");
+        }
+
+        /* User story TAM-1.5 */
+        public ActionResult PasswordReset()
+        {
+            ViewBag.HTMLCheck = true;
+            return View();
+        }
+
+        public ActionResult SendPasswordRequest(string correo)
+        {
+            var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
+
+            if (user != null)
+            {
+                /*Prevencion del bloqueo de Adminsitrador*/
+                if (correo == "admin@mail.com")
+                {
+                    ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
+                    ViewBag.HTMLCheck = true;
+                    return View("PasswordReset");
+                }
+
+
+                /* Only for demo purposes, will be changed for a password reset link */
+                Random random = new Random();
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var newPassword = new string(Enumerable.Repeat(chars, 16)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                ViewBag.Message = "El correo ha sido enviado";
+
+                db.ChangePassword(correo, newPassword);
+                db.SaveChanges();
+
+                EmailNotification notification = new EmailNotification();
+
+                List<string> users = new List<string>();
+                users.Add(correo);
+                notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Correo no encontrado";
+            }
+            ViewBag.HTMLCheck = true;
+            return View("PasswordReset");
         }
     }
 }

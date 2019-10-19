@@ -12,6 +12,6 @@
 	Observacion NVARCHAR(250),
 
 	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo),
-	CONSTRAINT fkRespondeLibreRespuestasAFormulario FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha) REFERENCES Respuestas_a_formulario(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha),
-	CONSTRAINT fkRespondeLibreCodigo FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
+	CONSTRAINT fkRespondeLibreRespuestasAFormulario FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha) REFERENCES Respuestas_a_formulario(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha) on delete cascade,
+	CONSTRAINT fkRespondeLibreCodigo FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo) on delete cascade,
 )

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AppIntegrador.Models.SeccionConPreguntas>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-primary">
+        <div class='panel-heading'>
+            @Html.DisplayFor(model => item.Nombre)
+        </div>
+        <div class='panel-body'>
+            @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        
+        @using (Html.BeginForm("GuardarRespuestas", "Formularios", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-info" >Guardar Respuestas</button>
+        }
+        @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn btn-default" })
+    </div>
+</div>

@@ -8,31 +8,32 @@ namespace AppIntegrador.Models.Metadata
 {
     public class ObjetivoMetadata
     {
-        [Display(Name = "Código del Plan")]
+        [Display(Name = "Código Plan")]
         [Required(ErrorMessage = "Este campo es requerido")]
         public int codPlan { get; set; }
 
-        [Display(Name = "Nombre del objetivo")]
+        [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Este campo es requerido")]
         public string nombre { get; set; }
 
-        [Display(Name = "Descripción del objetivo")]
+        [Display(Name = "Descripción")]
         public string descripcion { get; set; }
 
-        [Display(Name = "Fecha de inicio")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        [Display(Name = "Inicio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
-        [Display(Name = "Fecha final")]
+        [Display(Name = "Fin")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        //[DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> fechaFin { get; set; }
 
-        [Display(Name = "Tipo de objetivo")]
+        [Display(Name = "Tipo")]
         public string nombTipoObj { get; set; }
 
-        [Display(Name = "Código de la plantilla utilizada")]
+        [Display(Name = "Código plantilla")]
         public Nullable<int> codPlantilla { get; set; }
     }
 }

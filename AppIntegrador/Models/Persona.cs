@@ -27,12 +27,11 @@ namespace AppIntegrador.Models
         public string Nombre2 { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
-        public string Usuario { get; set; }
         public string TipoIdentificacion { get; set; }
     
         public virtual Estudiante Estudiante { get; set; }
         public virtual Funcionario Funcionario { get; set; }
-        public virtual Usuario Usuario1 { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
     }
