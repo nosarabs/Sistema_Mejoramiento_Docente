@@ -3,184 +3,142 @@
 @{
     ViewBag.Title = "Details";
 }
+<!--Historia de usuario 2.9: ver detalles de un usuario. Se modificó para mostrarlos en una tabla
+    para que el layout sea responsive.-->
+<div class="container">
+    <h2>Detalles</h2>
 
-    <div class="container">
-        <h2>Detalles</h2>
-
-        <div>
-            <h4>Persona</h4>
-            <hr />
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
-
-                <div>
+    <div>
+        <h4>Persona</h4>
+        <hr />
+        <table class="table table-striped table-responsive-md" cellspacing="0" width="60%">
+            <tr>
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.TipoIdentificacion)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.TipoIdentificacion)
-                </div>
-            </div>
+                </td>
+            </tr>
 
-            <hr />
+            <tr>
 
-
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
-
-                <div>
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Identificacion)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Identificacion)
-                </div>
-            </div>
-            <hr />
+                </td>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            </tr>
 
-                <div>
+            <tr>
+
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Correo)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Correo)
-                </div>
-            </div>
-            <hr />
+                </td>
 
+            </tr>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            <tr>
 
-                <div>
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.CorreoAlt)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.CorreoAlt)
-                    <br />
-                </div>
-            </div>
-            <hr />
+                </td>
 
+            </tr>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            <tr>
 
-                <div>
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Nombre1)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Nombre1)
-                </div>
-            </div>
-            <hr />
+                </td>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            </tr>
 
-                <div>
+            <tr>
+
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Nombre2)
-                    
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                </th>
+
+                <td>
                     @Html.DisplayFor(model => model.Persona.Nombre2)
-                    <br />
-                </div>
-            </div>
-            <hr />
+                </td>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            </tr>
 
-                <div>
+            <tr>
+
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Apellido1)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Apellido1)
+                </td>
 
-                </div>
-            </div>
-            <hr />
+            </tr>
 
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+            <tr>
 
-                <div>
-                    @Html.DisplayNameFor(model => model.Persona.Apellido2)
-
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
-                    @Html.DisplayFor(model => model.Persona.Apellido2)
-                    <br />
-                </div>
-            </div>
-            <hr />
-
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
-
-                <div>
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Estudiante.Carne)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Estudiante.Carne)
-                    <br />
-                </div>
-            </div>
-            <hr />
-            <div class="col-md-6" style="text-align:right; font-weight:bold">
+                </td>
 
-                <div>
+            </tr>
+
+            <tr>
+
+                <th>
                     @Html.DisplayNameFor(model => model.Persona.Usuario.Activo)
+                </th>
 
-                </div>
-            </div>
-            <div>
-                <div class="col-md-6">
+                <td>
                     @Html.DisplayFor(model => model.Persona.Usuario.Activo)
-                    <br />
-                </div>
-            </div>
-            
-            <hr />
-            <br />
+                </td>
+
+            </tr>
 
 
+        </table>
 
 
-        </div>
-        <br />
-        <br />
-        <div class="col-md-6 col-centered" style="text-align:center">
-            <p>
-                @Html.ActionLink("Editar", "Edit", new
-           {
-               username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
-               domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
-           },
-                            new
-                            {
-                                @class = "btn btn-primary"
-                            }
-
-            )
-                @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
-            </p>
-        </div>
     </div>
+    <br />
+    <br />
+    <div class="col-md-6 col-centered" style="text-align:center">
+        <p>
+            @Html.ActionLink("Editar", "Edit", new
+        {
+            username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
+            domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
+        },
+                        new
+                        {
+                            @class = "btn btn-primary"
+                        }
+
+        )
+            @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>
