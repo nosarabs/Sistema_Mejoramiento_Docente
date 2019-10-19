@@ -232,20 +232,26 @@ namespace AppIntegrador.Controllers
 
         public ActionResult SendPasswordRequest(string correo)
         {
-            string message = "";
-            bool status = false;
-
             var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
 
             if (user != null)
             {
+                /*Prevencion del bloqueo de Adminsitrador*/
+                if (correo == "admin@mail.com")
+                {
+                    ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
+                    ViewBag.HTMLCheck = true;
+                    return View("PasswordReset");
+                }
+
+
                 /* Only for demo purposes, will be changed for a password reset link */
                 Random random = new Random();
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 var newPassword = new string(Enumerable.Repeat(chars, 16)
                   .Select(s => s[random.Next(s.Length)]).ToArray());
 
-                message = "El correo ha sido enviado";
+                ViewBag.Message = "El correo ha sido enviado";
 
                 db.ChangePassword(correo, newPassword);
                 db.SaveChanges();
@@ -258,9 +264,8 @@ namespace AppIntegrador.Controllers
             }
             else
             {
-                message = "Correo no encontrado";
+                ViewBag.ErrorMessage = "Correo no encontrado";
             }
-            ViewBag.Message = message;
             ViewBag.HTMLCheck = true;
             return View("PasswordReset");
         }

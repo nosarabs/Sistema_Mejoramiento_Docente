@@ -44,8 +44,10 @@ namespace AppIntegrador
             List<Persona> Personas = db.Persona.ToList();
 
             /*Creates a list with the joiner entity "usuarioPersona", and then sends them to the view.*/
+            /*Keep admin out of the list to avoid loss of access*/
             var usuarioPersona = from u in Usuarios
                                  join p in Personas on u.Username equals p.Correo into table1
+                                 where u.Username != "admin@mail.com"
                                  from p in table1.ToList()
                                  select new UsuarioPersona
                                  {
