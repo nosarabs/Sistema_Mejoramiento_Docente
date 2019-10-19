@@ -71,19 +71,21 @@
                     </td>
                     <td style="text-align:center;">
                         @Html.ActionLink("Editar", "Edit", new
-                        {
-                            username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                            domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                   {
+                            
+                                username = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                                domain = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
+                            
                         },
                              new
                              {
                                  @class = "btn btn-primary"
-                        }
+                             }
                    )
                         @Html.ActionLink("Detalles", "Details", new
                         {
-                            username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                            domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                            username = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                            domain = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
                         },
                              new
                              {
@@ -96,8 +98,8 @@
                         {
                             @Html.ActionLink("Borrar", "DeleteConfirmed", new
                        {
-                           username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                           domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')),
+                           username = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                           domain = item.Persona.Correo.Contains('.')? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : "",
                            confirmed = true
                        },
                             new
