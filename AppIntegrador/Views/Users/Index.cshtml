@@ -8,19 +8,19 @@
 <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 <br />
 <div class="container">
-    <div class="row" style="display:flex;">
+    <div class="row" style="display:flex; padding-left:15px; ">
         <div class="column" style="flex:50%;">
             <h2>
                 Administración de usuarios
             </h2>
         </div>
-        <div class="column" style="flex:50%; text-align:right; vertical-align:bottom;">
+        <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
 
             <p>@Html.ActionLink("+ Agregar usuario", "Create", "Create", new { @class = "btn btn-success" })</p>
         </div>
     </div>
     <br />
-    <div style="height:400px; overflow-x:auto;">
+    <div style="max-height:650px; overflow-x:auto;">
         <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <col width="50">
             <thead class="users-list">
