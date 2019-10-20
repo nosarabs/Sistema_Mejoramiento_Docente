@@ -327,15 +327,15 @@ namespace AppIntegrador
 
             /*If it was confirmed, then delete the user and its related person.*/
             string id = username + domain;
-            Usuario usuario = db.Usuario.Find(id);
+            Persona persona = db.Persona.Find(id);
 
-            if (usuario != null)
+            if (persona != null)
             {
                 if(id != "admin@mail.com")
                 {
                     /*Both user and person tuples are deleted from the database.*/
                     /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
-                    db.Usuario.Remove(usuario);
+                    db.Persona.Remove(persona);
                     db.SaveChanges();
                 }
                 else
