@@ -258,9 +258,9 @@ namespace AppIntegrador
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
                         originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
-                        
+
                         //Si hay un cambio en el Carne entonces agregar el atributo Estudiante a la persona original para poder editarlo
-                        if(usuarioPersona.Persona.Estudiante.Carne != null)
+                        if (usuarioPersona.Persona.Estudiante.Carne != null)
                         {
                             if (originalPerson.Estudiante == null)
                             {
@@ -268,6 +268,9 @@ namespace AppIntegrador
                             }
                             originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
                             originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
+                        }
+                        else if (originalPerson.Estudiante != null) {
+                            originalPerson.Estudiante.Carne = null;
                         }
 
                         ViewBag.resultmessage = "Los cambios han sido guardados";
