@@ -422,7 +422,7 @@ namespace AppIntegrador
                     if (regexResult.Matches(id).Count == 0)
                     {
                         ModelState.AddModelError("Persona.Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
-                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
                         return false;
                     }
                     break;

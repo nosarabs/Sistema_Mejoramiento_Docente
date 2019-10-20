@@ -5,7 +5,7 @@
 }
 @Styles.Render("~/Content/users&profiles")
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { action = "#", id = "dirrty-form" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
@@ -141,14 +141,8 @@
                 </div>
 
                 <div class="col-md-offset-4 col-md-4" style="text-align:center;">
-                    <input type="submit" value="Crear" class="btn btn-success" />
-                    @Html.ActionLink("Cancelar", "Index", "Index", new { @class = "btn btn-danger" })
-                </div>
-                <div>
-                    <br />
-                </div>
-                <div class="col-md-offset-1 col-md-4">
-                    @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
+                    <input id="create-save" type="submit" value="Crear" class="btn btn-success" />
+                    @Html.ActionLink("Salir", "Index", "Index", new { @class = "btn btn-default", id = "dirrty-cancel" })
                 </div>
 
             </div>
@@ -181,4 +175,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom")
 }
