@@ -9,8 +9,8 @@
             // settings
                 type: type,
             placement: {
-                from: "bottom",
-                align: "center"
+                from: "top",
+                align: "right"
             }
         });
     }
