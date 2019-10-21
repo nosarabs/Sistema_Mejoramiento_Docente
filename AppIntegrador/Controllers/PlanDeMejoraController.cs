@@ -69,8 +69,7 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora/Create
         public ActionResult Create()
         {
-            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
-            return View("_crearPlanDeMejora", plan);
+            return View("_crearPlanDeMejora");
         }
 
         // POST: PlanDeMejora/Create
@@ -78,7 +77,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        public ActionResult Create([Bind(Include = "nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
