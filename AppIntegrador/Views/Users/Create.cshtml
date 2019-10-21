@@ -15,7 +15,7 @@
             <div class="form-row">
                 @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label required col-md-3" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off", maxlength="50" } })
                 </div>
             </div>
             <br />
@@ -29,7 +29,7 @@
             <div class="form-row">
                 @Html.LabelFor(model => model.CorreoAlt, "Correo alternativo", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.CorreoAlt, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.CorreoAlt, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", maxlength="50" } })
                 </div>
             </div>
             <br />
@@ -51,7 +51,7 @@
                 </div>
                 @Html.LabelFor(model => model.Identificacion, "Identificación", htmlAttributes: new { @class = "control-label required col-md-3" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off", maxlength="12" } })
                 </div>
             </div>
             <br /><br />
@@ -68,12 +68,12 @@
             <div class="form-row form-inline">
                 @Html.LabelFor(model => model.Nombre1, "Primer nombre", htmlAttributes: new { @class = "control-label required col-md-3" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Nombre1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Nombre1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off", maxlength="15" } })
 
                 </div>
                 @Html.LabelFor(model => model.Nombre2, "Segundo nombre", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Nombre2, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Nombre2, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", maxlength="15" } })
 
                 </div>
             </div>
@@ -92,13 +92,13 @@
             <div class="form-row form-inline">
                 @Html.LabelFor(model => model.Apellido1, "Primer apellido", htmlAttributes: new { @class = "control-label required col-md-3" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Apellido1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Apellido1, new { htmlAttributes = new { @class = "form-control", required = "required", autocomplete = "off", maxlength="15" } })
 
                 </div>
 
                 @Html.LabelFor(model => model.Apellido2, "Segundo apellido", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Apellido2, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Apellido2, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", maxlength="15" } })
 
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <div class="form-row form-inline">
                 @Html.LabelFor(model => model.Estudiante.Carne, "Carné", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-2">
-                    @Html.EditorFor(model => model.Estudiante.Carne, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.EditorFor(model => model.Estudiante.Carne, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", maxlength="6" } })
 
                 </div>
 
