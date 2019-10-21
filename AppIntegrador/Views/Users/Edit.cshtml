@@ -149,11 +149,6 @@
                     <input id="dirrty-save" type="submit" value="Guardar" class="btn btn-success" disabled="disabled" />
                     @Html.ActionLink("Salir", "Index", "Index", new { @class = "btn btn-default", id = "dirrty-cancel" })
                 </div>
-                <div>
-                    <span class="text-success h4">@ViewBag.resultmessage</span>
-                    @*<br />*@
-                </div>
-
             </div>
 
         </div>
@@ -165,21 +160,25 @@
     </div>
 }
 
-
-
-
-    <style>
-        .required:after {
-            content: "*";
-            font-weight: bold;
-            color: red;
-        }
-    </style>
-
-    @section Scripts {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
-
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/custom")
+<style>
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
     }
+</style>
+
+@section Scripts
+    {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom")
+
+    @if (!string.IsNullOrEmpty(ViewBag.resultmessage))
+    {
+<script>
+    customAlert('success','@ViewBag.resultmessage');
+</script>
+    }
+}
+
+}

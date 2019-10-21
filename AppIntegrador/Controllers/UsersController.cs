@@ -29,7 +29,13 @@ namespace AppIntegrador
             //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
             if (TempData["alertmessage"] != null)
             {
-                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+                ViewBag.typeMessage = "alert";
+                ViewBag.NotifyMessage = TempData["alertmessage"].ToString();
+            }
+            if (TempData["successMessage"] != null)
+            {
+                ViewBag.typeMessage = "success";
+                ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
             string username = HttpContext.User.Identity.Name;
@@ -153,6 +159,7 @@ namespace AppIntegrador
                     return View(persona);
                 }
 
+                TempData["successMessage"] = "El nuevo usuario ha sido creado.";
                 return RedirectToAction("Index");
             }
 
