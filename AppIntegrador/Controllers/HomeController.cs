@@ -30,6 +30,7 @@ namespace AppIntegrador.Controllers
             //Si hay informacion de alerta en TempData entonces pasarla al viewbag
             if (TempData["alertmessage"] != null)
             {
+                ViewBag.typeMessage = "alert";
                 ViewBag.AlertMessage = TempData["alertmessage"].ToString();
             }
 
@@ -65,6 +66,12 @@ namespace AppIntegrador.Controllers
         public ActionResult Login()
         {
             ViewBag.HTMLCheck = true;
+            //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
+            if (TempData["successMessage"] != null)
+            {
+                ViewBag.typeMessage = "success";
+                ViewBag.NotifyMessage = TempData["successMessage"].ToString();
+            }
             return View();
         }
 
@@ -75,7 +82,7 @@ namespace AppIntegrador.Controllers
 
             ViewBag.HTMLCheck = true;
             if (ModelState.IsValid)
-            {
+            {               
                 /*When loggin in, first checks whether the user's account is locked or deactivated.*/
                 if (IsUserLocked(objUser)) 
                 {
@@ -249,9 +256,7 @@ namespace AppIntegrador.Controllers
                 Random random = new Random();
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 var newPassword = new string(Enumerable.Repeat(chars, 16)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());
-
-                ViewBag.Message = "El correo ha sido enviado";
+                  .Select(s => s[random.Next(s.Length)]).ToArray());                
 
                 db.ChangePassword(correo, newPassword);
                 db.SaveChanges();
@@ -261,6 +266,9 @@ namespace AppIntegrador.Controllers
                 List<string> users = new List<string>();
                 users.Add(correo);
                 notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
+
+                TempData["successMessage"] = "Se ha enviado un correo con su nueva contraseña a la dirección indicada.";
+                return RedirectToAction("Login");
             }
             else
             {

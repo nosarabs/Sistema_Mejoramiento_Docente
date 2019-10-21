@@ -169,15 +169,15 @@
 </style>
 
 @section Scripts
-    {
+{
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/custom")
 
     @if (!string.IsNullOrEmpty(ViewBag.resultmessage))
     {
-<script>
-    customAlert('success','@ViewBag.resultmessage');
-</script>
+        <script>
+            customAlert('success','@ViewBag.resultmessage');
+        </script>
     }
 }
 
