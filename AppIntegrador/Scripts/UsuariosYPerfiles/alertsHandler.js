@@ -10,7 +10,7 @@
                 type: type,
             placement: {
                 from: "top",
-                align: "right"
+                align: "center"
             }
         });
     }
