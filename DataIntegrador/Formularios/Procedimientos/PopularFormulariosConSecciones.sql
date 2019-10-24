@@ -1,23 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[PopularFormulariosConSecciones]
 AS
-	-- Se crean los formularios
-	MERGE INTO Formulario AS Target
-	USING (VALUES
-		('FORMSU01', 'Formulario selección única') -- Formulario que solo tendrá preguntas de selección única
-	)
-	AS SOURCE ([Codigo],[Nombre])
-	ON Target.Codigo = Source.Codigo
-	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (Codigo,Nombre)
-	VALUES (Codigo,Nombre);
-
 	-- Se asignan las secciones a los formularios
 	
 	MERGE INTO Formulario_tiene_seccion AS Target
 	USING (VALUES
-		('FORMSU01', 'PERSONAL', 0),
-		('FORMSU01', 'INFOPROF', 1),
-		('FORMSU01', 'SUPRUEBA', 2)
+		('CI0128G1', 'CI0128S1', 0),
+		('CI0128G1', 'CI0128S2', 1),
+		('CI0128G1', 'CI0128S3', 2)
 	)
 	AS SOURCE ([FCodigo],[SCodigo],[Orden])
 	ON Target.FCodigo = Source.FCodigo and Target.SCodigo = Source.SCodigo
