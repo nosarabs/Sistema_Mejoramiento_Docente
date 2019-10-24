@@ -28,9 +28,7 @@
         <EntityTypeShape EntityType="DataIntegradorModel.PlanDeMejora" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.PlantillaAccionDeMejora" Width="1.5" PointX="11.25" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.PlantillaObjetivo" Width="1.5" PointX="9" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones" Width="1.5" PointX="10.5" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="12.75" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="10.5" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Profesor" Width="1.5" PointX="20.25" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_con_opciones" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
@@ -64,7 +62,6 @@
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_Plan" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_PlantillaObjetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_TipoObj" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkOpcionesSeleccionadas" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__3548C815" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__4FFCBE51" ManuallyRouted="false" />
@@ -72,12 +69,6 @@
         <AssociationConnector Association="DataIntegradorModel.fkPersonaAUsuarioUsername" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasUsuario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_PlantillaObj_TipoObj" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkResLibreCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkSeccionTienePreguntaCodigoPregunta" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesSeleccionCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkSiNoCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" ManuallyRouted="false" />
@@ -95,6 +86,16 @@
         <AssociationConnector Association="DataIntegradorModel.Pertenece_a" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta" Width="1.5" PointX="8.625" PointY="14.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="13.125" PointY="25.375" />
+        <AssociationConnector Association="DataIntegradorModel.fkOpcionesCodigo" />
+        <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesCodigo" />
+        <AssociationConnector Association="DataIntegradorModel.fkResLibreCodigo" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreCodigo" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigo" />
+        <AssociationConnector Association="DataIntegradorModel.fkSeccionTienePreguntaCodigoPregunta" />
+        <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesSeleccionCodigo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
