@@ -66,7 +66,7 @@ namespace AppIntegrador.Controllers
         // GET: Seccion/Create
         public ActionResult Create()
         {
-            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            crearSeccion.pregunta = db.Pregunta;
             return View(crearSeccion);
         }
 
@@ -77,7 +77,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
-            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            crearSeccion.pregunta = db.Pregunta;
             if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
             {
                 if ( InsertSeccionTienePregunta(seccion, preguntas) )
@@ -100,35 +100,55 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Create(string input0, string input1, string input2, string input3)
         {
-            crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion;
+            crearSeccion.pregunta = db.Pregunta;
             ViewBag.filtro = "Ninguno";
             if (input0 == null && input1 == null && input2 == null && input3 == null)
             {
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+                crearSeccion.pregunta = db.Pregunta.ToList();
                 return View("Create", crearSeccion);
             }
             //if a user choose the radio button option as Subject  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(input1)).ToList();
+                crearSeccion.pregunta = db.Pregunta.Where(x => x.Codigo.Contains(input1)).ToList();
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
             }
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Enunciado: " + input2;
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(input2)).ToList();
+                crearSeccion.pregunta = db.Pregunta.Where(x => x.Enunciado.Contains(input2)).ToList();
             }
             else if (input3.Length > 0)
             {
-                var aux = input3 == "U" ? "Selección Única" : "Seleción Múltiple";
+                var aux = "";
+                switch(input3)
+                {
+                    case "U":
+                        aux = "Selección Única";
+                        break;
+                    case "M":
+                        aux = "Selección Múltiple";
+                        break;
+                    case "L":
+                        aux = "Respuesta libre";
+                        break;
+                    case "S":
+                        aux = "Sí/No/NR";
+                        break;
+                    case "E":
+                        aux = "Escalar";
+                        break;
+                    default:
+                        break;
+                }
                 ViewBag.filtro = "Tipo: " + aux;
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(input3)).ToList();
+                crearSeccion.pregunta = db.Pregunta.Where(x => x.Tipo.Contains(input3)).ToList();
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                crearSeccion.pregunta_Con_Opciones_De_Seleccion = db.Pregunta_con_opciones_de_seleccion.ToList();
+                crearSeccion.pregunta = db.Pregunta.ToList();
             }
             return View("Create", crearSeccion);
         }

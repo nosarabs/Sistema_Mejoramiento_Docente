@@ -8,13 +8,13 @@ BEGIN
 	-- Primeramente se tiene que crear una pregunta, con su código y enunciado
 	MERGE INTO Pregunta AS Target
 	USING (VALUES
-			(@cod, @enunciado) 
+			(@cod, @enunciado, @type) 
 	)
-	AS Source ([Codigo],[Enunciado])
+	AS Source ([Codigo],[Enunciado], [Tipo])
 	ON Target.Codigo = Source.Codigo
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (Codigo, Enunciado)
-	VALUES (@cod,@enunciado);
+	INSERT (Codigo, Enunciado, Tipo)
+	VALUES (@cod,@enunciado,@type);
 
 	-- Una vez creada la pregunta, se puede crear su subclase, Pregunta_con_opciones
 	MERGE INTO Pregunta_con_opciones AS Target
@@ -29,6 +29,6 @@ BEGIN
 
 
 	-- Se llama al procedimiento que va a insertar 
-	EXEC [dbo].[AgregarPreguntaSeleccion]  @codigo = @cod, @tipo = @type;
+	EXEC [dbo].[AgregarPreguntaSeleccion]  @codigo = @cod;
 END
 
