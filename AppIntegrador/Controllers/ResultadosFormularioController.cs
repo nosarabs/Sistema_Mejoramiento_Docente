@@ -139,30 +139,33 @@ namespace AppIntegrador.Controllers
         {
             String tipo = "";
 
-            if ((from pcrl in db.Pregunta_con_respuesta_libre
-                 where pcrl.Codigo == codigoPregunta
-                 select pcrl).Count() != 0)
-                tipo = "texto_abierto";
-            else
-                    if ((from e in db.Escalar
-                         where e.Codigo == codigoPregunta
-                         select e).Count() != 0)
-                tipo = "escala";
-            else
-                        if ((from snnr in db.Si_no_nr
-                             where snnr.Codigo == codigoPregunta
-                             select snnr).Count() != 0)
-                tipo = "seleccion_cerrada";
-            else
-                            if ((from pcods in db.Pregunta_con_opciones_de_seleccion
-                                 where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
-                                 select pcods).Count() != 0)
-                tipo = "seleccion_multiple";
-            else
-                                if ((from pcods in db.Pregunta_con_opciones_de_seleccion
-                                     where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
-                                     select pcods).Count() != 0)
-                tipo = "seleccion_unica";
+            List<Pregunta> preguntas = db.Pregunta.Where(x => x.Codigo.Equals(codigoPregunta)).ToList();
+
+            if(preguntas != null)
+            {
+                Pregunta pregunta = preguntas.First();
+
+                switch(pregunta.Tipo)
+                {
+                    case "U":
+                        tipo = "seleccion_unica";
+                        break;
+                    case "M":
+                        tipo = "seleccion_multiple";
+                        break;
+                    case "L":
+                        tipo = "texto_abierto";
+                        break;
+                    case "S":
+                        tipo = "seleccion_cerrada";
+                        break;
+                    case "E":
+                        tipo = "escala";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             return tipo;
         }
