@@ -66,12 +66,13 @@ BEGIN
 
 	-- Se agregan las preguntas para el formulario de prueba del sprint 2 
 
-	-- Pregunta 1
+	-- Pregunta 1: Sí/No/No sabe
 	EXEC [dbo].[AgregarPreguntaConOpcion] -- Revisar esto. Hay que ver si se agrega una pregunta de Sí/no igual que una con opciones
 		@cod = 'CI0128P1',
-		@type = 'SN',
+		@type = 'S',
 		@enunciado = '¿Considera que los cursos de Bases de Datos e Ingeniería de Software se complementan bien?';
 
+	-- Pregunta 2: Selección única
 	EXEC [dbo].[AgregarPreguntaConOpcion] -- Revisar esto. Hay que ver si se agrega una pregunta de Sí/no igual que una con opciones
 		@cod = 'CI0128P2',
 		@type = 'U',
@@ -81,15 +82,49 @@ BEGIN
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 1, @texto = 'Un poco';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 2, @texto = 'Sí';
 
+	-- Pregunta 3: Selección múltiple
 	EXEC [dbo].[AgregarPreguntaConOpcion] -- Revisar esto. Hay que ver si se agrega una pregunta de Sí/no igual que una con opciones
 		@cod = 'CI0128P3',
 		@type = 'M',
-		@enunciado = '¿Cuáles de los siguientes temas considera que ha aprendido en el curso?';
+		@enunciado = '¿Cuáles de los siguientes temas ha puesto en práctica en el curso?';
 
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 0, @texto = 'Git';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 1, @texto = 'VS';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 2, @texto = 'Trabajo en equipo';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 3, @texto = 'Esquemas relacionales';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 3, @texto = 'Scrum';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 4, @texto = 'Scrum';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 5, @texto = 'Testing';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 6, @texto = 'Negociación con el PO';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 7, @texto = 'Tecnologías web';
+
+	-- Pregunta 4: Respuesta libre
+	EXEC [dbo].[AgregarPreguntaConOpcion] 
+		@cod = 'CI0128P4',
+		@type = 'L',
+		@enunciado = '¿Cuál es su opinión sobre el curso?';
+
+	-- Pregunta 5: Para la sección de profesores
+	EXEC [dbo].[AgregarPreguntaConOpcion] 
+		@cod = 'CI0128P5',
+		@type = 'L',
+		@enunciado = '¿Cuál es su opinión sobre el/la profesor(a)?';
+
+	-- Pregunta 6: Para la sección de profesores
+	EXEC [dbo].[AgregarPreguntaConOpcion] 
+		@cod = 'CI0128P6',
+		@type = 'S',
+		@enunciado = '¿El/la profesor(a) mantiene una relación de respeto hacia su persona?',
+		@justificacion = 'Si no lo respeta, explique por qué';
+
+	EXEC [dbo].[AgregarPreguntaConOpcion]
+		@cod = 'CI0128P7',
+		@type = 'U',
+		@enunciado = '¿Qué tan seguido el/la profesor(a) cumple el horario de lecciones establecido?' 
+
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 0, @texto = 'Nunca';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 1, @texto = 'Casi nunca';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 2, @texto = 'A veces';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 3, @texto = 'Casi siempre';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 4, @texto = 'Siempre';
 
 END
