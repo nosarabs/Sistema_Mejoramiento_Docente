@@ -67,15 +67,21 @@ namespace AppIntegrador.Controllers
 
         // Retorna la vista "parcial" de pregunta con opciones (.cshtml)
         public ActionResult PreguntaConOpciones()
-        { 
-            return View();
+        {
+            ViewBag.message = "Pregunta con opciones";
+            return View("Pregunta con opciones");
+
         }
 
         [HttpGet]
         public ActionResult OpcionesDeSeleccion(int i)
         {
+            if(i < 0)
+            {
+                return null;
+            }
             ViewBag.i = i;
-            return PartialView();
+            return View("Opciones");
         }
 
         protected override void Dispose(bool disposing)

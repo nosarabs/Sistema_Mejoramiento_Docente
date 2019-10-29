@@ -73,12 +73,64 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void SeleccionUnicaNoNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.PreguntaConOpciones() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void OpcionesDeSeleccionNoNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.OpcionesDeSeleccion(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        public void OpcionesDeSeleccionNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.OpcionesDeSeleccion(-1) as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void ProbarCrear()
         {
             var controller = new PreguntasController();
             var result = controller.Create() as ViewResult;
 
             Assert.AreEqual("Create", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarOpciones()
+        {
+            var controller = new PreguntasController();
+            var result = controller.OpcionesDeSeleccion(7) as ViewResult;
+
+            Assert.AreEqual("Opciones", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarPreguntaConOpciones()
+        {
+            var controller = new PreguntasController();
+            var result = controller.PreguntaConOpciones() as ViewResult;
+
+            Assert.AreEqual("Pregunta con opciones", result.ViewName);
         }
 
         // Historia RIP-CBX
