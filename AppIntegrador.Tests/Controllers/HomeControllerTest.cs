@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Models;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -13,8 +15,18 @@ namespace AppIntegrador.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void Login()
         {
+            Usuario usuario = new Usuario();
+            usuario.Username = "berta@mail.com";
+            usuario.Password = "fsdfsfs";
+            usuario.Activo = true;
+
+            HomeController controller = new HomeController();
+
+            Task<ActionResult> result = controller.Login(usuario);
+            Assert.IsNotNull(result);
+            /*
             // Arrange
             HomeController controller = new HomeController();
 
@@ -22,9 +34,9 @@ namespace AppIntegrador.Tests.Controllers
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result);*/
         }
-
+        /*
         [TestMethod]
         public void About()
         {
@@ -49,6 +61,6 @@ namespace AppIntegrador.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-        }
+        }*/
     }
 }
