@@ -1,0 +1,233 @@
+﻿@model AppIntegrador.Models.Pregunta
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="container">
+    <h3>Crear pregunta</h3>
+    <div class="panel panel-default">
+        @*test3*@
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.Codigo, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "validar form-control",
+                                            @maxlength = "8",
+                                            required = "required",
+                                            @onkeyup = "contarCaracteres(this)",
+                                            @placeholder = "Código"
+                                        }
+                                    })
+
+                                    <div class="contador small pull-right">0/8 caracteres usados</div>
+                                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
+                                </div>
+                                <div class="col-md-10">
+                                    @*<div>
+                                    <button name="@Html.NameFor(m => m.Tipo)" value="-" id="@Html.NameFor(m => m.Tipo)" class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="texto-btn">Escoger tipo</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu col-md-10" style="margin-left: 7.5%" aria-labelledby="Tipo">
+                                        <li value="U"><a href="#">Opción única</a></li>
+                                        <li value="M"><a href="#">Opción múltiple</a></li>
+                                        <li value="L"><a href="#">Respuesta libre</a></li>
+                                        <li value="E"><a href="#">Escalar</a></li>
+                                        <li value="S"><a href="#">Sí / No / No responde</a></li>
+                                    </ul>
+                                </div>*@
+
+                                    <select id="Tipo" name="Tipo" class="form-control">
+                                        <option value="-">Escoger tipo</option>
+                                        <option value="U">Opción única</option>
+                                        <option value="M">Opción múltiple</option>
+                                        <option value="L">Respuesta libre</option>
+                                        <option value="E">Escalar</option>
+                                        <option value="S">Sí / No / No responde</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <br />
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.Enunciado, new
+                                {
+                                    @class = "validar form-control long-textbox",
+                                    @style = "width: 100%;max-width: 100%",
+                                    @maxlength = "250",
+                                    required = "required",
+                                    data_val = "true",
+                                    data_val_length_max = "250",
+                                    @onkeyup = "contarCaracteres(this)",
+                                    @placeholder = "Enunciado de la pregunta"
+                                })
+
+                                <div class="contador small pull-right">0/250 caracteres usados</div>
+                                @*Historia MSU: que el mensaje de error salga en rojo*@
+                                @Html.ValidationMessageFor(model => model.Enunciado, "", new { @style = "color:red" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body grisUCR1">
+                        <div id="contenedor-preguntas">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Crear" class="btn btn-info azulUCR" id="Create" />
+                        @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .orden {
+        display: none;
+    }
+
+    .sortable-container:hover {
+        background-color: lightgrey;
+        cursor: grab;
+    }
+
+    .sortable-container:active {
+        background-color: #c4c4c4;
+        cursor: grabbing;
+    }
+
+    .grisUCR1 {
+        background: #e9e9e9;
+    }
+
+    .grisUCR2 {
+        background: #fbfbfb;
+    }
+
+    .grisUCR3 {
+        background: #fdfdfd;
+    }
+
+    .radio-dibujo {
+        transform: scale(2);
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    .azulUCR {
+        color: #fff;
+        background-color: #41ade7;
+    }
+</style>
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+
+    <script>
+        //$(".dropdown-menu li").on("click", function () {
+        //    cambiarTipo(this);
+        //})
+
+        //function cambiarTipo(node) {
+        //    var valorSeleccionado = $(node).attr("value")
+        //    // Buscar el boton "combobox"
+        //    var botonCombobox = $(node).parent().parent()
+        //    // Asignar valor al dropdown
+        //    $(botonCombobox).find("#Tipo").attr("value", valorSeleccionado)
+        //    // Cambiar nombre
+        //    $(botonCombobox).find(".texto-btn").text($(node).text())
+        //}
+
+        $("#Tipo").on("change", function () {
+            cargarVista(this.value)
+        })
+
+        $(document).ready(function () {
+            validarEntradas();
+        })
+
+        function cargarVista(valor) {
+            if (valor === 'U') {
+                $.ajax({
+                    url: 'PreguntaConOpciones',
+                    success: function (data) {
+                        $(data).appendTo('#contenedor-preguntas')
+                        opcionUnicaInit()
+
+                    }
+                })
+            }
+        }
+
+        function opcionUnicaInit() {
+            // Hide the text input box by default
+            $('#justificationField').css('display', 'none');
+            $("#sortable").disableSelection();
+            $("#Add").trigger('click');
+            
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).on("click", "#Add", function () {
+            var i = fixIndexes();
+            $.ajax({
+                url: 'OpcionesDeSeleccion',
+                data: { i: i },
+                success: function (data) {
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
+                    $("#sortable").find(".texto").focus();
+                    disableRemoveButton();
+                    $('#Create').prop('disabled', true);
+                    // Make options inside sortable id sortable
+                    $("#sortable").sortable({
+                        axis: "y",
+                        // Fix indexes of each input box when an input box is moved
+                        update: function () {
+                            fixIndexes();
+                        },
+                    });
+                }
+            })
+        })
+
+        function EnableDisableTextBox(justificationField) {
+            var txtPassportNumber = document.getElementById("txtJustificationNumber");
+            txtJustificationNumber.disabled = justificationField.checked ? false : true;
+            if (!txtJustificationNumber.disabled) {
+                txtJustificationNumber.focus();
+            }
+            validarEntradas();
+        }
+    </script>
+
+
+}
