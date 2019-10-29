@@ -25,6 +25,15 @@ namespace AppIntegrador.Controllers
             return View(db.PlanDeMejora.ToList());
         }
 
+        //Para pruebas
+        public ActionResult Index(String nombre)
+        {
+            ObjectParameter count = new ObjectParameter("count", 999);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = nombre;
+            return View(db.PlanDeMejora.ToList());
+        }
+
         public ActionResult Index2(int idPlanDeMejora)
         {
             return PartialView("~/Views/PlanDeMejora/Index.cshtml", new ViewDataDictionary { { "idPlan", idPlanDeMejora } });
