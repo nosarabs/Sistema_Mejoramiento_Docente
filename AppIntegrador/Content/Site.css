@@ -7,6 +7,14 @@
     font-size: 15px;
 }
 
+.mainBarList {
+    list-style: none;
+}
+
+.firstNavbar {
+    background-color: #DDDDDD !important;
+}
+
 p.uppercase {
     padding: 1em;
     text-transform: uppercase;
@@ -45,6 +53,12 @@ p.uppercase {
 
 nav {
     background-color: #f0f0f0;
+    display: flex;
+}
+
+.mainBarDropdown {
+    background-color: #DDDDDD !important;
+    padding-color: #DDDDDD !important;
 }
 
 @media all and (max-width: 600px) {
@@ -235,6 +249,151 @@ li a:hover {
     color: black;
 }
 
+/* Estilos para los planes de mejora */
+.planesDeMejoraMainStyle {
+    display: flex;
+    text-align: center;
+}
+
+.createPlanButton {
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.horizontalBoxes {
+    display: flex;
+    flex-direction: column;
+}
+
+p.impText {
+    font-weight: bold !important;
+}
+
+.verticalBoxes {
+    display: flex;
+    flex-direction: row;
+}
+
+.verticalBoxesCrear {
+    display: flex;
+    flex-direction: row;
+    padding-left: 15%;
+}
+
+.equalSpaceVertical {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.halfVerticalBox {
+    width: 50%;
+}
+
+.labelPlace {
+    width: 30%;
+    text-align: center;
+}
+
+.inputPlace {
+    width: 50%;
+}
+
+
+.planButtons {
+    width: 100%;
+    padding-right: 20%;
+    justify-content: flex-end;
+}
+
+.halfHorizontalBox {
+    height: 50%;
+    text-align: center;
+}
+
+.btnWithPadding {
+    padding-left: 5px !important;
+}
+
+.fullWidth {
+    padding-top: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
+    text-align: center;
+}
+
+
+.indexPlanesDeMejora {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.wrapperPlanesDeMejora {
+    display: flex;
+    flex-direction: row;
+    width: 80% !important;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
+.listadoPlanesDeMejora {
+    width: 50%;
+    order: 2;
+}
+
+.creacionPlanesDeMejora {
+    width: 50%;
+    order: 1;
+}
+
+.table-row {
+    cursor: pointer;
+}
+
+
+/*
+    Dashboard planes de mejora
+*/
+
+html, body {
+    height: 100%;
+}
+
+.smallLabel {
+    font-size: 10px !important;
+}
+
+.dashboardPlanesDeMejora {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70%;
+}
+
+.leftPanel {
+    order: 1;
+    flex-grow: 1;
+    margin-right: 5px;
+    border-color: black;
+    border-right: 2px;
+    background-color: #F0F0F0;
+}
+
+.contentPanel {
+    order: 2;
+    flex-grow: 8;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* FIN DE LOS ESTILOS DEL DASHBOARD DE LOS PLANES DE MEJORA*/
+
 .botonCentrado {
     padding: 10px;
     text-align:center;
@@ -278,6 +437,27 @@ li a:hover {
 .TablasSeccionesPlanesDeMejora {
     border-collapse: collapse;
     width: 100%;
+    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.TablasDescripcion {
+    width: 44%;
+    word-break: break-all;
+}
+
+.TablasFecha {
+    width: 10%;
+}
+
+.TablasOpciones {
+    width: 14%;
+}
+
+.TablasNombre {
+    width: 20%;
+    word-break: break-all;
 }
 
 .TablasSeccionesPlanesDeMejora td, .TablasSeccionesPlanesDeMejora th {
@@ -289,7 +469,7 @@ li a:hover {
     padding-bottom: 12px;
     text-align: left;
     background-color: #ddd;
-    color: white;
+    color: black;
 }
 
 .FilaTablasSeccionesPlanesDeMejora:hover {

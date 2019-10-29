@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.Data.Entity.Core.Objects;
 
 namespace AppIntegrador.Controllers
 {
@@ -34,19 +34,25 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: PreguntasFormulario
-        [HttpGet]
-        public IEnumerable<SelectListItem> ObtenerPreguntas(String codigoFormulario)
+        public List<Preguntas> ObtenerPreguntas(String codigoFormulario)
         {
-            var preguntas = from f in db.Formulario
-                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
-                            join s in db.Seccion on fs.SCodigo equals s.Codigo
-                            join sp in db.Seccion_tiene_pregunta on s.Codigo equals sp.SCodigo
-                            join p in db.Pregunta on sp.PCodigo equals p.Codigo
-                            where f.Codigo == codigoFormulario
-                            orderby fs.Orden, sp.Orden
-                            select new SelectListItem { Value = p.Codigo, Text = p.Enunciado };
+            var preguntas =     from f in db.Formulario
+                                join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
+                                join s in db.Seccion on fs.SCodigo equals s.Codigo
+                                join sp in db.Seccion_tiene_pregunta on s.Codigo equals sp.SCodigo
+                                join p in db.Pregunta on sp.PCodigo equals p.Codigo
+                                where f.Codigo == codigoFormulario
+                                orderby fs.Orden, sp.Orden
+                                select new Preguntas { codigoPregunta = p.Codigo, textoPregunta = p.Enunciado };
 
-            return preguntas.ToList();
+            var listaPreguntas = preguntas.ToList();
+
+            for (int i = 0; i < preguntas.Count(); ++i)
+            {
+                listaPreguntas[i].tipoPregunta = GetTipoPregunta(listaPreguntas[i].codigoPregunta);
+            }
+
+            return listaPreguntas;
         }
 
         public string ObtenerEtiquetasEscala(string codigoPregunta)
@@ -113,7 +119,6 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeY);
         }
 
-        [HttpGet]
         public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -130,38 +135,36 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
-        [HttpGet]
         public String GetTipoPregunta(String codigoPregunta)
         {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            List<string> tipo = new List<string>();
+            String tipo = "";
 
             if ((from pcrl in db.Pregunta_con_respuesta_libre
                  where pcrl.Codigo == codigoPregunta
                  select pcrl).Count() != 0)
-                tipo.Add("texto_abierto");
+                tipo = "texto_abierto";
             else
                     if ((from e in db.Escalar
                          where e.Codigo == codigoPregunta
                          select e).Count() != 0)
-                tipo.Add("escala");
+                tipo = "escala";
             else
                         if ((from snnr in db.Si_no_nr
                              where snnr.Codigo == codigoPregunta
                              select snnr).Count() != 0)
-                tipo.Add("seleccion_cerrada");
+                tipo = "seleccion_cerrada";
             else
                             if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                  where pcods.Codigo == codigoPregunta & pcods.Tipo == "M"
                                  select pcods).Count() != 0)
-                tipo.Add("seleccion_multiple");
+                tipo = "seleccion_multiple";
             else
                                 if ((from pcods in db.Pregunta_con_opciones_de_seleccion
                                      where pcods.Codigo == codigoPregunta & pcods.Tipo == "U"
                                      select pcods).Count() != 0)
-                tipo.Add("seleccion_unica");
+                tipo = "seleccion_unica";
 
-            return serializer.Serialize(tipo);
+            return tipo;
         }
 
         public String ObtenterOpcionesPreguntasSeleccion(String codigoPregunta)
@@ -198,13 +201,18 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas);
         }
 
-        public String getJustificacionPregunta(string codigoPregunta, string tipo)
+        public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
 
             var respuestas =    from rrco in db.Responde_respuesta_con_opciones
-                                where rrco.PCodigo == codigoPregunta
+                                where rrco.FCodigo == codigoFormulario
+                                && rrco.CSigla == siglaCurso
+                                && rrco.GNumero == numeroGrupo
+                                && rrco.GSemestre == semestre
+                                && rrco.GAnno == ano
+                                && rrco.PCodigo == codigoPregunta
                                 select new SelectListItem { Value = rrco.Justificacion };
 
             return serializer.Serialize(respuestas.ToList());
@@ -219,5 +227,29 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(resultado.Value);
 
         }
+
+
+        public String getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            ObjectParameter resultadoMediana = new ObjectParameter("mediana", typeof(float));
+            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
+
+            return serializer.Serialize(resultadoMediana.Value);
+        }
+
+        //Denisse Alfaro P. Josue Zeledon R.
+        //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
+        //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 
+        //Cumplimiento: 7/10
+        public String getPromedio(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultPromedio);
+
+            return serializer.Serialize(resultPromedio.Value);
+        }
+
     }
 }

@@ -99,12 +99,35 @@ namespace AppIntegrador.Controllers
 
 
         // GET: Formularios
-        public ActionResult Index()
+        public ActionResult Index(string input0, string input1, string input2)
         {
-            return View(db.Formulario.ToList());
+            var formulario = db.Formulario;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
+            {
+                ViewBag.filtro = "Ninguno";
+                return View(formulario.ToList());
+            }
+            // si se selecionó el código  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(formulario.Where(x => x.Codigo.Contains(input1)).ToList());
+            }
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Nombre: " + input2;
+                return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                return View(formulario.ToList());
+            }
         }
-
-
 
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
@@ -140,12 +163,13 @@ namespace AppIntegrador.Controllers
             {
                 if(InsertFormularioTieneSeccion(formulario, secciones))
                 {
+                    ViewBag.Message = "Exitoso";
                     return RedirectToAction("Create");
                 }
                 else
                 {
                     // Notifique que ocurrió un error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
                     return View(crearFormulario);
                 }
             }
@@ -167,6 +191,39 @@ namespace AppIntegrador.Controllers
                 return HttpNotFound();
             }
             return View(formulario);
+        }
+
+        // Historia RIP-CF5
+        // Se copió la función para filtrar preguntas.
+        [HttpGet]
+        public ActionResult Create(string input0, string input1, string input2)
+        {
+            crearFormulario.seccion = db.Seccion;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
+            {
+                crearFormulario.seccion = db.Seccion.ToList();
+                return View("Create", crearFormulario);
+            }
+            //if a user choose the radio button option as Subject  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                crearFormulario.seccion = db.Seccion.Where(x => x.Codigo.Contains(input1)).ToList();
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+            }
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Nombre: " + input2;
+                crearFormulario.seccion = db.Seccion.Where(x => x.Nombre.Contains(input2)).ToList();
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                crearFormulario.seccion = db.Seccion.ToList();
+            }
+            return View("Create", crearFormulario);
         }
 
         // POST: Formularios/Edit/5
@@ -230,45 +287,23 @@ namespace AppIntegrador.Controllers
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["LoginIntegrador"].ConnectionString))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                if (db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
                 {
-                    try
-                    {
-                        cmd.Connection = con;
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.CommandText = "dbo.AgregarFormulario";
-                        cmd.Parameters.Add(new SqlParameter("@codigo", formulario.Codigo));
-                        cmd.Parameters.Add(new SqlParameter("@nombre", formulario.Nombre));
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    catch (System.Data.SqlClient.SqlException)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                if (secciones != null)
-                {
-                    for (int index = 0; index < secciones.Count; ++index)
-                    {
-                        using (SqlCommand cmd = new SqlCommand())
-                        {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.CommandText = "dbo.AsociarSeccionConFormulario";
-                            cmd.Parameters.Add(new SqlParameter("@codigoFormulario", formulario.Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@codigoSeccion", secciones[index].Codigo));
-                            cmd.Parameters.Add(new SqlParameter("@orden", index));
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
 
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                        }
-                    }
+            if (secciones != null)
+            {
+                for (int index = 0; index < secciones.Count; ++index)
+                {
+                    db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index].Codigo, index);
                 }
             }
             return true;

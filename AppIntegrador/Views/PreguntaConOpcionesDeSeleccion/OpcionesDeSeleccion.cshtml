@@ -2,20 +2,24 @@
 @{
     int i = ViewBag.i == null ? 0 : ViewBag.i;
 }
-<div class="sortable-container vertical panel">
-    @Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-xs-6">
+<div class="sortable-container panel test vertical-align">
+    <div class="custom-control custom-radio control-label ">
+        <input type="radio" class="checkmark" aria-label="..." checked>
+    </div>
+    @*Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2 form-horizontal " })*@
+    <div class="col-md-12" style="margin-top: 18px">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
         {
             @Name = "[" + i + "].Texto",
-            @class = "texto form-control col-xs-6",
+            @class = "validar texto form-control",
             @maxlength = "50",
-            @onkeyup = "charCount(this)"
+            @onkeyup = "contarCaracteres(this)",
+            @placeholder = "Texto de opción"
         })
-        <div class="counter small pull-right">0/50 caracteres usados</div>
+        <div class="contador small pull-right">0/50 caracteres usados</div>
     </div>
 
-    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">Borrar</button>
+    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">X</button>
     
     <div style="display: none">
         @Html.TextBoxFor(opcion => opcion.Orden, null, new

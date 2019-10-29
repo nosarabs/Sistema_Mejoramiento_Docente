@@ -1,13 +1,27 @@
+body {
+    overflow-x:hidden;
+}
+
 * {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
 }
 
-h3 {text-align: center;}
+h3 {
+    text-align: center;
+    color: #747474;
+}
 
 .breadcrumb {
     background-color: #f0f0f0;
     margin-top: 2px;
     margin-bottom: 1px;
+}
+
+.cuerpoPrincipal {
+    margin-right: 2px;
+    margin-left: 3px;
+    padding-bottom: 10%;
+    background-color: #f1f1f1;
 }
 
 .collapsible {
@@ -25,24 +39,14 @@ h3 {text-align: center;}
 }
 
 .activeCollapsible, .collapsible:hover {
-    background-color: #34a5e2;
+    background-color: #41ade7;
 }
-
-#sistema {
-    color: #34a5e2;
-    background-color: transparent;
-}
-
-    #sistema:hover {
-        color: #00659b;
-        background-color: transparent;
-    }
 
 .collapsible:after {
-    content: '\002B';
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
+	content: '\002B';
+	font-weight: bold;
+	float: right;
+	margin-left: 5px;
 }
 
 .activeCollapsible:after {
@@ -57,51 +61,95 @@ h3 {text-align: center;}
 	background-color: #f1f1f1;
 }
 
+/*Llugar donde se dibuja el gráfico*/
 canvas{
     margin: 50px auto;
+    height: inherit;
+    min-height: inherit;
+    width: inherit;
+    min-width: inherit;
 }
 
+/*Cuadro para las justificaciones*/
 .myBox {
+    position: relative;
+    vertical-align: middle;
     margin: 30px auto;
     margin-top: 0;
-    border: 2px solid #ababab;
-    padding: 0px;
     font: 18px;
-    width: 750px;
-    height: auto;
+    width: inherit;
+    height: inherit;
     overflow: auto;
-    background-color: #F9F9F9;
+    background-color: lightgray;
     list-style-position: inside;
-    border-radius: 10px;
-    margin-right: 50px;
-      
+    position: inherit;
+}
+
+.myBox ul 
+{
+    background-color: inherit;
+    padding: 0px;
+    width: inherit;
+    list-style: none;
+    margin-bottom: 0;
+    max-height: 35.3vh;
 }
 
 .myBox ul li {
-    background-color: #ddd;
-    padding: 20px;
-    margin-bottom: 10px;
-
+    background-color: white;
+    height: auto;
+    color: #6b6b6b;
+    margin: 4px;
+    padding: 8px;
 }
 
-.myBox ul {
+.textoAbierto ul {
+    background-color: inherit;
+    padding: 0px;
+    width: 70vw;
+    list-style: none;
     margin-bottom: 0;
+    max-height: 35.3vh;
 }
 
 
-.desviacion {
+.estadisticas {
+    background-color: #e6e6e6;
+    font: 15px;
+    color: #747474;
     text-align: center;
-    font: 18px;
 }
 
-.column {
-    float: left;
-    width: 50%;
+.col{
+    align-self: center;
+    margin: 2% !important;
+    align-items:center;
+
 }
 
 /* Clear floats after the columns */
-.row:after {
+.row {
+    vertical-align: middle;
+}
+
+.row:after 
+{
     content: "";
     display: table;
     clear: both;
+}
+
+.row h3 
+{
+    padding:3%;
+    text-align: center;
+    width: 100%;
+}
+
+.navbar-nav {
+    display: inline !important;
+}
+
+.caret {
+    display: none;
 }

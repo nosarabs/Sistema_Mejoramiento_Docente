@@ -3,97 +3,134 @@
 @{
     ViewBag.Title = "Create";
 }
+
+@*Historia de usuario: ISU
+    Yo como Administrativo quier uniformidad en la interfaz de creación de pregunta de selección única
+    para que sea agradable a la vista.
+
+    Se realiza agrupaciones de elementos para dar una comunicación fluida entre el sistema y el usuario.
+    Se crean diferentes niveles de importancia.
+    Se establece colores de botones.
+    Mejor distribución del espacio.
+*@
 <div class="container">
-    <h2>Crear pregunta</h2>
-    
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <h1>Banco de preguntas</h1>
+    @* Primer contenidor, envuelve todos los elementos de crear pregunta *@
+    <div class=" panel panel-default">
+        <div class="panel-body test3">
+            <h3>Crear pregunta de Selección Única</h3>
 
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Codigo, "Codigo", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
-                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new {
-                       @class = "form-control",
-                       @maxlength = "8",
-                       required = "required",
-                       @onkeyup = "charCount(this)"
-                    }})
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-                    <div class="counter small pull-right">0/8 caracteres usados</div>
-                    @*Historia MSU: que el mensaje de error salga en rojo*@
-                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
+                // segundo contenedor, envuelve los elementos principales de una pregunta, código, enunciado y justificación
+                <div class="form-horizontal panel-group ">
+                    <div class=" panel panel-default test2">
+                        <div class="panel-body">
+                            <div class="row">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="col-xs-2">
+                                    @Html.EditorFor(model => model.Codigo, new
+                                   {
+                                       htmlAttributes = new
+                                       {
+                                           @class = "validar form-control",
+                                           @maxlength = "8",
+                                           required = "required",
+                                           @onkeyup = "contarCaracteres(this)",
+                                           @placeholder = "Código"
+                                       }
+                                   })
+
+                                    <div class="contador small pull-right">0/8 caracteres usados</div>
+                                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
+                                </div>
+
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
+                                    {
+                                        @class = "validar form-control long-textbox",
+                                        @style = "width: 100%;max-width: 100%",
+                                        @maxlength = "250",
+                                        required = "required",
+                                        data_val = "true",
+                                        data_val_length_max = "250",
+                                        @onkeyup = "contarCaracteres(this)",
+                                        @placeholder = "Enunciado de la pregunta"
+                                    })
+
+                                    <div class="contador small pull-right">0/250 caracteres usados</div>
+                                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                                    @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
+                                </div>
+                            </div>
+
+                            <br />
+                            <div>
+                                <input type="checkbox" class="pull-left" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
+                                <label for="showField" class="col-md-10">
+                                    Incluir campo de justificación para la pregunta.
+                                </label>
+                            </div>
+                            
+
+                            <div class="form-group" id="justificationField">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "validar-opc form-control",
+                                            required = "required",
+                                            id = "txtJustificationNumber",
+                                            @maxlength = "50",
+                                            @placeholder = "Descripción",
+                                            @onkeyup = "contarCaracteres(this)"
+                                        }
+                                    })
+                                    <div class="contador small pull-right">0/50 caracteres usados</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, htmlAttributes: new { @class = "control-label col-md-2", @maxlength = "250" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
-                    {
-                        @class = "form-control long-textbox",
-                        @style = "width: 100%;max-width: 100%",
-                        @maxlength = "250",
-                        required = "required",
-                        data_val = "true",
-                        data_val_length_max = "250",
-                        @onkeyup = "charCount(this)"
-                    })
+                <div class="form-horizontal">
 
-                    <div class="counter small pull-right">0/250 caracteres usados</div>
-                    @*Historia MSU: que el mensaje de error salga en rojo*@
+                    @* Tercer contenidor, envuelve los elementos de las opciones de las preguntas. Con un color de fondo
+                        diferente para dar difernte importancia.*@
+                    <div class="panel-group">
+                        <div class=" panel panel-default">
+                            <div class="panel-body test">
+                                <div id="sortable">
+                                </div>
+                                <div class="custom-control custom-radio control-label col-xs-1 form-horizontal">
+                                </div>
+                                <br/>
+                                <div class="test col-xs-6">
+                                    <input type="button" class="btn btn-default " value="Agregar opción +" id="Add" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Crear" class="btn btn-info" id="Create" />
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+
                 </div>
-             </div>
-        </div>
-
-<div class="form-horizontal">
-    <label for="chkPassport" class="col-md-offset-2 col-md-10">
-        <input type="checkbox" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
-        Incluir campo de justificación.
-    </label>
-    <p></p>
-    <div class="form-horizontal">
-        <div class="form-group" id="justificationField">
-            @Html.LabelFor(model => model.Tipo, "Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new { htmlAttributes = new { @onclick = "checkboxcheck()", @class = "form-control", required = "required", id = "txtJustificationNumber", @maxlength = "50" } })
-            </div>
+            }
         </div>
     </div>
-    <br />
-
-
-    <div id="sortable">
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" class="btn btn-default " value="Agregar nueva opción" id="Add" />
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-success" id="Create" />
-            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default"})
-        </div>
-    </div>
-
-</div>
-}
 </div>
 
-@*<div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
-
+@* Estilos espeficos de la página de crear preguntas.*@
 <style>
     .orden {
         display: none;
@@ -108,6 +145,28 @@
         background-color: #c4c4c4;
         cursor: grabbing;
     }
+
+    .test {
+        background: #e9e9e9;
+    }
+
+    .test2 {
+        background: #fbfbfb;
+    }
+
+    .test3 {
+        background: #fdfdfd;
+    }
+
+    input[type="radio"] {
+        transform: scale(2);
+        margin-left: 10px;
+    }
+
+    .btn-info {
+        color: #fff;
+        background-color: #41ade7;
+    }
 </style>
 
 @section Scripts {
@@ -116,51 +175,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
 
     @Scripts.Render("~/bundles/jqueryval")
-   
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/creacionpregunta.js"></script>
-    <script src="~/Scripts/Formularios/CharacterCounter.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+
     <script>
-        function disableRemoveButton() {
-            var nodes = document.getElementsByClassName("remove-button btn btn-danger");
-            console.log(nodes.length);
-            var disable = nodes.length <= 1;
-
-            Array.prototype.forEach.call(nodes, function (node) {
-                node.disabled = disable;
-            });
-        }
-
-        // Set index starting from 0 for each option
-        function fixIndexes() {
-            var i = 0;
-            // Fix order value and name
-            $(".orden").each(function () {
-                $(this).val(i);
-                this.name = "[" + i + "].Orden";
-                ++i;
-            });
-
-            // Fix text name
-            i = 0;
-            $(".texto").each(function () {
-                this.name = "[" + i + "].Texto";
-                ++i;
-            });
-
-            return i;
-        }
-
-        // Make options inside sortable id sortable
-        $("#sortable").sortable({
-            axis: "y",
-            // Fix indexes of each input box when an input box is moved
-            update: function () {
-                fixIndexes();
-            },
-        });
-
         $("#sortable").disableSelection();
 
         // When a new option is added, fix the index (not very efficient)
@@ -170,14 +193,17 @@
                 url: 'OpcionesDeSeleccion',
                 data: { i: i },
                 success: function (data) {
-                    $(data).appendTo('#sortable').height(0).animate({ 'height': 100 }, 200);
+                    $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
+                    $("#sortable").find(".texto").focus();
                     disableRemoveButton();
+                    $('#Create').prop('disabled', true);
                 }
             })
 
         });
 
         $(document).ready(function () {
+            validarEntradas();
             var msg = '@ViewBag.Message';
             if (msg && msg.length > 0) {
                 pregunta();
@@ -185,49 +211,10 @@
             $("#Add").trigger('click');
         });
 
-
-        // Delete option input box(es)
-        function removeOption(deleteNode) {
-            // Get the parent div that contains all the option modules (text, inputbox, and button)
-            var target = deleteNode.parentNode;
-
-            $(target).animate({ 'height': 0, 'opacity': 0 }, 200, function () {
-                // Remove div from DOM
-                $(this).remove();
-                // Fix indexes when an input box is deleted
-                fixIndexes();
-                // Check if the first button needs to be disabled
-                disableRemoveButton();
-            })
-
-        }
-
         // Hide the text input box in default
         $('#justificationField').css('display', 'none');
-        function myFunction() {
-            if ($('#showField').prop('checked')) {
-                $('#justificationField').css('display', 'block');
-            } else {
-                $('#justificationField').css('display', 'none');
-            }
-        }
-    </script>
 
-    <script>
-        function pregunta() {
-            swal({
-                title: "Pregunta creada con éxito!",
-                text: "Puede ser vista en el banco de preguntas",
-                type: "success",
-                timer: 1000,
-                showConfirmButton: false
-            },
-                function () {
-                    window.location.href = "Create";
-                });
-        }
     </script>
-
 
     <script type="text/javascript">
         function EnableDisableTextBox(justificationField) {
@@ -236,6 +223,7 @@
             if (!txtJustificationNumber.disabled) {
                 txtJustificationNumber.focus();
             }
+            validarEntradas();
         }
     </script>
 }

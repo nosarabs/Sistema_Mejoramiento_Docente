@@ -3083,7 +3083,7 @@ select[multiple].input-lg {
   .form-horizontal .control-label {
     padding-top: 7px;
     margin-bottom: 0;
-    text-align: right;
+    text-align: left;
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -3605,7 +3605,7 @@ tbody.collapse.in {
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;
-  text-align: left;
+  text-align: center;
   list-style: none;
   background-color: #fff;
   background-clip: padding-box;

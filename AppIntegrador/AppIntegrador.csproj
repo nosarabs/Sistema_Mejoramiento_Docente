@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -157,8 +158,6 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CrearFormularioModel.cs" />
-    <Compile Include="Models\CrearSeccionModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -201,20 +200,15 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
-    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
-    <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
-    <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PreguntaConOpciones.cs" />
-    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
-    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
+    <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -223,7 +217,6 @@
     <Compile Include="Models\Opciones_seleccionadas_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -269,18 +262,12 @@
     <Compile Include="Models\Responde_respuesta_libre.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ResponsableDe.cs" />
     <Compile Include="Models\Respuestas_a_formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ResultadosFormularioModel.cs" />
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SeccionConPreguntas.cs" />
     <Compile Include="Models\Seccion_tiene_pregunta.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -290,7 +277,6 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TodasLasPreguntas.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -300,6 +286,21 @@
     <Compile Include="Models\UsuarioPerfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioPersona.cs" />
+    <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearSeccionModel.cs" />
+    <Compile Include="Models\Metadata\AccionDeMejoraMetadata.cs" />
+    <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
+    <Compile Include="Models\LlenarFormulario.cs" />
+    <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
+    <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
+    <Compile Include="Models\ResponsableDe.cs" />
+    <Compile Include="Models\ResultadosFormularioModel.cs" />
+    <Compile Include="Models\SeccionConPreguntas.cs" />
+    <Compile Include="Models\TodasLasPreguntas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
@@ -310,6 +311,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
@@ -340,8 +342,11 @@
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
-    <Content Include="Scripts\Formularios\CharacterCounter.js" />
-    <Content Include="Scripts\custom\login.js" />
+    <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
+    <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\login.js" />
+    <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -352,12 +357,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Visualizacion\box.js" />
+    <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
+    <Content Include="Scripts\Visualizacion\botones.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />
-    <Content Include="Scripts\Visualizacion\charts.js" />
     <Content Include="Scripts\Visualizacion\chroma.js" />
-    <Content Include="Scripts\Visualizacion\collapsibles.js" />
+    <Content Include="Scripts\Visualizacion\estadisticas.js" />
+    <Content Include="Scripts\Visualizacion\graficos.js" />
+    <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
+    <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -392,7 +400,7 @@
     <Content Include="Views\Formularios\Index.cshtml" />
     <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-	<Content Include="Views\Seccion\Create.cshtml" />
+    <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
@@ -402,17 +410,23 @@
     <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
     <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
-	<Content Include="Views\Objetivos\Create.cshtml" />
+    <Content Include="Views\Objetivos\Create.cshtml" />
     <Content Include="Views\Objetivos\Delete.cshtml" />
     <Content Include="Views\Objetivos\Details.cshtml" />
     <Content Include="Views\Objetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\Index.cshtml" />
     <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
-	<Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Scripts\Visualizacion\jquery-3.4.1.min.js" />
+    <Content Include="Views\AccionDeMejora\Delete.cshtml" />
+    <Content Include="Views\AccionDeMejora\Edit.cshtml" />
+    <Content Include="Views\AccionDeMejora\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
+    <Content Include="Views\Home\PasswordReset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
