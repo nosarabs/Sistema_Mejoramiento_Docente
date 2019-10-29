@@ -110,7 +110,7 @@ namespace AppIntegrador.Controllers
                         // No se encontró el usuario
                         if (result == 1)
                         {
-                            ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
+                            ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
                         }
                         /*If user's account exists in the database but the password is wrong.*/
                         else
@@ -140,7 +140,7 @@ namespace AppIntegrador.Controllers
             {
                 /*Sets the count of failed login attempts to 1.*/
                 System.Web.HttpContext.Current.Application[objUser.Username] = 1;
-                ModelState.AddModelError("Password", "Contraseña incorrecta");
+                ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
             }
             else 
             {
@@ -163,7 +163,7 @@ namespace AppIntegrador.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "Contraseña incorrecta");
+                    ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
                 }
 
                 /*Save the failed attempts count back to somewhere in the system.*/
