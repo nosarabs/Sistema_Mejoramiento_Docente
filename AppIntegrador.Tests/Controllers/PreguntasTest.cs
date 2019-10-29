@@ -120,7 +120,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.OpcionesDeSeleccion(7) as ViewResult;
 
-            Assert.AreEqual("Opciones", result.ViewName);
+            Assert.AreEqual("OpcionesDeSeleccion", result.ViewName);
         }
 
         // Historia RIP-CBX
@@ -130,7 +130,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.PreguntaConOpciones() as ViewResult;
 
-            Assert.AreEqual("Pregunta con opciones", result.ViewName);
+            Assert.AreEqual("PreguntaConOpciones", result.ViewName);
         }
 
         // Historia RIP-CBX

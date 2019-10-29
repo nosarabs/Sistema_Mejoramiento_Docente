@@ -69,7 +69,7 @@ namespace AppIntegrador.Controllers
         public ActionResult PreguntaConOpciones()
         {
             ViewBag.message = "Pregunta con opciones";
-            return View("Pregunta con opciones");
+            return View("PreguntaConOpciones");
 
         }
 
@@ -81,7 +81,7 @@ namespace AppIntegrador.Controllers
                 return null;
             }
             ViewBag.i = i;
-            return View("Opciones");
+            return View("OpcionesDeSeleccion");
         }
 
         protected override void Dispose(bool disposing)
