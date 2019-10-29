@@ -64,6 +64,22 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void LoginAdminSuccess()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            Usuario usuario = new Usuario();
+            usuario.Username = "admin@mail.com";
+            usuario.Password = "admin@mail.com";
+            usuario.Activo = true;
+
+            Task<ActionResult> result = controller.Login(usuario);
+
+            Assert.IsNotNull(result);
+        }
+
         /*Termina TAM-1.1.6 Redirección Login*/
     }
 }
