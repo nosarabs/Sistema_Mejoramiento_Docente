@@ -3190,7 +3190,7 @@
           </FunctionImport>
           <FunctionImport Name="AgregarPreguntas" />
           <FunctionImport Name="AgregarPreguntaSeleccion">
-            <Parameter Name="codigo" Mode="In" Type="String" />
+          <Parameter Name="codigo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AgregarSeccion">
             <Parameter Name="codigo" Mode="In" Type="String" />
@@ -3274,9 +3274,6 @@
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
           <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-          <Parameter Name="sectionCode" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
           <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
@@ -3322,6 +3319,9 @@
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
             <End Role="Pregunta_con_opciones_de_seleccion" EntitySet="Pregunta_con_opciones_de_seleccion" />
           </AssociationSet>
+          <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
+            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3454,6 +3454,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ObtenerPreguntasDeSeccion1_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Enunciado" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="ObtenerPreguntasDeSeccion_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Enunciado" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="1" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3946,7 +3956,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
@@ -3981,6 +3990,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerPreguntasDeSeccion_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,5 +1,13 @@
 ﻿@model AppIntegrador.Models.TodasLasPreguntas
 
 
-@{Html.RenderPartial("PreguntaConOpciones", Model.PreguntasConOpciones);}
+@foreach (var pregunta in Model.Preguntas)
+{
+    @if (pregunta.Tipo == "U")
+    {
+        @{Html.RenderPartial("PreguntaConOpciones", pregunta);}
+    }
+}
+
+@{Html.RenderPartial("PreguntaConOpciones", Model.Preguntas);}
 <!--Luego vienen otros partials para los demás tipos de pregunta-->

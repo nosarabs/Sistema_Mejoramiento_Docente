@@ -39,69 +39,21 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
-
-            // Sacar el nombre de cada formulario y el código en el orden definido.
-            SqlParameter codForm = new SqlParameter("CodForm", id);
-            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
-
-            // Agrego cada seccion a la lista de secciones
-            foreach (var seccion in nombresSecciones)
+            LlenarFormulario formulario = new LlenarFormulario { Nombre = id, Secciones = new List<SeccionConPreguntas>() };
+            List<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id).ToList();
+            foreach(var seccion in seccionesDeFormulario)
             {
-                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
-
-                // Obtiene los códigos de todas las preguntas relacionadas a la sección
-                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
-                // Lista con cada tipo de pregunta
-                TodasLasPreguntas todasLasPreguntas = new TodasLasPreguntas();
-                // Lista que contiene cada pregunta con sus opciones
-                List<PreguntaConOpciones> preguntasConOpciones = new List<PreguntaConOpciones>();
-
-                // Agrego cada pregunta a la lista de preguntas
-                foreach (string codigo in Codigos)
+                List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new TodasLasPreguntas() };
+                nuevaSeccion.Preguntas.Preguntas = new List<Pregunta>();
+                foreach(var pregunta in preguntas)
                 {
-                    PreguntaConOpciones pregunta = new PreguntaConOpciones();
-
-                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
-                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
-               
-                    // Se asigna el código de la pregunta y de sección, que serán usados para identificar la pregunta luego
-                    pregunta.CodigoPregunta = codigo;
-                    pregunta.CodigoSeccion = seccion.Codigo;
-
-                    // Obtiene el enunciado de una pregunta
-                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
-
-                    // Obtiene las opciones de una pregunta
-                    List<Opcion> opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
-                    pregunta.Opciones = opciones.Select(Opcion => Opcion.Texto);
-
-                    // Añade la pregunta con sus opciones a la lista
-                    preguntasConOpciones.Add(pregunta);
+                    nuevaSeccion.Preguntas.Preguntas.Append(new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo });
                 }
+                formulario.Secciones.Append(nuevaSeccion);
+            }
 
-                todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
-                todasLasPreguntas.CodigoSeccion = seccion.Codigo;
-
-                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
-                {
-                    CodigoSeccion = seccion.Codigo,
-                    Nombre = seccion.Nombre,
-                    Preguntas = todasLasPreguntas
-                };
-
-                secciones.Add(seccionCompleta);
-            } // Foreach section in nombresSecciones
-
-            LlenarFormulario formularioCompleto = new LlenarFormulario
-            {
-                Nombre = formularioDB.Nombre,
-                Secciones = secciones
-
-            };
-
-            return View(formularioCompleto);
+            return View(formulario);
         }
 
 

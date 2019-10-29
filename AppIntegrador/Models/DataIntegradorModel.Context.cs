@@ -567,18 +567,6 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual ObjectResult<string> ObtenerPreguntasDeSeccion(string sectionCode)
-    {
-
-        var sectionCodeParameter = sectionCode != null ?
-            new ObjectParameter("sectionCode", sectionCode) :
-            new ObjectParameter("sectionCode", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
-    }
-
-
     public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
     {
 
@@ -639,6 +627,18 @@ public partial class DataIntegradorEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
+    }
+
+
+    public virtual ObjectResult<ObtenerPreguntasDeSeccion_Result> ObtenerPreguntasDeSeccion(string sectionCode)
+    {
+
+        var sectionCodeParameter = sectionCode != null ?
+            new ObjectParameter("sectionCode", sectionCode) :
+            new ObjectParameter("sectionCode", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerPreguntasDeSeccion_Result>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
     }
 
 }
