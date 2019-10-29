@@ -4,16 +4,14 @@ $(document).on("keyup", ".validar", function () {
     validarEntradas();
 })
 
-$("#txtJustificationNumber").on("keyup", function () {
+$(document).on("keyup", "#txtJustificationNumber", function () {
     validarEntradas();
 })
 
 function validarEntradas() {
     var todoLleno = true;
-    if ($("#showField").is(':checked') === true) {
-        console.log("Fuck");
+    if ($("#showField").is(':checked') == true) {
         if ($("#txtJustificationNumber").val() == '') {
-            console.log("Fuck2");
             todoLleno = false;
         }
     }
