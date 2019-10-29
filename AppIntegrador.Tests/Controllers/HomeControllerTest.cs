@@ -36,6 +36,8 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);*/
         }
+
+        /* TAM-1.1.6 Redirección Login */
         [TestMethod]
         public void Login()
         {
@@ -60,5 +62,8 @@ namespace AppIntegrador.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
+        }
+
+        /* Termina TAM-1.1.6 Redirección Login */
     }
 }
