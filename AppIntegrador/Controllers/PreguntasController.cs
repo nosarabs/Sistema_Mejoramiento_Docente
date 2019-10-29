@@ -11,7 +11,8 @@ namespace AppIntegrador.Controllers
         // GET: Preguntas/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.message = "Crear pregunta";
+            return View("Create");
         }
 
         [HttpPost]
@@ -86,4 +87,14 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
     }
+
+
+
+
+
 }
+
+
+
+
+
