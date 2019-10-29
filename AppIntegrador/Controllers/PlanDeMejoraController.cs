@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,6 +18,10 @@ namespace AppIntegrador.Controllers
         // GET: PlanDeMejora
         public ActionResult Index()
         {
+            HttpContext context = System.Web.HttpContext.Current;
+            ObjectParameter count = new ObjectParameter("count", 999);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = context.User.Identity.Name;
             return View(db.PlanDeMejora.ToList());
         }
 
@@ -35,6 +40,7 @@ namespace AppIntegrador.Controllers
         {
             var idPlan = -1;
             Int32.TryParse(id, out idPlan);
+            ViewBag.idPlan = idPlan;
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == idPlan);
             return PartialView("~/Views/Objetivos/Index.cshtml", objetivosDePlan);
         }
@@ -44,6 +50,8 @@ namespace AppIntegrador.Controllers
             var idPlan = -1;
             if (Int32.TryParse(id, out idPlan))
             {
+                Session["id"] = idPlan;
+                Session["name"] = nomb;
                 IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == idPlan && o.nombreObj == nomb);
                 return PartialView("~/Views/AccionDeMejora/Index.cshtml", acciones);
             }
@@ -117,7 +125,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(planDeMejora);
+            return View("Index");
         }
 
         // GET: PlanDeMejora/Delete/5
@@ -163,14 +171,21 @@ namespace AppIntegrador.Controllers
         {
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
-                var planTemp = new PlanDeMejora();
-                var plans = this.db.PlanDeMejora.ToList();
-                var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                planTemp.codigo = codigoTemporal + 1;
-                planTemp.nombre = nombre;
-                planTemp.fechaInicio = fechaInicio;
-                planTemp.fechaFin = fechaFin;
-                this.Create(planTemp);
+                if( DateTime.Compare(fechaInicio, fechaFin) < 0)
+                {
+                    var planTemp = new PlanDeMejora();
+                    var plans = this.db.PlanDeMejora.ToList();
+                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
+                    planTemp.codigo = codigoTemporal + 1;
+                    planTemp.nombre = nombre;
+                    planTemp.fechaInicio = fechaInicio;
+                    planTemp.fechaFin = fechaFin;
+                    this.Create(planTemp);
+                }
+                else
+                {
+                    return RedirectToAction("Index", ViewBag.Fecha = -1);
+                }
             }
             return RedirectToAction("Index");
         }

@@ -26,13 +26,13 @@ namespace AppIntegrador.Models.Metadata
 
         [Display(Name = "Inicio")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
         [Display(Name = "Fin")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required]
         public Nullable<System.DateTime> fechaFin { get; set; }
 

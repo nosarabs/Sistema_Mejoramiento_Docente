@@ -24,7 +24,7 @@ namespace AppIntegrador.Models.Metadata
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaInicio { get; set; }
 
-        [Display(Name = "Final")]
+        [Display(Name = "Fin")]
         [DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

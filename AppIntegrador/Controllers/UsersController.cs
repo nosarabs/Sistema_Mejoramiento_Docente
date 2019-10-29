@@ -379,7 +379,7 @@ namespace AppIntegrador
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
                 case "Pasaporte":
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
-                case "Número de residencia":
+                case "Residencia":
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
             }
 

@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-2">
             <br />
-            @Html.ActionLink("Nueva Acción de mejora", "Create", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
+            @Html.ActionLink("Nueva Acción de mejora", "Create","AccionDeMejora", null, new { @class = "modal-link btn btn-Nuevo col-md-12" })
         </div>
 
     </div>
@@ -55,8 +55,8 @@
             @foreach (var item in Model)
             {
                 <tbody>
-                    <tr class="FilaTablasSeccionesPlanesDeMejora">
-                        <td class="TablasDescripcion">
+                    <tr class="FilaAccioneblePlanesDeMejora">
+                        <td class="TablasDescripcionAccionable">
                             @Html.DisplayFor(modelItem => item.descripcion)
                         </td>
                         <td class="TablasFecha">
@@ -66,9 +66,13 @@
                             @Html.DisplayFor(modelItem => item.fechaFin)
                         </td>
                         <td class="TablasOpciones botonCentrado">
-                            @Html.ActionLink("Editar", "Edit", "AccionDeMejora", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion}, new { @class = "modal-link btn btn-primary" })
+                            <div class="col-md-6">
+                                @Html.ActionLink("Editar", "Edit", "AccionDeMejora", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn btn-primary" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.ActionLink("Borrar", "Delete", "AccionDeMejora", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn btn-danger" })
+                            </div>
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })*@
-                            @Html.ActionLink("Borrar", "Delete", "AccionDeMejora", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion}, new { @class = "modal-link btn btn-danger" })
                         </td>
                     </tr>
                 </tbody>
