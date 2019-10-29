@@ -94,7 +94,7 @@ namespace AppIntegrador.Controllers
         // Metodo usado para el render partial
         public ActionResult OpcionesDeSeleccion()
         {
-            return View();
+            return View("OpcionesSeleccion");
         }
 
         public ActionResult Create()
