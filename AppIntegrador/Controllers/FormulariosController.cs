@@ -66,25 +66,25 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(formulario.Where(x => x.Codigo.Contains(input1)).ToList());
+                return View("Index", formulario.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Nombre: " + input2;
-                return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
+                return View("Index", formulario.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
         }
 
@@ -108,7 +108,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Create()
         {
             crearFormulario.seccion = db.Seccion;
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         // POST: Formularios/Create
@@ -133,7 +133,7 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         [HttpPost]
