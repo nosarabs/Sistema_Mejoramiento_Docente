@@ -345,6 +345,7 @@
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarrespuestas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
+    <Content Include="Scripts\Formularios\CargarPreguntas.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />

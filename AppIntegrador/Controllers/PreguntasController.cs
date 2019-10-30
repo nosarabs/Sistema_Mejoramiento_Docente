@@ -11,7 +11,8 @@ namespace AppIntegrador.Controllers
         // GET: Preguntas/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.message = "Crear pregunta";
+            return View("Create");
         }
 
         [HttpPost]
@@ -66,15 +67,21 @@ namespace AppIntegrador.Controllers
 
         // Retorna la vista "parcial" de pregunta con opciones (.cshtml)
         public ActionResult PreguntaConOpciones()
-        { 
-            return View();
+        {
+            ViewBag.message = "Pregunta con opciones";
+            return View("PreguntaConOpciones");
+
         }
 
         [HttpGet]
         public ActionResult OpcionesDeSeleccion(int i)
         {
+            if(i < 0)
+            {
+                return null;
+            }
             ViewBag.i = i;
-            return PartialView();
+            return View("OpcionesDeSeleccion");
         }
 
         protected override void Dispose(bool disposing)
@@ -86,4 +93,14 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
     }
+
+
+
+
+
 }
+
+
+
+
+
