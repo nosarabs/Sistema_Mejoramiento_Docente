@@ -17,18 +17,19 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void LoginBlock()
         {
+            DataIntegradorEntities db = new DataIntegradorEntities();
             Usuario usuario = new Usuario();
             usuario.Username = "berta@mail.com";
             usuario.Password = "fsdfsfs";
             usuario.Activo = true;
 
             HomeController controller = new HomeController();
+            Task<ActionResult> result;
 
-            Task<ActionResult> result = controller.Login(usuario);
-            Assert.IsNotNull(result);
+            result = controller.Login(usuario);
+
+            Assert.AreNotEqual("Index", result.Result.ViewName);
             /*
-            // Arrange
-            HomeController controller = new HomeController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
