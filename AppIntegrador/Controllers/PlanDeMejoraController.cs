@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -26,13 +27,13 @@ namespace AppIntegrador.Controllers
         }
 
         //Para pruebas
-        public ActionResult Index(String nombre)
-        {
-            ObjectParameter count = new ObjectParameter("count", 999);
-            ViewBag.cantidad = count.Value;
-            ViewBag.nombre = nombre;
-            return View(db.PlanDeMejora.ToList());
-        }
+        //public ActionResult Index(String nombre)
+        //{
+        //    ObjectParameter count = new ObjectParameter("count", 999);
+        //    ViewBag.cantidad = count.Value;
+        //    ViewBag.nombre = nombre;
+        //    return View(db.PlanDeMejora.ToList());
+        //}
 
         public ActionResult Index2(int idPlanDeMejora)
         {
@@ -90,6 +91,16 @@ namespace AppIntegrador.Controllers
             return View("_crearPlanDeMejora", plan);
         }
 
+
+        //Añadido por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //Retorna la nueva vista de planes de mejora adaptada a las solicitudes del PO.
+        public ActionResult CreateNuevo()
+        {
+            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            return View("CrearPlanDeMejora", plan);
+        }
+
         // POST: PlanDeMejora/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -99,9 +110,23 @@ namespace AppIntegrador.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PlanDeMejora.Add(planDeMejora);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.PlanDeMejora.Add(planDeMejora);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var errors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in errors.ValidationErrors)
+                        {
+                            // get the error message 
+                            string errorMessage = validationError.ErrorMessage;
+                        }
+                    }
+                }
             }
 
             return View(planDeMejora);
@@ -128,6 +153,33 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(planDeMejora).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("Index");
+        }
+
+        public ActionResult EditarPlanDeMejora(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            if (planDeMejora == null)
+            {
+                return HttpNotFound();
+            }
+            return View(planDeMejora);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarPlanDeMejora([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -179,14 +231,17 @@ namespace AppIntegrador.Controllers
         // Method that creates the plan and sets the next "codigo" automatically
         public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
         {
+            int id = -1;
+            var planTemp = new PlanDeMejora();
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
                 if( DateTime.Compare(fechaInicio, fechaFin) < 0)
                 {
-                    var planTemp = new PlanDeMejora();
+                    
                     var plans = this.db.PlanDeMejora.ToList();
                     var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
                     planTemp.codigo = codigoTemporal + 1;
+                    id = planTemp.codigo;
                     planTemp.nombre = nombre;
                     planTemp.fechaInicio = fechaInicio;
                     planTemp.fechaFin = fechaFin;
@@ -197,7 +252,8 @@ namespace AppIntegrador.Controllers
                     return RedirectToAction("Index", ViewBag.Fecha = -1);
                 }
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return PartialView("EditarPlanDeMejora2", planTemp);
         }
 
         // Method that edits one "PlanDeMejora"
