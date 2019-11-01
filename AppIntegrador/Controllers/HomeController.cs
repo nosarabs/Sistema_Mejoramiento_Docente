@@ -65,7 +65,7 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
             if (TempData["successMessage"] != null)
             {
@@ -80,7 +80,7 @@ namespace AppIntegrador.Controllers
         public async Task<ActionResult> Login(Usuario objUser)
         {
 
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             if (ModelState.IsValid)
             {               
                 /*When loggin in, first checks whether the user's account is locked or deactivated.*/
@@ -233,7 +233,7 @@ namespace AppIntegrador.Controllers
         /* User story TAM-1.5 */
         public ActionResult PasswordReset()
         {
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             return View();
         }
 
@@ -247,7 +247,7 @@ namespace AppIntegrador.Controllers
                 if (correo == "admin@mail.com")
                 {
                     ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
-                    ViewBag.HTMLCheck = true;
+                    ViewBag.EnableBS4NoNavBar = true;
                     return View("PasswordReset");
                 }
 
@@ -274,7 +274,7 @@ namespace AppIntegrador.Controllers
             {
                 ViewBag.ErrorMessage = "Correo no encontrado";
             }
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
         }
     }
