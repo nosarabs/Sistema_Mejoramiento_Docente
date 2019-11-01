@@ -9,15 +9,14 @@ Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en 
 
 @{
     ViewBag.Title = "CrearPlanDeMejora";
-    ViewBag.idPlan = 1;
-    ViewBag.creado = 0;
 }
 <div class="fullWidth">
-    <h2>Crear Plan de mejora</h2>
 
     <div class="planDiv">
 
-        <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post" name="theForm">
+        <h2>Crear Plan de mejora</h2>
+
+        <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
@@ -55,20 +54,12 @@ Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en 
                 <div class="form-group">
                     <div class="row">
                         <div class="botonCentrado">
-                            <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" onClick="enviar()" />
+                            <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" />
                         </div>
                     </div>
                 </div>
-              }
+            }
         </form>
-    </div>
-
-    <div id="searchResults">
-
-    </div>
-    <div class="planDiv">
-        <h2>Crear Objetivos</h2>
-        @Html.ActionLink("Nuevo Objetivo", "Create", "Objetivos", new { id = ViewBag.idPlan }, new { @class = "modal-link btn btn-Nuevo" })
     </div>
 </div>
 
@@ -78,8 +69,7 @@ Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en 
     <script>
         enviar = function () {
             alert("hi");
-            //document.theForm.submit();
-            $('#searchResults').load(document.theForm.submit());
+            document.theForm.submit();
         }
     </script>
 }

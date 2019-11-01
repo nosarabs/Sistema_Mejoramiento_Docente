@@ -106,7 +106,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        public void Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +114,7 @@ namespace AppIntegrador.Controllers
                 {
                     db.PlanDeMejora.Add(planDeMejora);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    //return RedirectToAction("Index");
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -129,7 +129,7 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            return View(planDeMejora);
+            //return View(planDeMejora);
         }
 
         // GET: PlanDeMejora/Edit/5
@@ -188,6 +188,18 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
             return View("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarPlanDeMejora2([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(planDeMejora).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return View("EditarPlanDeMejora2", planDeMejora);
         }
 
         // GET: PlanDeMejora/Delete/5
@@ -249,11 +261,11 @@ namespace AppIntegrador.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", ViewBag.Fecha = -1);
+                    //return RedirectToAction("Index", ViewBag.Fecha = -1);
                 }
             }
             //return RedirectToAction("Index");
-            return PartialView("EditarPlanDeMejora2", planTemp);
+            return View("EditarPlanDeMejora2", planTemp);
         }
 
         // Method that edits one "PlanDeMejora"

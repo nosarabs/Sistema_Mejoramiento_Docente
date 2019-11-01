@@ -419,7 +419,7 @@ html, body {
 /*Planes de mejora*/
 .planDiv {
     border-radius: 8px;
-    background-color: gray;
+    background-color: lightgray;
     width: 100%;
     padding-left: 5%;
     padding-right: 5%;
