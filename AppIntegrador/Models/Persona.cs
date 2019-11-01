@@ -28,6 +28,7 @@ namespace AppIntegrador.Models
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string TipoIdentificacion { get; set; }
+        public bool Borrado { get; set; }
     
         public virtual Estudiante Estudiante { get; set; }
         public virtual Funcionario Funcionario { get; set; }
