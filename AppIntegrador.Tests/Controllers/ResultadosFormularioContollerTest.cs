@@ -27,20 +27,6 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
 
-        }
-
-        /*Este test tiene como propósito probar lo que retorna el método para obtener las justificaciones de una pregunta cuando
-        se envían parámetros inválidos.*/
-        [TestMethod]
-        public void TestJustificacionParametrosInvalidos()
-        {
-
-            // Arrange
-            ResultadosFormularioController controller = new ResultadosFormularioController();
-            // Act
-            String result = controller.getJustificacionPregunta("0A500W01", "CI0128", 1, 2, 2019, "00000001");
-            // Assert
-            Assert.AreEqual(result, "[]");
 
         }
     }
