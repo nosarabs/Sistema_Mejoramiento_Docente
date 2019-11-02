@@ -448,6 +448,8 @@
     <Content Include="Views\Preguntas\Create.cshtml" />
     <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Preguntas\OpcionesDeSeleccion.cshtml" />
+    <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
+    <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
