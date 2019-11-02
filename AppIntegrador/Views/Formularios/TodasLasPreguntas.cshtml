@@ -7,5 +7,9 @@
     {
         {Html.RenderPartial("PreguntaConOpciones", pregunta);}
     }
+    else if(pregunta.Pregunta.Tipo == "S")
+    {
+        {Html.RenderPartial("PreguntaSiNoNr", pregunta);}
+    }
 }
 
