@@ -63,9 +63,9 @@
     }
 </script>
 
-<div class="form-horizontal panel-group">
-    <div class=" panel panel-default">
-        <div class="panel-body test3">
+<div class="form-horizontal card-group">
+    <div class=" card card-default">
+        <div class="card-body test3">
             <h2>Agregar preguntas</h2>
 
             @*
@@ -74,11 +74,11 @@
             *@
             @using (Html.BeginForm("Create", "Seccion", FormMethod.Get))
             {
-                <div class="form-horizontal panel-group">
+                <div class="form-horizontal card-group">
 
-                    <div class="panel panel-default">
+                    <div class="card card-default">
 
-                        <div class="panel-body test2">
+                        <div class="card-body test2">
                             <b>
                                 Búsqueda:
                             </b>
@@ -113,7 +113,7 @@
                                 <input type="submit"
                                        name="submit"
                                        value="Filtrar"
-                                       class="btn" />
+                                       class="btn btn-outline-light text-dark bg-white border-secondary" />
                                 <br />
                             </form>
                             @if (@ViewBag.filtro != "Ninguno")
@@ -124,6 +124,7 @@
                         </div>
                     </div>
                 </div>
+                <br />
             }
             <div style="height: 300px; overflow: auto;">
                 <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
