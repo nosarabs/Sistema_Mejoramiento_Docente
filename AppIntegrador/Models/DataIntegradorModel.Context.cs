@@ -35,6 +35,8 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
+    public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+
     public virtual DbSet<Accionable> Accionable { get; set; }
 
     public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
@@ -81,7 +83,11 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<PlantillaObjetivo> PlantillaObjetivo { get; set; }
 
+    public virtual DbSet<Pregunta> Pregunta { get; set; }
+
     public virtual DbSet<Pregunta_con_opciones> Pregunta_con_opciones { get; set; }
+
+    public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
 
     public virtual DbSet<Pregunta_con_respuesta_libre> Pregunta_con_respuesta_libre { get; set; }
 
@@ -106,12 +112,6 @@ public partial class DataIntegradorEntities : DbContext
     public virtual DbSet<Usuario> Usuario { get; set; }
 
     public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
-
-    public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-
-    public virtual DbSet<Pregunta> Pregunta { get; set; }
-
-    public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
 
 
     public virtual int AgregarFormulario(string codigo, string nombre)

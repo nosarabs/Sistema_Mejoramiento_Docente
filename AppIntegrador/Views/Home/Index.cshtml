@@ -9,9 +9,14 @@
 </div>
 
 @*//Si hay un mensaje de alerta en el Viewbag mostrarlo como alerta*@
-@if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
+@section Scripts
 {
-    <script type="text/javascript">
-        alert("@ViewBag.AlertMessage");
-    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom")
+    @if (!string.IsNullOrEmpty(ViewBag.typeMessage))
+    {
+        <script type="text/javascript">
+                customAlert('danger','@ViewBag.AlertMessage');
+        </script>
+    }
 }

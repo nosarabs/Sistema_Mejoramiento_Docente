@@ -38,9 +38,9 @@ public partial class Responde_respuesta_libre
 
 
 
-    public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
-
     public virtual Pregunta Pregunta { get; set; }
+
+    public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
 
 }
 

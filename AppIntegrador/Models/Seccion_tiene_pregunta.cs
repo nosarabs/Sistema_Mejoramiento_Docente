@@ -26,9 +26,9 @@ public partial class Seccion_tiene_pregunta
 
 
 
-    public virtual Seccion Seccion { get; set; }
-
     public virtual Pregunta Pregunta { get; set; }
+
+    public virtual Seccion Seccion { get; set; }
 
 }
 
