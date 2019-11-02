@@ -162,6 +162,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -431,10 +432,10 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
+    <Content Include="Views\CSV\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CSV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
