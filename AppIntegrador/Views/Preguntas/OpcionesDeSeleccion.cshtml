@@ -3,25 +3,25 @@
     int i = ViewBag.i == null ? 0 : ViewBag.i;
     Layout = null;
 }
-<div class="sortable-container panel grisUCR1 vertical-align">
+<div class="sortable-container card grisUCR1 vertical-align row">
     <div class="custom-control custom-radio control-label ">
-        <span class="glyphicon glyphicon-record radio-dibujo"></span>
-        @*<input type="radio" class="checkmark" aria-label="..." checked>*@
+        @*<span class="glyphicon glyphicon-record radio-dibujo"></span>*@
+        <input type="radio" class="checkmark" aria-label="..." checked style="margin-top: 30px">
     </div>
-    @*Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2 form-horizontal " })*@
-    <div class="col-md-12" style="margin-top: 18px">
+    @*Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-lg-2 form-horizontal " })*@
+    <div class="col-lg-11" style="margin-top: 18px">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
         {
             @Name = "[" + i + "].Texto",
             @class = "validar texto form-control",
             @maxlength = "50",
             @onkeyup = "contarCaracteres(this)",
-            @placeholder = "Texto de opción"
+            @placeholder = "Texto de la opción"
         })
-        <div class="contador small pull-right">0/50 caracteres usados</div>
+        <div class="contador small float-right">0/50 caracteres usados</div>
     </div>
 
-    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">X</button>
+    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)" style="margin-top: 18px; margin-right: 18px">X</button>
 
     <div style="display: none">
         @Html.TextBoxFor(opcion => opcion.Orden, null, new

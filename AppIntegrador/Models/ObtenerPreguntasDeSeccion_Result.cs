@@ -13,22 +13,15 @@ namespace AppIntegrador.Models
 {
 
 using System;
-    using System.Collections.Generic;
     
-public partial class Seccion_tiene_pregunta
+public partial class ObtenerPreguntasDeSeccion_Result
 {
 
-    public string SCodigo { get; set; }
+    public string Codigo { get; set; }
 
-    public string PCodigo { get; set; }
+    public string Enunciado { get; set; }
 
-    public int Orden { get; set; }
-
-
-
-    public virtual Pregunta Pregunta { get; set; }
-
-    public virtual Seccion Seccion { get; set; }
+    public string Tipo { get; set; }
 
 }
 

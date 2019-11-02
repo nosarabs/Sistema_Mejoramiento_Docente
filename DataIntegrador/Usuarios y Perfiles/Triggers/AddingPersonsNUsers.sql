@@ -17,12 +17,12 @@ BEGIN
 
 	while @@FETCH_STATUS=0
 	begin
-		EXEC AgregarUsuario @pLogin=@correoactual, @pPassword=@correoactual, @activo=1, @estado=@output
-
 		insert into Persona
 		select *
 		from inserted
 		where Correo=@correoactual
+
+		EXEC AgregarUsuario @pLogin=@correoactual, @pPassword=@correoactual, @activo=1, @estado=@output
 
 		FETCH NEXT FROM personasAgregadas into @correoactual;
 	end

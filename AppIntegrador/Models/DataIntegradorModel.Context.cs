@@ -35,6 +35,8 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
+    public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+
     public virtual DbSet<Accionable> Accionable { get; set; }
 
     public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
@@ -81,7 +83,11 @@ public partial class DataIntegradorEntities : DbContext
 
     public virtual DbSet<PlantillaObjetivo> PlantillaObjetivo { get; set; }
 
+    public virtual DbSet<Pregunta> Pregunta { get; set; }
+
     public virtual DbSet<Pregunta_con_opciones> Pregunta_con_opciones { get; set; }
+
+    public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
 
     public virtual DbSet<Pregunta_con_respuesta_libre> Pregunta_con_respuesta_libre { get; set; }
 
@@ -106,12 +112,6 @@ public partial class DataIntegradorEntities : DbContext
     public virtual DbSet<Usuario> Usuario { get; set; }
 
     public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
-
-    public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-
-    public virtual DbSet<Pregunta> Pregunta { get; set; }
-
-    public virtual DbSet<Pregunta_con_opciones_de_seleccion> Pregunta_con_opciones_de_seleccion { get; set; }
 
 
     public virtual int AgregarFormulario(string codigo, string nombre)
@@ -567,18 +567,6 @@ public partial class DataIntegradorEntities : DbContext
     }
 
 
-    public virtual ObjectResult<string> ObtenerPreguntasDeSeccion(string sectionCode)
-    {
-
-        var sectionCodeParameter = sectionCode != null ?
-            new ObjectParameter("sectionCode", sectionCode) :
-            new ObjectParameter("sectionCode", typeof(string));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
-    }
-
-
     public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
     {
 
@@ -639,6 +627,18 @@ public partial class DataIntegradorEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
+    }
+
+
+    public virtual ObjectResult<ObtenerPreguntasDeSeccion_Result> ObtenerPreguntasDeSeccion(string sectionCode)
+    {
+
+        var sectionCodeParameter = sectionCode != null ?
+            new ObjectParameter("sectionCode", sectionCode) :
+            new ObjectParameter("sectionCode", typeof(string));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerPreguntasDeSeccion_Result>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
     }
 
 }
