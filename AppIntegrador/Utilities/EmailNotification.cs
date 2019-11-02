@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -235,32 +236,23 @@ namespace AppIntegrador.Utilities
             message.Subject = subject;
             // Body just in plain text
             message.Body = bodyPlainText;
-            
+
             // Construct the alternate body as HTML.
             // Construir el Header como los correos institucionales
-            string htmlHeader = "< div id = \"encabezado\" style = \"width:100%;	display:block; background:#47ABE1; height:100px;\" >" +
-                                    "< div style = \"max-width:975px;margin-left:auto;margin-right:auto; height:70px; padding-top:10px;\" >" +
-                                        "< a href = \"http://www.ucr.ac.cr\" id = \"firma\" style = \"border:none;\" >< img src = \"../Content/images/logo_ucr.png\" " +
-                                        "border = \"0\" id = \"encabezado-imagen\" alt = \"Universidad de Costa Rica\" /></ a ></ div >" +
-                                    "< div style = \"background:#00c0f3;; height:20px;\" > &nbsp;</ div >" +
-                                "</ div >";
+            string headerPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Content\\Email\\EmailHeaderTemplate.htm");
+            string htmlHeader = File.ReadAllText(headerPath);
 
             string htmlBody = bodyAlternateHtml;
 
             // Construir el Footer como los correos institucionales
-            string htmlFooter = "< div style = \"margin:0;padding:0 20px 0 20px;background:#005da4;color:#fff;min-height:120px\" >" +
-                                    "< div style = \"max-width:975px;min-width:320px;margin-left:auto;margin-right:auto;height:70px;padding-top:40px\" >" +
-                                        "< p style = \"margin:0px;font-family:Verdana,Arial;font-size:11px;color:#fff\" > < b > Tel.</ b > 2511 - 1213 </ p >" +
-                                        "< p style = \"font-size:9px;font-family:Verdana,Arial;font-weight:bold;color:#fff\" >© 2019 Universidad de " +
-                                            "Costa Rica</ p >" +
-                                    "</ div >" +
-                                "</ div >";
+            string footerPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Content\\Email\\EmailFooterTemplate.htm");
+            string htmlFooter = File.ReadAllText(footerPath);
 
             ContentType mimeType = new ContentType("text/html");
             // Add the alternate body to the message.
 
-            //AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlHeader + htmlBody + htmlFooter, mimeType);
-            AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
+            AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlHeader + htmlBody + htmlFooter, mimeType);
+            //AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
 
             message.AlternateViews.Add(alternate);
             return message;
