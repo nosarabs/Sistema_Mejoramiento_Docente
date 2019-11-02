@@ -22,6 +22,9 @@ namespace AppIntegrador.Models
     [MetadataType(typeof(PlantillaObjetivoMetadata))]
     public partial class PlantillaObjetivo { }
 
+    [MetadataType(typeof(AccionableMetadata))]
+    public partial class Accionable { }
+
     [MetadataType(typeof(PersonaMetadata))]
     public partial class Persona { }
 

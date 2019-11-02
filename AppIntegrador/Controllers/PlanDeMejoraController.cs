@@ -16,6 +16,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: PlanDeMejora
+        [HttpGet]
         public ActionResult Index()
         {
             HttpContext context = System.Web.HttpContext.Current;
