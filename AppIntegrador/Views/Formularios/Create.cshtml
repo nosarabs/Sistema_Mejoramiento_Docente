@@ -11,19 +11,18 @@
     @Html.AntiForgeryToken()
 
     <table class="table">
-        <tr>
-            <td style="width:36%">
-                <div class="form-horizontal panel-group">
+        <tbody>
+         <tr>
+            <td>
+                <div class="form-row panel-group">
 
                     <div class="panel panel-default">
 
                         <div class="panel-body test2">
                             <h2>Crear Formulario</h2>
                             <hr />
-
-
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
+                            <div class="form-group col-md-4">
                                 @Html.LabelFor(model => model.Formulario.Codigo, "Código", htmlAttributes: new { @class = "control-label required col-md-2" })
                                 <div class="col-md-4">
                                     @Html.EditorFor(model => model.Formulario.Codigo, new
@@ -45,9 +44,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group col-md-8">
                                 @Html.LabelFor(model => model.Formulario.Nombre, htmlAttributes: new { @class = "control-label required col-md-2" })
-                                <div class="col-md-10">
+                                <div class="col-md-11">
                                     <form accept-charset="UTF-8" action="" method="POST">
                                         @Html.EditorFor(model => model.Formulario.Nombre, new
                                    {
@@ -63,42 +62,63 @@
                                            @onkeyup = "contarCaracteres(this)"
                                        }
                                    })
-
                                         <div class="contador small pull-right">0/250 caracteres usados</div>
                                         @Html.ValidationMessageFor(model => model.Formulario.Nombre, "", new { @style = "color:red" })
                                     </form>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Crear" class="btn btn-info" id="Create" />
-                                    @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </td>
-           
-            <td class="align-middle center-block">
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <button type="button" class="btn btn-primary btn-arrow-left" onclick="addSeccionToFormulario()">Agregar</button>
-
-            </td>
-
-            <td style="width:55%">
-                @Html.Partial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion)
+        </tr>
+        
+        <tr>
+              <td>
+                  <div class="panel panel-default">
+                      <div class="panel-body test2">
+                          <h2>Secciones del formulario</h2>
+                          <hr />
+                          <div class="form-group col-md-12">
+                              <div class="row grisUCR1">
+                                  <h3>
+                                      Seccion 1
+                                  </h3>
+                              </div>
+                              <div class="row grisUCR1">
+                                  <h3>
+                                      Seccion 2
+                                  </h3>
+                              </div>
+                              <div class="row grisUCR1">
+                                  <h3>
+                                      Seccion 3
+                                  </h3>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-md-offset-10">
+                              <input type="submit" value="Agregar sección al formulario" class="btn btn-info" id="AgregarSeccion" />
+                          </div>
+                      </div>
+                  </div>
             </td>
         </tr>
+
+        <tr>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Crear" class="btn btn-info" id="Create" />
+                        @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </td>
+        
+        </tr>
+        </tbody>
+       
     </table>
 }
 
@@ -116,7 +136,9 @@
         border-color: #a2a6aa;
    }
 
-
+       .grisUCR2 {
+        background: #fbfbfb;
+    }
     .required:after {
         content: "*";
         font-weight: bold;
@@ -148,6 +170,9 @@
 
 .btn-arrow-left {
    padding-right: 10px;
+}
+.grisUCR1 {
+    background: #e9e9e9;
 }
 
 .btn-arrow-right:before,
