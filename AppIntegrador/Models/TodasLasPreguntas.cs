@@ -8,7 +8,7 @@ namespace AppIntegrador.Models
     public class TodasLasPreguntas
     {
         // Se guarda una lista con el enunciado de cada pregunta y su propia lista de opciones
-        public IEnumerable<Pregunta> Preguntas { get; set; }
+        public List<PreguntaConCodigoSeccion> Preguntas { get; set; }
 
         // Se ocupa este dato para poder separar los radio buttons en la vista
         public string CodigoSeccion { get; set; }

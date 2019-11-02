@@ -45,15 +45,43 @@ namespace AppIntegrador.Controllers
             {
                 List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
                 SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new TodasLasPreguntas() };
-                nuevaSeccion.Preguntas.Preguntas = new List<Pregunta>();
+                nuevaSeccion.Preguntas.Preguntas = new List<PreguntaConCodigoSeccion>();
                 foreach(var pregunta in preguntas)
                 {
-                    nuevaSeccion.Preguntas.Preguntas.Append(new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo });
+                    nuevaSeccion.Preguntas.Preguntas.Add(new PreguntaConCodigoSeccion
+                    {
+                        Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                        CodigoSeccion = nuevaSeccion.CodigoSeccion
+                    });
+                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas.Preguntas);
                 }
-                formulario.Secciones.Append(nuevaSeccion);
+                formulario.Secciones.Add(nuevaSeccion);
             }
 
             return View(formulario);
+        }
+
+        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConCodigoSeccion> preguntas)
+        {
+            if (preguntas != null)
+            {
+                foreach (PreguntaConCodigoSeccion pregunta in preguntas)
+                {
+                    if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
+                    {
+                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList().FirstOrDefault();
+                        if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion =
+                                db.Opciones_de_seleccion.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList();
+                        }
+                        else if (pregunta.Pregunta.Tipo == "E")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -137,7 +165,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult GuardarRespuestas(PreguntaConOpciones objUser)
+        public ActionResult GuardarRespuestas(PreguntaConCodigoSeccion objUser)
         {
             DateTime today = DateTime.Today;
 

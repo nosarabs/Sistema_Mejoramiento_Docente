@@ -300,7 +300,7 @@
     <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\PreguntaConCodigoSeccion.cs" />
     <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />

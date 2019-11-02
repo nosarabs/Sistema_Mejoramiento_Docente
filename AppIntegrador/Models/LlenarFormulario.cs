@@ -8,6 +8,6 @@ namespace AppIntegrador.Models
     public class LlenarFormulario
     {
         public string Nombre { get; set; }
-        public IEnumerable<SeccionConPreguntas> Secciones { get; set; }
+        public List<SeccionConPreguntas> Secciones { get; set; }
     }
 }
