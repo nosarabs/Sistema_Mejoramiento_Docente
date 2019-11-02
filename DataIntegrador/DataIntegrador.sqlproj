@@ -66,6 +66,7 @@
     <Folder Include="Usuarios y Perfiles\Triggers" />
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
+    <Folder Include="FiltrosFormulario" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -142,6 +143,7 @@
     <Build Include="PlanesDeMejora\PlantillaObjetivo.sql" />
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
