@@ -100,7 +100,7 @@ class BaseTexto extends BaseRespuesta {
         this.textoAbierto.className = "myBox textoAbierto";
 
         var tituloJustificacion = document.createElement("h3");
-        tituloJustificacion.innerText = "Justificación de los resultados";
+        tituloJustificacion.innerText = "Respuestas";
 
         this.base.appendChild(tituloJustificacion);    
         this.base.appendChild(this.textoAbierto);
