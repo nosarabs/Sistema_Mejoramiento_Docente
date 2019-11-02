@@ -4,78 +4,80 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container">
-    <h2>Banco de formularios</h2>
+    <div class="container">
+        <h2>Banco de formularios</h2>
 
-    @using (Html.BeginForm(FormMethod.Get))
-    {
-        <div class="form-horizontal panel-group">
+        @using (Html.BeginForm(FormMethod.Get))
+        {
+            <div class="form-horizontal card-group">
 
-            <div class=" panel panel-default">
+                <div class=" card card-default">
 
-                <div class="panel-body test2">
-                    <b>
-                        Búsqueda:
-                    </b>
+                    <div class="card-body test2">
+                        <b>
+                            Búsqueda:
+                        </b>
 
-                    <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
+                        <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
 
-                        <select class="form-control my-form-control" id="mySelect" onChange="check(this);">
-                            <option value="-">Sin filtro </option>
-                            <option value="C">Código </option>
-                            <option value="E">Nombre</option>
-                        </select>
+                            <select class="form-control my-form-control" id="mySelect" onChange="check(this);">
+                                <option value="-">Sin filtro </option>
+                                <option value="C">Código </option>
+                                <option value="E">Nombre</option>
+                            </select>
 
-                        @* campo de filtrado para ingresar el código *@
-                        <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true">
-                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength="8">
-                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="250">
+                            @* campo de filtrado para ingresar el código *@
+                            <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline;" disabled="true">
+                            <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none;" maxlength="8">
+                            <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none;" maxlength="250">
 
-                        @* Enviar el filtrado al controlador *@
-                        <input type="submit"
-                               name="submit"
-                               value="Filtrar"
-                               class="btn" />
-                        <br />
-                    </form>
-                    @if (@ViewBag.filtro != "Ninguno")
-                    {
-                        <h5><span class="label label-default">@ViewBag.filtro</span></h5>
-                    }
+                            @* Enviar el filtrado al controlador *@
+                            <input type="submit"
+                                   name="submit"
+                                   value="Filtrar"
+                                   class="btn btn-outline-light text-dark bg-white border-secondary" />
+                            <br />
+                        </form>
+                        @if (@ViewBag.filtro != "Ninguno")
+                        {
+                            <h5><span class="label label-default">@ViewBag.filtro</span></h5>
+                        }
+
+                    </div>
 
                 </div>
             </div>
-        </div>
-    }
-    <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <tr>
-            <th>
-                Código
-            </th>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Operaciones
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo })
-                </td>
-            </tr>
+            <br />
         }
-    </table>
-</div>
+        <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <tr>
+                <th>
+                    Código
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Operaciones
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 
 
 <style>
@@ -101,7 +103,7 @@
         border: 1px solid #ccc;
     }
 
-    .panel-body {
+    .card-body {
         padding: 10px;
     }
 </style>
