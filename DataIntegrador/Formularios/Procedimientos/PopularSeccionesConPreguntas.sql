@@ -71,7 +71,8 @@ BEGIN
 		USING (VALUES
 				('CI0128S2','CI0128P4',0),
 				('CI0128S2','CI0128P5',1),
-				('CI0128S2','CI0128P6',2)
+				('CI0128S2','CI0128P6',2),
+				('CI0128S2','CI0128P7',3)
 		)
 		AS Source ([SCodigo],[PCodigo],Orden)
 		ON Target.SCodigo = Source.SCodigo AND Target.PCodigo = Source.PCodigo
@@ -86,9 +87,10 @@ BEGIN
 
 	MERGE INTO Seccion_tiene_pregunta AS Target
 		USING (VALUES
-				('CI0128S2','CI0128P4',0),
-				('CI0128S2','CI0128P5',1),
-				('CI0128S2','CI0128P6',2)
+				('CI0128S3','CI0128P4',0),
+				('CI0128S3','CI0128P5',1),
+				('CI0128S3','CI0128P6',2),
+				('CI0128S3','CI0128P7',3)
 		)
 		AS Source ([SCodigo],[PCodigo],Orden)
 		ON Target.SCodigo = Source.SCodigo AND Target.PCodigo = Source.PCodigo
@@ -103,10 +105,11 @@ BEGIN
 
 	MERGE INTO Seccion_tiene_pregunta AS Target
 		USING (VALUES
-				('CI0128S2','CI0128P4',0),
-				('CI0128S2','CI0128P5',1),
-				('CI0128S2','CI0128P6',2),
-				('CI0128S2','CI0128P7',3)
+				('CI0128S4','CI0128P4',0),
+				('CI0128S4','CI0128P5',1),
+				('CI0128S4','CI0128P6',2),
+				('CI0128S4','CI0128P7',3),
+				('CI0128S4','CI0128P8',4)
 		)
 		AS Source ([SCodigo],[PCodigo],Orden)
 		ON Target.SCodigo = Source.SCodigo AND Target.PCodigo = Source.PCodigo

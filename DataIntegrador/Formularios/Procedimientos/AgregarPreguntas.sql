@@ -97,14 +97,14 @@ BEGIN
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 6, @texto = 'Negociación con el PO';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 7, @texto = 'Tecnologías web';
 
-	-- Pregunta 4 y 5: Preguntas de respuesta libre
+	-- Pregunta 4, 5 y 8: Preguntas de respuesta libre
 	-- Estas se hacen directamente en este procedimiento ya que no es necesario agregarles opciones 
 	-- o realizar inserciones a varias tablas como las preguntas de selección
 	MERGE INTO Pregunta AS Target
 	USING (VALUES 
 		('CI0128P4', '¿Cuál es su opinión general del curso?'),
-		('CI0128P5', '¿Cuál es su opinión sobre el/la profesor(a)?')
-
+		('CI0128P5', '¿Cuál es su opinión sobre el/la profesor(a)?'),
+		('CI0128P8', '¿Cuál es su opinión del profesor en su papel de <<PO>>?')
 	)
 	As Source ([Codigo],[Enunciado])
 	ON Target.Codigo = Source.Codigo
