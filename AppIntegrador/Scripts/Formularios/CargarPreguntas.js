@@ -14,7 +14,6 @@ $("#Tipo").on("change", function () {
 function deshabilitarCamposBasicos(booleano) {
     $('#Codigo').prop('disabled', booleano);
     $('#Enunciado').prop('disabled', booleano);
-    $('#Create').prop('disabled', booleano);
 }
 
 // Método que carga cada vista según la pregunta que se seleccionó en el combobox
@@ -76,6 +75,7 @@ $(document).on("click", "#agregar-opcion", function () {
             $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
             $("#sortable").find(".texto").focus();
             disableRemoveButton();
+            validarEntradas();
         }
     })
 })
