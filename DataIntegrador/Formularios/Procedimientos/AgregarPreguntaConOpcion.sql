@@ -28,7 +28,18 @@ BEGIN
 	VALUES (@cod,@justificacion);
 
 
-	-- Se llama al procedimiento que va a insertar 
-	EXEC [dbo].[AgregarPreguntaSeleccion]  @codigo = @cod, @tipo = @type;
+	-- Se fija si es una pregunta con opciones de selección, es decir, Selección Única o Selección Múltiple
+	IF @type = 'U' OR @type = 'M' 
+	BEGIN
+		MERGE INTO Pregunta_con_opciones_de_seleccion AS Target
+		USING (VALUES
+				(@cod, @type) 
+		)
+		AS Source ([Codigo],[Tipo])
+		ON Target.Codigo = Source.Codigo
+		WHEN NOT MATCHED BY TARGET THEN
+		INSERT (Codigo, Tipo)
+		VALUES (@cod,@type);
+	END;
 END
 

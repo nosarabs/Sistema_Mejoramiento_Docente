@@ -116,7 +116,6 @@
     <Build Include="Formularios\Procedimientos\AgregarPreguntaConOpcion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
-    <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
     <Build Include="Origina.sql" />
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />

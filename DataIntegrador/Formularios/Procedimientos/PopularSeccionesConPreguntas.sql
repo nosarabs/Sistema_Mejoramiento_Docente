@@ -1,8 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[PopularSeccionesConPreguntas]
 AS
 BEGIN
-	EXEC dbo.AgregarPreguntas;
-
 	EXEC dbo.AgregarSeccion 
 		@codigo = 'INFOPROF',
 		@nombre = 'Sobre el profesor';

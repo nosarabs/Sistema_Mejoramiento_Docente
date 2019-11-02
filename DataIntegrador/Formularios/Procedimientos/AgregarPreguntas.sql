@@ -78,9 +78,9 @@ BEGIN
 		@type = 'U',
 		@enunciado = '¿Qué tan útil considera que es tener un profesor que haga el papel de <<PO>> dentro del curso?';
 
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 0, @texto = 'No';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 0, @texto = 'No mucho';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 1, @texto = 'Un poco';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 2, @texto = 'Sí';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 2, @texto = 'Mucho';
 
 	-- Pregunta 3: Selección múltiple
 	EXEC [dbo].[AgregarPreguntaConOpcion] -- Revisar esto. Hay que ver si se agrega una pregunta de Sí/no igual que una con opciones
@@ -97,17 +97,20 @@ BEGIN
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 6, @texto = 'Negociación con el PO';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P3', @orden = 7, @texto = 'Tecnologías web';
 
-	-- Pregunta 4: Respuesta libre
-	EXEC [dbo].[AgregarPreguntaConOpcion] 
-		@cod = 'CI0128P4',
-		@type = 'L',
-		@enunciado = '¿Cuál es su opinión sobre el curso?';
+	-- Pregunta 4 y 5: Preguntas de respuesta libre
+	-- Estas se hacen directamente en este procedimiento ya que no es necesario agregarles opciones 
+	-- o realizar inserciones a varias tablas como las preguntas de selección
+	MERGE INTO Pregunta AS Target
+	USING (VALUES 
+		('CI0128P4', '¿Cuál es su opinión general del curso?'),
+		('CI0128P5', '¿Cuál es su opinión sobre el/la profesor(a)?')
 
-	-- Pregunta 5: Para la sección de profesores
-	EXEC [dbo].[AgregarPreguntaConOpcion] 
-		@cod = 'CI0128P5',
-		@type = 'L',
-		@enunciado = '¿Cuál es su opinión sobre el/la profesor(a)?';
+	)
+	As Source ([Codigo],[Enunciado])
+	ON Target.Codigo = Source.Codigo
+	WHEN NOT MATCHED BY TARGET THEN 
+	INSERT (Codigo, Enunciado)
+	VALUES (Codigo,Enunciado);
 
 	-- Pregunta 6: Para la sección de profesores
 	EXEC [dbo].[AgregarPreguntaConOpcion] 
@@ -121,10 +124,10 @@ BEGIN
 		@type = 'U',
 		@enunciado = '¿Qué tan seguido el/la profesor(a) cumple el horario de lecciones establecido?' 
 
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 0, @texto = 'Nunca';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 1, @texto = 'Casi nunca';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 2, @texto = 'A veces';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 3, @texto = 'Casi siempre';
-	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P6', @orden = 4, @texto = 'Siempre';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P7', @orden = 0, @texto = 'Nunca';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P7', @orden = 1, @texto = 'Casi nunca';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P7', @orden = 2, @texto = 'A veces';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P7', @orden = 3, @texto = 'Casi siempre';
+	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P7', @orden = 4, @texto = 'Siempre';
 
 END
