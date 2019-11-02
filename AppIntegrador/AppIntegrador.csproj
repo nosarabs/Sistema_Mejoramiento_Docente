@@ -314,6 +314,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\Plugins\animate.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
@@ -344,9 +346,15 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
+    <Content Include="Scripts\Formularios\agregarrespuestas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
+    <Content Include="Scripts\Plugins\bootstrap-notify.js" />
+    <Content Include="Scripts\Plugins\jquery.dirrty.js" />
+    <Content Include="Scripts\Plugins\sweetalert2.all.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
@@ -430,6 +438,11 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
+    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
+    <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

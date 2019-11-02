@@ -11,6 +11,6 @@ CREATE TABLE [dbo].[AccionDeMejora]
 
 	constraint DateOrderAM check(fechaFin >= fechaInicio),
 	constraint PK_AccionDeMejora primary key(codPlan, nombreObj, descripcion),
-	constraint FK_AccionDeMejora_Objetivo foreign key(codPlan, nombreObj) references Objetivo(codPlan, nombre),
-	constraint FK_AccionDeMejora_PlantillaAccMej foreign key(codPlantilla) references PlantillaAccionDeMejora(codigo)
+	constraint FK_AccionDeMejora_Objetivo foreign key(codPlan, nombreObj) references Objetivo(codPlan, nombre) on delete cascade,
+	constraint FK_AccionDeMejora_PlantillaAccMej foreign key(codPlantilla) references PlantillaAccionDeMejora(codigo) on delete set null
 )
