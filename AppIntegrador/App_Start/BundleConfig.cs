@@ -34,14 +34,8 @@ namespace AppIntegrador
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/Plugins/jquery.dirrty.js",
                         "~/Scripts/UsuariosYPerfiles/login.js",
-                        "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js"
-                      ));
-
-            // Custom bundles de planes de mejora
-            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                        "~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js"
-                      ));
-
+                        "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js",
+                        "~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js"));
         }
     }
 }

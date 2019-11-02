@@ -1,71 +1,131 @@
-﻿@model AppIntegrador.Models.PlanDeMejoraMetadata
-
-@{
+﻿@{
     ViewBag.Title = "Create";
-    Layout = null;
-}
-<!-- Modal -->
+    var plan = new AppIntegrador.Models.PlanDeMejora();
 
-<div class="modal-header">
-    <h4 class="modal-title">Crear Plan de Mejora</h4>
-    <div class="alert alert-warning">
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        Todos los campos son obligatorios. <br>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        La fecha de inicio debe ser mayor que la fecha de finalización.
+    var listaFormularios = new List<string>();
+}
+
+@Scripts.Render("~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js")
+
+<form id="newPlan" onsubmit="sayHello();">
+
+    <div class="sameRow">
+        
+        <div>
+            <div class="sameRow">
+                <h6>@Html.LabelFor(model => plan.nombre, "Nombre:")</h6>
+                &nbsp;
+                <div class="sameColumn">
+                    @Html.EditorFor(model => plan.nombre, new
+                    {
+                        htmlAttributes = new
+                        {
+                           @class = "form-control",
+                           required = "required",
+                           placeholder = "Máximo 50 caracteres",
+                           maxlength = "50",
+                           @onkeyup = "cambioNombrePlan(this)"
+                       }
+                    })
+                    <span class="error">
+                        <p id="nombrePDM_eror">Te quedan 50 letras.</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div>
+            <div class="sameColumn">
+                @Html.LabelFor(model => plan.fechaInicio, "Fecha Inicio")
+                <div class="sameColumn">
+                    @Html.EditorFor(model => plan.fechaInicio, new
+                    {
+                        htmlAttributes = new
+                        {
+                            id = "fechaInicioPlanDM",
+                            @class = "form-control",
+                            required = "required",
+                            @onChange = "validacionFechas()"
+                       }
+                    })
+                    <span class="error">
+                        <p id="fechaInicioPDM_eror" class="redError">Campo Obligatorio</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="sameColumn">
+                @Html.LabelFor(model => plan.fechaFin, "Fecha Fin")
+                <div class="sameColumn">
+                    @Html.EditorFor(model => plan.fechaFin, new
+                    {
+                        htmlAttributes = new
+                        {
+                            id = "fechaFinalPlanDM",
+                            @class = "form-control",
+                            required = "required",
+                            @onChange = "validacionFechas()"
+                       }
+                    })
+                    <span class="error">
+                        <p id="fechaFinalPDM_eror" class="redError">Campo Obligatorio</p>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="modal-body">
-    <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
 
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-10">
-                    @Html.LabelFor(model => model.nombre, "Nombre")
-                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @onkeyup = "nombreDelPlan()", placeholder = "Máximo 50 caracteres", maxlength = "50" } })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.fechaInicio, "Fecha Inicio")
-                    <div class="row">
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control", @oninput = "inicio()" } })
-                        </div>
+    <div class="sameRow">
+        <div>
+            <div class="sameRow">
+                <h6>Asignado a:</h6>
+                &nbsp;
+                <div class="sameColumn">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="formulario">Formulario</label>
                     </div>
-                </div>
-
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.fechaFin, "Fecha Fin")
-                    <div class="row">
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control", @oninput = "fina()" } })
-                        </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="personas">Personas</label>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="row">
-                <div class="botonCentrado">
-                    <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" disabled="disabled" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
+        </div>
+        <div>
+            <div class="sameRow">
+                <h6>Formulario:</h6>
+                &nbsp;
+                <select name="Formularios">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
             </div>
         </div>
-    </form>
-</div>
+        <div>
+            <div class="sameRow">
+                <h6>Personas:</h6>
+                &nbsp;
+                <select name="Formularios">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
-@section Scripts{
-    <script>
-      
-    </script>
+    <br />
 
-}
-
-
-
+    <div class="alignRight">
+        <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" />
+        <input type="submit" id="send" style="display:none;" value="Guardar cambios a Plan de Mejora" class="btn btn-success" disabled="disabled" />
+    </div>
+</form>

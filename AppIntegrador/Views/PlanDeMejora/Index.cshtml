@@ -1,12 +1,30 @@
-﻿
-
-<div class="fullWidth">
+﻿<div class="fullWidth">
     <div class="wrapperPlanesDeMejora greyOneBackground">
         <div>
             <h3>Creacion de Plan De Mejora</h3>
+            <!-- El siguiente div es para la vista de creacion de planes de mejora -->
+            <div>
+                @Html.Partial("~/Views/PlanDeMejora/_crearPlanDeMejora.cshtml")
+                <br />
+            </div>
         </div>
 
-        <div class="sameRow">
+        <!-- El siguiente div es para la los objetivos -->
+        <div id="creacionObjetivos" typ>
+            Objetivos del plan de mejora que voy a crear
+        </div>
+
+        <!-- El siguiente div es para las acciones de mejora del objetivo escogido -->
+        <div id="creacionAccionesDeMejora">
+            Acciones de mejora
+        </div>
+
+        <!-- El siguiente div es para la los acconables de la accion de mejora escogida -->
+        <div id="creacionAccionables">
+            Accionables
+        </div>
+
+        @*<div class="sameRow">
             <div class="sameColumn">
                 <div class="itemOne">
                     Nombre
@@ -32,7 +50,7 @@
                 <i class="fa fa-question-circle" style="font-size:24px"></i>
             </div>
         </div>
-        
+
         <div class="verticalBoxes">
             <div>
                 <div class="form-check">
@@ -54,6 +72,6 @@
             <div>
                 navarrete
             </div>
-        </div>
+        </div>*@
     </div>
 </div>

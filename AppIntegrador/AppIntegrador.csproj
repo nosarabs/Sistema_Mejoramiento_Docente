@@ -139,6 +139,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
+    <Compile Include="Controllers\PlanesDeMejoraBI\PlanDeMejoraBI.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />

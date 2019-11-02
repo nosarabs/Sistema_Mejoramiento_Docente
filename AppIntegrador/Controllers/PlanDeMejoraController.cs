@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
+
 
 namespace AppIntegrador.Controllers
 {
@@ -184,9 +186,10 @@ namespace AppIntegrador.Controllers
                 if( DateTime.Compare(fechaInicio, fechaFin) < 0)
                 {
                     var planTemp = new PlanDeMejora();
-                    var plans = this.db.PlanDeMejora.ToList();
-                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                    planTemp.codigo = codigoTemporal + 1;
+
+                    var utils = new PlanDeMejoraBI();
+                    utils.setCodigoAPlanDeMejora(this.db, planTemp);
+
                     planTemp.nombre = nombre;
                     planTemp.fechaInicio = fechaInicio;
                     planTemp.fechaFin = fechaFin;
