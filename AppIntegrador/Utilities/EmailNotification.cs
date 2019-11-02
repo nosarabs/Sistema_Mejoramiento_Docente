@@ -22,26 +22,27 @@ namespace AppIntegrador.Utilities
             db = new DataIntegradorEntities();
         }
 
-        /// <summary>This method sends an email notification using the provided info
-        /// and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients.</param>
-        /// <param name="subject">The email subject.</param>
-        /// <param name="bodyPlainText">The email body in plain text.</param>
-        /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
-        /// <returns>0 on success, -1 otherwise</returns>
+        /// <summary>Este método envía una notificación de correo directa
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public int SendNotification(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
         {
             try
             {
-                MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml);
-
-                // Mail settings in Web.config under system.net/mailSettings
-                using (SmtpClient smtp = new SmtpClient())
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'd'))
                 {
-                    smtp.Send(message);
-                    return 0;
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Send(message);
+                        return 0;
+                    }
                 }
 
             }
@@ -52,26 +53,27 @@ namespace AppIntegrador.Utilities
             return -1;
         }
 
-        /// <summary>This method sends an email notification (asynchronously)
-        /// using the provided info and Web.config mail settings.</summary>
-        /// <param name="recipients">List of recipients.</param>
-        /// <param name="subject">The email subject.</param>
-        /// <param name="bodyPlainText">The email body in plain text.</param>
-        /// <param name="bodyAlternateHtml">The email body in HTML to be sent as an alternate body.</param>
-        /// <returns>0 on success, -1 otherwise</returns>
+        /// <summary>Este método envía una notificación de correo directa (de forma asíncrona)
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<int> SendNotificationAsync(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
         {
             try
             {
-                MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml);
-
-                // Mail settings in Web.config under system.net/mailSettings
-                using (SmtpClient smtp = new SmtpClient())
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'd'))
                 {
-                    await smtp.SendMailAsync(message);
-                    return 0;
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message).ConfigureAwait(false);
+                        return 0;
+                    }
                 }
 
             }
@@ -82,13 +84,153 @@ namespace AppIntegrador.Utilities
             return -1;
         }
 
-        private MailMessage ConstructMessage(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        /// <summary>Este método envía una notificación de correo con copia (CC)
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public int SendNotificationCopy(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        {
+            try
+            {
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'c'))
+                {
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Send(message);
+                        return 0;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
+        }
+
+        /// <summary>Este método envía una notificación de correo con copia (CC) (de forma asíncrona)
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<int> SendNotificationCopyAsync(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        {
+            try
+            {
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'c'))
+                {
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message).ConfigureAwait(false);
+                        return 0;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
+        }
+
+        /// <summary>Este método envía una notificación de correo con copia oculta (CCO)
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public int SendNotificationBlindCopy(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        {
+            try
+            {
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'b'))
+                {
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Send(message);
+                        return 0;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
+        }
+
+        /// <summary>Este método envía una notificación de correo con copia oculta (CCO) (de forma asíncrona)
+        /// utilizando los datos provistos y la configuración de correo en Web.config.</summary>
+        /// <param name="recipients">Lista de receptores.</param>
+        /// <param name="subject">El asunto del correo.</param>
+        /// <param name="bodyPlainText">El cuerpo del correo en texto plano.</param>
+        /// <param name="bodyAlternateHtml">El cuerpo del correo en HTML para ser enviado como alternativa.</param>
+        /// <returns>0 si tiene éxito, -1 en otro caso</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<int> SendNotificationBlindCopyAsync(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml)
+        {
+            try
+            {
+                using (MailMessage message = ConstructMessage(recipients, subject, bodyPlainText, bodyAlternateHtml, 'b'))
+                {
+                    // Mail settings in Web.config under system.net/mailSettings
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message).ConfigureAwait(false);
+                        return 0;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
+        }
+
+        private MailMessage ConstructMessage(List<string> recipients, string subject, string bodyPlainText, string bodyAlternateHtml, char msgType)
         {
             MailMessage message = new MailMessage();
-            // Add the recipients
+            // Agregar la lista de receptores, según el tipo de mensaje
             foreach (string recipient in recipients)
             {
-                message.Bcc.Add(new MailAddress(recipient)); // Bcc property used so that recipients dont's see other recipients
+                switch (msgType)
+                {
+                    // Mensaje directo
+                    case 'd':
+                        message.To.Add(new MailAddress(recipient));
+                        break;
+
+                    // Con copia
+                    case 'c':
+                        message.CC.Add(new MailAddress(recipient));
+                        break;
+
+                    // Con copia oculta
+                    case 'b':
+                        message.Bcc.Add(new MailAddress(recipient));
+                        break;
+                }                
             }
             message.Subject = subject;
             // Body just in plain text
@@ -102,20 +244,6 @@ namespace AppIntegrador.Utilities
             AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
             message.AlternateViews.Add(alternate);
             return message;
-        }
-
-        private List<string> getEmail(List<string> recipients)
-        {
-            List<string> userEmail = new List<string>();
-            ObjectParameter obtainedEmail = new ObjectParameter("email", typeof(string));
-            foreach (var user in recipients)
-            {
-                // Ejecuta el procedimiento que obtiene el correo dado un usuario
-                //db.ObtenerEmailUsuario(user, obtainedEmail);
-                string email = obtainedEmail.Value.ToString();
-                userEmail.Add(email);
-            }
-            return userEmail;
         }
     }
 }
