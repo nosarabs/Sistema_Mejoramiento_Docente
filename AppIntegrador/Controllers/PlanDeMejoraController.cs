@@ -22,17 +22,18 @@ namespace AppIntegrador.Controllers
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
-            return View(db.PlanDeMejora.ToList());
+            //return View(db.PlanDeMejora.ToList());
+            return View();
         }
 
         //Para pruebas
-        public ActionResult Index(String nombre)
-        {
-            ObjectParameter count = new ObjectParameter("count", 999);
-            ViewBag.cantidad = count.Value;
-            ViewBag.nombre = nombre;
-            return View(db.PlanDeMejora.ToList());
-        }
+        //public ActionResult Index(String nombre)
+        //{
+        //    ObjectParameter count = new ObjectParameter("count", 999);
+        //    ViewBag.cantidad = count.Value;
+        //    ViewBag.nombre = nombre;
+        //    return View(db.PlanDeMejora.ToList());
+        //}
 
         public ActionResult Index2(int idPlanDeMejora)
         {
