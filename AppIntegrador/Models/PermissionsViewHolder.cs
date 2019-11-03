@@ -17,6 +17,8 @@ namespace AppIntegrador.Models
 
         public List<Enfasis> EnfasisView { get; set; }
 
+        public List<Persona> Personas{ get; set; }
+
         public MultiSelectList ListaCarreras { get; set; }
 
         public MultiSelectList ListaPermisos { get; set; }
@@ -25,9 +27,13 @@ namespace AppIntegrador.Models
 
         public MultiSelectList ListaPerfiles { get; set; }
 
+        public MultiSelectList ListaPersonas { get; set; }
+
         public string[] CarrerasSeleccionadas { get; set; }
 
         public string[] EnfasisSeleccionados { get; set; }
+
+        public string [] PersonasSeleccionadas { get; set; }
 
         public int[] PermisosSeleccionados { get; set; }
 
@@ -44,10 +50,13 @@ namespace AppIntegrador.Models
             this.Carreras = db.Carrera.ToList();
             this.EnfasisView = db.Enfasis.ToList();
             this.Permisos = db.Permiso.ToList();
+            this.Personas = db.Persona.ToList();
             this.ListaCarreras = GetCarreras();
             this.ListaPermisos = GetPermisos();
             this.ListaEnfasis = GetEnfasis();
             this.ListaPerfiles = GetPerfiles();
+            this.ListaPersonas = GetPersonas();
+            this.ConcatenarNombresPersonas();
 
         }
 
@@ -66,6 +75,17 @@ namespace AppIntegrador.Models
         public MultiSelectList GetPerfiles()
         {
             return new MultiSelectList(this.Perfiles, "Codigo", "NombrePerfil", null);
+        }
+        public MultiSelectList GetPersonas()
+        {
+            return new MultiSelectList(this.Personas, "Correo", "Nombre1", null);
+        }
+
+        private void ConcatenarNombresPersonas()
+        {
+            foreach (Persona p in this.Personas) {
+                p.Nombre1 = p.Nombre1 + " " + p.Apellido1 + " "+ p.Apellido2;
+            }
         }
     }
 

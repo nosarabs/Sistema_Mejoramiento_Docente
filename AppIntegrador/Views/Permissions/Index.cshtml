@@ -16,40 +16,60 @@
         {
             <div class="row" style="display:flex; padding-left:15px; ">
                 <div class="col-md-4" style="flex:50%;">
-                    @Html.Label("Seleccione un perfil")
+                    @Html.Label("Seleccione perfiles")
                     <br />
 
                     @Html.ListBoxFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "selectpicker" })
                     <br />
                 </div>
                 <div class="col-md-4" style="flex:50%;">
-                    @Html.Label("Seleccione una carrera")
+                    @Html.Label("Seleccione carreras")
                     <br />
 
                     @Html.ListBoxFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "selectpicker" })
                     <br />
                 </div>
                 <div class="col-md-4" style="flex:50%;">
-                    @Html.Label("Seleccione un énfasis")
+                    @Html.Label("Seleccione énfasis")
                     <br />
                     @Html.ListBoxFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "selectpicker" })
                     <br />
                 </div>
             </div>
             
+            
+            
+            <div class="row" style="display:flex; padding-left:15px; ">
+                <div class="col-md-6" style="flex:50%;">
+                    @Html.Label("Seleccione personas")
+                    <br />
+
+                    @Html.ListBoxFor(model => model.PersonasSeleccionadas, Model.ListaPersonas, new { @class = "selectpicker" })
+                    <br />
+                </div>
+                <div class="col-md-6" style="flex:50%;">
+                    @Html.Label("Seleccione permisos")
+                    <br />
+                    @Html.ListBoxFor(model => model.PermisosSeleccionados, Model.ListaPermisos, new { @class = "selectpicker" })
+                    <br />
+                </div>
+            </div>
+            <br />
+            <hr />
+            <br />
             <input id="create-save" type="submit" value="Crear" class="btn btn-success" />
-        }
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
+            }
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/custom")
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/custom")
 
-<!--Código jQuery para cargar en el select de énfasis los énfasis asociados a la carrera elegida.-->
-<script>
+            <!--Código jQuery para cargar en el select de énfasis los énfasis asociados a la carrera elegida.-->
+            <script>
     $("#CarrerasSeleccionada").on("change", function () {
         cargarEnfasis($(this).val());
     })
@@ -63,4 +83,4 @@
             }
         })
     }
-</script>
+            </script>
