@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AppIntegrador.Models.Seccion>
+
+@{
+    ViewBag.Title = "_SeccionesActualesPartial";
+}
+
+@foreach (var item in Model)
+{
+    <div class="row grisUCR1">
+        <h3>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </h3>
+    </div>
+}
