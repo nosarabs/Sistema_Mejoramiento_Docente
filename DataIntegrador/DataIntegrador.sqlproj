@@ -66,6 +66,7 @@
     <Folder Include="Usuarios y Perfiles\Triggers" />
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
+    <Folder Include="Usuarios y Perfiles\Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -142,6 +143,11 @@
     <Build Include="PlanesDeMejora\PlantillaObjetivo.sql" />
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\TienePermiso.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\TienePermisoSinEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\TienePermisoSinEnfasisNiCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\PerfilesXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarreraXPerfil.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

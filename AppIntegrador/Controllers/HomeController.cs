@@ -39,6 +39,14 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
 
             }
+            List<string> perfiles = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var profileList = from Profile in db.PerfilesXUsuario("andres@mail.com")
+                                  select Profile;
+                foreach (var profileName in profileList)
+                    perfiles.Add(profileName.NombrePefil);
+            }
             return View();
         }
 
