@@ -1,7 +1,7 @@
-﻿@model AppIntegrador.Models.TodasLasPreguntas
+﻿@model IEnumerable<AppIntegrador.Models.PreguntaConNumeroSeccion>
 
 
-@foreach (var pregunta in Model.Preguntas)
+@foreach(var pregunta in Model)
 {
     if (pregunta.Pregunta.Tipo == "U")
     {
@@ -9,7 +9,7 @@
     }
     else if(pregunta.Pregunta.Tipo == "S")
     {
-        {Html.RenderPartial("PreguntaSiNoNr", pregunta);}
+        { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
     }
 }
 

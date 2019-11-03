@@ -23,6 +23,8 @@ public partial class ObtenerPreguntasDeSeccion_Result
 
     public string Tipo { get; set; }
 
+    public int Orden { get; set; }
+
 }
 
 }

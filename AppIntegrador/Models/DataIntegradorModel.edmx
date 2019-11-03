@@ -2916,11 +2916,11 @@
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
           <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
-          <Parameter Name="CodForm" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
             <Parameter Name="sectionCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
+            <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
@@ -3552,14 +3552,16 @@
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="ObtenerSeccionesDeFormulario_Result">
-          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
-        </ComplexType>
         <ComplexType Name="ObtenerPreguntasDeSeccion_Result">
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Enunciado" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="Tipo" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerSeccionesDeFormulario_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4084,20 +4086,22 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerPreguntasDeSeccion_Result">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

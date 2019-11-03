@@ -1,4 +1,4 @@
-﻿@model AppIntegrador.Models.PreguntaConCodigoSeccion
+﻿@model AppIntegrador.Models.PreguntaConNumeroSeccion
 
 @{
     Layout = null;
@@ -6,7 +6,7 @@
 
 @*RIP-EDF6*@
 
-@{string radname = "rad" + Model.CodigoSeccion + Model.Pregunta.Codigo; }
+@{string radname = "rad" + Model.OrdenSeccion + Model.Pregunta.Codigo; }
     <div class="card card-primary full">
         @Html.DisplayFor(model => Model.Pregunta.Enunciado)
 

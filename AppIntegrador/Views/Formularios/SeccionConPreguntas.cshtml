@@ -6,8 +6,10 @@
 
 @foreach (var item in Model)
 {
+    var displayOrden = item.Orden + 1;
     <div class="card card-primary">
         <div class='card-heading'>
+            @displayOrden.
             @Html.DisplayFor(model => item.Nombre)
         </div>
         <div class='card-body '>
@@ -23,7 +25,7 @@
             <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-10">
                     <button type="submit" class="btn btn-info">Guardar Respuestas</button>
-                    
+
                     @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn btn-default" })
                 </div>
             </div>
@@ -39,7 +41,7 @@
         border: transparent;
     }
 
-    .card-heading{
+    .card-heading {
         font-size: 20px;
     }
 </style>

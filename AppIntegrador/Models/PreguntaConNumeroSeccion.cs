@@ -5,9 +5,9 @@ using System.Web;
 
 namespace AppIntegrador.Models
 {
-    public partial class PreguntaConCodigoSeccion
+    public partial class PreguntaConNumeroSeccion
     {
-        public string CodigoSeccion { get; set; }
+        public int OrdenSeccion { get; set; }
         public Pregunta Pregunta { get; set; }
     }
 }

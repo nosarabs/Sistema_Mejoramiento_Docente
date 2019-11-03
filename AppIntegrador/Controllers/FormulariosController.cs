@@ -30,16 +30,15 @@ namespace AppIntegrador.Controllers
             foreach(var seccion in seccionesDeFormulario)
             {
                 List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
-                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new TodasLasPreguntas() };
-                nuevaSeccion.Preguntas.Preguntas = new List<PreguntaConCodigoSeccion>();
+                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
                 foreach(var pregunta in preguntas)
                 {
-                    nuevaSeccion.Preguntas.Preguntas.Add(new PreguntaConCodigoSeccion
+                    nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
                     {
                         Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                        CodigoSeccion = nuevaSeccion.CodigoSeccion
+                        OrdenSeccion = nuevaSeccion.Orden
                     });
-                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas.Preguntas);
+                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
                 }
                 formulario.Secciones.Add(nuevaSeccion);
             }
@@ -47,11 +46,23 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
-        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConCodigoSeccion> preguntas)
+        [HttpPost]
+        public ActionResult GuardarRespuestas()
+        {
+            DateTime today = DateTime.Today;
+
+            Console.WriteLine(today);
+
+            //Console.WriteLine(HttpContext.Current.User.Identity.Name);
+
+            return RedirectToAction("Index");
+        }
+
+        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas)
         {
             if (preguntas != null)
             {
-                foreach (PreguntaConCodigoSeccion pregunta in preguntas)
+                foreach (PreguntaConNumeroSeccion pregunta in preguntas)
                 {
                     if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
                     {
@@ -148,18 +159,6 @@ namespace AppIntegrador.Controllers
             }
 
             return View("Create", crearFormulario);
-        }
-
-        [HttpPost]
-        public ActionResult GuardarRespuestas(PreguntaConCodigoSeccion objUser)
-        {
-            DateTime today = DateTime.Today;
-
-            Console.WriteLine(today);
-
-            //Console.WriteLine(HttpContext.Current.User.Identity.Name);
-
-           return View();
         }
 
         // GET: Formularios/Edit/5

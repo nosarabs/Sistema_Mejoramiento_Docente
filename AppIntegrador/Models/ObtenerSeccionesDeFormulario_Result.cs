@@ -21,6 +21,8 @@ public partial class ObtenerSeccionesDeFormulario_Result
 
     public string Nombre { get; set; }
 
+    public int Orden { get; set; }
+
 }
 
 }
