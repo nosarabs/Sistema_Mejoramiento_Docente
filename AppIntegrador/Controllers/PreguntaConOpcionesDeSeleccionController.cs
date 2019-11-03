@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
 {
     public class PreguntaConOpcionesDeSeleccionController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private Entities db = new Entities();
 
         [HttpGet]
         public ActionResult Pregunta_con_opciones_de_seleccion()

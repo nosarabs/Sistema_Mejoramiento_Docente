@@ -148,6 +148,7 @@
     <Build Include="Usuarios y Perfiles\Functions\TienePermisoSinEnfasisNiCarrera.sql" />
     <Build Include="Usuarios y Perfiles\Functions\PerfilesXUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarreraXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\CarrerasXPerfilXUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

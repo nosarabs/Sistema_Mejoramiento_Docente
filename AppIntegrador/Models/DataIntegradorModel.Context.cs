@@ -15,10 +15,10 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DataIntegradorEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public DataIntegradorEntities()
-            : base("name=DataIntegradorEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -67,7 +67,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
     
-        [DbFunction("DataIntegradorEntities", "EnfasisXCarreraXPerfil")]
+        [DbFunction("Entities", "EnfasisXCarreraXPerfil")]
         public virtual IQueryable<EnfasisXCarreraXPerfil_Result> EnfasisXCarreraXPerfil(string correoUsuario, string codCarrera, string nombrePerfil)
         {
             var correoUsuarioParameter = correoUsuario != null ?
@@ -82,17 +82,17 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombrePerfil", nombrePerfil) :
                 new ObjectParameter("nombrePerfil", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarreraXPerfil_Result>("[DataIntegradorEntities].[EnfasisXCarreraXPerfil](@correoUsuario, @codCarrera, @nombrePerfil)", correoUsuarioParameter, codCarreraParameter, nombrePerfilParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarreraXPerfil_Result>("[Entities].[EnfasisXCarreraXPerfil](@correoUsuario, @codCarrera, @nombrePerfil)", correoUsuarioParameter, codCarreraParameter, nombrePerfilParameter);
         }
     
-        [DbFunction("DataIntegradorEntities", "PerfilesXUsuario")]
+        [DbFunction("Entities", "PerfilesXUsuario")]
         public virtual IQueryable<PerfilesXUsuario_Result> PerfilesXUsuario(string correoUsuario)
         {
             var correoUsuarioParameter = correoUsuario != null ?
                 new ObjectParameter("correoUsuario", correoUsuario) :
                 new ObjectParameter("correoUsuario", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PerfilesXUsuario_Result>("[DataIntegradorEntities].[PerfilesXUsuario](@correoUsuario)", correoUsuarioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PerfilesXUsuario_Result>("[Entities].[PerfilesXUsuario](@correoUsuario)", correoUsuarioParameter);
         }
     
         public virtual int AgregarFormulario(string codigo, string nombre)
@@ -501,6 +501,20 @@ namespace AppIntegrador.Models
                 new ObjectParameter("codigoPregunta", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
+        }
+    
+        [DbFunction("Entities", "CarrerasXPerfilXUsuario")]
+        public virtual IQueryable<string> CarrerasXPerfilXUsuario(string correoUsuario, string param2)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var param2Parameter = param2 != null ?
+                new ObjectParameter("param2", param2) :
+                new ObjectParameter("param2", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[Entities].[CarrerasXPerfilXUsuario](@correoUsuario, @param2)", correoUsuarioParameter, param2Parameter);
         }
     }
 }

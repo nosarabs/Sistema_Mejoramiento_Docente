@@ -15,11 +15,11 @@ namespace AppIntegrador.Utilities
     /* Historia TAM-5.2 Interfaz de envío de correos */
     public class EmailNotification
     {
-        private DataIntegradorEntities db;
+        private Entities db;
 
         public EmailNotification()
         {
-            db = new DataIntegradorEntities();
+            db = new Entities();
         }
 
         /// <summary>Este método envía una notificación de correo directa
