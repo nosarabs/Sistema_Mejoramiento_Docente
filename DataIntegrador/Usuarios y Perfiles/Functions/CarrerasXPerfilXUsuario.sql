@@ -1,4 +1,6 @@
-﻿CREATE FUNCTION [dbo].[CarrerasXPerfilXUsuario]
+﻿/*TAM 3.1: Función almacenada que devuelve una lista de códigos de carreras en las que el usuario dado con 
+la carrera seleccionada tiene perfiles asignados.*/
+CREATE FUNCTION [dbo].[CarrerasXPerfilXUsuario]
 (
 	@correoUsuario VARCHAR(50),
 	@param2 char(5)

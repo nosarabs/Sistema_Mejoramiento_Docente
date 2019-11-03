@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Text;
 using System.Text.RegularExpressions;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador
 {
@@ -38,8 +39,7 @@ namespace AppIntegrador
                 ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
-            string username = HttpContext.User.Identity.Name;
-            if (username != "admin@mail.com")
+            if (UsersManager.GetCurrentUserProfile(Session) != "Superusuario")
             {
                 TempData["alertmessage"] = "Solo el administrador puede accesar esta página";
                 return RedirectToAction("../Home/Index");

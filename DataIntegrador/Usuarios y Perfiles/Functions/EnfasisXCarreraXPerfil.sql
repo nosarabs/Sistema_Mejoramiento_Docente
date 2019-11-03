@@ -1,4 +1,6 @@
-﻿CREATE FUNCTION [dbo].[EnfasisXCarreraXPerfil]
+﻿/*TAM 3.1: Función almacenada que devuelve una lista de códigos de énfasis en las que el usuario dado con 
+la carrera seleccionada tiene perfiles asignados.*/
+CREATE FUNCTION [dbo].[EnfasisXCarreraXPerfil]
 (
 	@correoUsuario VARCHAR(50),
 	@codCarrera VARCHAR(10),

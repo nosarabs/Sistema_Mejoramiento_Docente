@@ -1,4 +1,5 @@
-﻿CREATE FUNCTION [dbo].[EnfasisXCarrera]
+﻿/*TAM 3.1: Función almacenada que devuelve una lista de códigos de énfasis que tiene una carrera dada.*/
+CREATE FUNCTION [dbo].[EnfasisXCarrera]
 (
 	@codCarrera VARCHAR(10)
 )

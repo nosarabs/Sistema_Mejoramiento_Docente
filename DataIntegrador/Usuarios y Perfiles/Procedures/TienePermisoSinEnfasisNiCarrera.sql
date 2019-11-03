@@ -1,5 +1,5 @@
-﻿/*TAM-3.2: Listar usuarios con sus respectivos permisos según su énfasis y perfil elegido en la página de administración de 
-permisos y perfiles. Este procedimiento devuelve TRUE si el usuario con el correo ingresado tiene el permiso indicado, FALSE 
+﻿/*TAM-3.2 y 3.6: Listar usuarios con sus respectivos permisos según su énfasis y perfil elegido en la página de administración de 
+permisos y perfiles. Este procedimiento devuelve 1 si el usuario con el correo ingresado tiene el permiso indicado, 0 
 en caso contrario.*/
 
 CREATE PROCEDURE [dbo].[TienePermisoSinEnfasisNiCarrera]

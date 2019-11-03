@@ -7,10 +7,12 @@ using System.Web;
 
 namespace AppIntegrador.Utilities
 {
+    /*Interfaz de permisos para ser utilizada por las demás funcionalidades del sistema cuando se requiera
+     saber si un usuario con un perfil en una carrera y un énfasis seleccionado tiene un determinado permiso.*/
     public class PermissionManager
     {
         private Entities db = new Entities();
-        /*Permission enum that lists all the possible permissions to be used in the system.*/
+        /*Listado constantes de permisos.*/
         public enum Permission : int {
             VER_USUARIOS = 101,
             CREAR_USUARIOS,
@@ -41,28 +43,53 @@ namespace AppIntegrador.Utilities
         };
         
         /*Permissions interface to be used on all the system wherever permission authorization is required.*/
-        public bool IsAllowed(string userMail, string profileName, string majorCode, string emphasisCode, int permissionId)
+        public bool IsAllowed(string userMail, string profileName, string majorCode, string emphasisCode, PermissionManager.Permission permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
-            db.TienePermiso(userMail, profileName, majorCode, emphasisCode, permissionId, resultado);
-            /*For now, just an empty implementation.*/
+            db.TienePermiso(userMail, profileName, majorCode, emphasisCode, (int) permissionId, resultado);   
             return (bool) resultado.Value;
         }
 
-        public bool IsAllowed(string userMail, string profileName, string majorCode, int permissionId)
+        public bool IsAllowed(string userMail, string profileName, string majorCode, PermissionManager.Permission permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
-            db.TienePermisoSinEnfasis(userMail, profileName, majorCode, permissionId, resultado);
-            /*For now, just an empty implementation.*/
+            db.TienePermisoSinEnfasis(userMail, profileName, majorCode, (int) permissionId, resultado);
             return (bool)resultado.Value;
         }
 
-        public bool IsAllowed(string userMail, string profileName, int permissionId)
+        public bool IsAllowed(string userMail, string profileName, PermissionManager.Permission permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
-            db.TienePermisoSinEnfasisNiCarrera(userMail, profileName, permissionId, resultado);
-            /*For now, just an empty implementation.*/
+            db.TienePermisoSinEnfasisNiCarrera(userMail, profileName, (int) permissionId, resultado);
             return (bool)resultado.Value;
+        }
+
+        public bool IsUserAuthorized(HttpSessionStateBase Session, PermissionManager.Permission permissionId)
+        {
+            /*Both major and emphasis are null*/
+            if(UsersManager.GetCurrentUserEmphasisId(Session) == null && UsersManager.GetCurrentUserMajorId(Session) == null)
+                return IsAllowed(
+                UsersManager.GetCurrentUserName(Session),
+                UsersManager.GetCurrentUserProfile(Session),
+                permissionId
+            );
+            /*Only emphasis is null*/
+            else if (UsersManager.GetCurrentUserEmphasisId(Session) == null)
+                return IsAllowed(
+                UsersManager.GetCurrentUserName(Session),
+                UsersManager.GetCurrentUserProfile(Session),
+                UsersManager.GetCurrentUserMajorId(Session),
+                permissionId
+            );
+            /*All parameters supplied*/
+            else
+            return this.IsAllowed(
+                UsersManager.GetCurrentUserName(Session),
+                UsersManager.GetCurrentUserProfile(Session),
+                UsersManager.GetCurrentUserMajorId(Session),
+                UsersManager.GetCurrentUserEmphasisId(Session),
+                permissionId
+            );
         }
     }
 
