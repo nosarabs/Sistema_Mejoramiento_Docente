@@ -144,7 +144,7 @@
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosCarrera.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
