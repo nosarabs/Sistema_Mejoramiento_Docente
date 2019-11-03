@@ -39,8 +39,16 @@ namespace AppIntegrador.Utilities
             VER_RESPUESTAS_FORMULARIO = 401
 
         };
-        
-        /*Permissions interface to be used on all the system wherever permission authorization is required.*/
+
+        /* Permissions interface to be used on all the system wherever permission authorization is required.*/
+
+        /// <summary>Este método revisa si el usuario tiene el permiso asignado en el énfasis de la carrera.</summary>
+        /// <param name="userMail">Nombre del usuario.</param>
+        /// <param name="profileName">Nombre del perfil con que está trabajando.</param>
+        /// <param name="majorCode">Código de la carrera.</param>
+        /// <param name="emphasisCode">Código del énfasis de la carrera.</param>
+        /// <param name="permissionId">Código identificador del permiso.</param>
+        /// <returns>true si tiene el permiso, false en otro caso</returns>
         public bool IsAllowed(string userMail, string profileName, string majorCode, string emphasisCode, int permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
@@ -49,6 +57,12 @@ namespace AppIntegrador.Utilities
             return (bool) resultado.Value;
         }
 
+        /// <summary>Este método revisa si el usuario tiene el permiso asignado en la carrera.</summary>
+        /// <param name="userMail">Nombre del usuario.</param>
+        /// <param name="profileName">Nombre del perfil con que está trabajando.</param>
+        /// <param name="majorCode">Código de la carrera.</param>
+        /// <param name="permissionId">Código identificador del permiso.</param>
+        /// <returns>true si tiene el permiso, false en otro caso</returns>
         public bool IsAllowed(string userMail, string profileName, string majorCode, int permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
@@ -57,6 +71,11 @@ namespace AppIntegrador.Utilities
             return (bool)resultado.Value;
         }
 
+        /// <summary>Este método revisa si el usuario tiene el permiso asignado.</summary>
+        /// <param name="userMail">Nombre del usuario.</param>
+        /// <param name="profileName">Nombre del perfil con que está trabajando.</param>
+        /// <param name="permissionId">Código identificador del permiso.</param>
+        /// <returns>true si tiene el permiso, false en otro caso</returns>
         public bool IsAllowed(string userMail, string profileName, int permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
