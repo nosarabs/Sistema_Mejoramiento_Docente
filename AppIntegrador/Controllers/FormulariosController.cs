@@ -14,7 +14,7 @@ namespace AppIntegrador.Controllers
 {
     public class FormulariosController : Controller
     {
-        
+
         private DataIntegradorEntities db = new DataIntegradorEntities();
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
 
@@ -25,37 +25,70 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Index");
             }
-            LlenarFormulario formulario = new LlenarFormulario { Nombre = id, Secciones = new List<SeccionConPreguntas>() };
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             List<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id).ToList();
-            foreach(var seccion in seccionesDeFormulario)
+            foreach (var seccion in seccionesDeFormulario)
             {
                 List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
                 SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
-                foreach(var pregunta in preguntas)
+                foreach (var pregunta in preguntas)
                 {
                     nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
                     {
                         Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                        OrdenSeccion = nuevaSeccion.Orden
+                        OrdenSeccion = nuevaSeccion.Orden,
+                        OrdenPregunta = pregunta.Orden
                     });
                     ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
                 }
                 formulario.Secciones.Add(nuevaSeccion);
             }
-
             return View(formulario);
         }
 
+        // Se espera que respuestas ya venga con el código del formulario.
+        // Si una respuesta se recibe como 255 en una de si/no/nr, fue que no se respondió.
         [HttpPost]
-        public ActionResult GuardarRespuestas()
+        public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
         {
-            DateTime today = DateTime.Today;
+            if (respuestas == null || secciones == null)
+            {
+                return RedirectToAction("Index");
+            }
 
-            Console.WriteLine(today);
+            respuestas.Fecha = DateTime.Today;
+            respuestas.Correo = HttpContext.User.Identity.Name;
 
-            //Console.WriteLine(HttpContext.Current.User.Identity.Name);
+            // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
+            respuestas.CSigla = "CI0128";
+            respuestas.GAnno = 2019;
+            respuestas.GNumero = 1;
+            respuestas.GSemestre = 2;
+
+            // Llamar a procedimiento que agrega Respuestas_a_formulario
+
+            // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
+            foreach (SeccionConPreguntas seccion in secciones)
+            {
+                foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
+                {
+                    GuardarRespuestaAPregunta(pregunta.Pregunta, seccion.CodigoSeccion);
+                }
+            }
 
             return RedirectToAction("Index");
+        }
+
+        public void GuardarRespuestaAPregunta(Pregunta pregunta, string CodigoSeccion)
+        {
+            if (pregunta.Tipo == "L")
+            {
+                Console.WriteLine("Todo es trivial");
+            }
+            else
+            {
+                Console.WriteLine("Todo sigue siendo trivial");
+            }
         }
 
         public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas)
@@ -139,13 +172,13 @@ namespace AppIntegrador.Controllers
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]        
+        [HttpPost]
         public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
         {
             crearFormulario.seccion = db.Seccion;
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-                if(InsertFormularioTieneSeccion(formulario, secciones))
+                if (InsertFormularioTieneSeccion(formulario, secciones))
                 {
                     ViewBag.Message = "Exitoso";
                     return RedirectToAction("Create");
@@ -265,7 +298,7 @@ namespace AppIntegrador.Controllers
             crearFormulario.seccion = db.Seccion;
             base.Dispose(disposing);
         }
-        
+
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {

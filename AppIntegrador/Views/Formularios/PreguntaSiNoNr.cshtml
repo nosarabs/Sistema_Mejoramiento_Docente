@@ -6,31 +6,44 @@
 
 @*RIP-EDF6*@
 
-@{string radname = "rad" + Model.OrdenSeccion + Model.Pregunta.Codigo; }
-    <div class="card card-primary full">
-        @Html.DisplayFor(model => Model.Pregunta.Enunciado)
+@*Se ocupa el código de la pregunta para poder guardar las respuestas*@
+@Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+        "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
 
-        <div class='card-body'>
+@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa, 
+   en vez de crear uno o varios modelos distintos.*@
+@{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+          "].Pregunta.Responde_respuesta_con_opciones[0].Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada"; }
+<div class="card card-primary full">
+    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
 
-            <input type="radio" name="@radname" value="0" />
-
-            Sí
-        </div>
-
-        <div class='card-body'>
-
-            <input type="radio" name="@radname" value="1" />
-
-            No
-        </div>
-
-        <div class='card-body'>
-
-            <input type="radio" name="@radname" value="2" />
-
-            No responde
-        </div>
+    @*Se usa este radio button escondido para que no hayan problemas si una pregunta no se responde (dado que se pone marcado por defecto).
+        Se escogió 255, porque el valor de las opciones seleccionadas es de un solo byte.*@
+    <div class="card-body">
+        <input type="radio" name="@radname" value="255" hidden="hidden" checked />
     </div>
+
+    <div class='card-body'>
+
+        <input type="radio" name="@radname" value="0" />
+
+        Sí
+    </div>
+
+    <div class='card-body'>
+
+        <input type="radio" name="@radname" value="1" />
+
+        No
+    </div>
+
+    <div class='card-body'>
+
+        <input type="radio" name="@radname" value="2" />
+
+        No responde
+    </div>
+</div>
 
 @if (!Request["rad"].IsEmpty())
 {

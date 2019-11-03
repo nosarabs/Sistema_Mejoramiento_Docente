@@ -62,12 +62,6 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
                     return View(pregunta);
                 }
-                // se guarda la opcion de si
-                db.AgregarOpcion(pregunta.Codigo, (byte)0, "Sí");
-                // se guarda la opcion de no
-                db.AgregarOpcion(pregunta.Codigo, (byte)1, "No");
-                // se guarda la opcion de No responde
-                db.AgregarOpcion(pregunta.Codigo, (byte)2, "No responde");
             }
             return View();
         }
