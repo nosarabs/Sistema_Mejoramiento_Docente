@@ -1,0 +1,46 @@
+﻿
+@import "BootstrapSccs/bootstrap.scss";
+
+.btn-blancoUCR {
+    @extend .btn;
+    @extend .btn-light;
+    @extend .text-dark;
+    @extend .border-secondary;
+}
+
+.grisUCR1 {
+    background: #e9e9e9;
+}
+
+.grisUCR2 {
+    background: #fbfbfb;
+}
+
+.grisUCR3 {
+    background: #fdfdfd;
+}
+
+.radio-dibujo {
+    transform: scale(2);
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.azulUCR {
+    color: #fff;
+    background-color: #41ade7;
+}
+
+.orden {
+    display: none;
+}
+
+.sortable-container:hover {
+    background-color: lightgrey;
+    cursor: grab;
+}
+
+.sortable-container:active {
+    background-color: #c4c4c4;
+    cursor: grabbing;
+}
