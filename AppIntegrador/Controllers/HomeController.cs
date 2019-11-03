@@ -103,14 +103,6 @@ namespace AppIntegrador.Controllers
                     if (result == 0)
                     {
                         FormsAuthentication.SetAuthCookie(objUser.Username, false);
-
-                        EmailNotification notification = new EmailNotification();
-                        // Por ahora utilizo mi propio correo
-                        List<string> recipients = new List<string> { "ericrios24@gmail.com" };
-                        string body = "Este es un correo de prueba";
-
-                        int emailResult = notification.SendNotification(recipients, "Correo Test", body, body);
-
                         return RedirectToAction("Index");
                     }
                     else
