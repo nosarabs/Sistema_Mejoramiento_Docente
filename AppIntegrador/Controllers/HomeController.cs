@@ -111,7 +111,7 @@ namespace AppIntegrador.Controllers
                     if (result == 0)
                     {
                         FormsAuthentication.SetAuthCookie(objUser.Username, false);
-                        ConfigureSession();
+                        ConfigureSession(objUser.Username);
                         return RedirectToAction("Index");
                     }
                     else
@@ -287,16 +287,35 @@ namespace AppIntegrador.Controllers
             return View("PasswordReset");
         }
 
-        private void ConfigureSession()
+        private void ConfigureSession(string username)
         {
-            /*TO-DO: Lanzar aquí a una página de selección donde el usuario escoja 
-            el perfil, la carrera y el énfasis con el que desea trabajar, si 
-            tiene opciones para escoger, y guardar la selección en las cookies.*/
+            /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
+             énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
+             o la única que tenga si no tiene más opciones).*/
 
-            //Por ahora, solo de prueba. Hay que encriptar esa información.
-            TempData["perfil"] = "Superusuario";
-            TempData["carrera"] = "0000000001";
-            TempData["enfasis"] = "0000000001";
+            /*Por ahora, solo datos de prueba.*/
+            ObjectParameter mejorPerfil = new ObjectParameter("PerfilPoderoso", typeof(string));
+            ObjectParameter mejorCarrera = new ObjectParameter("CarreraPoderosa", typeof(string));
+            ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
+            db.SugerirConfiguracion(username, mejorPerfil, mejorCarrera, mejorEnfasis);
+   
+            /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
+             donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
+             y no atrasar a los demás equipos.*/
+            SetUserData(username, (mejorPerfil.Value.Equals(DBNull.Value) ? "Superusuario" : (string)mejorPerfil.Value), (mejorCarrera.Value.Equals(DBNull.Value) ? null : (string)mejorCarrera.Value), (mejorEnfasis.Value.Equals(DBNull.Value) ? null : (string)mejorEnfasis.Value));
+        }
+
+        /*TAM-3.1, 3.2 y 3.6: Función que guarda los datos relevantes del usuario loggeado para poder consultar
+         la interfaz de permisos con esa información.*/
+        private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
+        {
+            LoggedInUserData userData = new LoggedInUserData(
+                correoUsuario,
+                perfil,
+                codCarrera,
+                codEnfasis
+                );
+            Session["UserData"] = userData;
         }
     }
 }

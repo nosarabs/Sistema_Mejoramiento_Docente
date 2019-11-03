@@ -1646,6 +1646,12 @@
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="SugerirConfiguracion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CorreoUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="PerfilPoderoso" Type="varchar" Mode="InOut" />
+          <Parameter Name="CarreraPoderosa" Type="varchar" Mode="InOut" />
+          <Parameter Name="EnfasisPoderoso" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="TienePermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
           <Parameter Name="perfil" Type="varchar" Mode="In" />
@@ -3551,7 +3557,13 @@
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(String)">
-            <Parameter Name="codCarrera" Mode="In" Type="String" />
+          <Parameter Name="codCarrera" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SugerirConfiguracion">
+            <Parameter Name="CorreoUsuario" Mode="In" Type="String" />
+            <Parameter Name="PerfilPoderoso" Mode="InOut" Type="String" />
+            <Parameter Name="CarreraPoderosa" Mode="InOut" Type="String" />
+            <Parameter Name="EnfasisPoderoso" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
@@ -4109,6 +4121,7 @@
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
           <FunctionImportMapping FunctionImportName="EnfasisXCarrera" FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" />
+          <FunctionImportMapping FunctionImportName="SugerirConfiguracion" FunctionName="DataIntegradorModel.Store.SugerirConfiguracion" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
