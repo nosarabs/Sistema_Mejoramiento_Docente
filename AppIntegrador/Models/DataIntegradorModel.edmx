@@ -1500,6 +1500,11 @@
           <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
           <Parameter Name="justificacion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPreguntaRespuestaLibre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cod" Type="char" Mode="In" />
+          <Parameter Name="type" Type="char" Mode="In" />
+          <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="AgregarPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AgregarPreguntaSeleccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo" Type="char" Mode="In" />
@@ -3445,7 +3450,12 @@
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
-            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          <Parameter Name="sectionCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AgregarPreguntaRespuestaLibre">
+            <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="enunciado" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
@@ -3997,6 +4007,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaRespuestaLibre" FunctionName="DataIntegradorModel.Store.AgregarPreguntaRespuestaLibre" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

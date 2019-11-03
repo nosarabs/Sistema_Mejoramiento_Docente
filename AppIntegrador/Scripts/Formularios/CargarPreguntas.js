@@ -40,6 +40,34 @@ function cargarVista(valor) {
             }
         })
     }
+    // Comparar el tipo de pregunta que se seleccionó 
+    // y cargar la vista por medio de Ajax
+    else if (valor === 'S') {
+        $.ajax({
+            // url completa: Views/Pregunta/PreguntaSiNo
+            url: 'PreguntaSiNo',
+            success: function (data) {
+                $(data).appendTo('#contenedor-preguntas')
+                SiNoInit()
+            }
+        })
+    }
+    // Comparar el tipo de pregunta que se seleccionó 
+    // y cargar la vista por medio de Ajax
+    else if (valor === 'L') {
+        $.ajax({
+            // url completa: Views/Pregunta/RespuestaLibre
+            url: 'RespuestaLibre',
+            success: function (data) {
+                $(data).appendTo('#contenedor-preguntas')
+            }
+        })
+    }
+}
+
+function SiNoInit() {
+    // Esconder campo de justificación por defecto
+    $('#justificationField').css('display', 'none');
 }
 
 function opcionUnicaInit() {

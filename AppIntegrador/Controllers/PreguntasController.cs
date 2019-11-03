@@ -15,12 +15,78 @@ namespace AppIntegrador.Controllers
             return View("Create");
         }
 
+
+        protected ActionResult GuardarRespuestaLibre(Pregunta pregunta)
+        {
+            // asegurarse que exista la preguna
+            if (pregunta != null)
+            {
+                try
+                {
+                    // se trata de guardar la pregunta de respuesta libre 
+                    if (db.AgregarPreguntaRespuestaLibre(pregunta.Codigo, "L", pregunta.Enunciado) == 0)
+                    { 
+                        // si se presentó un problema, se devuelve el codigo de error
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException)
+                {
+                    // si se presentó un problema, se devuelve el codigo de error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
+                }
+            }
+            return View();
+        }
+
+        protected ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
+        {
+            // asegurarse que exista la preguna
+            if (pregunta != null)
+            {
+                try
+                {
+                    // se trata de guardar la pregunta de con opciones de si/no/nr
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "S", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    {
+                        // si se presentó un problema, se devuelve el codigo de error
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException)
+                {
+                    // si se presentó un problema, se devuelve el codigo de error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
+                }
+                // se guarda la opcion de si
+                db.AgregarOpcion(pregunta.Codigo, (byte)0, "Sí");
+                // se guarda la opcion de no
+                db.AgregarOpcion(pregunta.Codigo, (byte)1, "No");
+                // se guarda la opcion de No responde
+                db.AgregarOpcion(pregunta.Codigo, (byte)2, "No responde");
+            }
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
         {
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Enunciado.Length > 0)
             {
+                // GuardarPreguntaSiNo las preguntas dependiendo del tipo
+                // ToDo: realizar un método para cada tipo de pregunta
+                switch (pregunta.Tipo)
+                {
+                    case "U": break;
+                    case "M": break;
+                    case "L": return GuardarRespuestaLibre(pregunta);
+                    case "S": return GuardarPreguntaSiNo(pregunta);
+                }
                 bool validOptions = Opciones != null;
                 if (validOptions)
                 {
@@ -65,6 +131,19 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        // Retorna la vista "parcial" de Respuesta libre (.cshtml)
+        public ActionResult RespuestaLibre()
+        {
+            ViewBag.message = "Respuesta Libre";
+            return View("RespuestaLibre");
+        }
+        // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
+        public ActionResult PreguntaSiNo()
+        {
+            ViewBag.message = "Pregunta Si/No/NR";
+            return View("PreguntaSiNo");
+        }
+
         // Retorna la vista "parcial" de pregunta con opciones (.cshtml)
         public ActionResult PreguntaConOpciones()
         {
@@ -92,6 +171,7 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 
 
