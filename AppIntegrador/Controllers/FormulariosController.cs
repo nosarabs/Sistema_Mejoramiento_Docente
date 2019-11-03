@@ -47,7 +47,6 @@ namespace AppIntegrador.Controllers
         }
 
         // Se espera que respuestas ya venga con el código del formulario.
-        // Si una respuesta se recibe como 255 en una de si/no/nr, fue que no se respondió.
         [HttpPost]
         public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
         {

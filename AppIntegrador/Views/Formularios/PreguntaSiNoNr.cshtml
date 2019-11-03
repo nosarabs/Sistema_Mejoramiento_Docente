@@ -17,12 +17,6 @@
 <div class="card card-primary full">
     @Html.DisplayFor(model => Model.Pregunta.Enunciado)
 
-    @*Se usa este radio button escondido para que no hayan problemas si una pregunta no se responde (dado que se pone marcado por defecto).
-        Se escogió 255, porque el valor de las opciones seleccionadas es de un solo byte.*@
-    <div class="card-body">
-        <input type="radio" name="@radname" value="255" hidden="hidden" checked />
-    </div>
-
     <div class='card-body'>
 
         <input type="radio" name="@radname" value="0" />
