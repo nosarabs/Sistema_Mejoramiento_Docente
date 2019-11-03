@@ -33,13 +33,13 @@ BEGIN
 	BEGIN
 		MERGE INTO Pregunta_con_opciones_de_seleccion AS Target
 		USING (VALUES
-				(@cod, @type) 
+				(@cod) 
 		)
-		AS Source ([Codigo],[Tipo])
+		AS Source ([Codigo])
 		ON Target.Codigo = Source.Codigo
 		WHEN NOT MATCHED BY TARGET THEN
-		INSERT (Codigo, Tipo)
-		VALUES (@cod,@type);
+		INSERT (Codigo)
+		VALUES (@cod);
 	END;
 END
 

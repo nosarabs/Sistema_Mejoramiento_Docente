@@ -76,7 +76,7 @@ BEGIN
 	EXEC [dbo].[AgregarPreguntaConOpcion] -- Revisar esto. Hay que ver si se agrega una pregunta de Sí/no igual que una con opciones
 		@cod = 'CI0128P2',
 		@type = 'U',
-		@enunciado = '¿Qué tan útil considera que es tener un profesor que haga el papel de <<PO>> dentro del curso?';
+		@enunciado = '¿Qué tan útil considera que es tener un profesor que haga el papel de ''PO'' dentro del curso?';
 
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 0, @texto = 'No mucho';
 	EXEC [dbo].[AgregarOpcion] @cod = 'CI0128P2', @orden = 1, @texto = 'Un poco';
@@ -102,15 +102,15 @@ BEGIN
 	-- o realizar inserciones a varias tablas como las preguntas de selección
 	MERGE INTO Pregunta AS Target
 	USING (VALUES 
-		('CI0128P4', '¿Cuál es su opinión general del curso?'),
-		('CI0128P5', '¿Cuál es su opinión sobre el/la profesor(a)?'),
-		('CI0128P8', '¿Cuál es su opinión del profesor en su papel de <<PO>>?')
+		('CI0128P4', '¿Cuál es su opinión general del curso?', 'L'),
+		('CI0128P5', '¿Cuál es su opinión sobre el/la profesor(a)?', 'L'),
+		('CI0128P8', '¿Cuál es su opinión del profesor en su papel de ''PO''?', 'L')
 	)
-	As Source ([Codigo],[Enunciado])
+	As Source ([Codigo],[Enunciado], [Tipo])
 	ON Target.Codigo = Source.Codigo
 	WHEN NOT MATCHED BY TARGET THEN 
-	INSERT (Codigo, Enunciado)
-	VALUES (Codigo,Enunciado);
+	INSERT (Codigo, Enunciado, Tipo)
+	VALUES (Codigo,Enunciado, Tipo);
 
 	-- Pregunta 6: Para la sección de profesores
 	EXEC [dbo].[AgregarPreguntaConOpcion] 
