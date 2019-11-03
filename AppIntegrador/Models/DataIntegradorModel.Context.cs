@@ -516,5 +516,68 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[Entities].[CarrerasXPerfilXUsuario](@correoUsuario, @param2)", correoUsuarioParameter, param2Parameter);
         }
+    
+        public virtual int TienePermiso(string correoUsuario, string perfil, string codCarrera, string codEnfasis, Nullable<int> permiso, ObjectParameter resultado)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("codEnfasis", codEnfasis) :
+                new ObjectParameter("codEnfasis", typeof(string));
+    
+            var permisoParameter = permiso.HasValue ?
+                new ObjectParameter("permiso", permiso) :
+                new ObjectParameter("permiso", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermiso", correoUsuarioParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, permisoParameter, resultado);
+        }
+    
+        public virtual int TienePermisoSinEnfasis(string correoUsuario, string perfil, string codCarrera, Nullable<int> permiso, ObjectParameter resultado)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var permisoParameter = permiso.HasValue ?
+                new ObjectParameter("permiso", permiso) :
+                new ObjectParameter("permiso", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasis", correoUsuarioParameter, perfilParameter, codCarreraParameter, permisoParameter, resultado);
+        }
+    
+        public virtual int TienePermisoSinEnfasisNiCarrera(string correoUsuario, string perfil, Nullable<int> permiso, ObjectParameter resultado)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var permisoParameter = permiso.HasValue ?
+                new ObjectParameter("permiso", permiso) :
+                new ObjectParameter("permiso", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
     }
 }

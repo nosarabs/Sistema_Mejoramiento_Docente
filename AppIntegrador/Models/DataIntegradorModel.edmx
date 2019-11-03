@@ -1636,23 +1636,26 @@
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
         </Function>
-        <Function Name="TienePermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
-          <Parameter Name="correoUsuario" Type="nvarchar" Mode="In" />
-          <Parameter Name="perfil" Type="nvarchar" Mode="In" />
+        <Function Name="TienePermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
           <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
           <Parameter Name="permiso" Type="int" Mode="In" />
+          <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
-        <Function Name="TienePermisoSinEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
+        <Function Name="TienePermisoSinEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="nvarchar" Mode="In" />
           <Parameter Name="perfil" Type="nvarchar" Mode="In" />
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
           <Parameter Name="permiso" Type="int" Mode="In" />
+          <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
-        <Function Name="TienePermisoSinEnfasisNiCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
+        <Function Name="TienePermisoSinEnfasisNiCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="nvarchar" Mode="In" />
           <Parameter Name="perfil" Type="nvarchar" Mode="In" />
           <Parameter Name="permiso" Type="int" Mode="In" />
+          <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
         <EntityContainer Name="DataIntegradorModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
@@ -3516,6 +3519,27 @@
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
             <Parameter Name="param2" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="TienePermiso">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="TienePermisoSinEnfasis">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="TienePermisoSinEnfasisNiCarrera">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4068,6 +4092,9 @@
           <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
           <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
           <FunctionImportMapping FunctionImportName="CarrerasXPerfilXUsuario" FunctionName="DataIntegradorModel.Store.CarrerasXPerfilXUsuario" />
+          <FunctionImportMapping FunctionImportName="TienePermiso" FunctionName="DataIntegradorModel.Store.TienePermiso" />
+          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
+          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -2,17 +2,15 @@
 permisos y perfiles. Este procedimiento devuelve TRUE si el usuario con el correo ingresado, con el perfil en la carrera
 tiene el permiso indicado, FALSE en caso contrario.*/
 
-CREATE FUNCTION [dbo].[TienePermisoSinEnfasis]
+CREATE PROCEDURE [dbo].[TienePermisoSinEnfasis]
 (
 	@correoUsuario NVARCHAR(50),
 	@perfil NVARCHAR(50),
 	@codCarrera VARCHAR(10),
-	@permiso INT
+	@permiso INT,
+	@resultado BIT OUTPUT
 )
-RETURNS BIT
 AS
-BEGIN
-	DECLARE @Resultado BIT = 1;
 	IF (@permiso in 
 	(select PP.PermisoId from UsuarioPerfil as UP JOIN PerfilPermiso as PP ON 
 		UP.Perfil = PP.Perfil AND 
@@ -21,9 +19,7 @@ BEGIN
 	 where UP.Usuario = @correoUsuario AND UP.CodCarrera = @codCarrera AND PP.Perfil = @perfil
 	)
 )
-	SET @Resultado = 1
+	SET @resultado = 1
 ELSE
-	SET @Resultado = 0
+	SET @resultado = 0
 
-	RETURN @Resultado
-END
