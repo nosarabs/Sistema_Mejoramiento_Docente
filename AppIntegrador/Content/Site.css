@@ -421,8 +421,8 @@ html, body {
     border-radius: 8px;
     background-color: lightgray;
     width: 100%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
     padding-top: 1%;
 }
 
@@ -462,6 +462,15 @@ html, body {
 
 .Info-parrafo-fu {
     font-family: Arial;
+}
+
+.planDiv2 {
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
 }
 /*Termina Planes de mejora*/
 

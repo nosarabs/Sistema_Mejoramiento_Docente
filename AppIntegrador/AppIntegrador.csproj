@@ -436,6 +436,8 @@
     <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

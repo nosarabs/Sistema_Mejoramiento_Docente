@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
@@ -94,16 +95,17 @@ namespace AppIntegrador.Controllers
 
         //Añadido por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //Retorna la nueva vista de planes de mejora adaptada a las solicitudes del PO.
+        //Retorna la nueva vista de creación de planes de mejora adaptada a las solicitudes del PO.
         public ActionResult CreateNuevo()
         {
             AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
             return View("CrearPlanDeMejora", plan);
         }
 
-        // POST: PlanDeMejora/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //Modificado por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //crea un plan de mejora este método solo es llamado internamente por lo que retorna un void
+        //pero esto puede cambiarse para que retorne true o false y validad la creación
         [HttpPost]
         [ValidateAntiForgeryToken]
         public void Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
@@ -190,6 +192,10 @@ namespace AppIntegrador.Controllers
             return View("Index");
         }
 
+        //Modificado por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //permite editar los datos de un plan de mejora 
+        //retorna la misma vista de editar para que puedan ser añadidos los objetivos, acciones y acionables al mismo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditarPlanDeMejora2([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
@@ -237,19 +243,19 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-
-        //////////////////////////////////////////////BI///////////////////////////////////////////////////
-
-        // Method that creates the plan and sets the next "codigo" automatically
+        //Modificado por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //crea un plan de mejora con un id que se determina automáticamente
+        //retorna el view que permite editar un plan de mejora completo para añadir objetivos, acciones y accionables
         public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
         {
             int id = -1;
             var planTemp = new PlanDeMejora();
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
-                if( DateTime.Compare(fechaInicio, fechaFin) < 0)
+                if (DateTime.Compare(fechaInicio, fechaFin) < 0)
                 {
-                    
+
                     var plans = this.db.PlanDeMejora.ToList();
                     var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
                     planTemp.codigo = codigoTemporal + 1;
@@ -265,6 +271,7 @@ namespace AppIntegrador.Controllers
                 }
             }
             //return RedirectToAction("Index");
+            ViewBag.IdPlan = id;
             return View("EditarPlanDeMejora2", planTemp);
         }
 
@@ -288,6 +295,64 @@ namespace AppIntegrador.Controllers
         {
             this.DeleteConfirmed(codigoPlan);
             return RedirectToAction("Index");
+        }
+
+        //Añadido por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //Retorna un partial view que permite crear un objetivo en el plan con el id recibido
+        [ChildActionOnly]
+        public PartialViewResult divObjetivo(int id)
+        {
+            AppIntegrador.Models.Metadata.ObjetivoMetadata objetivo = new AppIntegrador.Models.Metadata.ObjetivoMetadata();
+            ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
+            ViewBag.IdPlan = id;
+            return PartialView("_crearObjetivo", objetivo);
+        }
+
+
+        //Modificado por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //Si no hay fechas vacías o que no tengan sentido crea un objetivo
+        //De momento retorna un EmtyResult pero esto se puede modificar para las validaciones
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public EmptyResult CrearObjetivo([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
+        {
+            bool error = false;
+
+            if (objetivo.fechaInicio != null && objetivo.fechaFin != null)
+            {
+                if ((DateTime.Compare(objetivo.fechaInicio.Value, objetivo.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if (!error)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Objetivo.Add(objetivo);
+                    db.SaveChanges();
+                    IEnumerable<AppIntegrador.Models.Objetivo> objetivos = db.Objetivo.Where(o => o.codPlan == objetivo.codPlan);
+                    //return PartialView("_objetivosDelPlan", objetivos);
+                    ViewBag.NuevoObj = 1;
+                    return new EmptyResult();
+                }
+            }
+            //ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre", objetivo.codPlantilla);
+            //ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre", objetivo.nombTipoObj);
+            //return RedirectToAction("Index", "PlanDeMejora");
+            return new EmptyResult();
+        }
+
+        //Añadido por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //Permite actualizar la vista parcial de objetivos al crear uno nuevo
+        public ActionResult RefrescarObjetivos(int Id)
+        {
+            ViewBag.IdPlan = Id;
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == Id);
+            return PartialView("_objetivosDelPlan", objetivosDePlan);
         }
     }
 }

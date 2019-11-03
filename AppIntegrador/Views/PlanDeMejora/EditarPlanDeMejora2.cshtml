@@ -1,9 +1,19 @@
 ﻿@model AppIntegrador.Models.PlanDeMejora
+@*
+    Creado por: Johan Córdoba
+    Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+    Vista que contiene todo el plan de mejora después de creado y permite añadir objetivos, acciones y accionables
+*@
 
 <div class="fullWidth">
+    <div id="modal-containerPlanes" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+
     <div class="planDiv">
 
-        <h2>Crear Plan de mejora</h2>
+        <h2>Crear Plan de mejora @ViewBag.IdPlan </h2>
 
         <form role="form" id="newPlan" action="EditarPlanDeMejora2" method="post">
             @Html.AntiForgeryToken()
@@ -49,10 +59,25 @@
                 </div>
             </div>
         </form>
+
+        <div class="planDiv2">
+            <div id="crearNuevoObjetivo">
+                <h2>Objetivos del Plan de mejora @ViewBag.IdPlan </h2>
+                <div id="crear">
+                    @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
+                </div>
+            </div>
+            <div>
+                <h4 style="text-align:center">Lista de objetivos</h4>
+
+                <div id="divObjetivos">
+                    @Html.Partial("_objetivosDelPlan", Model.Objetivo)
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
-
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -60,4 +85,78 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(function () {
+            // Initialize numeric spinner input boxes
+            //$(".numeric-spinner").spinedit();
+
+            // Initalize modal dialog
+            // attach modal-container bootstrap attributes to links with .modal-link class.
+            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+            $('body').on('click', '.modal-link', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-containerPlanes');
+                $(this).attr('data-toggle', 'modal');
+            });
+
+            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modal-containerPlanes').modal('hide');
+            });
+
+            //clear modal cache, so that new content can be loaded
+            $('#modal-containerPlanes').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+
+            $('#CancelModal').on('click', function () {
+                return false;
+            });
+
+            $('body').on('click', '#CANCEL', function (e) {
+                alert(e.type);
+            });
+
+            //$('body').on('click', '#crearObjetivoButton', function (e) {
+            //    aquí también se puede validar
+            //});
+
+            //modifica la vista parcial de los objetivos al crear uno nuevo
+            $('#newObjetivo').submit(function (e) {
+                //alert("dentro del submit");
+                var id = "@ViewBag.IdPlan";
+                e.preventDefault();
+                $.ajax({
+                    url:'/PlanDeMejora/CrearObjetivo/',
+                    type:'post',
+                    data:$('#newObjetivo').serialize(),
+                    success:function(){
+                        $.ajax({
+                            type: 'GET',
+                            url: "@Url.Content("/PlanDeMejora/RefrescarObjetivos/")",
+                            data : {
+                                        Id:id  //Data need to pass as parameter
+                                    },
+                            dataType: 'html', //dataType - html
+                            success:function(result)
+                            {
+                                //alert ("Inside ajax"),
+                                $('#divObjetivos').html(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+            @*$("#crearObjetivoButton"). click(function (e) {
+                aquí se puede validar sobre objetivos
+            });*@
+
+        });
+
+        //actualizarObjetivos = function (id) {
+            //poner aquí la función de ajax anidada
+        //};
+    </script>
 }
