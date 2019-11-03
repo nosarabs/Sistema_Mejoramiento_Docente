@@ -10,49 +10,17 @@
 <form id="newPlan" onsubmit="sayHello();">
 
     <div class="sameRow">
-        
-        <div>
-            <div class="sameRow">
-                <h6>@Html.LabelFor(model => plan.nombre, "Nombre:")</h6>
-                &nbsp;
-                <div class="sameColumn">
-                    @Html.EditorFor(model => plan.nombre, new
-                    {
-                        htmlAttributes = new
-                        {
-                           @class = "form-control",
-                           required = "required",
-                           placeholder = "Máximo 50 caracteres",
-                           maxlength = "50",
-                           @onkeyup = "cambioNombrePlan(this)"
-                       }
-                    })
-                    <span class="error">
-                        <p id="nombrePDM_eror">Te quedan 50 letras.</p>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
 
         <div>
             <div class="sameColumn">
-                @Html.LabelFor(model => plan.fechaInicio, "Fecha Inicio")
-                <div class="sameColumn">
-                    @Html.EditorFor(model => plan.fechaInicio, new
-                    {
-                        htmlAttributes = new
-                        {
-                            id = "fechaInicioPlanDM",
-                            @class = "form-control",
-                            required = "required",
-                            @onChange = "validacionFechas()"
-                       }
-                    })
-                    <span class="error">
-                        <p id="fechaInicioPDM_eror" class="redError">Campo Obligatorio</p>
-                    </span>
+                <div class="sameRow">
+                    <h6>@Html.LabelFor(model => plan.nombre, "Nombre:")</h6>
+                    &nbsp;
+                    @Html.EditorFor(model => plan.nombre, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Máximo 50 caracteres", maxlength = "50", @onkeyup = "cambioNombrePlan(this)" } })
+                </div>
+
+                <div class="alignRight">
+                    <span class="regularMsj"> <p id="nombrePDM_eror">50 letras restantes.</p> </span>
                 </div>
             </div>
         </div>
@@ -60,44 +28,54 @@
 
         <div>
             <div class="sameColumn">
-                @Html.LabelFor(model => plan.fechaFin, "Fecha Fin")
-                <div class="sameColumn">
-                    @Html.EditorFor(model => plan.fechaFin, new
-                    {
-                        htmlAttributes = new
-                        {
-                            id = "fechaFinalPlanDM",
-                            @class = "form-control",
-                            required = "required",
-                            @onChange = "validacionFechas()"
-                       }
-                    })
-                    <span class="error">
-                        <p id="fechaFinalPDM_eror" class="redError">Campo Obligatorio</p>
-                    </span>
+                <div class="sameRow">
+                    @Html.LabelFor(model => plan.fechaInicio, "Inicio")
+                    &nbsp;
+                    @Html.EditorFor(model => plan.fechaInicio, new { htmlAttributes = new { id = "fechaInicioPlanDM", @class = "form-control", required = "required", @onChange = "validacionFechas()" } })
+                </div>
+
+                <div class="alignRight">
+                    <span class="error regularMsj"><p id="fechaInicioPDM_eror regularMsj" class="redError">Campo Obligatorio</p></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="sameColumn">
+                <div class="sameRow">
+                    @Html.LabelFor(model => plan.fechaFin, "Fin")
+                    &nbsp;
+                    @Html.EditorFor(model => plan.fechaFin, new { htmlAttributes = new { id = "fechaFinalPlanDM", @class = "form-control", required = "required", @onChange = "validacionFechas()" } })
+                </div>
+
+                <div class="alignRight">
+                    <span class="error regularMsj"><p id="fechaFinalPDM_eror regularMsj" class="redError">Campo Obligatorio</p></span>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="sameRow">
-        <div>
-            <div class="sameRow">
-                <h6>Asignado a:</h6>
-                &nbsp;
-                <div class="sameColumn">
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="formulario">Formulario</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="personas">Personas</label>
-                    </div>
-                </div>
-            </div>
 
+        <div class="halfSeccion sameRowCheckboxes">
+            <div>
+                @Html.LabelFor(model => plan.fechaFin, "Asignado a:")
+            </div>
+            &nbsp;
+            <label class="checkboxPDM">
+                <input type="checkbox" onchange="activarDesactivar(this, document.getElementById('opcionesFormulario'))" value="formulario" />
+                Formulario
+            </label>
+            &nbsp;
+            <label class="checkboxPDM">
+                <input type="checkbox" onchange="activarDesactivar(this, document.getElementById('opcionesPersonas'))" value="formulario" />
+                Personas
+            </label>
         </div>
-        <div>
-            <div class="sameRow">
+
+        <div class="quarterSeccion hideElement" id="opcionesFormulario">
+            <div class="sameRowSelect">
                 <h6>Formulario:</h6>
                 &nbsp;
                 <select name="Formularios">
@@ -108,8 +86,9 @@
                 </select>
             </div>
         </div>
-        <div>
-            <div class="sameRow">
+
+        <div class="quarterSeccion hideElement" id="opcionesPersonas">
+            <div class="sameRowSelect">
                 <h6>Personas:</h6>
                 &nbsp;
                 <select name="Formularios">
@@ -125,7 +104,7 @@
     <br />
 
     <div class="alignRight">
-        <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" />
+        <input type="submit" id="enviarFormularioCompletPDM" value="Crear Plan de Mejora" class="btn btn-success" disabled />
         <input type="submit" id="send" style="display:none;" value="Guardar cambios a Plan de Mejora" class="btn btn-success" disabled="disabled" />
     </div>
 </form>

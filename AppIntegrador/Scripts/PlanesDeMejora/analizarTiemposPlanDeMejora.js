@@ -75,8 +75,17 @@ function cambioNombrePlan(nombrePlan) {
     errorMessage.innerHTML = msjEspaciosSobrantes + espaciosSobrantes + " letras."
 }
 
-//Este metodo activa y desactiva el boton de submit del form the planes de mejora
-funtion anular_activar_Submit(estado)
+// Metodo que se encarga de mostrar o ocualtar el segundo elemento que se le envia como parametro
+function activarDesactivar(checkbox, elemento)
 {
-    // Este metodo acti
+    if (checkbox.checked) {
+        elemento.style.display = "block";
+    } else { //If it has been unchecked.
+        elemento.style.display = "none";
+    }
+}
+
+
+function enableSubmitPDM() {
+    document.getElementById("enviarFormularioCompletPDM").disabled = false;
 }
