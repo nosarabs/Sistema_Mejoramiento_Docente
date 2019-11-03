@@ -12,7 +12,7 @@ namespace AppIntegrador.Controllers
 {
     public class AccionDeMejoraController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private Entities db = new Entities();
 
         // GET: AccionDeMejora
         public ActionResult Index()

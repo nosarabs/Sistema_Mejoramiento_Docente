@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
     public class FormulariosController : Controller
     {
         
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private Entities db = new Entities();
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
 
 

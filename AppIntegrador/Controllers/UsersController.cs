@@ -17,7 +17,7 @@ namespace AppIntegrador
     {
         private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
 
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private Entities db = new Entities();
 
         // GET: Users
         /*Shows the list of users and persons in the database. Only displays users whose associated person exists.
@@ -222,7 +222,7 @@ namespace AppIntegrador
                 usuarioPersona.Usuario != null )
             {
                 /*To edit an user, first fetch it from the database using the stored email in the other edit function.*/
-                using (var db = new DataIntegradorEntities()) {
+                using (var db = new Entities()) {
 
                     string formerUserMail = (string)System.Web.HttpContext.Current.Application["CurrentEditingUser"];
                     var originalUser = db.Usuario.SingleOrDefault(u => u.Username == formerUserMail);

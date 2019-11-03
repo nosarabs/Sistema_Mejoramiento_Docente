@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private Entities db = new Entities();
 
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
@@ -38,7 +38,15 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Login");
 
-            }
+            }/*
+            List<string> perfiles = new List<string>();
+            using (var context = new Entities())
+            {
+                var profileList = from Profile in db.PerfilesXUsuario("andres@mail.com")
+                                  select Profile;
+                foreach (var profileName in profileList)
+                    perfiles.Add(profileName.NombrePefil);
+            }*/
             return View();
         }
 
@@ -175,7 +183,7 @@ namespace AppIntegrador.Controllers
         private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser) {
 
             /*To lock the user, first fetch it from the database.*/
-            using (var context = new DataIntegradorEntities())
+            using (var context = new Entities())
             {
                 var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
                 if (user != null)
@@ -190,7 +198,7 @@ namespace AppIntegrador.Controllers
             await Task.Delay(LOGIN_TIMEOUT).ConfigureAwait(false);
 
             /*Then reactivates the user.*/
-            using (var context = new DataIntegradorEntities())
+            using (var context = new Entities())
             {
                 var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
                 if (user != null)
@@ -205,7 +213,7 @@ namespace AppIntegrador.Controllers
         /*Function to tell whether a given user account is locked or not.*/
         private static bool IsUserLocked(Usuario objUser) {
             bool locked = false;
-            using (var context = new DataIntegradorEntities())
+            using (var context = new Entities())
             {
                 var query = context.Usuario
                     .Where(u => u.Username == objUser.Username)
