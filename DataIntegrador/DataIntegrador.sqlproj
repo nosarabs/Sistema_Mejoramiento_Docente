@@ -149,6 +149,7 @@
     <Build Include="Usuarios y Perfiles\Procedures\TienePermiso.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasis.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasisNiCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarrera.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

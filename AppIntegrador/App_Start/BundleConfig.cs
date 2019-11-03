@@ -40,7 +40,8 @@ namespace AppIntegrador
                       "~/Scripts/Plugins/sweetalert2.all.js",
                       "~/Scripts/UsuariosYPerfiles/login.js",
                       "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js",
-                      "~/Scripts/UsuariosYPerfiles/alertsHandler.js"
+                      "~/Scripts/UsuariosYPerfiles/alertsHandler.js",
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js"
                       ));
 
         }
