@@ -34,6 +34,8 @@ public partial class Opciones_seleccionadas_respuesta_con_opciones
 
     public string PCodigo { get; set; }
 
+    public string SCodigo { get; set; }
+
     public byte OpcionSeleccionada { get; set; }
 
 

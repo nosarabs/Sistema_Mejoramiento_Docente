@@ -22,9 +22,13 @@ public partial class Seccion
     public Seccion()
     {
 
-        this.Formulario_tiene_seccion = new HashSet<Formulario_tiene_seccion>();
+        this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
+
+        this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
 
         this.Seccion_tiene_pregunta = new HashSet<Seccion_tiene_pregunta>();
+
+        this.Formulario_tiene_seccion = new HashSet<Formulario_tiene_seccion>();
 
     }
 
@@ -37,11 +41,19 @@ public partial class Seccion
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
+    public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Responde_respuesta_libre> Responde_respuesta_libre { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Formulario_tiene_seccion> Formulario_tiene_seccion { get; set; }
 
 }
 

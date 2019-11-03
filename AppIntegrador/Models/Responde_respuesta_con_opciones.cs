@@ -43,6 +43,8 @@ public partial class Responde_respuesta_con_opciones
 
     public string PCodigo { get; set; }
 
+    public string SCodigo { get; set; }
+
     public string Justificacion { get; set; }
 
 
@@ -52,6 +54,8 @@ public partial class Responde_respuesta_con_opciones
     public virtual ICollection<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
 
     public virtual Pregunta Pregunta { get; set; }
+
+    public virtual Seccion Seccion { get; set; }
 
     public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
 
