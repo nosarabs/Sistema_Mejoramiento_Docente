@@ -315,6 +315,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
@@ -344,6 +346,97 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\BootstrapSccs\bootstrap-grid.scss" />
+    <Content Include="Content\BootstrapSccs\bootstrap-reboot.scss" />
+    <Content Include="Content\BootstrapSccs\bootstrap.scss" />
+    <Content Include="Content\BootstrapSccs\_alert.scss" />
+    <Content Include="Content\BootstrapSccs\_badge.scss" />
+    <Content Include="Content\BootstrapSccs\_breadcrumb.scss" />
+    <Content Include="Content\BootstrapSccs\_button-group.scss" />
+    <Content Include="Content\BootstrapSccs\_buttons.scss" />
+    <Content Include="Content\BootstrapSccs\_card.scss" />
+    <Content Include="Content\BootstrapSccs\_carousel.scss" />
+    <Content Include="Content\BootstrapSccs\_close.scss" />
+    <Content Include="Content\BootstrapSccs\_code.scss" />
+    <Content Include="Content\BootstrapSccs\_custom-forms.scss" />
+    <Content Include="Content\BootstrapSccs\_dropdown.scss" />
+    <Content Include="Content\BootstrapSccs\_forms.scss" />
+    <Content Include="Content\BootstrapSccs\_functions.scss" />
+    <Content Include="Content\BootstrapSccs\_grid.scss" />
+    <Content Include="Content\BootstrapSccs\_images.scss" />
+    <Content Include="Content\BootstrapSccs\_input-group.scss" />
+    <Content Include="Content\BootstrapSccs\_jumbotron.scss" />
+    <Content Include="Content\BootstrapSccs\_list-group.scss" />
+    <Content Include="Content\BootstrapSccs\_media.scss" />
+    <Content Include="Content\BootstrapSccs\_mixins.scss" />
+    <Content Include="Content\BootstrapSccs\_modal.scss" />
+    <Content Include="Content\BootstrapSccs\_nav.scss" />
+    <Content Include="Content\BootstrapSccs\_navbar.scss" />
+    <Content Include="Content\BootstrapSccs\_pagination.scss" />
+    <Content Include="Content\BootstrapSccs\_popover.scss" />
+    <Content Include="Content\BootstrapSccs\_print.scss" />
+    <Content Include="Content\BootstrapSccs\_progress.scss" />
+    <Content Include="Content\BootstrapSccs\_reboot.scss" />
+    <Content Include="Content\BootstrapSccs\_root.scss" />
+    <Content Include="Content\BootstrapSccs\_spinners.scss" />
+    <Content Include="Content\BootstrapSccs\_tables.scss" />
+    <Content Include="Content\BootstrapSccs\_toasts.scss" />
+    <Content Include="Content\BootstrapSccs\_tooltip.scss" />
+    <Content Include="Content\BootstrapSccs\_transitions.scss" />
+    <Content Include="Content\BootstrapSccs\_type.scss" />
+    <Content Include="Content\BootstrapSccs\_utilities.scss" />
+    <Content Include="Content\BootstrapSccs\_variables.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_alert.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_background-variant.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_badge.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_border-radius.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_box-shadow.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_breakpoints.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_buttons.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_caret.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_clearfix.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_deprecate.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_float.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_forms.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_gradients.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_grid-framework.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_grid.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_hover.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_image.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_list-group.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_lists.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_nav-divider.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_pagination.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_reset-text.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_resize.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_screen-reader.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_size.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_table-row.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-emphasis.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-hide.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-truncate.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_transition.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_visibility.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_align.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_background.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_borders.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_clearfix.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_display.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_embed.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_flex.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_float.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_overflow.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_position.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_screenreaders.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_shadows.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_sizing.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_spacing.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_stretched-link.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_text.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_visibility.scss" />
+    <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
+    <Content Include="compilerconfig.json" />
+    <Content Include="Content\Main.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -521,7 +614,9 @@
     <Error Condition="!Exists('packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+    <Error Condition="!Exists('packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets'))" />
   </Target>
+  <Import Project="packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets" Condition="Exists('packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
