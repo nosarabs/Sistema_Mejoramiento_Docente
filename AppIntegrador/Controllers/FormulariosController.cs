@@ -39,69 +39,49 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
-
-            // Sacar el nombre de cada formulario y el código en el orden definido.
-            SqlParameter codForm = new SqlParameter("CodForm", id);
-            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
-
-            // Agrego cada seccion a la lista de secciones
-            foreach (var seccion in nombresSecciones)
+            LlenarFormulario formulario = new LlenarFormulario { Nombre = id, Secciones = new List<SeccionConPreguntas>() };
+            List<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id).ToList();
+            foreach(var seccion in seccionesDeFormulario)
             {
-                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
-
-                // Obtiene los códigos de todas las preguntas relacionadas a la sección
-                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
-                // Lista con cada tipo de pregunta
-                TodasLasPreguntas todasLasPreguntas = new TodasLasPreguntas();
-                // Lista que contiene cada pregunta con sus opciones
-                List<PreguntaConOpciones> preguntasConOpciones = new List<PreguntaConOpciones>();
-
-                // Agrego cada pregunta a la lista de preguntas
-                foreach (string codigo in Codigos)
+                List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new TodasLasPreguntas() };
+                nuevaSeccion.Preguntas.Preguntas = new List<PreguntaConCodigoSeccion>();
+                foreach(var pregunta in preguntas)
                 {
-                    PreguntaConOpciones pregunta = new PreguntaConOpciones();
-
-                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
-                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
-               
-                    // Se asigna el código de la pregunta y de sección, que serán usados para identificar la pregunta luego
-                    pregunta.CodigoPregunta = codigo;
-                    pregunta.CodigoSeccion = seccion.Codigo;
-
-                    // Obtiene el enunciado de una pregunta
-                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
-
-                    // Obtiene las opciones de una pregunta
-                    List<Opcion> opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
-                    pregunta.Opciones = opciones.Select(Opcion => Opcion.Texto);
-
-                    // Añade la pregunta con sus opciones a la lista
-                    preguntasConOpciones.Add(pregunta);
+                    nuevaSeccion.Preguntas.Preguntas.Add(new PreguntaConCodigoSeccion
+                    {
+                        Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                        CodigoSeccion = nuevaSeccion.CodigoSeccion
+                    });
+                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas.Preguntas);
                 }
+                formulario.Secciones.Add(nuevaSeccion);
+            }
 
-                todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
-                todasLasPreguntas.CodigoSeccion = seccion.Codigo;
+            return View(formulario);
+        }
 
-                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
-                {
-                    CodigoSeccion = seccion.Codigo,
-                    Nombre = seccion.Nombre,
-                    Preguntas = todasLasPreguntas
-                };
-
-                secciones.Add(seccionCompleta);
-            } // Foreach section in nombresSecciones
-
-            LlenarFormulario formularioCompleto = new LlenarFormulario
+        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConCodigoSeccion> preguntas)
+        {
+            if (preguntas != null)
             {
-                Nombre = formularioDB.Nombre,
-                Secciones = secciones
-
-            };
-
-            return View(formularioCompleto);
+                foreach (PreguntaConCodigoSeccion pregunta in preguntas)
+                {
+                    if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
+                    {
+                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList().FirstOrDefault();
+                        if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion =
+                                db.Opciones_de_seleccion.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList();
+                        }
+                        else if (pregunta.Pregunta.Tipo == "E")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -114,25 +94,25 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(formulario.Where(x => x.Codigo.Contains(input1)).ToList());
+                return View("Index", formulario.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Nombre: " + input2;
-                return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
+                return View("Index", formulario.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
         }
 
@@ -156,7 +136,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Create()
         {
             crearFormulario.seccion = db.Seccion;
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         // POST: Formularios/Create
@@ -181,11 +161,11 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         [HttpPost]
-        public ActionResult GuardarRespuestas(PreguntaConOpciones objUser)
+        public ActionResult GuardarRespuestas(PreguntaConCodigoSeccion objUser)
         {
             DateTime today = DateTime.Today;
 

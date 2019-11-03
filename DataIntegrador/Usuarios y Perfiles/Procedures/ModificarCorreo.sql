@@ -3,12 +3,12 @@
 	@nuevo varchar(50),
 	@resultado bit output
 AS
-	-- Cambiar nombre de usuario si no existe ya ese nombre
-	IF NOT EXISTS (SELECT TOP 1 Username FROM [dbo].[Usuario] WHERE Username=@nuevo)
+	-- Cambiar correo si no existe ya en la base
+	IF NOT EXISTS (SELECT TOP 1 Correo FROM [dbo].[Persona] WHERE Correo=@nuevo)
 	BEGIN
-		UPDATE Usuario
-		SET Username = @nuevo
-		WHERE Username = @anterior
+		UPDATE Persona
+		SET Correo = @nuevo
+		WHERE Correo = @anterior
 
 		SET @resultado = 1;
 	END

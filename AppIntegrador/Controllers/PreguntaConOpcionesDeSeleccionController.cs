@@ -40,38 +40,58 @@ namespace AppIntegrador.Controllers
         //the first parameter is the option that we choose and the second parameter will use the textbox value  
         public ActionResult Index(string input0, string input1, string input2, string input3)
         {
-            var pregunta_con_opciones_de_seleccion = db.Pregunta_con_opciones_de_seleccion;
+            var pregunta = db.Pregunta;
 
             ViewBag.filtro = "Ninguno";
             if (input0 == null && input1 == null && input2 == null && input3 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return View(pregunta_con_opciones_de_seleccion.ToList());
+                return View(pregunta.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Codigo.Contains(input1)).ToList());
+                return View(pregunta.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if ( input2.Length > 0)
             {
                 ViewBag.filtro = "Enunciado: " + input2;
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Pregunta_con_opciones.Pregunta.Enunciado.Contains(input2)).ToList());
+                return View(pregunta.Where(x => x.Enunciado.Contains(input2)).ToList());
             }
             // si se seleccionó el tipo
             else if (input3.Length > 0)
             {
-                var aux = input3 == "U" ? "Selección Única" : "Seleción Múltiple";
+                var aux = "";
+                switch (input3)
+                {
+                    case "U":
+                        aux = "Selección Única";
+                        break;
+                    case "M":
+                        aux = "Selección Múltiple";
+                        break;
+                    case "L":
+                        aux = "Respuesta libre";
+                        break;
+                    case "S":
+                        aux = "Sí/No/NR";
+                        break;
+                    case "E":
+                        aux = "Escalar";
+                        break;
+                    default:
+                        break;
+                }
                 ViewBag.filtro = "Tipo: " + aux;
-                return View(pregunta_con_opciones_de_seleccion.Where(x => x.Tipo.Contains(input3)).ToList());
+                return View(pregunta.Where(x => x.Tipo.Contains(input3)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return View(pregunta_con_opciones_de_seleccion.ToList());
+                return View(pregunta.ToList());
             }
         }
 
@@ -110,8 +130,6 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_con_opciones_de_seleccion pregunta, List<Opciones_de_seleccion> Opciones)
         {
-            // Para esta fase del proyecto solo se soportan preguntas de selección única
-            pregunta.Tipo = "U";
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Pregunta_con_opciones.Pregunta.Enunciado.Length > 0)
             {
                 bool validOptions = Opciones != null;

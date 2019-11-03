@@ -2,7 +2,7 @@
 	@sectionCode varchar(8)
 AS
 BEGIN
-	SELECT sp.PCodigo
-	FROM Seccion_tiene_pregunta sp
+	SELECT p.Codigo, p.Enunciado, p.Tipo
+	FROM Seccion_tiene_pregunta sp JOIN Pregunta p ON sp.PCodigo = p.Codigo
 	WHERE sp.SCodigo = @sectionCode;
 END;

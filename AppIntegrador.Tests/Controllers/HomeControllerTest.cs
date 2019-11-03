@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Models;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -13,42 +15,72 @@ namespace AppIntegrador.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void LoginBlock()
         {
-            // Arrange
+            DataIntegradorEntities db = new DataIntegradorEntities();
+            Usuario usuario = new Usuario();
+            usuario.Username = "berta@mail.com";
+            usuario.Password = "fsdfsfs";
+            usuario.Activo = true;
+
             HomeController controller = new HomeController();
+            Task<ActionResult> result;
+
+            result = controller.Login(usuario);
+
+            //Assert.AreNotEqual("Index", result.Result.ViewName);
+            /*
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result);*/
         }
 
+        /* TAM-1.1.6 Redirección Login */
         [TestMethod]
-        public void About()
+        public void Login()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            ViewResult result = controller.Login() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void Contact()
+        public void PasswordReset()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            ViewResult result = controller.PasswordReset() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void LoginAdminSuccess()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            Usuario usuario = new Usuario();
+            usuario.Username = "admin@mail.com";
+            usuario.Password = "admin@mail.com";
+            usuario.Activo = true;
+
+            Task<ActionResult> result = controller.Login(usuario);
+
+            Assert.IsNotNull(result);
+        }
+
+        /*Termina TAM-1.1.6 Redirección Login*/
     }
 }

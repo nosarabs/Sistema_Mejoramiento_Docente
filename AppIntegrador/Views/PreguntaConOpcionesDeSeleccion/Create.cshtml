@@ -17,8 +17,8 @@
 
     <h1>Banco de preguntas</h1>
     @* Primer contenidor, envuelve todos los elementos de crear pregunta *@
-    <div class=" panel panel-default">
-        <div class="panel-body test3">
+    <div class=" card card-default">
+        <div class="card-body test3">
             <h3>Crear pregunta de Selección Única</h3>
 
             @using (Html.BeginForm())
@@ -26,12 +26,12 @@
                 @Html.AntiForgeryToken()
 
                 // segundo contenedor, envuelve los elementos principales de una pregunta, código, enunciado y justificación
-                <div class="form-horizontal panel-group ">
-                    <div class=" panel panel-default test2">
-                        <div class="panel-body">
+                <div class="form-horizontal card-group ">
+                    <div class=" card card-default test2">
+                        <div class="card-body">
                             <div class="row">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="col-xs-2">
+                                <div class="col-sm-2">
                                     @Html.EditorFor(model => model.Codigo, new
                                    {
                                        htmlAttributes = new
@@ -44,12 +44,12 @@
                                        }
                                    })
 
-                                    <div class="contador small pull-right">0/8 caracteres usados</div>
+                                    <div class="contador small float-right">0/8 caracteres usados</div>
                                     @*Historia MSU: que el mensaje de error salga en rojo*@
                                     @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
                                 </div>
 
-                                <div class="col-md-10">
+                                <div class="col-lg-10">
                                     @Html.TextAreaFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, new
                                     {
                                         @class = "validar form-control long-textbox",
@@ -62,7 +62,7 @@
                                         @placeholder = "Enunciado de la pregunta"
                                     })
 
-                                    <div class="contador small pull-right">0/250 caracteres usados</div>
+                                    <div class="contador small float-right">0/250 caracteres usados</div>
                                     @*Historia MSU: que el mensaje de error salga en rojo*@
                                     @Html.ValidationMessageFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado, "", new { @style = "color:red" })
                                 </div>
@@ -70,15 +70,15 @@
 
                             <br />
                             <div>
-                                <input type="checkbox" class="pull-left" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
-                                <label for="showField" class="col-md-10">
+                                <input type="checkbox" class="float-left" name="showField" id="showField" value="yes" onchange="myFunction()" onclick="EnableDisableTextBox(this)">
+                                <label for="showField" class="col-lg-10">
                                     Incluir campo de justificación para la pregunta.
                                 </label>
                             </div>
                             
 
                             <div class="form-group" id="justificationField">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
                                     @Html.EditorFor(model => model.Pregunta_con_opciones.TituloCampoObservacion, new
                                     {
                                         htmlAttributes = new
@@ -91,36 +91,36 @@
                                             @onkeyup = "contarCaracteres(this)"
                                         }
                                     })
-                                    <div class="contador small pull-right">0/50 caracteres usados</div>
+                                    <div class="contador small float-right">0/50 caracteres usados</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <br />
                 <div class="form-horizontal">
 
                     @* Tercer contenidor, envuelve los elementos de las opciones de las preguntas. Con un color de fondo
                         diferente para dar difernte importancia.*@
-                    <div class="panel-group">
-                        <div class=" panel panel-default">
-                            <div class="panel-body test">
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body test">
                                 <div id="sortable">
                                 </div>
-                                <div class="custom-control custom-radio control-label col-xs-1 form-horizontal">
+                                <div class="custom-control custom-radio control-label col-sm-1 form-horizontal">
                                 </div>
                                 <br/>
-                                <div class="test col-xs-6">
-                                    <input type="button" class="btn btn-default " value="Agregar opción +" id="Add" />
+                                <div class="test col-sm-6">
+                                    <input type="button" class="btn btn-outline-light text-dark bg-white border-secondary" value="Agregar opción +" id="Add" />
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <br />
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="col-lg-offset-2 col-lg-10">
                             <input type="submit" value="Crear" class="btn btn-info" id="Create" />
-                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-outline-light text-dark bg-white border-secondary" })
                         </div>
                     </div>
 

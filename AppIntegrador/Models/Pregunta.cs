@@ -24,6 +24,7 @@ namespace AppIntegrador.Models
     
         public string Codigo { get; set; }
         public string Enunciado { get; set; }
+        public string Tipo { get; set; }
     
         public virtual Pregunta_con_opciones Pregunta_con_opciones { get; set; }
         public virtual Pregunta_con_respuesta_libre Pregunta_con_respuesta_libre { get; set; }

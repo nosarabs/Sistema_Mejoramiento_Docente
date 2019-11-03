@@ -27,6 +27,7 @@ namespace AppIntegrador.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Accionable> Accionable { get; set; }
         public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
@@ -143,17 +144,13 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntas");
         }
     
-        public virtual int AgregarPreguntaSeleccion(string codigo, string tipo)
+        public virtual int AgregarPreguntaSeleccion(string codigo)
         {
             var codigoParameter = codigo != null ?
                 new ObjectParameter("codigo", codigo) :
                 new ObjectParameter("codigo", typeof(string));
     
-            var tipoParameter = tipo != null ?
-                new ObjectParameter("tipo", tipo) :
-                new ObjectParameter("tipo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaSeleccion", codigoParameter, tipoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaSeleccion", codigoParameter);
         }
     
         public virtual int AgregarSeccion(string codigo, string nombre)
@@ -421,15 +418,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesDePregunta_Result>("ObtenerOpcionesDePregunta", questionCodeParameter);
         }
     
-        public virtual ObjectResult<string> ObtenerPreguntasDeSeccion(string sectionCode)
-        {
-            var sectionCodeParameter = sectionCode != null ?
-                new ObjectParameter("sectionCode", sectionCode) :
-                new ObjectParameter("sectionCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
-        }
-    
         public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
         {
             var codFormParameter = codForm != null ?
@@ -476,6 +464,32 @@ namespace AppIntegrador.Models
                 new ObjectParameter("codigoPregunta", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
+        }
+    
+        public virtual ObjectResult<ObtenerPreguntasDeSeccion_Result> ObtenerPreguntasDeSeccion(string sectionCode)
+        {
+            var sectionCodeParameter = sectionCode != null ?
+                new ObjectParameter("sectionCode", sectionCode) :
+                new ObjectParameter("sectionCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerPreguntasDeSeccion_Result>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
+        }
+    
+        public virtual int AgregarPreguntaRespuestaLibre(string cod, string type, string enunciado)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var enunciadoParameter = enunciado != null ?
+                new ObjectParameter("enunciado", enunciado) :
+                new ObjectParameter("enunciado", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaRespuestaLibre", codParameter, typeParameter, enunciadoParameter);
         }
     }
 }

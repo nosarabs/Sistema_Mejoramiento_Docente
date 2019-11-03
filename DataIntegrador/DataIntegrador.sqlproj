@@ -142,6 +142,7 @@
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
