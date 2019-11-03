@@ -1,7 +1,7 @@
 ﻿CREATE TABLE Periodo_activa_por
 (
 	-- Hay que cambiar varios valores cuando estén las otras tablas.
-	FCodigo CHAR(8) NOT NULL,
+	FCodigo VARCHAR(8) NOT NULL,
 	CSigla VARCHAR(10) NOT NULL,
 	GNumero TINYINT NOT NULL,
 	GAnno INT NOT NULL,

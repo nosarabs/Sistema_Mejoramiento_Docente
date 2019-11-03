@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Escalar
 (
-	Codigo CHAR(8) NOT NULL PRIMARY KEY,
+	Codigo VARCHAR(8) NOT NULL PRIMARY KEY,
 
 	-- Hay que validar los defaults
 	Incremento INT NOT NULL DEFAULT 1,

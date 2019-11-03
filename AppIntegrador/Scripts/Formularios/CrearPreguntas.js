@@ -28,15 +28,6 @@ function fixIndexes() {
     return i;
 }
 
-// Make options inside sortable id sortable
-$("#sortable").sortable({
-    axis: "y",
-    // Fix indexes of each input box when an input box is moved
-    update: function () {
-        fixIndexes();
-    },
-});
-
 // Delete option input box(es)
 function removeOption(deleteNode) {
     // Get the parent div that contains all the option modules (text, inputbox, and button)
