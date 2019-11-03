@@ -15,3 +15,13 @@ $('#dirrty-form').dirrty({
     $("#dirrty-cancel").toggleClass("btn-danger btn-default");
     $("#dirrty-cancel").text('Salir');
 });
+
+
+//TODO TAM-2.2 - Se mejora UX, solo mostrar el boton de guardar cuando la form sea valida
+//$('dirrty-form').find(':input').each(function () {
+//    if ($("#dirrty-form").valid()) {
+//        $("#create-save").attr("disabled", false);
+//    } else {
+//        $("#create-save").attr("disabled", true);
+//    }
+//});

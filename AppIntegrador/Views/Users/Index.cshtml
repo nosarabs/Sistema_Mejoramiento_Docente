@@ -4,44 +4,46 @@
     ViewBag.Title = "Index";
 }
 
+@Styles.Render("~/Content/users&profiles")
 <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
 <br />
 <div class="container">
-    <div class="row" style="display:flex;">
+    <div class="row" style="display:flex; padding-left:15px; ">
         <div class="column" style="flex:50%;">
             <h2>
                 Administración de usuarios
             </h2>
         </div>
-        <div class="column" style="flex:50%; text-align:right; vertical-align:bottom;">
+        <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
 
             <p>@Html.ActionLink("+ Agregar usuario", "Create", "Create", new { @class = "btn btn-success" })</p>
         </div>
     </div>
     <br />
-        <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-            <col width="50">
-            <thead>
-                <tr>
-                    <th>
+    <div style="max-height:650px; overflow-x:auto;">
+        <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate;">
+            @*<col width="50">*@
+            <thead class="users-list">
+                <tr class="users-list" id="selectedColumn">
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Persona.Identificacion)
                     </th>
-                    <th>
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Persona.Apellido1)
                     </th>
-                    <th>
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Persona.Apellido2)
                     </th>
-                    <th>
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Persona.Nombre1)
                     </th>
-                    <th>
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Persona.Nombre2)
                     </th>
-                    <th>
+                    <th class="users-list">
                         @Html.DisplayNameFor(model => model.Usuario.Activo)
                     </th>
-                    <th>
+                    <th class="users-list">
                         <p style="text-align:center; display:table-cell;">Acciones</p>
                     </th>
                 </tr>
@@ -71,19 +73,21 @@
                     </td>
                     <td style="text-align:center;">
                         @Html.ActionLink("Editar", "Edit", new
-                        {
-                            username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                            domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                   {
+
+                                username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                                domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
+
                         },
                              new
                              {
                                  @class = "btn btn-primary"
-                        }
+                             }
                    )
                         @Html.ActionLink("Detalles", "Details", new
                         {
-                            username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                            domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.'))
+                            username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                            domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
                         },
                              new
                              {
@@ -91,42 +95,60 @@
                         }
 
                )
-                    @{
-                        if (item.Persona.Correo != "admin@mail.com")
-                        {
-                            @Html.ActionLink("Borrar", "DeleteConfirmed", new
-                       {
-                           username = item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')),
-                           domain = item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')),
-                           confirmed = true
-                       },
-                            new
-                            {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
-                                onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
-                                "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
-                                @class = "btn btn-danger"
-                            })
+                        @{
+                            if (item.Persona.Correo != "admin@mail.com")
+                            {
+                                @Html.ActionLink("Borrar", "DeleteConfirmed", new
+                           {
+                               username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                               domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : "",
+                               confirmed = true
+                           },
+                                new
+                                {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
+                                    onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
+                                    "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
+                                    @class = "btn btn-danger"
+                                })
+                            }
+                            else
+                            {
+                                <a class="btn btn-danger disabled">Borrar</a>
+                            }
                         }
-                        else
-                        {
-                            <a class="btn btn-danger disabled">Borrar</a>
-                        }
-                   }
 
-                        </td>
+                    </td>
 
-                    </tr>
-                }
+                </tr>
+            }
 
-    </table>
+        </table>
+    </div>
 </div>
 
 @*//If there is a message in ViewBag.Message it displays it as an alert*@
-@if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
-{
-<script type="text/javascript">
-        alert("@ViewBag.AlertMessage");
-</script>
+@section Scripts
+    {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom")
+    @if (!string.IsNullOrEmpty(ViewBag.typeMessage))
+    {
+        switch (ViewBag.typeMessage)
+        {
+            case "alert":
+                <script type="text/javascript">
+                customAlert('warning','@ViewBag.NotifyMessage');;
+                </script>
+                break;
+            case "success":
+                <script type="text/javascript">
+                customAlert('success','@ViewBag.NotifyMessage');
+                </script>
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 
