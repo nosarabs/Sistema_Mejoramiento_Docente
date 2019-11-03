@@ -20,10 +20,5 @@ namespace AppIntegrador.Controllers
         {
             return View();
         }
-
-        public List<FiltroFormulariosModel> FiltrarFormularios(String codigoUA, String codigoCarrera, String codigoEnfasis, String siglaCurso, Byte? numeroGrupo, Byte? semestre, Int32? ano, String correoProfesor)
-        {
-            
-        }
     }
 }
