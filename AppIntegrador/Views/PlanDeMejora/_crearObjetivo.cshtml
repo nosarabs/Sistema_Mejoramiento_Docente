@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "control-label" })
-                        @Html.TextAreaFor(model => model.descripcion, new { @class = "form-control", rows = "3", maxlength = "250", style = "resize:vertical", placeholder = "Máximo 250 caracteres" })
+                        @Html.TextAreaFor(model => model.descripcion, new { @class = "form-control", rows = "2", maxlength = "250", style = "resize:vertical", placeholder = "Máximo 250 caracteres" })
                         @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
                     </div>
                 </div>

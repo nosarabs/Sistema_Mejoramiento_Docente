@@ -472,7 +472,15 @@ html, body {
     padding-right: 3%;
     padding-top: 1%;
 }
-/*Termina Planes de mejora*/
+
+.planDiv3 {
+    border-radius: 8px;
+    background-color: lightgray;
+    width: 100%;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+}
 
 /*Para Tablas*/
 
@@ -482,6 +490,7 @@ html, body {
     overflow: scroll;
     overflow-y: scroll;
     overflow-x: scroll;
+    table-layout: fixed;
 }
 
 .EncabezadoTabla {
@@ -494,7 +503,8 @@ html, body {
 }
 
 .TablasDescripcion {
-    width: 44%;
+    max-width: 600px;
+    min-width: 500px;
     word-break: break-all;
 }
 
@@ -504,11 +514,13 @@ html, body {
 }
 
 .TablasFecha {
-    width: 10%;
+    max-width: 250px;
+    min-width: 225px;
 }
 
 .TablasOpciones {
-    width: 16%;
+    min-width: 250px;
+    max-width: 300px;
 }
 
 .TablasCodigo {
@@ -517,7 +529,8 @@ html, body {
 }
 
 .TablasNombrePlan {
-    width: 26%;
+    max-width: 350px;
+    min-width: 250px;
     word-break: break-all;
     text-align: left;
 }
@@ -570,6 +583,7 @@ html, body {
 }
 
 /*Terminan tablas*/
+/*Termina Planes de mejora*/
 /*Estilos para modal*/
 
 .modal-content {

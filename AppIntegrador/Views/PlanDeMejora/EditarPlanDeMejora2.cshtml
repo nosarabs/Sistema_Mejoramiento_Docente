@@ -75,6 +75,23 @@
                 </div>
             </div>
 
+            <div class="planDiv3">
+                <div id="crearNuevaAccion">
+                    <h2>Acciones del Objetivo @ViewBag.ObjetivoSeleccionado </h2>
+                    <div id="crear">
+                        @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
+                    </div>
+                </div>
+                <div>
+                    <h4 style="text-align:center">Lista de objetivos</h4>
+
+                    <div id="divObjetivos">
+                        @Html.Partial("_objetivosDelPlan", Model.Objetivo)
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
