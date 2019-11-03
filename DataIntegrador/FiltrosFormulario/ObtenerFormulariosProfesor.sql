@@ -5,7 +5,7 @@ Esta información se necesita para filtrar respuestas a formulario.
 CREATE FUNCTION ObtenerFormulariosProfesor (@correoProfesor AS VARCHAR(50))
 RETURNS @formulariosProfesor TABLE
 (
-	FCodigo CHAR(8),	/*Código del formulario.*/
+	FCodigo VARCHAR(8),	/*Código del formulario.*/
 	CSigla VARCHAR(10),	/*Sigla del curso.*/
 	GNumero TINYINT,	/*Número de grupo.*/
 	GSemestre TINYINT,	/*Número de semestre.*/

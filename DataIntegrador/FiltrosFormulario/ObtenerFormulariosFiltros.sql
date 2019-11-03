@@ -14,7 +14,7 @@ CREATE FUNCTION ObtenerFormulariosFiltros (
 )
 RETURNS @formulariosFiltros TABLE
 (
-	FCodigo CHAR(8),	/*Código del formulario.*/
+	FCodigo VARCHAR(8),	/*Código del formulario.*/
 	CSigla VARCHAR(10),	/*Sigla del curso.*/
 	GNumero TINYINT,	/*Número de grupo.*/
 	GSemestre TINYINT,	/*Número de semestre.*/
@@ -31,7 +31,7 @@ BEGIN
 	/*Almacena resultados de forma temporal para poder hacer las intersecciones.*/
 	DECLARE @formulariosTemp TABLE
 	(
-		FCodigo CHAR(8),	/*Código del formulario.*/
+		FCodigo VARCHAR(8),	/*Código del formulario.*/
 		CSigla VARCHAR(10),	/*Sigla del curso.*/
 		GNumero TINYINT,	/*Número de grupo.*/
 		GSemestre TINYINT,	/*Número de semestre.*/

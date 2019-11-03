@@ -5,7 +5,7 @@ Esta información se necesita para filtrar respuestas a formulario.
 CREATE FUNCTION ObtenerFormulariosAnno (@anno AS INT)
 RETURNS @formulariosAnno TABLE
 (
-	FCodigo CHAR(8),	/*Código del formulario.*/
+	FCodigo VARCHAR(8),	/*Código del formulario.*/
 	CSigla VARCHAR(10),	/*Sigla del curso.*/
 	GNumero TINYINT,	/*Número de grupo.*/
 	GSemestre TINYINT,	/*Número de semestre.*/
