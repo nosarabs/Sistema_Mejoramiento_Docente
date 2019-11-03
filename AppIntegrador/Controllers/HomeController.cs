@@ -111,6 +111,7 @@ namespace AppIntegrador.Controllers
                     if (result == 0)
                     {
                         FormsAuthentication.SetAuthCookie(objUser.Username, false);
+                        ConfigureSession();
                         return RedirectToAction("Index");
                     }
                     else
@@ -284,6 +285,18 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
+        }
+
+        private void ConfigureSession()
+        {
+            /*TO-DO: Lanzar aquí a una página de selección donde el usuario escoja 
+            el perfil, la carrera y el énfasis con el que desea trabajar, si 
+            tiene opciones para escoger, y guardar la selección en las cookies.*/
+
+            //Por ahora, solo de prueba. Hay que encriptar esa información.
+            TempData["perfil"] = "Superusuario";
+            TempData["carrera"] = "0000000001";
+            TempData["enfasis"] = "0000000001";
         }
     }
 }

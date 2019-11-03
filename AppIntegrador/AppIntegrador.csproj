@@ -142,6 +142,7 @@
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -321,8 +323,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Email\EmailFooterTemplate.htm" />
-    <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
@@ -365,6 +365,7 @@
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
     <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
@@ -453,6 +454,7 @@
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
+    <Content Include="Views\Permissions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

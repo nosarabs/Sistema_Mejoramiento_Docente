@@ -1552,6 +1552,16 @@
           <Parameter Name="PCod" Type="char" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="EnfasisXCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="codEnfasis" Type="varchar" MaxLength="10" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="EnfasisXCarreraXPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
@@ -3540,6 +3550,9 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(String)">
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4095,6 +4108,7 @@
           <FunctionImportMapping FunctionImportName="TienePermiso" FunctionName="DataIntegradorModel.Store.TienePermiso" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
+          <FunctionImportMapping FunctionImportName="EnfasisXCarrera" FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

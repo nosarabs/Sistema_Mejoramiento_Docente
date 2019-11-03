@@ -579,5 +579,15 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
         }
+    
+        [DbFunction("Entities", "EnfasisXCarrera")]
+        public virtual IQueryable<string> EnfasisXCarrera(string codCarrera)
+        {
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[Entities].[EnfasisXCarrera](@codCarrera)", codCarreraParameter);
+        }
     }
 }

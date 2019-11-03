@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -236,24 +235,13 @@ namespace AppIntegrador.Utilities
             message.Subject = subject;
             // Body just in plain text
             message.Body = bodyPlainText;
-
             // Construct the alternate body as HTML.
-            // Construir el Header como los correos institucionales
-            string headerPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Content\\Email\\EmailHeaderTemplate.htm");
-            string htmlHeader = File.ReadAllText(headerPath);
-
             string htmlBody = bodyAlternateHtml;
-
-            // Construir el Footer como los correos institucionales
-            string footerPath = Path.Combine(HttpRuntime.AppDomainAppPath, "Content\\Email\\EmailFooterTemplate.htm");
-            string htmlFooter = File.ReadAllText(footerPath);
 
             ContentType mimeType = new ContentType("text/html");
             // Add the alternate body to the message.
 
-            AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlHeader + htmlBody + htmlFooter, mimeType);
-            //AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
-
+            AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
             message.AlternateViews.Add(alternate);
             return message;
         }
