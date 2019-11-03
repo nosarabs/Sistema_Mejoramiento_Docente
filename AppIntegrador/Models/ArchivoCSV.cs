@@ -21,9 +21,9 @@ namespace AppIntegrador.Models
         public String NombreEnfasis { get; set; }
         public String SiglaCurso { get; set; }
         public String NombreCurso { get; set; }
-        public int NumeroGrupo { get; set; }
-        public int Anno { get; set; }
-        public int Semestre { get; set; }
+        public String NumeroGrupo { get; set; }
+        public String Anno { get; set; }
+        public String Semestre { get; set; }
         public String CorreoProfesor { get; set; }
         public String IdProfesor { get; set; }
         public String NombreProfesor { get; set; }
