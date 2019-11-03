@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-10">
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-info" id="AgregarSeccion" data-toggle="modal" data-target="#exampleModal" />
+                                    <input type="button" value="Agregar sección al formulario" class="btn-azulUCR" id="AgregarSeccion" data-toggle="modal" data-target="#exampleModal" />
                                 </div>
                             </div>
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -100,8 +100,8 @@
                                             @Html.Partial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion)
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <button type="button" class="btn btn-primary " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
+                                            <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn-azulUCR" onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
                                         </div>
                                     </div>
                                 </div>
@@ -116,8 +116,8 @@
                 <td>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Crear" class="btn btn-info" id="Create" />
-                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn btn-default" })
+                            <input type="submit" value="Crear" class="btn-azulUCR" id="Create" />
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
                         </div>
                     </div>
                 </td>
@@ -132,22 +132,6 @@
 
 
 <style>
-
-    .btn-info {
-        color: #fff;
-        background-color: #41ade7;
-    }
-
-    .btn-primary {
-        background-color: #f0f0f0;
-        color: black;
-        border-color: #a2a6aa;
-    }
-
-    .grisUCR2 {
-        background: #fbfbfb;
-    }
-
     .required:after {
         content: "*";
         font-weight: bold;

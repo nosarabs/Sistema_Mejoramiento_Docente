@@ -31,6 +31,16 @@
     background-color: #41ade7;
 }
 
+.btn-azulUCR {
+    @extend .btn;
+    @extend .azulUCR;
+}
+
+.btn-azulUCR:hover {
+    color: #fff;
+    background-color: #0678b5;
+}
+
 .orden {
     display: none;
 }
