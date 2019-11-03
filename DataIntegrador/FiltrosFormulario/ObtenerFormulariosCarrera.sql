@@ -1,9 +1,9 @@
 ﻿/*
-Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a una unidad académica.
+Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a una carrera.
 Esta información se necesita para filtrar respuestas a formulario.
 */
-CREATE FUNCTION ObtenerFormulariosUA (@codigoUA AS VARCHAR(10))
-RETURNS @formulariosUA TABLE
+CREATE FUNCTION ObtenerFormulariosCarrera (@codigoCarrera AS VARCHAR(10))
+RETURNS @formulariosCarrera TABLE
 (
 	FCodigo CHAR(8),	/*Código del formulario.*/
 	CSigla VARCHAR(10),	/*Sigla del curso.*/
@@ -16,15 +16,15 @@ RETURNS @formulariosUA TABLE
 AS
 BEGIN
 	
-	/*Si el código de la unidad académica no es nulo, verifica si es válido y recupera la información de los formularios.*/
-	IF (@codigoUA IS NOT NULL)
+	/*Si el código de la carrera no es nulo, verifica si es válido y recupera la información de los formularios.*/
+	IF (@codigoCarrera IS NOT NULL)
 	BEGIN
 
-		/*Si el código de la unidad académica es válido, recupera la información de los formularios.*/
-		IF (EXISTS (SELECT * FROM UnidadAcademica WHERE Codigo = @codigoUA))
+		/*Si el código de la carrera es válido, recupera la información de los formularios.*/
+		IF (EXISTS (SELECT * FROM Carrera WHERE Codigo = @codigoCarrera))
 		BEGIN
 
-			INSERT INTO @formulariosUA
+			INSERT INTO @formulariosCarrera
 			SELECT	PAP.FCodigo, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
 			FROM	Periodo_activa_por AS PAP
 			WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
@@ -33,7 +33,7 @@ BEGIN
 									FROM UnidadAcademica AS U
 									JOIN Inscrita_en AS I ON U.Codigo = I.CodUnidadAc
 									JOIN Pertenece_a AS PE ON I.CodCarrera = PE.CodCarrera
-									WHERE U.Codigo = @codigoUA AND PE.SiglaCurso = PAP.CSigla /*Solo de formularios activados para los cursos que contiene la unidad académica.*/
+									WHERE PE.CodCarrera = @codigoCarrera AND PE.SiglaCurso = PAP.CSigla /*Solo de formularios activados para los cursos que contiene la carrera.*/
 								);
 
 		END;
