@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPreguntaRespuestaLibre]
-	@cod char(8),
+	@cod varchar(8),
 	@type char,
 	@enunciado nvarchar(250)
 AS

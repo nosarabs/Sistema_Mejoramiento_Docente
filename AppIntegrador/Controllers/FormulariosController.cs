@@ -18,20 +18,6 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
 
-
-        // GET: Formularios
-        private class SeccionYCodigo
-        {
-            // It is important to declare them public so they get returned
-            public string Codigo { get; set; }
-            public string Nombre { get; set; }
-        }
-        private class Opcion
-        {
-            public string Texto { get; set; }
-            public int Orden { get; set; }
-        }
-
         public ActionResult LlenarFormulario(string id)
         {
             Formulario formularioDB = db.Formulario.Find(id);

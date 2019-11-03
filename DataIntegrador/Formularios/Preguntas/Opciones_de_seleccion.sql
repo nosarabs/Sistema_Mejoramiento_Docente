@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Opciones_de_seleccion
 (
-	Codigo CHAR(8) NOT NULL,
+	Codigo VARCHAR(8) NOT NULL,
 	Orden INT NOT NULL,
 	Texto NVARCHAR(50) NOT NULL,
 	PRIMARY KEY(Codigo, Orden, Texto),
