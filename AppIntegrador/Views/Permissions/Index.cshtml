@@ -43,11 +43,18 @@
 
                     <div class="col-md-6" style="display:flex; float:left" ;>
 
-                        <div class="row" style="display:flex; padding-left:15px; ">
-                            @Html.Label("Seleccione personas", new { htmlAttributes = new { style = "float:left" } })
-                        </div>
-
                         <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate; float:left">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.Label("Usuarios")
+                                    </th>
+                                    <th>
+                                        @Html.Label("Perfil asignado a Usuario")
+                                    </th>
+                                </tr>
+                            </thead>
+                            
                             @{var ordered = Model.Personas.OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
                                       ThenBy(item => item.Nombre1).ThenBy(item => item.Nombre2).ToList(); }
                             @for (int i = 0; i < Model.Personas.Count(); ++i)
@@ -65,11 +72,18 @@
 
                     <div class="col-md-6" style="display:flex; float:right" ;>
 
-                        <div class="row" style="display:flex; padding-left:15px; ">
-                            @Html.Label("Seleccione permisos", new { htmlAttributes = new { style = "float:left" } })
-                        </div>
-
                         <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate; float:right">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.Label("Permisos")
+                                    </th>
+                                    <th>
+                                        @Html.Label("Asignado a Perfil")
+                                    </th>
+                                </tr>
+                            </thead>
+                            
                             @for (int i = 0; i < Model.Permisos.Count(); ++i)
                             {
                                 <tr>
