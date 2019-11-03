@@ -149,6 +149,7 @@
     <Build Include="FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosSemestre.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosAnno.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
