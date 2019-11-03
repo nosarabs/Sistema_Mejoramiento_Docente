@@ -323,6 +323,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Email\EmailFooterTemplate.htm" />
+    <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
