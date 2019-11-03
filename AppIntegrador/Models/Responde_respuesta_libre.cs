@@ -34,13 +34,17 @@ public partial class Responde_respuesta_libre
 
     public string PCodigo { get; set; }
 
+    public string SCodigo { get; set; }
+
     public string Observacion { get; set; }
 
 
 
-    public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
-
     public virtual Pregunta Pregunta { get; set; }
+
+    public virtual Seccion Seccion { get; set; }
+
+    public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
 
 }
 

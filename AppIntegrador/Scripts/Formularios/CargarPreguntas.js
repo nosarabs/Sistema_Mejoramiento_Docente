@@ -14,7 +14,6 @@ $("#Tipo").on("change", function () {
 function deshabilitarCamposBasicos(booleano) {
     $('#Codigo').prop('disabled', booleano);
     $('#Enunciado').prop('disabled', booleano);
-    $('#Create').prop('disabled', booleano);
 }
 
 // Método que carga cada vista según la pregunta que se seleccionó en el combobox
@@ -41,6 +40,34 @@ function cargarVista(valor) {
             }
         })
     }
+    // Comparar el tipo de pregunta que se seleccionó 
+    // y cargar la vista por medio de Ajax
+    else if (valor === 'S') {
+        $.ajax({
+            // url completa: Views/Pregunta/PreguntaSiNo
+            url: 'PreguntaSiNo',
+            success: function (data) {
+                $(data).appendTo('#contenedor-preguntas')
+                SiNoInit()
+            }
+        })
+    }
+    // Comparar el tipo de pregunta que se seleccionó 
+    // y cargar la vista por medio de Ajax
+    else if (valor === 'L') {
+        $.ajax({
+            // url completa: Views/Pregunta/RespuestaLibre
+            url: 'RespuestaLibre',
+            success: function (data) {
+                $(data).appendTo('#contenedor-preguntas')
+            }
+        })
+    }
+}
+
+function SiNoInit() {
+    // Esconder campo de justificación por defecto
+    $('#justificationField').css('display', 'none');
 }
 
 function opcionUnicaInit() {
@@ -76,6 +103,7 @@ $(document).on("click", "#agregar-opcion", function () {
             $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
             $("#sortable").find(".texto").focus();
             disableRemoveButton();
+            validarEntradas();
         }
     })
 })

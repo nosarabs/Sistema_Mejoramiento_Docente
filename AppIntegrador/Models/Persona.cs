@@ -43,6 +43,8 @@ public partial class Persona
 
     public string TipoIdentificacion { get; set; }
 
+    public bool Borrado { get; set; }
+
 
 
     public virtual Estudiante Estudiante { get; set; }

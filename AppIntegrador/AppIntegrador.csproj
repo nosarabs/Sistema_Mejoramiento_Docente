@@ -209,9 +209,6 @@
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerPreguntasDeSeccion1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -300,7 +297,7 @@
     <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\PreguntaConCodigoSeccion.cs" />
+    <Compile Include="Models\PreguntaConNumeroSeccion.cs" />
     <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
@@ -319,6 +316,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\Plugins\animate.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
@@ -354,6 +352,11 @@
     <Content Include="Scripts\Formularios\CargarPreguntas.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
+    <Content Include="Scripts\Plugins\bootstrap-notify.js" />
+    <Content Include="Scripts\Plugins\jquery.dirrty.js" />
+    <Content Include="Scripts\Plugins\sweetalert2.all.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
@@ -445,7 +448,10 @@
     <Content Include="Views\Preguntas\Create.cshtml" />
     <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Preguntas\OpcionesDeSeleccion.cshtml" />
-    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
+    <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
+    <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
+    <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
+	<Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
