@@ -10,3 +10,7 @@ function setCodigoPlan(int id) {
 function crearAccionable() {
     console.log("Se llamó a crearAccionable")
 }
+
+function clickAccionMejora() {
+
+}
