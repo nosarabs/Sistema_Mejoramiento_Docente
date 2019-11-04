@@ -1,4 +1,5 @@
 ﻿using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -15,6 +16,11 @@ namespace AppIntegrador.Controllers
         // GET: Permissions
         public ActionResult Index()
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             return View(new PermissionsViewHolder());
         }
 
@@ -22,6 +28,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Index(PermissionsViewHolder Data)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             //TO-DO: Guardar aquí la selección de perfil, permisos, usuarios, carrera 
             //y énfasis en la base de datos.
             return View(Data);
@@ -120,7 +131,7 @@ namespace AppIntegrador.Controllers
                                     select Carrera;
                 foreach (var codigoEnfasis in listaCarreras)
                     carreras.Add(codigoEnfasis + "," + (db.Enfasis.Find(value, codigoEnfasis.codEnfasis)).Nombre);
-
+                carreras.Add("0" + "," + "Tronco común");
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
         }
