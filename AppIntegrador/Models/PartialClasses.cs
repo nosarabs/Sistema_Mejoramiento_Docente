@@ -25,6 +25,7 @@ namespace AppIntegrador.Models
     [MetadataType(typeof(PersonaMetadata))]
     public partial class Persona
     {
+        // En la administración de Perfiles indica si el usuario tiene ese perfil en el énfasis
         public bool HasProfileInEmph { get; set; }
     }
 
@@ -34,6 +35,7 @@ namespace AppIntegrador.Models
     [MetadataType(typeof(PermisoMetadata))]
     public partial class Permiso
     {
+        // En la administración de Perfiles indica si el perfil tiene activo el permiso en el énfasis
         public bool ActiveInProfileEmph { get; set; }
     }
 }

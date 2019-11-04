@@ -44,13 +44,23 @@ namespace AppIntegrador.Models
             List<Perfil> perfiles = db.Perfil.ToList();
             this.Perfiles = new List<PerfilCodigo>();
             int count = 0;
-            foreach (Perfil perfil in perfiles) {
+            foreach (Perfil perfil in perfiles)
+            {
                 this.Perfiles.Add(new PerfilCodigo(perfil.Nombre, count++));
-            } 
+            }
             this.Carreras = db.Carrera.ToList();
             this.EnfasisView = db.Enfasis.ToList();
             this.Permisos = db.Permiso.ToList();
-            this.Personas = db.Persona.ToList();
+            foreach (Permiso permiso in this.Permisos)
+            {
+                permiso.ActiveInProfileEmph = false;
+            }
+            this.Personas = db.Persona.OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
+                                      ThenBy(item => item.Nombre1).ThenBy(item => item.Nombre2).ToList();
+            foreach (Persona persona in this.Personas)
+            {
+                persona.HasProfileInEmph = false;
+            }
             this.ListaCarreras = GetCarreras();
             this.ListaPermisos = GetPermisos();
             this.ListaEnfasis = GetEnfasis();

@@ -55,15 +55,14 @@
                                 </tr>
                             </thead>
                             
-                            @{var ordered = Model.Personas.OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
-                                      ThenBy(item => item.Nombre1).ThenBy(item => item.Nombre2).ToList(); }
                             @for (int i = 0; i < Model.Personas.Count(); ++i)
                             {
                                 <tr>
                                     <td>
-                                        @ordered[i].Nombre1
+                                        @Html.DisplayFor(model => model.Personas[i].Nombre1)
                                     </td>
                                     <td>
+                                        @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph)
                                     </td>
                                 </tr>
                             }
@@ -91,6 +90,7 @@
                                         @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                     </td>
                                     <td>
+                                        @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph)
                                     </td>
                                 </tr>
                             }
