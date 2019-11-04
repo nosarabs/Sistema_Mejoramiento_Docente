@@ -119,7 +119,7 @@ namespace AppIntegrador.Controllers
                 var listaCarreras = from Carrera in db.EnfasisXCarrera(value)
                                     select Carrera;
                 foreach (var codigoEnfasis in listaCarreras)
-                    carreras.Add(codigoEnfasis + "," + (db.Enfasis.Find(value, codigoEnfasis)).Nombre);
+                    carreras.Add(codigoEnfasis + "," + (db.Enfasis.Find(value, codigoEnfasis.codEnfasis)).Nombre);
 
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
