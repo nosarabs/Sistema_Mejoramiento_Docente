@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
@@ -176,7 +176,7 @@ namespace AppIntegrador.Controllers
         private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser) {
 
             /*To lock the user, first fetch it from the database.*/
-            using (var context = new Entities())
+            using (var context = new DataIntegradorEntities())
             {
                 var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
                 if (user != null)
@@ -191,7 +191,7 @@ namespace AppIntegrador.Controllers
             await Task.Delay(LOGIN_TIMEOUT).ConfigureAwait(false);
 
             /*Then reactivates the user.*/
-            using (var context = new Entities())
+            using (var context = new DataIntegradorEntities())
             {
                 var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
                 if (user != null)
@@ -206,7 +206,7 @@ namespace AppIntegrador.Controllers
         /*Function to tell whether a given user account is locked or not.*/
         private static bool IsUserLocked(Usuario objUser) {
             bool locked = false;
-            using (var context = new Entities())
+            using (var context = new DataIntegradorEntities())
             {
                 var query = context.Usuario
                     .Where(u => u.Username == objUser.Username)

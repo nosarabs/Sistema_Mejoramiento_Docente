@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
 {
     public class PreguntaConOpcionesDeSeleccionController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         [HttpGet]
         public ActionResult Pregunta_con_opciones_de_seleccion()
@@ -114,7 +114,7 @@ namespace AppIntegrador.Controllers
         // Metodo usado para el render partial
         public ActionResult OpcionesDeSeleccion()
         {
-            return View();
+            return View("OpcionesSeleccion");
         }
 
         public ActionResult Create()

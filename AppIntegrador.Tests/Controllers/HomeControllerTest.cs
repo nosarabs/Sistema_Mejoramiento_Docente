@@ -17,7 +17,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void LoginBlock()
         {
-            Entities db = new Entities();
+            DataIntegradorEntities db = new DataIntegradorEntities();
             Usuario usuario = new Usuario();
             usuario.Username = "berta@mail.com";
             usuario.Password = "fsdfsfs";

@@ -14,7 +14,7 @@ namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
         // GET: Seccion

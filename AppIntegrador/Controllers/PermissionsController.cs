@@ -11,7 +11,7 @@ namespace AppIntegrador.Controllers
 {
     public class PermissionsController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
         // GET: Permissions
         public ActionResult Index()
         {
@@ -114,7 +114,7 @@ namespace AppIntegrador.Controllers
         public JsonResult CargarEnfasisDeCarrera(string value)
         {
             List<string> carreras = new List<string>();
-            using (var context = new Entities())
+            using (var context = new DataIntegradorEntities())
             {
                 var listaCarreras = from Carrera in db.EnfasisXCarrera(value)
                                     select Carrera;

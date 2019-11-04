@@ -13,7 +13,7 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: PlanDeMejora
         public ActionResult Index()

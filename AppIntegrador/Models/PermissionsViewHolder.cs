@@ -8,7 +8,7 @@ namespace AppIntegrador.Models
 {
     public class PermissionsViewHolder
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
         public List<PerfilCodigo> Perfiles { get; set; }
 
         public List<Carrera> Carreras { get; set; }

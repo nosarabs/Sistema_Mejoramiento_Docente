@@ -9,7 +9,7 @@ namespace AppIntegrador.Tests.Utilities
     [TestClass]
     public class EmailNotificationTest
     {
-        private Entities db;
+        private DataIntegradorEntities db;
 
         /*[TestMethod]
         public void TestSendNotification()

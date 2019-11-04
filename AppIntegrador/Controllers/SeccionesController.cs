@@ -13,7 +13,7 @@ namespace AppIntegrador.Controllers
     // Scaffold para la historia EDF5. Tarea: crear el scaffold de las secciones
     public class SeccionesController : Controller
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: Seccions
         public ActionResult Index()

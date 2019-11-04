@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -47,7 +47,7 @@
             <PropertyRef Name="GAnno" />
             <PropertyRef Name="GSemestre" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -106,7 +106,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Incremento" Type="int" Nullable="false" />
           <Property Name="Minimo" Type="int" Nullable="false" />
           <Property Name="Maximo" Type="int" Nullable="false" />
@@ -124,13 +124,13 @@
             <PropertyRef Name="codFormulario" />
           </Key>
           <Property Name="codPlan" Type="int" Nullable="false" />
-          <Property Name="codFormulario" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="codFormulario" Type="varchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <EntityType Name="Formulario">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="Formulario_tiene_seccion">
@@ -138,8 +138,8 @@
             <PropertyRef Name="FCodigo" />
             <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="SCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Orden" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Funcionario">
@@ -215,7 +215,7 @@
             <PropertyRef Name="Orden" />
             <PropertyRef Name="Texto" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Orden" Type="int" Nullable="false" />
           <Property Name="Texto" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -229,16 +229,18 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
             <PropertyRef Name="OpcionSeleccionada" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
           <Property Name="GSemestre" Type="tinyint" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
-          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PCodigo" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="OpcionSeleccionada" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Origina">
@@ -252,7 +254,7 @@
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="codPlan" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
@@ -289,7 +291,7 @@
             <PropertyRef Name="FechaInicio" />
             <PropertyRef Name="FechaFin" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
@@ -357,7 +359,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Enunciado" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Tipo" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
@@ -365,20 +367,20 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="TituloCampoObservacion" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Pregunta_con_opciones_de_seleccion">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <EntityType Name="Pregunta_con_respuesta_libre">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -396,15 +398,17 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
           <Property Name="GSemestre" Type="tinyint" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
-          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PCodigo" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Justificacion" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Responde_respuesta_libre">
@@ -417,15 +421,17 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
           <Property Name="GAnno" Type="int" Nullable="false" />
           <Property Name="GSemestre" Type="tinyint" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
-          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PCodigo" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Observacion" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Responsable_De">
@@ -452,7 +458,7 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
           </Key>
-          <Property Name="FCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="FCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CSigla" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="GNumero" Type="tinyint" Nullable="false" />
@@ -464,7 +470,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="Seccion_tiene_pregunta">
@@ -472,15 +478,15 @@
             <PropertyRef Name="SCodigo" />
             <PropertyRef Name="PCodigo" />
           </Key>
-          <Property Name="SCodigo" Type="char" MaxLength="8" Nullable="false" />
-          <Property Name="PCodigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="SCodigo" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="PCodigo" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Orden" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Si_no_nr">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <EntityType Name="TipoObjetivo">
           <Key>
@@ -781,7 +787,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__CodUn__3D2915A8">
+        <Association Name="FK__Trabaja_e__CodUn__3F115E1A">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -795,7 +801,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__Corre__3C34F16F">
+        <Association Name="FK__Trabaja_e__Corre__3E1D39E1">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -809,7 +815,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__3E1D39E1">
+        <Association Name="FK__UnidadAca__Super__40058253">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -821,7 +827,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__40F9A68C">
+        <Association Name="FK__UsuarioPe__Perfi__42E1EEFE">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -835,7 +841,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__40058253">
+        <Association Name="FK__UsuarioPe__Usuar__41EDCAC5">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -849,7 +855,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__41EDCAC5">
+        <Association Name="FK__UsuarioPerfil__43D61337">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1224,6 +1230,7 @@
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
               <PropertyRef Name="PCodigo" />
+              <PropertyRef Name="SCodigo" />
             </Principal>
             <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
@@ -1234,6 +1241,7 @@
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
               <PropertyRef Name="PCodigo" />
+              <PropertyRef Name="SCodigo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1299,7 +1307,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkRespondeLibreCodigo">
+        <Association Name="fkRespondeLibreCodigoPregunta">
           <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1310,6 +1318,20 @@
             </Principal>
             <Dependent Role="Responde_respuesta_libre">
               <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespondeLibreCodigoSeccion">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_libre">
+              <PropertyRef Name="SCodigo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1339,7 +1361,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkRespondeOpcionesCodigo">
+        <Association Name="fkRespondeOpcionesCodigoPregunta">
           <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1350,6 +1372,20 @@
             </Principal>
             <Dependent Role="Responde_respuesta_con_opciones">
               <PropertyRef Name="PCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespondeOpcionesCodigoSeccion">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_con_opciones">
+              <PropertyRef Name="SCodigo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1480,11 +1516,11 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="AgregarFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
           <Parameter Name="nombre" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="AgregarOpcion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="cod" Type="char" Mode="In" />
+          <Parameter Name="cod" Type="varchar" Mode="In" />
           <Parameter Name="orden" Type="tinyint" Mode="In" />
           <Parameter Name="texto" Type="varchar" Mode="In" />
         </Function>
@@ -1495,17 +1531,19 @@
           <Parameter Name="fechaFin" Type="date" Mode="In" />
         </Function>
         <Function Name="AgregarPreguntaConOpcion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="cod" Type="char" Mode="In" />
+          <Parameter Name="cod" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="char" Mode="In" />
           <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
           <Parameter Name="justificacion" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="AgregarPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="AgregarPreguntaSeleccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigo" Type="char" Mode="In" />
+        <Function Name="AgregarPreguntaRespuestaLibre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cod" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="char" Mode="In" />
+          <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AgregarSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
           <Parameter Name="nombre" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1515,13 +1553,13 @@
           <Parameter Name="estado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="AsociarPreguntaConSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodigoSeccion" Type="char" Mode="In" />
-          <Parameter Name="CodigoPregunta" Type="char" Mode="In" />
+          <Parameter Name="CodigoSeccion" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoPregunta" Type="varchar" Mode="In" />
           <Parameter Name="Orden" Type="int" Mode="In" />
         </Function>
         <Function Name="AsociarSeccionConFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="codigoSeccion" Type="char" Mode="In" />
+          <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="codigoSeccion" Type="varchar" Mode="In" />
           <Parameter Name="orden" Type="int" Mode="In" />
         </Function>
         <Function Name="CarrerasXPerfilXUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1575,7 +1613,7 @@
           </ReturnType>
         </Function>
         <Function Name="GuardarRespuestaAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codFormulario" Type="char" Mode="In" />
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
@@ -1585,14 +1623,15 @@
         </Function>
         <Function Name="GuardarRespuestaAPregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tipo" Type="char" Mode="In" />
-          <Parameter Name="codFormulario" Type="char" Mode="In" />
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="fecha" Type="date" Mode="In" />
-          <Parameter Name="codPregunta" Type="char" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+          <Parameter Name="codseccion" Type="varchar" Mode="In" />
           <Parameter Name="justificacion" Type="nvarchar" Mode="In" />
           <Parameter Name="opcionSeleccionada" Type="tinyint" Mode="In" />
           <Parameter Name="observacion" Type="nvarchar" Mode="In" />
@@ -1623,7 +1662,7 @@
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObtenerSeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodForm" Type="char" Mode="In" />
+          <Parameter Name="CodForm" Type="varchar" Mode="In" />
         </Function>
         <Function Name="PerfilesXUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
@@ -1636,6 +1675,7 @@
           </ReturnType>
         </Function>
         <Function Name="PopularFormulariosConSecciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PopularFormulariosDePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
@@ -1806,27 +1846,27 @@
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__CodUn__3D2915A8" Association="Self.FK__Trabaja_e__CodUn__3D2915A8">
+          <AssociationSet Name="FK__Trabaja_e__CodUn__3F115E1A" Association="Self.FK__Trabaja_e__CodUn__3F115E1A">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__Corre__3C34F16F" Association="Self.FK__Trabaja_e__Corre__3C34F16F">
+          <AssociationSet Name="FK__Trabaja_e__Corre__3E1D39E1" Association="Self.FK__Trabaja_e__Corre__3E1D39E1">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__3E1D39E1" Association="Self.FK__UnidadAca__Super__3E1D39E1">
+          <AssociationSet Name="FK__UnidadAca__Super__40058253" Association="Self.FK__UnidadAca__Super__40058253">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__40F9A68C" Association="Self.FK__UsuarioPe__Perfi__40F9A68C">
+          <AssociationSet Name="FK__UsuarioPe__Perfi__42E1EEFE" Association="Self.FK__UsuarioPe__Perfi__42E1EEFE">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__40058253" Association="Self.FK__UsuarioPe__Usuar__40058253">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__41EDCAC5" Association="Self.FK__UsuarioPe__Usuar__41EDCAC5">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__41EDCAC5" Association="Self.FK__UsuarioPerfil__41EDCAC5">
+          <AssociationSet Name="FK__UsuarioPerfil__43D61337" Association="Self.FK__UsuarioPerfil__43D61337">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -1946,16 +1986,24 @@
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
           </AssociationSet>
-          <AssociationSet Name="fkRespondeLibreCodigo" Association="Self.fkRespondeLibreCodigo">
+          <AssociationSet Name="fkRespondeLibreCodigoPregunta" Association="Self.fkRespondeLibreCodigoPregunta">
             <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespondeLibreCodigoSeccion" Association="Self.fkRespondeLibreCodigoSeccion">
+            <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
           <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="Self.fkRespondeLibreRespuestasAFormulario">
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
-          <AssociationSet Name="fkRespondeOpcionesCodigo" Association="Self.fkRespondeOpcionesCodigo">
+          <AssociationSet Name="fkRespondeOpcionesCodigoPregunta" Association="Self.fkRespondeOpcionesCodigoPregunta">
             <End Role="Pregunta" EntitySet="Pregunta" />
+            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespondeOpcionesCodigoSeccion" Association="Self.fkRespondeOpcionesCodigoSeccion">
+            <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
           </AssociationSet>
           <AssociationSet Name="fkRespondeOpcionesRespuestasAFormulario" Association="Self.fkRespondeOpcionesRespuestasAFormulario">
@@ -1991,10 +2039,17 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="CarrerasXPerfilXUsuario_Result">
+          <Property Name="codCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="EnfasisXCarrera_Result">
+          <Property Name="codEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </ComplexType>
         <ComplexType Name="EnfasisXCarreraXPerfil_Result">
           <Property Name="codEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </ComplexType>
@@ -2048,7 +2103,7 @@
             <PropertyRef Name="GAnno" />
             <PropertyRef Name="GSemestre" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2085,7 +2140,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__114A936A" FromRole="Enfasis" ToRole="Carrera" />
           <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__282DF8C2" FromRole="Enfasis" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__41EDCAC5" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__43D61337" FromRole="Enfasis" ToRole="UsuarioPerfil" />
           <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
           <NavigationProperty Name="Curso" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
         </EntityType>
@@ -2093,7 +2148,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Incremento" Type="Int32" Nullable="false" />
           <Property Name="Minimo" Type="Int32" Nullable="false" />
           <Property Name="Maximo" Type="Int32" Nullable="false" />
@@ -2113,7 +2168,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Activa_por" Relationship="Self.fkActivaPorFormulario" FromRole="Formulario" ToRole="Activa_por" />
           <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.fkFormularioTieneSeccionCodigoFormulario" FromRole="Formulario" ToRole="Formulario_tiene_seccion" />
@@ -2125,8 +2180,8 @@
             <PropertyRef Name="FCodigo" />
             <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Formulario" Relationship="Self.fkFormularioTieneSeccionCodigoFormulario" FromRole="Formulario_tiene_seccion" ToRole="Formulario" />
           <NavigationProperty Name="Seccion" Relationship="Self.fkFormularioTieneSeccionCodigoSeccion" FromRole="Formulario_tiene_seccion" ToRole="Seccion" />
@@ -2182,7 +2237,7 @@
             <PropertyRef Name="Orden" />
             <PropertyRef Name="Texto" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <Property Name="Texto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Pregunta_con_opciones_de_seleccion" Relationship="Self.fkOpcionesCodigo" FromRole="Opciones_de_seleccion" ToRole="Pregunta_con_opciones_de_seleccion" />
@@ -2197,16 +2252,18 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
             <PropertyRef Name="OpcionSeleccionada" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
           <Property Name="GSemestre" Type="Byte" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OpcionSeleccionada" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkOpcionesSeleccionadas" FromRole="Opciones_seleccionadas_respuesta_con_opciones" ToRole="Responde_respuesta_con_opciones" />
         </EntityType>
@@ -2216,7 +2273,7 @@
           </Key>
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__2645B050" FromRole="Perfil" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__40F9A68C" FromRole="Perfil" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__42E1EEFE" FromRole="Perfil" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="PerfilPermiso">
           <Key>
@@ -2243,7 +2300,7 @@
             <PropertyRef Name="FechaInicio" />
             <PropertyRef Name="FechaFin" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
@@ -2315,20 +2372,20 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Enunciado" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.fkPregOpcionesCodigo" FromRole="Pregunta" ToRole="Pregunta_con_opciones" />
           <NavigationProperty Name="Pregunta_con_respuesta_libre" Relationship="Self.fkResLibreCodigo" FromRole="Pregunta" ToRole="Pregunta_con_respuesta_libre" />
-          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_libre" />
-          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesCodigo" FromRole="Pregunta" ToRole="Responde_respuesta_con_opciones" />
+          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreCodigoPregunta" FromRole="Pregunta" ToRole="Responde_respuesta_libre" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesCodigoPregunta" FromRole="Pregunta" ToRole="Responde_respuesta_con_opciones" />
           <NavigationProperty Name="Seccion_tiene_pregunta" Relationship="Self.fkSeccionTienePreguntaCodigoPregunta" FromRole="Pregunta" ToRole="Seccion_tiene_pregunta" />
         </EntityType>
         <EntityType Name="Pregunta_con_opciones">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TituloCampoObservacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Escalar" Relationship="Self.fkEscalarCodigo" FromRole="Pregunta_con_opciones" ToRole="Escalar" />
           <NavigationProperty Name="Pregunta" Relationship="Self.fkPregOpcionesCodigo" FromRole="Pregunta_con_opciones" ToRole="Pregunta" />
@@ -2339,7 +2396,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Opciones_de_seleccion" Relationship="Self.fkOpcionesCodigo" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Opciones_de_seleccion" />
           <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.fkPregOpcionesSeleccionCodigo" FromRole="Pregunta_con_opciones_de_seleccion" ToRole="Pregunta_con_opciones" />
         </EntityType>
@@ -2347,7 +2404,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pregunta" Relationship="Self.fkResLibreCodigo" FromRole="Pregunta_con_respuesta_libre" ToRole="Pregunta" />
         </EntityType>
         <EntityType Name="Profesor">
@@ -2369,18 +2426,21 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
           <Property Name="GSemestre" Type="Byte" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Justificacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Opciones_seleccionadas_respuesta_con_opciones" Relationship="Self.fkOpcionesSeleccionadas" FromRole="Responde_respuesta_con_opciones" ToRole="Opciones_seleccionadas_respuesta_con_opciones" />
-          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeOpcionesCodigo" FromRole="Responde_respuesta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeOpcionesCodigoPregunta" FromRole="Responde_respuesta_con_opciones" ToRole="Pregunta" />
+          <NavigationProperty Name="Seccion" Relationship="Self.fkRespondeOpcionesCodigoSeccion" FromRole="Responde_respuesta_con_opciones" ToRole="Seccion" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeOpcionesRespuestasAFormulario" FromRole="Responde_respuesta_con_opciones" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="Responde_respuesta_libre">
@@ -2393,17 +2453,20 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="PCodigo" />
+            <PropertyRef Name="SCodigo" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
           <Property Name="GAnno" Type="Int32" Nullable="false" />
           <Property Name="GSemestre" Type="Byte" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeLibreCodigo" FromRole="Responde_respuesta_libre" ToRole="Pregunta" />
+          <NavigationProperty Name="Pregunta" Relationship="Self.fkRespondeLibreCodigoPregunta" FromRole="Responde_respuesta_libre" ToRole="Pregunta" />
+          <NavigationProperty Name="Seccion" Relationship="Self.fkRespondeLibreCodigoSeccion" FromRole="Responde_respuesta_libre" ToRole="Seccion" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespondeLibreRespuestasAFormulario" FromRole="Responde_respuesta_libre" ToRole="Respuestas_a_formulario" />
         </EntityType>
         <EntityType Name="Respuestas_a_formulario">
@@ -2416,7 +2479,7 @@
             <PropertyRef Name="GSemestre" />
             <PropertyRef Name="Fecha" />
           </Key>
-          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CSigla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GNumero" Type="Byte" Nullable="false" />
@@ -2434,9 +2497,11 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Formulario_tiene_seccion" Relationship="Self.fkFormularioTieneSeccionCodigoSeccion" FromRole="Seccion" ToRole="Formulario_tiene_seccion" />
+          <NavigationProperty Name="Responde_respuesta_con_opciones" Relationship="Self.fkRespondeOpcionesCodigoSeccion" FromRole="Seccion" ToRole="Responde_respuesta_con_opciones" />
+          <NavigationProperty Name="Responde_respuesta_libre" Relationship="Self.fkRespondeLibreCodigoSeccion" FromRole="Seccion" ToRole="Responde_respuesta_libre" />
           <NavigationProperty Name="Seccion_tiene_pregunta" Relationship="Self.fkSeccionTienePreguntaCodigoSeccion" FromRole="Seccion" ToRole="Seccion_tiene_pregunta" />
         </EntityType>
         <EntityType Name="Seccion_tiene_pregunta">
@@ -2444,8 +2509,8 @@
             <PropertyRef Name="SCodigo" />
             <PropertyRef Name="PCodigo" />
           </Key>
-          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PCodigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Pregunta" Relationship="Self.fkSeccionTienePreguntaCodigoPregunta" FromRole="Seccion_tiene_pregunta" ToRole="Pregunta" />
           <NavigationProperty Name="Seccion" Relationship="Self.fkSeccionTienePreguntaCodigoSeccion" FromRole="Seccion_tiene_pregunta" ToRole="Seccion" />
@@ -2454,7 +2519,7 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pregunta_con_opciones" Relationship="Self.fkSiNoCodigo" FromRole="Si_no_nr" ToRole="Pregunta_con_opciones" />
         </EntityType>
         <EntityType Name="TipoObjetivo">
@@ -2472,8 +2537,8 @@
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__3E1D39E1" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
-          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__3E1D39E1" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__40058253" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
+          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__40058253" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
           <NavigationProperty Name="Carrera" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
           <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
         </EntityType>
@@ -2486,7 +2551,7 @@
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.fkUsuarioAPersonaCorreo" FromRole="Usuario" ToRole="Persona" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__40058253" FromRole="Usuario" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__41EDCAC5" FromRole="Usuario" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="UsuarioPerfil">
           <Key>
@@ -2499,9 +2564,9 @@
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__41EDCAC5" FromRole="UsuarioPerfil" ToRole="Enfasis" />
-          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__40F9A68C" FromRole="UsuarioPerfil" ToRole="Perfil" />
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__40058253" FromRole="UsuarioPerfil" ToRole="Usuario" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__43D61337" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__42E1EEFE" FromRole="UsuarioPerfil" ToRole="Perfil" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__41EDCAC5" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_Accionable_AccionDeMejora">
           <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1">
@@ -2643,7 +2708,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__41EDCAC5">
+        <Association Name="FK__UsuarioPerfil__43D61337">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2840,6 +2905,7 @@
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
               <PropertyRef Name="PCodigo" />
+              <PropertyRef Name="SCodigo" />
             </Principal>
             <Dependent Role="Opciones_seleccionadas_respuesta_con_opciones">
               <PropertyRef Name="FCodigo" />
@@ -2850,6 +2916,7 @@
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
               <PropertyRef Name="PCodigo" />
+              <PropertyRef Name="SCodigo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2867,7 +2934,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__40F9A68C">
+        <Association Name="FK__UsuarioPe__Perfi__42E1EEFE">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2963,7 +3030,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkRespondeLibreCodigo">
+        <Association Name="fkRespondeLibreCodigoPregunta">
           <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2977,7 +3044,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkRespondeOpcionesCodigo">
+        <Association Name="fkRespondeOpcionesCodigoPregunta">
           <End Role="Pregunta" Type="Self.Pregunta" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3031,6 +3098,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fkRespondeOpcionesCodigoSeccion">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Responde_respuesta_con_opciones" Type="Self.Responde_respuesta_con_opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_con_opciones">
+              <PropertyRef Name="SCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkRespondeOpcionesRespuestasAFormulario">
           <End Role="Respuestas_a_formulario" Type="Self.Respuestas_a_formulario" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3054,6 +3135,20 @@
               <PropertyRef Name="GAnno" />
               <PropertyRef Name="GSemestre" />
               <PropertyRef Name="Fecha" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkRespondeLibreCodigoSeccion">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Responde_respuesta_libre" Type="Self.Responde_respuesta_libre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Responde_respuesta_libre">
+              <PropertyRef Name="SCodigo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3095,7 +3190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__3E1D39E1">
+        <Association Name="FK__UnidadAca__Super__40058253">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3107,7 +3202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__40058253">
+        <Association Name="FK__UsuarioPe__Usuar__41EDCAC5">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3165,7 +3260,7 @@
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="*" />
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DataIntegradorEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Accionable" EntityType="Self.Accionable" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" />
@@ -3241,7 +3336,7 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__41EDCAC5" Association="Self.FK__UsuarioPerfil__41EDCAC5">
+          <AssociationSet Name="FK__UsuarioPerfil__43D61337" Association="Self.FK__UsuarioPerfil__43D61337">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -3301,7 +3396,7 @@
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__40F9A68C" Association="Self.FK__UsuarioPe__Perfi__40F9A68C">
+          <AssociationSet Name="FK__UsuarioPe__Perfi__42E1EEFE" Association="Self.FK__UsuarioPe__Perfi__42E1EEFE">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -3329,11 +3424,11 @@
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Pregunta_con_respuesta_libre" EntitySet="Pregunta_con_respuesta_libre" />
           </AssociationSet>
-          <AssociationSet Name="fkRespondeLibreCodigo" Association="Self.fkRespondeLibreCodigo">
+          <AssociationSet Name="fkRespondeLibreCodigoPregunta" Association="Self.fkRespondeLibreCodigoPregunta">
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
-          <AssociationSet Name="fkRespondeOpcionesCodigo" Association="Self.fkRespondeOpcionesCodigo">
+          <AssociationSet Name="fkRespondeOpcionesCodigoPregunta" Association="Self.fkRespondeOpcionesCodigoPregunta">
             <End Role="Pregunta" EntitySet="Pregunta" />
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
           </AssociationSet>
@@ -3349,9 +3444,17 @@
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
             <End Role="Si_no_nr" EntitySet="Si_no_nr" />
           </AssociationSet>
+          <AssociationSet Name="fkRespondeOpcionesCodigoSeccion" Association="Self.fkRespondeOpcionesCodigoSeccion">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+          </AssociationSet>
           <AssociationSet Name="fkRespondeOpcionesRespuestasAFormulario" Association="Self.fkRespondeOpcionesRespuestasAFormulario">
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
+          </AssociationSet>
+          <AssociationSet Name="fkRespondeLibreCodigoSeccion" Association="Self.fkRespondeLibreCodigoSeccion">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Responde_respuesta_libre" EntitySet="Responde_respuesta_libre" />
           </AssociationSet>
           <AssociationSet Name="fkRespondeLibreRespuestasAFormulario" Association="Self.fkRespondeLibreRespuestasAFormulario">
             <End Role="Respuestas_a_formulario" EntitySet="Respuestas_a_formulario" />
@@ -3361,11 +3464,11 @@
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__3E1D39E1" Association="Self.FK__UnidadAca__Super__3E1D39E1">
+          <AssociationSet Name="FK__UnidadAca__Super__40058253" Association="Self.FK__UnidadAca__Super__40058253">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__40058253" Association="Self.FK__UsuarioPe__Usuar__40058253">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__41EDCAC5" Association="Self.FK__UsuarioPe__Usuar__41EDCAC5">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -3413,13 +3516,20 @@
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <FunctionImport Name="CarrerasXPerfilXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasXPerfilXUsuario_Result)">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="param2" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="EnfasisXCarreraXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarreraXPerfil_Result)">
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
             <Parameter Name="codCarrera" Mode="In" Type="String" />
             <Parameter Name="nombrePerfil" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PerfilesXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.PerfilesXUsuario_Result)">
-          <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AgregarFormulario">
             <Parameter Name="codigo" Mode="In" Type="String" />
@@ -3442,10 +3552,12 @@
             <Parameter Name="enunciado" Mode="In" Type="String" />
             <Parameter Name="justificacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="AgregarPreguntas" />
-          <FunctionImport Name="AgregarPreguntaSeleccion">
-          <Parameter Name="codigo" Mode="In" Type="String" />
+          <FunctionImport Name="AgregarPreguntaRespuestaLibre">
+            <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="enunciado" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarPreguntas" />
           <FunctionImport Name="AgregarSeccion">
             <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -3502,6 +3614,7 @@
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="fecha" Mode="In" Type="DateTime" />
             <Parameter Name="codPregunta" Mode="In" Type="String" />
+            <Parameter Name="codseccion" Mode="In" Type="String" />
             <Parameter Name="justificacion" Mode="In" Type="String" />
             <Parameter Name="opcionSeleccionada" Mode="In" Type="Byte" />
             <Parameter Name="observacion" Mode="In" Type="String" />
@@ -3526,15 +3639,16 @@
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-          <Parameter Name="questionCode" Mode="In" Type="String" />
+            <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(String)">
-          <Parameter Name="sectionCode" Mode="In" Type="String" />
+          <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
+            <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
-          <Parameter Name="CodForm" Mode="In" Type="String" />
+            <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularFormulariosConSecciones" />
+          <FunctionImport Name="PopularFormulariosDePrueba" />
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
@@ -3544,34 +3658,6 @@
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
-          </FunctionImport>
-          <FunctionImport Name="CarrerasXPerfilXUsuario" IsComposable="true" ReturnType="Collection(String)">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="param2" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="TienePermiso">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="perfil" Mode="In" Type="String" />
-            <Parameter Name="codCarrera" Mode="In" Type="String" />
-            <Parameter Name="codEnfasis" Mode="In" Type="String" />
-            <Parameter Name="permiso" Mode="In" Type="Int32" />
-            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="TienePermisoSinEnfasis">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="perfil" Mode="In" Type="String" />
-            <Parameter Name="codCarrera" Mode="In" Type="String" />
-            <Parameter Name="permiso" Mode="In" Type="Int32" />
-            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="TienePermisoSinEnfasisNiCarrera">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="perfil" Mode="In" Type="String" />
-            <Parameter Name="permiso" Mode="In" Type="Int32" />
-            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(String)">
-          <Parameter Name="codCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SugerirConfiguracion">
             <Parameter Name="CorreoUsuario" Mode="In" Type="String" />
@@ -3586,6 +3672,14 @@
             <Parameter Name="codEnfasis" Mode="In" Type="String" />
             <Parameter Name="tienePerfil" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="TienePermiso">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="TienePermisoActivoEnEnfasis">
             <Parameter Name="permisoId" Mode="In" Type="Int32" />
             <Parameter Name="perfil" Mode="In" Type="String" />
@@ -3593,21 +3687,41 @@
             <Parameter Name="codEnfasis" Mode="In" Type="String" />
             <Parameter Name="tieneActivo" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="TienePermisoSinEnfasis">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="TienePermisoSinEnfasisNiCarrera">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="permiso" Mode="In" Type="Int32" />
+            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="ObtenerPreguntasDeSeccion_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Enunciado" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="ObtenerSeccionesDeFormulario_Result">
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="DataIntegradorEntities">
           <EntitySetMapping Name="C__RefactorLog">
             <EntityTypeMapping TypeName="DataIntegradorModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
@@ -3761,6 +3875,7 @@
                 <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
                 <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3895,6 +4010,7 @@
                 <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
                 <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3910,6 +4026,7 @@
                 <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4092,6 +4209,20 @@
               <ScalarProperty Name="Correo" ColumnName="CorreoFuncionario" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.CarrerasXPerfilXUsuario" FunctionImportName="CarrerasXPerfilXUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasXPerfilXUsuario_Result">
+                <ScalarProperty Name="codCarrera" ColumnName="codCarrera" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" FunctionImportName="EnfasisXCarrera">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarrera_Result">
+                <ScalarProperty Name="codEnfasis" ColumnName="codEnfasis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="DataIntegradorModel.Store.EnfasisXCarreraXPerfil" FunctionImportName="EnfasisXCarreraXPerfil">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarreraXPerfil_Result">
@@ -4110,8 +4241,8 @@
           <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPlan" FunctionName="DataIntegradorModel.Store.AgregarPlan" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaConOpcion" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaRespuestaLibre" FunctionName="DataIntegradorModel.Store.AgregarPreguntaRespuestaLibre" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntas" FunctionName="DataIntegradorModel.Store.AgregarPreguntas" />
-          <FunctionImportMapping FunctionImportName="AgregarPreguntaSeleccion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaSeleccion" />
           <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="DataIntegradorModel.Store.AgregarSeccion" />
           <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="DataIntegradorModel.Store.AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
@@ -4132,26 +4263,35 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion" />
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeSeccion" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeSeccion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerPreguntasDeSeccion_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Enunciado" ColumnName="Enunciado" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerSeccionesDeFormulario" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesDeFormulario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerSeccionesDeFormulario_Result">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PopularFormulariosConSecciones" FunctionName="DataIntegradorModel.Store.PopularFormulariosConSecciones" />
+          <FunctionImportMapping FunctionImportName="PopularFormulariosDePrueba" FunctionName="DataIntegradorModel.Store.PopularFormulariosDePrueba" />
           <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
           <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
-          <FunctionImportMapping FunctionImportName="CarrerasXPerfilXUsuario" FunctionName="DataIntegradorModel.Store.CarrerasXPerfilXUsuario" />
-          <FunctionImportMapping FunctionImportName="TienePermiso" FunctionName="DataIntegradorModel.Store.TienePermiso" />
-          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
-          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
-          <FunctionImportMapping FunctionImportName="EnfasisXCarrera" FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" />
           <FunctionImportMapping FunctionImportName="SugerirConfiguracion" FunctionName="DataIntegradorModel.Store.SugerirConfiguracion" />
           <FunctionImportMapping FunctionImportName="TienePerfilEnElEnfasis" FunctionName="DataIntegradorModel.Store.TienePerfilEnElEnfasis" />
+          <FunctionImportMapping FunctionImportName="TienePermiso" FunctionName="DataIntegradorModel.Store.TienePermiso" />
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
+          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
+          <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4169,7 +4309,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

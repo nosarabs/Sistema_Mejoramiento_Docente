@@ -117,7 +117,6 @@
     <Build Include="Formularios\Procedimientos\AgregarPreguntaConOpcion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
-    <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
     <Build Include="Origina.sql" />
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
@@ -153,6 +152,8 @@
     <Build Include="Usuarios y Perfiles\Procedures\SugerirConfiguracion.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\TienePerfilEnElEnfasis.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\TienePermisoActivoEnEnfasis.sql" />
+    <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

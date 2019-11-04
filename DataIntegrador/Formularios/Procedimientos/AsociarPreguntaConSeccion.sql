@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[AsociarPreguntaConSeccion]
-	@CodigoSeccion char(8),
-	@CodigoPregunta char(8),
+	@CodigoSeccion varchar(8),
+	@CodigoPregunta varchar(8),
 	@Orden int
 AS
 

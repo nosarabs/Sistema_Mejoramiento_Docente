@@ -11,7 +11,7 @@ namespace AppIntegrador.Utilities
      saber si un usuario con un perfil en una carrera y un énfasis seleccionado tiene un determinado permiso.*/
     public class PermissionManager
     {
-        private Entities db = new Entities();
+        private DataIntegradorEntities db = new DataIntegradorEntities();
         /*Listado constantes de permisos.*/
         public enum Permission : int {
             VER_USUARIOS = 101,
