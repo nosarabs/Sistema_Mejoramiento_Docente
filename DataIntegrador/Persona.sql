@@ -7,8 +7,6 @@
     [Nombre2] VARCHAR(15) NULL, 
     [Apellido1] VARCHAR(15) NOT NULL, 
     [Apellido2] VARCHAR(15) NULL, 
-	[TipoIdentificacion] VARCHAR(30) NOT NULL
-	CONSTRAINT fkPersonaAUsuarioUsername Foreign key (Correo) references Usuario(Username)
-	on delete cascade
-	on update cascade
+	[TipoIdentificacion] VARCHAR(30) NOT NULL,
+	[Borrado] BIT not NULL DEFAULT 0
 )

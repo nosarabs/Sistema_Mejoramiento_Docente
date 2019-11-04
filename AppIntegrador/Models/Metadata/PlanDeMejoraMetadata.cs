@@ -20,7 +20,7 @@ namespace AppIntegrador.Models.Metadata
 
         [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
-        [MaxLength(30, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
+        [MaxLength(50, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
         [Required]
         public string nombre { get; set; }
 

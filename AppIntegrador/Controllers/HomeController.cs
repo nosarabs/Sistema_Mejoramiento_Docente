@@ -30,6 +30,7 @@ namespace AppIntegrador.Controllers
             //Si hay informacion de alerta en TempData entonces pasarla al viewbag
             if (TempData["alertmessage"] != null)
             {
+                ViewBag.typeMessage = "alert";
                 ViewBag.AlertMessage = TempData["alertmessage"].ToString();
             }
 
@@ -64,7 +65,13 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
+            //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
+            if (TempData["successMessage"] != null)
+            {
+                ViewBag.typeMessage = "success";
+                ViewBag.NotifyMessage = TempData["successMessage"].ToString();
+            }
             return View();
         }
 
@@ -73,9 +80,9 @@ namespace AppIntegrador.Controllers
         public async Task<ActionResult> Login(Usuario objUser)
         {
 
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             if (ModelState.IsValid)
-            {
+            {               
                 /*When loggin in, first checks whether the user's account is locked or deactivated.*/
                 if (IsUserLocked(objUser)) 
                 {
@@ -103,7 +110,7 @@ namespace AppIntegrador.Controllers
                         // No se encontró el usuario
                         if (result == 1)
                         {
-                            ModelState.AddModelError("Username", "Nombre de usuario incorrecto");
+                            ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
                         }
                         /*If user's account exists in the database but the password is wrong.*/
                         else
@@ -133,7 +140,7 @@ namespace AppIntegrador.Controllers
             {
                 /*Sets the count of failed login attempts to 1.*/
                 System.Web.HttpContext.Current.Application[objUser.Username] = 1;
-                ModelState.AddModelError("Password", "Contraseña incorrecta");
+                ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
             }
             else 
             {
@@ -156,7 +163,7 @@ namespace AppIntegrador.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "Contraseña incorrecta");
+                    ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
                 }
 
                 /*Save the failed attempts count back to somewhere in the system.*/
@@ -226,26 +233,30 @@ namespace AppIntegrador.Controllers
         /* User story TAM-1.5 */
         public ActionResult PasswordReset()
         {
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             return View();
         }
 
         public ActionResult SendPasswordRequest(string correo)
         {
-            string message = "";
-            bool status = false;
-
             var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
 
             if (user != null)
             {
+                /*Prevencion del bloqueo de Adminsitrador*/
+                if (correo == "admin@mail.com")
+                {
+                    ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
+                    ViewBag.EnableBS4NoNavBar = true;
+                    return View("PasswordReset");
+                }
+
+
                 /* Only for demo purposes, will be changed for a password reset link */
                 Random random = new Random();
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 var newPassword = new string(Enumerable.Repeat(chars, 16)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());
-
-                message = "El correo ha sido enviado";
+                  .Select(s => s[random.Next(s.Length)]).ToArray());                
 
                 db.ChangePassword(correo, newPassword);
                 db.SaveChanges();
@@ -255,13 +266,15 @@ namespace AppIntegrador.Controllers
                 List<string> users = new List<string>();
                 users.Add(correo);
                 notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
+
+                TempData["successMessage"] = "Se ha enviado un correo con su nueva contraseña a la dirección indicada.";
+                return RedirectToAction("Login");
             }
             else
             {
-                message = "Correo no encontrado";
+                ViewBag.ErrorMessage = "Correo no encontrado";
             }
-            ViewBag.Message = message;
-            ViewBag.HTMLCheck = true;
+            ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
         }
     }
