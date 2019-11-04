@@ -1652,6 +1652,13 @@
           <Parameter Name="CarreraPoderosa" Type="varchar" Mode="InOut" />
           <Parameter Name="EnfasisPoderoso" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="TienePerfilEnElEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tienePerfil" Type="bit" Mode="InOut" />
+        </Function>
         <Function Name="TienePermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
           <Parameter Name="perfil" Type="varchar" Mode="In" />
@@ -1659,6 +1666,13 @@
           <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
           <Parameter Name="permiso" Type="int" Mode="In" />
           <Parameter Name="resultado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="TienePermisoActivoEnEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="permisoId" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tieneActivo" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="TienePermisoSinEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="nvarchar" Mode="In" />
@@ -3565,6 +3579,20 @@
             <Parameter Name="CarreraPoderosa" Mode="InOut" Type="String" />
             <Parameter Name="EnfasisPoderoso" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="TienePerfilEnElEnfasis">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tienePerfil" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="TienePermisoActivoEnEnfasis">
+            <Parameter Name="permisoId" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tieneActivo" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4122,6 +4150,8 @@
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
           <FunctionImportMapping FunctionImportName="EnfasisXCarrera" FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" />
           <FunctionImportMapping FunctionImportName="SugerirConfiguracion" FunctionName="DataIntegradorModel.Store.SugerirConfiguracion" />
+          <FunctionImportMapping FunctionImportName="TienePerfilEnElEnfasis" FunctionName="DataIntegradorModel.Store.TienePerfilEnElEnfasis" />
+          <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
