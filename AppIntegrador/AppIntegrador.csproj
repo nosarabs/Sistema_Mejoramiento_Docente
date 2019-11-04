@@ -368,6 +368,7 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarrespuestas.js" />
@@ -379,6 +380,7 @@
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
@@ -476,6 +478,7 @@
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
+    <Content Include="Views\Home\CambiarContrasenna.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

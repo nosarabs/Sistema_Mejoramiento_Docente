@@ -1,0 +1,72 @@
+﻿﻿@model AppIntegrador.Models.Usuario
+
+@{
+    ViewBag.Title = "CambiarContrasenna";
+}
+
+@Styles.Render("~/Content/users&profiles")
+
+<div class="container col-3 p-3 border" style="background-color: #fbfbfb">
+    <h2>Cambiar Mi Contraseña</h2>
+    @*@using (Html.BeginForm("CambiarContrasenna", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))*@
+    @using (Html.BeginForm("CambiarContrasenna", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { onsubmit = "return validarNuevaContrasenna()" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <label for="contrasennaActual">Contraseña Actual</label>
+            <input type="password" class="form-control col-7" id="contrasennaActual" name="contrasennaActual" />
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            <label for="contrasennaNueva">Contraseña Nueva</label>
+            <input type="password" class="form-control col-7" id="contrasennaNueva" name="contrasennaNueva" />
+        </div>
+        <div class="form-group">
+            <label for="contrasennaConfirmar">Confirmar Contraseña</label>
+            <input type="password" class="form-control col-7" id="contrasennaConfirmar" name="contrasennaConfirmar" />
+            <p class="text-danger" id="contrasennaConfirmarErrorJS">@Html.ValidationMessageFor(model => model.Password, "")</p>
+        </div>
+        <button type="submit" class="btn btn-info mr-3">Cambiar Contraseña</button>
+        @Html.ActionLink("Salir", "Index", "Home", new object { }, new { @class = "btn btn-light border-secondary" })
+
+    }
+</div>
+
+
+
+@*//If there is a message in ViewBag.Message it displays it as an alert*@
+@section Scripts
+    {
+    @Scripts.Render("~/bundles/custom")
+    @if (!string.IsNullOrEmpty(ViewBag.typeMessage))
+    {
+
+
+        switch (ViewBag.typeMessage)
+        {
+            case "alert":
+                <script type="text/javascript">
+                customAlert('warning','@ViewBag.NotifyMessage');;
+                </script>
+                break;
+            case "success":
+                <script>
+                    Swal.fire({
+                        type: 'success',
+                        title: '@ViewBag.NotifyTitle',
+                        text: '@ViewBag.NotifyMessage'
+                        });
+                </script>
+                @*<script type="text/javascript">
+                    customAlert('success','@ViewBag.NotifyMessage');
+                </script>*@
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
