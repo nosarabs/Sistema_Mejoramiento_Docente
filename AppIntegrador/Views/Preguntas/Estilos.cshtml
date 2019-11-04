@@ -5,11 +5,12 @@
 }
 
 
-<div class="container">
-    <h2>Índice de estilos</h2>
+    <div class="container">
 
-    <div class="card card-default">
-        <table class="table">
+
+        <div class="card card-body">
+            <h2>Índice de estilos</h2>
+            <table class="table">
                 <tr>
                     <th scope="col">Clase</th>
                     <th scope="col">Vista previa</th>
@@ -26,6 +27,10 @@
                     <tr>
                         <th scope="row">btn-rojoUCR</th>
                         <td><button class="btn-rojoUCR">Rojo UCR</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">btn-linkUCR</th>
+                        <td class="btn-linkUCR">Link normal</td>
                     </tr>
                     <tr>
                         <th scope="row">azulUCR</th>
@@ -48,6 +53,17 @@
                         <td class="sortable-container">Fondo usado en opciones de preguntas de OU (Tiene hover y cambia el cursor)</td>
                     </tr>
                 </tbody>
-        </table>
+            </table>
+        </div>
+        <br />
+        <div class="card card-body">
+            <h3>Agregar nuevos estilos</h3>
+            Para agregar nuevos estilos, se necesita instalar el compilador de SCSS. Se instala con NuGet escribiendo:
+            <code>Install-Package BuildWebCompiler</code>
+            Luego, en el archivo Main.scss, se agregan los las clases con los estilos que se ocupen. Si se quiere heredar el estilo de
+            alguna clase de Bootstrap o de las que ya están, se usa lo siguiente:
+            <code>@@extend .clase</code>
+            Cuando se hacen cambios en este archivo, hay que compilar para que el Main.css se actualice.
+
+        </div>
     </div>
-</div>

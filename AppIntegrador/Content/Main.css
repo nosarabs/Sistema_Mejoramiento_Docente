@@ -1664,7 +1664,7 @@ textarea.form-control {
     .form-inline .custom-control-label {
       margin-bottom: 0; } }
 
-.btn, .btn-blancoUCR, .btn-azulUCR, .btn-rojoUCR {
+.btn, .btn-blancoUCR, .btn-azulUCR, .btn-rojoUCR, .btn-linkUCR {
   display: inline-block;
   font-weight: 400;
   color: #212529;
@@ -1679,22 +1679,23 @@ textarea.form-control {
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   @media (prefers-reduced-motion: reduce) {
-    .btn, .btn-blancoUCR, .btn-azulUCR, .btn-rojoUCR {
+    .btn, .btn-blancoUCR, .btn-azulUCR, .btn-rojoUCR, .btn-linkUCR {
       transition: none; } }
-  .btn:hover, .btn-blancoUCR:hover, .btn-azulUCR:hover, .btn-rojoUCR:hover {
+  .btn:hover, .btn-blancoUCR:hover, .btn-azulUCR:hover, .btn-rojoUCR:hover, .btn-linkUCR:hover {
     color: #212529;
     text-decoration: none; }
-  .btn:focus, .btn-blancoUCR:focus, .btn-azulUCR:focus, .btn-rojoUCR:focus, .btn.focus, .focus.btn-blancoUCR, .focus.btn-azulUCR, .focus.btn-rojoUCR {
+  .btn:focus, .btn-blancoUCR:focus, .btn-azulUCR:focus, .btn-rojoUCR:focus, .btn-linkUCR:focus, .btn.focus, .focus.btn-blancoUCR, .focus.btn-azulUCR, .focus.btn-rojoUCR, .focus.btn-linkUCR {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-  .btn.disabled, .disabled.btn-blancoUCR, .disabled.btn-azulUCR, .disabled.btn-rojoUCR, .btn:disabled, .btn-blancoUCR:disabled, .btn-azulUCR:disabled, .btn-rojoUCR:disabled {
+  .btn.disabled, .disabled.btn-blancoUCR, .disabled.btn-azulUCR, .disabled.btn-rojoUCR, .disabled.btn-linkUCR, .btn:disabled, .btn-blancoUCR:disabled, .btn-azulUCR:disabled, .btn-rojoUCR:disabled, .btn-linkUCR:disabled {
     opacity: 0.65; }
 
-a.btn.disabled, a.disabled.btn-blancoUCR, a.disabled.btn-azulUCR, a.disabled.btn-rojoUCR,
+a.btn.disabled, a.disabled.btn-blancoUCR, a.disabled.btn-azulUCR, a.disabled.btn-rojoUCR, a.disabled.btn-linkUCR,
 fieldset:disabled a.btn,
 fieldset:disabled a.btn-blancoUCR,
 fieldset:disabled a.btn-azulUCR,
-fieldset:disabled a.btn-rojoUCR {
+fieldset:disabled a.btn-rojoUCR,
+fieldset:disabled a.btn-linkUCR {
   pointer-events: none; }
 
 .btn-primary {
@@ -2053,27 +2054,27 @@ fieldset:disabled a.btn-rojoUCR {
     .show > .btn-outline-dark.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
 
-.btn-link {
+.btn-link, .btn-linkUCR {
   font-weight: 400;
   color: #007bff;
   text-decoration: none; }
-  .btn-link:hover {
+  .btn-link:hover, .btn-linkUCR:hover {
     color: #0056b3;
     text-decoration: underline; }
-  .btn-link:focus, .btn-link.focus {
+  .btn-link:focus, .btn-linkUCR:focus, .btn-link.focus, .focus.btn-linkUCR {
     text-decoration: underline;
     box-shadow: none; }
-  .btn-link:disabled, .btn-link.disabled {
+  .btn-link:disabled, .btn-linkUCR:disabled, .btn-link.disabled, .disabled.btn-linkUCR {
     color: #6c757d;
     pointer-events: none; }
 
-.btn-lg, .btn-group-lg > .btn, .btn-group-lg > .btn-blancoUCR, .btn-group-lg > .btn-azulUCR, .btn-group-lg > .btn-rojoUCR {
+.btn-lg, .btn-group-lg > .btn, .btn-group-lg > .btn-blancoUCR, .btn-group-lg > .btn-azulUCR, .btn-group-lg > .btn-rojoUCR, .btn-group-lg > .btn-linkUCR {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.3rem; }
 
-.btn-sm, .btn-group-sm > .btn, .btn-group-sm > .btn-blancoUCR, .btn-group-sm > .btn-azulUCR, .btn-group-sm > .btn-rojoUCR {
+.btn-sm, .btn-group-sm > .btn, .btn-group-sm > .btn-blancoUCR, .btn-group-sm > .btn-azulUCR, .btn-group-sm > .btn-rojoUCR, .btn-group-sm > .btn-linkUCR {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -2317,32 +2318,37 @@ input[type="button"].btn-block {
   position: relative;
   display: inline-flex;
   vertical-align: middle; }
-  .btn-group > .btn, .btn-group > .btn-blancoUCR, .btn-group > .btn-azulUCR, .btn-group > .btn-rojoUCR,
+  .btn-group > .btn, .btn-group > .btn-blancoUCR, .btn-group > .btn-azulUCR, .btn-group > .btn-rojoUCR, .btn-group > .btn-linkUCR,
   .btn-group-vertical > .btn,
   .btn-group-vertical > .btn-blancoUCR,
   .btn-group-vertical > .btn-azulUCR,
-  .btn-group-vertical > .btn-rojoUCR {
+  .btn-group-vertical > .btn-rojoUCR,
+  .btn-group-vertical > .btn-linkUCR {
     position: relative;
     flex: 1 1 auto; }
-    .btn-group > .btn:hover, .btn-group > .btn-blancoUCR:hover, .btn-group > .btn-azulUCR:hover, .btn-group > .btn-rojoUCR:hover,
+    .btn-group > .btn:hover, .btn-group > .btn-blancoUCR:hover, .btn-group > .btn-azulUCR:hover, .btn-group > .btn-rojoUCR:hover, .btn-group > .btn-linkUCR:hover,
     .btn-group-vertical > .btn:hover,
     .btn-group-vertical > .btn-blancoUCR:hover,
     .btn-group-vertical > .btn-azulUCR:hover,
-    .btn-group-vertical > .btn-rojoUCR:hover {
+    .btn-group-vertical > .btn-rojoUCR:hover,
+    .btn-group-vertical > .btn-linkUCR:hover {
       z-index: 1; }
-    .btn-group > .btn:focus, .btn-group > .btn-blancoUCR:focus, .btn-group > .btn-azulUCR:focus, .btn-group > .btn-rojoUCR:focus, .btn-group > .btn:active, .btn-group > .btn-blancoUCR:active, .btn-group > .btn-azulUCR:active, .btn-group > .btn-rojoUCR:active, .btn-group > .btn.active, .btn-group > .active.btn-blancoUCR, .btn-group > .active.btn-azulUCR, .btn-group > .active.btn-rojoUCR,
+    .btn-group > .btn:focus, .btn-group > .btn-blancoUCR:focus, .btn-group > .btn-azulUCR:focus, .btn-group > .btn-rojoUCR:focus, .btn-group > .btn-linkUCR:focus, .btn-group > .btn:active, .btn-group > .btn-blancoUCR:active, .btn-group > .btn-azulUCR:active, .btn-group > .btn-rojoUCR:active, .btn-group > .btn-linkUCR:active, .btn-group > .btn.active, .btn-group > .active.btn-blancoUCR, .btn-group > .active.btn-azulUCR, .btn-group > .active.btn-rojoUCR, .btn-group > .active.btn-linkUCR,
     .btn-group-vertical > .btn:focus,
     .btn-group-vertical > .btn-blancoUCR:focus,
     .btn-group-vertical > .btn-azulUCR:focus,
     .btn-group-vertical > .btn-rojoUCR:focus,
+    .btn-group-vertical > .btn-linkUCR:focus,
     .btn-group-vertical > .btn:active,
     .btn-group-vertical > .btn-blancoUCR:active,
     .btn-group-vertical > .btn-azulUCR:active,
     .btn-group-vertical > .btn-rojoUCR:active,
+    .btn-group-vertical > .btn-linkUCR:active,
     .btn-group-vertical > .btn.active,
     .btn-group-vertical > .active.btn-blancoUCR,
     .btn-group-vertical > .active.btn-azulUCR,
-    .btn-group-vertical > .active.btn-rojoUCR {
+    .btn-group-vertical > .active.btn-rojoUCR,
+    .btn-group-vertical > .active.btn-linkUCR {
       z-index: 1; }
 
 .btn-toolbar {
@@ -2352,23 +2358,25 @@ input[type="button"].btn-block {
   .btn-toolbar .input-group {
     width: auto; }
 
-.btn-group > .btn:not(:first-child), .btn-group > .btn-blancoUCR:not(:first-child), .btn-group > .btn-azulUCR:not(:first-child), .btn-group > .btn-rojoUCR:not(:first-child),
+.btn-group > .btn:not(:first-child), .btn-group > .btn-blancoUCR:not(:first-child), .btn-group > .btn-azulUCR:not(:first-child), .btn-group > .btn-rojoUCR:not(:first-child), .btn-group > .btn-linkUCR:not(:first-child),
 .btn-group > .btn-group:not(:first-child) {
   margin-left: -1px; }
 
-.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-blancoUCR:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-azulUCR:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-rojoUCR:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-blancoUCR:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-azulUCR:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-rojoUCR:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-linkUCR:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn-group:not(:last-child) > .btn,
 .btn-group > .btn-group:not(:last-child) > .btn-blancoUCR,
 .btn-group > .btn-group:not(:last-child) > .btn-azulUCR,
-.btn-group > .btn-group:not(:last-child) > .btn-rojoUCR {
+.btn-group > .btn-group:not(:last-child) > .btn-rojoUCR,
+.btn-group > .btn-group:not(:last-child) > .btn-linkUCR {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
 
-.btn-group > .btn:not(:first-child), .btn-group > .btn-blancoUCR:not(:first-child), .btn-group > .btn-azulUCR:not(:first-child), .btn-group > .btn-rojoUCR:not(:first-child),
+.btn-group > .btn:not(:first-child), .btn-group > .btn-blancoUCR:not(:first-child), .btn-group > .btn-azulUCR:not(:first-child), .btn-group > .btn-rojoUCR:not(:first-child), .btn-group > .btn-linkUCR:not(:first-child),
 .btn-group > .btn-group:not(:first-child) > .btn,
 .btn-group > .btn-group:not(:first-child) > .btn-blancoUCR,
 .btn-group > .btn-group:not(:first-child) > .btn-azulUCR,
-.btn-group > .btn-group:not(:first-child) > .btn-rojoUCR {
+.btn-group > .btn-group:not(:first-child) > .btn-rojoUCR,
+.btn-group > .btn-group:not(:first-child) > .btn-linkUCR {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
 
@@ -2382,11 +2390,11 @@ input[type="button"].btn-block {
   .dropleft .dropdown-toggle-split::before {
     margin-right: 0; }
 
-.btn-sm + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .btn-blancoUCR + .dropdown-toggle-split, .btn-group-sm > .btn-azulUCR + .dropdown-toggle-split, .btn-group-sm > .btn-rojoUCR + .dropdown-toggle-split {
+.btn-sm + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .btn-blancoUCR + .dropdown-toggle-split, .btn-group-sm > .btn-azulUCR + .dropdown-toggle-split, .btn-group-sm > .btn-rojoUCR + .dropdown-toggle-split, .btn-group-sm > .btn-linkUCR + .dropdown-toggle-split {
   padding-right: 0.375rem;
   padding-left: 0.375rem; }
 
-.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .btn-group-lg > .btn-blancoUCR + .dropdown-toggle-split, .btn-group-lg > .btn-azulUCR + .dropdown-toggle-split, .btn-group-lg > .btn-rojoUCR + .dropdown-toggle-split {
+.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .btn-group-lg > .btn-blancoUCR + .dropdown-toggle-split, .btn-group-lg > .btn-azulUCR + .dropdown-toggle-split, .btn-group-lg > .btn-rojoUCR + .dropdown-toggle-split, .btn-group-lg > .btn-linkUCR + .dropdown-toggle-split {
   padding-right: 0.75rem;
   padding-left: 0.75rem; }
 
@@ -2394,46 +2402,52 @@ input[type="button"].btn-block {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center; }
-  .btn-group-vertical > .btn, .btn-group-vertical > .btn-blancoUCR, .btn-group-vertical > .btn-azulUCR, .btn-group-vertical > .btn-rojoUCR,
+  .btn-group-vertical > .btn, .btn-group-vertical > .btn-blancoUCR, .btn-group-vertical > .btn-azulUCR, .btn-group-vertical > .btn-rojoUCR, .btn-group-vertical > .btn-linkUCR,
   .btn-group-vertical > .btn-group {
     width: 100%; }
-  .btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-blancoUCR:not(:first-child), .btn-group-vertical > .btn-azulUCR:not(:first-child), .btn-group-vertical > .btn-rojoUCR:not(:first-child),
+  .btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-blancoUCR:not(:first-child), .btn-group-vertical > .btn-azulUCR:not(:first-child), .btn-group-vertical > .btn-rojoUCR:not(:first-child), .btn-group-vertical > .btn-linkUCR:not(:first-child),
   .btn-group-vertical > .btn-group:not(:first-child) {
     margin-top: -1px; }
-  .btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-blancoUCR:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-azulUCR:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-rojoUCR:not(:last-child):not(.dropdown-toggle),
+  .btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-blancoUCR:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-azulUCR:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-rojoUCR:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-linkUCR:not(:last-child):not(.dropdown-toggle),
   .btn-group-vertical > .btn-group:not(:last-child) > .btn,
   .btn-group-vertical > .btn-group:not(:last-child) > .btn-blancoUCR,
   .btn-group-vertical > .btn-group:not(:last-child) > .btn-azulUCR,
-  .btn-group-vertical > .btn-group:not(:last-child) > .btn-rojoUCR {
+  .btn-group-vertical > .btn-group:not(:last-child) > .btn-rojoUCR,
+  .btn-group-vertical > .btn-group:not(:last-child) > .btn-linkUCR {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0; }
-  .btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-blancoUCR:not(:first-child), .btn-group-vertical > .btn-azulUCR:not(:first-child), .btn-group-vertical > .btn-rojoUCR:not(:first-child),
+  .btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-blancoUCR:not(:first-child), .btn-group-vertical > .btn-azulUCR:not(:first-child), .btn-group-vertical > .btn-rojoUCR:not(:first-child), .btn-group-vertical > .btn-linkUCR:not(:first-child),
   .btn-group-vertical > .btn-group:not(:first-child) > .btn,
   .btn-group-vertical > .btn-group:not(:first-child) > .btn-blancoUCR,
   .btn-group-vertical > .btn-group:not(:first-child) > .btn-azulUCR,
-  .btn-group-vertical > .btn-group:not(:first-child) > .btn-rojoUCR {
+  .btn-group-vertical > .btn-group:not(:first-child) > .btn-rojoUCR,
+  .btn-group-vertical > .btn-group:not(:first-child) > .btn-linkUCR {
     border-top-left-radius: 0;
     border-top-right-radius: 0; }
 
-.btn-group-toggle > .btn, .btn-group-toggle > .btn-blancoUCR, .btn-group-toggle > .btn-azulUCR, .btn-group-toggle > .btn-rojoUCR,
+.btn-group-toggle > .btn, .btn-group-toggle > .btn-blancoUCR, .btn-group-toggle > .btn-azulUCR, .btn-group-toggle > .btn-rojoUCR, .btn-group-toggle > .btn-linkUCR,
 .btn-group-toggle > .btn-group > .btn,
 .btn-group-toggle > .btn-group > .btn-blancoUCR,
 .btn-group-toggle > .btn-group > .btn-azulUCR,
-.btn-group-toggle > .btn-group > .btn-rojoUCR {
+.btn-group-toggle > .btn-group > .btn-rojoUCR,
+.btn-group-toggle > .btn-group > .btn-linkUCR {
   margin-bottom: 0; }
-  .btn-group-toggle > .btn input[type="radio"], .btn-group-toggle > .btn-blancoUCR input[type="radio"], .btn-group-toggle > .btn-azulUCR input[type="radio"], .btn-group-toggle > .btn-rojoUCR input[type="radio"],
+  .btn-group-toggle > .btn input[type="radio"], .btn-group-toggle > .btn-blancoUCR input[type="radio"], .btn-group-toggle > .btn-azulUCR input[type="radio"], .btn-group-toggle > .btn-rojoUCR input[type="radio"], .btn-group-toggle > .btn-linkUCR input[type="radio"],
   .btn-group-toggle > .btn input[type="checkbox"],
   .btn-group-toggle > .btn-blancoUCR input[type="checkbox"],
   .btn-group-toggle > .btn-azulUCR input[type="checkbox"],
   .btn-group-toggle > .btn-rojoUCR input[type="checkbox"],
+  .btn-group-toggle > .btn-linkUCR input[type="checkbox"],
   .btn-group-toggle > .btn-group > .btn input[type="radio"],
   .btn-group-toggle > .btn-group > .btn-blancoUCR input[type="radio"],
   .btn-group-toggle > .btn-group > .btn-azulUCR input[type="radio"],
   .btn-group-toggle > .btn-group > .btn-rojoUCR input[type="radio"],
+  .btn-group-toggle > .btn-group > .btn-linkUCR input[type="radio"],
   .btn-group-toggle > .btn-group > .btn input[type="checkbox"],
   .btn-group-toggle > .btn-group > .btn-blancoUCR input[type="checkbox"],
   .btn-group-toggle > .btn-group > .btn-azulUCR input[type="checkbox"],
-  .btn-group-toggle > .btn-group > .btn-rojoUCR input[type="checkbox"] {
+  .btn-group-toggle > .btn-group > .btn-rojoUCR input[type="checkbox"],
+  .btn-group-toggle > .btn-group > .btn-linkUCR input[type="checkbox"] {
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none; }
@@ -2493,54 +2507,69 @@ input[type="button"].btn-block {
 .input-group-prepend,
 .input-group-append {
   display: flex; }
-  .input-group-prepend .btn, .input-group-prepend .btn-blancoUCR, .input-group-prepend .btn-azulUCR, .input-group-prepend .btn-rojoUCR,
+  .input-group-prepend .btn, .input-group-prepend .btn-blancoUCR, .input-group-prepend .btn-azulUCR, .input-group-prepend .btn-rojoUCR, .input-group-prepend .btn-linkUCR,
   .input-group-append .btn,
   .input-group-append .btn-blancoUCR,
   .input-group-append .btn-azulUCR,
-  .input-group-append .btn-rojoUCR {
+  .input-group-append .btn-rojoUCR,
+  .input-group-append .btn-linkUCR {
     position: relative;
     z-index: 2; }
-    .input-group-prepend .btn:focus, .input-group-prepend .btn-blancoUCR:focus, .input-group-prepend .btn-azulUCR:focus, .input-group-prepend .btn-rojoUCR:focus,
+    .input-group-prepend .btn:focus, .input-group-prepend .btn-blancoUCR:focus, .input-group-prepend .btn-azulUCR:focus, .input-group-prepend .btn-rojoUCR:focus, .input-group-prepend .btn-linkUCR:focus,
     .input-group-append .btn:focus,
     .input-group-append .btn-blancoUCR:focus,
     .input-group-append .btn-azulUCR:focus,
-    .input-group-append .btn-rojoUCR:focus {
+    .input-group-append .btn-rojoUCR:focus,
+    .input-group-append .btn-linkUCR:focus {
       z-index: 3; }
-  .input-group-prepend .btn + .btn, .input-group-prepend .btn-blancoUCR + .btn, .input-group-prepend .btn-azulUCR + .btn, .input-group-prepend .btn-rojoUCR + .btn, .input-group-prepend .btn + .btn-blancoUCR, .input-group-prepend .btn-blancoUCR + .btn-blancoUCR, .input-group-prepend .btn-azulUCR + .btn-blancoUCR, .input-group-prepend .btn-rojoUCR + .btn-blancoUCR, .input-group-prepend .btn + .btn-azulUCR, .input-group-prepend .btn-blancoUCR + .btn-azulUCR, .input-group-prepend .btn-azulUCR + .btn-azulUCR, .input-group-prepend .btn-rojoUCR + .btn-azulUCR, .input-group-prepend .btn + .btn-rojoUCR, .input-group-prepend .btn-blancoUCR + .btn-rojoUCR, .input-group-prepend .btn-azulUCR + .btn-rojoUCR, .input-group-prepend .btn-rojoUCR + .btn-rojoUCR,
+  .input-group-prepend .btn + .btn, .input-group-prepend .btn-blancoUCR + .btn, .input-group-prepend .btn-azulUCR + .btn, .input-group-prepend .btn-rojoUCR + .btn, .input-group-prepend .btn-linkUCR + .btn, .input-group-prepend .btn + .btn-blancoUCR, .input-group-prepend .btn-blancoUCR + .btn-blancoUCR, .input-group-prepend .btn-azulUCR + .btn-blancoUCR, .input-group-prepend .btn-rojoUCR + .btn-blancoUCR, .input-group-prepend .btn-linkUCR + .btn-blancoUCR, .input-group-prepend .btn + .btn-azulUCR, .input-group-prepend .btn-blancoUCR + .btn-azulUCR, .input-group-prepend .btn-azulUCR + .btn-azulUCR, .input-group-prepend .btn-rojoUCR + .btn-azulUCR, .input-group-prepend .btn-linkUCR + .btn-azulUCR, .input-group-prepend .btn + .btn-rojoUCR, .input-group-prepend .btn-blancoUCR + .btn-rojoUCR, .input-group-prepend .btn-azulUCR + .btn-rojoUCR, .input-group-prepend .btn-rojoUCR + .btn-rojoUCR, .input-group-prepend .btn-linkUCR + .btn-rojoUCR, .input-group-prepend .btn + .btn-linkUCR, .input-group-prepend .btn-blancoUCR + .btn-linkUCR, .input-group-prepend .btn-azulUCR + .btn-linkUCR, .input-group-prepend .btn-rojoUCR + .btn-linkUCR, .input-group-prepend .btn-linkUCR + .btn-linkUCR,
   .input-group-prepend .btn + .input-group-text,
   .input-group-prepend .btn-blancoUCR + .input-group-text,
   .input-group-prepend .btn-azulUCR + .input-group-text,
   .input-group-prepend .btn-rojoUCR + .input-group-text,
+  .input-group-prepend .btn-linkUCR + .input-group-text,
   .input-group-prepend .input-group-text + .input-group-text,
   .input-group-prepend .input-group-text + .btn,
   .input-group-prepend .input-group-text + .btn-blancoUCR,
   .input-group-prepend .input-group-text + .btn-azulUCR,
   .input-group-prepend .input-group-text + .btn-rojoUCR,
+  .input-group-prepend .input-group-text + .btn-linkUCR,
   .input-group-append .btn + .btn,
   .input-group-append .btn-blancoUCR + .btn,
   .input-group-append .btn-azulUCR + .btn,
   .input-group-append .btn-rojoUCR + .btn,
+  .input-group-append .btn-linkUCR + .btn,
   .input-group-append .btn + .btn-blancoUCR,
   .input-group-append .btn-blancoUCR + .btn-blancoUCR,
   .input-group-append .btn-azulUCR + .btn-blancoUCR,
   .input-group-append .btn-rojoUCR + .btn-blancoUCR,
+  .input-group-append .btn-linkUCR + .btn-blancoUCR,
   .input-group-append .btn + .btn-azulUCR,
   .input-group-append .btn-blancoUCR + .btn-azulUCR,
   .input-group-append .btn-azulUCR + .btn-azulUCR,
   .input-group-append .btn-rojoUCR + .btn-azulUCR,
+  .input-group-append .btn-linkUCR + .btn-azulUCR,
   .input-group-append .btn + .btn-rojoUCR,
   .input-group-append .btn-blancoUCR + .btn-rojoUCR,
   .input-group-append .btn-azulUCR + .btn-rojoUCR,
   .input-group-append .btn-rojoUCR + .btn-rojoUCR,
+  .input-group-append .btn-linkUCR + .btn-rojoUCR,
+  .input-group-append .btn + .btn-linkUCR,
+  .input-group-append .btn-blancoUCR + .btn-linkUCR,
+  .input-group-append .btn-azulUCR + .btn-linkUCR,
+  .input-group-append .btn-rojoUCR + .btn-linkUCR,
+  .input-group-append .btn-linkUCR + .btn-linkUCR,
   .input-group-append .btn + .input-group-text,
   .input-group-append .btn-blancoUCR + .input-group-text,
   .input-group-append .btn-azulUCR + .input-group-text,
   .input-group-append .btn-rojoUCR + .input-group-text,
+  .input-group-append .btn-linkUCR + .input-group-text,
   .input-group-append .input-group-text + .input-group-text,
   .input-group-append .input-group-text + .btn,
   .input-group-append .input-group-text + .btn-blancoUCR,
   .input-group-append .input-group-text + .btn-azulUCR,
-  .input-group-append .input-group-text + .btn-rojoUCR {
+  .input-group-append .input-group-text + .btn-rojoUCR,
+  .input-group-append .input-group-text + .btn-linkUCR {
     margin-left: -1px; }
 
 .input-group-prepend {
@@ -2579,10 +2608,12 @@ input[type="button"].btn-block {
 .input-group-lg > .input-group-prepend > .btn-blancoUCR,
 .input-group-lg > .input-group-prepend > .btn-azulUCR,
 .input-group-lg > .input-group-prepend > .btn-rojoUCR,
+.input-group-lg > .input-group-prepend > .btn-linkUCR,
 .input-group-lg > .input-group-append > .btn,
 .input-group-lg > .input-group-append > .btn-blancoUCR,
 .input-group-lg > .input-group-append > .btn-azulUCR,
-.input-group-lg > .input-group-append > .btn-rojoUCR {
+.input-group-lg > .input-group-append > .btn-rojoUCR,
+.input-group-lg > .input-group-append > .btn-linkUCR {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
@@ -2600,10 +2631,12 @@ input[type="button"].btn-block {
 .input-group-sm > .input-group-prepend > .btn-blancoUCR,
 .input-group-sm > .input-group-prepend > .btn-azulUCR,
 .input-group-sm > .input-group-prepend > .btn-rojoUCR,
+.input-group-sm > .input-group-prepend > .btn-linkUCR,
 .input-group-sm > .input-group-append > .btn,
 .input-group-sm > .input-group-append > .btn-blancoUCR,
 .input-group-sm > .input-group-append > .btn-azulUCR,
-.input-group-sm > .input-group-append > .btn-rojoUCR {
+.input-group-sm > .input-group-append > .btn-rojoUCR,
+.input-group-sm > .input-group-append > .btn-linkUCR {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -2613,32 +2646,36 @@ input[type="button"].btn-block {
 .input-group-sm > .custom-select {
   padding-right: 1.75rem; }
 
-.input-group > .input-group-prepend > .btn, .input-group > .input-group-prepend > .btn-blancoUCR, .input-group > .input-group-prepend > .btn-azulUCR, .input-group > .input-group-prepend > .btn-rojoUCR,
+.input-group > .input-group-prepend > .btn, .input-group > .input-group-prepend > .btn-blancoUCR, .input-group > .input-group-prepend > .btn-azulUCR, .input-group > .input-group-prepend > .btn-rojoUCR, .input-group > .input-group-prepend > .btn-linkUCR,
 .input-group > .input-group-prepend > .input-group-text,
 .input-group > .input-group-append:not(:last-child) > .btn,
 .input-group > .input-group-append:not(:last-child) > .btn-blancoUCR,
 .input-group > .input-group-append:not(:last-child) > .btn-azulUCR,
 .input-group > .input-group-append:not(:last-child) > .btn-rojoUCR,
+.input-group > .input-group-append:not(:last-child) > .btn-linkUCR,
 .input-group > .input-group-append:not(:last-child) > .input-group-text,
 .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
 .input-group > .input-group-append:last-child > .btn-blancoUCR:not(:last-child):not(.dropdown-toggle),
 .input-group > .input-group-append:last-child > .btn-azulUCR:not(:last-child):not(.dropdown-toggle),
 .input-group > .input-group-append:last-child > .btn-rojoUCR:not(:last-child):not(.dropdown-toggle),
+.input-group > .input-group-append:last-child > .btn-linkUCR:not(:last-child):not(.dropdown-toggle),
 .input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
 
-.input-group > .input-group-append > .btn, .input-group > .input-group-append > .btn-blancoUCR, .input-group > .input-group-append > .btn-azulUCR, .input-group > .input-group-append > .btn-rojoUCR,
+.input-group > .input-group-append > .btn, .input-group > .input-group-append > .btn-blancoUCR, .input-group > .input-group-append > .btn-azulUCR, .input-group > .input-group-append > .btn-rojoUCR, .input-group > .input-group-append > .btn-linkUCR,
 .input-group > .input-group-append > .input-group-text,
 .input-group > .input-group-prepend:not(:first-child) > .btn,
 .input-group > .input-group-prepend:not(:first-child) > .btn-blancoUCR,
 .input-group > .input-group-prepend:not(:first-child) > .btn-azulUCR,
 .input-group > .input-group-prepend:not(:first-child) > .btn-rojoUCR,
+.input-group > .input-group-prepend:not(:first-child) > .btn-linkUCR,
 .input-group > .input-group-prepend:not(:first-child) > .input-group-text,
 .input-group > .input-group-prepend:first-child > .btn:not(:first-child),
 .input-group > .input-group-prepend:first-child > .btn-blancoUCR:not(:first-child),
 .input-group > .input-group-prepend:first-child > .btn-azulUCR:not(:first-child),
 .input-group > .input-group-prepend:first-child > .btn-rojoUCR:not(:first-child),
+.input-group > .input-group-prepend:first-child > .btn-linkUCR:not(:first-child),
 .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
@@ -3573,7 +3610,7 @@ input[type="button"].btn-block {
   .badge:empty {
     display: none; }
 
-.btn .badge, .btn-blancoUCR .badge, .btn-azulUCR .badge, .btn-rojoUCR .badge {
+.btn .badge, .btn-blancoUCR .badge, .btn-azulUCR .badge, .btn-rojoUCR .badge, .btn-linkUCR .badge {
   position: relative;
   top: -1px; }
 
@@ -7071,7 +7108,7 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   *::after {
     text-shadow: none !important;
     box-shadow: none !important; }
-  a:not(.btn):not(.btn-blancoUCR):not(.btn-azulUCR):not(.btn-rojoUCR) {
+  a:not(.btn):not(.btn-blancoUCR):not(.btn-azulUCR):not(.btn-rojoUCR):not(.btn-linkUCR) {
     text-decoration: underline; }
   abbr[title]::after {
     content: " (" attr(title) ")"; }
