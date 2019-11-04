@@ -1,9 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[PromedioRespuestasPreguntaEscalaNumerica]
-	(@codigoFormulario CHAR(8),
+	(@codigoFormulario VARCHAR(8),
 	@siglaCurso VARCHAR(50),
 	@numeroGrupo TINYINT,
 	@anno INT,
 	@semestre TINYINT,
+	@fechaInicio DATE,
+	@fechaFin DATE,
 	@codigoPregunta CHAR(8),
 	@promedio FLOAT OUTPUT)
 AS
@@ -16,5 +18,7 @@ AS
 			AND O.GAnno = @anno
 			AND O.GSemestre = @semestre
 			AND O.PCodigo = @codigoPregunta
+			AND O.Fecha >= @fechaInicio
+			AND O.Fecha <= @fechaFin
 	END
 RETURN 0

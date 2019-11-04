@@ -21,7 +21,7 @@
 
     }
 
-    recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var justificaciones = [];
 
@@ -33,6 +33,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: 'post',
@@ -49,7 +51,7 @@
 
     }
 
-    recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var respuestas = [];
 
@@ -61,6 +63,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -77,17 +81,31 @@
 
     }
 
-    generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        this.crearLista(caja, respuestas);
+        var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+
+        if (respuestas.length > 0) {
+
+            this.crearLista(caja, respuestas);
+
+        }
+
+        return respuestas.length;
 
     }
 
-    generarTextoAbierto(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarTextoAbierto(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var respuestas = this.recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        this.crearLista(caja, respuestas);
+        var respuestas = this.recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+
+        if (respuestas.length > 0) {
+
+            this.crearLista(caja, respuestas);
+
+        }
+
+        return respuestas.length;
 
     }
 

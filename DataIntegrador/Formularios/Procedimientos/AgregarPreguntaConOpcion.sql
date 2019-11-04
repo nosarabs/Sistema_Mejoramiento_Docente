@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPreguntaConOpcion]
-	@cod char(8),
+	@cod varchar(8),
 	@type char,
 	@enunciado nvarchar(250),
 	@justificacion varchar(50) = NULL
@@ -8,13 +8,13 @@ BEGIN
 	-- Primeramente se tiene que crear una pregunta, con su código y enunciado
 	MERGE INTO Pregunta AS Target
 	USING (VALUES
-			(@cod, @enunciado) 
+			(@cod, @enunciado, @type) 
 	)
-	AS Source ([Codigo],[Enunciado])
+	AS Source ([Codigo],[Enunciado], [Tipo])
 	ON Target.Codigo = Source.Codigo
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (Codigo, Enunciado)
-	VALUES (@cod,@enunciado);
+	INSERT (Codigo, Enunciado, Tipo)
+	VALUES (@cod,@enunciado,@type);
 
 	-- Una vez creada la pregunta, se puede crear su subclase, Pregunta_con_opciones
 	MERGE INTO Pregunta_con_opciones AS Target
@@ -28,7 +28,18 @@ BEGIN
 	VALUES (@cod,@justificacion);
 
 
-	-- Se llama al procedimiento que va a insertar 
-	EXEC [dbo].[AgregarPreguntaSeleccion]  @codigo = @cod, @tipo = @type;
+	-- Se fija si es una pregunta con opciones de selección, es decir, Selección Única o Selección Múltiple
+	IF @type = 'U' OR @type = 'M' 
+	BEGIN
+		MERGE INTO Pregunta_con_opciones_de_seleccion AS Target
+		USING (VALUES
+				(@cod) 
+		)
+		AS Source ([Codigo])
+		ON Target.Codigo = Source.Codigo
+		WHEN NOT MATCHED BY TARGET THEN
+		INSERT (Codigo)
+		VALUES (@cod);
+	END;
 END
 

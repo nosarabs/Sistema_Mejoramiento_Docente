@@ -172,7 +172,7 @@
 
     }
 
-    recuperarEtiquetasEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarEtiquetasEscala(codigoPregunta) {
 
         var etiquetas;
 
@@ -193,7 +193,7 @@
 
     }
 
-    recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var valores;
 
@@ -205,6 +205,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -219,7 +221,7 @@
 
     }
 
-    recuperarEtiquetasSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarEtiquetasSeleccion(codigoPregunta) {
 
         var etiquetas;
 
@@ -240,7 +242,7 @@
 
     }
 
-    recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta, numeroOpciones) {
+    recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, numeroOpciones) {
 
         var valores;
 
@@ -252,6 +254,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta,
                 numOpciones: numeroOpciones
             },
@@ -282,50 +286,99 @@
 
     }
 
-    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    revisarRespuestas(valores) {
 
-        var etiquetas = this.recuperarEtiquetasEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoBarras(canvas, datos);
+        var suma = 0;
 
-    }
+        for (var i = 0; i < valores.length; ++i) {
 
-    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+            suma += valores[i];
 
-        var etiquetas = this.recuperarEtiquetasSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta, etiquetas.length);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoPie(canvas, datos);
+        }
+
+        return suma;
 
     }
 
-    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var etiquetas = this.recuperarEtiquetasSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta, etiquetas.length);
+        var etiquetas = this.recuperarEtiquetasEscala(codigoPregunta);
+        var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
-        var arregloOrdenadoObjetos = this.ordenarDatos(etiquetas, valores);
+        var resultado = this.revisarRespuestas(valores);
 
-        var etiquetasOrdenadas = [];
-        var valoresOrdenados = [];
+        if (resultado > 0) {
 
-        arregloOrdenadoObjetos.forEach(function (d) {
-            etiquetasOrdenadas.push(d.etiqueta);
-            valoresOrdenados.push(d.valor);
-        });
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoBarras(canvas, datos);
 
-        var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
-        this.generarGraficoBarras(canvas, datos);
+        }
+
+        return resultado;
 
     }
 
-    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
+
+        var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoPie(canvas, datos);
+
+        }
+
+        return resultado;
+
+    }
+
+    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
+
+        var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var arregloOrdenadoObjetos = this.ordenarDatos(etiquetas, valores);
+
+            var etiquetasOrdenadas = [];
+            var valoresOrdenados = [];
+
+            arregloOrdenadoObjetos.forEach(function (d) {
+                etiquetasOrdenadas.push(d.etiqueta);
+                valoresOrdenados.push(d.valor);
+            });
+
+            var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
+            this.generarGraficoBarras(canvas, datos);
+
+        }
+
+        return resultado;
+
+    }
+
+    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = ["No", "Sí", "No responde"];
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta, etiquetas.length);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoPie(canvas, datos);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoPie(canvas, datos);
+
+        }
+
+        return resultado;
 
     }
 

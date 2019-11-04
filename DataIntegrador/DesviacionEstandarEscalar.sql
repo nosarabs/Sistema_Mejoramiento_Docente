@@ -1,10 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[DesviacionEstandarEscalar]
 (
-	@FCod CHAR(8),
+	@FCod VARCHAR(8),
 	@CSigla VARCHAR(50),
 	@Grupo TINYINT,
 	@GAnno INT,
 	@GSem TINYINT,
+	@FechaInicio DATE,
+	@FechaFin DATE,
 	@PCod CHAR(8),
 	@Desviacion Float output
 )
@@ -18,5 +20,7 @@ BEGIN
 			 AND GAnno		= @GAnno
 			 AND GSemestre	= @GSem
 			 AND PCodigo	= @PCod
+			 AND Fecha >= @FechaInicio
+			 AND Fecha <= @FechaFin
 END
 RETURN 0
