@@ -77,16 +77,16 @@
 
             <div class="planDiv3">
                 <div id="crearNuevaAccion">
-                    <h2>Acciones del Objetivo @ViewBag.ObjetivoSeleccionado </h2>
-                    <div id="crear">
-                        @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
+                    <h2>Seleccione un Objetivo</h2>
+                    <div id="crearAccion">
+                        @*@Html.Action("divObjetivo", new { id = ViewBag.IdPlan })*@
                     </div>
                 </div>
                 <div>
-                    <h4 style="text-align:center">Lista de objetivos</h4>
+                    <h4 style="text-align:center">Lista de acciones de mejora</h4>
 
-                    <div id="divObjetivos">
-                        @Html.Partial("_objetivosDelPlan", Model.Objetivo)
+                    <div id="divAccion">
+                        @*@Html.Partial("_objetivosDelPlan", Model.Objetivo)*@
                     </div>
                 </div>
 
@@ -171,10 +171,26 @@
                 aquí se puede validar sobre objetivos
             });*@
 
+            $("#dataOb tr").click(function () {
+                alert("here");
+                var selected = $(this).hasClass("highlight");
+                $("#dataOb tr").removeClass("highlight");
+                if (!selected)
+                    $(this).addClass("highlight");
+            });
+
         });
 
         //actualizarObjetivos = function (id) {
             //poner aquí la función de ajax anidada
         //};
+    </script>
+
+    <script>
+        clickObjetivo = function (id, plan, obj) {
+            //alert("plan id:" + plan + " nombre obj:" + obj + " id obj:" + id);
+            var content = '<h2>Acciones de mejora del Objetivo ' + id + '</h2>';
+            document.getElementById('crearNuevaAccion').innerHTML = content;
+        };
     </script>
 }

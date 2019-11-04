@@ -237,10 +237,6 @@ nav {
 }
 
 /* Estilos para los planes de mejora */
-.planesTable {
-    padding-left: 5%;
-    padding-right: 5%;
-}
 
 .centerImage {
     width: 100%;
@@ -484,13 +480,11 @@ html, body {
 
 /*Para Tablas*/
 
-.TablasSeccionesPlanesDeMejora {
-    border-collapse: collapse;
+.planesTable {
     width: 100%;
-    overflow: scroll;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    table-layout: fixed;
+    padding-left: 5%;
+    padding-right: 5%;
+    table-layout: auto;
 }
 
 .EncabezadoTabla {
@@ -502,25 +496,32 @@ html, body {
     color: white;
 }
 
-.TablasDescripcion {
-    max-width: 600px;
-    min-width: 500px;
+.TablasNumero {
+    width: 4%;
+}
+
+.TablasNombre {
+    width: 19%;
     word-break: break-all;
+    text-align: left;
+}
+
+.TablasDescripcion {
+    width: 35%;
+    word-break: break-all;
+}
+
+.TablasFecha {
+    width: 13%;
+}
+
+.TablasOpciones {
+    min-width: 16%;
 }
 
 .TablasDescripcionAccionable {
     width: 64%;
     word-break: break-all;
-}
-
-.TablasFecha {
-    max-width: 250px;
-    min-width: 225px;
-}
-
-.TablasOpciones {
-    min-width: 250px;
-    max-width: 300px;
 }
 
 .TablasCodigo {
@@ -541,17 +542,12 @@ html, body {
     text-align: left;
 }
 
-.TablasNombre {
-    width: 20%;
-    word-break: break-all;
-    text-align: left;
-}
-
 .FilaTablasPlanesDeMejora td {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     border: 1px solid #ddd;
     border-collapse: collapse;
+    word-break: break-all;
 }
 
 .FilaAccioneblePlanesDeMejora td {
