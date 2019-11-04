@@ -1571,11 +1571,13 @@
           <Parameter Name="result" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FCod" Type="char" Mode="In" />
+          <Parameter Name="FCod" Type="varchar" Mode="In" />
           <Parameter Name="CSigla" Type="varchar" Mode="In" />
           <Parameter Name="Grupo" Type="tinyint" Mode="In" />
           <Parameter Name="GAnno" Type="int" Mode="In" />
           <Parameter Name="GSem" Type="tinyint" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
           <Parameter Name="PCod" Type="char" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
@@ -1609,11 +1611,13 @@
           <Parameter Name="result" Type="int" Mode="InOut" />
         </Function>
         <Function Name="Mediana" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="anio" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="fechaInicio" Type="date" Mode="In" />
+          <Parameter Name="fechaFin" Type="date" Mode="In" />
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
@@ -1771,11 +1775,13 @@
         <Function Name="PopularFormulariosDePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="fechaInicio" Type="date" Mode="In" />
+          <Parameter Name="fechaFin" Type="date" Mode="In" />
           <Parameter Name="codigoPregunta" Type="char" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
         </Function>
@@ -2839,6 +2845,8 @@
             <Parameter Name="Grupo" Mode="In" Type="Byte" />
             <Parameter Name="GAnno" Mode="In" Type="Int32" />
             <Parameter Name="GSem" Mode="In" Type="Byte" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="PCod" Mode="In" Type="String" />
             <Parameter Name="Desviacion" Mode="InOut" Type="Double" />
           </FunctionImport>
@@ -2853,6 +2861,8 @@
             <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
             <Parameter Name="anio" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
@@ -2869,6 +2879,8 @@
             <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
@@ -3059,14 +3071,14 @@
           <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosAnno" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosAnno_Result)">
-            <Parameter Name="anno" Mode="In" Type="Int32" />
+          <Parameter Name="anno" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosCarreraEnfasis" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosCarreraEnfasis_Result)">
             <Parameter Name="codigoCarrera" Mode="In" Type="String" />
             <Parameter Name="codigoEnfasis" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosCurso" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosCurso_Result)">
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+          <Parameter Name="siglaCurso" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosFiltros" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosFiltros_Result)">
             <Parameter Name="codigoUA" Mode="In" Type="String" />
@@ -3079,16 +3091,16 @@
             <Parameter Name="correoProfesor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosGrupo" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosGrupo_Result)">
-            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+          <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosProfesor_Result)">
-            <Parameter Name="correoProfesor" Mode="In" Type="String" />
+          <Parameter Name="correoProfesor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosSemestre" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosSemestre_Result)">
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)">
-            <Parameter Name="codigoUA" Mode="In" Type="String" />
+          <Parameter Name="codigoUA" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">

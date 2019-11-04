@@ -236,7 +236,7 @@ namespace AppIntegrador.Controllers
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultado = new ObjectParameter("Desviacion", typeof(float));
-            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultado);
+            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoPregunta, resultado);
 
             return serializer.Serialize(resultado.Value);
 
@@ -247,7 +247,7 @@ namespace AppIntegrador.Controllers
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultadoMediana = new ObjectParameter("mediana", typeof(float));
-            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
+            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoPregunta, resultadoMediana);
 
             return serializer.Serialize(resultadoMediana.Value);
         }
@@ -260,7 +260,7 @@ namespace AppIntegrador.Controllers
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultPromedio);
+            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoPregunta, resultPromedio);
 
             return serializer.Serialize(resultPromedio.Value);
         }
