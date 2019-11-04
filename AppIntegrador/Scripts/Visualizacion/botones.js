@@ -56,7 +56,7 @@
                 case "escala":
                     base = new BaseConEstadisticas(tipoPregunta);
                     insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
-                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
                 case "seleccion_unica":

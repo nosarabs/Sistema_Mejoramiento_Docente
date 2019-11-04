@@ -2,7 +2,7 @@
 
     constructor() { }
 
-    recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var media;
         $.ajax({
@@ -13,6 +13,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -27,7 +29,7 @@
 
     }
 
-    recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var mediana;
         $.ajax({
@@ -38,6 +40,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -52,7 +56,7 @@
 
     }
 
-    recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var desviacion;
         $.ajax({
@@ -63,6 +67,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -77,11 +83,11 @@
 
     }
 
-    generarEstadisticas(row, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarEstadisticas(row, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var media = this.recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var mediana = this.recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+        var media = this.recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+        var mediana = this.recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+        var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         var colMedia = row.firstElementChild;
         var colMediana = colMedia.nextElementSibling;
