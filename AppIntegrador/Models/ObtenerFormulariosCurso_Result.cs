@@ -10,10 +10,15 @@
 namespace AppIntegrador.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class ObtenerFormulariosCurso_Result
     {
-        public System.Guid OperationKey { get; set; }
+        public string FCodigo { get; set; }
+        public string CSigla { get; set; }
+        public Nullable<byte> GNumero { get; set; }
+        public Nullable<byte> GSemestre { get; set; }
+        public Nullable<int> GAnno { get; set; }
+        public Nullable<System.DateTime> FechaInicio { get; set; }
+        public Nullable<System.DateTime> FechaFin { get; set; }
     }
 }
