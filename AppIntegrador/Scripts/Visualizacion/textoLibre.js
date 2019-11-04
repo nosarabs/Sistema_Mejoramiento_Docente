@@ -84,14 +84,28 @@
     generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
-        this.crearLista(caja, respuestas);
+
+        if (respuestas.length > 0) {
+
+            this.crearLista(caja, respuestas);
+
+        }
+
+        return respuestas.length;
 
     }
 
     generarTextoAbierto(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var respuestas = this.recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
-        this.crearLista(caja, respuestas);
+
+        if (respuestas.length > 0) {
+
+            this.crearLista(caja, respuestas);
+
+        }
+
+        return respuestas.length;
 
     }
 

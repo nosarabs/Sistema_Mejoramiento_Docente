@@ -286,12 +286,35 @@
 
     }
 
+    revisarRespuestas(valores) {
+
+        var suma = 0;
+
+        for (var i = 0; i < valores.length; ++i) {
+
+            suma += valores[i];
+
+        }
+
+        return suma;
+
+    }
+
     generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = this.recuperarEtiquetasEscala(codigoPregunta);
         var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoBarras(canvas, datos);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoBarras(canvas, datos);
+
+        }
+
+        return resultado;
 
     }
 
@@ -299,8 +322,17 @@
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoPie(canvas, datos);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoPie(canvas, datos);
+
+        }
+
+        return resultado;
 
     }
 
@@ -309,18 +341,26 @@
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
 
-        var arregloOrdenadoObjetos = this.ordenarDatos(etiquetas, valores);
+        var resultado = this.revisarRespuestas(valores);
 
-        var etiquetasOrdenadas = [];
-        var valoresOrdenados = [];
+        if (resultado > 0) {
 
-        arregloOrdenadoObjetos.forEach(function (d) {
-            etiquetasOrdenadas.push(d.etiqueta);
-            valoresOrdenados.push(d.valor);
-        });
+            var arregloOrdenadoObjetos = this.ordenarDatos(etiquetas, valores);
 
-        var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
-        this.generarGraficoBarras(canvas, datos);
+            var etiquetasOrdenadas = [];
+            var valoresOrdenados = [];
+
+            arregloOrdenadoObjetos.forEach(function (d) {
+                etiquetasOrdenadas.push(d.etiqueta);
+                valoresOrdenados.push(d.valor);
+            });
+
+            var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
+            this.generarGraficoBarras(canvas, datos);
+
+        }
+
+        return resultado;
 
     }
 
@@ -328,8 +368,17 @@
 
         var etiquetas = ["No", "Sí", "No responde"];
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
-        var datos = { DATA: valores, LABELS: etiquetas };
-        this.generarGraficoPie(canvas, datos);
+
+        var resultado = this.revisarRespuestas(valores);
+
+        if (resultado > 0) {
+
+            var datos = { DATA: valores, LABELS: etiquetas };
+            this.generarGraficoPie(canvas, datos);
+
+        }
+
+        return resultado;
 
     }
 
