@@ -96,23 +96,32 @@ namespace AppIntegrador.Controllers
 
                 if (pregunta.Tipo == "L")
                 {
-
-                    db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
-                                                        respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_libre.FirstOrDefault().Observacion);
+                    // Si no se responde una pregunta de respuesta libre, los campos van a venir nulos, por lo que no se debe intentar guardar en la base de datos.
+                    if (pregunta.Responde_respuesta_libre != null && pregunta.Responde_respuesta_libre.Any())
+                    {
+                        db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
+                                                            respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_libre.FirstOrDefault().Observacion);
+                    }
                 }
                 else
                 {
-                    // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
-                    db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Justificacion);
-
-                    // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
-                    // En todos los demás casos solo se ejecuta una vez.
-                    foreach (var opcion in pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Opciones_seleccionadas_respuesta_con_opciones)
+                    // Si no se responde una pregunta con opciones, de cualquiera de los tipos, los campos van a venir nulos, por lo que no se debe guardar en la base de datos.
+                    if (pregunta.Responde_respuesta_con_opciones != null && pregunta.Responde_respuesta_con_opciones.Any())
                     {
-                        db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, (byte)opcion.OpcionSeleccionada);
+                        // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
+                        db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Justificacion);
 
+                        // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
+                        // En todos los demás casos solo se ejecuta una vez.
+                        if (pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Opciones_seleccionadas_respuesta_con_opciones != null)
+                        {
+                            foreach (var opcion in pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Opciones_seleccionadas_respuesta_con_opciones)
+                            {
+                                db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                                respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, (byte)opcion.OpcionSeleccionada);
+                            }
+                        }
                     }
                 }
             }

@@ -1,0 +1,57 @@
+﻿@model AppIntegrador.Models.PreguntaConNumeroSeccion
+
+@{
+    Layout = null;
+}
+
+@*RIP-EDF6*@
+
+@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa,
+    en vez de crear uno o varios modelos distintos.*@
+@{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+                  "].Pregunta.Responde_respuesta_con_opciones[0]";
+    string radname = respuestaname + ".Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada";
+    string justificacionname = respuestaname + ".Justificacion";}
+<div class="card card-primary full">
+    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
+    <div class="card-body" style="margin-left:unset">
+        @for (var index = Model.Pregunta.Pregunta_con_opciones.Escalar.Minimo;
+            index <= Model.Pregunta.Pregunta_con_opciones.Escalar.Maximo;
+            index += Model.Pregunta.Pregunta_con_opciones.Escalar.Incremento)
+        {
+            <div style="display: inline-block; padding:2px; text-align: center;">
+                <label for="@radname @index"> 
+                    @index<br />
+                    <input type="radio" name="@radname" id="@radname @index" value="@index" />
+                </label>
+            </div>
+        }
+    </div>
+
+    @if (Model.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
+    {
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="card-body grisUCR2">
+                <div class="form-group col-md-12">
+                    <div>
+                        @Model.Pregunta.Pregunta_con_opciones.TituloCampoObservacion
+                        <input class="form-control long-textbox col-md-12" style="width: 100%;max-width: 100%; min-width: 100%" cols="50" name="@justificacionname" maxlength="250" onkeyup="contarCaracteres(this)" />
+                        @*<div class="contador small float-right">0/8 caracteres usados</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Request["rad"].IsEmpty())
+    {
+        <ul>
+
+            @foreach (var selection in Request["rad"].Split(','))
+            {
+                <li>@selection</li>
+            }
+        </ul>
+    }
+</div>
