@@ -23,6 +23,7 @@ namespace AppIntegrador.Models
 
     public class Preguntas
     {
+        public String codigoSeccion { get; set; }
         public String codigoPregunta { get; set; }
         public String textoPregunta { get; set; }
         public String tipoPregunta { get; set; }

@@ -1578,7 +1578,8 @@
           <Parameter Name="GSem" Type="tinyint" Mode="In" />
           <Parameter Name="FechaInicio" Type="date" Mode="In" />
           <Parameter Name="FechaFin" Type="date" Mode="In" />
-          <Parameter Name="PCod" Type="char" Mode="In" />
+          <Parameter Name="SCod" Type="varchar" Mode="In" />
+          <Parameter Name="PCod" Type="varchar" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
         <Function Name="GuardarRespuestaAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1618,7 +1619,8 @@
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="fechaInicio" Type="date" Mode="In" />
           <Parameter Name="fechaFin" Type="date" Mode="In" />
-          <Parameter Name="codigoPregunta" Type="char" Mode="In" />
+          <Parameter Name="codigoSeccion" Type="varchar" Mode="In" />
+          <Parameter Name="codigoPregunta" Type="varchar" Mode="In" />
           <Parameter Name="mediana" Type="float" Mode="InOut" />
         </Function>
         <Function Name="ModificarCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1782,7 +1784,8 @@
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="fechaInicio" Type="date" Mode="In" />
           <Parameter Name="fechaFin" Type="date" Mode="In" />
-          <Parameter Name="codigoPregunta" Type="char" Mode="In" />
+          <Parameter Name="codigoSeccion" Type="varchar" Mode="In" />
+          <Parameter Name="codigoPregunta" Type="varchar" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
         </Function>
         <EntityContainer Name="DataIntegradorModelStoreContainer">
@@ -2847,6 +2850,7 @@
             <Parameter Name="GSem" Mode="In" Type="Byte" />
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="SCod" Mode="In" Type="String" />
             <Parameter Name="PCod" Mode="In" Type="String" />
             <Parameter Name="Desviacion" Mode="InOut" Type="Double" />
           </FunctionImport>
@@ -2863,6 +2867,7 @@
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="mediana" Mode="InOut" Type="Double" />
           </FunctionImport>
@@ -2881,6 +2886,7 @@
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
             <Parameter Name="codigoPregunta" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
