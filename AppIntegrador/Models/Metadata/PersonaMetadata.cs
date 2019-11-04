@@ -37,6 +37,8 @@ namespace AppIntegrador.Models.Metadata
         public string Apellido2 { get; set; }
         [Display(Name = "Tipo de Identificación")]
         public string TipoIdentificacion { get; set; }
+        [Display(Name = "Nombre completo")]
+        public string NombreCompleto { get; set; }
         [Display(Name = "Perfil asignado")]
         public bool HasProfileInEmph { get; set; }
     }

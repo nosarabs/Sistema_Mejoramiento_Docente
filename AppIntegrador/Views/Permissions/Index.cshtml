@@ -59,7 +59,9 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(model => model.Personas[i].Nombre1)
+                                        @Html.HiddenFor(model => model.Personas[i].Correo)
+                                        @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                                        @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
                                     </td>
                                     <td>
                                         @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph)
@@ -87,6 +89,8 @@
                             {
                                 <tr>
                                     <td>
+                                        @Html.HiddenFor(model => model.Permisos[i].Id)
+                                        @Html.HiddenFor(model => model.Permisos[i].Descripcion)
                                         @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                     </td>
                                     <td>

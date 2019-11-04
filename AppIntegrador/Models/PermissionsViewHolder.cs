@@ -37,7 +37,7 @@ namespace AppIntegrador.Models
 
         public int[] PermisosSeleccionados { get; set; }
 
-        public string[] PerfilesSeleccionados { get; set; }
+        public int[] PerfilesSeleccionados { get; set; }
 
         public PermissionsViewHolder()
         {
@@ -94,7 +94,7 @@ namespace AppIntegrador.Models
         private void ConcatenarNombresPersonas()
         {
             foreach (Persona p in this.Personas) {
-                p.Nombre1 = p.Nombre1 + " " + p.Apellido1 + " "+ p.Apellido2;
+                p.NombreCompleto = p.Apellido1 + " " + p.Apellido2 + " "+ p.Nombre1;
             }
         }
     }

@@ -21,12 +21,14 @@ namespace AppIntegrador.Controllers
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
-            return View(new PermissionsViewHolder());
+            PermissionsViewHolder model = new PermissionsViewHolder();
+            
+            return View(model);
         }
 
         /* Se llama cuando se quieren guardar los cambios */
         [HttpPost]
-        public ActionResult Index(PermissionsViewHolder Data, bool updateView)
+        public ActionResult Index(PermissionsViewHolder model, bool updateView)
         {
             if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
             {
@@ -38,20 +40,21 @@ namespace AppIntegrador.Controllers
             {
                 ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
                 ObjectParameter tieneActivo = new ObjectParameter("tieneActivo", typeof(bool));
+                var profileName = model.Perfiles.Where(p => p.Codigo == model.PerfilesSeleccionados[0]).ElementAt(0);
                 // Para revisar si el usuario tiene todos esos perfiles
                 int total = 0;
                 int correct = 0;
 
                 // Revisa los checks de las personas
-                foreach (Persona persona in Data.Personas)
+                foreach (Persona persona in model.Personas)
                 {
                     total = 0;
                     correct = 0;
-                    for (int i = 0; i < Data.PerfilesSeleccionados.Length; ++i)
+                    for (int i = 0; i < model.PerfilesSeleccionados.Length; ++i)
                     {
                         ++total;
                         // Se asume una sola carrera y un solo énfasis
-                        db.TienePerfilEnElEnfasis(persona.Correo, Data.PerfilesSeleccionados[i], Data.CarrerasSeleccionadas[0], Data.EnfasisSeleccionados[0], tienePerfil);
+                        db.TienePerfilEnElEnfasis(persona.Correo, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], model.EnfasisSeleccionados[0], tienePerfil);
 
                         if ((bool)tienePerfil.Value)
                         {
@@ -77,15 +80,15 @@ namespace AppIntegrador.Controllers
                 }
 
                 // Revisa los checks de los permisos
-                foreach (Permiso permiso in Data.Permisos)
+                foreach (Permiso permiso in model.Permisos)
                 {
                     total = 0;
                     correct = 0;
-                    for (int i = 0; i < Data.PerfilesSeleccionados.Length; ++i)
+                    for (int i = 0; i < model.PerfilesSeleccionados.Length; ++i)
                     {
                         ++total;
                         // Se asume una sola carrera y un solo énfasis
-                        db.TienePermisoActivoEnEnfasis(permiso.Id, Data.PerfilesSeleccionados[i], Data.CarrerasSeleccionadas[0], Data.EnfasisSeleccionados[0], tieneActivo);
+                        db.TienePermisoActivoEnEnfasis(permiso.Id, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], model.EnfasisSeleccionados[0], tieneActivo);
 
                         if ((bool)tieneActivo.Value)
                         {
@@ -118,90 +121,7 @@ namespace AppIntegrador.Controllers
             {
 
             }
-            return View(Data);
-        }
-
-        /* Se llama cuando se han elegido los perfiles y énfasis */
-        private void UpdateCheckboxes(PermissionsViewHolder Data)
-        {
-            if (Data == null)
-            {
-                return;
-            }
-            ObjectParameter result = new ObjectParameter("result", typeof(bool));
-            // Para revisar si el usuario tiene todos esos perfiles
-            int total = 0;
-            int correct = 0;
-            
-            // Revisa los checks de las personas
-            foreach(Persona persona in Data.Personas)
-            {
-                total = 0;
-                correct = 0;
-                for (int i = 0; i < Data.PerfilesSeleccionados.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePerfilEnElEnfasis(persona.Correo, Data.PerfilesSeleccionados[i], Data.CarrerasSeleccionadas[0], Data.EnfasisSeleccionados[0], result);
-
-                    if ((bool)result.Value)
-                    {
-                        // Si tiene el perfil asignado, aumente contador
-                        ++correct;
-                    }
-                }
-
-                // Tiene al menos un perfil
-                if (correct > 0)
-                {
-                    // Tiene todos los perfiles
-                    if (total == correct)
-                    {
-                        persona.HasProfileInEmph = true;
-                    }
-                    // No tiene todos
-                    /*else
-                    {
-                        // TO-DO: Cambiar con Javascript checkbox a "indeterminado"
-                    }*/
-                }
-            }
-
-            // Revisa los checks de los permisos
-            foreach (Permiso permiso in Data.Permisos)
-            {
-                total = 0;
-                correct = 0;
-                for (int i = 0; i < Data.PerfilesSeleccionados.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePermisoActivoEnEnfasis(permiso.Id, Data.PerfilesSeleccionados[i], Data.CarrerasSeleccionadas[0], Data.EnfasisSeleccionados[0], result);
-
-                    if ((bool)result.Value)
-                    {
-                        // Si está activado en el perfil, aumente contador
-                        ++correct;
-                    }
-                }
-
-                // Activo en al menos un perfil
-                if (correct > 0)
-                {
-                    // Activo en todos los perfiles
-                    if (total == correct)
-                    {
-                        permiso.ActiveInProfileEmph = true;
-                    }
-                    // No tiene todos
-                    /*else
-                    {
-                        // TO-DO: Cambiar con Javascript checkbox a "indeterminado"
-                    }*/
-                }
-            }
-
-            // TO-DO: Cargar la página con los cambios
+            return View(model);
         }
 
         [HttpGet]
