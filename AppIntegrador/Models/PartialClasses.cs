@@ -23,8 +23,17 @@ namespace AppIntegrador.Models
     public partial class PlantillaObjetivo { }
 
     [MetadataType(typeof(PersonaMetadata))]
-    public partial class Persona { }
+    public partial class Persona
+    {
+        public bool HasProfileInEmph { get; set; }
+    }
 
     [MetadataType(typeof(EstudianteMetadata))]
     public partial class Estudiante { }
+
+    [MetadataType(typeof(PermisoMetadata))]
+    public partial class Permiso
+    {
+        public bool ActiveInProfileEmph { get; set; }
+    }
 }
