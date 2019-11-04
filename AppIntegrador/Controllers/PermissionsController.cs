@@ -86,15 +86,15 @@ namespace AppIntegrador.Controllers
 
                     if ((bool)result.Value)
                     {
-                        // Si tiene el perfil asignado, aumente contador
+                        // Si está activado en el perfil, aumente contador
                         ++correct;
                     }
                 }
 
-                // Tiene al menos un perfil
+                // Activo en al menos un perfil
                 if (correct > 0)
                 {
-                    // Tiene todos los perfiles
+                    // Activo en todos los perfiles
                     if (total == correct)
                     {
                         permiso.ActiveInProfileEmph = true;
