@@ -37,7 +37,7 @@ namespace AppIntegrador.Models
 
         public int[] PermisosSeleccionados { get; set; }
 
-        public int[] PerfilesSeleccionados { get; set; }
+        public string[] PerfilesSeleccionados { get; set; }
 
         public PermissionsViewHolder()
         {

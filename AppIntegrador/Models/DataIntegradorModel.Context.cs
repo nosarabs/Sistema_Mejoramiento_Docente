@@ -620,11 +620,11 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePerfilEnElEnfasis", usernameParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, tienePerfil);
         }
     
-        public virtual int TienePermisoActivoEnEnfasis(string permisoId, string perfil, string codCarrera, string codEnfasis, ObjectParameter tieneActivo)
+        public virtual int TienePermisoActivoEnEnfasis(Nullable<int> permisoId, string perfil, string codCarrera, string codEnfasis, ObjectParameter tieneActivo)
         {
-            var permisoIdParameter = permisoId != null ?
+            var permisoIdParameter = permisoId.HasValue ?
                 new ObjectParameter("permisoId", permisoId) :
-                new ObjectParameter("permisoId", typeof(string));
+                new ObjectParameter("permisoId", typeof(int));
     
             var perfilParameter = perfil != null ?
                 new ObjectParameter("perfil", perfil) :

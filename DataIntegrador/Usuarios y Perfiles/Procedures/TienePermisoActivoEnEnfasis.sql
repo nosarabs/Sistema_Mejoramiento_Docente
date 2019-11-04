@@ -1,7 +1,7 @@
 ﻿/* TAM-3.2 Revisa los permisos asignados al perfil en el énfasis seleccionado */
 
 CREATE PROCEDURE [dbo].[TienePermisoActivoEnEnfasis]
-	@permisoId VARCHAR(50),
+	@permisoId INT,
 	@perfil VARCHAR(50),
 	@codCarrera VARCHAR(10),
 	@codEnfasis VARCHAR(10),

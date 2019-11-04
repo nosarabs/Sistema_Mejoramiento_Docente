@@ -1668,7 +1668,7 @@
           <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="TienePermisoActivoEnEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="permisoId" Type="varchar" Mode="In" />
+          <Parameter Name="permisoId" Type="int" Mode="In" />
           <Parameter Name="perfil" Type="varchar" Mode="In" />
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
           <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
@@ -3587,7 +3587,7 @@
             <Parameter Name="tienePerfil" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="TienePermisoActivoEnEnfasis">
-            <Parameter Name="permisoId" Mode="In" Type="String" />
+            <Parameter Name="permisoId" Mode="In" Type="Int32" />
             <Parameter Name="perfil" Mode="In" Type="String" />
             <Parameter Name="codCarrera" Mode="In" Type="String" />
             <Parameter Name="codEnfasis" Mode="In" Type="String" />

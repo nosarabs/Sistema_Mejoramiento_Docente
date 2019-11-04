@@ -52,7 +52,7 @@ namespace AppIntegrador.Utilities
         public bool IsAllowed(string userMail, string profileName, string majorCode, string emphasisCode, PermissionManager.Permission permissionId)
         {
             ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
-            db.TienePermiso(userMail, profileName, majorCode, emphasisCode, (int) permissionId, resultado);   
+            db.TienePermiso(userMail, profileName, majorCode, emphasisCode, (int) permissionId, resultado);
             return (bool) resultado.Value;
         }
 
