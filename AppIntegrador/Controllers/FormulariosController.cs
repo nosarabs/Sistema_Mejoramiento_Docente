@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Controllers
 {
@@ -211,8 +212,8 @@ namespace AppIntegrador.Controllers
 
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
-        [HttpGet]
-        public ActionResult Create(string input0, string input1, string input2)
+//        [HttpPost]
+        public ActionResult AplicarFiltro(string input0, string input1, string input2)
         {
             crearFormulario.seccion = db.Seccion;
 
@@ -220,7 +221,7 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 crearFormulario.seccion = db.Seccion.ToList();
-                return View("Create", crearFormulario);
+                return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
             }
             //if a user choose the radio button option as Subject  
             if (input1.Length > 0)
@@ -239,7 +240,7 @@ namespace AppIntegrador.Controllers
                 ViewBag.filtro = "Ninguno";
                 crearFormulario.seccion = db.Seccion.ToList();
             }
-            return View("Create", crearFormulario);
+            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
         }
 
         // POST: Formularios/Edit/5
