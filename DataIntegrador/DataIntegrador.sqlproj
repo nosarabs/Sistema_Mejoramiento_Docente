@@ -127,7 +127,6 @@
     <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\CheckID.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
-    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPregunta.sql" />
     <Build Include="Formularios\Procedimientos\GuardarRespuestaAFormulario.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlan.sql" />
     <Build Include="PlanesDeMejora\Accionable.sql" />
@@ -143,6 +142,9 @@
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPreguntaLibre.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPreguntaConOpciones.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarOpcionesSeleccionadas.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
