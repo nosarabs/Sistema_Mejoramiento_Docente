@@ -208,7 +208,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoggedInUserData.cs" />
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
@@ -318,7 +318,6 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
-    <Compile Include="Utilities\UsersManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

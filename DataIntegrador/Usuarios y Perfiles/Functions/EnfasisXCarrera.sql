@@ -10,8 +10,8 @@ RETURNS @returntable TABLE
 AS
 BEGIN
 	INSERT @returntable
-	SELECT DISTINCT E.Codigo
-	FROM UsuarioPerfil AS UP JOIN Enfasis AS E ON UP.CodEnfasis = E.Codigo
-	WHERE UP.CodCarrera = @codCarrera
+	SELECT E.Codigo
+	FROM Enfasis AS E JOIN Carrera AS C ON E.CodCarrera = C.Codigo
+	WHERE C.Codigo = @codCarrera
 	RETURN
 END

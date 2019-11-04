@@ -38,15 +38,7 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Login");
 
-            }/*
-            List<string> perfiles = new List<string>();
-            using (var context = new Entities())
-            {
-                var profileList = from Profile in db.PerfilesXUsuario("andres@mail.com")
-                                  select Profile;
-                foreach (var profileName in profileList)
-                    perfiles.Add(profileName.NombrePefil);
-            }*/
+            }
             return View();
         }
 
@@ -309,13 +301,10 @@ namespace AppIntegrador.Controllers
          la interfaz de permisos con esa información.*/
         private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
         {
-            LoggedInUserData userData = new LoggedInUserData(
-                correoUsuario,
-                perfil,
-                codCarrera,
-                codEnfasis
-                );
-            Session["UserData"] = userData;
+            CurrentUser.Username = correoUsuario;
+            CurrentUser.Profile = perfil;
+            CurrentUser.MajorId = codCarrera;
+            CurrentUser.EmphasisId = codEnfasis;
         }
     }
 }

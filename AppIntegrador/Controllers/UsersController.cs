@@ -39,9 +39,9 @@ namespace AppIntegrador
                 ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
-            if (UsersManager.GetCurrentUserProfile(Session) != "Superusuario")
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_USUARIOS))
             {
-                TempData["alertmessage"] = "Solo el administrador puede accesar esta página";
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
                 return RedirectToAction("../Home/Index");
             }
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
@@ -70,6 +70,11 @@ namespace AppIntegrador
         /*Responds to User Story TAM-2.9.*/
         public ActionResult Details(string username, string domain)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_DETALLES_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             /* Full query string is splitted into username and domain to avoid problems while sending the string to 
              * the controller. Ex: username: john.doe@mail, domain: .com*/
             string id = username + domain;
@@ -101,6 +106,11 @@ namespace AppIntegrador
         /*Two functions corresponding to User Story TAM-2.2.*/
         public ActionResult Create()
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne");
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo");
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password");
@@ -112,6 +122,12 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Create(Persona persona)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (ModelState.IsValid && persona != null)
             {
                 /*To create a new user-person, first create the user using the stored procedure "AgregarUsuario"
@@ -176,6 +192,11 @@ namespace AppIntegrador
         /*Respond to User Story 2.4.*/
         public ActionResult Edit(string username, string domain)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             string id = username + domain;
 
             if (id == null)
@@ -213,6 +234,11 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
                 return View(usuarioPersona);
 

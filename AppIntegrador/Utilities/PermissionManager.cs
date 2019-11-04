@@ -81,32 +81,37 @@ namespace AppIntegrador.Utilities
             return (bool)resultado.Value;
         }
 
-        public bool IsUserAuthorized(HttpSessionStateBase Session, PermissionManager.Permission permissionId)
+        public bool IsUserAuthorized(PermissionManager.Permission permissionId)
         {
             /*Both major and emphasis are null*/
-            if(UsersManager.GetCurrentUserEmphasisId(Session) == null && UsersManager.GetCurrentUserMajorId(Session) == null)
+            if(CurrentUser.EmphasisId == null && CurrentUser.MajorId == null)
                 return IsAllowed(
-                UsersManager.GetCurrentUserName(Session),
-                UsersManager.GetCurrentUserProfile(Session),
+                CurrentUser.Username,
+                CurrentUser.Profile,
                 permissionId
             );
             /*Only emphasis is null*/
-            else if (UsersManager.GetCurrentUserEmphasisId(Session) == null)
+            else if (CurrentUser.EmphasisId == null)
                 return IsAllowed(
-                UsersManager.GetCurrentUserName(Session),
-                UsersManager.GetCurrentUserProfile(Session),
-                UsersManager.GetCurrentUserMajorId(Session),
+                CurrentUser.Username,
+                CurrentUser.Profile,
+                CurrentUser.MajorId,
                 permissionId
             );
             /*All parameters supplied*/
             else
             return this.IsAllowed(
-                UsersManager.GetCurrentUserName(Session),
-                UsersManager.GetCurrentUserProfile(Session),
-                UsersManager.GetCurrentUserMajorId(Session),
-                UsersManager.GetCurrentUserEmphasisId(Session),
+                CurrentUser.Username,
+                CurrentUser.Profile,
+                CurrentUser.MajorId,
+                CurrentUser.EmphasisId,
                 permissionId
             );
+        }
+
+        public static bool IsAuthorized(Permission permission)
+        {
+            return new PermissionManager().IsUserAuthorized(permission);
         }
     }
 

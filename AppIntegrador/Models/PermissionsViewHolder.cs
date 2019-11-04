@@ -48,7 +48,7 @@ namespace AppIntegrador.Models
                 this.Perfiles.Add(new PerfilCodigo(perfil.Nombre, count++));
             } 
             this.Carreras = db.Carrera.ToList();
-            this.EnfasisView = db.Enfasis.ToList();
+            this.EnfasisView = new List<Enfasis>();
             this.Permisos = db.Permiso.ToList();
             this.Personas = db.Persona.ToList();
             this.ListaCarreras = GetCarreras();

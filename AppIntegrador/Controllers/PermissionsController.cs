@@ -25,15 +25,15 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public JsonResult CargarEnfasisDeCarrera(string id)
+        public JsonResult CargarEnfasisDeCarrera(string value)
         {
             List<string> carreras = new List<string>();
             using (var context = new Entities())
             {
-                var listaCarreras = from Carrera in db.EnfasisXCarrera(id)
+                var listaCarreras = from Carrera in db.EnfasisXCarrera(value)
                                     select Carrera;
-                foreach (var nombreCarrera in listaCarreras)
-                    carreras.Add(nombreCarrera);
+                foreach (var codigoEnfasis in listaCarreras)
+                    carreras.Add(codigoEnfasis + "," + (db.Enfasis.Find(value, codigoEnfasis)).Nombre);
 
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);

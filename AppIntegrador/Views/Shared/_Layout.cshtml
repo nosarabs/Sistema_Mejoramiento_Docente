@@ -56,65 +56,60 @@
                 <div id="header">
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
-                        @{AppIntegrador.Utilities.PermissionManager manager = new AppIntegrador.Utilities.PermissionManager();}
-                        @{bool isAllowed = manager.IsUserAuthorized(
-                              Session, 
-                              AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS
-                        );}
-                        @if (@isAllowed) 
+                        @if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
-                            <li>
-                                <a href="/Users/Index">Usuarios &#9660;</a>
-                                <ul>
-                                    <li><a href="/Users/Index">Administración de usuarios</a></li>
+                        <li>
+                            <a href="/Users/Index">Usuarios &#9660;</a>
+                            <ul>
+                                <li><a href="/Users/Index">Administración de usuarios</a></li>
 
-                                    <li><a href="/Permissions/Index">Administración de perfiles</a></li>
-                                    
-                                </ul>
-                            </li>
+                                <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+
+                            </ul>
+                        </li>
                         }
-                            <li>
-                                <a href="">Formularios &#9660;</a>
-                                <ul>
-                                    <li>
-                                        <a href="">Formulario &#9658;</a>
-                                        <ul>
-                                            <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                            <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="">Sección &#9658;</a>
-                                        <ul>
-                                            <li><a href="/Seccion/Create">Crear Sección</a></li>
-                                            <li><a href="/Seccion/Index">Ver Sección</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="">Preguntas &#9658;</a>
-                                        <ul>
-                                            <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
-                                            <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">Planes de Mejora &#9660;</a>
-                                <ul>
-                                    <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
-                                    <li><a href="#">Banco de Objetivos</a></li>
-                                    <li><a href="#">Banco de Acciones de Mejora</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">Visualización &#9660;</a>
-                                <ul>
-                                    <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="/Home/About">Acerca de</a></li>
-                        </ul>
+                        <li>
+                            <a href="">Formularios &#9660;</a>
+                            <ul>
+                                <li>
+                                    <a href="">Formulario &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Sección &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Seccion/Create">Crear Sección</a></li>
+                                        <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Preguntas &#9658;</a>
+                                    <ul>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Planes de Mejora &#9660;</a>
+                            <ul>
+                                <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
+                                <li><a href="#">Banco de Objetivos</a></li>
+                                <li><a href="#">Banco de Acciones de Mejora</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Visualización &#9660;</a>
+                            <ul>
+                                <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/Home/About">Acerca de</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
