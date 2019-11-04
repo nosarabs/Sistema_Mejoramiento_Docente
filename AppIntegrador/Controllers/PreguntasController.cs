@@ -165,9 +165,10 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpGet]
+        public ActionResult Estilos() => View();
 
     }
-
 
 
 
