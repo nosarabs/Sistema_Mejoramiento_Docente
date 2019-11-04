@@ -16,6 +16,8 @@ namespace AppIntegrador.Models
         public String NumeroGrupo { get; set; }
         public String Semestre { get; set; }
         public String Ano { get; set; }
+        public String FechaInicio { get; set; }
+        public String FechaFin { get; set; }
         public String Preguntas { get; set; }
     }
 

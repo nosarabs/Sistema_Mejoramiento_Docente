@@ -21,7 +21,7 @@
 
     }
 
-    recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var justificaciones = [];
 
@@ -33,6 +33,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: 'post',
@@ -49,7 +51,7 @@
 
     }
 
-    recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var respuestas = [];
 
@@ -61,6 +63,8 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -77,16 +81,16 @@
 
     }
 
-    generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+        var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
         this.crearLista(caja, respuestas);
 
     }
 
-    generarTextoAbierto(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarTextoAbierto(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var respuestas = this.recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+        var respuestas = this.recuperarTextoAbierto(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
         this.crearLista(caja, respuestas);
 
     }
