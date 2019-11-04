@@ -6,10 +6,6 @@
 
 @*RIP-EDF6*@
 
-@*Se ocupa el código de la pregunta para poder guardar las respuestas*@
-@Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
-        "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
-
 @*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa,
     en vez de crear uno o varios modelos distintos.*@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +

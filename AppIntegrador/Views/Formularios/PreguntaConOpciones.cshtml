@@ -6,10 +6,6 @@
 
 @*RIP-EDF6*@
 
-@*Se ocupa el código de la pregunta para poder guardar las respuestas*@
-@Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
-        "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
-
 @{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
             "].Pregunta.Responde_respuesta_con_opciones[0].Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada"; }
 <div class="card card-primary full">

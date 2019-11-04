@@ -52,6 +52,7 @@ namespace AppIntegrador.Controllers
             ViewBag.message = "RespuestaLibre";
             return View("RespuestaLibre");
         }
+
         // Se espera que respuestas ya venga con el código del formulario.
         [HttpPost]
         public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
@@ -97,7 +98,7 @@ namespace AppIntegrador.Controllers
                 {
 
                     db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
-                                                        respuestas.Fecha, pregunta.Codigo, CodigoSeccion, "Diego, meta aquí el campo de texto de la vista");
+                                                        respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_libre.FirstOrDefault().Observacion);
                 }
                 else
                 {
