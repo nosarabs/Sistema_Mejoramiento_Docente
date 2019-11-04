@@ -11,5 +11,9 @@
     {
         { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
     }
+    else if(pregunta.Pregunta.Tipo == "L")
+    {
+        { Html.RenderPartial("RespuestaLibre", pregunta); }
+    }
 }
 
