@@ -10,13 +10,14 @@
 @Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
         "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
 
-@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa, 
-   en vez de crear uno o varios modelos distintos.*@
-@{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
-          "].Pregunta.Responde_respuesta_con_opciones[0].Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada"; }
+@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa,
+    en vez de crear uno o varios modelos distintos.*@
+@{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+              "].Pregunta.Responde_respuesta_con_opciones[0]";
+    string radname = respuestaname + ".Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada";
+    string justificacionname = respuestaname + ".Justificacion";}
 <div class="card card-primary full">
     @Html.DisplayFor(model => Model.Pregunta.Enunciado)
-
     <div class='card-body'>
 
         <input type="radio" name="@radname" value="0" />
@@ -37,73 +38,88 @@
 
         No responde
     </div>
-</div>
 
-@if (!Request["rad"].IsEmpty())
-{
-    <ul>
+    @if (Model.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
+    {
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="card-body grisUCR2">
+                <div class="form-group col-md-12">
+                    <div>
+                        @Model.Pregunta.Pregunta_con_opciones.TituloCampoObservacion
+                        <input class="form-control long-textbox col-md-12" style="width: 100%;max-width: 100%; min-width: 100%" cols="50" name="@justificacionname" maxlength="250" onkeyup="contarCaracteres(this)" />
+                        @*<div class="contador small float-right">0/8 caracteres usados</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
-        @foreach (var selection in Request["rad"].Split(','))
-        {
-            <li>@selection</li>
+    @if (!Request["rad"].IsEmpty())
+    {
+        <ul>
+
+            @foreach (var selection in Request["rad"].Split(','))
+            {
+                <li>@selection</li>
+            }
+        </ul>
+    }
+
+    @*RIP-EDF6*@
+    <style>
+        .card {
+            margin-bottom: 20px;
+            background-color: white;
+            border: 1px solid #939393;
+            border-radius: 4px;
+            font: "robot";
+            font-size: 18px;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+            margin-left: 20%;
+            margin-right: 20%;
         }
-    </ul>
-}
 
-@*RIP-EDF6*@
-<style>
-    .card {
-        margin-bottom: 20px;
-        background-color: white;
-        border: 1px solid #939393;
-        border-radius: 4px;
-        font: "robot";
-        font-size: 18px;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        margin-left: 20%;
-        margin-right: 20%;
-    }
+        .card-primary > .card-heading {
+            color: #000;
+            background-color: #e9e9e9;
+            border-color: #888b8f;
+            .card-body
 
-    .card-primary > .card-heading {
-        color: #000;
-        background-color: #e9e9e9;
-        border-color: #888b8f;
-        .card-body
+        {
+            padding: 10px;
+            padding-bottom: 10px;
+            background-color: white;
+            padding-bottom: 5px;
+        }
 
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
+        .card-primary > .card-heading {
+            color: #000;
+            .card-body
 
-    .card-primary > .card-heading {
-        color: #000;
-        .card-body
+        {
+            padding: 10px;
+            padding-bottom: 10px;
+            background-color: white;
+            padding-bottom: 5px;
+        }
 
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
+        .card-primary {
+            border-color: #646464;
+            background-color: #c4c4c4;
+            .card-body
 
-    .card-primary {
-        border-color: #646464;
-        background-color: #c4c4c4;
-        .card-body
-
-    {
-        padding: 5px;
-    }
-    }
-</style>
+        {
+            padding: 5px;
+        }
+        }
+    </style>
 
 
-<style>
-    .card-body {
-        margin-left: 1%;
-        padding: 0.5%;
-    }
-</style>
+    <style>
+        .card-body {
+            margin-left: 1%;
+            padding: 0.5%;
+        }
+    </style>

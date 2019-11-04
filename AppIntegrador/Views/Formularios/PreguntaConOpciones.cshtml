@@ -6,15 +6,20 @@
 
 @*RIP-EDF6*@
 
-@{string radname = "rad" + Model.OrdenSeccion + Model.Pregunta.Codigo; }
+@*Se ocupa el código de la pregunta para poder guardar las respuestas*@
+@Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+        "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
+
+@{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
+            "].Pregunta.Responde_respuesta_con_opciones[0].Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada"; }
 <div class="card card-primary full">
     @Html.DisplayFor(model => Model.Pregunta.Enunciado)
 
-    @foreach(var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
+    @foreach (var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
     {
         <div class='card-body'>
 
-            <input type="radio" name="@radname" value="@opcion" />
+            <input type="radio" name="@radname" value="@opcion.Orden" />
 
             @Html.DisplayFor(model => opcion.Texto)
         </div>
