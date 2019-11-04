@@ -11,46 +11,49 @@
 
     <div class="sameRow">
 
-        <div>
+        <div class="item1PDM">
             <div class="sameColumn">
                 <div class="sameRow">
-                    <h6>@Html.LabelFor(model => plan.nombre, "Nombre:")</h6>
                     &nbsp;
-                    @Html.EditorFor(model => plan.nombre, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Máximo 50 caracteres", maxlength = "50", @onkeyup = "cambioNombrePlan(this)" } })
+                    <h6><abbr title="Nombre asignado al plan de Mejora">@Html.LabelFor(model => plan.nombre, "Nombre:")</abbr></h6>
+                    &nbsp;
+                    @Html.EditorFor(model => plan.nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Máximo 50 caracteres", maxlength = "50", @onkeyup = "cambioNombrePlan(this)" } })
                 </div>
 
                 <div class="alignRight">
-                    <span class="regularMsj"> <p id="nombrePDM_eror">50 letras restantes.</p> </span>
+                    <span><p id="nombrePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
                 </div>
             </div>
         </div>
 
 
-        <div>
+        <div class="item2PDM">
             <div class="sameColumn">
                 <div class="sameRow">
-                    @Html.LabelFor(model => plan.fechaInicio, "Inicio")
                     &nbsp;
-                    @Html.EditorFor(model => plan.fechaInicio, new { htmlAttributes = new { id = "fechaInicioPlanDM", @class = "form-control", required = "required", @onChange = "validacionFechas()" } })
+                    <h6><abbr title="Inicio del plan, no puede ser antes del día de hoy, ni después de la fecha de fin.">@Html.LabelFor(model => plan.fechaInicio, "Inicio:")</abbr></h6>
+                    &nbsp;
+                    @Html.EditorFor(model => plan.fechaInicio, new { htmlAttributes = new { id = "fechaInicioPlanDM", @class = "form-control", @onChange = "validacionFechas()" } })
                 </div>
 
                 <div class="alignRight">
-                    <span class="error regularMsj"><p id="fechaInicioPDM_eror regularMsj" class="redError">Campo Obligatorio</p></span>
+                    <span class="error"><p id="fechaInicioPDM_error" class="regularMsj">Inicio plan de mejora.</p></span>
                 </div>
             </div>
         </div>
 
 
-        <div>
+        <div class="item3PDM">
             <div class="sameColumn">
                 <div class="sameRow">
-                    @Html.LabelFor(model => plan.fechaFin, "Fin")
                     &nbsp;
-                    @Html.EditorFor(model => plan.fechaFin, new { htmlAttributes = new { id = "fechaFinalPlanDM", @class = "form-control", required = "required", @onChange = "validacionFechas()" } })
+                    <h6><abbr title="Final del plan, tiene que ser despues de la fecha de inicio.">@Html.LabelFor(model => plan.fechaFin, "Fin:")</abbr></h6>
+                    &nbsp;
+                    @Html.EditorFor(model => plan.fechaFin, new { htmlAttributes = new { id = "fechaFinalPlanDM", @class = "form-control", @onChange = "validacionFechas()" } })
                 </div>
 
                 <div class="alignRight">
-                    <span class="error regularMsj"><p id="fechaFinalPDM_eror regularMsj" class="redError">Campo Obligatorio</p></span>
+                    <span class="error"><p id="fechaFinalPDM_error" class="regularMsj">Fin plan de mejora.</p></span>
                 </div>
             </div>
         </div>

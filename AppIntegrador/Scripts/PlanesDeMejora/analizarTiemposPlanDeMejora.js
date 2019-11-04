@@ -1,18 +1,52 @@
 ﻿let msjEspaciosSobrantes = "Te quedan ";
 let msjFechaInicioMuyAntes = "No puedes definir una fecha anterior al dia de hoy."
-let msjFechaInicioMuyAdelanteDeFinal = "Esta fecha no puede ser despues de la fecha de finalizacion."
-let msjFechaFinalMuyAtrasDeInicio = "Esta fecha no puede ser antes de la fecha de inicion."
+
+let msjFechaInicioMuyAdelanteDeFinal = "Fecha Inválida."
+let msjFechaFinalMuyAtrasDeInicio = "Fecha Inválida."
+
+let msjRegularFechaInicio = "Recuerda que no puede ser antes del día de hoy.";
+let msjRegularFechaFinal = "Recuerda que no puede ser antes del día de inicio.";
+
+let listo = "Fecha Válidos";
 
 const maximoCaracteresNombrePlan = 50;
-
 
 // Seteando el valor minimo de la fecha de inicio de los planes de mejora
 var today = Date.now();
 
+// Validacion de la fecha de inicio de plan de Mejora
+function validarInicioPDM() {
+    // Tomando la fecha que el usuario ingresa en el formulario
+    let element = document.getElementById("fechaInicioPlanDM");
+    //Ahora viendo los segundo de la fecha ingresada por el usuario
+    let secondsInicio = hmsToSecondsOnly(element.value);
+    // Viendo los segundos de la fecha actual
+    let secondsToday = hmsToSecondsOnly(todayStringDate());
+
+    console.log(secondsToday);
+    console.log(secondsInicio);
+
+
+    if (secondsInicio >= secondsToday) {
+        var msj = document.getElementById("fechaInicioPDM_error");
+        msj.classList.remove("redError");
+        msj.classList.add("correct");
+        msj.innerHTML = listo;
+    } else {
+        var msj = document.getElementById("fechaInicioPDM_error");
+        msj.classList.remove("correct");
+        msj.classList.add("redError");
+        msj.innerHTML = msjFechaInicioMuyAntes;
+    }
+}
 
 function validacionFechas() {
     let fechaInicoPlan = document.getElementById("fechaInicioPlanDM");
     let fechaFinalPlan = document.getElementById("fechaFinalPlanDM");
+
+    if (fechaInicoPlan) {
+        validarInicioPDM();
+    }
 
     //Hasta que las dos fechas esten ingredas es que las validamos
     if (fechaInicoPlan.value && fechaFinalPlan.value)
@@ -24,18 +58,25 @@ function validacionFechas() {
         let secondsFin = hmsToSecondsOnly(fechaFinalPlan.value);
 
         if ((secondsInicio >= secondsToday) && (secondsInicio <= secondsFin)) {
-            console.log("todo bien");
+            var msj = document.getElementById("fechaInicioPDM_error");
+            msj.innerHTML = listo;
+            var msj = document.getElementById("fechaFinalPDM_error");
+            msj.innerHTML = listo;
         }
         else
         {
             if (secondsInicio < secondsToday) {
-                var errorMessage = document.getElementById("fechaInicioPDM_eror");
+                var errorMessage = document.getElementById("fechaInicioPDM_error");
                 errorMessage.innerHTML = msjFechaInicioMuyAntes;
+                errorMessage.classList.remove('regularMsj');
+                errorMessage.classList.add("redError");
             } else {
-                var errorMessage1 = document.getElementById("fechaInicioPDM_eror");
+                var errorMessage1 = document.getElementById("fechaInicioPDM_error");
                 errorMessage1.innerHTML = msjFechaInicioMuyAdelanteDeFinal;
-                var errorMessage2 = document.getElementById("fechaFinalPDM_eror");
+                errorMessage1.classList.add("redError");
+                var errorMessage2 = document.getElementById("fechaFinalPDM_error");
                 errorMessage2.innerHTML = msjFechaFinalMuyAtrasDeInicio;
+                errorMessage2.classList.add("redError");
             }
         }
     }
@@ -84,6 +125,9 @@ function activarDesactivar(checkbox, elemento)
         elemento.style.display = "none";
     }
 }
+
+
+
 
 
 function enableSubmitPDM() {
