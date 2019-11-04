@@ -81,7 +81,7 @@ namespace AppIntegrador.Controllers
                 {
                     foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
                     {
-                        GuardarRespuestaAPregunta(pregunta.Pregunta, seccion.CodigoSeccion, respuestas);
+                        GuardarRespuestaAPregunta(pregunta, seccion.CodigoSeccion, respuestas);
                     }
                 }
             }
@@ -89,38 +89,30 @@ namespace AppIntegrador.Controllers
             return RedirectToAction("Index");
         }
 
-        public void GuardarRespuestaAPregunta(Pregunta pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
+        public void GuardarRespuestaAPregunta(PreguntaConNumeroSeccion pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
         {
             if (pregunta != null && !string.IsNullOrEmpty(CodigoSeccion) && respuestas != null)
             {
 
-                if (pregunta.Tipo == "L")
+                if (pregunta.Pregunta.Tipo == "L")
                 {
-                    // Si no se responde una pregunta de respuesta libre, los campos van a venir nulos, por lo que no se debe intentar guardar en la base de datos.
-                    if (pregunta.Responde_respuesta_libre != null && pregunta.Responde_respuesta_libre.Any())
-                    {
-                        db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
-                                                            respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_libre.FirstOrDefault().Observacion);
-                    }
+                    db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
+                                                            respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
                 }
                 else
                 {
-                    // Si no se responde una pregunta con opciones, de cualquiera de los tipos, los campos van a venir nulos, por lo que no se debe guardar en la base de datos.
-                    if (pregunta.Responde_respuesta_con_opciones != null && pregunta.Responde_respuesta_con_opciones.Any())
-                    {
-                        // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
-                        db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Justificacion);
+                    // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
+                    db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
 
-                        // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
-                        // En todos los demás casos solo se ejecuta una vez.
-                        if (pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Opciones_seleccionadas_respuesta_con_opciones != null)
+                    // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
+                    // En todos los demás casos solo se ejecuta una vez.
+                    if (pregunta.Opciones != null && pregunta.Opciones.Any())
+                    {
+                        foreach (var opcion in pregunta.Opciones)
                         {
-                            foreach (var opcion in pregunta.Responde_respuesta_con_opciones.FirstOrDefault().Opciones_seleccionadas_respuesta_con_opciones)
-                            {
-                                db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                                respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, (byte)opcion.OpcionSeleccionada);
-                            }
+                            db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, (byte)opcion);
                         }
                     }
                 }

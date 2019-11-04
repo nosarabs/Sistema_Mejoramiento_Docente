@@ -548,6 +548,7 @@
     <Content Include="Views\Preguntas\Estilos.cshtml" />
     <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
     <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
+    <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

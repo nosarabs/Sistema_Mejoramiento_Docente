@@ -28,5 +28,9 @@
     {
         { Html.RenderPartial("PreguntaEscalar", pregunta); }
     }
+    else if (pregunta.Pregunta.Tipo == "M")
+    {
+        { Html.RenderPartial("PreguntaSeleccionMultiple", pregunta); }
+    }
 }
 
