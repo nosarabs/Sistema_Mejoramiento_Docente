@@ -1,15 +1,17 @@
 ﻿@*
-Añadido por: Johan Córdoba
-Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en la creación de un plan de mejora
+    Añadido por: Johan Córdoba
+    Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+    Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en la creación de un plan de mejora
 *@
 
 
 @model AppIntegrador.Models.Metadata.PlanDeMejoraMetadata
+@Scripts.Render("~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js")
 
 @{
     ViewBag.Title = "CrearPlanDeMejora";
 }
+
 <div class="fullWidth">
 
     <div class="planDiv">
@@ -24,27 +26,52 @@ Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en 
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             @Html.LabelFor(model => model.nombre, "Nombre")
                             <div class="row">
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @onkeyup = "nombreDelPlan()", placeholder = "Máximo 50 caracteres", maxlength = "50" } })
+                                    @Html.EditorFor(model => model.nombre, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            id = "nombrePlanDM",
+                                            @onkeyup = "cambioNombrePlan(this)",
+                                            placeholder = "Máximo 50 caracteres",
+                                            maxlength = "50"
+                                        }
+                                    })
+                                    <span><p id="nombrePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             @Html.LabelFor(model => model.fechaInicio, "Inicio")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control", @oninput = "inicio()" } })
+                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { 
+                                        id = "fechaInicioPlanDM",
+                                        @class = "form-control", 
+                                        @onchange = "validarInicioPDM()" 
+                                    } })
+                                    <span class="error">
+                                        <p id="fechaInicioPlanDM_msj" class="regularMsj">Inicio plan de mejora.</p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             @Html.LabelFor(model => model.fechaFin, "Fin")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control", @oninput = "fina()" } })
+                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { 
+                                        id = "fechaFinalPlanDM",
+                                        @class = "form-control",
+                                        @onchange = "validarFinPDM()" 
+                                    } })
+                                    <span class="error">
+                                        <p id="fechaFinalPlanDM_msj" class="regularMsj">Fin plan de mejora.</p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +81,7 @@ Nueva vista adaptada a las solicitudes del PO donde se muestra la jerarquía en 
                 <div class="form-group">
                     <div class="row">
                         <div class="botonCentrado">
-                            <input type="submit" id="send" value="Crear Plan de Mejora" class="btn btn-success" />
+                            <input type="submit" id="sendPDMListo" value="Crear Plan de Mejora" class="btn btn-success" disabled/>
                         </div>
                     </div>
                 </div>

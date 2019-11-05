@@ -433,6 +433,11 @@
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\EditarPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
