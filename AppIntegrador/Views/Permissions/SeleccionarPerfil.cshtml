@@ -49,6 +49,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+<script>
+    window.onload = function cargarPerfil() {
+    $.getJSON('@Url.Action("CargarPerfil", "Permissions")', function (result) {
+        $("#PerfilSeleccionado").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+        var data = result.data;
+        for (var i = 0; i < data.length; ++i) {
+            var splitted = data[i].toString().split(",");
+            $("#PerfilSeleccionado").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
+        }
+    }
+</script>
+
 <!--
 <script>
 $(function() {
