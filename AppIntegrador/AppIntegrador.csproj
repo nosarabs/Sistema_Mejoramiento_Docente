@@ -344,6 +344,7 @@
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\Visualizacion\bootstrap-multiselect.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
@@ -398,6 +399,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
+    <Content Include="Scripts\Visualizacion\bootstrap-multiselect.js" />
     <Content Include="Scripts\Visualizacion\botones.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />

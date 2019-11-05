@@ -164,6 +164,11 @@ canvas{
     text-align: center;
 }
 
+.container-fluid .h5, h5 {
+    text-align: center;
+    font-size: smaller;
+}
+
 .container-fluid .row {
     height: inherit; 
     padding: 1% !important;
@@ -189,4 +194,14 @@ canvas{
     padding: 1%;
     border: 1px solid rgba(0,0,0,.075);
     border-radius: 3px;
+}
+
+.multiselect-container > li > a > label.checkbox {
+    padding: 2%;
+    background-color: none;
+    width: inherit;
+}
+
+.btn {
+    background-color: #dee2e6 !important;
 }
