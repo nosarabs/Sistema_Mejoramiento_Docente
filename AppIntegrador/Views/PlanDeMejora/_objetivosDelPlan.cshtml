@@ -94,15 +94,3 @@ else
 
     </table>
 }
-
-@section Scripts{
-    <script>
-        $("#dataOb tr").click(function () {
-            alert("here");
-            var selected = $(this).hasClass("highlight");
-            $("#dataOb tr").removeClass("highlight");
-            if (!selected)
-                $(this).addClass("highlight");
-        });
-    </script>
-    }
