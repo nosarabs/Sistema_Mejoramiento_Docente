@@ -152,6 +152,8 @@
     <Build Include="FiltrosFormulario\ObtenerFormulariosAnno.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
+    <Build Include="PromedioProfesor.sql" />
+    <Build Include="PromedioCursos.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
