@@ -9,6 +9,11 @@ using System.Web;
 using Moq;
 using AppIntegrador.Models;
 
+//MOS-8 Como Usuario administrativo	quiero poder agregar tipos de objetivos para dar opciones a la hora de crear los objetivos
+//Tarea 1: "1. Es necesario agregar un scaffold de las operaciones de CRUD de los tipos de objetivos
+//Christian Asch
+//Commits: c0d43bd, e4023d4
+
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]

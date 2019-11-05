@@ -8,6 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 
+//MOS-8 Como Usuario administrativo	quiero poder agregar tipos de objetivos para dar opciones a la hora de crear los objetivos
+//Tarea 1: "1. Es necesario agregar un scaffold de las operaciones de CRUD de los tipos de objetivos
+//Christian Asch
+//Commits: 29298cf, c0d43bd, e4023d4
+
 namespace AppIntegrador.Controllers
 {
     public class TipoObjetivosController : Controller
