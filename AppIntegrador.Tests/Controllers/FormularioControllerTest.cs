@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Models;
+using Moq;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -92,6 +94,36 @@ namespace AppIntegrador.Tests.Controllers
             FormulariosController formulario = new FormulariosController();
             ViewResult result = formulario.Index(null, null, null) as ViewResult;
             Assert.AreEqual("Index", result.ViewName);
+        }
+
+        /*[TestMethod]
+        public void TextIndexNotNullAndView()
+        {
+            FormulariosController controller = new FormulariosController();
+            ViewResult result = controller.LlenarFormulario() as ViewResult;
+            Assert.IsNotNull(result, "Null");
+            Assert.AreEqual("Index", result.ViewName, "ViewName");
+        }*/
+
+        [TestMethod]
+        public void TestLlenarFormulariosSinSeccionesDataMock()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            string codFormulario = "CI0128G2";
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formularios de prueba para CI0128"
+            };
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario) ;
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
         }
     }
 }
