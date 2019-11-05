@@ -1,0 +1,29 @@
+﻿@*
+    HU: COD-65: Yo como administrador quiero visualizar las secciones que componen un formulario
+    específico para poder desplegar las preguntas asociadas a una sección.
+        Tarea: Crear la vista parcial donde irán las secciones del formulario.
+
+*@
+
+@model  AppIntegrador.Models.ResultadosFormulario
+@{
+    ViewBag.Title = "Secciones";
+}
+
+<div>
+    <!--Si el modelo viene vacío, significa que no se ha seleccionado un formulario todavía
+        o que este viene sin secciones-->
+    @if (Model.Equals(null))
+    {
+        <p>
+            Aún no se han creado acciones de mejora en el objetivo seleccionado
+        </p>
+    }
+    else
+    {
+        <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br/>
+        <!--En caso de que el modelo venga lleno, se llama a las funciones en javscript para
+            visualizar las secciones referentes al formulario-->
+    }
+
+</div>
