@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Models;
+using Moq;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -92,6 +94,85 @@ namespace AppIntegrador.Tests.Controllers
             FormulariosController formulario = new FormulariosController();
             ViewResult result = formulario.Index(null, null, null) as ViewResult;
             Assert.AreEqual("Index", result.ViewName);
+        }
+
+        /*[TestMethod]
+        public void TextIndexNotNullAndView()
+        {
+            FormulariosController controller = new FormulariosController();
+            ViewResult result = controller.LlenarFormulario() as ViewResult;
+            Assert.IsNotNull(result, "Null");
+            Assert.AreEqual("Index", result.ViewName, "ViewName");
+        }*/
+
+
+        // RIP-EDF7
+        // Verificación de que el programa no se caiga si el formulario no tiene ninguna sección asociada.
+        [TestMethod]
+        public void TestLlenarFormulariosSinSeccionesDataMock()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            string codFormulario = "CI0128G2";
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formularios de prueba para CI0128"
+            };
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        // RIP-ELFSN
+        // Verificación de que el programa no se caiga si se le pasan parámetros nulos.
+        [TestMethod]
+        public void TestGuardarRespuestasNullParameters()
+        {
+            FormulariosController controller = new FormulariosController();
+            ActionResult result = controller.GuardarRespuestas(null, null);
+            Assert.IsNotNull(result);
+        }
+
+        // RIP-ELFSN
+        // Verificación de que el programa no se caiga si el formulario tiene secciones, pero no hay ninguna pregunta.
+        [TestMethod]
+        public void TestLlenarFormulariosSinPreguntasDataMock()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            string codFormulario = "CI0128G2";
+            string codSeccion = "12345678";
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formularios de prueba para CI0128"
+            };
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            Seccion seccion = new Seccion
+            {
+                Codigo = codSeccion,
+                Nombre = "Nombre de sección"
+            };
+            mockDb.Setup(m => m.Seccion.Find(codSeccion)).Returns(seccion);
+
+            Formulario_tiene_seccion formulario_Tiene_Seccion = new Formulario_tiene_seccion
+            {
+                FCodigo = codFormulario,
+                SCodigo = codSeccion
+            };
+            mockDb.Setup(m => m.Formulario_tiene_seccion.Find(codFormulario, codSeccion)).Returns(formulario_Tiene_Seccion);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+
+            Assert.IsNotNull(result);
         }
     }
 }
