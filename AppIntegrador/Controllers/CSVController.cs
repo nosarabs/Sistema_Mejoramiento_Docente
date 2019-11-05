@@ -16,6 +16,7 @@ namespace AppIntegrador.Controllers
 {
     public class CSVController : Controller
     {
+        ArchivoCSV fila;
         public ActionResult Index()
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
@@ -26,17 +27,18 @@ namespace AppIntegrador.Controllers
             };
             CsvContext cc = new CsvContext();
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
-            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\Daniel\\DatosCSV.csv", inputFileDescription); //TODO: De momento el path está fijo
+            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\B50220\\Documents\\DatosCSV.csv", inputFileDescription); //TODO: De momento el path está fijo
             List<ArchivoCSV> lista = datos.ToList();
 
 
             bool valido = validarEntradas(lista[0]);
             if (valido)
             {
-                System.Diagnostics.Debug.WriteLine("Sirve");
+                fila = lista[0];
             }
+            cargaFila(lista[1]);
 
-            return View(lista[0]); //TODO: Cambiar esto. Fue usado solo para prueba
+            return View(fila); //TODO: Cambiar esto. Fue usado solo para prueba
         }
 
 
@@ -202,6 +204,109 @@ namespace AppIntegrador.Controllers
                 return false;
             }
             return true;
+        }
+
+        //COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
+        //Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
+        private void cargaFila(ArchivoCSV filaActual)
+        {
+            /*Unidad academica*/
+            if (!string.IsNullOrEmpty(filaActual.CodigoUnidad)) //CodigoUnidad
+            {
+                fila.CodigoUnidad = filaActual.CodigoUnidad;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreFacultad)) //nombreFacultad
+            {
+                fila.NombreFacultad = filaActual.NombreFacultad;
+            }
+
+            /*Carrera*/
+            if (!string.IsNullOrEmpty(filaActual.CodigoCarrera)) //CodigoCarrera
+            {
+                fila.CodigoCarrera = filaActual.CodigoCarrera;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreCarrera)) //NombreCarrera
+            {
+                fila.NombreCarrera = filaActual.NombreCarrera;
+            }
+
+            /*Enfasis*/
+            if (!string.IsNullOrEmpty(filaActual.CodigoEnfasis)) //CodigoEnfasis
+            {
+                fila.CodigoEnfasis = filaActual.CodigoEnfasis;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreEnfasis)) //NombreEnfasis
+            {
+                fila.NombreEnfasis = filaActual.NombreEnfasis;
+            }
+
+            /*Curso*/
+            if (!string.IsNullOrEmpty(filaActual.SiglaCurso)) //Sigla Curso
+            {
+                fila.SiglaCurso = filaActual.SiglaCurso;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreCurso)) //NombreCurso
+            {
+                fila.NombreCurso = filaActual.NombreCurso;
+            }
+
+            /*NumGrupo*/
+            if (!string.IsNullOrEmpty(filaActual.NumeroGrupo))  //NumGrupo
+            {
+                fila.NumeroGrupo = filaActual.NumeroGrupo;
+            }
+            if (!string.IsNullOrEmpty(filaActual.Anno))  //anno
+            {
+                fila.Anno = filaActual.Anno;
+            }
+            if (!string.IsNullOrEmpty(filaActual.Semestre))  //semestre
+            {
+                fila.Semestre = filaActual.Semestre;
+            }
+
+            /*Profesor*/
+            if (!string.IsNullOrEmpty(filaActual.CorreoProfesor)) //CorreoDocente
+            {
+                fila.CorreoProfesor = filaActual.CorreoProfesor;
+            }
+            if (!string.IsNullOrEmpty(filaActual.IdProfesor)) //Id Profesor
+            {
+                fila.IdProfesor = filaActual.IdProfesor;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreProfesor)) //Nombre Profe
+            {
+                fila.NombreProfesor = filaActual.NombreProfesor;
+            }
+            if (!string.IsNullOrEmpty(filaActual.ApellidoProfesor)) //apellidoProfa
+            {
+                fila.ApellidoProfesor = filaActual.ApellidoProfesor;
+            }
+            if (!string.IsNullOrEmpty(filaActual.TipoIdProfesor)) //TipoIdProfesor
+            {
+                fila.TipoIdProfesor = filaActual.TipoIdProfesor;
+            }
+
+            /*Estudiante*/
+            if (!string.IsNullOrEmpty(filaActual.CorreoEstudiante)) //CorreoEstudiantes
+            {
+                fila.CorreoEstudiante = filaActual.CorreoEstudiante;
+            }
+            if (!string.IsNullOrEmpty(filaActual.IdEstudiante)) //Id Estudiante
+            {
+                fila.IdEstudiante = filaActual.IdEstudiante;
+            }
+            if (!string.IsNullOrEmpty(filaActual.NombreEstudiante)) //Nombre Estudiante
+            {
+                fila.NombreEstudiante = filaActual.NombreEstudiante;
+            }
+            if (!string.IsNullOrEmpty(filaActual.ApellidoEstudiante)) //apellido estudiante
+            {
+                fila.ApellidoEstudiante = filaActual.ApellidoEstudiante;
+            }
+            if (!string.IsNullOrEmpty(filaActual.TipoIdEstudiante)) //TipoIdEstudiante
+            {
+                fila.TipoIdEstudiante = filaActual.TipoIdEstudiante;
+            }
         }
 
     }
