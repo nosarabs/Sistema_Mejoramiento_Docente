@@ -42,16 +42,20 @@
                     </div>
                     <div class="smallItem">
                         <div class="dropdown">
-                            <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name &#9660;</button>
+                            <!--TAM-9.2 - Se indica que existen submenus en usuario-->
+                            <button class="dropbtn dropbtn_alt">
+                                @HttpContext.Current.User.Identity.Name &#9660;
+                            </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
                                 <a class="dropdown-item" href="#">Configuración</a>
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
-
                             </div>
                         </div>
+                        <!--TAM-9.2 - Imagen default de usuario-->
+                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
                     </div>
                 </div>
             </div>
