@@ -28,19 +28,23 @@ namespace AppIntegrador.Controllers
 
         /* Se llama cuando se quieren guardar los cambios */
         [HttpPost]
-        public ActionResult Index(PermissionsViewHolder model, bool updateView)
+        public ActionResult Index(PermissionsViewHolder model, bool updateView, string enfasis)
         {
             if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
+
+            // Obtener nombre de Perfil y Énfasis
+            var profileName = model.Perfiles.Where(p => p.Codigo.Equals(model.PerfilesSeleccionados[0])).ElementAt(0);
+            // Debe cambiarse para utilizar el código, no el nombre
+            var emphCode = model.EnfasisView.Where(e => e.CodCarrera.Equals(model.CarrerasSeleccionadas[0]) && e.Nombre.Equals(enfasis)).ElementAt(0);
             // Actualizar los checkboxes con la selección de énfasis.
             if (updateView)
             {
                 ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
                 ObjectParameter tieneActivo = new ObjectParameter("tieneActivo", typeof(bool));
-                var profileName = model.Perfiles.Where(p => p.Codigo == model.PerfilesSeleccionados[0]).ElementAt(0);
                 // Para revisar si el usuario tiene todos esos perfiles
                 int total = 0;
                 int correct = 0;
@@ -54,7 +58,7 @@ namespace AppIntegrador.Controllers
                     {
                         ++total;
                         // Se asume una sola carrera y un solo énfasis
-                        db.TienePerfilEnElEnfasis(persona.Correo, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], model.EnfasisSeleccionados[0], tienePerfil);
+                        db.TienePerfilEnElEnfasis(persona.Correo, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], emphCode.Codigo, tienePerfil);
 
                         if ((bool)tienePerfil.Value)
                         {
@@ -88,7 +92,7 @@ namespace AppIntegrador.Controllers
                     {
                         ++total;
                         // Se asume una sola carrera y un solo énfasis
-                        db.TienePermisoActivoEnEnfasis(permiso.Id, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], model.EnfasisSeleccionados[0], tieneActivo);
+                        db.TienePermisoActivoEnEnfasis(permiso.Id, profileName.NombrePerfil, model.CarrerasSeleccionadas[0], emphCode.Codigo, tieneActivo);
 
                         if ((bool)tieneActivo.Value)
                         {

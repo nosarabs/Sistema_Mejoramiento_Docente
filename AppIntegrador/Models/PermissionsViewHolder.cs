@@ -49,7 +49,7 @@ namespace AppIntegrador.Models
                 this.Perfiles.Add(new PerfilCodigo(perfil.Nombre, count++));
             }
             this.Carreras = db.Carrera.ToList();
-            this.EnfasisView = new List<Enfasis>();
+            this.EnfasisView = db.Enfasis.ToList();
             this.Permisos = db.Permiso.ToList();
             foreach (Permiso permiso in this.Permisos)
             {

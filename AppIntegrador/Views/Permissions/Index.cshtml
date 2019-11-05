@@ -106,6 +106,7 @@
                 <br />
             </div>
             <input type="hidden" name="updateView" value="false" id="updateView" />
+            <input type="hidden" name="enfasis" value="" id="enfasis" />
             <input id="create-save" type="submit" value="Crear" class="btn btn-success" />
         }
     </div>
@@ -129,7 +130,10 @@
                     })
                 }
                 $("#EnfasisSeleccionados").on("change", function(){
+                    var e = window.document.getElementById("EnfasisSeleccionados");
+                    var selEmph = e.options[e.selectedIndex].text;
                     window.document.getElementById("updateView").value = true;
+                    window.document.getElementById("enfasis").value = selEmph;
                     $("#IndexForm").submit();
                 })
                 window.onload = function loadDefaultValue() {
