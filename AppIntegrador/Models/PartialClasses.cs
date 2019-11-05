@@ -25,6 +25,7 @@ namespace AppIntegrador.Models
     [MetadataType(typeof(PersonaMetadata))]
     public partial class Persona
     {
+        public string NombreCompleto { get; set; }
         // En la administración de Perfiles indica si el usuario tiene ese perfil en el énfasis
         public bool HasProfileInEmph { get; set; }
     }
