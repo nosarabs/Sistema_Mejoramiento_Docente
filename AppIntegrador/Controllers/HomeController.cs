@@ -39,7 +39,9 @@ namespace AppIntegrador.Controllers
         public HomeController(DataIntegradorEntities db, Usuario objUser)
         {
             this.db = db;
-            FormsAuthentication.SetAuthCookie(objUser.Username, false);
+            FormsAuth forms = new FormsAuth();
+            forms.Login(objUser.Username);
+            //FormsAuthentication.SetAuthCookie(objUser.Username, false);
             ConfigureSession(objUser.Username);
         }
 
@@ -403,4 +405,24 @@ namespace AppIntegrador.Controllers
             return View();
         }
     }
+
+    interface IAuthentication
+    {
+        void Login(string username);
+        void Logout();
+    }
+
+    class FormsAuth : IAuthentication
+    {
+        public void Login(string username)
+        {
+            FormsAuthentication.SetAuthCookie(username, false);
+        }
+
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
+    }
+
 }

@@ -8,6 +8,7 @@ using AppIntegrador;
 using AppIntegrador.Controllers;
 using AppIntegrador.Models;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -83,7 +84,7 @@ namespace AppIntegrador.Tests.Controllers
         /*Termina TAM-1.1.6 Redirección Login*/
 
         [TestMethod]
-        public void CambiarContrasenna()
+        public async Task CambiarContrasenna()
         {
             string contrasennaActual = "admin@mail.com";
             string contrasennaNueva = "test";
@@ -94,11 +95,13 @@ namespace AppIntegrador.Tests.Controllers
             usuario.Password = "admin@mail.com";
             usuario.Activo = true;
 
-            HomeController hc = new HomeController(db, usuario);
-            //Task<ViewResult> result = hc.CambiarContrasenna(contrasennaActual, contrasennaNueva, contrasennaConfirmar) as Task<ViewResult>;
+            //HomeController hc = new HomeController(db, usuario);
+            //var result = await hc.CambiarContrasenna(contrasennaActual, contrasennaNueva, contrasennaConfirmar) as ViewResult;
 
             //Assert.IsNotNull(result.ViewBag.NotifyTitle);
 
         }
     }
 }
+
+
