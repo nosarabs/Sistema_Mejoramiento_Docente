@@ -47,41 +47,27 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 
 <script>
-    window.onload = function cargarPerfil() {
-    $.getJSON('@Url.Action("CargarPerfil", "Permissions")', function (result) {
-        $("#PerfilSeleccionado").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
-        var data = result.data;
-        for (var i = 0; i < data.length; ++i) {
-            var splitted = data[i].toString().split(",");
-            $("#PerfilSeleccionado").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
-        }
-    }
+    window.onload = function(){
+                    cargarPerfiles();
+                }
+                function cargarPerfiles() {
+                    $.getJSON('@Url.Action("CargarPerfil", "Permissions")', function (result) {
+                        $("#PerfilSeleccionado").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                        var data = result.data;
+                        for (var i = 0; i < data.length; ++i) {
+                            
+                            $("#PerfilSeleccionado").append("<option>" + data[i] + "</option>");
+                        }
+                    })
+                }
 </script>
 
-<!--
-<script>
-$(function() {
-    $.getJSON('@Url.Action("CargarPerfil", "ConfiguracionUsuario")', function(result) {
-        $('#PerfilSeleccionado').empty();
-        $("#PerfilSeleccionado").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
-            var data = result.data;
-            for (var i = 0; i < data.length; ++i) {
-                var splitted = data[i].toString().split(",");
-                $("#PerfilSeleccionado").append("<option value=\"" + splitted[0] + "\">" + splitted[1] + "</option>");
-            }
-            );
-        });
-    });
-});
-</script>
--->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquerymin")
     @Scripts.Render("~/bundles/custom")
 }

@@ -68,17 +68,17 @@ namespace AppIntegrador.Models
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
     
         [DbFunction("DataIntegradorEntities", "CarrerasXPerfilXUsuario")]
-        public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string param2)
+        public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
         {
             var correoUsuarioParameter = correoUsuario != null ?
                 new ObjectParameter("correoUsuario", correoUsuario) :
                 new ObjectParameter("correoUsuario", typeof(string));
     
-            var param2Parameter = param2 != null ?
-                new ObjectParameter("param2", param2) :
-                new ObjectParameter("param2", typeof(string));
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<CarrerasXPerfilXUsuario_Result>("[DataIntegradorEntities].[CarrerasXPerfilXUsuario](@correoUsuario, @param2)", correoUsuarioParameter, param2Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<CarrerasXPerfilXUsuario_Result>("[DataIntegradorEntities].[CarrerasXPerfilXUsuario](@correoUsuario, @perfil)", correoUsuarioParameter, perfilParameter);
         }
     
         [DbFunction("DataIntegradorEntities", "EnfasisXCarrera")]

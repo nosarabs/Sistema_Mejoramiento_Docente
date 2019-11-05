@@ -1564,11 +1564,12 @@
         </Function>
         <Function Name="CarrerasXPerfilXUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoUsuario" Type="varchar" Mode="In" />
-          <Parameter Name="param2" Type="char" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
           <ReturnType>
             <CollectionType>
               <RowType>
                 <Property Name="codCarrera" Type="varchar" MaxLength="10" />
+                <Property Name="nombreCarrera" Type="varchar" MaxLength="50" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -3517,7 +3518,7 @@
           </AssociationSet>
           <FunctionImport Name="CarrerasXPerfilXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasXPerfilXUsuario_Result)">
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="param2" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
           <Parameter Name="codCarrera" Mode="In" Type="String" />
