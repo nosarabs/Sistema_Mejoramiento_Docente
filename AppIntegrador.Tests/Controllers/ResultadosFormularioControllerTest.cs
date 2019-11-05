@@ -1,53 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AppIntegrador;
 using AppIntegrador.Controllers;
-using AppIntegrador.Models;
+using System.Web.Mvc;
+
 
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]
+    
     public class ResultadosFormularioControllerTest
     {
-        /*
-        HU: COD-1
-        Tarea técnica: obtener el tipo de la pregunta a partir de un código de formulario existente
-        */
+        //COD-4: Visualizar el promedio para las respuestas de las preguntas de tipo escalar
         [TestMethod]
-        public void TestTipoNotNull()
+        public void TestPromedioFormulario() //Comprueba que el promedio retornado no es nulo
         {
-            //Arrange
             ResultadosFormularioController controller = new ResultadosFormularioController();
-            String codFormulario = "00000001";
-
-            //Act
-            String result = controller.GetTipoPregunta(codFormulario);
-
-            //Assert
-            Assert.IsNotNull(result);
+            String resultado = controller.getPromedio("00000001", "CI0128", 1, 2, 2019, "00000001") as String; //Metodo en el controlador y sus respectivos parametros
+            Assert.IsNotNull(resultado); //Comprobacion de que no es null 
         }
 
-        /*
-        HU: COD-1
-        Tarea técnica: obtener la lista de preguntas asociadas a un código de formulario existente
-        */
+        // COD-22: Visualizar la desviación estándar para las respuestas de las preguntas de escala numérica
         [TestMethod]
-        public void TestObtenerPreguntaNotNull()
+        public void TestDesviacionFormulario()
         {
-            //Arrange
-            ResultadosFormularioController controller = new ResultadosFormularioController();
-            String codigoFormulario = "00000001";
-
-            //Act
-            List<Preguntas> result = controller.ObtenerPreguntas(codigoFormulario);
-
-            //Assert
-            Assert.IsNotNull(result);
+            // Arrange
+            ResultadosFormularioController controlador = new ResultadosFormularioController();
+            // Act
+            String resultado = controlador.obtenerDesviacionEstandar("00000001", "CI0128", 1, 2, 2019, "00000001") as String; //Metodo en el controlador y sus respectivos parametros
+            // Assert
+            Assert.IsNotNull(resultado); //Comprobacion de que no es null 
         }
-
     }
 }

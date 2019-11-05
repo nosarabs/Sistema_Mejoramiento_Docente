@@ -1,71 +1,91 @@
-﻿@model IEnumerable<AppIntegrador.Models.PreguntaConOpciones>
+﻿@model AppIntegrador.Models.PreguntaConNumeroSeccion
 
 @{
     Layout = null;
 }
 
 @*RIP-EDF6*@
-@foreach (var pregunta in Model)
-{
-    <div class="panel panel-primary">
-        <div class='panel-heading'>
-            @Html.DisplayFor(model => pregunta.Enunciado)
 
-            @foreach (var opcion in pregunta.Opciones)
-            {
-            <div class='panel-body'>
-                <input type="radio" asp-for="Option" value="@opcion" />@opcion<br />
-                
-            </div>
-            }
+@{string radname = "rad" + Model.OrdenSeccion + Model.Pregunta.Codigo; }
+<div class="card card-primary full">
+    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
+
+    @foreach(var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
+    {
+        <div class='card-body'>
+
+            <input type="radio" name="@radname" value="@opcion" />
+
+            @Html.DisplayFor(model => opcion.Texto)
         </div>
-    </div>
+    }
+</div>
+
+@if (!Request["rad"].IsEmpty())
+{
+    <ul>
+
+        @foreach (var selection in Request["rad"].Split(','))
+        {
+            <li>@selection</li>
+        }
+    </ul>
 }
 
 @*RIP-EDF6*@
 <style>
-    .panel {
-
-    margin-bottom: 20px;
-    background-color: white;
-    border: 1px solid #939393;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    margin-left: 20%;
-    margin-right: 20%;
-
+    .card {
+        margin-bottom: 20px;
+        background-color: white;
+        border: 1px solid #939393;
+        border-radius: 4px;
+        font: "robot";
+        font-size: 18px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-left: 20%;
+        margin-right: 20%;
     }
 
-    .panel-primary > .panel-heading {
-    color: #000;
-    background-color: lightgray;
-    border-color: #888b8f;
+    .card-primary > .card-heading {
+        color: #000;
+        background-color: #e9e9e9;
+        border-color: #888b8f;
+        .card-body
 
-    .panel-body { padding: 10px;
-    padding-bottom: 10px;
-    background-color: white;
-    padding-bottom: 5px;
-    } 
-
-    .panel-primary > .panel-heading {
-    color: #000;
-
-    .panel-body {
-
-    padding: 10px;
+    {
+        padding: 10px;
         padding-bottom: 10px;
-    background-color: white;
-    padding-bottom: 5px;
-    }   
+        background-color: white;
+        padding-bottom: 5px;
+    }
 
-    .panel-primary {
-    border-color: #646464;
+    .card-primary > .card-heading {
+        color: #000;
+        .card-body
 
-    .panel-body {
-    padding: 5px;
-}
+    {
+        padding: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+        padding-bottom: 5px;
+    }
 
-}
+    .card-primary {
+        border-color: #646464;
+        background-color: #c4c4c4;
+        .card-body
 
+    {
+        padding: 5px;
+    }
+    }
+</style>
+
+
+<style>
+    .card-body {
+        margin-left: 1%;
+        padding: 0.5%;
+    }
 </style>

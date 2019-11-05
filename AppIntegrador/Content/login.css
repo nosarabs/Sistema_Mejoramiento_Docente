@@ -91,6 +91,12 @@
     margin-left: auto;
 }
 
+.users-list {
+    position:sticky;
+    top:0;
+    background-color:white;
+}
+
 .container-details-header {
     text-align: right;
     font-weight:bold;

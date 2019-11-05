@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppIntegrador.Models.Pregunta_con_opciones_de_seleccion>
+﻿@model IEnumerable<AppIntegrador.Models.Pregunta>
 
 @{
     ViewBag.Title = "Banco de preguntas";
@@ -11,11 +11,11 @@
 
     @using (Html.BeginForm(FormMethod.Get))
     {
-        <div class="form-horizontal panel-group">
+        <div class="form-horizontal card-group">
 
-            <div class=" panel panel-default">
+            <div class=" card card-default">
 
-                <div class="panel-body test2">
+                <div class="card-body test2">
                     <b>
                         Búsqueda:
                     </b>
@@ -40,13 +40,16 @@
                             <option value="">Tipos de preguntas</option>
                             <option value="U">Selección Única</option>
                             <option value="M">Selección Múltiple</option>
+                            <option value="S">Sí/No/NR</option>
+                            <option value="L">Respuesta Libre</option>
+                            <option value="E">Escalar</option>
                         </select>
 
                         @* Enviar el filtrado al controlador *@
                         <input type="submit"
                                name="submit"
                                value="Filtrar"
-                               class="btn" />
+                               class="btn btn-outline-light text-dark bg-white border-secondary" />
                         <br />
                     </form>
                     @if (@ViewBag.filtro != "Ninguno")
@@ -57,6 +60,7 @@
                 </div>
             </div>
         </div>
+        <br />
     }
 
     <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm " cellspacing="0" width="100%">
@@ -78,19 +82,31 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
+                    @Html.DisplayFor(modelItem => item.Codigo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
+                    @Html.DisplayFor(modelItem => item.Enunciado)
                 </td>
                 <td>
                     @if (item.Tipo == "U")
                     {
-                        <p>Seleción Única</p>
+                        <p>Selección Única</p>
                     }
-                    else
+                    else if(item.Tipo == "M")
                     {
-                        <p>Seleción Múltiple</p>
+                        <p>Selección Múltiple</p>
+                    }
+                    else if(item.Tipo == "L")
+                    {
+                        <p>Respuesta Libre</p>
+                    }
+                    else if(item.Tipo == "S")
+                    {
+                        <p>Sí/No/NR</p>
+                    }
+                    else if(item.Tipo == "E")
+                    {
+                        <p>Escalar</p>
                     }
                     @**@
                 </td>
@@ -122,7 +138,7 @@
         border: 1px solid #ccc;
     }
 
-    .panel-body {
+    .card-body {
         padding: 10px;
     }
 </style>
