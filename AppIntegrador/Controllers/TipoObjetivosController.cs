@@ -14,6 +14,16 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        public TipoObjetivosController()
+        {
+        }
+        //Para pruebas
+        public TipoObjetivosController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
+
         // GET: TipoObjetivos
         public ActionResult Index()
         {
@@ -57,6 +67,20 @@ namespace AppIntegrador.Controllers
 
             return View(tipoObjetivo);
         }
+        //Para pruebas
+        public ActionResult Create([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo, DataIntegradorEntities db)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TipoObjetivo.Add(tipoObjetivo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(tipoObjetivo);
+        }
+
+
 
         // GET: TipoObjetivos/Edit/5
         public ActionResult Edit(string id)
