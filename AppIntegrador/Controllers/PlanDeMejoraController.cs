@@ -18,23 +18,23 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: PlanDeMejora
+        [HttpGet]
         public ActionResult Index()
         {
             HttpContext context = System.Web.HttpContext.Current;
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
+            return View("Index", db.PlanDeMejora.ToList());
+        }
+        
+        public ActionResult Index(String nombre)
+        {
+            ObjectParameter count = new ObjectParameter("count", 999);
+            ViewBag.cantidad = count.Value;
+            ViewBag.nombre = nombre;
             return View(db.PlanDeMejora.ToList());
         }
-
-        //Para pruebas
-        //public ActionResult Index(String nombre)
-        //{
-        //    ObjectParameter count = new ObjectParameter("count", 999);
-        //    ViewBag.cantidad = count.Value;
-        //    ViewBag.nombre = nombre;
-        //    return View(db.PlanDeMejora.ToList());
-        //}
 
         public ActionResult Index2(int idPlanDeMejora)
         {

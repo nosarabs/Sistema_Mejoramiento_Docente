@@ -485,6 +485,7 @@ html, body {
     padding-left: 5%;
     padding-right: 5%;
     table-layout: auto;
+    background-color: white !important;
 }
 
 .EncabezadoTabla {
