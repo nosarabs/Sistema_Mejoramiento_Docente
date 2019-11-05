@@ -144,6 +144,7 @@
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\SeccionesController.cs" />
+    <Compile Include="Controllers\TipoObjetivosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -452,6 +453,11 @@
     <Content Include="Views\Accionables\Edit.cshtml" />
     <Content Include="Views\Accionables\Index.cshtml" />
     <Content Include="Views\Accionables\_Tabla.cshtml" />
+    <Content Include="Views\TipoObjetivos\Create.cshtml" />
+    <Content Include="Views\TipoObjetivos\Delete.cshtml" />
+    <Content Include="Views\TipoObjetivos\Details.cshtml" />
+    <Content Include="Views\TipoObjetivos\Edit.cshtml" />
+    <Content Include="Views\TipoObjetivos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
