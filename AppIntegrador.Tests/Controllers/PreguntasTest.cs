@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador.Controllers;
 using System.Web.Mvc;
+using AppIntegrador.Models;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -59,7 +60,6 @@ namespace AppIntegrador.Tests.Controllers
         // public void MyTestCleanup() { }
         //
         #endregion
-
         // Historia RIP-CBX
         [TestMethod]
         public void PreguntasGeneralNoNulo()
@@ -128,6 +128,86 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void EstilosNoNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Estilos() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void GuardarRespuestaLibreNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.GuardarRespuestaLibre(null) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void GuardarPreguntaSiNoNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.GuardarPreguntaSiNo(null) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void CreatePostNoNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Create(null, null) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void CreatePostNoNulaConPregunta()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            Pregunta pregunta = new Pregunta
+            {
+                Codigo = "",
+                Enunciado = ""
+            };
+
+            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+
+            Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Datos incompletos");
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void CreatePostNoNulaConPreguntaTipo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            Pregunta pregunta = new Pregunta
+            {
+                Codigo = "chetos21",
+                Enunciado = "adsadsaa",
+            };
+
+            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+
+            Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Una pregunta de selección única necesita al menos una opción");
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void ProbarCrear()
         {
             var controller = new PreguntasController();
@@ -186,6 +266,55 @@ namespace AppIntegrador.Tests.Controllers
             ViewResult result = controller.Create() as ViewResult;
             // Assert
             Assert.AreEqual("Crear pregunta", result.ViewBag.Message);
+        }
+
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarEstilos()
+        {
+            var controller = new PreguntasController();
+            var result = controller.Estilos() as ViewResult;
+
+            Assert.AreEqual("Estilos", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarGuardarRespuestaLibre()
+        {
+            var controller = new PreguntasController();
+            var result = controller.GuardarRespuestaLibre(null) as ViewResult;
+
+            Assert.AreEqual("GuardarRespuestaLibre", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarGuardarPreguntaSiNo()
+        {
+            var controller = new PreguntasController();
+            var result = controller.GuardarPreguntaSiNo(null) as ViewResult;
+
+            Assert.AreEqual("GuardarPreguntaSiNo", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarPostNoNulaConPregunta()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            Pregunta pregunta = new Pregunta
+            {
+                Codigo = "",
+                Enunciado = ""
+            };
+
+            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+
+            Assert.AreEqual("Create", result.ViewName);
         }
 
     }
