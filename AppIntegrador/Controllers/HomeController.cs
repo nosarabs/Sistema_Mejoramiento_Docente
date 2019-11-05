@@ -18,13 +18,31 @@ namespace AppIntegrador.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+
 
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
 
         /*Max number of failed login attempts before temporarily locking the account.*/
         private const int MAX_FAILED_ATTEMPTS = 3;
+        private DataIntegradorEntities db;
+        public HomeController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public HomeController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
+        public HomeController(DataIntegradorEntities db, Usuario objUser)
+        {
+            this.db = db;
+            FormsAuthentication.SetAuthCookie(objUser.Username, false);
+            ConfigureSession(objUser.Username);
+        }
+
 
         public ActionResult Index()
         {

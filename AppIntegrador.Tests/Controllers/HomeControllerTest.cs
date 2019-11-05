@@ -80,7 +80,25 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.IsNotNull(result);
         }
-
         /*Termina TAM-1.1.6 Redirección Login*/
+
+        [TestMethod]
+        public void CambiarContrasenna()
+        {
+            string contrasennaActual = "admin@mail.com";
+            string contrasennaNueva = "test";
+            string contrasennaConfirmar = "test";
+            DataIntegradorEntities db = new DataIntegradorEntities();
+            Usuario usuario = new Usuario();
+            usuario.Username = "admin@mail.com";
+            usuario.Password = "admin@mail.com";
+            usuario.Activo = true;
+
+            HomeController hc = new HomeController(db, usuario);
+            //Task<ViewResult> result = hc.CambiarContrasenna(contrasennaActual, contrasennaNueva, contrasennaConfirmar) as Task<ViewResult>;
+
+            //Assert.IsNotNull(result.ViewBag.NotifyTitle);
+
+        }
     }
 }
