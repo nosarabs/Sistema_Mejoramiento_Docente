@@ -42,5 +42,19 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        // Prueba de que la vista no sea nula
+        public void TestEditNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Edit("00000001") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }
