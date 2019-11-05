@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Objects;
 using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
+using System.Globalization;
 
 namespace AppIntegrador.Controllers
 {
@@ -347,9 +348,37 @@ namespace AppIntegrador.Controllers
                 {
                     db.ChangePassword(CurrentUser.Username, contrasennaNueva);
                     db.SaveChanges();
+
+                    //Enviamos un correo al usuario alertando del cambio
+                    EmailNotification notification = new EmailNotification();
+
+                    List<string> users = new List<string>();
+                    users.Add(CurrentUser.Username);
+
+                    //Creamos un timestamp para agregarlo al correo
+                    var timestamp = DateTime.Now;
+                    string fechaSalida = timestamp.ToString("dd/MM/yyyy");
+                    string horaSalida = timestamp.ToString("hh:mm tt");
+
+                    notification.SendNotification(users,
+                        "Cambio de contraseña",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr");
+
+                    //HTML implementation pending
+
+                    //notification.SendNotification(users, 
+                    //    "Cambio de contraseña",
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                    //    "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
+                    //    "<br>Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins a marcelo.jenkins@ecci.ucr.ac.cr");
+
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
-                    ViewBag.NotifyMessage = "Recibira una confirmacion del cambio en su correo.";
+                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
                 }
             }
 
