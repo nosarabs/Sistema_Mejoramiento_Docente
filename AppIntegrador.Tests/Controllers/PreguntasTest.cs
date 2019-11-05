@@ -73,6 +73,28 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void PreguntaSiNoNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.PreguntaSiNo() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void RespuestaLibreNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.RespuestaLibre() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void SeleccionUnicaNoNula()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -94,6 +116,7 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         // Historia RIP-CBX
+        [TestMethod]
         public void OpcionesDeSeleccionNula()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -135,6 +158,26 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void ProbarPreguntaSiNo()
+        {
+            var controller = new PreguntasController();
+            var result = controller.PreguntaSiNo() as ViewResult;
+
+            Assert.AreEqual("PreguntaSiNo", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarRespuestaLibre()
+        {
+            var controller = new PreguntasController();
+            var result = controller.RespuestaLibre() as ViewResult;
+
+            Assert.AreEqual("RespuestaLibre", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void ProbarViewbagGeneral()
         {
             // Arrange
@@ -144,5 +187,6 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.AreEqual("Crear pregunta", result.ViewBag.Message);
         }
+
     }
 }
