@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace AppIntegrador.Controllers
 {
@@ -116,7 +117,9 @@ namespace AppIntegrador.Controllers
                     }*/
                 }
             }
-            return Json( new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            JsonResult result = Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            string resultString = new JavaScriptSerializer().Serialize(result.Data);
+            return result;
         }
 
         [HttpGet]
