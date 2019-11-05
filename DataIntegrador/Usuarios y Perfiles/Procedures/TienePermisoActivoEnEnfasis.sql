@@ -8,12 +8,15 @@ CREATE PROCEDURE [dbo].[TienePermisoActivoEnEnfasis]
 	@tieneActivo BIT OUTPUT
 AS
 BEGIN
-	IF EXISTS (SELECT TOP 1 PermisoId FROM [dbo].[PerfilPermiso]
+	IF (@permisoId in
+		(SELECT TOP 1 PermisoId FROM PerfilPermiso
 		WHERE PermisoId = @permisoId AND
-		Perfil = @perfil AND
-		CodCarrera = @codCarrera AND
-		CodEnfasis = @codEnfasis)
-			SET @tieneActivo = 1
+			Perfil = @perfil AND
+			CodCarrera = @codCarrera AND
+			CodEnfasis = @codEnfasis
+		)
+	)
+		SET @tieneActivo = 1
 	ELSE
 		SET @tieneActivo = 0
 END
