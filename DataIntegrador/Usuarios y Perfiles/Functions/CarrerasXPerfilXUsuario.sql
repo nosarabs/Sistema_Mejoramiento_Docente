@@ -3,17 +3,18 @@ la carrera seleccionada tiene perfiles asignados.*/
 CREATE FUNCTION [dbo].[CarrerasXPerfilXUsuario]
 (
 	@correoUsuario VARCHAR(50),
-	@param2 char(5)
+	@perfil VARCHAR(50)
 )
 RETURNS @returntable TABLE
 (
-	codCarrera VARCHAR(10)
+	codCarrera VARCHAR(10),
+	nombreCarrera VARCHAR(50)
 )
 AS
 BEGIN
 	INSERT @returntable
-	SELECT DISTINCT C.Codigo FROM UsuarioPerfil AS UP JOIN Enfasis AS E on UP.CodEnfasis = E.Codigo 
-	JOIN Carrera AS C ON E.CodCarrera = C.Codigo
-	WHERE UP.Usuario = @correoUsuario
+	SELECT DISTINCT C.Codigo, C.Nombre FROM UsuarioPerfil AS UP JOIN PerfilPermiso AS PP on UP.Perfil= PP.Perfil
+	JOIN Carrera AS C ON UP.CodCarrera = C.Codigo
+	WHERE UP.Usuario = @correoUsuario AND UP.Perfil = @perfil
 	RETURN
 END

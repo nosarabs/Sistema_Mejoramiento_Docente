@@ -1,4 +1,4 @@
-﻿@model AppIntegrador.Models.PermissionsViewHolder
+﻿@model AppIntegrador.Models.ConfigViewHolder
 
 @{
     ViewBag.Title = "Index";
@@ -15,27 +15,27 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("SeleccionarPerfil", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    @using (Html.BeginForm("GuardarSeleccion", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione perfil")
                 <br />
-                @Html.DropDownListFor(model => model.PerfilSeleccionado, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.ListaPerfiles, Model.PerfilesSeleccionables, new { @class = "form-control", @required = "required" })
                 <br />
             </div>
 
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione carrera")
                 <br />
-                @Html.DropDownListFor(model => model.CarreraSeleccionada, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.ListaCarreras, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @required = "required" })
                 <br />
             </div>
 
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione énfasis")
                 <br />
-                @Html.DropDownListFor(model => model.EnfasisSeleccionado, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.ListaEnfasis, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", @required = "required" })
                 <br />
             </div>
         </div>
@@ -49,23 +49,43 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-<!--
 <script>
-$(function() {
-    $.getJSON('@Url.Action("CargarPerfil", "ConfiguracionUsuario")', function(result) {
-        $('#PerfilSeleccionado').empty();
-        $("#PerfilSeleccionado").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+    $("#ListaPerfiles").on("change", function(){
+                    cargarCarreras($("#ListaPerfiles option:selected").val());
+                })
+                function cargarCarreras(val) {
+                    $.getJSON('@Url.Action("CargarCarreras", "Permissions")' + "?perfilSeleccionado=" + val, function (result) {
+                        $("#ListaCarreras").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                        var data = result.data;
+                        for (var i = 0; i < data.length; ++i) {
+                            var splitted = data[i].toString().split(",");
+                            $("#ListaCarreras").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
+                        }
+                    })
+                }
+
+    $("#ListaCarreras").on("change", function(){
+                    cargarEnfasis($("#ListaCarreras option:selected").val());
+                })
+    function cargarEnfasis(val) {
+        $.getJSON('@Url.Action("CargarEnfasisDeCarrera", "Permissions")' + "?value=" + val, function (result) {
+            $("#ListaEnfasis").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
             var data = result.data;
             for (var i = 0; i < data.length; ++i) {
                 var splitted = data[i].toString().split(",");
-                $("#PerfilSeleccionado").append("<option value=\"" + splitted[0] + "\">" + splitted[1] + "</option>");
+                $("#ListaEnfasis").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
             }
-            );
-        });
-    });
-});
+        })
+    }
+    
 </script>
--->
+<script>
+    window.onload = function loadDefaultValue() {
+                    $("#ListaPerfiles").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                    $("#ListaCarreras").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                    $("#ListaEnfasis").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
