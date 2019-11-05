@@ -44,7 +44,7 @@
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
-                                @HttpContext.Current.User.Identity.Name &#9660;
+                                @HttpContext.Current.User.Identity.Name &#9660;<br />
                             </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
@@ -72,6 +72,18 @@
                                     <li><a href="/Users/Index">Administración de usuarios</a></li>
 
                                     <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="disabled">
+                                <a href="/Users/Index">Usuarios &#9660;</a>
+                                <ul>
+                                    <li><a>Administración de usuarios</a></li>
+
+                                    <li><a>Administración de perfiles</a></li>
 
                                 </ul>
                             </li>
@@ -118,7 +130,10 @@
                             </ul>
                         </li>
                         <li><a href="/Home/About">Acerca de</a></li>
+                        
+                        <li><a href="#">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</a></li>
                     </ul>
+                    
                 </div>
             </div>
         </div>

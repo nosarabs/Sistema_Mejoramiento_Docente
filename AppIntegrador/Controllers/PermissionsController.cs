@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace AppIntegrador.Controllers
 {
@@ -34,15 +35,15 @@ namespace AppIntegrador.Controllers
 
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
         [HttpPost]
-        public JsonResult CargarCheckboxes(string[] profileCodes, string[] profileNames, string majorCode, string emphCode)
+        public JsonResult CargarCheckboxes(string profileCode, string profileName, string majorCode, string emphCode)
         {
-            if ((profileCodes == null) || (profileNames == null) || (majorCode == null) || (emphCode == null)) {
+            if ((profileCode == null) || (profileName == null) || (majorCode == null) || (emphCode == null)) {
                 TempData["alertmessage"] = "Algo salió mal. Intente de nuevo.";
                 return Json(new { persons = "", permissions = "" });
             }
             PermissionsViewHolder model = new PermissionsViewHolder();
             // Obtener nombre de Perfil y Énfasis
-            var profileName = profileNames[0];
+
             // Actualizar los checkboxes con la selección de énfasis.
 
             ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
@@ -56,18 +57,17 @@ namespace AppIntegrador.Controllers
             {
                 total = 0;
                 correct = 0;
-                for (int i = 0; i < profileCodes.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePerfilEnElEnfasis(persona.Correo, profileName, majorCode, emphCode, tienePerfil);
 
-                    if ((bool)tienePerfil.Value)
-                    {
-                        // Si tiene el perfil asignado, aumente contador
-                        ++correct;
-                    }
+                ++total;
+                // Se asume una sola carrera y un solo énfasis
+                db.TienePerfilEnElEnfasis(persona.Correo, profileName, majorCode, emphCode, tienePerfil);
+
+                if ((bool)tienePerfil.Value)
+                {
+                    // Si tiene el perfil asignado, aumente contador
+                    ++correct;
                 }
+
 
                 // Tiene al menos un perfil
                 if (correct > 0)
@@ -90,18 +90,17 @@ namespace AppIntegrador.Controllers
             {
                 total = 0;
                 correct = 0;
-                for (int i = 0; i < profileCodes.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePermisoActivoEnEnfasis(permiso.Id, profileName, majorCode, emphCode, tieneActivo);
+                
+                ++total;
+                // Se asume una sola carrera y un solo énfasis
+                db.TienePermisoActivoEnEnfasis(permiso.Id, profileName, majorCode, emphCode, tieneActivo);
 
-                    if ((bool)tieneActivo.Value)
-                    {
-                        // Si está activado en el perfil, aumente contador
-                        ++correct;
-                    }
+                if ((bool)tieneActivo.Value)
+                {
+                    // Si está activado en el perfil, aumente contador
+                    ++correct;
                 }
+                
 
                 // Activo en al menos un perfil
                 if (correct > 0)
@@ -118,7 +117,9 @@ namespace AppIntegrador.Controllers
                     }*/
                 }
             }
-            return Json( new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            JsonResult result = Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            string resultString = new JavaScriptSerializer().Serialize(result.Data);
+            return result;
         }
 
         [HttpGet]
