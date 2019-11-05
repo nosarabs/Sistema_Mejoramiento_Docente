@@ -1,0 +1,89 @@
+﻿@model IEnumerable<AppIntegrador.Models.Accionable>
+
+@*
+    Creado por: Johan Córdoba
+    Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+    Vista parcial de los objetvos de un plan de mejora, lista todos los objetivos del plan y sus opciones
+*@
+
+
+<div>
+    @*
+        Modificado por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
+        Cambio para que se adapte a la vista parcial de planes de mejoras.
+    *@
+
+    @if (Model.Count() == 0)
+    {
+        <div class="centeredText">
+            <p>
+                Aún no se han creado objetivos en este Plan de Mejora.
+            </p>
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <colgroup>
+                <col class="TablasNombre">
+                <col class="TablasDescripcion">
+                <col class="TablasFecha">
+                <col class="TablasFecha">
+                <col class="TablasOpciones">
+            </colgroup>
+
+            <thead>
+                <tr class="EncabezadoTabla">
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaFin)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.progreso)
+                    </th>
+                    <th>
+                        Opciones
+                    </th>
+                </tr>
+            </thead>
+
+            @foreach (var obj in Model)
+            {
+                <tbody id="dataOb">
+                    <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@obj.codPlan, `@obj.nombre`);">
+
+                        <td>
+                            @Html.DisplayFor(modelItem => obj.descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => obj.fechaInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => obj.fechaFin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => obj.progreso)
+                        </td>
+                        <td>
+                            <div>
+                                @*@Html.ActionLink("Editar", "Edit", "Accionable", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
+                                @Html.ActionLink("Borrar", "Delete", "Accionable", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })*@
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    }
+
+    <hr />
+</div>
+
