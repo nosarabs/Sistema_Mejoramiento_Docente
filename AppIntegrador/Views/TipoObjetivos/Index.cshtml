@@ -4,24 +4,45 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<!--Estilos tomados de las tablas de los Tamales-->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
+    <div class="container">
+        <div class="row" style="display:flex; padding-left:15px; ">
+            <div class="column" style="flex:50%;">
+                <h2>
+                    Administración de tipos de objetivos
+                </h2>
+            </div>
+            <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.nombre }) |
-            @Html.ActionLink("Details", "Details", new { id=item.nombre }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.nombre })
-        </td>
-    </tr>
-}
+                <p>@Html.ActionLink("+ Agregar tipo de objetivos", "Create", "Create", new { @class = "btn btn-success" })</p>
+            </div>
+        </div>
+        <br />
+            <table class="table table-striped table-bordered table-sm center" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate;">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombre)
+                        </th>
+                        <th>
+                            Opciones
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.nombre }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Details", "Details", new { id = item.nombre }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.nombre }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
 
-</table>
+            </table>
+        </div>

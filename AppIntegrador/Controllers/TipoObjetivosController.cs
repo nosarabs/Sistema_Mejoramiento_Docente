@@ -17,7 +17,7 @@ namespace AppIntegrador.Controllers
         // GET: TipoObjetivos
         public ActionResult Index()
         {
-            return View(db.TipoObjetivo.ToList());
+            return View("Index", db.TipoObjetivo.ToList());
         }
 
         // GET: TipoObjetivos/Details/5
