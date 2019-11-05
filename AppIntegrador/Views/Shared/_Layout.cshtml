@@ -7,8 +7,8 @@
     <title>Sistema de Mejoramiento Docente</title>
 
     @{ bool EnableBS4SiteWide = true;}
-
-    @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true  && EnableBS4SiteWide == false)
+    <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
+    @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
         @Styles.Render("~/Content/bs3")
         @Scripts.Render("~/bundles/modernizr")
@@ -16,9 +16,8 @@
     }
     else
     {
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        if (ViewBag.EnableBS4NoNavBar != true)        
+        @Styles.Render("~/Content/bs4.3.1")
+        if (ViewBag.EnableBS4NoNavBar != true)
         {
             @Styles.Render("~/Content/css")
         }
@@ -27,7 +26,7 @@
 
 </head>
 <body>
-
+    <!--No siempre se debe cargar el Navbar, se usa viebag para desabilitarla-->
     @if (ViewBag.EnableBS4NoNavBar != true)
     {
         <div class="">
@@ -43,12 +42,20 @@
                     </div>
                     <div class="smallItem">
                         <div class="dropdown">
-                            <button class="dropbtn dropbtn_alt">@HttpContext.Current.User.Identity.Name</button>
+                            <!--TAM-9.2 - Se indica que existen submenus en usuario-->
+                            <button class="dropbtn dropbtn_alt">
+                                @HttpContext.Current.User.Identity.Name &#9660;
+                            </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
+                                <a class="dropdown-item" href="#">Configuración</a>
+                                @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
+                                <div class="dropdown-divider"></div>
+                                @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
                             </div>
                         </div>
+                        <!--TAM-9.2 - Imagen default de usuario-->
+                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
                     </div>
                 </div>
             </div>
@@ -56,12 +63,18 @@
                 <div id="header">
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
-                        <li>
-                            <a href="/Users/Index">Usuarios &#9660;</a>
-                            <ul>
-                                <li><a href="/Users/Index">Administración de usuarios</a></li>
-                            </ul>
-                        </li>
+                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
+                        {
+                            <li>
+                                <a href="/Users/Index">Usuarios &#9660;</a>
+                                <ul>
+                                    <li><a href="/Users/Index">Administración de usuarios</a></li>
+
+                                    <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+
+                                </ul>
+                            </li>
+                        }
                         <li>
                             <a href="">Formularios &#9660;</a>
                             <ul>
@@ -112,6 +125,7 @@
         <br />
     }
 
+   <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
@@ -120,9 +134,7 @@
     }
     else
     {
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")
     }
     @RenderSection("scripts", required: false)
 

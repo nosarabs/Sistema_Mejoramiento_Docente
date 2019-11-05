@@ -66,6 +66,7 @@
     <Folder Include="Usuarios y Perfiles\Triggers" />
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
+    <Folder Include="Usuarios y Perfiles\Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -141,6 +142,16 @@
     <Build Include="PlanesDeMejora\PlantillaObjetivo.sql" />
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\PerfilesXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarreraXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\CarrerasXPerfilXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermiso.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasisNiCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\SugerirConfiguracion.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePerfilEnElEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoActivoEnEnfasis.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
   </ItemGroup>
