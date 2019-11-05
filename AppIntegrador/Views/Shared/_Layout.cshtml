@@ -48,7 +48,8 @@
                             </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                <a class="dropdown-item" href="#">Configuración</a>
+                                <!-- <a class="dropdown-item" href="#">Configuración</a> -->
+                                @Html.ActionLink("Configuración", "Index", "ConfiguracionUsuario", new object { }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
