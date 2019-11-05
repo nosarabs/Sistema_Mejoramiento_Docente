@@ -8,12 +8,15 @@ CREATE PROCEDURE [dbo].[TienePerfilEnElEnfasis]
 	@tienePerfil BIT OUTPUT
 AS
 BEGIN
-	IF EXISTS (SELECT TOP 1 Usuario FROM [dbo].[UsuarioPerfil]
+	IF (@username in 
+		(SELECT Usuario FROM UsuarioPerfil
 		WHERE Usuario = @username AND
-		Perfil = @perfil AND
-		CodCarrera = @codCarrera AND
-		CodEnfasis = @codEnfasis)
-			SET @tienePerfil = 1
+			Perfil = @perfil AND
+			CodCarrera = @codCarrera AND
+			CodEnfasis = @codEnfasis
+		)
+	)
+		SET @tienePerfil = 1
 	ELSE
 		SET @tienePerfil = 0
 END
