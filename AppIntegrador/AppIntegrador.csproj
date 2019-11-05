@@ -138,7 +138,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
-    <Compile Include="Controllers\ConfiguracionUsuarioController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -483,7 +482,7 @@
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
-    <Content Include="Views\ConfiguracionUsuario\Index.cshtml" />
+    <Content Include="Views\Permissions\SeleccionarPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

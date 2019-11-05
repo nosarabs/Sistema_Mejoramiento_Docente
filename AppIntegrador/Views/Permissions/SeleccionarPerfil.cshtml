@@ -10,21 +10,12 @@
     <div class="row" style="display:flex; padding-left:15px; ">
         <div class="column" style="flex:50%;">
             <h2>
-                Configuración
+                Seleccionar perfil de trabajo
             </h2>
         </div>
     </div>
 
-    <div class="row" style="display:flex; padding-left:15px; ">
-        <div class="column" style="flex:50%;">
-            <h4>
-                Configurar perfil de trabajo
-            </h4>
-        </div>
-    </div>
-    <br />
-
-    @using (Html.BeginForm("Index", "ConfiguracionUsuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    @using (Html.BeginForm("SeleccionarPerfil", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
             <div class="col-md-4" style="flex:50%;">

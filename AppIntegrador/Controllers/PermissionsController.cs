@@ -27,6 +27,11 @@ namespace AppIntegrador.Controllers
             return View(model);
         }
 
+        public ActionResult ConfigIndex()
+        {
+            return View("SeleccionarPerfil");
+        }
+
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
         [HttpPost]
         public JsonResult CargarCheckboxes(string[] profileCodes, string[] profileNames, string majorCode, string emphCode)
@@ -134,7 +139,21 @@ namespace AppIntegrador.Controllers
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }
 
- 
+        [HttpGet]
+        public JsonResult CargarPerfil()
+        {
+            string username = CurrentUser.Username;
+            List<string> perfiles = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaPerfiles = from Perfil in db.PerfilesXUsuario(username)
+                                    select Perfil;
+                foreach (var nombrePerfil in listaPerfiles)
+                    perfiles.Add(nombrePerfil.NombrePefil);
+            }
+            return Json(new { data = perfiles }, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
     
