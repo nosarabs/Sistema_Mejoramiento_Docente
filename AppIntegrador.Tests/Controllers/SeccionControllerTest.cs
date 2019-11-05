@@ -43,6 +43,20 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        // Prueba de que la vista no sea nula
+        public void TestEditNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Edit("00000001") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         //RIP CF5
         // Prueba de que la vista no sea nula
         public void TestCreateIndexFiltroCodigoNotNull()

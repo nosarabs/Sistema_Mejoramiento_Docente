@@ -9,14 +9,26 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data.Entity.Core.Objects;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Controllers
 {
     public class FormulariosController : Controller
     {
 
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
+
+        public FormulariosController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public FormulariosController(DataIntegradorEntities db) 
+        { 
+            this.db = db; 
+        }
 
         public ActionResult LlenarFormulario(string id)
         {
@@ -26,23 +38,28 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Index");
             }
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
-            List<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id).ToList();
-            foreach (var seccion in seccionesDeFormulario)
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
+
+            if(seccionesDeFormulario != null)
             {
-                List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
-                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
-                foreach (var pregunta in preguntas)
+                foreach (var seccion in seccionesDeFormulario.ToList())
                 {
-                    nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
+                    foreach (var pregunta in preguntas)
                     {
-                        Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                        OrdenSeccion = nuevaSeccion.Orden,
-                        OrdenPregunta = pregunta.Orden
-                    });
-                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
+                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                        {
+                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                            OrdenSeccion = nuevaSeccion.Orden,
+                            OrdenPregunta = pregunta.Orden
+                        });
+                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
+                    }
+                    formulario.Secciones.Add(nuevaSeccion);
                 }
-                formulario.Secciones.Add(nuevaSeccion);
             }
+           
             return View(formulario);
         }
 
@@ -240,8 +257,8 @@ namespace AppIntegrador.Controllers
 
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
-        [HttpGet]
-        public ActionResult Create(string input0, string input1, string input2)
+//        [HttpPost]
+        public ActionResult AplicarFiltro(string input0, string input1, string input2)
         {
             crearFormulario.seccion = db.Seccion;
 
@@ -249,7 +266,7 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 crearFormulario.seccion = db.Seccion.ToList();
-                return View("Create", crearFormulario);
+                return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
             }
             //if a user choose the radio button option as Subject  
             if (input1.Length > 0)
@@ -268,7 +285,7 @@ namespace AppIntegrador.Controllers
                 ViewBag.filtro = "Ninguno";
                 crearFormulario.seccion = db.Seccion.ToList();
             }
-            return View("Create", crearFormulario);
+            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
         }
 
         // POST: Formularios/Edit/5

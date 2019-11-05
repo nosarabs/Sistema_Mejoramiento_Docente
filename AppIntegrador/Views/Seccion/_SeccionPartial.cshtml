@@ -41,85 +41,98 @@
 <div class="form-horizontal card-group">
     <div class=" card card-default">
         <div class="card-body test3">
-            <h2>Agregar secciones al formulario</h2>
-            @using (Html.BeginForm("Create", "Formularios", FormMethod.Get))
-            {
-
-                <div class="form-horizontal card-group">
-
-                    <div class="card card-default">
-
-                        <div class="card-body test2">
-                            <b>
-                                Búsqueda:
-                            </b>
-
-                            <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
-
-                                <select class="form-control my-form-control" id="mySelect"
-                                        style="width: 17%; display: inline;" onChange="check(this);">
-                                    <option value="-">Sin filtro </option>
-                                    <option value="C">Código </option>
-                                    <option value="E">Enunciado</option>
-                                </select>
-
-                                @* campo de filtrado para ingresar el código *@
-                                <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline; width: 45%;" disabled="true">
-                                <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none; width: 45%;" maxlength="8">
-                                <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none; width: 45%;" maxlength="250">
-
-                                @* Enviar el filtrado al controlador *@
-                                <input type="submit"
-                                       name="submit"
-                                       value="Filtrar"
-                                       class="btn btn-outline-light text-dark bg-white border-secondary" />
-                                <br />
-                            </form>
-                            @if (@ViewBag.filtro != "Ninguno")
+            <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h2>Agregar secciones al formulario</h2>
+                            @using (Html.BeginForm("AplicarFiltro", "Formularios", FormMethod.Post))
                             {
-                                <h5><span class="label label-default">@ViewBag.filtro</span></h5>
+
+                                <div class="form-horizontal card-group">
+
+                                    <div class="card card-default">
+
+                                        <div class="card-body test2">
+                                            <b>
+                                                Búsqueda:
+                                            </b>
+
+                                            <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
+
+                                                <select class="form-control my-form-control" id="mySelect"
+                                                        style="width: 17%; display: inline;" onChange="check(this);">
+                                                    <option value="-">Sin filtro </option>
+                                                    <option value="C">Código </option>
+                                                    <option value="E">Enunciado</option>
+                                                </select>
+
+                                                @* campo de filtrado para ingresar el código *@
+                                                <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline; width: 45%;" disabled="true">
+                                                <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none; width: 45%;" maxlength="8">
+                                                <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none; width: 45%;" maxlength="250">
+
+                                                @* Enviar el filtrado al controlador *@
+                                                <input type="button"
+                                                       id="ActualizarVistaFiltros"
+                                                       value="Filtrar"
+                                                       @*data-dismiss="modal"*@
+                                                       class="btn btn-outline-light text-dark bg-white border-secondary" />
+                                                <br />
+                                            </form>
+                                            @if (@ViewBag.filtro != "Ninguno")
+                                            {
+                                                <h5><span class="label label-default">@ViewBag.filtro</span></h5>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
                             }
 
+                            <div style="height: 300px; overflow: auto;">
+                                <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+
+                                    <thead>
+                                        <tr>
+                                            <th>
+
+                                            </th>
+                                            <th>
+                                                Codigo
+                                            </th>
+                                            <th>
+                                                Nombre
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr id="sec(@item.Codigo)">
+                                            <td style="width:7%;">
+                                                <center>
+                                                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
+                                                </center>
+                                            </td>
+                                            <td style="width:20%">
+                                                @Html.DisplayFor(modelItem => item.Codigo)
+                                            </td>
+                                            <td style="width:70%">
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
                         </div>
                     </div>
                 </div>
-                <br />
-            }
-
-            <div style="height: 300px; overflow: auto;">
-                <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
-
-                    <thead>
-                        <tr>
-                            <th>
-
-                            </th>
-                            <th>
-                                Codigo
-                            </th>
-                            <th>
-                                Nombre
-                            </th>
-                        </tr>
-                    </thead>
-                    @foreach (var item in Model)
-                    {
-
-                        <tr id="sec(@item.Codigo)">
-                            <td style="width:7%;">
-                                <center>
-                                    <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
-                                </center>
-                            </td>
-                            <td style="width:20%">
-                                @Html.DisplayFor(modelItem => item.Codigo)
-                            </td>
-                            <td style="width:70%">
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                        </tr>
-                    }
-                </table>
             </div>
         </div>
     </div>
@@ -134,10 +147,12 @@
     .test2 {
         background: #fbfbfb;
     }
-        input.SectionCheckbox {
+
+    input.SectionCheckbox {
         width: 15px;
         height: 15px;
     }
+
     .my-form-control {
         width: 10%;
         display: inline

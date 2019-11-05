@@ -4,23 +4,26 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Seccion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+    <H2>
+        @Html.DisplayFor(model => model.Codigo)
+        @Html.DisplayFor(model => model.Nombre)
+    </H2>
 
-    </dl>
+        <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            @foreach (var pregunta in Model.Seccion_tiene_pregunta)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => pregunta.PCodigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => pregunta.Pregunta.Enunciado)
+                        </td>
+                    </tr>
+            }
+    </table>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
