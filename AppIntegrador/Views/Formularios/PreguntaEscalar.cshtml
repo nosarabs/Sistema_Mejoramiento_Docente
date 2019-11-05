@@ -13,25 +13,18 @@
     string justificacionname = respuestaname + ".RespuestaLibreOJustificacion";}
 <div class="card card-primary full">
     @Html.DisplayFor(model => Model.Pregunta.Enunciado)
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="0" />
-
-        Sí
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="1" />
-
-        No
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="2" />
-
-        No responde
+    <div class="card-body" style="margin-left:unset">
+        @for (var index = Model.Pregunta.Pregunta_con_opciones.Escalar.Minimo;
+            index <= Model.Pregunta.Pregunta_con_opciones.Escalar.Maximo;
+            index += Model.Pregunta.Pregunta_con_opciones.Escalar.Incremento)
+        {
+            <div style="display: inline-block; padding:2px; text-align: center;">
+                <label for="@radname @index">
+                    @index<br />
+                    <input type="radio" name="@radname" id="@radname @index" value="@index" />
+                </label>
+            </div>
+        }
     </div>
 
     @if (Model.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)

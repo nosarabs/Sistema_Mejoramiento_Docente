@@ -1,15 +1,36 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PreguntaConNumeroSeccion>
 
 
-@foreach(var pregunta in Model)
+@foreach (var pregunta in Model)
 {
+
+    @*Se ocupa el tipo de la pregunta para poder guardar las respuestas*@
+    @Html.Hidden("secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta +
+            "].Pregunta.Tipo", null, new { @Value = pregunta.Pregunta.Tipo })
+
+    @*Se ocupa el código de la pregunta para poder guardar las respuestas*@
+    @Html.Hidden("secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta +
+            "].Pregunta.Codigo", null, new { @Value = pregunta.Pregunta.Codigo })
+
     if (pregunta.Pregunta.Tipo == "U")
     {
-        {Html.RenderPartial("PreguntaConOpciones", pregunta);}
+        { Html.RenderPartial("PreguntaConOpciones", pregunta); }
     }
-    else if(pregunta.Pregunta.Tipo == "S")
+    else if (pregunta.Pregunta.Tipo == "S")
     {
         { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
+    }
+    else if (pregunta.Pregunta.Tipo == "L")
+    {
+        { Html.RenderPartial("RespuestaLibre", pregunta); }
+    }
+    else if (pregunta.Pregunta.Tipo == "E")
+    {
+        { Html.RenderPartial("PreguntaEscalar", pregunta); }
+    }
+    else if (pregunta.Pregunta.Tipo == "M")
+    {
+        { Html.RenderPartial("PreguntaSeleccionMultiple", pregunta); }
     }
 }
 

@@ -47,6 +47,13 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
+        // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
+        public ActionResult RespuestaLibre()
+        {
+            ViewBag.message = "RespuestaLibre";
+            return View("RespuestaLibre");
+        }
+
         // Se espera que respuestas ya venga con el código del formulario.
         [HttpPost]
         public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
@@ -60,7 +67,6 @@ namespace AppIntegrador.Controllers
             respuestas.Correo = HttpContext.User.Identity.Name;
 
             // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
-            respuestas.FCodigo = "CI0128G1";
             respuestas.CSigla = "CI0128";
             respuestas.GNumero = 1;
             respuestas.GAnno = 2019;
@@ -72,36 +78,44 @@ namespace AppIntegrador.Controllers
             // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
             foreach (SeccionConPreguntas seccion in secciones)
             {
-                foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
+                if (seccion.Preguntas != null)
                 {
-                    GuardarRespuestaAPregunta(pregunta.Pregunta, seccion.CodigoSeccion, respuestas);
+                    foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
+                    {
+                        GuardarRespuestaAPregunta(pregunta, seccion.CodigoSeccion, respuestas);
+                    }
                 }
             }
 
             return RedirectToAction("Index");
         }
 
-        public void GuardarRespuestaAPregunta(Pregunta pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
+        public void GuardarRespuestaAPregunta(PreguntaConNumeroSeccion pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
         {
-            if (pregunta.Tipo == "L")
+            if (pregunta != null && !string.IsNullOrEmpty(CodigoSeccion) && respuestas != null)
             {
 
-                db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, 
-                                                    respuestas.Fecha, pregunta.Codigo, CodigoSeccion, "Diego, meta aquí el campo de texto de la vista");
-            }
-            else
-            {
-                // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
-                db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                    respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, "Meter aquí CodigoSeccion, pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Justificacion");
-
-                // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
-                // En todos los demás casos solo se ejecuta una vez.
-                foreach(var opcion in pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion.ToList())
+                if (pregunta.Pregunta.Tipo == "L")
                 {
-                    db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, 
-                                                    respuestas.GSemestre, respuestas.Fecha, pregunta.Codigo, CodigoSeccion, (byte) opcion.Orden);
+                    db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
+                                                            respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
+                }
+                else
+                {
+                    // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
+                    db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
 
+                    // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
+                    // En todos los demás casos solo se ejecuta una vez.
+                    if (pregunta.Opciones != null && pregunta.Opciones.Any())
+                    {
+                        foreach (var opcion in pregunta.Opciones)
+                        {
+                            db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
+                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, (byte)opcion);
+                        }
+                    }
                 }
             }
         }
