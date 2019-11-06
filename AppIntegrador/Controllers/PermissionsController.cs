@@ -35,9 +35,13 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult GuardarSeleccion(ConfigViewHolder Data)
+        public ActionResult GuardarSeleccion(string ListaPerfiles, string ListaCarreras, string ListaEnfasis)
         {
-            return View(Data);
+            CurrentUser.Profile = ListaPerfiles;
+            CurrentUser.MajorId = ListaCarreras;
+            CurrentUser.EmphasisId = ListaEnfasis;
+            //Tirar aqui un aviso de que la configuracion ha sido cambiada.
+            return RedirectToAction("Index", "Home");
         }
 
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
@@ -97,7 +101,7 @@ namespace AppIntegrador.Controllers
             {
                 total = 0;
                 correct = 0;
-                
+
                 ++total;
                 // Se asume una sola carrera y un solo énfasis
                 db.TienePermisoActivoEnEnfasis(permiso.Id, profileName, majorCode, emphCode, tieneActivo);
@@ -107,7 +111,7 @@ namespace AppIntegrador.Controllers
                     // Si está activado en el perfil, aumente contador
                     ++correct;
                 }
-                
+
 
                 // Activo en al menos un perfil
                 if (correct > 0)
@@ -136,7 +140,7 @@ namespace AppIntegrador.Controllers
             using (var context = new DataIntegradorEntities())
             {
                 var listaEnfasis = from Carrera in db.EnfasisXCarrera(value)
-                                    select Carrera;
+                                   select Carrera;
                 foreach (var codigoEnfasis in listaEnfasis)
                 {
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
@@ -154,7 +158,7 @@ namespace AppIntegrador.Controllers
             using (var context = new DataIntegradorEntities())
             {
                 var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.Username, perfilSeleccionado)
-                                   select Resultado;
+                                    select Resultado;
                 foreach (var carrera in listaCarreras)
                 {
                     carreras.Add(carrera.codCarrera + "," + carrera.nombreCarrera);
@@ -176,6 +180,18 @@ namespace AppIntegrador.Controllers
                     perfiles.Add(nombrePerfil.NombrePefil);
             }
             return Json(new { data = perfiles }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarDatosDefault()
+        {
+            string profile = CurrentUser.Profile;
+            Carrera carrera = db.Carrera.Find(CurrentUser.MajorId);
+            Enfasis enfasis = db.Enfasis.Find(CurrentUser.MajorId, CurrentUser.EmphasisId);
+            string major = carrera.Codigo + "," + carrera.Nombre;
+            string emphasis = enfasis.Codigo + "," + enfasis.Nombre;
+            return Json(new { defaultProfile = profile, defaultMajor = major, defaultEmphasis = emphasis }, JsonRequestBehavior.AllowGet);
+
         }
 
 
