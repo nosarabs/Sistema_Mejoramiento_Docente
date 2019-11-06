@@ -89,17 +89,37 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-10">
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-info" id="AgregarSeccion" data-toggle="modal" data-target="#ExampleModal" />
+                                    <input type="button" value="Agregar sección al formulario" class="btn btn-info" id="AgregarSeccion" onclick="CrearModal()" />
                                 </div>
                             </div>
-                            <div id="ModalSecciones">
-                                @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                            </div>
+                            <div class="form-horizontal card-group">
+                                <div class=" card card-default">
+                                    <div class="card-body test3">
+                                        <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="ModalAgregarSecciones">
+                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                        </div>
+                                                        <div id="ModalCrearSeccion">
+                                                            @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                        <button type="button" class="btn btn-primary " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
                 </td>
             </tr>
 
@@ -302,9 +322,26 @@
         }
     </script>
 
+    <script>
+        function CrearModal (){
+            $('#ExampleModal').modal();
+    }</script>
+    <script>
+        $('.CrearSeccionModal').click(function () {
+            $('#ModalCrearSeccion').show("fast");
+            $(this).parent().hide("fast");
+        });
+    </script>
 
-    @*Historia RIP-CF5. Llama al método del controlador que genera la vista parcial filtrada y 
-    vuelve a llamar al diálogo modal para mostrar los resultados.*@
+    <script>
+        $('#ExampleModal').on('show.bs.modal', function (event) {
+            $('#ModalCrearSeccion').hide();
+        })
+    </script>
+
+
+    @*Historia RIP-CF5. Llama al método del controlador que genera la vista parcial filtrada y
+        vuelve a llamar al diálogo modal para mostrar los resultados.*@
     <script>
         $("#ActualizarVistaFiltros").click(function () {
            $.ajax({
@@ -314,7 +351,7 @@
                data: $("form").serialize(), //if you need to post Model data, use this
                success: function (result) {
                    $("#ModalSecciones").html(result);
-                   $('#ExampleModal').modal();
+                   $('#ExampleModal').show();
                }
            });
         })
