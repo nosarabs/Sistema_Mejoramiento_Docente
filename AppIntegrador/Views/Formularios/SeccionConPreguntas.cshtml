@@ -8,8 +8,8 @@
 {
     @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion} )
     var displayOrden = item.Orden + 1;
-    <div class="card card-primary">
-        <div class='card-heading'>
+    <div class="card card-primary shadow">
+        <div class='card-header'>
             @displayOrden.
             @Html.DisplayFor(model => item.Nombre)
         </div>
@@ -27,7 +27,7 @@
         border: transparent;
     }
 
-    .card-heading {
+    .card-header {
         font-size: 20px;
     }
 </style>

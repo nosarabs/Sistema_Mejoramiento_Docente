@@ -110,7 +110,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.OpcionesDeSeleccion(1) as ViewResult;
+            ViewResult result = preguntas.OpcionesDeSeleccion(1, 'U') as ViewResult;
 
             Assert.IsNotNull(result);
         }
@@ -121,7 +121,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.OpcionesDeSeleccion(-1) as ViewResult;
+            ViewResult result = preguntas.OpcionesDeSeleccion(-1, 'U') as ViewResult;
 
             Assert.IsNull(result);
         }
@@ -221,7 +221,7 @@ namespace AppIntegrador.Tests.Controllers
         public void ProbarOpciones()
         {
             var controller = new PreguntasController();
-            var result = controller.OpcionesDeSeleccion(7) as ViewResult;
+            var result = controller.OpcionesDeSeleccion(7, 'U') as ViewResult;
 
             Assert.AreEqual("OpcionesDeSeleccion", result.ViewName);
         }
