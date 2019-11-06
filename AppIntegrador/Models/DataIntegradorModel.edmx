@@ -3516,10 +3516,6 @@
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <FunctionImport Name="CarrerasXPerfilXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasXPerfilXUsuario_Result)">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="perfil" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
           <Parameter Name="codCarrera" Mode="In" Type="String" />
           </FunctionImport>
@@ -3700,6 +3696,10 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="CarrerasXPerfilXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasXPerfilXUsuario_Result1)">
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3715,6 +3715,10 @@
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="CarrerasXPerfilXUsuario_Result1">
+          <Property Type="String" Name="codCarrera" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="nombreCarrera" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4209,13 +4213,6 @@
               <ScalarProperty Name="Correo" ColumnName="CorreoFuncionario" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.CarrerasXPerfilXUsuario" FunctionImportName="CarrerasXPerfilXUsuario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasXPerfilXUsuario_Result">
-                <ScalarProperty Name="codCarrera" ColumnName="codCarrera" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" FunctionImportName="EnfasisXCarrera">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarrera_Result">
@@ -4292,6 +4289,14 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
+          <FunctionImportMapping FunctionImportName="CarrerasXPerfilXUsuario" FunctionName="DataIntegradorModel.Store.CarrerasXPerfilXUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasXPerfilXUsuario_Result1">
+                <ScalarProperty Name="codCarrera" ColumnName="codCarrera" />
+                <ScalarProperty Name="nombreCarrera" ColumnName="nombreCarrera" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
