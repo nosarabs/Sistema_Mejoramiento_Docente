@@ -6,8 +6,11 @@
 
 @foreach (var item in Model)
 {
+    @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion} )
+    var displayOrden = item.Orden + 1;
     <div class="card card-primary">
         <div class='card-heading'>
+            @displayOrden.
             @Html.DisplayFor(model => item.Nombre)
         </div>
         <div class='card-body '>
@@ -15,21 +18,6 @@
         </div>
     </div>
 }
-
-<div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-        @using (Html.BeginForm("GuardarRespuestas", "Formularios", FormMethod.Post))
-        {
-            <div class="form-group">
-                <div class="col-lg-offset-3 col-lg-10">
-                    <button type="submit" class="btn btn-info">Guardar Respuestas</button>
-                    
-                    @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn btn-default" })
-                </div>
-            </div>
-        }
-    </div>
-</div>
 
 <style>
     .full {
@@ -39,7 +27,7 @@
         border: transparent;
     }
 
-    .card-heading{
+    .card-heading {
         font-size: 20px;
     }
 </style>

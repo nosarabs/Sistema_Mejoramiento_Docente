@@ -35,7 +35,7 @@
                     <div class="form-group mx-1">
                         <label style="color:white; font-weight:bold; font-size:16px;">Contraseña</label>
                         <!-- UserStory TAM-1.1.3 - Capslock detection -->
-                        <input class="form-control" id="password-field" name="Password" type="password" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" maxlength="25" autocomplete="off" required />
+                        <input class="form-control" id="password-field" name="Password" type="password" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" autocomplete="off" required />
                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password mr-2" id="password-eye" style="font-size:inherit;cursor:pointer"></span>
                         <p class="text-danger">@Html.ValidationMessageFor(m => m.Password)</p>
                         <!-- End of UserStory  -->

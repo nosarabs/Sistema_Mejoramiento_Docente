@@ -28,11 +28,13 @@ namespace AppIntegrador.Models
         public byte GSemestre { get; set; }
         public System.DateTime Fecha { get; set; }
         public string PCodigo { get; set; }
+        public string SCodigo { get; set; }
         public string Justificacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Opciones_seleccionadas_respuesta_con_opciones> Opciones_seleccionadas_respuesta_con_opciones { get; set; }
         public virtual Pregunta Pregunta { get; set; }
+        public virtual Seccion Seccion { get; set; }
         public virtual Respuestas_a_formulario Respuestas_a_formulario { get; set; }
     }
 }

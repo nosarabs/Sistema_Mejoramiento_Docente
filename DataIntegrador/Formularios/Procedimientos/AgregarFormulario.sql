@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarFormulario]
-	@codigo CHAR(8),
+	@codigo VARCHAR(8),
 	@nombre NVARCHAR(250)
 AS
 	INSERT INTO Formulario(Codigo, Nombre)

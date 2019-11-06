@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
   <Import Project="packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props')" />
   <Import Project="packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props')" />
@@ -50,11 +51,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeFirstStoreFunctions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.CodeFirstStoreFunctions.1.2.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -138,8 +142,10 @@
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
+    <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
+    <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\SeccionesController.cs" />
@@ -158,6 +164,10 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -182,6 +192,12 @@
     <Compile Include="Models\Enfasis.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnfasisXCarreraXPerfil_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EnfasisXCarrera_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Escalar.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -201,11 +217,15 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
+    <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
@@ -220,6 +240,9 @@
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PerfilesXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PerfilPermiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -229,6 +252,7 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -293,7 +317,7 @@
     <Compile Include="Models\Metadata\ObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\PlanDeMejoraMetadata.cs" />
     <Compile Include="Models\LlenarFormulario.cs" />
-    <Compile Include="Models\PreguntaConOpciones.cs" />
+    <Compile Include="Models\PreguntaConNumeroSeccion.cs" />
     <Compile Include="Models\Metadata\PlantillaObjetivoMetadata.cs" />
     <Compile Include="Models\Metadata\TipoObjetivoMetadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
@@ -304,12 +328,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
+    <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Email\EmailFooterTemplate.htm" />
+    <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
@@ -341,17 +368,21 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
     <Content Include="Scripts\Formularios\agregarrespuestas.js" />
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
+    <Content Include="Scripts\Formularios\CargarPreguntas.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
+    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
@@ -436,12 +467,20 @@
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
+    <Content Include="Views\Preguntas\Create.cshtml" />
+    <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
+    <Content Include="Views\Preguntas\OpcionesDeSeleccion.cshtml" />
+    <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
+    <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
+    <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
+    <Content Include="Views\Permissions\Index.cshtml" />
+    <Content Include="Views\Home\CambiarContrasenna.cshtml" />
+    <Content Include="Views\AccionDeMejora\_accionesDeUnObjetivo.cshtml" />
+    <Content Include="Views\AccionDeMejora\_crearAccionDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
-    <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
-    <Content Include="Views\AccionDeMejora\_crearAccionDeMejora.cshtml" />
-    <Content Include="Views\AccionDeMejora\_accionesDeUnObjetivo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -511,7 +550,10 @@
     <Error Condition="!Exists('packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
