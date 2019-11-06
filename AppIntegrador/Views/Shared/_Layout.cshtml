@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>Sistema de Mejoramiento Docente</title>
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     @{ bool EnableBS4SiteWide = true;}
     <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
@@ -17,8 +17,8 @@
     else
     {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        @Styles.Render("~/Content/Main.css")      
         @Styles.Render("~/Content/bs4.3.1")
+        @Styles.Render("~/Content/Main.css")
         if (ViewBag.EnableBS4NoNavBar != true)
         {
             @Styles.Render("~/Content/css")

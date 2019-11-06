@@ -18,9 +18,9 @@
                 <td>
                     @*Acomodar el código y el nombre en el mismo nivel*@
                     <div class="form-horizontal card-group">
-                        <div class="card card-default">
+                        <div class="card card-default shadow">
 
-                            <div class="card-body test2">
+                            <div class="card-body grisUCR2">
                                 <div class=" row">
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group col-lg-2">
@@ -77,40 +77,41 @@
             <tr>
                 <td>
                     @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
-                    <div class="form-horizontal card-group">
-                        <div class="card card-default">
-                            <div class="card-body test2">
+                    <div class="form-horizontal card-group shadow ">
+                        <div class="card card-default ">
+                            <div class="card-body grisUCR2  ">
                                 <h2>Secciones del formulario</h2>
                                 <hr />
                                 <div class="form-group col-md-12">
                                     @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="">
-                                    @*Posibilidad de agregar sección*@
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-azulUCR float-right" id="AgregarSeccion" data-toggle="modal" data-target="#ExampleModal" />
-                                </div>
-                            </div>
-                            <div class="form-horizontal card-group">
-                                <div class=" card card-default">
-                                    <div class="card-body test3">
-                                        <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="ModalAgregarSecciones">
-                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
-                                                        </div>
-                                                        <div id="ModalCrearSeccion">
-                                                            @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
-                                                        </div>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                        <button type="button" class="btn btn-primary " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
+                                <div class="form-group">
+                                    <div class="">
+                                        @*Posibilidad de agregar sección*@
+                                        <input type="button" value="Agregar sección al formulario" class="btn-azulUCR float-right" id="AgregarSeccion" data-toggle="modal" data-target="#ExampleModal" />
+                                    </div>
+                                </div>
+                                <div class="form-horizontal card-group">
+                                    <div class="card card-default">
+                                        <div class="card-body">
+                                            <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <div class="ModalAgregarSecciones">
+                                                                @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                                <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                            </div>
+                                                            <div id="ModalCrearSeccion">
+                                                                @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                                            <button type="button" class="btn-azulUCR " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
