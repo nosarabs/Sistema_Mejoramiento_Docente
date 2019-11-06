@@ -657,5 +657,55 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<CarrerasXPerfilXUsuario_Result1>("[DataIntegradorEntities].[CarrerasXPerfilXUsuario](@correoUsuario, @perfil)", correoUsuarioParameter, perfilParameter);
         }
+    
+        public virtual int AgregarPerfilPermiso(string perfil, Nullable<int> idPermiso, string codCarrera, string codEnfasis, Nullable<bool> tienePermiso)
+        {
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var idPermisoParameter = idPermiso.HasValue ?
+                new ObjectParameter("idPermiso", idPermiso) :
+                new ObjectParameter("idPermiso", typeof(int));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("codEnfasis", codEnfasis) :
+                new ObjectParameter("codEnfasis", typeof(string));
+    
+            var tienePermisoParameter = tienePermiso.HasValue ?
+                new ObjectParameter("tienePermiso", tienePermiso) :
+                new ObjectParameter("tienePermiso", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPerfilPermiso", perfilParameter, idPermisoParameter, codCarreraParameter, codEnfasisParameter, tienePermisoParameter);
+        }
+    
+        public virtual int AgregarUsuarioPerfil(string usuario, string perfil, string codCarrera, string codEnfasis, Nullable<bool> tienePerfil)
+        {
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("usuario", usuario) :
+                new ObjectParameter("usuario", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("codEnfasis", codEnfasis) :
+                new ObjectParameter("codEnfasis", typeof(string));
+    
+            var tienePerfilParameter = tienePerfil.HasValue ?
+                new ObjectParameter("tienePerfil", tienePerfil) :
+                new ObjectParameter("tienePerfil", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuarioPerfil", usuarioParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, tienePerfilParameter);
+        }
     }
 }

@@ -154,6 +154,8 @@
     <Build Include="Usuarios y Perfiles\Procedures\TienePermisoActivoEnEnfasis.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuarioPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

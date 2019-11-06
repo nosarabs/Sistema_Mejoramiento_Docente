@@ -1524,6 +1524,13 @@
           <Parameter Name="orden" Type="tinyint" Mode="In" />
           <Parameter Name="texto" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPerfilPermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="idPermiso" Type="int" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tienePermiso" Type="bit" Mode="In" />
+        </Function>
         <Function Name="AgregarPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo" Type="int" Mode="In" />
           <Parameter Name="nombre" Type="varchar" Mode="In" />
@@ -1551,6 +1558,13 @@
           <Parameter Name="pPassword" Type="varchar" Mode="In" />
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="estado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="AgregarUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tienePerfil" Type="bit" Mode="In" />
         </Function>
         <Function Name="AsociarPreguntaConSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoSeccion" Type="varchar" Mode="In" />
@@ -3700,6 +3714,20 @@
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
             <Parameter Name="perfil" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarPerfilPermiso">
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="idPermiso" Mode="In" Type="Int32" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tienePermiso" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="AgregarUsuarioPerfil">
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tienePerfil" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4297,6 +4325,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AgregarPerfilPermiso" FunctionName="DataIntegradorModel.Store.AgregarPerfilPermiso" />
+          <FunctionImportMapping FunctionImportName="AgregarUsuarioPerfil" FunctionName="DataIntegradorModel.Store.AgregarUsuarioPerfil" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
