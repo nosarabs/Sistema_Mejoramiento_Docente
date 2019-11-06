@@ -49,110 +49,66 @@
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "mainBarText" })
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="header">
+                    <ul class="nav">
+                        <li><a href="/Home/Index">Inicio</a></li>
+                        <li>
+                            <a href="/Users/Index">Usuarios &#9660;</a>
+                            <ul>
+                                <li><a href="/Users/Index">Administración de usuarios</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Formularios &#9660;</a>
+                            <ul>
+                                <li>
+                                    <a href="">Formulario &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Sección &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Seccion/Create">Crear Sección</a></li>
+                                        <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Preguntas &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Preguntas/Create">Crear pregunta NEW</a></li>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Planes de Mejora &#9660;</a>
+                            <ul>
+                                <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
+                                <li><a href="#">Banco de Objetivos</a></li>
+                                <li><a href="#">Banco de Acciones de Mejora</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Visualización &#9660;</a>
+                            <ul>
+                                <li><a href="/Dashboard/Index">Dashboard</a></li>
+                                <li>@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "00000001", siglaCurso = "CI0128", numeroGrupo = 1, semestre = 2, ano = 2019, fechaInicio = DateTime.Parse("2019-10-31"), fechaFin = DateTime.Parse("2019-11-02") }, htmlAttributes: null)</li>
+</ul>
+                        </li>
+                        <li><a href="/Home/About">Acerca de</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <!--Inverted Navbar Start Here-->
-        <!--<nav> tag  start with classes .navbar and .navbar-inverse -->
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <!--Navbar Header Start Here-->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"></a>
-                </div>
-                <!--Navbar Header End Here-->
-                <!--Menu Start Here-->
-                <ul class="nav navbar-nav">
-                    <li><a href="/Home/Index">Inicio</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Usuarios
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Users/Index" ,>Administración de usuarios</a></li>
-                        </ul>
-                    </li>
-                    <!--dropdown Menu Start-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formularios<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formulario</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                    <li><a href="/Formularios/Index">Ver Formularios</a></li>
-                                    <li><a href="/Formularios/LlenarFormulario">Llenar Formularios</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sección</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Seccion/Create">Crear Sección</a></li>
-                                    <li><a href="/Seccion/Index">Ver Secciones</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pregunta</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
-                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Preguntas</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Planes de mejoramiento
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/PlanDeMejora/Index" ,>Mis planes de mejoramiento</a></li>
-                            <li><a href="/AccionDeMejora/Index" ,>Acciones de mejora</a></li>
-                            <li><a href="/Objetivos/Index" ,>Objetivos</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Visualizacion
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/ResultadosFormulario/Formulario" ,>Formulario</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Acerca de
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Home/About" ,>Acerca del proyecto</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Carga de datos
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/CSV/Index" ,>Archivo CSV</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-                <!--Menu End Here-->
-                <!--Menu End Here-->
-                <!--Right Aligned Menu Start-->
-                <ul class="nav navbar-nav navbar-right">
-                    @*<li><a href="#">Login</a></li>*@
-                </ul>
-                <!--Right Aligned Menu End-->
-</div>
-        </nav>
-        <!--<nav> tag end-->
-        <!--Inverted Navbar End Here-->
 
         <br />
     }
