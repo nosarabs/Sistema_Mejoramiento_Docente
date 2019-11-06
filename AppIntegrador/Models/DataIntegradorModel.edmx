@@ -1606,6 +1606,42 @@
           <Parameter Name="opcionSeleccionada" Type="tinyint" Mode="In" />
           <Parameter Name="observacion" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="InsertarCarreraCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cod" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarCursoCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Sigla" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarEnfasisCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="Codigo" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarEstudianteCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarGrupoCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="Semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="Anno" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertarPersonaCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Id" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="TipoId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarProfesorCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarUnidadCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodUnidad" Type="varchar" Mode="In" />
+          <Parameter Name="Nfacultad" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pLoginName" Type="varchar" Mode="In" />
           <Parameter Name="pPassword" Type="varchar" Mode="In" />
@@ -3108,6 +3144,42 @@
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)">
           <Parameter Name="codigoUA" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="InsertarCarreraCSV">
+            <Parameter Name="Cod" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarCursoCSV">
+            <Parameter Name="Sigla" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarEnfasisCSV">
+            <Parameter Name="CodCarrera" Mode="In" Type="String" />
+            <Parameter Name="Codigo" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarEstudianteCSV">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarGrupoCSV">
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarPersonaCSV">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Id" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="TipoId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarProfesorCSV">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarUnidadCSV">
+            <Parameter Name="CodUnidad" Mode="In" Type="String" />
+            <Parameter Name="Nfacultad" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
           <Key>
@@ -4467,6 +4539,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertarCarreraCSV" FunctionName="DataIntegradorModel.Store.InsertarCarreraCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarCursoCSV" FunctionName="DataIntegradorModel.Store.InsertarCursoCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarEnfasisCSV" FunctionName="DataIntegradorModel.Store.InsertarEnfasisCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarEstudianteCSV" FunctionName="DataIntegradorModel.Store.InsertarEstudianteCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarGrupoCSV" FunctionName="DataIntegradorModel.Store.InsertarGrupoCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarPersonaCSV" FunctionName="DataIntegradorModel.Store.InsertarPersonaCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarProfesorCSV" FunctionName="DataIntegradorModel.Store.InsertarProfesorCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarUnidadCSV" FunctionName="DataIntegradorModel.Store.InsertarUnidadCSV" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

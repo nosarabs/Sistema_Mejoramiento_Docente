@@ -13,8 +13,8 @@ namespace AppIntegrador.Models
 {
     public class ArchivoCSV
     {
-        public String CodigoUnidad { get; set; }
-        public String NombreFacultad { get; set; }
+        public string CodigoUnidad { get; set; }
+        public string NombreFacultad { get; set; }
         public String CodigoCarrera { get; set; }
         public String NombreCarrera { get; set; }
         public String CodigoEnfasis { get; set; }
