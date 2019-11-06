@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
 using System.Web;
+using System.Web.Mvc;
 
 namespace AppIntegrador.Tests.Controllers
 {
     /// <summary>
-    /// Summary description for PlanDeMejoraTest
+    /// Summary description for ObjetivosTest
     /// </summary>
     [TestClass]
-    public class PlanDeMejoraTest
+    public class ObjetivosTest
     {
-        public PlanDeMejoraTest()
+        public ObjetivosTest()
         {
             //
             // TODO: Add constructor logic here
@@ -23,23 +23,6 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         private TestContext testContextInstance;
-
-        [TestMethod]
-        public void TestIndexNotNull()
-        {
-            PlanDeMejoraController controller = new PlanDeMejoraController();
-            ViewResult result = controller.Index("admin") as ViewResult;
-            Assert.IsNotNull(result);
-        }
-
-
-        [TestMethod]
-        public void CreateNuevo() 
-        {
-            PlanDeMejoraController controlador = new PlanDeMejoraController();
-            ViewResult resultado = controlador.CreateNuevo() as ViewResult;
-            Assert.IsNotNull(resultado);
-        }
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -82,18 +65,16 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestIndexView()
         {
-            //HttpContext context = System.Web.HttpContext.Current;
-            
-            //// Arrange
-            //var controller = new PlanDeMejoraController();
+            HttpContext context = System.Web.HttpContext.Current;
 
-            //// Act
-            //ViewResult result = controller.Index("admin") as ViewResult;
+            // Arrange
+            var controller = new ObjetivosController();
 
-            //// Assert
-            //Assert.IsNotNull(result);
+            // Act
+            ActionResult result = controller.Index() as ActionResult;
+
+            // Assert
+            Assert.IsNotNull(result);
         }
-
-
     }
 }
