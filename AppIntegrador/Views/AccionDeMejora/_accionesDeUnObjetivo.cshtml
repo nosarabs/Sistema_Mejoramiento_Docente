@@ -27,7 +27,7 @@
     }
     else
     {
-        <table class="table planesTable">
+        <table class="table">
             <colgroup>
                 <col class="TablasNumero">
                 <col class="TablasDescripcion">
@@ -36,10 +36,10 @@
                 <col class="TablasOpciones">
             </colgroup>
 
-            <thead>
-                <tr class="EncabezadoTabla">
+            <thead class="thead-light">
+                <tr>
                     <th>
-                        ID
+                        #
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.descripcion)
@@ -59,20 +59,20 @@
             @foreach (var item in Model)
             {
                 <tbody>
-                    <tr class="FilaAccioneblePlanesDeMejora">
+                    <tr class="FilaTablasPlanesDeMejora">
                         <td>
                             @numAccion
                         </td>
-                        <td class="TablasDescripcionAccionable">
+                        <td>
                             @Html.DisplayFor(modelItem => item.descripcion)
                         </td>
-                        <td class="TablasFecha">
+                        <td>
                             @Html.DisplayFor(modelItem => item.fechaInicio)
                         </td>
-                        <td class="TablasFecha">
+                        <td>
                             @Html.DisplayFor(modelItem => item.fechaFin)
                         </td>
-                        <td class="TablasOpciones botonCentrado">
+                        <td>
                             <div>
                                 @Html.ActionLink("Editar", "Edit", "AccionDeMejora", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn btn-primary" })
                                 @Html.ActionLink("Borrar", "Delete", "AccionDeMejora", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn btn-danger" })
