@@ -129,6 +129,67 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        // RIP-ELF
+        [TestMethod]
+        public void TestLlenarFormulariosConPreguntasDeOpcionConOpcionesNulas()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPNUL";
+            string codSeccion = "SECCPNUL";
+            string codPregunta = "PREGNUL";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas con opciones nulas"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            // Se crea la sección de prueba
+            Seccion seccion = new Seccion
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección de prueba con preguntas con opciones nulas"
+            };
+
+            mockDb.Setup(m => m.Seccion.Find(codSeccion)).Returns(seccion);
+
+            // Se crea una pregunta con opciones de prueba. Pero no se le agregarán opciones
+            Pregunta pregunta = new Pregunta
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Es esta su pregunta sin opciones favorita?",
+                Tipo = "U"
+            };
+
+            mockDb.Setup(m => m.Pregunta.Find(codPregunta)).Returns(pregunta);
+
+            // Se agrega la pregunta sin opciones a la sección de prueba
+            Seccion_tiene_pregunta seccion_tiene_pregunta = new Seccion_tiene_pregunta
+            {
+                SCodigo = codSeccion,
+                PCodigo = codPregunta
+            };
+
+            // Se agrega la sección al formulario
+            Formulario_tiene_seccion formulario_Tiene_Seccion = new Formulario_tiene_seccion
+            {
+                FCodigo = codFormulario,
+                SCodigo = codSeccion
+            };
+
+            mockDb.Setup(m => m.Formulario_tiene_seccion.Find(codFormulario, codSeccion)).Returns(formulario_Tiene_Seccion);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
         // RIP-ELFSN
         // Verificación de que el programa no se caiga si se le pasan parámetros nulos.
         [TestMethod]
