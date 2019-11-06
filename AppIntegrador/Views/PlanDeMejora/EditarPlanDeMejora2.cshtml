@@ -89,20 +89,12 @@
                 <div class="planDiv2">
                     <div id="crearNuevoAccionable">
                         <h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>
-                        <div id="crear">
-                            @*@Html.Action("divObjetivo", new { id = ViewBag.IdPlan })*@
-                            @Html.Action("Create", "Accionables", new { id = ViewBag.IdPlan });
+                        <div id="crearAccionable">
                         </div>
                     </div>
                     <div>
                         <h4 style="text-align:center">Lista de accionables</h4>
-
                         <div id="divAccionables">
-                            <div class="centeredText">
-                                <p>
-                                    Aún no se han creado objetivos en este Plan de Mejora.
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
