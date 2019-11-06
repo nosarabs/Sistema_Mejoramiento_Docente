@@ -12,7 +12,8 @@ let mensajeFechaFinalDefault = "Fecha de finalización.";
 
 let listo = "Fecha Válida";
 
-let idBoton = "sendPDMListo"
+const idBoton = "sendPDMListo"
+const idPlanDeMejoraNombre = "nombrePlanDM";
 
 let today = Date.now();
 const maximoCaracteresNombrePlan = 50;
@@ -103,7 +104,7 @@ function validarFechas(idFechaUno, idFechaDos) {
     let msjDos = document.getElementById(idFechaDos + '_msj');
 
     // Variable para la validación de fechas
-    let fechasValidas = false;
+    this.validacionPorFechas = false;
 
     // Si existen ambas fechas
     if (fechaUno.value && fechaDos.value) { // Ambas fechas estan definidas
@@ -115,7 +116,7 @@ function validarFechas(idFechaUno, idFechaDos) {
         if (validaPorHoyInicio && validaPorHoyFinal && ordenValidoDeFechas) {
             cambiarMensaje(listo, msjUno, false);
             cambiarMensaje(listo, msjDos, false);
-            fechasValidas = true;
+            this.validacionPorFechas = true;
         } else {
             // Para la fecha de inicio
             if (!validaPorHoyInicio) {
@@ -167,7 +168,6 @@ function validarFechas(idFechaUno, idFechaDos) {
         }
     }
 
-    this.validacionPorFechas = fechasValidas ? true : false;
     activarBotonSubmit();
 }
 
@@ -285,7 +285,11 @@ function cambioNombrePlan(nombrePlan) {
 // Funcion que se encarga de ver si el nombre del plan de mejora es valido
 function validarNombreDePlan(espaciosSobrantes) {
     // La unica validacion que se hace es que tenga caracteres
-    this.validacionPorNombrePlan = (espaciosSobrantes == this.maximoCaracteresNombrePlan) ? false : true;
+    let cantidadCaracteres = document.getElementById(idPlanDeMejoraNombre).value.length;
+    this.validacionPorNombrePlan = false;
+    if (cantidadCaracteres > 0) {
+        this.validacionPorNombrePlan = true;
+    }
 }
 
 //// METODOS PARA LA ACTIVACION DEL BOTON DE ENVIO DE LOS PLANES DE MEJORA ////
