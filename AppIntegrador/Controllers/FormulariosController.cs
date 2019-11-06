@@ -40,7 +40,7 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasList = db.Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
+            IQueryable<Respuestas_a_formulario> respuestasList = db.Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
                                                     && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
                                                     && x.GAnno == 2019 && x.GSemestre == 2);
             Respuestas_a_formulario respuestas = null;
