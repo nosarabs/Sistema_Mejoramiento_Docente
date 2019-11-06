@@ -7164,6 +7164,9 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   color: #fff;
   background-color: #0678b5; }
 
+.redondeado, .grisUCR1, .sortable-container, .grisUCR2, .grisUCR3, .card {
+  border-radius: 15px; }
+
 .grisUCR1, .sortable-container {
   background: #e9e9e9; }
 
@@ -7174,7 +7177,7 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   background: #fdfdfd; }
 
 .radio-dibujo {
-  transform: scale(2);
+  transform: scale(1);
   margin-left: 10px;
   margin-bottom: 5px; }
 

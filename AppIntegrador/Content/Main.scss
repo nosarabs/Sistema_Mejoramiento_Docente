@@ -18,6 +18,10 @@
     background-color: #0678b5;
 }
 
+.redondeado {
+    border-radius: 15px;
+}
+
 .btn-rojoUCR {
     @extend .btn;
     @extend .btn-danger;
@@ -30,18 +34,25 @@
 
 .grisUCR1 {
     background: #e9e9e9;
+    @extend .redondeado;
 }
 
 .grisUCR2 {
     background: #f1f1f1;
+    @extend .redondeado;
 }
 
 .grisUCR3 {
     background: #fdfdfd;
+    @extend .redondeado;
+}
+
+.card {
+    @extend .redondeado;
 }
 
 .radio-dibujo {
-    transform: scale(2);
+    transform: scale(1);
     margin-left: 10px;
     margin-bottom: 5px;
 }
