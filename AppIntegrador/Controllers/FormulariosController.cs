@@ -287,6 +287,26 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
+        [HttpPost]
+        public ActionResult CreateSeccion([Bind(Include = "Codigo,Nombre")] Seccion seccion)
+        {
+            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
+            {
+                if (InsertSeccionTienePregunta(seccion, null))
+                {
+                    return PartialView("~/Views/Seccion/_CreateSeccionPartial");
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
+                    return View("~/Views/Seccion/_CreateSeccionPartial");
+                }
+            }
+
+            return View("~/Views/Seccion/_CreateSeccionPartial");
+        }
+
         // GET: Formularios/Edit/5
         public ActionResult Edit(string id)
         {
@@ -392,6 +412,30 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
+        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
+        {
+            try
+            {
+                if (db.AgregarSeccion(seccion.Codigo, seccion.Nombre) == 0)
+                {
+                    return false;
+                }
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
+
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                }
+            }
+            return true;
+        }
+
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
@@ -416,5 +460,7 @@ namespace AppIntegrador.Controllers
             }
             return true;
         }
+
+
     }
 }

@@ -221,6 +221,21 @@
         })
     </script>
 
+    <script>
+        function GuardarSeccion() {
+           $.ajax({
+               url: "@Url.Action("CreateSeccion", "Formularios")",
+               type: "post",
+               //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
+               data: $("form").serialize(), //if you need to post Model data, use this
+               success: function (result) {
+                   $("#ModalCrearSeccion").html(result);
+                   CerrarCrearSeccion();
+               }
+           });
+        }
+    </script>
+
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
