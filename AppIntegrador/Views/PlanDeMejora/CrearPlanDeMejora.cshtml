@@ -49,11 +49,12 @@
                             @Html.LabelFor(model => model.fechaInicio, "Inicio")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { 
-                                        id = "fechaInicioPlanDM",
-                                        @class = "form-control", 
-                                        @onchange = "validarInicioPDM()" 
-                                    } })
+                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new {
+                                    id = "fechaInicioPlanDM",
+                                    @class = "form-control",
+                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')" 
+                                    //@onchange = "validarInicioPDM()" 
+                               } })
                                     <span class="error">
                                         <p id="fechaInicioPlanDM_msj" class="regularMsj">Inicio plan de mejora.</p>
                                     </span>
@@ -64,11 +65,11 @@
                             @Html.LabelFor(model => model.fechaFin, "Fin")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { 
-                                        id = "fechaFinalPlanDM",
-                                        @class = "form-control",
-                                        @onchange = "validarFinPDM()" 
-                                    } })
+                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new {
+                                    id = "fechaFinalPlanDM",
+                                    @class = "form-control",
+                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
+                               } })
                                     <span class="error">
                                         <p id="fechaFinalPlanDM_msj" class="regularMsj">Fin plan de mejora.</p>
                                     </span>

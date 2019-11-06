@@ -1,5 +1,5 @@
 ﻿let msjEspaciosSobrantes = "Te quedan ";
-let msjFechaMuyAntes = "No puedes definir una fecha anterior al dia de hoy."
+let msjFechaMuyAntes = "No puede ser antes de hoy."
 
 let msjFechaInicioMuyAdelanteDeFinal = "Inválida, no puede ser después de la fecha final."
 let msjFechaFinalMuyAtrasDeInicio = "Inválida, no puede ser antes de la fecha de inicio."
@@ -7,11 +7,17 @@ let msjFechaFinalMuyAtrasDeInicio = "Inválida, no puede ser antes de la fecha d
 let msjRegularFechaInicio = "Recuerda que no puede ser antes del día de hoy.";
 let msjRegularFechaFinal = "Recuerda que no puede ser antes del día de inicio.";
 
+let mensajeFechaInicioDefault = "Fecha de inicio.";
+let mensajeFechaFinalDefault = "Fecha de finalización.";
+
 let listo = "Fecha Válida";
+
+let idBoton = "sendPDMListo"
+
 let today = Date.now();
 const maximoCaracteresNombrePlan = 50;
 let validacionPorFechas = false;
-enableDisableSubmitPDM();
+let validacionPorNombrePlan = false;
 
 // Funcion que se encarga de devolver un valor numerico que representa el str que se le manda 
 // como parametro, se espera que el mismo sea una fecha
@@ -35,7 +41,6 @@ function todayStringDate() {
     return newdate;
 }
 
-
 // Viendo los segundos de la fecha actual
 var numToday = hmsToSecondsOnly(todayStringDate());
 
@@ -56,8 +61,8 @@ function getSeconds(valorId) {
 
 //Metodo que se encarga de asignarle el error del parametro al segundo elemento del Dom que 
 //viene por parametro, el tercer parametro es si es un error o no
-function setDOMvalues(htmlValues, element, error) {
-    document.getElementById(element.id).innerHTML = htmlValues;
+function cambiarMensaje(mensaje, element, error) {
+    document.getElementById(element.id).innerHTML = mensaje;
     if (error) {
         document.getElementById(element.id).classList.remove('correct');
         document.getElementById(element.id).classList.add('redError');
@@ -90,31 +95,80 @@ function esAntes(elementoA, elementoB) {
 }
 
 // Metodo que se encarga de validar los ids de las fechas que se ingresan como parametro
-// La primer fecha se espera que sea antes de la segunda
+// La primer fecha se espera que sea antes de la segunda fecha ingeresadas como parametros
 function validarFechas(idFechaUno, idFechaDos) {
     let fechaUno = document.getElementById(idFechaUno);
     let msjUno = document.getElementById(idFechaUno + '_msj');
     let fechaDos = document.getElementById(idFechaDos);
     let msjDos = document.getElementById(idFechaDos + '_msj');
 
+    // Variable para la validación de fechas
+    let fechasValidas = false;
+
     // Si existen ambas fechas
-    if (fechaUno.value && fechaDos.value) {
-        // Ahora viendo que la primera fecha sea validad por el dia de hoy
-        // Ahora viendo que la segunda fecha sea validad por el dia de hoy
-    } else {
-        //Solo existe la primera
-        if (fechaUno.value) {
+    if (fechaUno.value && fechaDos.value) { // Ambas fechas estan definidas
+        // Validando ambas fechas por el dia de hoy y que la de incio sea antes que la final
+        let validaPorHoyInicio = esValidaPorHoy(fechaUno);
+        let validaPorHoyFinal = esValidaPorHoy(fechaDos);
+        let ordenValidoDeFechas = esAntes(fechaUno, fechaDos);
 
+        if (validaPorHoyInicio && validaPorHoyFinal && ordenValidoDeFechas) {
+            cambiarMensaje(listo, msjUno, false);
+            cambiarMensaje(listo, msjDos, false);
+            fechasValidas = true;
         } else {
-            // Solo existe la segunda
-            if (fechaDos.value) {
-
+            // Para la fecha de inicio
+            if (!validaPorHoyInicio) {
+                cambiarMensaje(msjFechaMuyAntes, msjUno, true);
             } else {
-                //No existe ninguna
+                if (ordenValidoDeFechas) {
+                    cambiarMensaje(listo, msjUno, false);
+                } else {
+                    cambiarMensaje(msjFechaInicioMuyAdelanteDeFinal, msjUno, true);
+                }
+            }
+            // Para la fecha final
+            if (!validaPorHoyFinal) {
+                cambiarMensaje(msjFechaMuyAntes, msjDos, true);
+            } else {
+                if (ordenValidoDeFechas) {
+                    cambiarMensaje(listo, msjDos, false);
+                } else {
+                    cambiarMensaje(msjFechaFinalMuyAtrasDeInicio, msjDos, true);
+                }
             }
         }
 
+    } else { //Si solo existe una de las fechas o ninguna
+
+        if (fechaUno.value) {
+            //Solo existe la primera
+            // Validando por el dia de hoy
+            fechasValidas = esValidaPorHoy(fechaUno);
+            if (fechasValidas) {
+                cambiarMensaje(listo, msjUno, false);
+            } else {
+                cambiarMensaje(msjFechaMuyAntes, msjUno, true);
+            }
+        } else {
+            if (fechaDos.value) {
+                // Solo existe la segunda
+                fechasValidas = esValidaPorHoy(fechaDos);
+                if (fechasValidas) {
+                    cambiarMensaje(listo, msjDos, false);
+                } else {
+                    cambiarMensaje(msjFechaMuyAntes, msjDos, true);
+                }
+            } else {
+                //No existe ninguna
+                cambiarMensaje(mensajeFechaInicioDefault, msjUno, false);
+                cambiarMensaje(mensajeFechaFinalDefault, msjDos, false);
+            }
+        }
     }
+
+    this.validacionPorFechas = fechasValidas ? true : false;
+    activarBotonSubmit();
 }
 
 
@@ -224,52 +278,22 @@ function cambioNombrePlan(nombrePlan) {
     let espaciosSobrantes = maximoCaracteresNombrePlan - cantidadCaracteres;
 
     errorMessage.innerHTML = msjEspaciosSobrantes + espaciosSobrantes + " letras.";
-    revisarBotonSubmit();
+    validarNombreDePlan(espaciosSobrantes);
+    activarBotonSubmit();
 }
 
 // Funcion que se encarga de ver si el nombre del plan de mejora es valido
-function validarNombreDePlan() {
-    let resultado = false;
-    let elem = document.getElementById('nombrePlanDM');
-    //Esta validacion solo define que se tiene que escribir aldo en el campo
-    if (elem.value.length > 0) {
-        resultado = true;
-    }
-    return resultado;
+function validarNombreDePlan(espaciosSobrantes) {
+    // La unica validacion que se hace es que tenga caracteres
+    this.validacionPorNombrePlan = (espaciosSobrantes == this.maximoCaracteresNombrePlan) ? false : true;
 }
 
 //// METODOS PARA LA ACTIVACION DEL BOTON DE ENVIO DE LOS PLANES DE MEJORA ////
-
-//Metodo que se fija en todos los campos que tiene que validar para la 
-// activacion del boton de creacion de los planes de mejora
-function validadoPorFechas(validado) {
-    this.validacionPorFechas = validado;    
-}
-
-// Este metodo revisa todas las validaciones que se ocupan para activar el boton submit 
-// de los planes de mejora
-function revisarBotonSubmit() {
-    let validacionPorNombrePlan = validarNombreDePlan();
-
-    let elem = document.getElementById("sendPDMListo");
-    if (validacionPorNombrePlan && this.validacionPorFechas) {
-        elem.disabled = false;
+function activarBotonSubmit() {
+    let elementoBoton = document.getElementById(idBoton);
+    if (this.validacionPorFechas && this.validacionPorNombrePlan) {
+        elementoBoton.disabled = false;
     } else {
-        elem.disabled = true;
-    }
-}
-
-
-
-// Funcion que se encarga de habilitar o desabilitart el boton de envío del formulario PDM
-function enableDisableSubmitPDM() {
-    let elemSubmit = document.getElementById('sendPDMListo');
-    console.log("Andres Navarrete");
-    if (elemSubmit) {
-        if (validacionPorFechas && validadoPorNombrePlan()) {
-            document.getElementById('sendPDMListo').disabled = false;
-        } else {
-            document.getElementById('sendPDMListo').disabled = true;
-        }
+        elementoBoton.disabled = true;
     }
 }
