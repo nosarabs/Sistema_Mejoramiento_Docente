@@ -13,7 +13,7 @@
 <div>
     <!--Si el modelo viene vacío, significa que no se ha seleccionado un formulario todavía
         o que este viene sin secciones-->
-    @if (Model.Equals(null))
+    @if (Model.Secciones.Count() == 0)
     {
         <p>
             Aún no se han creado acciones de mejora en el objetivo seleccionado
@@ -21,9 +21,11 @@
     }
     else
     {
-        <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br/>
+        <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
         <!--En caso de que el modelo venga lleno, se llama a las funciones en javscript para
             visualizar las secciones referentes al formulario-->
+        
+
     }
 
 </div>

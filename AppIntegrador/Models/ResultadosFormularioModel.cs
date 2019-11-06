@@ -19,6 +19,7 @@ namespace AppIntegrador.Models
         public String FechaInicio { get; set; }
         public String FechaFin { get; set; }
         public String Preguntas { get; set; }
+        public IEnumerable<Secciones> Secciones { get; set; }
     }
 
     public class Preguntas
@@ -27,5 +28,12 @@ namespace AppIntegrador.Models
         public String codigoPregunta { get; set; }
         public String textoPregunta { get; set; }
         public String tipoPregunta { get; set; }
+    }
+
+    public class Secciones
+    {
+        public String codigoSeccion { get; set; }
+        public String textoSeccion { get; set; }
+        
     }
 }
