@@ -83,7 +83,6 @@
                 </div>
                 <div>
                     <h4 style="text-align:center">Lista de acciones de mejora</h4>
-
                     <div id="divAcciones">
                     </div>
                 </div>
@@ -151,22 +150,6 @@
                 });
             });
 
-            @*$('#pruebarara').submit(function (e) {
-                alert("here");
-                var id = "@ViewBag.IdPlan";
-                var objetivo = "@ViewBag.nomObj";
-                alert("Se va a llamar a crearAccionDeMejora con id:"+id+" y con obj:"+objetivo);
-                e.preventDefault();
-                $.ajax({
-                    url:'/AccionDeMejora/CrearAccionDeMejora/',
-                    type:'post',
-                    data:$('#newAccion').serialize(),
-                    success:function(){
-                        $('#divAcciones').html(result);
-                    }
-                });
-            });*@
-
         });
 
     </script>
@@ -190,7 +173,34 @@
                     $('#crearAccion').html(result);
                 }
             });
+
+            actualizarAccionesDeMejora(plan, obj);
         };
     </script>
 
+    <script>
+        function actualizarAccionesDeMejora(plan, obj) {
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/AccionDeMejora/AccionesDeObjetivo/")",
+                data: {
+                      //Data need to pass as parameter
+                      plan: plan,
+                      nombObj: obj
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#divAcciones').html(result);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function cargarAccionesDeMejora(plan, obj) {
+            //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
+            actualizarAccionesDeMejora(plan, obj);
+        }
+    </script>
 }

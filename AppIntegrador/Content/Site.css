@@ -488,14 +488,14 @@ html, body {
     background-color: white !important;
 }
 
-.EncabezadoTabla {
+/*.EncabezadoTabla {
     padding-top: 12px;
     padding-bottom: 12px;
     width: 100%;
     text-align: left;
     background-color: #095fa3;
     color: white;
-}
+}*/
 
 .TablasNumero {
     width: 4%;
@@ -509,15 +509,18 @@ html, body {
 
 .TablasDescripcion {
     width: 35%;
+    max-width: 40%;
     word-break: break-all;
 }
 
 .TablasFecha {
     width: 13%;
+    max-width: 16%;
 }
 
 .TablasOpciones {
-    min-width: 16%;
+    width: 16%;
+    max-width: 16%;
 }
 
 .TablasDescripcionAccionable {
@@ -544,26 +547,8 @@ html, body {
 }
 
 .FilaTablasPlanesDeMejora td {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border: 1px solid #ddd;
-    border-collapse: collapse;
     word-break: break-all;
-}
-
-.FilaAccioneblePlanesDeMejora td {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    border: 1px solid #ddd;
-    border-collapse: collapse;
-}
-
-.TablasSeccionesPlanesDeMejora th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #41ade7;
-    color: black;
+    background-color: white !important;
 }
 
 .highlight {

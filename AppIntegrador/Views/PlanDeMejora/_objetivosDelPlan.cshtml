@@ -28,7 +28,7 @@
 }
 else
 {
-    <table class="table planesTable">
+    <table class="table">
         <colgroup>
             <col class="TablasNumero">
             <col class="TablasNombre">
@@ -38,10 +38,10 @@ else
             <col class="TablasOpciones">
         </colgroup>
 
-        <thead>
-            <tr class="EncabezadoTabla">
+        <thead class="thead-light">
+            <tr>
                 <th>
-                    ID
+                    #
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.nombre)

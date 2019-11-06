@@ -24,9 +24,7 @@
                 <div class="col-md-12">
                     @*@Html.LabelFor(model => model.nombreObj, htmlAttributes: new { @class = "control-label" })*@
                     @*@Html.EditorFor(model => model.nombreObj, new { htmlAttributes = new { @class = "form-control", maxlength = "50", placeholder = "Máximo 50 caracteres" } })*@
-                    @Html.TextBoxFor(model => model.nombreObj, new
-                    {style = "display:none;", @Value = @Session["nombreObj"]
-                })
+                    @Html.TextBoxFor(model => model.nombreObj, new {style = "display:none;", @Value = @Session["nombreObj"] })
                     @Html.ValidationMessageFor(model => model.nombreObj, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -37,7 +35,7 @@
             <div class="row">
                 <div class="col-md-12">
                     @*@Html.EditorFor(model => model.codPlan, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.TextBoxFor(model => model.codPlan, new { style = "display:none;", @Value = @Session["id"] })
+                    @Html.TextBoxFor(model => model.codPlan, new { style = "display:none;", @Value = @Session["idPlan"] })
                     @Html.ValidationMessageFor(model => model.codPlan, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -45,7 +43,7 @@
 
         <div class="form-group">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
                     <div class="row">
                         <div class="col-md-12">
@@ -55,9 +53,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-4"></div>
+                <div class="col-md-3"></div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
                     <div class="row">
                         <div class="col-md-12">
@@ -110,20 +108,20 @@
 
 <script>
     $(function () {
-        $("#myform").submit(function () {
-            console.log("This should fire after form submission");
+        $("#myform").submit(function (e) {
             var id = "@Session["idPlan"]";
-                var objetivo = "@Session["nombreObj"]";
-                alert("Se va a llamar a crearAccionDeMejora con id:"+id+" y con obj:"+objetivo);
-                e.preventDefault();
-                $.ajax({
-                    url:'/AccionDeMejora/CrearAccionDeMejora/',
-                    type:'post',
-                    data:$('#newAccion').serialize(),
-                    success:function(){
-                        $('#divAcciones').html(result);
-                    }
-                });
+            var objetivo = "@Session["nombreObj"]";
+            //alert("Se va a llamar a crearAccionDeMejora con id:"+id+" y con obj:"+objetivo);
+            
+            e.preventDefault();
+            $.ajax({
+                url: '/AccionDeMejora/CrearAccionDeMejora/',
+                type: 'post',
+                data: $('#myform').serialize(),
+                success: function () {
+                    cargarAccionesDeMejora(id, objetivo);
+                }
+            });
         });
     });
 </script>
