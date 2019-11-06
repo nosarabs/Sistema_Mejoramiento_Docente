@@ -27,7 +27,7 @@ namespace AppIntegrador.Controllers
             };
             CsvContext cc = new CsvContext();
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
-            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\Denisse Alfaro\\Documents\\DatosCSV.csv", inputFileDescription); //TODO: De momento el path está fijo
+            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\Daniel\\DatosCSV.csv", inputFileDescription); //TODO: De momento el path está fijo
             List<ArchivoCSV> lista = datos.ToList();
 
 

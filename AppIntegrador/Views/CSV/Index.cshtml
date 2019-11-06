@@ -4,33 +4,46 @@
     ViewBag.Title = "Index";
 }
 
+<script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CSVuploader.js"></script>
+
+
 <h2>Carga CSV</h2>
-<body>
-    <h1>Datos</h1>
-    <ul>
-        <!--Imprime los datos del modelo-->
-        <li>codigoUnidad @Model.CodigoUnidad</li>
-        <li>nombreFacultad = @Model.NombreFacultad</li>
-        <li>codigoCarrera = @Model.CodigoCarrera</li>
-        <li>nombreCarrera = @Model.NombreCarrera</li>
-        <li>codigoEnfasis = @Model.CodigoEnfasis</li>
-        <li>nombreEnfasis = @Model.NombreEnfasis</li>
-        <li>siglaCurso = @Model.SiglaCurso</li>
-        <li>nombreCurso = @Model.NombreCurso</li>
-        <li>numeroGrupo = @Model.NumeroGrupo</li>
-        <li>anno = @Model.Anno</li>
-        <li>semestre = @Model.Semestre</li>
-        <li>correoProf = @Model.CorreoProfesor</li>
-        <li>idProf = @Model.IdProfesor</li>
-        <li>nombreProf = @Model.NombreProfesor</li>
-        <li>apellidoProf = @Model.ApellidoProfesor</li>
-        <li>tipoIdProf = @Model.TipoIdProfesor</li>
-        <li>correoEst = @Model.CorreoEstudiante</li>
-        <li>idEst = @Model.IdEstudiante</li>
-        <li>nombreEst = @Model.NombreEstudiante</li>
-        <li>apellidoEst = @Model.ApellidoEstudiante</li>
-        <li>tipoIdEst = @Model.TipoIdEstudiante</li>
 
-    </ul>
 
-</body>
+<h1>Upload CSV</h1>
+<form name="form1">
+
+    <input type="file" id="CSVFileUpload" name="Upload" accept=".csv" />
+    <input type="submit" onclick="saveCSV();">
+
+</form>
+
+
+<h1>Datos</h1>
+<ul>
+    <!--Imprime los datos del modelo-->
+    <li>codigoUnidad @Model.CodigoUnidad</li>
+    <li>nombreFacultad = @Model.NombreFacultad</li>
+    <li>codigoCarrera = @Model.CodigoCarrera</li>
+    <li>nombreCarrera = @Model.NombreCarrera</li>
+    <li>codigoEnfasis = @Model.CodigoEnfasis</li>
+    <li>nombreEnfasis = @Model.NombreEnfasis</li>
+    <li>siglaCurso = @Model.SiglaCurso</li>
+    <li>nombreCurso = @Model.NombreCurso</li>
+    <li>numeroGrupo = @Model.NumeroGrupo</li>
+    <li>anno = @Model.Anno</li>
+    <li>semestre = @Model.Semestre</li>
+    <li>correoProf = @Model.CorreoProfesor</li>
+    <li>idProf = @Model.IdProfesor</li>
+    <li>nombreProf = @Model.NombreProfesor</li>
+    <li>apellidoProf = @Model.ApellidoProfesor</li>
+    <li>tipoIdProf = @Model.TipoIdProfesor</li>
+    <li>correoEst = @Model.CorreoEstudiante</li>
+    <li>idEst = @Model.IdEstudiante</li>
+    <li>nombreEst = @Model.NombreEstudiante</li>
+    <li>apellidoEst = @Model.ApellidoEstudiante</li>
+    <li>tipoIdEst = @Model.TipoIdEstudiante</li>
+</ul>
+
+
