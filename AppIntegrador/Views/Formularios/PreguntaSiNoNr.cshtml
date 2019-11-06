@@ -10,34 +10,21 @@
     en vez de crear uno o varios modelos distintos.*@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
     string radname = respuestaname + ".Opciones[0]";}
-<div class="card card-primary full">
-    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
-    <div class='card-body'>
-        <input type="radio" name="@radname" id="@radname 0" value="0" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 0 ? "checked" : "")/>
+<div class='card-body'>
+    <input type="radio" name="@radname" id="@radname 0" value="0" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 0 ? "checked" : "") />
 
-        Sí
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" id="@radname 1" value="1" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 1 ? "checked" : "")/>
-        No
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" id="@radname 2" value="2" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 2 ? "checked" : "")/>
-        No responde
-    </div>
-
-    @if (!Request["rad"].IsEmpty())
-    {
-        <ul>
-
-            @foreach (var selection in Request["rad"].Split(','))
-            {
-                <li>@selection</li>
-            }
-        </ul>
-    }
+    Sí
 </div>
+
+<div class='card-body'>
+
+    <input type="radio" name="@radname" id="@radname 1" value="1" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 1 ? "checked" : "") />
+    No
+</div>
+
+<div class='card-body'>
+
+    <input type="radio" name="@radname" id="@radname 2" value="2" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 2 ? "checked" : "") />
+    No responde
+</div>
+

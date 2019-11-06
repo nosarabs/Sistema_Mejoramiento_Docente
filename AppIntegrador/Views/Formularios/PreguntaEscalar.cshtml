@@ -11,7 +11,6 @@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
     string radname = respuestaname + ".Opciones[0]";}
 
-@Html.DisplayFor(model => Model.Pregunta.Enunciado)
 <div class="card-body" style="margin-left:unset">
     @for (var index = Model.Pregunta.Pregunta_con_opciones.Escalar.Minimo;
         index <= Model.Pregunta.Pregunta_con_opciones.Escalar.Maximo;
@@ -25,14 +24,3 @@
         </div>
     }
 </div>
-
-@if (!Request["rad"].IsEmpty())
-{
-    <ul>
-
-        @foreach (var selection in Request["rad"].Split(','))
-        {
-            <li>@selection</li>
-        }
-    </ul>
-}

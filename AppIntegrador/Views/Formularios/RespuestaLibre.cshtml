@@ -10,12 +10,9 @@
     en vez de crear uno o varios modelos distintos.*@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "].RespuestaLibreOJustificacion"; }
 
-<div class="card card-primary full">
-    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
 
-    <div class='card-body'>
+<div class='card-body'>
 
-        <textarea class="form-control long-textbox col-md-12" style="width: 100%;max-width: 100%; min-width: 100%" cols="50" 
-                  name="@respuestaname">@Model.RespuestaLibreOJustificacion</textarea>
-    </div>
+    <textarea class="form-control long-textbox col-md-12" style="width: 100%;max-width: 100%; min-width: 100%" cols="50"
+              name="@respuestaname">@Model.RespuestaLibreOJustificacion</textarea>
 </div>
