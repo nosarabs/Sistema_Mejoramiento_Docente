@@ -3,14 +3,10 @@ Retorna una tabla con el código de formulario, sigla del curso, número de grup
 Esta información se necesita para filtrar respuestas a formulario.
 */
 CREATE FUNCTION ObtenerFormulariosFiltros (
-@codigoUA AS VARCHAR(10),
-@codigoCarrera AS VARCHAR(10),
-@codigoEnfasis AS VARCHAR(10),
-@siglaCurso AS VARCHAR(10),
-@numeroGrupo AS TINYINT,
-@semestre AS TINYINT,
-@anno AS INT,
-@correoProfesor AS VARCHAR(50)
+@UnidadesAcademicas FiltroUnidadesAcademicas READONLY,
+@CarrerasEnfasis FiltroCarrerasEnfasis READONLY,
+@Grupos FiltroGrupos READONLY,
+@CorreosProfesores FiltroProfesores READONLY
 )
 RETURNS @formulariosFiltros TABLE
 (
@@ -20,13 +16,11 @@ RETURNS @formulariosFiltros TABLE
 	GSemestre TINYINT,	/*Número de semestre.*/
 	GAnno INT,			/*Año.*/
 	FechaInicio DATE,	/*Fecha de inicio del periodo de llenado el formulario.*/
-	FechaFin DATE		/*Fecha de finalización del periodo de llenado del formulario.*/
+	FechaFin DATE,		/*Fecha de finalización del periodo de llenado del formulario.*/
+	PRIMARY KEY (FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin)
 )
 AS
 BEGIN
-
-	/*Declara que hay un primer filtro.*/
-	DECLARE @primero BIT = 1;
 
 	/*Almacena resultados de forma temporal para poder hacer las intersecciones.*/
 	DECLARE @formulariosTemp TABLE
@@ -37,299 +31,103 @@ BEGIN
 		GSemestre TINYINT,	/*Número de semestre.*/
 		GAnno INT,			/*Año.*/
 		FechaInicio DATE,	/*Fecha de inicio del periodo de llenado el formulario.*/
-		FechaFin DATE		/*Fecha de finalización del periodo de llenado del formulario.*/
+		FechaFin DATE,		/*Fecha de finalización del periodo de llenado del formulario.*/
+		PRIMARY KEY (FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin)
 	);
+
+	INSERT INTO @formulariosFiltros
+	SELECT	PAP.FCodigo, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
+	FROM	Periodo_activa_por AS PAP;
 	
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@codigoUA IS NOT NULL)
+	/*Si existe algún parámetro que no sea nulo, se toma en cuenta para el filtro.*/
+	IF (EXISTS (SELECT * FROM @UnidadesAcademicas WHERE CodigoUA IS NOT NULL))
 	BEGIN
 
-		SET @primero = 0;
+		/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
+		INSERT INTO @formulariosTemp
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM ObtenerFormulariosUA(@UnidadesAcademicas)
+		INTERSECT
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosFiltros;
+
+		/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
+		DELETE FROM @formulariosFiltros;
 
 		INSERT INTO @formulariosFiltros
 		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-		FROM ObtenerFormulariosUA(@codigoUA);
+		FROM @formulariosTemp;
+
+		DELETE FROM @formulariosTemp;
 
 	END;
 
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@codigoCarrera IS NOT NULL AND @codigoEnfasis IS NOT NULL)
+	/*Si existe algún parámetro que no sea nulo, se toma en cuenta para el filtro.*/
+	IF (EXISTS (SELECT * FROM @CarrerasEnfasis WHERE CodigoCarrera IS NOT NULL AND CodigoEnfasis IS NOT NULL))
 	BEGIN
 
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
+		/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
+		INSERT INTO @formulariosTemp
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM ObtenerFormulariosCarreraEnfasis(@CarrerasEnfasis)
+		INTERSECT
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosFiltros;
 
-			/*Le indica a los otros que ya hubo un primer filtro.*/
-			SET @primero = 0;
+		/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
+		DELETE FROM @formulariosFiltros;
 
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosCarreraEnfasis(@codigoCarrera, @codigoEnfasis);
+		INSERT INTO @formulariosFiltros
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosTemp;
 
-		END
-		ELSE BEGIN
-
-			/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-			INSERT INTO @formulariosTemp
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosCarreraEnfasis(@codigoCarrera, @codigoEnfasis)
-			INTERSECT
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM @formulariosFiltros;
-
-			/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-			DELETE FROM @formulariosFiltros;
-
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM @formulariosTemp;
-
-			DELETE FROM @formulariosTemp;
-
-		END;
-
-	END
-	ELSE
-	BEGIN
-
-		/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-		IF (@codigoCarrera IS NOT NULL)
-		BEGIN
-
-			/*Si es el primer filtro.*/
-			IF (@primero = 1)
-			BEGIN
-
-				/*Le indica a los otros que ya hubo un primer filtro.*/
-				SET @primero = 0;
-
-				/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosCarreraEnfasis(@codigoCarrera, null);
-
-			END
-			ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosCarreraEnfasis(@codigoCarrera, null)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-			END;
-
-		END;
+		DELETE FROM @formulariosTemp;
 
 	END;
 
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@siglaCurso IS NOT NULL)
+	/*Si existe algún parámetro que no sea nulo, se toma en cuenta para el filtro.*/
+	IF (EXISTS (SELECT * FROM @Grupos WHERE SiglaCurso IS NOT NULL AND NumeroGrupo IS NOT NULL AND Semestre IS NOT NULL AND Anno IS NOT NULL))
 	BEGIN
 
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
+		/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
+		INSERT INTO @formulariosTemp
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM ObtenerFormulariosGrupo(@Grupos)
+		INTERSECT
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosFiltros;
 
-			/*Le indica a los otros que ya hubo un primer filtro.*/
-			SET @primero = 0;
+		/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
+		DELETE FROM @formulariosFiltros;
 
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosCurso(@siglaCurso);
+		INSERT INTO @formulariosFiltros
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosTemp;
 
-		END
-		ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosCurso(@siglaCurso)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-		END;
+		DELETE FROM @formulariosTemp;
 
 	END;
 
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@numeroGrupo IS NOT NULL)
+	/*Si existe algún parámetro que no sea nulo, se toma en cuenta para el filtro.*/
+	IF (EXISTS (SELECT * FROM @CorreosProfesores WHERE CorreoProfesor IS NOT NULL))
 	BEGIN
 
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
+		/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
+		INSERT INTO @formulariosTemp
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM ObtenerFormulariosProfesor(@CorreosProfesores)
+		INTERSECT
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosFiltros;
 
-			/*Le indica a los otros que ya hubo un primer filtro.*/
-			SET @primero = 0;
+		/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
+		DELETE FROM @formulariosFiltros;
 
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosGrupo(@numeroGrupo);
+		INSERT INTO @formulariosFiltros
+		SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+		FROM @formulariosTemp;
 
-		END
-		ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosGrupo(@numeroGrupo)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-		END;
-
-	END;
-
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@semestre IS NOT NULL)
-	BEGIN
-
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
-
-			/*Le indica a los otros que ya hubo un primer filtro.*/
-			SET @primero = 0;
-
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosSemestre(@semestre);
-
-		END
-		ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosSemestre(@semestre)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-		END;
-
-	END;
-
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@anno IS NOT NULL)
-	BEGIN
-
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
-
-			/*Le indica a los otros que ya hubo un primer filtro.*/
-			SET @primero = 0;
-
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosAnno(@anno);
-
-		END
-		ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosAnno(@anno)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-		END;
-
-	END;
-
-	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
-	IF (@correoProfesor IS NOT NULL)
-	BEGIN
-
-		/*Si es el primer filtro.*/
-		IF (@primero = 1)
-		BEGIN
-
-			/*Hace el llenado inicial de formulariosFiltros según el parámetro que corresponde.*/
-			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-			FROM ObtenerFormulariosProfesor(@correoProfesor);
-
-		END
-		ELSE BEGIN
-
-				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
-				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM ObtenerFormulariosProfesor(@correoProfesor)
-				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosFiltros;
-
-				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
-				DELETE FROM @formulariosFiltros;
-
-				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosTemp;
-
-				DELETE FROM @formulariosTemp;
-
-		END;
+		DELETE FROM @formulariosTemp;
 
 	END;
 
