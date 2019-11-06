@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 <div class="">
                                     @*Posibilidad de agregar sección*@
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-azulUCR float-right" id="AgregarSeccion" data-toggle="modal" data-target="#ExampleModal" />
+                                    <input type="button" value="Agregar sección al formulario" class="btn btn-azulUCR float-right" data-toggle="modal" data-target="#ExampleModal" />
                                 </div>
                             </div>
                             <div class="form-horizontal card-group">
@@ -147,8 +147,36 @@
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
-    <script src="~/Scripts/Formularios/MensajesCreacionFormularios.js"></script>
+    <script>
+        $('#ExampleModal').on('hide.bs.modal', function () {
+            console.log('Todo es trivial')
 
+            var seccionesAsociadas=[]
+            var index = 0;
+            var beforeElement = true;
+            while (index < agregarsecciones.current() && beforeElement) {
+            var secc = document.getElementById("secciones[" + index + "].Codigo")
+            seccionesAsociadas.push(secc.value);
+            ++index;
+            }
+
+
+            $.ajax({  
+                 contentType: "application/json; charset=utf-8",
+                type: "POST",
+                url: "/Formularios/Test",
+                data: JSON.stringify(seccionesAsociadas),
+                dataType: "json",
+                traditional: true, 
+                    success: function (result, status, xhr) {  
+                        //$("#dataDiv").html(result);  
+                    },  
+                    error: function (xhr, status, error) {  
+                       // $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)  
+                    }  
+                });
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -179,9 +207,9 @@
     </script>
 
     <script>
-        function CrearModal (){
+        function CrearModal() {
             $('#ExampleModal').modal();
-    }</script>
+        }</script>
     <script>
         $('.CrearSeccionModal').click(function () {
             $('#ModalCrearSeccion').show("fast");

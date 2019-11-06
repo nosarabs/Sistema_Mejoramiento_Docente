@@ -353,6 +353,17 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
+        [HttpPost]
+        /**
+         * Este método valida si ya el formulario fue creado, de no ser así
+         * lo crea y le asocia las secciones recibidas por parámetros
+         * 
+         */
+        public void AsociarSesionesAFormulario(List<String> seccionesAsociadas)
+        {
+           // Implementación
+        }
+
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
         {
