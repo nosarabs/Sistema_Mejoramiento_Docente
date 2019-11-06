@@ -18,7 +18,9 @@ namespace AppIntegrador.Models
 
         public static string EmphasisId { get; set; }
 
-        public static string getUsername() {return Username; }
+        public static string getUsername() { return Username; }
+
+        public static string getUserProfile() { return Profile; }
 
     }
 

@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using AppIntegrador.Models.Metadata;
 
 namespace AppIntegrador.Controllers
 {
@@ -23,21 +25,36 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("../Home/Index");
             }
             PermissionsViewHolder model = new PermissionsViewHolder();
-            
+
             return View(model);
+        }
+
+        public ActionResult SeleccionarPerfil()
+        {
+            return View(new ConfigViewHolder());
+        }
+
+        [HttpPost]
+        public ActionResult GuardarSeleccion(string ListaPerfiles, string ListaCarreras, string ListaEnfasis)
+        {
+            CurrentUser.Profile = ListaPerfiles;
+            CurrentUser.MajorId = ListaCarreras;
+            CurrentUser.EmphasisId = ListaEnfasis;
+            //Tirar aqui un aviso de que la configuracion ha sido cambiada.
+            return RedirectToAction("Index", "Home");
         }
 
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
         [HttpPost]
-        public JsonResult CargarCheckboxes(string[] profileCodes, string[] profileNames, string majorCode, string emphCode)
+        public JsonResult CargarCheckboxes(string profileCode, string profileName, string majorCode, string emphCode)
         {
-            if ((profileCodes == null) || (profileNames == null) || (majorCode == null) || (emphCode == null)) {
+            if ((profileCode == null) || (profileName == null) || (majorCode == null) || (emphCode == null)) {
                 TempData["alertmessage"] = "Algo salió mal. Intente de nuevo.";
                 return Json(new { persons = "", permissions = "" });
             }
             PermissionsViewHolder model = new PermissionsViewHolder();
             // Obtener nombre de Perfil y Énfasis
-            var profileName = profileNames[0];
+
             // Actualizar los checkboxes con la selección de énfasis.
 
             ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
@@ -51,18 +68,17 @@ namespace AppIntegrador.Controllers
             {
                 total = 0;
                 correct = 0;
-                for (int i = 0; i < profileCodes.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePerfilEnElEnfasis(persona.Correo, profileName, majorCode, emphCode, tienePerfil);
 
-                    if ((bool)tienePerfil.Value)
-                    {
-                        // Si tiene el perfil asignado, aumente contador
-                        ++correct;
-                    }
+                ++total;
+                // Se asume una sola carrera y un solo énfasis
+                db.TienePerfilEnElEnfasis(persona.Correo, profileName, majorCode, emphCode, tienePerfil);
+
+                if ((bool)tienePerfil.Value)
+                {
+                    // Si tiene el perfil asignado, aumente contador
+                    ++correct;
                 }
+
 
                 // Tiene al menos un perfil
                 if (correct > 0)
@@ -85,18 +101,17 @@ namespace AppIntegrador.Controllers
             {
                 total = 0;
                 correct = 0;
-                for (int i = 0; i < profileCodes.Length; ++i)
-                {
-                    ++total;
-                    // Se asume una sola carrera y un solo énfasis
-                    db.TienePermisoActivoEnEnfasis(permiso.Id, profileName, majorCode, emphCode, tieneActivo);
 
-                    if ((bool)tieneActivo.Value)
-                    {
-                        // Si está activado en el perfil, aumente contador
-                        ++correct;
-                    }
+                ++total;
+                // Se asume una sola carrera y un solo énfasis
+                db.TienePermisoActivoEnEnfasis(permiso.Id, profileName, majorCode, emphCode, tieneActivo);
+
+                if ((bool)tieneActivo.Value)
+                {
+                    // Si está activado en el perfil, aumente contador
+                    ++correct;
                 }
+
 
                 // Activo en al menos un perfil
                 if (correct > 0)
@@ -113,7 +128,9 @@ namespace AppIntegrador.Controllers
                     }*/
                 }
             }
-            return Json( new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            JsonResult result = Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
+            string resultString = new JavaScriptSerializer().Serialize(result.Data);
+            return result;
         }
 
         [HttpGet]
@@ -123,7 +140,7 @@ namespace AppIntegrador.Controllers
             using (var context = new DataIntegradorEntities())
             {
                 var listaEnfasis = from Carrera in db.EnfasisXCarrera(value)
-                                    select Carrera;
+                                   select Carrera;
                 foreach (var codigoEnfasis in listaEnfasis)
                 {
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
@@ -134,7 +151,49 @@ namespace AppIntegrador.Controllers
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }
 
- 
+        [HttpGet]
+        public JsonResult CargarCarreras(string perfilSeleccionado)
+        {
+            List<string> carreras = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.Username, perfilSeleccionado)
+                                    select Resultado;
+                foreach (var carrera in listaCarreras)
+                {
+                    carreras.Add(carrera.codCarrera + "," + carrera.nombreCarrera);
+                }
+            }
+            return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarPerfil()
+        {
+            string username = CurrentUser.Username;
+            List<string> perfiles = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaPerfiles = from Perfil in db.PerfilesXUsuario(username)
+                                    select Perfil;
+                foreach (var nombrePerfil in listaPerfiles)
+                    perfiles.Add(nombrePerfil.NombrePefil);
+            }
+            return Json(new { data = perfiles }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarDatosDefault()
+        {
+            string profile = CurrentUser.Profile;
+            Carrera carrera = db.Carrera.Find(CurrentUser.MajorId);
+            Enfasis enfasis = db.Enfasis.Find(CurrentUser.MajorId, CurrentUser.EmphasisId);
+            string major = carrera.Codigo + "," + carrera.Nombre;
+            string emphasis = enfasis.Codigo + "," + enfasis.Nombre;
+            return Json(new { defaultProfile = profile, defaultMajor = major, defaultEmphasis = emphasis }, JsonRequestBehavior.AllowGet);
+
+        }
+
 
     }
     

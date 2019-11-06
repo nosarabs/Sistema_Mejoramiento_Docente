@@ -39,6 +39,12 @@ namespace AppIntegrador.Models
 
         public int[] PerfilesSeleccionados { get; set; }
 
+        public int PerfilSeleccionado { get; set; }
+
+        public int CarreraSeleccionada { get; set; }
+
+        public int EnfasisSeleccionado { get; set; }
+
         public PermissionsViewHolder()
         {
             List<Perfil> perfiles = db.Perfil.ToList();
