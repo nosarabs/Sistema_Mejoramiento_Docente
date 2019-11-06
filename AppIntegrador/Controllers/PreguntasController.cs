@@ -111,7 +111,7 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
                     {
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -128,8 +128,9 @@ namespace AppIntegrador.Controllers
                     db.AgregarOpcion(pregunta.Codigo, (byte)opcion.Orden, opcion.Texto);
                 }
 
+                ModelState.Clear();
                 ViewBag.Message = "Exitoso";
-                return View();
+                return View("Create");
             }
             else
             {
@@ -160,12 +161,13 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public ActionResult OpcionesDeSeleccion(int i)
+        public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
             if(i < 0)
             {
                 return null;
             }
+            ViewBag.Tipo = Tipo;
             ViewBag.i = i;
             return View("OpcionesDeSeleccion");
         }

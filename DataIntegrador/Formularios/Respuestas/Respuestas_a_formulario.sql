@@ -7,6 +7,7 @@
 	GAnno INT NOT NULL,
 	GSemestre TINYINT NOT NULL,
 	Fecha DATE NOT NULL,
+	Finalizado BIT NOT NULL DEFAULT 0
 
 	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha),
 	CONSTRAINT fkRespuestasFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo) on delete cascade,

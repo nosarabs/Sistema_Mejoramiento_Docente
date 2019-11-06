@@ -28,5 +28,5 @@ function validarEntradas() {
     }
 
     $('#Create').prop('disabled', !todoLleno);
-    $('#AgregarSeccion').prop('disabled', !todoLleno);
+    //$('#AgregarSeccion').prop('disabled', !todoLleno);
 }

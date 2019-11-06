@@ -854,5 +854,34 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarRespuestasDeFormulario", codFormularioParameter, correoParameter, csiglaParameter, gnumeroParameter, gannoParameter, gsemestreParameter);
         }
+    
+        public virtual ObjectResult<ObtenerRespuestasAFormulario_Result> ObtenerRespuestasAFormulario(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<int> anno, Nullable<byte> semestre)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAFormulario_Result>("ObtenerRespuestasAFormulario", codFormularioParameter, correoParameter, siglaParameter, numParameter, annoParameter, semestreParameter);
+        }
     }
 }
