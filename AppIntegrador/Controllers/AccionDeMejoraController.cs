@@ -81,9 +81,8 @@ namespace AppIntegrador.Controllers
                 if (ModelState.IsValid)
                 {
                     db.AccionDeMejora.Add(accionDeMejora);
-                    db.SaveChanges();
-                    IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == accionDeMejora.codPlan && o.nombreObj == accionDeMejora.nombreObj);
-                    //return PartialView("_accionesDeUnObjetivo", acciones);
+                    db.SaveChanges();IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == accionDeMejora.codPlan && o.nombreObj == accionDeMejora.nombreObj);
+
                     return new EmptyResult();
                 }
             }
@@ -183,7 +182,9 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.idPlan = plan;
             ViewBag.nombreObj = nombObj;
-            return PartialView();
+
+            IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == plan && o.nombreObj == nombObj);
+            return PartialView("_accionesDeUnObjetivo", acciones);
         }
 
     }
