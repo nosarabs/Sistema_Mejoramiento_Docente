@@ -258,6 +258,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Create()
         {
             crearFormulario.seccion = db.Seccion;
+            crearFormulario.crearSeccionModel = new CrearSeccionModel();
             return View("Create", crearFormulario);
         }
 
