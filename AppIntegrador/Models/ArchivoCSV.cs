@@ -15,24 +15,24 @@ namespace AppIntegrador.Models
     {
         public string CodigoUnidad { get; set; }
         public string NombreFacultad { get; set; }
-        public String CodigoCarrera { get; set; }
-        public String NombreCarrera { get; set; }
-        public String CodigoEnfasis { get; set; }
-        public String NombreEnfasis { get; set; }
-        public String SiglaCurso { get; set; }
-        public String NombreCurso { get; set; }
-        public String NumeroGrupo { get; set; }
-        public String Anno { get; set; }
-        public String Semestre { get; set; }
-        public String CorreoProfesor { get; set; }
-        public String IdProfesor { get; set; }
-        public String NombreProfesor { get; set; }
-        public String ApellidoProfesor { get; set; }
-        public String TipoIdProfesor { get; set; }
-        public String CorreoEstudiante { get; set; }
-        public String IdEstudiante { get; set; }
-        public String NombreEstudiante { get; set; }
-        public String ApellidoEstudiante { get; set; }
-        public String TipoIdEstudiante { get; set; }
+        public string CodigoCarrera { get; set; }
+        public string NombreCarrera { get; set; }
+        public string CodigoEnfasis { get; set; }
+        public string NombreEnfasis { get; set; }
+        public string SiglaCurso { get; set; }
+        public string NombreCurso { get; set; }
+        public string NumeroGrupo { get; set; }
+        public string Anno { get; set; }
+        public string Semestre { get; set; }
+        public string CorreoProfesor { get; set; }
+        public string IdProfesor { get; set; }
+        public string NombreProfesor { get; set; }
+        public string ApellidoProfesor { get; set; }
+        public string TipoIdProfesor { get; set; }
+        public string CorreoEstudiante { get; set; }
+        public string IdEstudiante { get; set; }
+        public string NombreEstudiante { get; set; }
+        public string ApellidoEstudiante { get; set; }
+        public string TipoIdEstudiante { get; set; }
     }
 }
