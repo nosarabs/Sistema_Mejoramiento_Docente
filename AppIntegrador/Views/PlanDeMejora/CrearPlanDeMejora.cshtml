@@ -14,15 +14,17 @@
 
 <div class="fullWidth">
 
-    <div class="planDiv">
+    <div class="card card-default">
 
-        <h2>Crear Plan de mejora</h2>
+        <div class="card-body">
 
-        <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h2>Crear Plan de mejora</h2>
+
+            <form role="form" id="newPlan" action="CrearPlanDeMejora" method="post">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <div class="form-group">
                     <div class="row">
@@ -79,19 +81,25 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="botonCentrado">
-                            <input type="submit" id="sendPDMListo" value="Crear Plan de Mejora" class="btn btn-success" disabled/>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="botonCentrado">
+                                <input type="submit" id="sendPDMListo" value="Crear Plan de Mejora" class="btn btn-success" disabled/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </form>
+                }
+            </form>
+        </div>
+        <div class="row">
+            <div class="botonCentrado">
+                @Html.ActionLink("Cancelar", "Index", "PlanDeMejora", new { @class = "btn-blancoUCR" })
+            </div>
+        </div>
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
 
-}
+        }
