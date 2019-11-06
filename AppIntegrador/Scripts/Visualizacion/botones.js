@@ -29,7 +29,7 @@
 
     }
 
-    crearBotones(listaPreguntas) {
+    crearBotones(idContenedor, listaPreguntas) {
 
         var insertaContenidos = new InsertaContenidos();
 
@@ -84,7 +84,9 @@
             }
 
             cuerpoPrincipal.appendChild(base.getBase());
-            document.body.appendChild(cuerpoPrincipal);
+
+            var contenedor = document.getElementById(idContenedor);
+            contenedor.appendChild(cuerpoPrincipal);
 
         }
 
