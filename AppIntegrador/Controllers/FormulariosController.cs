@@ -40,6 +40,15 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
+            var respuestasList = db.Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
+                                                    && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
+                                                    && x.GAnno == 2019 && x.GSemestre == 2);
+            Respuestas_a_formulario respuestas = null;
+            if(respuestasList != null)
+            {
+                respuestas = respuestasList.FirstOrDefault();
+            }
+
             if(seccionesDeFormulario != null)
             {
                 foreach (var seccion in seccionesDeFormulario.ToList())
@@ -54,7 +63,7 @@ namespace AppIntegrador.Controllers
                             OrdenSeccion = nuevaSeccion.Orden,
                             OrdenPregunta = pregunta.Orden
                         });
-                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
+                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }
                     formulario.Secciones.Add(nuevaSeccion);
                 }
@@ -136,7 +145,7 @@ namespace AppIntegrador.Controllers
             }
         }
 
-        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas)
+        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas, string codSeccion, Respuestas_a_formulario respuestas)
         {
             if (preguntas != null)
             {
@@ -153,6 +162,38 @@ namespace AppIntegrador.Controllers
                         else if (pregunta.Pregunta.Tipo == "E")
                         {
                             pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
+                        }
+
+                        var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
+                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                        if (respuestaGuardada != null)
+                        {
+                            pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
+                            var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
+                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                            pregunta.Opciones = new List<int>();
+                            if(opcionesGuardadas != null)
+                            {
+                                foreach(var opcion in opcionesGuardadas)
+                                {
+                                    pregunta.Opciones.Add(opcion.OpcionSeleccionada);
+                                }
+                            }
+                        }
+                    }
+                    else if(pregunta.Pregunta.Tipo == "L")
+                    {
+                        var respuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre 
+                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                        if(respuestaGuardada != null)
+                        {
+                            pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                         }
                     }
                 }
