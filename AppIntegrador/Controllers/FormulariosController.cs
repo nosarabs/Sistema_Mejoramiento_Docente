@@ -40,32 +40,50 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasList = db.Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
-                                                    && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
+            /* Antes se utilizaba Linq para obtener estas respuestas, pero Linq no acepta parámetros nulos por lo que se cambió por un procedimiento almacenado
+            var respuestasList Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
+                                                   && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
                                                     && x.GAnno == 2019 && x.GSemestre == 2);
-            Respuestas_a_formulario respuestas = null;
-            if(respuestasList != null)
-            {
-                respuestas = respuestasList.FirstOrDefault();
-            }
+            */
 
-            if(seccionesDeFormulario != null)
+            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+
+            if (respuestasObtenidas != null)
             {
-                foreach (var seccion in seccionesDeFormulario.ToList())
+                var respuestasList = respuestasObtenidas.FirstOrDefault();
+
+                Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
+
+                if (respuestasList != null)
                 {
-                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
-                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
-                    foreach (var pregunta in preguntas)
+                    respuestas.FCodigo = respuestasList.FCodigo;
+                    respuestas.Correo = respuestasList.Correo;
+                    respuestas.CSigla = respuestasList.CSigla;
+                    respuestas.Fecha = respuestasList.Fecha;
+                    respuestas.Finalizado = respuestas.Finalizado;
+                    respuestas.GAnno = respuestasList.GAnno;
+                    respuestas.GNumero = respuestasList.GNumero;
+                    respuestas.GSemestre = respuestasList.GSemestre;
+                }
+
+                if (seccionesDeFormulario != null)
+                {
+                    foreach (var seccion in seccionesDeFormulario.ToList())
                     {
-                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                        List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                        SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
+                        foreach (var pregunta in preguntas)
                         {
-                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                            OrdenSeccion = nuevaSeccion.Orden,
-                            OrdenPregunta = pregunta.Orden
-                        });
-                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
+                            nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                            {
+                                Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                                OrdenSeccion = nuevaSeccion.Orden,
+                                OrdenPregunta = pregunta.Orden
+                            });
+                            ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
+                        }
+                        formulario.Secciones.Add(nuevaSeccion);
                     }
-                    formulario.Secciones.Add(nuevaSeccion);
                 }
             }
            

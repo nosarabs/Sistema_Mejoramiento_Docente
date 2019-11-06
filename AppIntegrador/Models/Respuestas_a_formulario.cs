@@ -29,6 +29,7 @@ namespace AppIntegrador.Models
         public int GAnno { get; set; }
         public byte GSemestre { get; set; }
         public System.DateTime Fecha { get; set; }
+        public bool Finalizado { get; set; }
     
         public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
