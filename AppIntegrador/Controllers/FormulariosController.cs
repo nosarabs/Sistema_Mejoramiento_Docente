@@ -14,23 +14,9 @@ namespace AppIntegrador.Controllers
 {
     public class FormulariosController : Controller
     {
-        
+
         private DataIntegradorEntities db = new DataIntegradorEntities();
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
-
-
-        // GET: Formularios
-        private class SeccionYCodigo
-        {
-            // It is important to declare them public so they get returned
-            public string Codigo { get; set; }
-            public string Nombre { get; set; }
-        }
-        private class Opcion
-        {
-            public string Texto { get; set; }
-            public int Orden { get; set; }
-        }
 
         public ActionResult LlenarFormulario(string id)
         {
@@ -39,62 +25,92 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
-
-            // Sacar el nombre de cada formulario y el código en el orden definido.
-            SqlParameter codForm = new SqlParameter("CodForm", id);
-            List<SeccionYCodigo> nombresSecciones = db.Database.SqlQuery<SeccionYCodigo>("EXEC ObtenerSeccionesDeFormulario @CodForm", codForm).ToList();
-
-            // Agrego cada seccion a la lista de secciones
-            foreach (var seccion in nombresSecciones)
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            List<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id).ToList();
+            foreach (var seccion in seccionesDeFormulario)
             {
-                SqlParameter sectionCode = new SqlParameter("sectionCode", seccion.Codigo);
-
-                // Obtiene los códigos de todas las preguntas relacionadas a la sección
-                List<string> Codigos = db.Database.SqlQuery<string>("EXEC ObtenerPreguntasDeSeccion @sectionCode", sectionCode).ToList();
-                // Lista con cada tipo de pregunta
-                TodasLasPreguntas todasLasPreguntas = new TodasLasPreguntas();
-                // Lista que contiene cada pregunta con sus opciones
-                List<PreguntaConOpciones> preguntasConOpciones = new List<PreguntaConOpciones>();
-
-                // Agrego cada pregunta a la lista de preguntas
-                foreach (string codigo in Codigos)
+                List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
+                foreach (var pregunta in preguntas)
                 {
-                    PreguntaConOpciones pregunta = new PreguntaConOpciones();
-
-                    SqlParameter questionCode = new SqlParameter("questionCode", codigo);
-                    SqlParameter questionCode2 = new SqlParameter("questionCode", codigo);
-
-                    // Obtiene el enunciado de una pregunta
-                    pregunta.Enunciado = db.Database.SqlQuery<string>("SELECT p.Enunciado FROM Pregunta p WHERE p.Codigo = @questionCode", questionCode).First();
-
-                    // Obtiene las opciones de una pregunta
-                    List<Opcion> opciones = db.Database.SqlQuery<Opcion>("EXEC ObtenerOpcionesDePregunta @questionCode", questionCode2).ToList();
-                    pregunta.Opciones = opciones.Select(Opcion => Opcion.Texto);
-
-                    // Añade la pregunta con sus opciones a la lista
-                    preguntasConOpciones.Add(pregunta);
+                    nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                    {
+                        Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                        OrdenSeccion = nuevaSeccion.Orden,
+                        OrdenPregunta = pregunta.Orden
+                    });
+                    ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas);
                 }
+                formulario.Secciones.Add(nuevaSeccion);
+            }
+            return View(formulario);
+        }
 
-                todasLasPreguntas.PreguntasConOpciones = (IEnumerable<PreguntaConOpciones>)preguntasConOpciones;
-
-                SeccionConPreguntas seccionCompleta = new SeccionConPreguntas
-                {
-                    Nombre = seccion.Nombre,
-                    Preguntas = todasLasPreguntas
-                };
-
-                secciones.Add(seccionCompleta);
-            } // Foreach section in nombresSecciones
-
-            LlenarFormulario formularioCompleto = new LlenarFormulario
+        // Se espera que respuestas ya venga con el código del formulario.
+        [HttpPost]
+        public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
+        {
+            if (respuestas == null || secciones == null)
             {
-                Nombre = formularioDB.Nombre,
-                Secciones = secciones
-            };
+                return RedirectToAction("Index");
+            }
 
-            return View(formularioCompleto);
+            respuestas.Fecha = DateTime.Today;
+            respuestas.Correo = HttpContext.User.Identity.Name;
+
+            // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
+            respuestas.CSigla = "CI0128";
+            respuestas.GAnno = 2019;
+            respuestas.GNumero = 1;
+            respuestas.GSemestre = 2;
+
+            // Llamar a procedimiento que agrega Respuestas_a_formulario
+
+            // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
+            foreach (SeccionConPreguntas seccion in secciones)
+            {
+                foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
+                {
+                    GuardarRespuestaAPregunta(pregunta.Pregunta, seccion.CodigoSeccion);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public void GuardarRespuestaAPregunta(Pregunta pregunta, string CodigoSeccion)
+        {
+            if (pregunta.Tipo == "L")
+            {
+                Console.WriteLine("Todo es trivial");
+            }
+            else
+            {
+                Console.WriteLine("Todo sigue siendo trivial");
+            }
+        }
+
+        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas)
+        {
+            if (preguntas != null)
+            {
+                foreach (PreguntaConNumeroSeccion pregunta in preguntas)
+                {
+                    if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
+                    {
+                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList().FirstOrDefault();
+                        if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion =
+                                db.Opciones_de_seleccion.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList();
+                        }
+                        else if (pregunta.Pregunta.Tipo == "E")
+                        {
+                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -107,25 +123,25 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(formulario.Where(x => x.Codigo.Contains(input1)).ToList());
+                return View("Index", formulario.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Nombre: " + input2;
-                return View(formulario.Where(x => x.Nombre.Contains(input2)).ToList());
+                return View("Index", formulario.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return View(formulario.ToList());
+                return View("Index", formulario.ToList());
             }
         }
 
@@ -149,19 +165,19 @@ namespace AppIntegrador.Controllers
         public ActionResult Create()
         {
             crearFormulario.seccion = db.Seccion;
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]        
+        [HttpPost]
         public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
         {
             crearFormulario.seccion = db.Seccion;
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-                if(InsertFormularioTieneSeccion(formulario, secciones))
+                if (InsertFormularioTieneSeccion(formulario, secciones))
                 {
                     ViewBag.Message = "Exitoso";
                     return RedirectToAction("Create");
@@ -174,7 +190,7 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            return View(crearFormulario);
+            return View("Create", crearFormulario);
         }
 
         // GET: Formularios/Edit/5
@@ -282,8 +298,6 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-
-        
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
         {
