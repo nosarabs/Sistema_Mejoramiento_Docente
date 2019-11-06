@@ -391,7 +391,7 @@ namespace AppIntegrador.Controllers
             form.Codigo = formulario.codigo;
             form.Nombre = formulario.nombre;
 
-            if (ModelState.IsValid && formulario.codigo.Length > 0 && formulario.nombre.Length > 0)
+            if (ModelState.IsValid && formulario != null && formulario.codigo != null && formulario.nombre != null && formulario.codigo.Length > 0 && formulario.nombre.Length > 0)
             {
                 if (InsertFormularioTieneSeccionL(form, formulario.seccionesAsociadas))
                 {

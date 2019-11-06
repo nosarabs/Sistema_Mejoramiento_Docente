@@ -85,27 +85,27 @@
                                 <div class="form-group col-md-12">
                                     @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="">
-                                    @*Posibilidad de agregar sección*@
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-azulUCR float-right" data-toggle="modal" data-target="#ExampleModal" />
+
+                                <div class="form-group">
+                                    <div class="">
+                                        @*Posibilidad de agregar sección*@
+                                        <input type="button" value="Agregar sección al formulario" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-horizontal card-group">
-                                <div class=" card card-default">
-                                    <div class="card-body test3">
-                                        <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="ModalAgregarSecciones">
-                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
-                                                        </div>
-                                                        <div id="ModalCrearSeccion">
-                                                            @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
-                                                        </div>
+                                <div class="form-horizontal card-group">
+                                    <div class="card card-default">
+                                        <div class="card-body">
+                                            <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <div id="ModalAgregarSecciones">
+                                                                @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                                <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                            </div>
+                                                            <div id="ModalCrearSeccion">
+                                                                @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
+                                                            </div>
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -164,7 +164,7 @@
             var codigo = document.getElementById("textCode").value
             var nombre = document.getElementById("textName").value
 
-            var resultado = {codigo, nombre, seccionesAsociadas };
+            var resultado = { codigo, nombre, seccionesAsociadas };
             console.log(JSON.stringify(resultado));
             $.ajax({
                 contentType: "application/json; charset=utf-8",
@@ -177,7 +177,7 @@
                     resultado = []
                 },
                 error: function () {
-                    
+
                 }
             });
         });
@@ -215,7 +215,7 @@
         function CrearModal() {
             $('#ExampleModal').modal();
             $('#ModalAgregarSecciones').show();
-    }</script>
+        }</script>
     <script>
         $('.CrearSeccionModal').click(function () {
             $('#ModalCrearSeccion').show("fast");
