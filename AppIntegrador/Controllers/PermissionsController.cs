@@ -55,16 +55,19 @@ namespace AppIntegrador.Controllers
             List<Persona> Personas = model.Personas;
             List<Permiso> Permisos = model.Permisos;
 
+            //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
             for (int i = 0; i < Personas.Count; ++i)
             {
                 db.AgregarUsuarioPerfil(Personas[i].Correo, perfil , codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
             }
 
+            //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
             for (int i = 0; i < Permisos.Count; ++i)
             {
                 db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
             }
-
+            
+            //TO-DO Aviso de que la configuracion fue cambiada
             return View("Index", model);
         }
         /* Fin TAM 3.4 Task 1*/
@@ -191,7 +194,8 @@ namespace AppIntegrador.Controllers
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
         }
-
+        
+        /* TAM 3.7 Carga todos los perfiles que tiene asignados un usuario */
         [HttpGet]
         public JsonResult CargarPerfil()
         {
