@@ -139,6 +139,14 @@
     <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
     <Build Include="Formularios\Procedimientos\GuardarRespuestaAPregunta.sql" />
     <Build Include="Formularios\Procedimientos\GuardarRespuestaAFormulario.sql" />
+    <Build Include="InsertarUnidadCSV.sql" />
+    <Build Include="InsertarCarreraCSV.sql" />
+    <Build Include="InsertarEnfasisCSV.sql" />
+    <Build Include="InsertarCursoCSV.sql" />
+    <Build Include="InsertarGrupoCSV.sql" />
+    <Build Include="InsertarPersonaCSV.sql" />
+    <Build Include="InsertarProfesorCSV.sql" />
+    <Build Include="InsertarEstudianteCSV.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
