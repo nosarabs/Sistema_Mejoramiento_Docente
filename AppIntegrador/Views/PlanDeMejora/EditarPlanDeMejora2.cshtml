@@ -104,10 +104,6 @@
     </div>
 </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
@@ -167,6 +163,31 @@
             });
 
             actualizarAccionesDeMejora(plan, obj);
+        };
+    </script>
+
+    <script>
+        clickAccionDeMejora = function (id, plan, obj, acm) {
+            //alert("ID: " + plan + "\nNombre objetivo: " + obj + "\nID objetivo: " + id + "\nDescripción de la acción de mejora:" + acm);
+            var content = '<h2>Accionables de la acción de mejora ' + id + '</h2>' + '<div id="crearAccionable"></div>';
+            document.getElementById('crearNuevoAccionable').innerHTML = content;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/Accionables/Create/")",
+                data: {
+                      //Data need to pass as parameter
+                      codPlan: plan,
+                      nombObj: obj,
+                      descripAcMej: acm
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#crearAccionable').html(result);
+                }
+            });
+
+            //actualizarAccionesDeMejora(plan, obj);
         };
     </script>
 

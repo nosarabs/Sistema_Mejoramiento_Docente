@@ -484,7 +484,7 @@
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
-    <Content Include="Views\Accionables\Create.cshtml" />
+    <Content Include="Views\Accionables\_Create.cshtml" />
     <Content Include="Views\Accionables\Delete.cshtml" />
     <Content Include="Views\Accionables\Details.cshtml" />
     <Content Include="Views\Accionables\Edit.cshtml" />

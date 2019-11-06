@@ -37,10 +37,19 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Accionables/Create
-        public ActionResult Create()
+        public ActionResult Create(int codPlan, string nombObj, string descripAcMej)
         {
-            ViewBag.codPlan = new SelectList(db.AccionDeMejora, "codPlan", "nombreObj");
-            return View();
+
+            ViewBag.IdPlan = codPlan;
+            ViewBag.nomObj = nombObj;
+            ViewBag.descripAcMej = descripAcMej;
+
+            Session["codPlan"] = codPlan;
+            Session["nombreObj"] = nombObj;
+            Session["descripAcMej"] = descripAcMej;
+
+            Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
+            return PartialView("_Create", accionable);
         }
 
         // POST: Accionables/Create
