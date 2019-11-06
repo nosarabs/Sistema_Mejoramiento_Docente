@@ -16,7 +16,7 @@ namespace AppIntegrador.Controllers
         }
 
 
-        protected ActionResult GuardarRespuestaLibre(Pregunta pregunta)
+        public ActionResult GuardarRespuestaLibre(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
@@ -38,10 +38,12 @@ namespace AppIntegrador.Controllers
                     return View(pregunta);
                 }
             }
-            return View();
+
+            ViewBag.message = "Crear pregunta";
+            return View("GuardarRespuestaLibre");
         }
 
-        protected ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
+        public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
@@ -63,13 +65,21 @@ namespace AppIntegrador.Controllers
                     return View(pregunta);
                 }
             }
-            return View();
+
+            ViewBag.message = "Crear pregunta";
+            return View("GuardarPreguntaSiNo");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
         {
+            if(pregunta == null || Opciones == null)
+            {
+                ModelState.AddModelError("", "Datos incompletos");
+                return View("Create");
+            }
+
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Enunciado.Length > 0)
             {
                 // GuardarPreguntaSiNo las preguntas dependiendo del tipo
@@ -121,8 +131,11 @@ namespace AppIntegrador.Controllers
                 ViewBag.Message = "Exitoso";
                 return View();
             }
-
-            return View();
+            else
+            {
+                ModelState.AddModelError("", "Datos incompletos");
+                return View("Create");
+            }
         }
 
         // Retorna la vista "parcial" de Respuesta libre (.cshtml)
@@ -165,9 +178,14 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpGet]
+        public ActionResult Estilos()
+        {
+            ViewBag.message = "Estilos UCR";
+            return View("Estilos");
+        }
 
     }
-
 
 
 

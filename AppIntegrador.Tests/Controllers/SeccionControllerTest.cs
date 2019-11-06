@@ -16,7 +16,6 @@ namespace AppIntegrador.Tests.Controllers
     {
         [TestMethod]
         // Prueba de que la vista no sea nula
-        // Todo: asociarlo al modelo del entity framework.
         public void TestIndexNotNull()
         {
             // Arrange
@@ -42,5 +41,50 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        // Prueba de que la vista no sea nula
+        public void TestEditNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Edit("00000001") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexFiltroCodigoNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("0000001","","") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexFiltroEnunciadoNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "Info", "") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
     }
 }
