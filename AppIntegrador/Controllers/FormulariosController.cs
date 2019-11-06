@@ -164,28 +164,32 @@ namespace AppIntegrador.Controllers
                             pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
                         }
 
-                        var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                        if (respuestaGuardada != null)
+                        if (respuestas != null)
                         {
-                            pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
-                            var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                            pregunta.Opciones = new List<int>();
-                            if(opcionesGuardadas != null)
+
+                            var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                        && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
+                                                                        && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                        && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                            if (respuestaGuardada != null && respuestaGuardada.ToList().Any())
                             {
-                                foreach(var opcion in opcionesGuardadas)
+                                pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
+                                var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                        && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
+                                                                        && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                        && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                                pregunta.Opciones = new List<int>();
+                                if (opcionesGuardadas != null)
                                 {
-                                    pregunta.Opciones.Add(opcion.OpcionSeleccionada);
+                                    foreach (var opcion in opcionesGuardadas)
+                                    {
+                                        pregunta.Opciones.Add(opcion.OpcionSeleccionada);
+                                    }
                                 }
                             }
                         }
                     }
-                    else if(pregunta.Pregunta.Tipo == "L")
+                    else if(pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
                         var respuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                     && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre 

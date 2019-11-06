@@ -15,7 +15,7 @@
     {
         <div class='card-body'>
 
-            <input type="radio" name="@radname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones[0] == opcion.Orden ? "checked" : "")/>
+            <input type="radio" name="@radname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == opcion.Orden ? "checked" : "")/>
 
             @Html.DisplayFor(model => opcion.Texto)
         </div>
