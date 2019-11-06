@@ -151,30 +151,34 @@
         $('#ExampleModal').on('hide.bs.modal', function () {
             console.log('Todo es trivial')
 
-            var seccionesAsociadas=[]
+            var seccionesAsociadas = []
             var index = 0;
             var beforeElement = true;
             while (index < agregarsecciones.current() && beforeElement) {
-            var secc = document.getElementById("secciones[" + index + "].Codigo")
-            seccionesAsociadas.push(secc.value);
-            ++index;
+                var secc = document.getElementById("secciones[" + index + "].Codigo")
+                seccionesAsociadas.push(secc.value);
+                ++index;
             }
 
+            var codigo = document.getElementById("textCode").value
+            var nombre = document.getElementById("textName").value
 
-            $.ajax({  
-                 contentType: "application/json; charset=utf-8",
+            var resultado = {codigo, nombre, seccionesAsociadas };
+            console.log(JSON.stringify(resultado));
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
                 type: "POST",
-                url: "/Formularios/Test",
-                data: JSON.stringify(seccionesAsociadas),
+                url: "/Formularios/AsociarSesionesAFormulario",
+                data: JSON.stringify(resultado),
                 dataType: "json",
-                traditional: true, 
-                    success: function (result, status, xhr) {  
-                        //$("#dataDiv").html(result);  
-                    },  
-                    error: function (xhr, status, error) {  
-                       // $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)  
-                    }  
-                });
+                traditional: true,
+                success: function () {
+                    resultado = []
+                },
+                error: function () {
+                    
+                }
+            });
         });
     </script>
 
@@ -246,3 +250,4 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
 }
+

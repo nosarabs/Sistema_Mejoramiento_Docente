@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -25,9 +26,9 @@ namespace AppIntegrador.Controllers
             db = new DataIntegradorEntities();
         }
 
-        public FormulariosController(DataIntegradorEntities db) 
-        { 
-            this.db = db; 
+        public FormulariosController(DataIntegradorEntities db)
+        {
+            this.db = db;
         }
 
         public ActionResult LlenarFormulario(string id)
@@ -44,12 +45,12 @@ namespace AppIntegrador.Controllers
                                                     && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
                                                     && x.GAnno == 2019 && x.GSemestre == 2);
             Respuestas_a_formulario respuestas = null;
-            if(respuestasList != null)
+            if (respuestasList != null)
             {
                 respuestas = respuestasList.FirstOrDefault();
             }
 
-            if(seccionesDeFormulario != null)
+            if (seccionesDeFormulario != null)
             {
                 foreach (var seccion in seccionesDeFormulario.ToList())
                 {
@@ -68,7 +69,7 @@ namespace AppIntegrador.Controllers
                     formulario.Secciones.Add(nuevaSeccion);
                 }
             }
-           
+
             return View(formulario);
         }
 
@@ -191,13 +192,13 @@ namespace AppIntegrador.Controllers
                             }
                         }
                     }
-                    else if(pregunta.Pregunta.Tipo == "L" && respuestas != null)
+                    else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
                         var respuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre 
+                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                     && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                     && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                        if(respuestaGuardada != null)
+                        if (respuestaGuardada != null)
                         {
                             pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                         }
@@ -305,7 +306,7 @@ namespace AppIntegrador.Controllers
 
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
-//        [HttpPost]
+        //        [HttpPost]
         public ActionResult AplicarFiltro(string input0, string input1, string input2)
         {
             crearFormulario.seccion = db.Seccion;
@@ -353,16 +354,40 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
+
+        public class SeccionesFormulario
+        {
+            public string codigo { get; set; }
+            public string nombre { get; set; }
+            public List<String> seccionesAsociadas { get; set; }
+        }
         [HttpPost]
         /**
          * Este método valida si ya el formulario fue creado, de no ser así
          * lo crea y le asocia las secciones recibidas por parámetros
          * 
          */
-        public void AsociarSesionesAFormulario(List<String> seccionesAsociadas)
+        public void AsociarSesionesAFormulario(SeccionesFormulario formulario)
         {
-           // Implementación
+            Formulario form = new Formulario();
+            form.Codigo = formulario.codigo;
+            form.Nombre = formulario.nombre;
+
+            if (ModelState.IsValid && formulario.codigo.Length > 0 && formulario.nombre.Length > 0)
+            {
+                if (InsertFormularioTieneSeccionL(form, formulario.seccionesAsociadas))
+                {
+                    ViewBag.Message = "Exitoso";
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
+                }
+            }
         }
+
+  
 
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
@@ -401,6 +426,29 @@ namespace AppIntegrador.Controllers
             }
             crearFormulario.seccion = db.Seccion;
             base.Dispose(disposing);
+        }
+
+        private bool InsertFormularioTieneSeccionL(Formulario formulario, List<String> secciones)
+        {
+            try
+            {
+                // sin mensaje de codigo ya en uso
+                db.AgregarFormulario(formulario.Codigo, formulario.Nombre);
+ 
+            }
+            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+            {
+                return false;
+            }
+
+            if (secciones != null)
+            {
+                for (int index = 0; index < secciones.Count; ++index)
+                {
+                    db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index], index);
+                }
+            }
+            return true;
         }
 
 
