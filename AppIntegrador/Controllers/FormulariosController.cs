@@ -32,7 +32,8 @@ namespace AppIntegrador.Controllers
 
         public PartialViewResult CargarSeccionesFormulario(string Id)
         {
-            IEnumerable<AppIntegrador.Models.Seccion> seccionesSeleccionadas = db.Seccion.Where(s => s.Codigo == Id);
+            IEnumerable<ObtenerSeccionesDeFormulario_Result> seccionesSeleccionadas = db.ObtenerSeccionesDeFormulario("CI0128G1").ToList();
+
             return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 

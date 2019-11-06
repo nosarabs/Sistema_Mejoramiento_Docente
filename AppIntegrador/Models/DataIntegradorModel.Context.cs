@@ -626,5 +626,38 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPreguntaLibre", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, textoParameter);
         }
+    
+        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var enunciadoParameter = enunciado != null ?
+                new ObjectParameter("enunciado", enunciado) :
+                new ObjectParameter("enunciado", typeof(string));
+    
+            var justificacionParameter = justificacion != null ?
+                new ObjectParameter("justificacion", justificacion) :
+                new ObjectParameter("justificacion", typeof(string));
+    
+            var incrementoParameter = incremento.HasValue ?
+                new ObjectParameter("incremento", incremento) :
+                new ObjectParameter("incremento", typeof(int));
+    
+            var minimoParameter = minimo.HasValue ?
+                new ObjectParameter("minimo", minimo) :
+                new ObjectParameter("minimo", typeof(int));
+    
+            var maximoParameter = maximo.HasValue ?
+                new ObjectParameter("maximo", maximo) :
+                new ObjectParameter("maximo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter);
+        }
     }
 }

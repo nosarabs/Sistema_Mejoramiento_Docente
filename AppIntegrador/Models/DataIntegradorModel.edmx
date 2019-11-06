@@ -1536,6 +1536,15 @@
           <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
           <Parameter Name="justificacion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPreguntaEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cod" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="char" Mode="In" />
+          <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
+          <Parameter Name="justificacion" Type="varchar" Mode="In" />
+          <Parameter Name="incremento" Type="int" Mode="In" />
+          <Parameter Name="minimo" Type="int" Mode="In" />
+          <Parameter Name="maximo" Type="int" Mode="In" />
+        </Function>
         <Function Name="AgregarPreguntaRespuestaLibre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="char" Mode="In" />
@@ -2979,6 +2988,15 @@
             <Parameter Name="codseccion" Mode="In" Type="String" />
             <Parameter Name="texto" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarPreguntaEscalar">
+            <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="enunciado" Mode="In" Type="String" />
+            <Parameter Name="justificacion" Mode="In" Type="String" />
+            <Parameter Name="incremento" Mode="In" Type="Int32" />
+            <Parameter Name="minimo" Mode="In" Type="Int32" />
+            <Parameter Name="maximo" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
           <Key>
@@ -4164,6 +4182,7 @@
           <FunctionImportMapping FunctionImportName="GuardarOpcionesSeleccionadas" FunctionName="DataIntegradorModel.Store.GuardarOpcionesSeleccionadas" />
           <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaConOpciones" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaConOpciones" />
           <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaLibre" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaLibre" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaEscalar" FunctionName="DataIntegradorModel.Store.AgregarPreguntaEscalar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -549,7 +549,6 @@
     <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
-    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
     <Content Include="Views\Preguntas\Estilos.cshtml" />
     <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
     <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />

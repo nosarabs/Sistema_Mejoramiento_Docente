@@ -70,6 +70,32 @@ namespace AppIntegrador.Controllers
             return View("GuardarPreguntaSiNo");
         }
 
+        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta)
+        {
+            // asegurarse que exista la preguna
+            if (pregunta != null)
+            {
+                try
+                {
+                    // se trata de guardar la pregunta de con opciones de si/no/nr
+                    //if (db.AgregarPreguntaEscalar(pregunta.Codigo, "S", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    //{
+                    //    // si se presentó un problema, se devuelve el codigo de error
+                    //    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    //    return View(pregunta);
+                    //}
+                }
+                catch (System.Data.SqlClient.SqlException)
+                {
+                    // si se presentó un problema, se devuelve el codigo de error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
+                }
+            }
+
+            ViewBag.message = "Crear pregunta";
+            return View("GuardarPreguntaSiNo");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
@@ -90,6 +116,7 @@ namespace AppIntegrador.Controllers
                     case "M": break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
+                    case "E": return GuardarPreguntaEscalar(pregunta);
                 }
                 bool validOptions = Opciones != null;
                 if (validOptions)
