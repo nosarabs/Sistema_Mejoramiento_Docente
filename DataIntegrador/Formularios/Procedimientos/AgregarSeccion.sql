@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarSeccion]
-	@codigo char(8),
+	@codigo varchar(8),
 	@nombre nvarchar(250)
 AS
 BEGIN

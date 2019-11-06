@@ -2,12 +2,12 @@
 @{
     int i = ViewBag.i == null ? 0 : ViewBag.i;
 }
-<div class="sortable-container panel test vertical-align">
-    <div class="custom-control custom-radio control-label ">
+<div class="sortable-container card test row">
+    <div class="custom-control custom-radio control-label" style="margin-top: 25px">
         <input type="radio" class="checkmark" aria-label="..." checked>
     </div>
-    @*Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-md-2 form-horizontal " })*@
-    <div class="col-md-12" style="margin-top: 18px">
+    @*Html.LabelFor(opcion => opcion.Texto, "Texto de la opción", htmlAttributes: new { @class = "control-label col-lg-2 form-horizontal " })*@
+    <div class="col-lg-11" style="margin-top: 18px">
         @Html.TextBoxFor(opcion => opcion.Texto, null, new
         {
             @Name = "[" + i + "].Texto",
@@ -16,10 +16,10 @@
             @onkeyup = "contarCaracteres(this)",
             @placeholder = "Texto de opción"
         })
-        <div class="contador small pull-right">0/50 caracteres usados</div>
+        <div class="contador small float-right">0/50 caracteres usados</div>
     </div>
 
-    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)">X</button>
+    <button type="button" [disabled]="true" class="remove-button btn btn-danger" onclick="removeOption(this)" style="margin-top: 18px; margin-right: 18px">X</button>
     
     <div style="display: none">
         @Html.TextBoxFor(opcion => opcion.Orden, null, new
@@ -30,4 +30,3 @@
         })
     </div>
 </div>
-

@@ -1,0 +1,76 @@
+﻿@model AppIntegrador.Models.PlanDeMejora
+
+@{
+    ViewBag.Title = "Delete";
+    var planFinal = Model;
+}
+
+<!-- Boton para editar el plan de mejora -->
+<div class="col-md-6">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrar-@planFinal.codigo">
+        Borrar
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="borrar-@planFinal.codigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    Seguro que desea borrar este Plan de mejora. Esta acción es irreversible.
+                </div>
+               
+                <div>
+                    <h4>Plan De Mejora</h4>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.codigo)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => planFinal.codigo)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.nombre)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => planFinal.nombre)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.fechaInicio)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => planFinal.fechaInicio)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.fechaFin)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => planFinal.fechaFin)
+                        </dd>
+
+                    </dl>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <form action="BorrarPlan" method="post">
+                    <div class="botonCentrado">
+                        <input name="codigoPlan" class="form-control" value=@planFinal.codigo type="hidden" />
+                        <input type="submit" value="Borrar Plan" class="btn btn-danger" />
+                        <button type="button" value="Cancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

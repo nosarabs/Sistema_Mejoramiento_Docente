@@ -29,7 +29,13 @@ namespace AppIntegrador
             //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
             if (TempData["alertmessage"] != null)
             {
-                ViewBag.AlertMessage = TempData["alertmessage"].ToString();
+                ViewBag.typeMessage = "alert";
+                ViewBag.NotifyMessage = TempData["alertmessage"].ToString();
+            }
+            if (TempData["successMessage"] != null)
+            {
+                ViewBag.typeMessage = "success";
+                ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
             string username = HttpContext.User.Identity.Name;
@@ -44,8 +50,10 @@ namespace AppIntegrador
             List<Persona> Personas = db.Persona.ToList();
 
             /*Creates a list with the joiner entity "usuarioPersona", and then sends them to the view.*/
+            /*Keep admin out of the list to avoid loss of access*/
             var usuarioPersona = from u in Usuarios
                                  join p in Personas on u.Username equals p.Correo into table1
+                                 where u.Username != "admin@mail.com"
                                  from p in table1.ToList()
                                  select new UsuarioPersona
                                  {
@@ -151,6 +159,7 @@ namespace AppIntegrador
                     return View(persona);
                 }
 
+                TempData["successMessage"] = "El nuevo usuario ha sido creado.";
                 return RedirectToAction("Index");
             }
 
@@ -256,9 +265,9 @@ namespace AppIntegrador
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
                         originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
-                        
+
                         //Si hay un cambio en el Carne entonces agregar el atributo Estudiante a la persona original para poder editarlo
-                        if(usuarioPersona.Persona.Estudiante.Carne != null)
+                        if (usuarioPersona.Persona.Estudiante.Carne != null)
                         {
                             if (originalPerson.Estudiante == null)
                             {
@@ -266,6 +275,9 @@ namespace AppIntegrador
                             }
                             originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
                             originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
+                        }
+                        else if (originalPerson.Estudiante != null) {
+                            originalPerson.Estudiante.Carne = null;
                         }
 
                         ViewBag.resultmessage = "Los cambios han sido guardados";
@@ -322,15 +334,15 @@ namespace AppIntegrador
 
             /*If it was confirmed, then delete the user and its related person.*/
             string id = username + domain;
-            Usuario usuario = db.Usuario.Find(id);
+            Persona persona = db.Persona.Find(id);
 
-            if (usuario != null)
+            if (persona != null)
             {
                 if(id != "admin@mail.com")
                 {
                     /*Both user and person tuples are deleted from the database.*/
                     /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
-                    db.Usuario.Remove(usuario);
+                    db.Persona.Remove(persona);
                     db.SaveChanges();
                 }
                 else
@@ -379,7 +391,7 @@ namespace AppIntegrador
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.CEDULA);
                 case "Pasaporte":
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.PASAPORTE);
-                case "Número de residencia":
+                case "Residencia":
                     return ValidarIdentificacion(persona.Identificacion, TIPO_ID.RESIDENCIA);
             }
 
@@ -417,7 +429,7 @@ namespace AppIntegrador
                     if (regexResult.Matches(id).Count == 0)
                     {
                         ModelState.AddModelError("Persona.Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
-                        ModelState.AddModelError("Identificacion", "El pasaporte debe ser de 9 dígitos y no tener guiones.");
+                        ModelState.AddModelError("Identificacion", "La cédula de residencia debe ser de 12 dígitos y no tener guiones.");
                         return false;
                     }
                     break;

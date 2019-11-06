@@ -17,6 +17,7 @@ namespace AppIntegrador.Controllers
     public class CSVController : Controller
     {
         ArchivoCSV fila;
+        LlenarCSV ll = new LlenarCSV();
         public ActionResult Index()
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
@@ -29,18 +30,10 @@ namespace AppIntegrador.Controllers
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
             IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\Daniel\\DatosCSV.csv", inputFileDescription); //TODO: De momento el path está fijo
             List<ArchivoCSV> lista = datos.ToList();
+            ll.insertarDatos(lista[0]);
 
-
-            bool valido = validarEntradas(lista[0]);
-            if (valido)
-            {
-                fila = lista[0];
-            }
-            cargaFila(lista[1]);
-
-            return View(fila); //TODO: Cambiar esto. Fue usado solo para prueba
+            return View(lista[0]); //TODO: Cambiar esto. Fue usado solo para prueba
         }
-
 
         private bool validarEntradas (ArchivoCSV archivo)
         {

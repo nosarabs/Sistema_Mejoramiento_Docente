@@ -6,13 +6,28 @@
 
 @foreach (var item in Model)
 {
-    <div class="panel panel-primary">
-        <div class='panel-heading'>
+    @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion} )
+    var displayOrden = item.Orden + 1;
+    <div class="card card-primary">
+        <div class='card-heading'>
+            @displayOrden.
             @Html.DisplayFor(model => item.Nombre)
         </div>
-        <div class='panel-body'>
+        <div class='card-body '>
             @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
         </div>
     </div>
 }
 
+<style>
+    .full {
+        margin-left: 2%;
+        margin-right: 0%;
+        background: white;
+        border: transparent;
+    }
+
+    .card-heading {
+        font-size: 20px;
+    }
+</style>
