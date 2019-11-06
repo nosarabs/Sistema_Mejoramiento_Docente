@@ -74,7 +74,7 @@
                 </td>
             </tr>
 
-            <button type="button" class="btn btn-secondary" onclick="ActualizarSecciones">Cerrar</button>
+            <button type="button" class="btn btn-secondary" onclick="ActualizarSecciones()">Cerrar</button>
 
             <div id="seccionesagregadas"></div>
 
@@ -246,9 +246,9 @@
         ActualizarSecciones= function() {
             $.ajax({ 
                 type: 'GET',
-                url: "@Url.Content("/FormularioController/CargarSeccionesFormulario/")",
+                url: "@Url.Content("/Formularios/CargarSeccionesFormulario/")",
                 data: {
-                    Id: "777"  //Data need to pass as parameter
+                    Id: "00000001"  //Data need to pass as parameter
                 },
                 dataType: 'html', //dataType - html
                 success: function (result) {

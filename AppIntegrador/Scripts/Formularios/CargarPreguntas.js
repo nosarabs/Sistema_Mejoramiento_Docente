@@ -63,9 +63,26 @@ function cargarVista(valor) {
             }
         })
     }
+    // Comparar el tipo de pregunta que se seleccionó 
+    // y cargar la vista por medio de Ajax
+    else if (valor === 'E') {
+        $.ajax({
+            // url completa: Views/Pregunta/RespuestaLibre
+            url: 'PreguntaEscalar',
+            success: function (data) {
+                $(data).appendTo('#contenedor-preguntas')
+                EscalarInit()
+            }
+        })
+    }
 }
 
 function SiNoInit() {
+    // Esconder campo de justificación por defecto
+    $('#justificationField').css('display', 'none');
+}
+
+function EscalarInit() {
     // Esconder campo de justificación por defecto
     $('#justificationField').css('display', 'none');
 }
