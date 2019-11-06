@@ -52,6 +52,26 @@ namespace AppIntegrador.Models
                 cmd6.Parameters.AddWithValue("@Apellido", archivos.ApellidoProfesor);
                 cmd6.Parameters.AddWithValue("@TipoId", archivos.TipoIdProfesor);
 
+                SqlCommand cmd7 = new SqlCommand("InsertarFuncionarioCSV", con);
+                cmd7.CommandType = CommandType.StoredProcedure;
+                cmd7.Parameters.AddWithValue("@Correo", archivos.CorreoProfesor);
+
+                SqlCommand cmd8 = new SqlCommand("InsertarProfesorCSV", con);
+                cmd8.CommandType = CommandType.StoredProcedure;
+                cmd8.Parameters.AddWithValue("@Correo", archivos.CorreoProfesor);
+
+                SqlCommand cmd9 = new SqlCommand("InsertarPersonaCSV", con);
+                cmd9.CommandType = CommandType.StoredProcedure;
+                cmd9.Parameters.AddWithValue("@Correo", archivos.CorreoEstudiante);
+                cmd9.Parameters.AddWithValue("@Id", archivos.IdEstudiante);
+                cmd9.Parameters.AddWithValue("@Nombre", archivos.NombreEstudiante);
+                cmd9.Parameters.AddWithValue("@Apellido", archivos.ApellidoEstudiante);
+                cmd9.Parameters.AddWithValue("@TipoId", archivos.TipoIdEstudiante);
+
+                SqlCommand cmd10 = new SqlCommand("InsertarEstudianteCSV", con);
+                cmd10.CommandType = CommandType.StoredProcedure;
+                cmd10.Parameters.AddWithValue("@Correo", archivos.CorreoEstudiante);
+
                 con.Open();
 
                 cmd.ExecuteNonQuery();
@@ -60,6 +80,10 @@ namespace AppIntegrador.Models
                 cmd4.ExecuteNonQuery();
                 cmd5.ExecuteNonQuery();
                 cmd6.ExecuteNonQuery();
+                cmd7.ExecuteNonQuery();
+                cmd8.ExecuteNonQuery();
+                cmd9.ExecuteNonQuery();
+                cmd10.ExecuteNonQuery();
 
                 con.Close();
                 System.Diagnostics.Debug.WriteLine("Sirve");

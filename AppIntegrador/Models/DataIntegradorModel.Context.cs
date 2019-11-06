@@ -20,7 +20,6 @@ namespace AppIntegrador.Models
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
-
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -759,6 +758,15 @@ namespace AppIntegrador.Models
                 new ObjectParameter("Nfacultad", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarUnidadCSV", codUnidadParameter, nfacultadParameter);
+        }
+    
+        public virtual int InsertarFuncionarioCSV(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarFuncionarioCSV", correoParameter);
         }
     }
 }

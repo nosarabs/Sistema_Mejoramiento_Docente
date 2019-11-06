@@ -1622,6 +1622,9 @@
         <Function Name="InsertarEstudianteCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="InsertarFuncionarioCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertarGrupoCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
@@ -3158,7 +3161,7 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarEstudianteCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarGrupoCSV">
             <Parameter Name="SiglaCurso" Mode="In" Type="String" />
@@ -3174,11 +3177,14 @@
             <Parameter Name="TipoId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarProfesorCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarUnidadCSV">
             <Parameter Name="CodUnidad" Mode="In" Type="String" />
             <Parameter Name="Nfacultad" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarFuncionarioCSV">
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
@@ -4547,6 +4553,7 @@
           <FunctionImportMapping FunctionImportName="InsertarPersonaCSV" FunctionName="DataIntegradorModel.Store.InsertarPersonaCSV" />
           <FunctionImportMapping FunctionImportName="InsertarProfesorCSV" FunctionName="DataIntegradorModel.Store.InsertarProfesorCSV" />
           <FunctionImportMapping FunctionImportName="InsertarUnidadCSV" FunctionName="DataIntegradorModel.Store.InsertarUnidadCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarFuncionarioCSV" FunctionName="DataIntegradorModel.Store.InsertarFuncionarioCSV" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
