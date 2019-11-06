@@ -2,6 +2,7 @@
 $("#Tipo").on("change", function () {
     if (this.value === '-') {
         deshabilitarCamposBasicos(true)
+        $('#Create').prop('disabled', true);
     }
     else {
         deshabilitarCamposBasicos(false)
@@ -27,16 +28,15 @@ function deshabilitarCamposBasicos(booleano) {
 function cargarVista(valor) {
     // Vaciar el contenedor por si tenía otra vista ya cargada
     $('#contenedor-preguntas').empty();
-
     // Comparar el tipo de pregunta que se seleccionó 
     // y cargar la vista por medio de Ajax
-    if (valor === 'U') {
+    if (valor === 'U' || valor === 'M') {
         $.ajax({
             // url completa: Views/Pregunta/PreguntasConOpciones
             url: 'PreguntaConOpciones',
             success: function (data) {
                 $(data).appendTo('#contenedor-preguntas')
-                opcionUnicaInit()
+                preguntaConOpcionesInit()
             }
         })
     }
@@ -70,7 +70,7 @@ function SiNoInit() {
     $('#justificationField').css('display', 'none');
 }
 
-function opcionUnicaInit() {
+function preguntaConOpcionesInit() {
     // Esconder campo de justificación por defecto
     $('#justificationField').css('display', 'none');
     // Método de sortable
@@ -98,7 +98,7 @@ $(document).on("click", "#agregar-opcion", function () {
         // Este es el parámetro que se le pasa, la i de la izquierda es el nombre
         // del parámetro que recibe el constructor. La i de la derecha es el valor
         // que se manda desde la vista como parámetro (la i viene de fixIndexes())
-        data: {i: i },
+        data: { i: i, tipo: $("#Tipo").prop("value")},
         success: function (data) {
             $(data).appendTo('#sortable').height(0).animate({ 'height': 75 }, 200);
             $("#sortable").find(".texto").focus();

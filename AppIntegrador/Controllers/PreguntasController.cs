@@ -16,7 +16,7 @@ namespace AppIntegrador.Controllers
         }
 
 
-        protected ActionResult GuardarRespuestaLibre(Pregunta pregunta)
+        public ActionResult GuardarRespuestaLibre(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
@@ -38,10 +38,12 @@ namespace AppIntegrador.Controllers
                     return View(pregunta);
                 }
             }
-            return View();
+
+            ViewBag.message = "Crear pregunta";
+            return View("GuardarRespuestaLibre");
         }
 
-        protected ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
+        public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
@@ -63,13 +65,21 @@ namespace AppIntegrador.Controllers
                     return View(pregunta);
                 }
             }
-            return View();
+
+            ViewBag.message = "Crear pregunta";
+            return View("GuardarPreguntaSiNo");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
         {
+            if(pregunta == null || Opciones == null)
+            {
+                ModelState.AddModelError("", "Datos incompletos");
+                return View("Create");
+            }
+
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Enunciado.Length > 0)
             {
                 // GuardarPreguntaSiNo las preguntas dependiendo del tipo
@@ -101,7 +111,7 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
                     {
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -118,11 +128,15 @@ namespace AppIntegrador.Controllers
                     db.AgregarOpcion(pregunta.Codigo, (byte)opcion.Orden, opcion.Texto);
                 }
 
+                ModelState.Clear();
                 ViewBag.Message = "Exitoso";
-                return View();
+                return View("Create");
             }
-
-            return View();
+            else
+            {
+                ModelState.AddModelError("", "Datos incompletos");
+                return View("Create");
+            }
         }
 
         // Retorna la vista "parcial" de Respuesta libre (.cshtml)
@@ -147,12 +161,13 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public ActionResult OpcionesDeSeleccion(int i)
+        public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
             if(i < 0)
             {
                 return null;
             }
+            ViewBag.Tipo = Tipo;
             ViewBag.i = i;
             return View("OpcionesDeSeleccion");
         }
@@ -166,7 +181,11 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
         [HttpGet]
-        public ActionResult Estilos() => View();
+        public ActionResult Estilos()
+        {
+            ViewBag.message = "Estilos UCR";
+            return View("Estilos");
+        }
 
     }
 
