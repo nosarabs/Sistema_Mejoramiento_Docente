@@ -21,6 +21,7 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        //Función que devuelve las unidades académicas con su respectivo código y nombre
         public String getUnidadesAcademicas()
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();

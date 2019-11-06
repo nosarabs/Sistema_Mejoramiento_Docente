@@ -205,3 +205,7 @@ canvas{
 .btn {
     background-color: #dee2e6 !important;
 }
+
+.select {
+    width: 100% !important;
+}

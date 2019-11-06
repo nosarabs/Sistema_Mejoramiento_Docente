@@ -13,12 +13,14 @@ namespace AppIntegrador.Models
     {
     }
 
+    //Clase para representar las Unidades Académicas
     public class UnidadesAcademicas
     {
         public String codigo { get; set; }
         public String nombre { get; set; }
     }
 
+    //Clase para representar las Carreras con sus respectivos énfasis
     public class CarrerasEnfasis
     {
         public String codigoCarrera { get; set; }
@@ -27,6 +29,7 @@ namespace AppIntegrador.Models
         public String nombreEnfasis { get; set; }
     }
 
+    //Clase para representar los grupos asociados a un curso, los cuales están asociados a un período (semestre y año)
     public class CursoGrupo
     {
         public String siglaCurso { get; set; }
@@ -37,6 +40,7 @@ namespace AppIntegrador.Models
 
     }
 
+    //Clase para representar los profesores del curso
     public class Profesores
     {
         public String nombre { get; set; }
@@ -44,6 +48,7 @@ namespace AppIntegrador.Models
         public String apellido2 { get; set; }
     }
 
+    //Clase para representar los formularios
     public class Formularios
     {
         public String codigo { get; set; }
