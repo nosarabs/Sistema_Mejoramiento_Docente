@@ -14,7 +14,14 @@
     <div class="card card-default">
         <div class="card-body">
 
-            <h2>Crear Plan de mejora @ViewBag.IdPlan </h2>
+            @if (ViewBag.editar == true)
+            {
+                <h2>Editar Plan de mejora @ViewBag.IdPlan </h2>
+            }
+            else
+            {
+                <h2>Crear Plan de mejora @ViewBag.IdPlan </h2>
+            }
 
             <form role="form" id="newPlan" action="EditarPlanDeMejora2" method="post">
                 @Html.AntiForgeryToken()
