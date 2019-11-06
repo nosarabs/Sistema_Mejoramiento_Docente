@@ -5,9 +5,10 @@
 	@numeroGrupo tinyint,
 	@anio int,
 	@semestre tinyint,
-	@fechaInicio DATE,
-	@fechaFin DATE,
-	@codigoPregunta char(8),
+	@fechaInicio date,
+	@fechaFin date,
+	@codigoSeccion varchar(8),
+	@codigoPregunta varchar(8),
 	@mediana FLOAT OUTPUT
 )
 AS
@@ -21,6 +22,7 @@ BEGIN
 		  o.GNumero = @numeroGrupo and
 		  o.GAnno = @anio and
 		  o.GSemestre = @semestre and
+		  o.SCodigo = @codigoSeccion and
 		  o.PCodigo = @codigoPregunta and
 		  o.Fecha >= @fechaInicio and
 		  o.Fecha <= @fechaFin
