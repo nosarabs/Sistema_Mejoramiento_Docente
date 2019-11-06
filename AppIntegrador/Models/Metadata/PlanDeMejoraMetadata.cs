@@ -6,6 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppIntegrador.Models.Metadata
 {
+    [MetadataType(typeof(PlanDeMejoraMetadata))]
+    public partial class PlanDeMejora
+    {
+    }
+
     public class PlanDeMejoraMetadata
     {
         [Display(Name = "Código")]

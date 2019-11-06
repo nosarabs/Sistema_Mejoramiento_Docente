@@ -43,10 +43,12 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
+            ViewBag.progreso = 0;
 
             Session["codPlan"] = codPlan;
             Session["nombreObj"] = nombObj;
             Session["descripAcMej"] = descripAcMej;
+            Session["progreso"] = 0;
 
             Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
             return PartialView("_Create", accionable);
@@ -59,15 +61,35 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "codPlan,nombreObj,descripAcMej,descripcion,fechaInicio,fechaFin,progreso")] Accionable accionable)
         {
-            if (ModelState.IsValid)
+            bool error = false;
+
+            if (accionable.fechaInicio != null && accionable.fechaFin != null)
+            {
+                if ((DateTime.Compare(accionable.fechaInicio.Value, accionable.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if (!error && ModelState.IsValid)
             {
                 db.Accionable.Add(accionable);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return new EmptyResult();
             }
 
             ViewBag.codPlan = new SelectList(db.AccionDeMejora, "codPlan", "nombreObj", accionable.codPlan);
-            return View(accionable);
+            return new EmptyResult();
+
+        }
+
+        public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej)
+        {
+            ViewBag.IdPlan = codPlan;
+            ViewBag.nomObj = nombObj;
+            ViewBag.descripAcMej = descripAcMej;
+
+            IEnumerable<AppIntegrador.Models.Accionable> accionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            return PartialView("_Tabla", accionables);
         }
 
         // GET: Accionables/Edit/5

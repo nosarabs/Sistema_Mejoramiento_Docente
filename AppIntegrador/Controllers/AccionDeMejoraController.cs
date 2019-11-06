@@ -66,7 +66,8 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public EmptyResult CrearAccionDeMejora([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora) {
+        public EmptyResult CrearAccionDeMejora([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
+        {
             bool error = false;
 
             if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
@@ -81,7 +82,7 @@ namespace AppIntegrador.Controllers
                 if (ModelState.IsValid)
                 {
                     db.AccionDeMejora.Add(accionDeMejora);
-                    db.SaveChanges();IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == accionDeMejora.codPlan && o.nombreObj == accionDeMejora.nombreObj);
+                    db.SaveChanges(); IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == accionDeMejora.codPlan && o.nombreObj == accionDeMejora.nombreObj);
 
                     return new EmptyResult();
                 }

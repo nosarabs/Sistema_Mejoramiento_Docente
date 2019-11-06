@@ -145,8 +145,10 @@
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
+    <Compile Include="Controllers\PlanesDeMejoraBI\PlanDeMejoraBI.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
+    <Compile Include="Controllers\Pregunta_con_opciones_de_seleccionController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\SeccionesController.cs" />
@@ -344,6 +346,8 @@
     <Content Include="Content\Main.css" />
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
+    <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
@@ -482,7 +486,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\analizarTiemposPlanDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
@@ -599,6 +603,11 @@
     <Content Include="Views\TipoObjetivos\Details.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
+    <Content Include="Seccion\Create.cshtml" />
+    <Content Include="Seccion\Delete.cshtml" />
+    <Content Include="Seccion\Details.cshtml" />
+    <Content Include="Seccion\Edit.cshtml" />
+    <Content Include="Seccion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

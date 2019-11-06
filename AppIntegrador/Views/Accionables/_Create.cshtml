@@ -10,6 +10,7 @@
             <span class="glyphicon glyphicon-warning-sign"></span>
             La descripción es obligatoria.
         </div>
+        @*@using (Html.BeginForm("CreateAccionable"))*@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -17,13 +18,16 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.TextBoxFor(model => model.codPlan, new { style = "display:none;", @Value = @Session["name"] })
+                @Html.TextBoxFor(model => model.codPlan, new { style = "display:none;", @Value = @Session["codPlan"] })
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(model => model.nombreObj, new { style = "display:none;", @Value = @Session["name"] })
+                @Html.TextBoxFor(model => model.nombreObj, new { style = "display:none;", @Value = @Session["nombreObj"] })
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(model => model.descripAcMej, new { style = "display:none;", @Value = @Session["name"] })
+                @Html.TextBoxFor(model => model.descripAcMej, new { style = "display:none;", @Value = @Session["descripAcMej"] })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.progreso, new { style = "display:none;", @Value = @Session["progreso"] })
             </div>
             <div class="form-group">
                 <div class="row">
@@ -55,3 +59,23 @@
             </div>
         }
     </div>
+
+<script>
+$(function () {
+    $("#myform").submit(function (e) {
+        @*var id = "@Session["idPlan"]";
+        var objetivo = "@Session["nombreObj"]";*@
+        //alert("Se va a llamar a crearAccionDeMejora con id:"+id+" y con obj:"+objetivo);
+
+        e.preventDefault();
+        $.ajax({
+            url: '/Accionables/Crear/',
+            type: 'post',
+            data: $('#myform').serialize(),
+            success: function () {
+                cargarAccionables(id, objetivo);
+            }
+        });
+    });
+});
+</script>
