@@ -9,7 +9,10 @@
     public partial class CrearFormularioModel : DbContext
     {
         public Formulario Formulario { get; set; }
+        public  CrearSeccionModel crearSeccionModel{ get; set; }
         public IEnumerable<Seccion> seccion { get; set; }
+
+
     }
 
 

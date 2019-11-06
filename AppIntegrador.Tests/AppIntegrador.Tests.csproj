@@ -108,11 +108,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\PreguntasTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
     <Compile Include="Controllers\FormularioControllerTest.cs" />
+    <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\EmailNotificationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

@@ -6,86 +6,15 @@
 
 @*RIP-EDF6*@
 
-@{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "].Opciones[0]"; }
-<div class="card card-primary full">
-    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
+@{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
+    string radname = respuestaname + ".Opciones[0]";}
 
-    @foreach (var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
-    {
-        <div class='card-body'>
-
-            <input type="radio" name="@radname" value="@opcion.Orden" />
-
-            @Html.DisplayFor(model => opcion.Texto)
-        </div>
-    }
-</div>
-
-@if (!Request["rad"].IsEmpty())
+@foreach (var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
 {
-    <ul>
+    <div class='card-body'>
 
-        @foreach (var selection in Request["rad"].Split(','))
-        {
-            <li>@selection</li>
-        }
-    </ul>
+        <input type="radio" name="@radname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == opcion.Orden ? "checked" : "")/>
+
+        @Html.DisplayFor(model => opcion.Texto)
+    </div>
 }
-
-@*RIP-EDF6*@
-<style>
-    .card {
-        margin-bottom: 20px;
-        background-color: white;
-        border: 1px solid #939393;
-        border-radius: 4px;
-        font: "robot";
-        font-size: 18px;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        margin-left: 20%;
-        margin-right: 20%;
-    }
-
-    .card-primary > .card-heading {
-        color: #000;
-        background-color: #e9e9e9;
-        border-color: #888b8f;
-        .card-body
-
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
-
-    .card-primary > .card-heading {
-        color: #000;
-        .card-body
-
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
-
-    .card-primary {
-        border-color: #646464;
-        background-color: #c4c4c4;
-        .card-body
-
-    {
-        padding: 5px;
-    }
-    }
-</style>
-
-
-<style>
-    .card-body {
-        margin-left: 1%;
-        padding: 0.5%;
-    }
-</style>
