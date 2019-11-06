@@ -581,6 +581,7 @@
     <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
     <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
     <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
+    <Content Include="Views\Seccion\_CreateSeccionPartial.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
   </ItemGroup>
