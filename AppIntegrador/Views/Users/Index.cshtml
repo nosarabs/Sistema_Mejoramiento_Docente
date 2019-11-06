@@ -16,7 +16,7 @@
         </div>
         <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
 
-            <p>@Html.ActionLink("+ Agregar usuario", "Create", "Create", new { @class = "btn btn-success" })</p>
+            <p>@Html.ActionLink("Agregar usuario", "Create", "Create", new { @class = "btn btn-Nuevo" })</p>
         </div>
     </div>
     <br />
@@ -81,18 +81,18 @@
                         },
                              new
                              {
-                                 @class = "btn btn-primary"
+                                 @class = "btn-azulUCR"
                              }
                    )
                         @Html.ActionLink("Detalles", "Details", new
-                        {
-                            username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
-                            domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
-                        },
+                   {
+                       username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                       domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
+                   },
                              new
                              {
-                                 @class = "btn btn-default"
-                        }
+                                 @class = "btn-blancoUCR"
+                             }
 
                )
                         @{
@@ -108,7 +108,7 @@
                                 {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
                                     onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
                                     "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
-                                    @class = "btn btn-danger"
+                                    @class = "btn-rojoUCR"
                                 })
                             }
                             else
