@@ -20,5 +20,19 @@ namespace AppIntegrador.Controllers
         {
             return View();
         }
+
+        public String getUnidadesAcademicas()
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+          
+            List<UnidadesAcademicas> unidadesAcademicas = new List<UnidadesAcademicas>();
+
+            var uas = from uda in db.UnidadAcademica
+                      orderby uda.Nombre
+                      select new UnidadesAcademicas { codigo = uda.Codigo, nombre = uda.Nombre };
+            
+            return serializer.Serialize(uas.ToList());
+            //return unidadesAcademicas;
+        }
     }
 }
