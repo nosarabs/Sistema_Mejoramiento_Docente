@@ -226,7 +226,7 @@
         function actualizarAccionables(plan, obj, desc) {
             $.ajax({
                 type: 'GET',
-                url: "@Url.Content("/Accionables/AccionesDeObjetivo/")",
+                url: "@Url.Content("/Accionables/TablaAccionables/")",
                 data: {
                       //Data need to pass as parameter
                       codPlan: plan,
@@ -249,9 +249,9 @@
         }
     </script>
     <script>
-        function cargarAccionables(plan, obj) {
+        function cargarAccionables(plan, obj, desc) {
             //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
-            actualizarAccionables(plan, obj);
+            actualizarAccionables(plan, obj, desc);
         }
     </script>
 }
