@@ -74,6 +74,10 @@
                 </td>
             </tr>
 
+            <button type="button" class="btn btn-secondary" onclick="ActualizarSecciones">Cerrar</button>
+
+            <div id="seccionesagregadas"></div>
+
             <tr>
                 <td>
                     <div class="form-horizontal card-group">
@@ -237,6 +241,25 @@
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+
+    <script>
+        ActualizarSecciones= function() {
+            $.ajax({ 
+                type: 'GET',
+                url: "@Url.Content("/FormularioController/CargarSeccionesFormulario/")",
+                data: {
+                    Id: "777"  //Data need to pass as parameter
+                },
+                dataType: 'html', //dataType - html
+                success: function (result) {
+                    //alert ("Inside ajax"),
+                    $('#seccionesagregadas').html(result);
+                }
+            });
+        }
+
+
+    </script>
     <script>
         $(function () {
             $('#myModal').on('show.bs.modal', function () {
