@@ -27,7 +27,9 @@ namespace AppIntegrador
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css",
-                      "~/Content/Navbar/navbar.css"));
+                      "~/Content/Navbar/navbar.css",
+                      "~/Content/PlanesDeMejora/mainPlanesDeMejora.css",
+                      "~/Content/PlanesDeMejora/planesDeMejoraStructureStyles.css"));
 
             bundles.Add(new StyleBundle("~/Content/bs3").Include(
           "~/Content/bootstrap.css"));
