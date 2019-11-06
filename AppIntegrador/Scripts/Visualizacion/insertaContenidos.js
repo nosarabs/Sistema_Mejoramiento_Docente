@@ -30,22 +30,9 @@
 
     }
 
-    insertarGraficoEscala(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    insertarGraficoEscala(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoEscala(baseDosCol.getCanvas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-
-        if (resultado <= 0) {
-
-            this.limpiarBase(baseDosCol);
-            this.insertarMensajeNoEncontrado(baseDosCol);
-
-        }
-
-    }
-
-    insertarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
-
-        var resultado = this.graficos.generarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoEscala(baseDosCol.getCanvas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         if (resultado <= 0) {
 
@@ -56,22 +43,9 @@
 
     }
 
-    insertarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    insertarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-
-        if (resultado <= 0) {
-
-            this.limpiarBase(baseDosCol);
-            this.insertarMensajeNoEncontrado(baseDosCol);
-
-        }
-
-    }
-
-    insertarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
-
-        var resultado = this.graficos.generarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         if (resultado <= 0) {
 
@@ -82,9 +56,35 @@
 
     }
 
-    insertarEstadisticas(baseEstadisticas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    insertarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var resultado = this.estadisticas.generarEstadisticas(baseEstadisticas.getElementoEstadisticas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+
+        if (resultado <= 0) {
+
+            this.limpiarBase(baseDosCol);
+            this.insertarMensajeNoEncontrado(baseDosCol);
+
+        }
+
+    }
+
+    insertarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
+
+        var resultado = this.graficos.generarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+
+        if (resultado <= 0) {
+
+            this.limpiarBase(baseDosCol);
+            this.insertarMensajeNoEncontrado(baseDosCol);
+
+        }
+
+    }
+
+    insertarEstadisticas(baseEstadisticas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
+
+        var resultado = this.estadisticas.generarEstadisticas(baseEstadisticas.getElementoEstadisticas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         if (resultado <= 0) {
 
@@ -95,9 +95,9 @@
 
     }
 
-    insertarJustificaciones(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    insertarJustificaciones(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var resultado = this.textoLibre.generarJustificaciones(baseDosCol.getElementoJustificacion(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.textoLibre.generarJustificaciones(baseDosCol.getElementoJustificacion(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         if (resultado <= 0) {
 
@@ -108,9 +108,9 @@
 
     }
 
-    insertarTextoAbierto(baseTexto, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    insertarTextoAbierto(baseTexto, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
-        var resultado = this.textoLibre.generarTextoAbierto(baseTexto.getTextoAbierto(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.textoLibre.generarTextoAbierto(baseTexto.getTextoAbierto(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         if (resultado <= 0) {
 

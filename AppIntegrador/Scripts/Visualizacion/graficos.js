@@ -193,7 +193,7 @@
 
     }
 
-    recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var valores;
 
@@ -207,7 +207,6 @@
                 ano: ano,
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
-                codigoSeccion: codigoSeccion,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
@@ -243,7 +242,7 @@
 
     }
 
-    recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, numeroOpciones) {
+    recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, numeroOpciones) {
 
         var valores;
 
@@ -257,7 +256,6 @@
                 ano: ano,
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
-                codigoSeccion: codigoSeccion,
                 codigoPregunta: codigoPregunta,
                 numOpciones: numeroOpciones
             },
@@ -302,10 +300,10 @@
 
     }
 
-    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = this.recuperarEtiquetasEscala(codigoPregunta);
-        var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
 
         var resultado = this.revisarRespuestas(valores);
 
@@ -320,10 +318,10 @@
 
     }
 
-    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
 
         var resultado = this.revisarRespuestas(valores);
 
@@ -338,10 +336,10 @@
 
     }
 
-    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
 
         var resultado = this.revisarRespuestas(valores);
 
@@ -366,10 +364,10 @@
 
     }
 
-    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta) {
 
         var etiquetas = ["No", "Sí", "No responde"];
-        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
+        var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta, etiquetas.length);
 
         var resultado = this.revisarRespuestas(valores);
 

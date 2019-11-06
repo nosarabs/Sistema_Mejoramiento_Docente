@@ -7,8 +7,7 @@
 	@GSem TINYINT,
 	@FechaInicio DATE,
 	@FechaFin DATE,
-	@SCod VARCHAR(8),
-	@PCod VARCHAR(8),
+	@PCod CHAR(8),
 	@Desviacion Float output
 )
 AS
@@ -20,7 +19,6 @@ BEGIN
 			 AND GNumero	= @GRUPO
 			 AND GAnno		= @GAnno
 			 AND GSemestre	= @GSem
-			 AND SCodigo	= @SCod
 			 AND PCodigo	= @PCod
 			 AND Fecha >= @FechaInicio
 			 AND Fecha <= @FechaFin

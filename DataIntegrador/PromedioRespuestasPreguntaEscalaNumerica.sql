@@ -6,8 +6,7 @@
 	@semestre TINYINT,
 	@fechaInicio DATE,
 	@fechaFin DATE,
-	@codigoSeccion VARCHAR(8),
-	@codigoPregunta VARCHAR(8),
+	@codigoPregunta CHAR(8),
 	@promedio FLOAT OUTPUT)
 AS
 	BEGIN
@@ -18,7 +17,6 @@ AS
 			AND O.GNumero = @numeroGrupo
 			AND O.GAnno = @anno
 			AND O.GSemestre = @semestre
-			AND O.SCodigo = @codigoSeccion
 			AND O.PCodigo = @codigoPregunta
 			AND O.Fecha >= @fechaInicio
 			AND O.Fecha <= @fechaFin

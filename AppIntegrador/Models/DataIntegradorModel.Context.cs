@@ -127,7 +127,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID", identificacionParameter, result);
         }
     
-        public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string sCod, string pCod, ObjectParameter desviacion)
+        public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string pCod, ObjectParameter desviacion)
         {
             var fCodParameter = fCod != null ?
                 new ObjectParameter("FCod", fCod) :
@@ -157,15 +157,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("FechaFin", fechaFin) :
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
-            var sCodParameter = sCod != null ?
-                new ObjectParameter("SCod", sCod) :
-                new ObjectParameter("SCod", typeof(string));
-    
             var pCodParameter = pCod != null ?
                 new ObjectParameter("PCod", pCod) :
                 new ObjectParameter("PCod", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, fechaInicioParameter, fechaFinParameter, sCodParameter, pCodParameter, desviacion);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, fechaInicioParameter, fechaFinParameter, pCodParameter, desviacion);
         }
     
         public virtual int LoginUsuario(string pLoginName, string pPassword, ObjectParameter result)
@@ -181,7 +177,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario", pLoginNameParameter, pPasswordParameter, result);
         }
     
-        public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter mediana)
+        public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoPregunta, ObjectParameter mediana)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -211,15 +207,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("codigoSeccion", codigoSeccion) :
-                new ObjectParameter("codigoSeccion", typeof(string));
-    
             var codigoPreguntaParameter = codigoPregunta != null ?
                 new ObjectParameter("codigoPregunta", codigoPregunta) :
                 new ObjectParameter("codigoPregunta", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoSeccionParameter, codigoPreguntaParameter, mediana);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoPreguntaParameter, mediana);
         }
     
         public virtual int ModificarCorreo(string anterior, string nuevo, ObjectParameter resultado)
@@ -245,7 +237,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
         }
     
-        public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
+        public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoPregunta, ObjectParameter promedio)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -275,15 +267,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("codigoSeccion", codigoSeccion) :
-                new ObjectParameter("codigoSeccion", typeof(string));
-    
             var codigoPreguntaParameter = codigoPregunta != null ?
                 new ObjectParameter("codigoPregunta", codigoPregunta) :
                 new ObjectParameter("codigoPregunta", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoSeccionParameter, codigoPreguntaParameter, promedio);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoPreguntaParameter, promedio);
         }
     
         public virtual int PopularFormulariosDePrueba()

@@ -38,7 +38,6 @@
 
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
-            var codigoSeccion = listaPreguntas[i].codigoSeccion;
             var codigoPregunta = listaPreguntas[i].codigoPregunta;
             var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
             var tipoPregunta = listaPreguntas[i].tipoPregunta;
@@ -51,28 +50,28 @@
 
                 case "texto_abierto":
                     base = new BaseTexto(tipoPregunta);
-                    insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                    insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
                 case "escala":
                     base = new BaseConEstadisticas(tipoPregunta);
-                    insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                    insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
+                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
                 case "seleccion_unica":
                     base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
                 case "seleccion_multiple":
                     base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
                 case "seleccion_cerrada":
                     base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                    insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
                     break;
 
             }
@@ -80,7 +79,7 @@
             if (tipoPregunta != "texto_abierto")
             {
 
-                insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoPregunta);
             }
 
             cuerpoPrincipal.appendChild(base.getBase());
