@@ -97,6 +97,8 @@ namespace AppIntegrador.Controllers
             respuestas.GAnno = 2019;
             respuestas.GSemestre = 2;
 
+            db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
+
             // Llamar a procedimiento que agrega Respuestas_a_formulario
             db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha);
 

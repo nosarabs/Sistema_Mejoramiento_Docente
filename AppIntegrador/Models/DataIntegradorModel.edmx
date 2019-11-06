@@ -1599,6 +1599,14 @@
           <Parameter Name="PCod" Type="char" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="EliminarRespuestasDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="csigla" Type="varchar" Mode="In" />
+          <Parameter Name="gnumero" Type="tinyint" Mode="In" />
+          <Parameter Name="ganno" Type="int" Mode="In" />
+          <Parameter Name="gsemestre" Type="tinyint" Mode="In" />
+        </Function>
         <Function Name="EnfasisXCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
           <ReturnType>
@@ -3789,6 +3797,14 @@
             <Parameter Name="codseccion" Mode="In" Type="String" />
             <Parameter Name="texto" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="EliminarRespuestasDeFormulario">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="csigla" Mode="In" Type="String" />
+            <Parameter Name="gnumero" Mode="In" Type="Byte" />
+            <Parameter Name="ganno" Mode="In" Type="Int32" />
+            <Parameter Name="gsemestre" Mode="In" Type="Byte" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4385,6 +4401,7 @@
           <FunctionImportMapping FunctionImportName="GuardarOpcionesSeleccionadas" FunctionName="DataIntegradorModel.Store.GuardarOpcionesSeleccionadas" />
           <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaConOpciones" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaConOpciones" />
           <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaLibre" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaLibre" />
+          <FunctionImportMapping FunctionImportName="EliminarRespuestasDeFormulario" FunctionName="DataIntegradorModel.Store.EliminarRespuestasDeFormulario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

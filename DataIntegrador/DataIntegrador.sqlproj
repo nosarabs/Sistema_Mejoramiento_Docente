@@ -157,6 +157,7 @@
     <Build Include="Formularios\Procedimientos\GuardarRespuestaAPreguntaConOpciones.sql" />
     <Build Include="Formularios\Procedimientos\GuardarOpcionesSeleccionadas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaEscalar.sql" />
+    <Build Include="Formularios\Procedimientos\EliminarRespuestasDeFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

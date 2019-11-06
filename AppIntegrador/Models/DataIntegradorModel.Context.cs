@@ -825,5 +825,34 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPreguntaLibre", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, textoParameter);
         }
+    
+        public virtual int EliminarRespuestasDeFormulario(string codFormulario, string correo, string csigla, Nullable<byte> gnumero, Nullable<int> ganno, Nullable<byte> gsemestre)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var csiglaParameter = csigla != null ?
+                new ObjectParameter("csigla", csigla) :
+                new ObjectParameter("csigla", typeof(string));
+    
+            var gnumeroParameter = gnumero.HasValue ?
+                new ObjectParameter("gnumero", gnumero) :
+                new ObjectParameter("gnumero", typeof(byte));
+    
+            var gannoParameter = ganno.HasValue ?
+                new ObjectParameter("ganno", ganno) :
+                new ObjectParameter("ganno", typeof(int));
+    
+            var gsemestreParameter = gsemestre.HasValue ?
+                new ObjectParameter("gsemestre", gsemestre) :
+                new ObjectParameter("gsemestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarRespuestasDeFormulario", codFormularioParameter, correoParameter, csiglaParameter, gnumeroParameter, gannoParameter, gsemestreParameter);
+        }
     }
 }
