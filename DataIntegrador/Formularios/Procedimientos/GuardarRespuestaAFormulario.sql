@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GuardarRespuestaAFormulario]
-	@codFormulario char(8),
+	@codFormulario varchar(8),
 	@correo varchar(50),
 	@siglaCurso varchar(6),
 	@numGrupo tinyint,

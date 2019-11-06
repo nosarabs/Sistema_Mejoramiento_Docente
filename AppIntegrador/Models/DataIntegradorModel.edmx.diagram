@@ -4,87 +4,89 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="466bc72beaef47ce9131d47f818a2f4b" Name="Diagram1">
+      <Diagram DiagramId="83e7e10ef50146d8bf299d50126dffb7" Name="Diagram1">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="15" PointY="20.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="12.75" PointY="20.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Activa_por" Width="1.5" PointX="13.5" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Curso" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Enfasis" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Escalar" Width="1.5" PointX="19" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Estudiante" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Formulario" Width="1.5" PointX="11.25" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Formulario_tiene_seccion" Width="1.5" PointX="21.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Funcionario" Width="1.5" PointX="6" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Grupo" Width="1.5" PointX="8.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Objetivo" Width="1.5" PointX="10.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_de_seleccion" Width="1.5" PointX="21.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones" Width="1.5" PointX="19" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Perfil" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.PerfilPermiso" Width="1.5" PointX="10.5" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Periodo_activa_por" Width="1.5" PointX="15.75" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Permiso" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Persona" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.PlanDeMejora" Width="1.5" PointX="8.25" PointY="19.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.PlantillaAccionDeMejora" Width="1.5" PointX="10.5" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.PlantillaObjetivo" Width="1.5" PointX="8.25" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta" Width="1.5" PointX="14.5" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones" Width="1.5" PointX="16.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="19" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="16.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Profesor" Width="1.5" PointX="11.5" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_con_opciones" Width="1.5" PointX="16.75" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_libre" Width="1.5" PointX="19.75" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Respuestas_a_formulario" Width="1.5" PointX="14.5" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Seccion" Width="1.5" PointX="17.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Seccion_tiene_pregunta" Width="1.5" PointX="19.75" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Si_no_nr" Width="1.5" PointX="19" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.TipoObjetivo" Width="1.5" PointX="6" PointY="24.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.UnidadAcademica" Width="1.5" PointX="3.75" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="3" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.UsuarioPerfil" Width="1.5" PointX="8.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="15" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="12.75" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Activa_por" Width="1.5" PointX="13.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Curso" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Enfasis" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Escalar" Width="1.5" PointX="19" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Estudiante" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Formulario" Width="1.5" PointX="11.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Formulario_tiene_seccion" Width="1.5" PointX="21.75" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Funcionario" Width="1.5" PointX="6" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Grupo" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Objetivo" Width="1.5" PointX="10.5" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_de_seleccion" Width="1.5" PointX="21.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Opciones_seleccionadas_respuesta_con_opciones" Width="1.5" PointX="19" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Perfil" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PerfilPermiso" Width="1.5" PointX="10.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Periodo_activa_por" Width="1.5" PointX="15.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Permiso" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Persona" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PlanDeMejora" Width="1.5" PointX="8.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PlantillaAccionDeMejora" Width="1.5" PointX="10.5" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.PlantillaObjetivo" Width="1.5" PointX="8.25" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta" Width="1.5" PointX="14.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones" Width="1.5" PointX="16.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_opciones_de_seleccion" Width="1.5" PointX="19" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Pregunta_con_respuesta_libre" Width="1.5" PointX="16.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Profesor" Width="1.5" PointX="11.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_con_opciones" Width="1.5" PointX="16.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Responde_respuesta_libre" Width="1.5" PointX="19.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Respuestas_a_formulario" Width="1.5" PointX="14.5" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Seccion" Width="1.5" PointX="14.5" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Seccion_tiene_pregunta" Width="1.5" PointX="19.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Si_no_nr" Width="1.5" PointX="19" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.TipoObjetivo" Width="1.5" PointX="6" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.UnidadAcademica" Width="1.5" PointX="3.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataIntegradorModel.UsuarioPerfil" Width="1.5" PointX="8.5" PointY="16.75" IsExpanded="true" />
         <AssociationConnector Association="DataIntegradorModel.FK_Accionable_AccionDeMejora" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_Objetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_PlantillaAccMej" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorGrupo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkPeriodoActivaPor" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Enfasis__CodCarr__10566F31" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Grupo__SiglaCurs__17F790F9" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__2739D489" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__40F9A68C" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Enfasis__CodCarr__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Grupo__SiglaCurs__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__282DF8C2" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__43D61337" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkEscalarCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkEstudentAPersonaCorreo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkFormularioTieneSeccionCodigoFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkFormularioTieneSeccionCodigoSeccion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Funcionar__Corre__17036CC0" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__Profesor__Correo__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Funcionar__Corre__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__Profesor__Correo__2FCF1A8A" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasGrupo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_Plan" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_PlantillaObjetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_Objetivo_TipoObj" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkOpcionesSeleccionadas" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__25518C17" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__40058253" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Permi__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Perfi__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Perfi__42E1EEFE" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__PerfilPer__Permi__2739D489" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespuestasUsuario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkUsuarioAPersonaCorreo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_PlantillaObj_TipoObj" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkResLibreCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreCodigo" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigo" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreCodigoPregunta" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigoPregunta" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkSeccionTienePreguntaCodigoPregunta" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkPregOpcionesSeleccionCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkSiNoCodigo" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesCodigoSeccion" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeOpcionesRespuestasAFormulario" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreCodigoSeccion" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkRespondeLibreRespuestasAFormulario" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkSeccionTienePreguntaCodigoSeccion" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UnidadAca__Super__3D2915A8" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Usuar__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UnidadAca__Super__40058253" ManuallyRouted="false" />
+        <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPe__Usuar__41EDCAC5" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.AsignadoA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.CreadoPor" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Empadronado_en" ManuallyRouted="false" />

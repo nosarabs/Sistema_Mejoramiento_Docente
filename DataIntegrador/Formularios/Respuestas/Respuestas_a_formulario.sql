@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Respuestas_a_formulario
 (
-	FCodigo CHAR(8) NOT NULL,
+	FCodigo VARCHAR(8) NOT NULL,
 	Correo VARCHAR(50) NOT NULL DEFAULT 'admin@mail.com',
 	CSigla VARCHAR(10) NOT NULL,
 	GNumero TINYINT NOT NULL,

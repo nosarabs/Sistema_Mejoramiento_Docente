@@ -24,6 +24,23 @@ namespace AppIntegrador.Tests.Controllers
 
         private TestContext testContextInstance;
 
+        [TestMethod]
+        public void TestIndexNotNull()
+        {
+            PlanDeMejoraController controller = new PlanDeMejoraController();
+            ViewResult result = controller.Index("admin") as ViewResult;
+            Assert.IsNotNull(result);
+        }
+
+
+        [TestMethod]
+        public void CreateNuevo() 
+        {
+            PlanDeMejoraController controlador = new PlanDeMejoraController();
+            ViewResult resultado = controlador.CreateNuevo() as ViewResult;
+            Assert.IsNotNull(resultado);
+        }
+
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
@@ -76,5 +93,7 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+
     }
 }
