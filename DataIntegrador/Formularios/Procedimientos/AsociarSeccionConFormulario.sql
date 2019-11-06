@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[AsociarSeccionConFormulario]
-	@codigoFormulario CHAR(8),
-	@codigoSeccion CHAR(8),
+	@codigoFormulario VARCHAR(8),
+	@codigoSeccion VARCHAR(8),
 	@orden INT
 AS
 	MERGE INTO Formulario_tiene_seccion AS Target
