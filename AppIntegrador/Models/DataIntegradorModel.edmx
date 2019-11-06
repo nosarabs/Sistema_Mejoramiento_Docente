@@ -1536,6 +1536,15 @@
           <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
           <Parameter Name="justificacion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPreguntaEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cod" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="char" Mode="In" />
+          <Parameter Name="enunciado" Type="nvarchar" Mode="In" />
+          <Parameter Name="justificacion" Type="varchar" Mode="In" />
+          <Parameter Name="incremento" Type="int" Mode="In" />
+          <Parameter Name="minimo" Type="int" Mode="In" />
+          <Parameter Name="maximo" Type="int" Mode="In" />
+        </Function>
         <Function Name="AgregarPreguntaRespuestaLibre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="char" Mode="In" />
@@ -1590,6 +1599,14 @@
           <Parameter Name="PCod" Type="char" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="EliminarRespuestasDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="csigla" Type="varchar" Mode="In" />
+          <Parameter Name="gnumero" Type="tinyint" Mode="In" />
+          <Parameter Name="ganno" Type="int" Mode="In" />
+          <Parameter Name="gsemestre" Type="tinyint" Mode="In" />
+        </Function>
         <Function Name="EnfasisXCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codCarrera" Type="varchar" Mode="In" />
           <ReturnType>
@@ -1611,6 +1628,18 @@
               </RowType>
             </CollectionType>
           </ReturnType>
+        </Function>
+        <Function Name="GuardarOpcionesSeleccionadas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+          <Parameter Name="codseccion" Type="varchar" Mode="In" />
+          <Parameter Name="opcionSeleccionada" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="GuardarRespuestaAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codFormulario" Type="varchar" Mode="In" />
@@ -1635,6 +1664,30 @@
           <Parameter Name="justificacion" Type="nvarchar" Mode="In" />
           <Parameter Name="opcionSeleccionada" Type="tinyint" Mode="In" />
           <Parameter Name="observacion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GuardarRespuestaAPreguntaConOpciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+          <Parameter Name="codseccion" Type="varchar" Mode="In" />
+          <Parameter Name="justificacion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GuardarRespuestaAPreguntaLibre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+          <Parameter Name="codseccion" Type="varchar" Mode="In" />
+          <Parameter Name="texto" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pLoginName" Type="varchar" Mode="In" />
@@ -3699,6 +3752,59 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="AgregarPreguntaEscalar">
+            <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="enunciado" Mode="In" Type="String" />
+            <Parameter Name="justificacion" Mode="In" Type="String" />
+            <Parameter Name="incremento" Mode="In" Type="Int32" />
+            <Parameter Name="minimo" Mode="In" Type="Int32" />
+            <Parameter Name="maximo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GuardarOpcionesSeleccionadas">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="numGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="codPregunta" Mode="In" Type="String" />
+            <Parameter Name="codseccion" Mode="In" Type="String" />
+            <Parameter Name="opcionSeleccionada" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="GuardarRespuestaAPreguntaConOpciones">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="numGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="codPregunta" Mode="In" Type="String" />
+            <Parameter Name="codseccion" Mode="In" Type="String" />
+            <Parameter Name="justificacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GuardarRespuestaAPreguntaLibre">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="numGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="codPregunta" Mode="In" Type="String" />
+            <Parameter Name="codseccion" Mode="In" Type="String" />
+            <Parameter Name="texto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EliminarRespuestasDeFormulario">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="csigla" Mode="In" Type="String" />
+            <Parameter Name="gnumero" Mode="In" Type="Byte" />
+            <Parameter Name="ganno" Mode="In" Type="Int32" />
+            <Parameter Name="gsemestre" Mode="In" Type="Byte" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4291,6 +4397,11 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
+          <FunctionImportMapping FunctionImportName="AgregarPreguntaEscalar" FunctionName="DataIntegradorModel.Store.AgregarPreguntaEscalar" />
+          <FunctionImportMapping FunctionImportName="GuardarOpcionesSeleccionadas" FunctionName="DataIntegradorModel.Store.GuardarOpcionesSeleccionadas" />
+          <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaConOpciones" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaConOpciones" />
+          <FunctionImportMapping FunctionImportName="GuardarRespuestaAPreguntaLibre" FunctionName="DataIntegradorModel.Store.GuardarRespuestaAPreguntaLibre" />
+          <FunctionImportMapping FunctionImportName="EliminarRespuestasDeFormulario" FunctionName="DataIntegradorModel.Store.EliminarRespuestasDeFormulario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

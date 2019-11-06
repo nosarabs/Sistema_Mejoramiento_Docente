@@ -657,5 +657,202 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
         }
+    
+        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var enunciadoParameter = enunciado != null ?
+                new ObjectParameter("enunciado", enunciado) :
+                new ObjectParameter("enunciado", typeof(string));
+    
+            var justificacionParameter = justificacion != null ?
+                new ObjectParameter("justificacion", justificacion) :
+                new ObjectParameter("justificacion", typeof(string));
+    
+            var incrementoParameter = incremento.HasValue ?
+                new ObjectParameter("incremento", incremento) :
+                new ObjectParameter("incremento", typeof(int));
+    
+            var minimoParameter = minimo.HasValue ?
+                new ObjectParameter("minimo", minimo) :
+                new ObjectParameter("minimo", typeof(int));
+    
+            var maximoParameter = maximo.HasValue ?
+                new ObjectParameter("maximo", maximo) :
+                new ObjectParameter("maximo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter);
+        }
+    
+        public virtual int GuardarOpcionesSeleccionadas(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, Nullable<byte> opcionSeleccionada)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("numGrupo", numGrupo) :
+                new ObjectParameter("numGrupo", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            var codseccionParameter = codseccion != null ?
+                new ObjectParameter("codseccion", codseccion) :
+                new ObjectParameter("codseccion", typeof(string));
+    
+            var opcionSeleccionadaParameter = opcionSeleccionada.HasValue ?
+                new ObjectParameter("opcionSeleccionada", opcionSeleccionada) :
+                new ObjectParameter("opcionSeleccionada", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, opcionSeleccionadaParameter);
+        }
+    
+        public virtual int GuardarRespuestaAPreguntaConOpciones(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string justificacion)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("numGrupo", numGrupo) :
+                new ObjectParameter("numGrupo", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            var codseccionParameter = codseccion != null ?
+                new ObjectParameter("codseccion", codseccion) :
+                new ObjectParameter("codseccion", typeof(string));
+    
+            var justificacionParameter = justificacion != null ?
+                new ObjectParameter("justificacion", justificacion) :
+                new ObjectParameter("justificacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPreguntaConOpciones", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, justificacionParameter);
+        }
+    
+        public virtual int GuardarRespuestaAPreguntaLibre(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string texto)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("numGrupo", numGrupo) :
+                new ObjectParameter("numGrupo", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            var codseccionParameter = codseccion != null ?
+                new ObjectParameter("codseccion", codseccion) :
+                new ObjectParameter("codseccion", typeof(string));
+    
+            var textoParameter = texto != null ?
+                new ObjectParameter("texto", texto) :
+                new ObjectParameter("texto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPreguntaLibre", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, textoParameter);
+        }
+    
+        public virtual int EliminarRespuestasDeFormulario(string codFormulario, string correo, string csigla, Nullable<byte> gnumero, Nullable<int> ganno, Nullable<byte> gsemestre)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var csiglaParameter = csigla != null ?
+                new ObjectParameter("csigla", csigla) :
+                new ObjectParameter("csigla", typeof(string));
+    
+            var gnumeroParameter = gnumero.HasValue ?
+                new ObjectParameter("gnumero", gnumero) :
+                new ObjectParameter("gnumero", typeof(byte));
+    
+            var gannoParameter = ganno.HasValue ?
+                new ObjectParameter("ganno", ganno) :
+                new ObjectParameter("ganno", typeof(int));
+    
+            var gsemestreParameter = gsemestre.HasValue ?
+                new ObjectParameter("gsemestre", gsemestre) :
+                new ObjectParameter("gsemestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarRespuestasDeFormulario", codFormularioParameter, correoParameter, csiglaParameter, gnumeroParameter, gannoParameter, gsemestreParameter);
+        }
     }
 }
