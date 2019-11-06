@@ -4,12 +4,8 @@
 --Cumplimiento: 2/10
 
 CREATE PROCEDURE [dbo].[PromedioCursos]
-	(@codigoFromulario VARCHAR(8)
-	)
+	(@correo VARCHAR(50),
+	 @promedio FLOAT OUTPUT)
 AS
-	BEGIN
-		SELECT
-		FROM
-		WHERE = @codigoFromulario
-	END
+
 RETURN 0

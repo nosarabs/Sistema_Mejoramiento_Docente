@@ -639,5 +639,23 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosUA_Result>("[Entities].[ObtenerFormulariosUA](@codigoUA)", codigoUAParameter);
         }
+    
+        public virtual int PromedioCursos(string correo, ObjectParameter promedio)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio);
+        }
+    
+        public virtual int PromedioProfesor(string correo, ObjectParameter promedio)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio);
+        }
     }
 }

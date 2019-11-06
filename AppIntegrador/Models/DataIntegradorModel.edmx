@@ -1776,6 +1776,14 @@
         <Function Name="PopularFormulariosConSecciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularFormulariosDePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PromedioCursos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="promedio" Type="float" Mode="InOut" />
+        </Function>
+        <Function Name="PromedioProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="promedio" Type="float" Mode="InOut" />
+        </Function>
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
@@ -3107,6 +3115,14 @@
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)">
           <Parameter Name="codigoUA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PromedioCursos">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="promedio" Mode="InOut" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="PromedioProfesor">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="promedio" Mode="InOut" Type="Double" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
@@ -4467,6 +4483,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PromedioCursos" FunctionName="DataIntegradorModel.Store.PromedioCursos" />
+          <FunctionImportMapping FunctionImportName="PromedioProfesor" FunctionName="DataIntegradorModel.Store.PromedioProfesor" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

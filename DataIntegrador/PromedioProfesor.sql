@@ -3,13 +3,9 @@
 --Tarea técnica: Realizar consultas a la BD por medio de procedimientos almacenados.
 --Cumplimiento: 2/10
 
-CREATE PROCEDURE [dbo].[PromedioCursos]
-	(@codigoFromulario VARCHAR(8)
-	)
+CREATE PROCEDURE [dbo].[PromedioProfesor]
+	(@correo VARCHAR(50),
+	 @promedio FLOAT OUTPUT)
 AS
-	BEGIN
-		SELECT
-		FROM
-		WHERE = @codigoFromulario
-	END
+
 RETURN 0
