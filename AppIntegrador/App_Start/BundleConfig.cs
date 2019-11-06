@@ -11,6 +11,9 @@ namespace AppIntegrador
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquerymin").Include(
+                        "~/Scripts/jquery-{version}.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -29,10 +32,18 @@ namespace AppIntegrador
 
             bundles.Add(new StyleBundle("~/Content/bs3").Include(
           "~/Content/bootstrap.css"));
+            bundles.Add(new StyleBundle("~/Content/bs4.3.1", "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css").Include(
+                "~/Content/Visualizacion/bootstrap.min.css"));
+            bundles.Add(new ScriptBundle("~/bundles/bs4.3.1", "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js").Include(
+          "~/Scripts/bootstrap4.3.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery3.3.1", "https://code.jquery.com/jquery-3.3.1.slim.min.js").Include(
+            "~/Scripts/jquery-3.3.1.slim.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/popper1.14.7", "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js").Include(
+            "~/Scripts/popper.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
-          "~/Content/login.css",
-          "~/Content/Plugins/animate.css"));
+            "~/Content/login.css",
+            "~/Content/Plugins/animate.css"));
 
             // Custom bundles
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
@@ -41,7 +52,8 @@ namespace AppIntegrador
                       "~/Scripts/Plugins/sweetalert2.all.js",
                       "~/Scripts/UsuariosYPerfiles/login.js",
                       "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js",
-                      "~/Scripts/UsuariosYPerfiles/alertsHandler.js"
+                      "~/Scripts/UsuariosYPerfiles/alertsHandler.js",
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js"
                       ));
 
         }

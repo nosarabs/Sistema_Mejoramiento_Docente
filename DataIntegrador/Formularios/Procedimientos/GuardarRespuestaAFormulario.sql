@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GuardarRespuestaAFormulario]
-	@codFormulario char(8),
+	@codFormulario varchar(8),
 	@correo varchar(50),
 	@siglaCurso varchar(6),
 	@numGrupo tinyint,
@@ -15,9 +15,10 @@ BEGIN
 		(@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha)
 	)
 	AS SOURCE ([FCodigo], [Correo],[CSigla],[GNumero],[GAnno],[GSemestre],[Fecha])
-	ON Target.FCodigo = Source.FCodigo and Target.Correo = Source.Correo and Target.CSigla = Source.CSigla and Target.GNumero = Source.GNumero and
-		Target.GAnno = Source.GAnno and Target.GSemestre = Source.GSemestre and Target.Fecha = Source.Fecha
+	ON Target.FCodigo = Source.FCodigo and Target.Correo = Source.Correo and Target.CSigla = Source.CSigla 
+		and Target.GNumero = Source.GNumero and Target.GAnno = Source.GAnno 
+		and Target.GSemestre = Source.GSemestre and Target.Fecha = Source.Fecha
 	WHEN NOT MATCHED BY TARGET THEN
 	INSERT (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha)
-	VALUES (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha);
+	VALUES (@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha);
 END

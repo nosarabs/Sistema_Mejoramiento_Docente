@@ -66,6 +66,7 @@
     <Folder Include="Usuarios y Perfiles\Triggers" />
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
+    <Folder Include="Usuarios y Perfiles\Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -116,7 +117,6 @@
     <Build Include="Formularios\Procedimientos\AgregarPreguntaConOpcion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarOpcion.sql" />
-    <Build Include="Formularios\Procedimientos\AgregarPreguntaSeleccion.sql" />
     <Build Include="Formularios\Procedimientos\AgregarSeccion.sql" />
     <Build Include="Origina.sql" />
     <Build Include="Formularios\Procedimientos\AsociarSeccionConFormulario.sql" />
@@ -128,7 +128,6 @@
     <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\CheckID.sql" />
     <Build Include="Formularios\Procedimientos\PopularFormulariosConSecciones.sql" />
-    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPregunta.sql" />
     <Build Include="Formularios\Procedimientos\GuardarRespuestaAFormulario.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlan.sql" />
     <Build Include="PlanesDeMejora\Accionable.sql" />
@@ -142,9 +141,28 @@
     <Build Include="PlanesDeMejora\PlantillaObjetivo.sql" />
     <Build Include="PlanesDeMejora\ResponsableDe.sql" />
     <Build Include="PlanesDeMejora\TipoObjetivo.sql" />
-    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
-    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\PerfilesXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarreraXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\CarrerasXPerfilXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermiso.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoSinEnfasisNiCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\EnfasisXCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\SugerirConfiguracion.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePerfilEnElEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\TienePermisoActivoEnEnfasis.sql" />
+    <Build Include="Formularios\Procedimientos\PopularFormulariosDePrueba.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPreguntaLibre.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarRespuestaAPreguntaConOpciones.sql" />
+    <Build Include="Formularios\Procedimientos\GuardarOpcionesSeleccionadas.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarPreguntaEscalar.sql" />
+    <Build Include="Formularios\Procedimientos\EliminarRespuestasDeFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\AgregarSeccionesConPreguntas.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarAccionDeMejora.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ModificarDatosPersona.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

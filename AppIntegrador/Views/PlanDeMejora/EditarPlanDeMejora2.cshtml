@@ -77,27 +77,31 @@
 
             <div class="planDiv3">
                 <div id="crearNuevaAccion">
-                    <h2>Acciones del Objetivo @ViewBag.ObjetivoSeleccionado </h2>
-                    <div id="crear">
-                        @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
+                    <h2>Seleccione un Objetivo</h2>
+                    <div id="crearAccion">
                     </div>
                 </div>
                 <div>
-                    <h4 style="text-align:center">Lista de objetivos</h4>
-
-                    <div id="divObjetivos">
-                        @Html.Partial("_objetivosDelPlan", Model.Objetivo)
+                    <h4 style="text-align:center">Lista de acciones de mejora</h4>
+                    <div id="divAcciones">
                     </div>
                 </div>
-
+                <div class="planDiv2">
+                    <div id="crearNuevoAccionable">
+                        <h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>
+                        <div id="crearAccionable">
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="text-align:center">Lista de accionables</h4>
+                        <div id="divAccionables">
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
-</div>
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
@@ -106,39 +110,6 @@
 
     <script type="text/javascript">
         $(function () {
-            // Initialize numeric spinner input boxes
-            //$(".numeric-spinner").spinedit();
-
-            // Initalize modal dialog
-            // attach modal-container bootstrap attributes to links with .modal-link class.
-            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
-            $('body').on('click', '.modal-link', function (e) {
-                e.preventDefault();
-                $(this).attr('data-target', '#modal-containerPlanes');
-                $(this).attr('data-toggle', 'modal');
-            });
-
-            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
-            $('body').on('click', '.modal-close-btn', function () {
-                $('#modal-containerPlanes').modal('hide');
-            });
-
-            //clear modal cache, so that new content can be loaded
-            $('#modal-containerPlanes').on('hidden.bs.modal', function () {
-                $(this).removeData('bs.modal');
-            });
-
-            $('#CancelModal').on('click', function () {
-                return false;
-            });
-
-            $('body').on('click', '#CANCEL', function (e) {
-                alert(e.type);
-            });
-
-            //$('body').on('click', '#crearObjetivoButton', function (e) {
-            //    aquí también se puede validar
-            //});
 
             //modifica la vista parcial de los objetivos al crear uno nuevo
             $('#newObjetivo').submit(function (e) {
@@ -167,14 +138,82 @@
                 });
             });
 
-            @*$("#crearObjetivoButton"). click(function (e) {
-                aquí se puede validar sobre objetivos
-            });*@
-
         });
 
-        //actualizarObjetivos = function (id) {
-            //poner aquí la función de ajax anidada
-        //};
+    </script>
+
+    <script>
+        clickObjetivo = function (id, plan, obj) {
+            //alert("plan id:" + plan + " nombre obj:" + obj + " id obj:" + id);
+            var content = '<h2>Acciones de mejora del Objetivo ' + id + '</h2>' + '<div id="crearAccion"></div>';
+            document.getElementById('crearNuevaAccion').innerHTML = content;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/AccionDeMejora/divAccion/")",
+                data: {
+                      //Data need to pass as parameter
+                      plan: plan,
+                      nombObj: obj
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#crearAccion').html(result);
+                }
+            });
+
+            actualizarAccionesDeMejora(plan, obj);
+        };
+    </script>
+
+    <script>
+        clickAccionDeMejora = function (id, plan, obj, acm) {
+            //alert("ID: " + plan + "\nNombre objetivo: " + obj + "\nID objetivo: " + id + "\nDescripción de la acción de mejora:" + acm);
+            var content = '<h2>Accionables de la acción de mejora ' + id + '</h2>' + '<div id="crearAccionable"></div>';
+            document.getElementById('crearNuevoAccionable').innerHTML = content;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/Accionables/Create/")",
+                data: {
+                      //Data need to pass as parameter
+                      codPlan: plan,
+                      nombObj: obj,
+                      descripAcMej: acm
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#crearAccionable').html(result);
+                }
+            });
+
+            //actualizarAccionesDeMejora(plan, obj);
+        };
+    </script>
+
+    <script>
+        function actualizarAccionesDeMejora(plan, obj) {
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/AccionDeMejora/AccionesDeObjetivo/")",
+                data: {
+                      //Data need to pass as parameter
+                      plan: plan,
+                      nombObj: obj
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#divAcciones').html(result);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function cargarAccionesDeMejora(plan, obj) {
+            //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
+            actualizarAccionesDeMejora(plan, obj);
+        }
     </script>
 }

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarOpcion]
-	@cod char(8),
+	@cod varchar(8),
 	@orden tinyint,
 	@texto varchar(50)
 AS

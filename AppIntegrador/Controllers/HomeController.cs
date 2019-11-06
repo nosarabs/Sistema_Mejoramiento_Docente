@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Objects;
 using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
+using System.Globalization;
 
 namespace AppIntegrador.Controllers
 {
@@ -82,9 +83,9 @@ namespace AppIntegrador.Controllers
 
             ViewBag.EnableBS4NoNavBar = true;
             if (ModelState.IsValid)
-            {               
+            {
                 /*When loggin in, first checks whether the user's account is locked or deactivated.*/
-                if (IsUserLocked(objUser)) 
+                if (IsUserLocked(objUser))
                 {
                     ModelState.AddModelError("Password", "Este usuario está bloqueado temporalmente.\nIntente de nuevo más tarde o contacte al adminstrador del sitio.");
                     return View(objUser);
@@ -103,6 +104,7 @@ namespace AppIntegrador.Controllers
                     if (result == 0)
                     {
                         FormsAuthentication.SetAuthCookie(objUser.Username, false);
+                        ConfigureSession(objUser.Username);
                         return RedirectToAction("Index");
                     }
                     else
@@ -131,9 +133,10 @@ namespace AppIntegrador.Controllers
         }
 
         /*User story TAM-1.3 Brute-force attack prevention.*/
-        private async Task<ActionResult> WrongPassword(Usuario objUser) {
+        private async Task<ActionResult> WrongPassword(Usuario objUser)
+        {
             int failedAttempts = 0;
-            
+
             /*If it's this user first failed login attempt, store it somewhere in the system to keep watching 
              this user's activity.*/
             if (System.Web.HttpContext.Current.Application[objUser.Username] == null)
@@ -142,7 +145,7 @@ namespace AppIntegrador.Controllers
                 System.Web.HttpContext.Current.Application[objUser.Username] = 1;
                 ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
             }
-            else 
+            else
             {
                 /*If this user has already made failed login attempts, increment the counter.*/
                 failedAttempts = (int)System.Web.HttpContext.Current.Application[objUser.Username] + 1;
@@ -172,7 +175,8 @@ namespace AppIntegrador.Controllers
             return null;
         }
 
-        private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser) {
+        private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser)
+        {
 
             /*To lock the user, first fetch it from the database.*/
             using (var context = new DataIntegradorEntities())
@@ -203,7 +207,8 @@ namespace AppIntegrador.Controllers
         }
 
         /*Function to tell whether a given user account is locked or not.*/
-        private static bool IsUserLocked(Usuario objUser) {
+        private static bool IsUserLocked(Usuario objUser)
+        {
             bool locked = false;
             using (var context = new DataIntegradorEntities())
             {
@@ -211,7 +216,7 @@ namespace AppIntegrador.Controllers
                     .Where(u => u.Username == objUser.Username)
                     .FirstOrDefault<Usuario>();
                 /*Just return the user account's active/inactive bit.*/
-                if(query != null)
+                if (query != null)
                     locked = !query.Activo;
             }
             return locked;
@@ -256,7 +261,7 @@ namespace AppIntegrador.Controllers
                 Random random = new Random();
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 var newPassword = new string(Enumerable.Repeat(chars, 16)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());                
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
 
                 db.ChangePassword(correo, newPassword);
                 db.SaveChanges();
@@ -276,6 +281,108 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
+        }
+
+        private void ConfigureSession(string username)
+        {
+            /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
+             énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
+             o la única que tenga si no tiene más opciones).*/
+
+            /*Por ahora, solo datos de prueba.*/
+            ObjectParameter mejorPerfil = new ObjectParameter("PerfilPoderoso", typeof(string));
+            ObjectParameter mejorCarrera = new ObjectParameter("CarreraPoderosa", typeof(string));
+            ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
+            db.SugerirConfiguracion(username, mejorPerfil, mejorCarrera, mejorEnfasis);
+
+            /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
+             donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
+             y no atrasar a los demás equipos.*/
+            SetUserData(username, (mejorPerfil.Value.Equals(DBNull.Value) ? "Superusuario" : (string)mejorPerfil.Value), (mejorCarrera.Value.Equals(DBNull.Value) ? null : (string)mejorCarrera.Value), (mejorEnfasis.Value.Equals(DBNull.Value) ? null : (string)mejorEnfasis.Value));
+        }
+
+        /*TAM-3.1, 3.2 y 3.6: Función que guarda los datos relevantes del usuario loggeado para poder consultar
+         la interfaz de permisos con esa información.*/
+        private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
+        {
+            CurrentUser.Username = correoUsuario;
+            CurrentUser.Profile = perfil;
+            CurrentUser.MajorId = codCarrera;
+            CurrentUser.EmphasisId = codEnfasis;
+        }
+
+        public ActionResult CambiarContrasenna()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
+            //ViewBag.Message = "Your application description page.";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CambiarContrasenna(string contrasennaActual, string contrasennaNueva, string contrasennaConfirmar)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login");
+            }
+
+            ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
+
+            // Se ejecuta el procedimiento almacenado
+            db.LoginUsuario(CurrentUser.Username, contrasennaActual, loginResult);
+            if((int)loginResult.Value != 0)
+            {
+                ModelState.AddModelError("Username", "Contraseña Incorrecta.");
+            }
+            else 
+            {
+                if (contrasennaNueva != contrasennaConfirmar)
+                {
+                    ModelState.AddModelError("Password", "Las contraseña nueva y su confirmacion no son iguales.");
+                }
+                else
+                {
+                    db.ChangePassword(CurrentUser.Username, contrasennaNueva);
+                    db.SaveChanges();
+
+                    //Enviamos un correo al usuario alertando del cambio
+                    EmailNotification notification = new EmailNotification();
+
+                    List<string> users = new List<string>();
+                    users.Add(CurrentUser.Username);
+
+                    //Creamos un timestamp para agregarlo al correo
+                    var timestamp = DateTime.Now;
+                    string fechaSalida = timestamp.ToString("dd/MM/yyyy");
+                    string horaSalida = timestamp.ToString("hh:mm tt");
+
+                    notification.SendNotification(users,
+                        "Cambio de contraseña",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr");
+
+                    //HTML implementation pending
+
+                    //notification.SendNotification(users, 
+                    //    "Cambio de contraseña",
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                    //    "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
+                    //    "<br>Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins a marcelo.jenkins@ecci.ucr.ac.cr");
+
+                    ViewBag.typeMessage = "success";
+                    ViewBag.NotifyTitle = "Contraseña Cambiada";
+                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
+                }
+            }
+
+            return View();
         }
     }
 }

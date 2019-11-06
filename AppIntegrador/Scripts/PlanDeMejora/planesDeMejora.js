@@ -6,3 +6,11 @@ function setCodigoPlan(int id) {
     idPlan = id;
     console.log('Id = ' + idPlan + ' mostrarobjetivos = ' + mostrarObjetivos);
 }
+
+function crearAccionable() {
+    console.log("Se llamó a crearAccionable")
+}
+
+function clickAccionMejora() {
+
+}

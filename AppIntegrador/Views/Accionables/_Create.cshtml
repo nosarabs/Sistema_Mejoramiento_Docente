@@ -1,0 +1,57 @@
+﻿@model AppIntegrador.Models.Metadata.AccionableMetadata
+
+@{
+    ViewBag.Title = "Crear accionable";
+    Layout = null;
+}
+
+    <div class="modal-body">
+        <div class="alert alert-warning">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            La descripción es obligatoria.
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <h4 class="text-left">Crear accionable</h4>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.codPlan, new { style = "display:none;", @Value = @Session["name"] })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.nombreObj, new { style = "display:none;", @Value = @Session["name"] })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.descripAcMej, new { style = "display:none;", @Value = @Session["name"] })
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "col-form-label" })
+                        @Html.TextBoxFor(model => model.descripcion, new
+                        {
+                            @class = "form-control",
+                            maxlength = "250"
+                        })
+                        @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "col-form-label" })
+                        @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "col-form-label" })
+                        @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <input type="submit" id="crearAccion" value="Crear accionable" class="btn btn-primary offset-md-6 col-md-4" />
+                </div>
+            </div>
+        }
+    </div>

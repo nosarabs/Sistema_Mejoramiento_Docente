@@ -138,10 +138,10 @@
                                 @Html.DisplayNameFor(model => model.Codigo)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Enunciado)
+                                @Html.DisplayNameFor(model => model.Enunciado)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Pregunta_con_opciones.Pregunta.Tipo)
+                                @Html.DisplayNameFor(model => model.Tipo)
                             </th>
                         </tr>
                     </thead>
@@ -154,10 +154,10 @@
                                 </center>
                             </td>
                             <td style="width:15%">
-                                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Codigo)
+                                @Html.DisplayFor(modelItem => item.Codigo)
                             </td>
                             <td style="width:60%">
-                                @Html.DisplayFor(modelItem => item.Pregunta_con_opciones.Pregunta.Enunciado)
+                                @Html.DisplayFor(modelItem => item.Enunciado)
                             </td>
                             <td style="width:15%">
                                 @if (item.Tipo == "U")
