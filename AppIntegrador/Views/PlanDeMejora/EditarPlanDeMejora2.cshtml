@@ -209,11 +209,36 @@
             });
         }
     </script>
+    <script>
+        function actualizarAccionables(plan, obj, desc) {
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/Accionables/AccionesDeObjetivo/")",
+                data: {
+                      //Data need to pass as parameter
+                      codPlan: plan,
+                      nombObj: obj,
+                      descripAcMej: desc
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#divAccionables').html(result);
+                }
+            });
+        }
+    </script>
 
     <script>
         function cargarAccionesDeMejora(plan, obj) {
             //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
             actualizarAccionesDeMejora(plan, obj);
+        }
+    </script>
+    <script>
+        function cargarAccionables(plan, obj) {
+            //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
+            actualizarAccionables(plan, obj);
         }
     </script>
 }
