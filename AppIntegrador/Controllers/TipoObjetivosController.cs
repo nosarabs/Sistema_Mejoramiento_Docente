@@ -51,6 +51,7 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: TipoObjetivos/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -134,13 +135,16 @@ namespace AppIntegrador.Controllers
         }
 
         // POST: TipoObjetivos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        //[HttpPost, ActionName("DeleteConfirmed")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id, bool confirmed)
         {
-            TipoObjetivo tipoObjetivo = db.TipoObjetivo.Find(id);
-            db.TipoObjetivo.Remove(tipoObjetivo);
-            db.SaveChanges();
+            if (confirmed)
+            {
+                TipoObjetivo tipoObjetivo = db.TipoObjetivo.Find(id);
+                db.TipoObjetivo.Remove(tipoObjetivo);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
