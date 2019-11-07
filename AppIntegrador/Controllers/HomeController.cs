@@ -54,6 +54,12 @@ namespace AppIntegrador.Controllers
                 ViewBag.typeMessage = "alert";
                 ViewBag.AlertMessage = TempData["alertmessage"].ToString();
             }
+            if (TempData["sweetalertmessage"] != null)
+            {
+                ViewBag.typeMessage = "sweetalertmessage";
+                ViewBag.AlertMessage = TempData["sweetalertmessage"].ToString();
+            }
+
 
             if (!User.Identity.IsAuthenticated)
             {
