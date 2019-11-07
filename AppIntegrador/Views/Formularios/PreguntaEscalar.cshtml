@@ -11,7 +11,7 @@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
     string radname = respuestaname + ".Opciones[0]";}
 
-<div class="card-body" style="margin-left:unset">
+<div class="card-body opcion-pequena" style="margin-left:unset">
     @for (var index = Model.Pregunta.Pregunta_con_opciones.Escalar.Minimo;
         index <= Model.Pregunta.Pregunta_con_opciones.Escalar.Maximo;
         index += Model.Pregunta.Pregunta_con_opciones.Escalar.Incremento)

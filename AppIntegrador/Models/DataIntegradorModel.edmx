@@ -1697,6 +1697,16 @@
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerOpcionesSeleccionadas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="sigla" Type="varchar" Mode="In" />
+          <Parameter Name="num" Type="tinyint" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
+          <Parameter Name="codSeccion" Type="varchar" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
@@ -1707,6 +1717,16 @@
           <Parameter Name="num" Type="tinyint" Mode="In" />
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="ObtenerRespuestasAPreguntaConOpciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="sigla" Type="varchar" Mode="In" />
+          <Parameter Name="num" Type="tinyint" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
+          <Parameter Name="codSeccion" Type="varchar" Mode="In" />
+          <Parameter Name="codPregunta" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObtenerSeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodForm" Type="varchar" Mode="In" />
@@ -3808,6 +3828,26 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerOpcionesSeleccionadas" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesSeleccionadas_Result)">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="sigla" Mode="In" Type="String" />
+            <Parameter Name="num" Mode="In" Type="Byte" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="codSeccion" Mode="In" Type="String" />
+            <Parameter Name="codPregunta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerRespuestasAPreguntaConOpciones" ReturnType="Collection(DataIntegradorModel.ObtenerRespuestasAPreguntaConOpciones_Result)">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="sigla" Mode="In" Type="String" />
+            <Parameter Name="num" Mode="In" Type="Byte" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="codSeccion" Mode="In" Type="String" />
+            <Parameter Name="codPregunta" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -3833,6 +3873,30 @@
           <Property Type="Byte" Name="GSemestre" Nullable="false" />
           <Property Type="DateTime" Name="Fecha" Nullable="false" />
           <Property Type="Boolean" Name="Finalizado" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerOpcionesSeleccionadas_Result">
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
+          <Property Type="DateTime" Name="Fecha" Nullable="false" />
+          <Property Type="String" Name="PCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="Byte" Name="OpcionSeleccionada" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerRespuestasAPreguntaConOpciones_Result">
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
+          <Property Type="DateTime" Name="Fecha" Nullable="false" />
+          <Property Type="String" Name="PCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Justificacion" Nullable="true" MaxLength="250" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4426,6 +4490,38 @@
                 <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="Finalizado" ColumnName="Finalizado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerOpcionesSeleccionadas" FunctionName="DataIntegradorModel.Store.ObtenerOpcionesSeleccionadas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerOpcionesSeleccionadas_Result">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+                <ScalarProperty Name="OpcionSeleccionada" ColumnName="OpcionSeleccionada" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerRespuestasAPreguntaConOpciones" FunctionName="DataIntegradorModel.Store.ObtenerRespuestasAPreguntaConOpciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerRespuestasAPreguntaConOpciones_Result">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PCodigo" ColumnName="PCodigo" />
+                <ScalarProperty Name="SCodigo" ColumnName="SCodigo" />
+                <ScalarProperty Name="Justificacion" ColumnName="Justificacion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

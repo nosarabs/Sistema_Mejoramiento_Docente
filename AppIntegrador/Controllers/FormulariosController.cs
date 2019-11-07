@@ -233,17 +233,27 @@ namespace AppIntegrador.Controllers
                         if (respuestas != null)
                         {
 
+                            /* Manera de hacerlo con Linq. No acepta parámetros nulos.
                             var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                         && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                         && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                         && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                            */
+                            var respuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                                                                                     codSeccion, pregunta.Pregunta.Codigo);
+
                             if (respuestaGuardada != null && respuestaGuardada.ToList().Any())
                             {
                                 pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
-                                var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+
+                                /* Manera de hacerlo con Linq. No acepta parámetros nulos.
+                                 * var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                         && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                         && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                         && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                                */
+                                var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                                                                                     codSeccion, pregunta.Pregunta.Codigo);
                                 pregunta.Opciones = new List<int>();
                                 if (opcionesGuardadas != null)
                                 {
@@ -261,7 +271,8 @@ namespace AppIntegrador.Controllers
                                                                     && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                     && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                     && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                        if (respuestaGuardada != null)
+                        
+                        if (respuestaGuardada != null && respuestaGuardada.Any())
                         {
                             pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                         }
@@ -330,8 +341,12 @@ namespace AppIntegrador.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones, int? formularioCreado)
         {
+            if(formularioCreado == 1)
+            {
+                return RedirectToAction("Index");
+            }
             crearFormulario.seccion = db.Seccion;
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
@@ -343,12 +358,14 @@ namespace AppIntegrador.Controllers
                 else
                 {
                     // Notifique que ocurrió un error
-                    ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
+                    ViewBag.Message = "Fallido";
+                    crearFormulario.Formulario = formulario;
+                    crearFormulario.crearSeccionModel = new CrearSeccionModel();
                     return View(crearFormulario);
                 }
             }
 
-            return View("Create", crearFormulario);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -571,7 +588,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult AgregarFormulario(Formulario formulario)
         {
-            return Json(new { guardadoExitoso = InsertFormulario(formulario) });
+            return Json(new { guardadoExitoso = formulario != null && InsertFormulario(formulario) });
         }
 
 

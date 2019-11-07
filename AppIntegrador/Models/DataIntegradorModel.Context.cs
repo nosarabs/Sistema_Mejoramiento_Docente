@@ -883,5 +883,79 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAFormulario_Result>("ObtenerRespuestasAFormulario", codFormularioParameter, correoParameter, siglaParameter, numParameter, annoParameter, semestreParameter);
         }
+    
+        public virtual ObjectResult<ObtenerOpcionesSeleccionadas_Result> ObtenerOpcionesSeleccionadas(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var codSeccionParameter = codSeccion != null ?
+                new ObjectParameter("codSeccion", codSeccion) :
+                new ObjectParameter("codSeccion", typeof(string));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesSeleccionadas_Result>("ObtenerOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerRespuestasAPreguntaConOpciones_Result> ObtenerRespuestasAPreguntaConOpciones(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var codSeccionParameter = codSeccion != null ?
+                new ObjectParameter("codSeccion", codSeccion) :
+                new ObjectParameter("codSeccion", typeof(string));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAPreguntaConOpciones_Result>("ObtenerRespuestasAPreguntaConOpciones", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
+        }
     }
 }

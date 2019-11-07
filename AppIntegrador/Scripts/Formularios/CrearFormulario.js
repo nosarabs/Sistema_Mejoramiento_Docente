@@ -23,7 +23,8 @@
         dataType: "html",
         traditional: true,
         success: function (data) {
-            resultado = []
+            resultado = [];
+            console.log(data);
             $('#seccionesActuales').html(data);
         },
         error: function () {
@@ -105,9 +106,16 @@ function mostrarSecciones() {
                 $("#secciones").removeAttr("hidden");
 
                 console.log("Todo es trivial");
+                document.getElementById("validacion-codigo").textContent = "";
+                $("#textCode").removeClass("error");
+                document.getElementById("formularioCreado").setAttribute("value", "1");
+
+                // document.getElementById("CreateFormulario").value = "Guardar";
             }
             else {
                 console.log("Cmamo");
+                document.getElementById("validacion-codigo").textContent = "Código en uso";
+                $("#textCode").addClass("error");
             }
         }
     });
