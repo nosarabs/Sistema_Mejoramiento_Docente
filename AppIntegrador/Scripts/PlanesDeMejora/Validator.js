@@ -327,8 +327,6 @@ class Validador {
             }
         }
 
-        
-
         if (amountOfTrues === this._totalValidations) {
             result = true;
             document.getElementById(this._submitBtnId).disabled = false;
@@ -354,7 +352,13 @@ class Validador {
 
         var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
 
+
+
         let unusedSpaces = maxCharacters - totalCharactersWritten;
+
+        console.log(unusedSpaces);
+        console.log(maxCharacters);
+        console.log(totalCharactersWritten);
 
         subMessageDomElement.innerHTML = this._remainingLettersMsj + unusedSpaces + '.';
         return totalCharactersWritten;
