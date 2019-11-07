@@ -146,10 +146,7 @@
     <Build Include="Formularios\Procedimientos\AgregarPreguntaRespuestaLibre.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosCurso.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosSemestre.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosAnno.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
     <Build Include="FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
     <Build Include="InsertarUnidadCSV.sql" />

@@ -1667,41 +1667,9 @@
           <Parameter Name="nuevo" Type="varchar" Mode="In" />
           <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
-        <Function Name="ObtenerFormulariosAnno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="anno" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="FCodigo" Type="varchar" MaxLength="8" />
-                <Property Name="CSigla" Type="varchar" MaxLength="10" />
-                <Property Name="GNumero" Type="tinyint" />
-                <Property Name="GSemestre" Type="tinyint" />
-                <Property Name="GAnno" Type="int" />
-                <Property Name="FechaInicio" Type="date" />
-                <Property Name="FechaFin" Type="date" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <Function Name="ObtenerFormulariosCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoCarrera" Type="varchar" Mode="In" />
           <Parameter Name="codigoEnfasis" Type="varchar" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="FCodigo" Type="varchar" MaxLength="8" />
-                <Property Name="CSigla" Type="varchar" MaxLength="10" />
-                <Property Name="GNumero" Type="tinyint" />
-                <Property Name="GSemestre" Type="tinyint" />
-                <Property Name="GAnno" Type="int" />
-                <Property Name="FechaInicio" Type="date" />
-                <Property Name="FechaFin" Type="date" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="ObtenerFormulariosCurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <ReturnType>
             <CollectionType>
               <RowType>
@@ -1740,7 +1708,10 @@
           </ReturnType>
         </Function>
         <Function Name="ObtenerFormulariosGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
           <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="anno" Type="int" Mode="In" />
           <ReturnType>
             <CollectionType>
               <RowType>
@@ -1757,22 +1728,6 @@
         </Function>
         <Function Name="ObtenerFormulariosProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoProfesor" Type="varchar" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="FCodigo" Type="varchar" MaxLength="8" />
-                <Property Name="CSigla" Type="varchar" MaxLength="10" />
-                <Property Name="GNumero" Type="tinyint" />
-                <Property Name="GSemestre" Type="tinyint" />
-                <Property Name="GAnno" Type="int" />
-                <Property Name="FechaInicio" Type="date" />
-                <Property Name="FechaFin" Type="date" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="ObtenerFormulariosSemestre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <ReturnType>
             <CollectionType>
               <RowType>
@@ -3136,7 +3091,10 @@
             <Parameter Name="correoProfesor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosGrupo" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosGrupo_Result)">
-          <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+          <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosProfesor_Result)">
           <Parameter Name="correoProfesor" Mode="In" Type="String" />
@@ -4441,35 +4399,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerFormulariosAnno" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosAnno">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosAnno_Result">
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosCarreraEnfasis" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosCarreraEnfasis">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosCarreraEnfasis_Result">
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerFormulariosCurso" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosCurso">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosCurso_Result">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
@@ -4509,19 +4441,6 @@
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosProfesor" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosProfesor">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosProfesor_Result">
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerFormulariosSemestre" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosSemestre">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosSemestre_Result">
                 <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
                 <ScalarProperty Name="CSigla" ColumnName="CSigla" />
                 <ScalarProperty Name="GNumero" ColumnName="GNumero" />
