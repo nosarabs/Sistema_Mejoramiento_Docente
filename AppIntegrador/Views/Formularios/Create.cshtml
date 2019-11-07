@@ -6,140 +6,135 @@
 
 @*<form id="__AjaxAntiForgeryForm" action="#" method="post"><%= Html.AntiForgeryToken()%></form>*@
 
-@using (Html.BeginForm())
-{
-    @*RIP CF5: Creación de un tabla para organizar la información*@
-    <table class="table">
-        <thead>
-            <h2>Crear Formulario</h2>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    @*Acomodar el código y el nombre en el mismo nivel*@
-                    <div class="form-horizontal card-group">
-                        <div class="card card-default">
+<div class="container">
+    <h3>Crear Formulario</h3>
 
-                            <div class="card-body test2">
-                                <div class=" row">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="form-group col-lg-2">
-                                        <div>
-                                            @Html.EditorFor(model => model.Formulario.Codigo, new
-                                       {
-                                           htmlAttributes = new
-                                           {
-                                               @class = "validar form-control",
-                                               id = "textCode",
-                                               name = "textCode",
-                                               @maxlength = "8",
-                                               required = "required",
-                                               placeholder = "Código",
-                                               rows = "5",
-                                               @onkeyup = "contarCaracteres(this)"
-                                           }
-                                       })
-                                            <div class="contador small float-right">0/8 caracteres usados</div>
-                                            @Html.ValidationMessageFor(model => model.Formulario.Codigo, "", new { @style = "color:red" })
-                                        </div>
-                                    </div>
+    @using (Html.BeginForm())
+    {
 
-                                    <div class="form-group col-lg-10">
-                                        <div class="">
-                                            <form accept-charset="UTF-8" action="" method="POST">
-                                                @Html.EditorFor(model => model.Formulario.Nombre, new
-                                           {
-                                               htmlAttributes = new
-                                               {
-                                                   @class = "validar form-control",
-                                                   id = "textName",
-                                                   name = "textName",
-                                                   @maxlength = "250",
-                                                   required = "required",
-                                                   placeholder = "Nombre del formulario",
-                                                   rows = "5",
-                                                   @onkeyup = "contarCaracteres(this)"
-                                               }
-                                           })
+        @Html.AntiForgeryToken()
 
-                                                <div class="contador small float-right">0/250 caracteres usados</div>
-                                                @Html.ValidationMessageFor(model => model.Formulario.Nombre, "", new { @style = "color:red" })
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+        @Html.Hidden("formularioCreado", null, new { @id = "formularioCreado", @Value = "0" })
+        @*RIP CF5: Creación de un tabla para organizar la información*@
+        <div class="card card-body shadow">
+            @*Acomodar el código y el nombre en el mismo nivel*@
+            <div class="card card-default shadow">
+                <div class="card-body grisUCR2">
+                    <div class=" row">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group col-lg-2">
+                            <div>
+                                @Html.EditorFor(model => model.Formulario.Codigo, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "validar-agregar-secciones form-control",
+                                        id = "textCode",
+                                        name = "formulario.Codigo",
+                                        @maxlength = "8",
+                                        required = "required",
+                                        placeholder = "Código",
+                                        rows = "5",
+                                        @onkeyup = "contarCaracteres(this)",
+                                        @title = "Código requerido"
+                                    }
+                                })
+                                <div class="contador small float-right">0/8 caracteres usados</div>
+                                <label id="validacion-codigo" style="color: red;"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-10">
+                            <div class="">
+                                <form accept-charset="UTF-8" action="" method="POST">
+                                    @Html.EditorFor(model => model.Formulario.Nombre, new
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "validar-agregar-secciones form-control",
+                                       id = "textName",
+                                       name = "formulario.Nombre",
+                                       @maxlength = "250",
+                                       required = "required",
+                                       placeholder = "Nombre del formulario",
+                                       rows = "5",
+                                       @onkeyup = "contarCaracteres(this)",
+                                       @title = "Nombre del formulario requerido"
+                                   }
+                               })
+
+                                    <div class="contador small float-right">0/250 caracteres usados</div>
+                                    @Html.ValidationMessageFor(model => model.Formulario.Nombre, "", new { @style = "color:red" })
+                                </form>
                             </div>
                         </div>
                     </div>
-                </td>
-            </tr>
+                </div>
+            </div>
+            <br>
+            <div id="secciones" class="card card-default shadow">
+                @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
+                <div class="card-body grisUCR2  ">
+                    <h3>Secciones del formulario</h3>
+                    <hr />
+                    <div class="form-group col-md-12" id="seccionesActuales">
+                    </div>
 
-            <tr>
-                <td>
-                    @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
-                    <div class="form-horizontal card-group">
-                        <div class="card card-default">
-                            <div class="card-body test2">
-                                <h2>Secciones del formulario</h2>
-                                <hr />
-                                <div class="form-group col-md-12">
-                                    @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="">
-                                    @*Posibilidad de agregar sección*@
-                                    <input type="button" value="Agregar sección al formulario" class="btn btn-azulUCR float-right" id="AgregarSeccion" data-toggle="modal" data-target="#ExampleModal" />
-                                </div>
-                            </div>
-                            <div class="form-horizontal card-group">
-                                <div class=" card card-default">
-                                    <div class="card-body test3">
-                                        <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="ModalAgregarSecciones">
-                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
-                                                        </div>
-                                                        <div id="ModalCrearSeccion">
-                                                            @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                        <button type="button" class="btn btn-primary " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones</button>
-                                                    </div>
-                                                </div>
+                                        <div class="form-group">
+                                            <div class="">
+                                                @*Posibilidad de agregar sección*@
+                                                <input type="button" value="Añadir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="form-horizontal card-group">
+                                            <div class="card card-default">
+                                                <div>
+                                                    <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div id="BancoDeSecciones">
+                                                                        <div id="ModalAgregarSecciones">
+                                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                                        </div>
+                                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                                    </div>
+                                                                    <div id="ModalCrearSeccion">
+                                                                        @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
+                                                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn-azulUCR " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones seleccionadas</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </td>
-            </tr>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card card-body shadow form-group float-right sticky-bottom">
+            <div>
+                @*Mensaje final de creación de sección*@
+                <input type="submit" value="Guardar formulario" class="btn-azulUCR" id="CreateFormulario" />
+                @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
+            </div>
+        </div>
 
-            <tr>
-                <td>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            @*Mensaje final de creación de sección*@
-                            <input type="submit" value="Crear" class="btn-azulUCR" id="Create" />
-                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    }
+
+</div>
 
 
-}
+<style>
+    .error {
+        border: 1px solid red;
+    }
+</style>
 
+        }
 @section Scripts {
     @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/jqueryval/")*@
@@ -147,70 +142,18 @@
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
-    <script src="~/Scripts/Formularios/MensajesCreacionFormularios.js"></script>
-
+    <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
+    <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
 
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
-        });
-    </script>
-
-    <script>
-        $(function () {
-            var includes = $('[data-include]');
-            jQuery.each(includes, function () {
-                var file = 'views/' + $(this).data('include') + '.html';
-                $(this).load(file);
-            });
-        });
-    </script>
-
-
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
+            validarEntradasAgregarSecciones();
+            if ('@ViewBag.Message' == "Fallido") {
+                document.getElementById("validacion-codigo").textContent = "Código en uso";
+                $("#textCode").addClass("error");
             }
-            elem.disabled = false;
-            currentEnabled = elem;
-        }
-    </script>
-
-    <script>
-        function CrearModal (){
-            $('#ExampleModal').modal();
-    }</script>
-    <script>
-        $('.CrearSeccionModal').click(function () {
-            $('#ModalCrearSeccion').show("fast");
-            $(this).parent().hide("fast");
         });
-    </script>
-
-    <script>
-        $('#ExampleModal').on('show.bs.modal', function (event) {
-            $('#ModalCrearSeccion').hide();
-        })
-    </script>
-
-
-    @*Historia RIP-CF5. Llama al método del controlador que genera la vista parcial filtrada y
-        vuelve a llamar al diálogo modal para mostrar los resultados.*@
-    <script>
-        $("#ActualizarVistaFiltros").click(function () {
-           $.ajax({
-               url: "@Url.Action("AplicarFiltro", "Formularios")",
-               type: "post",
-               //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
-               data: $("form").serialize(), //if you need to post Model data, use this
-               success: function (result) {
-                   $("#ModalSecciones").html(result);
-                   $('#ExampleModal').show();
-               }
-           });
-        })
     </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">

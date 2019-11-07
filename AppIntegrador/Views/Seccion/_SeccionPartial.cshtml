@@ -84,40 +84,42 @@
         <br />
     }
 
-    <div style="height: 300px; overflow: auto;">
-        <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+    <div id="checkbox-container">
+        <div style="height: 300px; overflow: auto;">
+            <table id="selectedColumn" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
 
-            <thead>
-                <tr>
-                    <th>
+                <thead>
+                    <tr>
+                        <th>
 
-                    </th>
-                    <th>
-                        Codigo
-                    </th>
-                    <th>
-                        Nombre
-                    </th>
-                </tr>
-            </thead>
-            @foreach (var item in Model)
-            {
+                        </th>
+                        <th>
+                            Codigo
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                    </tr>
+                </thead>
+                    @foreach (var item in Model)
+                    {
 
-                <tr id="sec(@item.Codigo)">
-                    <td style="width:7%;">
-                        <center>
-                            <input type="checkbox" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
-                        </center>
-                    </td>
-                    <td style="width:20%">
-                        @Html.DisplayFor(modelItem => item.Codigo)
-                    </td>
-                    <td style="width:70%">
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                </tr>
-            }
-        </table>
+                        <tr id="sec(@item.Codigo)">
+                            <td style="width:7%;">
+                                <center>
+                                    <input type="checkbox" id= "ch(@item.Codigo)" class="SectionCheckbox" value="@item.Codigo" onclick="selectSeccion(this)" />
+                                </center>
+                            </td>
+                            <td style="width:20%">
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td style="width:70%">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                        </tr>
+                    }
+            </table>
+        </div>
     </div>
 
                    

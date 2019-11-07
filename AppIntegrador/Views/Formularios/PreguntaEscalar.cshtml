@@ -11,7 +11,7 @@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
     string radname = respuestaname + ".Opciones[0]";}
 
-<div class="card-body" style="margin-left:unset">
+<div class="card-body opcion-pequena" style="margin-left:unset">
     @for (var index = Model.Pregunta.Pregunta_con_opciones.Escalar.Minimo;
         index <= Model.Pregunta.Pregunta_con_opciones.Escalar.Maximo;
         index += Model.Pregunta.Pregunta_con_opciones.Escalar.Incremento)
@@ -19,7 +19,7 @@
         <div style="display: inline-block; padding:2px; text-align: center;">
             <label for="@radname @index">
                 @index<br />
-                <input type="radio" name="@radname" id="@radname @index" value="@index" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == index ? "checked" : "") />
+                <input type="radio" class="radio-grande" name="@radname" id="@radname @index" value="@index" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == index ? "checked" : "") />
             </label>
         </div>
     }
