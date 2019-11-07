@@ -6,8 +6,7 @@ class GraficosDashboard {
 
     constructor() { }
 
-    recuperarPromedioProfesor() {
-        var correo = "@HttpContext.Current.User.Identity.Name";
+    recuperarPromedioProfesor(correo) {
 
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
@@ -21,10 +20,10 @@ class GraficosDashboard {
             }
 
         });
+
     }
 
-    recuperarPromedioCursos() {
-        var correo = "@HttpContext.Current.User.Identity.Name";
+    recuperarPromedioCursos(correo) {
 
         $.ajax({
             url: '/Dashboard/ObtenerPromedioCursos',

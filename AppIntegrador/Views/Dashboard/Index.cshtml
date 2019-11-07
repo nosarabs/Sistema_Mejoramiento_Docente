@@ -9,10 +9,10 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-3.3.1.js")
     <script>
-
+        var correo = "@HttpContext.Current.User.Identity.Name";
         var x = new GraficosDashboard();
-        x.recuperarPromedioProfesor();
-        x.recuperarPromedioCursos();
+        x.recuperarPromedioProfesor(correo);
+        x.recuperarPromedioCursos(correo);
     </script>
 }
 

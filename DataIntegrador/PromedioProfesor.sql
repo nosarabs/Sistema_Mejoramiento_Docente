@@ -5,11 +5,14 @@
 
 CREATE PROCEDURE [dbo].[PromedioProfesor]
 	(@correo VARCHAR(50),
-	 @promedio FLOAT OUTPUT,
-	 @cantidad INT OUTPUT)
+	 @promedio FLOAT = -1 OUTPUT,
+	 @cantidad INT = 1 OUTPUT)
 	 
 AS
+
+IF EXISTS (SELECT * FROM Imparte WHERE CorreoProfesor = @correo) 
 BEGIN
+
 DECLARE @min AS INT 
 DECLARE @max AS INT
 DECLARE @inc AS INT
