@@ -18,9 +18,8 @@
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                var obj = JSON.parse(resultados);
-                alert(obj.cantidad);
-                alert(obj.promedio);
+                alert(resultados.promedio);
+                alert(resultados.cantidad);
             }
         });
 
