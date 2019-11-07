@@ -25,7 +25,7 @@ namespace AppIntegrador.Models
             PerfilesSeleccionables = new List<SelectListItem>();
             using (var context = new DataIntegradorEntities())
             {
-                var listaPerfiles = from Perfil in db.PerfilesXUsuario(CurrentUser.Username)
+                var listaPerfiles = from Perfil in db.PerfilesXUsuario(CurrentUser.getUsername())
                                     select Perfil;
                 foreach (var nombrePerfil in listaPerfiles) 
                     PerfilesString.Add(nombrePerfil.NombrePefil);

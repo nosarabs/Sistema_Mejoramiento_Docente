@@ -37,9 +37,9 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarSeleccion(string ListaPerfiles, string ListaCarreras, string ListaEnfasis)
         {
-            CurrentUser.Profile = ListaPerfiles;
-            CurrentUser.MajorId = ListaCarreras;
-            CurrentUser.EmphasisId = ListaEnfasis;
+            CurrentUser.setUserProfile(ListaPerfiles);
+            CurrentUser.setUserMajor(ListaCarreras);
+            CurrentUser.setUserEmphasis(ListaEnfasis);
             //Tirar aqui un aviso de que la configuracion ha sido cambiada.
             TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
             return RedirectToAction("Index", "Home");
@@ -204,7 +204,7 @@ namespace AppIntegrador.Controllers
             List<string> carreras = new List<string>();
             using (var context = new DataIntegradorEntities())
             {
-                var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.Username, perfilSeleccionado)
+                var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.getUsername(), perfilSeleccionado)
                                     select Resultado;
                 foreach (var carrera in listaCarreras)
                 {
@@ -218,7 +218,7 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public JsonResult CargarPerfil()
         {
-            string username = CurrentUser.Username;
+            string username = CurrentUser.getUsername();
             List<string> perfiles = new List<string>();
             using (var context = new DataIntegradorEntities())
             {
@@ -233,9 +233,9 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public JsonResult CargarDatosDefault()
         {
-            string profile = CurrentUser.Profile;
-            Carrera carrera = db.Carrera.Find(CurrentUser.MajorId);
-            Enfasis enfasis = db.Enfasis.Find(CurrentUser.MajorId, CurrentUser.EmphasisId);
+            string profile = CurrentUser.getUserProfile();
+            Carrera carrera = db.Carrera.Find(CurrentUser.getUserMajorId());
+            Enfasis enfasis = db.Enfasis.Find(CurrentUser.getUserMajorId(), CurrentUser.getUserEmphasisId());
             string major = carrera.Codigo + "," + carrera.Nombre;
             string emphasis = enfasis.Codigo + "," + enfasis.Nombre;
             return Json(new { defaultProfile = profile, defaultMajor = major, defaultEmphasis = emphasis }, JsonRequestBehavior.AllowGet);
