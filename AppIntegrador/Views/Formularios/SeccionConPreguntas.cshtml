@@ -4,14 +4,24 @@
     Layout = null;
 }
 
+
+
 @foreach (var item in Model)
 {
-    @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion} )
+
+    @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion })
     var displayOrden = item.Orden + 1;
     <div class="card card-primary shadow">
+
         <div class='card-header'>
-            @displayOrden.
-            @Html.DisplayFor(model => item.Nombre)
+            @if (item.Edicion)
+            {
+                @Html.DisplayFor(model => item.Nombre)
+                @Html.DisplayFor(model => item.CodigoSeccion)
+                @*<input type="radio" class="checkmark radio-dibujo" aria-label="..." checked style="margin-top: 30px; margin-left: 60%">*@
+            }
+            @*@displayOrden.*@
+            @*@Html.DisplayFor(model => item.Nombre)*@
         </div>
         <div class='card-body '>
             @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}

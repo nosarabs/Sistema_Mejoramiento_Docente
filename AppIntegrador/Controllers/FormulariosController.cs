@@ -134,6 +134,12 @@ namespace AppIntegrador.Controllers
                     formulario.Secciones.Add(nuevaSeccion);
                 }
             }
+
+            foreach (var seccion in formulario.Secciones)
+            {
+                seccion.Edicion = true;
+            }
+             
             return PartialView("SeccionConPreguntas", formulario.Secciones);
         }
         // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
@@ -341,6 +347,7 @@ namespace AppIntegrador.Controllers
         {
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
 
@@ -492,7 +499,6 @@ namespace AppIntegrador.Controllers
                     ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
                 }
             }
-
 
             return DesplegarFormulario(form.Codigo);
         }
