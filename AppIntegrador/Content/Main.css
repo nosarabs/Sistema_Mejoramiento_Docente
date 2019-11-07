@@ -7203,3 +7203,8 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
 .opcion-pequena {
   padding-top: 1px !important;
   padding-bottom: 1px !important; }
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  margin-bottom: 10px; }

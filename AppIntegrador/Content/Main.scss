@@ -89,3 +89,9 @@
     padding-top: 1px !important;
     padding-bottom: 1px !important;
 }
+
+.sticky-bottom {
+    position: sticky;
+    bottom: 0;
+    margin-bottom: 10px;
+}
