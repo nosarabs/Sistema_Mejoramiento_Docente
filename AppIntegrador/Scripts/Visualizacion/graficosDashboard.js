@@ -1,14 +1,8 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿class GraficosDashboard {
 
-<h2>Index</h2>
+    constructor() { }
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-3.3.1.js")
-    <script>
-
+    recuperarPromedioProfesor() {
         var correo = "@HttpContext.Current.User.Identity.Name";
 
         $.ajax({
@@ -21,7 +15,5 @@
                 alert(resultados);
             }
         });
-       
-    </script>
+    }
 }
-
