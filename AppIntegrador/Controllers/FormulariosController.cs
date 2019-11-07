@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -25,9 +26,17 @@ namespace AppIntegrador.Controllers
             db = new DataIntegradorEntities();
         }
 
-        public FormulariosController(DataIntegradorEntities db) 
-        { 
-            this.db = db; 
+        public FormulariosController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
+
+        public PartialViewResult CargarSeccionesFormulario(string Id)
+        {
+            IEnumerable<ObtenerSeccionesDeFormulario_Result> seccionesSeleccionadas = db.ObtenerSeccionesDeFormulario("CI0128G1").ToList();
+
+            return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 
         public ActionResult LlenarFormulario(string id)
@@ -40,16 +49,34 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasList = db.Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
-                                                    && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
+            /* Antes se utilizaba Linq para obtener estas respuestas, pero Linq no acepta parámetros nulos por lo que se cambió por un procedimiento almacenado
+            var respuestasList Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
+                                                   && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
                                                     && x.GAnno == 2019 && x.GSemestre == 2);
-            Respuestas_a_formulario respuestas = null;
-            if(respuestasList != null)
+            */
+
+            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+
+            Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
+
+            if (respuestasObtenidas != null)
             {
-                respuestas = respuestasList.FirstOrDefault();
+                var respuestasList = respuestasObtenidas.FirstOrDefault();
+
+                if (respuestasList != null)
+                {
+                    respuestas.FCodigo = respuestasList.FCodigo;
+                    respuestas.Correo = respuestasList.Correo;
+                    respuestas.CSigla = respuestasList.CSigla;
+                    respuestas.Fecha = respuestasList.Fecha;
+                    respuestas.Finalizado = respuestas.Finalizado;
+                    respuestas.GAnno = respuestasList.GAnno;
+                    respuestas.GNumero = respuestasList.GNumero;
+                    respuestas.GSemestre = respuestasList.GSemestre;
+                }
             }
 
-            if(seccionesDeFormulario != null)
+            if (seccionesDeFormulario != null)
             {
                 foreach (var seccion in seccionesDeFormulario.ToList())
                 {
@@ -67,11 +94,48 @@ namespace AppIntegrador.Controllers
                     }
                     formulario.Secciones.Add(nuevaSeccion);
                 }
+
             }
-           
+
             return View(formulario);
         }
 
+
+        public ActionResult DesplegarFormulario(string id)
+        {
+            Formulario formularioDB = db.Formulario.Find(id);
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
+
+            /* Antes se utilizaba Linq para obtener estas respuestas, pero Linq no acepta parámetros nulos por lo que se cambió por un procedimiento almacenado
+            var respuestasList Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
+                                                   && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
+                                                    && x.GAnno == 2019 && x.GSemestre == 2);
+            */
+
+
+
+            if (seccionesDeFormulario != null)
+            {
+                foreach (var seccion in seccionesDeFormulario.ToList())
+                {
+                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
+                    foreach (var pregunta in preguntas)
+                    {
+                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                        {
+                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                            OrdenSeccion = nuevaSeccion.Orden,
+                            OrdenPregunta = pregunta.Orden
+                        });
+                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, null);
+                    }
+                    formulario.Secciones.Add(nuevaSeccion);
+                }
+            }
+            return PartialView("SeccionConPreguntas", formulario.Secciones);
+        }
         // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
         public ActionResult RespuestaLibre()
         {
@@ -191,13 +255,13 @@ namespace AppIntegrador.Controllers
                             }
                         }
                     }
-                    else if(pregunta.Pregunta.Tipo == "L" && respuestas != null)
+                    else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
                         var respuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre 
+                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                     && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                     && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                        if(respuestaGuardada != null)
+                        if (respuestaGuardada != null)
                         {
                             pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                         }
@@ -271,10 +335,10 @@ namespace AppIntegrador.Controllers
             crearFormulario.seccion = db.Seccion;
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
-                if (InsertFormularioTieneSeccion(formulario, secciones))
+                if (InsertFormulario(formulario))
                 {
                     ViewBag.Message = "Exitoso";
-                    return RedirectToAction("Create");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -325,7 +389,7 @@ namespace AppIntegrador.Controllers
 
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
-//        [HttpPost]
+        //        [HttpPost]
         public ActionResult AplicarFiltro(string input0, string input1, string input2)
         {
             crearFormulario.seccion = db.Seccion;
@@ -372,6 +436,44 @@ namespace AppIntegrador.Controllers
             }
             return View(formulario);
         }
+
+
+        public class SeccionesFormulario
+        {
+            public string codigo { get; set; }
+            public string nombre { get; set; }
+            public List<String> seccionesAsociadas { get; set; }
+        }
+        [HttpPost]
+        /**
+         * Este método valida si ya el formulario fue creado, de no ser así
+         * lo crea y le asocia las secciones recibidas por parámetros
+         * 
+         */
+        public ActionResult AsociarSesionesAFormulario(SeccionesFormulario formulario)
+        {
+            Formulario form = new Formulario();
+            form.Codigo = formulario.codigo;
+            form.Nombre = formulario.nombre;
+
+            if (ModelState.IsValid && formulario != null && formulario.codigo != null && formulario.nombre != null && formulario.codigo.Length > 0 && formulario.nombre.Length > 0)
+            {
+                if (InsertFormularioTieneSeccion(form, formulario.seccionesAsociadas))
+                {
+                    ViewBag.Message = "Exitoso";
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Formulario.Codigo", "Código ya en uso.");
+                }
+            }
+
+
+            return DesplegarFormulario(form.Codigo);
+        }
+
+
 
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
@@ -436,8 +538,21 @@ namespace AppIntegrador.Controllers
             return true;
         }
 
+        private bool InsertFormularioTieneSeccion(Formulario formulario, List<String> secciones)
+        {
+            if (formulario == null || secciones == null)
+            {
+                return false;
+            }
 
-        private bool InsertFormularioTieneSeccion(Formulario formulario, List<Seccion> secciones)
+            for (int index = 0; index < secciones.Count; ++index)
+            {
+                db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index], index);
+            }
+            return true;
+        }
+
+        private bool InsertFormulario(Formulario formulario)
         {
             try
             {
@@ -450,15 +565,13 @@ namespace AppIntegrador.Controllers
             {
                 return false;
             }
-
-            if (secciones != null)
-            {
-                for (int index = 0; index < secciones.Count; ++index)
-                {
-                    db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index].Codigo, index);
-                }
-            }
             return true;
+        }
+
+        [HttpPost]
+        public ActionResult AgregarFormulario(Formulario formulario)
+        {
+            return Json(new { guardadoExitoso = InsertFormulario(formulario) });
         }
 
 

@@ -145,6 +145,14 @@ namespace AppIntegrador.Controllers
             ViewBag.message = "Respuesta Libre";
             return View("RespuestaLibre");
         }
+
+        // Retorna la vista "parcial" de Pregunta Escalar (.cshtml)
+        public ActionResult PreguntaEscalar()
+        {
+            ViewBag.message = "Pregunta Escalar";
+            return View("PreguntaEscalar");
+        }
+
         // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
         public ActionResult PreguntaSiNo()
         {
