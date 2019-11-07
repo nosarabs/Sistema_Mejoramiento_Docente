@@ -387,18 +387,9 @@ namespace AppIntegrador.Controllers
                     notification.SendNotification(users,
                         "Cambio de contraseña",
                         "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
                         "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr");
-
-                    //HTML implementation pending
-
-                    //notification.SendNotification(users, 
-                    //    "Cambio de contraseña",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                    //    "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
-                    //    "<br>Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins a marcelo.jenkins@ecci.ucr.ac.cr");
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
 
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
