@@ -446,12 +446,12 @@ namespace AppIntegrador.Controllers
             public string nombre { get; set; }
             public List<String> seccionesAsociadas { get; set; }
         }
-        [HttpPost]
         /**
          * Este método valida si ya el formulario fue creado, de no ser así
          * lo crea y le asocia las secciones recibidas por parámetros
          * 
          */
+        [HttpPost]
         public ActionResult AsociarSesionesAFormulario(SeccionesFormulario formulario)
         {
             Formulario form = new Formulario();
