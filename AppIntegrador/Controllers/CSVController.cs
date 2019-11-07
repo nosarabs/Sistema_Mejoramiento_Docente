@@ -21,16 +21,16 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Index()
         {
-            return View(); //TODO: Cambiar esto. Fue usado solo para prueba
+            return View(); 
         }
 
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0)
+            if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/ArchivoCSV"),
+                    string path = Path.Combine(Server.MapPath("~/ArchivoCSV"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
                     ViewBag.Message = "Archivo subido exitosamente";
@@ -64,21 +64,6 @@ namespace AppIntegrador.Controllers
             IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>(path, inputFileDescription); //TODO: De momento el path está fijo
             List<ArchivoCSV> lista = datos.ToList();
 
-            /*
-            foreach (ArchivoCSV f in lista)
-            {
-                datosValidos = validarEntradas(f);
-            }
-
-            if (datosValidos)
-            {
-                foreach (ArchivoCSV f in lista)
-                {
-                    ll.insertarDatos(f);
-                }
-            }*/
-
-
             var archivoValido = true;
 
             fila = lista[0];
@@ -106,10 +91,10 @@ namespace AppIntegrador.Controllers
 
         private bool validarEntradas(ArchivoCSV archivo)
         {
-            bool numerosValidos = validaNumeros(archivo);
-            bool longitudesValidas = validaLongitudes(archivo);
+            bool numerosValidos = validaNumeros(archivo); //Validar que los datos numéricos son correctos
+            bool longitudesValidas = validaLongitudes(archivo); //Validar que las longitudes de los caracteres son correctas
 
-            if (numerosValidos && longitudesValidas)
+            if (numerosValidos && longitudesValidas) 
             {
                 return true;
             }

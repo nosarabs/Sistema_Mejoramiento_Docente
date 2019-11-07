@@ -16,7 +16,7 @@ namespace AppIntegrador.Models
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("InsertarUnidadCSV", con);
+                SqlCommand cmd = new SqlCommand("InsertarUnidadCSV", con); //Cada uno de estos comandos llama a un procedimiento almacenado de inserción 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@CodUnidad", archivos.CodigoUnidad);
                 cmd.Parameters.AddWithValue("@Nfacultad", archivos.NombreFacultad);
@@ -72,7 +72,7 @@ namespace AppIntegrador.Models
                 cmd10.CommandType = CommandType.StoredProcedure;
                 cmd10.Parameters.AddWithValue("@Correo", archivos.CorreoEstudiante);
 
-                con.Open();
+                con.Open(); //Abre conexion con la db
 
                 cmd.ExecuteNonQuery();
                 cmd2.ExecuteNonQuery();
@@ -85,16 +85,14 @@ namespace AppIntegrador.Models
                 cmd9.ExecuteNonQuery();
                 cmd10.ExecuteNonQuery();
 
-                con.Close();
-                System.Diagnostics.Debug.WriteLine("Sirve");
+                con.Close(); //Cierra la conexion
             }
-            catch (Exception ex)
+            catch (Exception ex) //Si ocurre algun error
             {
                 if (con.State == ConnectionState.Open)
                 {
                     con.Close();
                 }
-                System.Diagnostics.Debug.WriteLine("NO SIRVE");
                 System.Diagnostics.Debug.WriteLine(ex.Message.ToString());
             }
         }
