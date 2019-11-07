@@ -8,6 +8,10 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using AppIntegrador.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Web;
+using System.IO;
+using System.Web.Routing;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -25,9 +29,34 @@ namespace AppIntegrador.Tests.Controllers
         public void TestMethod1()
         {
             // Arrange
+
+            //Creamos httpContextMock and serverMock:
+            var httpContextMock = new Mock<HttpContextBase>();
+            var serverMock = new Mock<HttpServerUtilityBase>();
+            //Mock el path original
+            serverMock.Setup(x => x.MapPath("~/ArchivoCSV")).Returns(Path.GetFullPath(@"C:\Users\Daniel"));
+            
+            //Mockeamos el objeto HTTPContext.Server con el servidor ya mockeado:
+            httpContextMock.Setup(x => x.Server).Returns(serverMock.Object);
+
+            //Creo el controlador y su contexto
             CSVController controller = new CSVController();
+            controller.ControllerContext = new ControllerContext(httpContextMock.Object, new RouteData(), controller);
+
+            //Insertamos el csv 
+            string filePath = Path.GetFullPath(@"C:\Users\Daniel\prueba.csv");
+            FileStream fileStream = new FileStream(filePath, FileMode.Open);
+
+            //Cargamos el mock
+            Mock<HttpPostedFileBase> uploadedFile = new Mock<HttpPostedFileBase>();
+            uploadedFile.Setup(x => x.FileName).Returns("pruebas.csv");
+            uploadedFile.Setup(x => x.ContentType).Returns(".csv");
+            uploadedFile.Setup(x => x.InputStream).Returns(fileStream);
+            HttpPostedFileBase[] httpPostedFileBases = { uploadedFile.Object };
+
+
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(httpPostedFileBases[0]) as ViewResult;
             // Assert
             Assert.IsNotNull(result);
         }
