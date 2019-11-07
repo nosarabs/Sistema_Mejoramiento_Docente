@@ -84,6 +84,17 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void PreguntaEscalarNoNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.PreguntaEscalar() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void RespuestaLibreNulo()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -244,6 +255,16 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.PreguntaSiNo() as ViewResult;
 
             Assert.AreEqual("PreguntaSiNo", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarPreguntaEscalar()
+        {
+            var controller = new PreguntasController();
+            var result = controller.PreguntaEscalar() as ViewResult;
+
+            Assert.AreEqual("PreguntaEscalar", result.ViewName);
         }
 
         // Historia RIP-CBX

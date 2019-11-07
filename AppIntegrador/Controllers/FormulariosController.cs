@@ -31,6 +31,14 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
+
+        public PartialViewResult CargarSeccionesFormulario(string Id)
+        {
+            IEnumerable<ObtenerSeccionesDeFormulario_Result> seccionesSeleccionadas = db.ObtenerSeccionesDeFormulario("CI0128G1").ToList();
+
+            return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
+        }
+
         public ActionResult LlenarFormulario(string id)
         {
             Formulario formularioDB = db.Formulario.Find(id);

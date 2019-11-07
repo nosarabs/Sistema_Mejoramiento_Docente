@@ -65,59 +65,60 @@
                                                }
                                            })
 
-                                                <div class="contador small float-right">0/250 caracteres usados</div>
-                                                @Html.ValidationMessageFor(model => model.Formulario.Nombre, "", new { @style = "color:red" })
-                                            </form>
+                                                    <div class="contador small float-right">0/250 caracteres usados</div>
+                                                    @Html.ValidationMessageFor(model => model.Formulario.Nombre, "", new { @style = "color:red" })
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group float-right">
-                                    <div>
-                                        <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="CrearFormulario" onclick="mostrarSecciones()" />
+                                    <div class="form-group float-right">
+                                        <div>
+                                            <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="CrearFormulario" onclick="mostrarSecciones()" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
-            <tr id="secciones" hidden>
-                <td>
-                    @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
-                    <div class="form-horizontal card-group shadow ">
-                        <div class="card card-default ">
-                            <div class="card-body grisUCR2  ">
-                                <h3>Secciones del formulario</h3>
-                                <hr />
-                                <div class="form-group col-md-12" id="seccionesActuales" style="height: 200px; overflow-y: scroll;">
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="">
-                                        @*Posibilidad de agregar sección*@
-                                        <input type="button" value="Elegir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
+                <tr id="secciones" hidden>
+                    <td>
+                        @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
+                        <div class="form-horizontal card-group shadow ">
+                            <div class="card card-default ">
+                                <div class="card-body grisUCR2  ">
+                                    <h3>Secciones del formulario</h3>
+                                    <hr />
+                                    <div class="form-group col-md-12" id="seccionesActuales" style="height: 200px; overflow-y: scroll;">
                                     </div>
-                                </div>
-                                <div class="form-horizontal card-group">
-                                    <div class="card card-default">
-                                        <div>
-                                            <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <div id="ModalAgregarSecciones">
-                                                                @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                                                                <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
-                                                            </div>
-                                                            <div id="ModalCrearSeccion">
-                                                                @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
-                                                            </div>
 
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
-                                                            <button type="button" class="btn-azulUCR " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones seleccionadas</button>
+                                    <div class="form-group">
+                                        <div class="">
+                                            @*Posibilidad de agregar sección*@
+                                            <input type="button" value="Elegir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
+                                        </div>
+                                    </div>
+                                    <div class="form-horizontal card-group">
+                                        <div class="card card-default">
+                                            <div>
+                                                <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <div id="ModalAgregarSecciones">
+                                                                    @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                                    <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                                </div>
+                                                                <div id="ModalCrearSeccion">
+                                                                    @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                                                <button type="button" class="btn-azulUCR " onclick="addSeccionToFormulario()" data-dismiss="modal">Agregar secciones seleccionadas</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -127,9 +128,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
             <tr>
                 <td>
@@ -155,6 +155,7 @@
     }
 </style>
 
+}
 @section Scripts {
     @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/jqueryval/")*@
@@ -182,4 +183,3 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
 }
-
