@@ -158,6 +158,8 @@
     <Build Include="Formularios\Procedimientos\GuardarOpcionesSeleccionadas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaEscalar.sql" />
     <Build Include="Formularios\Procedimientos\EliminarRespuestasDeFormulario.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuarioPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

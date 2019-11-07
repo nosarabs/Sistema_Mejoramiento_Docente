@@ -44,6 +44,34 @@ namespace AppIntegrador.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /*TAM 3.4 Task 1 */
+        [HttpPost]
+        public ActionResult GuardarPermisos(PermissionsViewHolder model)
+        {
+            int codPerfil = model.PerfilesSeleccionados;
+            string perfil = model.Perfiles[codPerfil].NombrePerfil;
+            string codCarrera = model.CarrerasSeleccionadas;
+            string codEnfasis = model.EnfasisSeleccionados;
+            List<Persona> Personas = model.Personas;
+            List<Permiso> Permisos = model.Permisos;
+
+            //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
+            for (int i = 0; i < Personas.Count; ++i)
+            {
+                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil , codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+            }
+
+            //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
+            for (int i = 0; i < Permisos.Count; ++i)
+            {
+                db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+            }
+            
+            //TO-DO Aviso de que la configuracion fue cambiada
+            return View("Index", model);
+        }
+        /* Fin TAM 3.4 Task 1*/
+
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
         [HttpPost]
         public JsonResult CargarCheckboxes(string profileCode, string profileName, string majorCode, string emphCode)
@@ -166,7 +194,8 @@ namespace AppIntegrador.Controllers
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
         }
-
+        
+        /* TAM 3.7 Carga todos los perfiles que tiene asignados un usuario */
         [HttpGet]
         public JsonResult CargarPerfil()
         {

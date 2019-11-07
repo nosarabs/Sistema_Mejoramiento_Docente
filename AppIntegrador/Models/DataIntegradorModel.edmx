@@ -1524,6 +1524,13 @@
           <Parameter Name="orden" Type="tinyint" Mode="In" />
           <Parameter Name="texto" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="AgregarPerfilPermiso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="idPermiso" Type="int" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tienePermiso" Type="bit" Mode="In" />
+        </Function>
         <Function Name="AgregarPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo" Type="int" Mode="In" />
           <Parameter Name="nombre" Type="varchar" Mode="In" />
@@ -1560,6 +1567,13 @@
           <Parameter Name="pPassword" Type="varchar" Mode="In" />
           <Parameter Name="activo" Type="bit" Mode="In" />
           <Parameter Name="estado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="AgregarUsuarioPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="tienePerfil" Type="bit" Mode="In" />
         </Function>
         <Function Name="AsociarPreguntaConSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoSeccion" Type="varchar" Mode="In" />
@@ -3595,6 +3609,13 @@
             <Parameter Name="orden" Mode="In" Type="Byte" />
             <Parameter Name="texto" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarPerfilPermiso">
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="idPermiso" Mode="In" Type="Int32" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tienePermiso" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="AgregarPlan">
             <Parameter Name="codigo" Mode="In" Type="Int32" />
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -3631,6 +3652,13 @@
             <Parameter Name="pPassword" Mode="In" Type="String" />
             <Parameter Name="activo" Mode="In" Type="Boolean" />
             <Parameter Name="estado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="AgregarUsuarioPerfil">
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
+            <Parameter Name="tienePerfil" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="AsociarPreguntaConSeccion">
             <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
@@ -4348,6 +4376,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AgregarFormulario" FunctionName="DataIntegradorModel.Store.AgregarFormulario" />
           <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
+          <FunctionImportMapping FunctionImportName="AgregarPerfilPermiso" FunctionName="DataIntegradorModel.Store.AgregarPerfilPermiso" />
           <FunctionImportMapping FunctionImportName="AgregarPlan" FunctionName="DataIntegradorModel.Store.AgregarPlan" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaConOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaEscalar" FunctionName="DataIntegradorModel.Store.AgregarPreguntaEscalar" />
@@ -4355,6 +4384,7 @@
           <FunctionImportMapping FunctionImportName="AgregarPreguntas" FunctionName="DataIntegradorModel.Store.AgregarPreguntas" />
           <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="DataIntegradorModel.Store.AgregarSeccion" />
           <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="DataIntegradorModel.Store.AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="AgregarUsuarioPerfil" FunctionName="DataIntegradorModel.Store.AgregarUsuarioPerfil" />
           <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
           <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
           <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="DataIntegradorModel.Store.ChangePassword" />
