@@ -77,18 +77,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group float-right">
-                                            <div>
-                                                <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="CrearFormulario" onclick="mostrarSecciones()" />
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr id="secciones" hidden>
+                    <tr id="secciones">
                         <td>
                             @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
                             <div class="form-horizontal card-group shadow ">
@@ -102,7 +97,7 @@
                                         <div class="form-group">
                                             <div class="">
                                                 @*Posibilidad de agregar sección*@
-                                                <input type="button" value="Elegir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
+                                                <input type="button" value="Añadir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo()" />
                                             </div>
                                         </div>
                                         <div class="form-horizontal card-group">
