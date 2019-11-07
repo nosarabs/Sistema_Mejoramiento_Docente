@@ -347,6 +347,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
+    <Compile Include="Utilities\FormsAuth.cs" />
+    <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
