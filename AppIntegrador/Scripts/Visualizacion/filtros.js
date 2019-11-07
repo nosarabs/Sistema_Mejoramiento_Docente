@@ -19,9 +19,8 @@
 
         var option = document.createElement("option");
         option.className = "option";
-        option.value = "";
+        option.value = null;
         option.text = "Seleccione una opción...";
-        //option.disabled= true;
 
         seleccion.appendChild(option);   
 
@@ -45,7 +44,7 @@
             }
         });
         //Se agrega el elemento select a la vista
-        seleccion.onchange = function () { recuperarUnidadAcademicaSeleccionada() };
+        seleccion.onchange = function () { recuperarFiltros() };
         container.appendChild(seleccion);
     }
 
@@ -66,10 +65,8 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = "";
+        option.value = null;
         option.text = "Seleccione una opción...";
-        //option.active = true;
-        //option.disabled = true;
 
         seleccion.appendChild(option);
 
@@ -93,7 +90,7 @@
             }
         });
         //Se agrega el elemento select a la vista
-        seleccion.onchange = function () { recuperarCarreraEnfasis() };
+        seleccion.onchange = function () { recuperarFiltros() };
         container.appendChild(seleccion);
     }
 
@@ -112,7 +109,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = "";
+        option.value = null;
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -137,7 +134,7 @@
             }
         });
         //Se agrega el elemento select a la vista
-        seleccion.onchange = function () { recuperarCursoGrupo() };
+        seleccion.onchange = function () { recuperarFiltros() };
 
         container.appendChild(seleccion);
     }
@@ -157,7 +154,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = "";
+        option.value = null;
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -191,7 +188,51 @@
             }
         });
         //Se agrega el elemento select a la vista
-        seleccion.onchange = function () { recuperarProfesor() };
+        seleccion.onchange = function () { recuperarFiltros() };
+        container.appendChild(seleccion);
+    }
+
+    agregarFiltroFormularios(container) {
+        //Título de la categoría
+        container.appendChild(document.createElement("hr"));
+        var categoria = document.createElement("h5");
+        categoria.textContent = "Formulario";
+        container.appendChild(categoria);
+
+        //Se agrega el select que contendrá los elementos (opciones)
+        var seleccion = document.createElement("select");
+        seleccion.id = "filtroFormularios";
+        seleccion.className = "select";
+        var option = document.createElement("option");
+        option.className = "option";
+
+        option.value = null;
+        option.text = "Seleccione una opción...";
+
+        seleccion.appendChild(option);
+
+        //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
+        $.ajax({
+            url: '/Dashboard/ObtenerFormularios',
+            data: {
+            },
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (resultados) {
+                //Ciclo que crea cada option para luego agregarlo al select
+
+                for (var i = 0; i < resultados.length; ++i) {
+                    var option = document.createElement("option");
+                    option.className = "option";
+                    option.value = resultados[i].FCodigo;
+                    option.text = resultados[i].FCodigo +" - "+resultados[i].FNombre;
+                    seleccion.appendChild(option);
+                }
+            }
+        });
+        //Se agrega el elemento select a la vista
+        seleccion.onchange = function () { recuperarFiltros() };
         container.appendChild(seleccion);
     }
 
@@ -208,25 +249,10 @@
         this.agregarFiltroCarreraEnfasis(container);
         this.agregarFiltroCursoGrupo(container);
         this.agregarFiltroProfesores(container);
+        this.agregarFiltroFormularios(container);
 
         var panelfiltros = document.getElementById("panelFiltros");
         panelfiltros.appendChild(container);
 
     }
-
-    //recuperarFiltros()
-    //{
-    //    var cont = document.getElementById("containerFiltros");
-
-    //    var e = document.getElementById("filtroUA");
-    //    var strUser = e.options[e.selectedIndex].value;
-    //    alert(strUser);
-
-    //    //var ua = document.getElementById("");
-        
-    //    //var p = document.createElement("textbox");
-    //    //p.className = "textbox";
-    //    //p.textContent = "qwe";
-    //    //container.appendChild(p);
-    //}
 }

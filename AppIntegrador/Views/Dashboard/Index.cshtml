@@ -30,42 +30,71 @@
                     </script>
 
                     <script>
+                        //Función que retorna el código de Unidad Académica seleccionada
                         function recuperarUnidadAcademicaSeleccionada()
                         {
                             var ua = document.getElementById("filtroUA");
                             var uaSeleccionada = ua.options[ua.selectedIndex].value;
-                            var s = uaSeleccionada.split("/");
+                            return uaSeleccionada;
                         }
+                        //Función que retorna el código de carrera y el código énfasis
                         function recuperarCarreraEnfasis()
                         {
                             var ce = document.getElementById("filtroCarreraEnfasis");
                             var ceSeleccionada = ce.options[ce.selectedIndex].value;
-                            var s = ceSeleccionada.split("/");
+                            if (ceSeleccionada == null)
+                                return null;
+                            else
+                                return ceSeleccionada.split("/");
                         }
+                        //Función que retorna la Sigla del curso, Número de Grupo, Semestre, Año
                         function recuperarCursoGrupo()
                         {
                             var cg = document.getElementById("filtroCursoGrupo");
                             var cgSeleccionada = cg.options[cg.selectedIndex].value;
-                            var s = cgSeleccionada.split("/");
+                            if (cgSeleccionada != null)
+                                return cgSeleccionada.split("/");
+                            else
+                                return null;
                         }
+                        //Función que retorna el correo del profesor
                         function recuperarProfesor()
                         {
                             var p = document.getElementById("filtroProfesores");
                             var pSeleccionada = p.options[p.selectedIndex].value;
-                            var s = pSeleccionada.split("/");
+                            return pSeleccionada;
                         }
-
+                        //Método que permite recuperar todas las opciones seleccionadas
                         function recuperarFiltros()
                         {
-                            this.recuperarUnidadAcademicaSeleccionada();
-                            this.recuperarCarreraEnfasis();
-                            this.recuperarCursoGrupo();
-                            this.recuperarProfesor();
+                            var ua = this.recuperarUnidadAcademicaSeleccionada();
+                            var ce = this.recuperarCarreraEnfasis();
+                            
+                            var codEnfasis = null;
+                            var codCarrera = null;
+                            if (ce != null)
+                            {
+                                codCarrera = ce[0];
+                                codEnfasis = ce[1];
+                            }
+
+                            var sigla = null;
+                            var numGrupo = null;
+                            var semestre = null;
+                            var anno = null;
+
+                            var cg = this.recuperarCursoGrupo();
+                            if (cg != null)
+                            {
+                                sigla = cg[0];
+                                numGrupo = cg[1];
+                                semestre = cg[2];
+                                anno = cg[3];
+                            }
+                            
+                            var correoProf = this.recuperarProfesor();
                         }
-
-
                     </script>
-                   
                 </div>
 
                 <div class="col" id="panelDashboard">
@@ -109,10 +138,10 @@
             async: false,
             success: function (resultados) {
                 //Se imprime la información de cada formulario para verificar el llamado.
-                alert("Length: " + resultados.length);
-                for (var i = 0; i < resultados.length; ++i) {
-                    alert("Código: " + resultados[i].FCodigo + "\nNombre: " + resultados[i].FNombre + "\nCurso: " + resultados[i].CSigla + "\nGrupo: " + resultados[i].GNumero + "\nSemestre: " + resultados[i].GSemestre + "\nAño: " + resultados[i].GAnno + "\nFecha Inicio: " + resultados[i].FechaInicio + "\nFecha Fin: " + resultados[i].FechaFin);
-                }
+                //alert("Length: " + resultados.length);
+                //for (var i = 0; i < resultados.length; ++i) {
+                //    alert("Código: " + resultados[i].FCodigo + "\nNombre: " + resultados[i].FNombre + "\nCurso: " + resultados[i].CSigla + "\nGrupo: " + resultados[i].GNumero + "\nSemestre: " + resultados[i].GSemestre + "\nAño: " + resultados[i].GAnno + "\nFecha Inicio: " + resultados[i].FechaInicio + "\nFecha Fin: " + resultados[i].FechaFin);
+                //}
             }
         });
 
