@@ -56,14 +56,7 @@
             </script>
             for (var item = 0; item < Model.Secciones.Count(); ++item)
             {
-                /* FUNCIONA PERO SALEN TODAS LAS PREGUNTAS DE TODAS LAS SECCIONES DE PICHAZO
-                <script>
-                    var boton = botones.crearBoton("Sec @Model.Secciones.ElementAt(item).codigoSeccion", "@Model.Secciones.ElementAt(item).textoSeccion");
-                    var i = document.getElementById("seccionesContainer");
-                    i.appendChild(boton);
-                    botones.crearBotones ("Sec @Model.Secciones.ElementAt(item).codigoSeccion", listaPreguntas);
-                </script>
-                */
+                
                 // Se crean los collapsibles iniciales, para las secciones
                 <button class="collapsible" name="seccioncita"> Sec. @(item + 1). @Html.DisplayFor(modelItem => Model.Secciones.ElementAt(item).textoSeccion)</button>
                 <div class="panel" id="Sec @Model.Secciones.ElementAt(item).codigoSeccion">
