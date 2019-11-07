@@ -29,7 +29,7 @@
                                        {
                                            htmlAttributes = new
                                            {
-                                               @class = "validar form-control",
+                                               @class = "validar-agregar-secciones form-control",
                                                id = "textCode",
                                                name = "textCode",
                                                @maxlength = "8",
@@ -51,7 +51,7 @@
                                            {
                                                htmlAttributes = new
                                                {
-                                                   @class = "validar form-control",
+                                                   @class = "validar-agregar-secciones form-control",
                                                    id = "textName",
                                                    name = "textName",
                                                    @maxlength = "250",
@@ -68,33 +68,37 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group float-right">
+                                    <div>
+                                        <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="CrearFormulario" onclick="mostrarSecciones()" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </td>
             </tr>
 
-            <tr>
+            <tr id="secciones" hidden>
                 <td>
                     @*Espacio donde se despliegan las secciones ya agregadas al formulario*@
                     <div class="form-horizontal card-group shadow ">
                         <div class="card card-default ">
                             <div class="card-body grisUCR2  ">
-                                <h2>Secciones del formulario</h2>
+                                <h3>Secciones del formulario</h3>
                                 <hr />
-                                <div class="form-group col-md-12" id="seccionesActuales" style="height: 250px; overflow-y: scroll;">
-                                    @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
+                                <div class="form-group col-md-12" id="seccionesActuales" style="height: 200px; overflow-y: scroll;">
                                 </div>
 
                                 <div class="form-group">
                                     <div class="">
                                         @*Posibilidad de agregar sección*@
-                                        <input type="button" value="Agregar sección al formulario" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
+                                        <input type="button" value="Elegir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="CrearModal()" />
                                     </div>
                                 </div>
                                 <div class="form-horizontal card-group">
                                     <div class="card card-default">
-                                        <div class="card-body">
+                                        <div>
                                             <div class="modal fade" id="ExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -148,111 +152,16 @@
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
-    <script>
-        $('#ExampleModal').on('hide.bs.modal', function () {
-            console.log('Todo es trivial')
-
-            var seccionesAsociadas = []
-            var index = 0;
-            var beforeElement = true;
-            while (index < agregarsecciones.current() && beforeElement) {
-                var secc = document.getElementById("secciones[" + index + "].Codigo")
-                seccionesAsociadas.push(secc.value);
-                ++index;
-            }
-
-            var codigo = document.getElementById("textCode").value
-            var nombre = document.getElementById("textName").value
-
-            var resultado = { codigo, nombre, seccionesAsociadas };
-            console.log(JSON.stringify(resultado));
-            $.ajax({
-                contentType: "application/json; charset=utf-8",
-                type: "POST",
-                url: "/Formularios/AsociarSesionesAFormulario",
-                data: JSON.stringify(resultado),
-                dataType: "html",
-                traditional: true,
-                success: function (data) {
-                    resultado = []
-                    $('#seccionesActuales').html(data);
-                },
-                error: function () {
-
-                }
-            });
-        });
-    </script>
+    <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
 
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
-        });
-    </script>
-
-    <script>
-        $(function () {
-            var includes = $('[data-include]');
-            jQuery.each(includes, function () {
-                var file = 'views/' + $(this).data('include') + '.html';
-                $(this).load(file);
-            });
+            validarEntradasAgregarSecciones();
         });
     </script>
 
 
-    <script type="text/javascript">
-        var currentEnabled = null;
-        function enableElement(elem) {
-            if (currentEnabled) {
-                currentEnabled.disabled = true;
-            }
-            elem.disabled = false;
-            currentEnabled = elem;
-        }
-    </script>
-
-    <script>
-        function CrearModal() {
-            $('#ExampleModal').modal();
-            $('#ModalAgregarSecciones').show();
-        }</script>
-    <script>
-        $('.CrearSeccionModal').click(function () {
-            $('#ModalCrearSeccion').show("fast");
-            $('#ModalAgregarSecciones').hide("fast");
-        });
-    </script>
-
-    <script>
-        $('#ExampleModal').on('show.bs.modal', function (event) {
-            $('#ModalCrearSeccion').hide();
-        })
-    </script>
-
-    <script>
-        function CerrarCrearSeccion() {
-            $('#ModalCrearSeccion').hide("fast");
-            $('#ModalAgregarSecciones').show("fast");
-        }
-    </script>
-
-    @*Historia RIP-CF5. Llama al método del controlador que genera la vista parcial filtrada y
-        vuelve a llamar al diálogo modal para mostrar los resultados.*@
-    <script>
-        $("#ActualizarVistaFiltros").click(function () {
-           $.ajax({
-               url: "@Url.Action("AplicarFiltro", "Formularios")",
-               type: "post",
-               //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
-               data: $("form").serialize(), //if you need to post Model data, use this
-               success: function (result) {
-                   $("#ModalSecciones").html(result);
-                   $('#ExampleModal').show();
-               }
-           });
-        })
-    </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
