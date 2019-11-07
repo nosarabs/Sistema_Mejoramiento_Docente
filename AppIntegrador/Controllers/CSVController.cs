@@ -72,7 +72,6 @@ namespace AppIntegrador.Controllers
                 //Se valida cada fila de CSV
                 foreach (ArchivoCSV f in lista)
                 {
-                    cargaFila(f); // actualiza fila y copia el valor anterior para los espacios en blanco
                     if (!validarEntradas(fila))
                     {
                         archivoValido = false;

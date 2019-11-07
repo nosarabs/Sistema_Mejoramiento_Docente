@@ -158,6 +158,7 @@
     <Build Include="InsertarProfesorCSV.sql" />
     <Build Include="InsertarEstudianteCSV.sql" />
     <Build Include="InsertarFuncionarioCSV.sql" />
+    <Build Include="TriggerUnidad.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
