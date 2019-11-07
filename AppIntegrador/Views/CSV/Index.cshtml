@@ -12,7 +12,7 @@
 @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <label for="file">Subir archivo CSV:</label>
-    <input type="file" name="file" id="file" />
+    <input type="file" name="file" id="file" accept=".csv" />
     <br>
     <br>
 
