@@ -15,6 +15,8 @@
         </div>
     </div>
     <p>Actualmente usted está trabajando con el perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</p>
+    <p>Carrera: @Html.DisplayFor(model => model.NombreCarrera)</p>
+    <p>Enfasis: @Html.DisplayFor(model => model.NombreEnfasis)</p>
     
     @using (Html.BeginForm("GuardarSeleccion", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
@@ -52,7 +54,6 @@
 
 <script>
     $("#ListaPerfiles").on("change", function () {
-                    $("#ListaCarreras").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     cargarCarreras($("#ListaPerfiles option:selected").val());
                     cargarEnfasisXPerfil('@AppIntegrador.Models.CurrentUser.getUserMajorId()', $("#ListaPerfiles option:selected").val());
                 })
@@ -65,13 +66,12 @@
                             var splitted = data[i].toString().split(",");
                             $("#ListaCarreras").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
                         }
+                        $("#ListaCarreras").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     })
                 }
 
     $("#ListaCarreras").on("change", function(){
-                    $("#ListaEnfasis").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     cargarEnfasisXPerfil($("#ListaCarreras option:selected").val(), '@AppIntegrador.Models.CurrentUser.getUserProfile()');
-                    
                 })
 
     function cargarEnfasisXPerfil(val, profile) {
@@ -84,6 +84,8 @@
                 var splitted = data[i].toString().split(",");
                 $("#ListaEnfasis").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
             }
+            $("#ListaEnfasis").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+
         })
     }
     
@@ -95,7 +97,6 @@
                     var major = result.defaultMajor.split(",");
                     var emphasis = result.defaultEmphasis.split(",");
                     if (major.length > 1) {
-                        $("#ListaCarreras").append("<option value=" + major[0] + ">" + major[1] + "</option>");
                         cargarCarreras(result.defaultProfile);
                     }
                     $('#ListaPerfiles').val(result.defaultProfile);

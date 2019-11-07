@@ -90,6 +90,7 @@ namespace AppIntegrador.Models
 
             if (db.UsuarioActual.Find(username) == null)
             {
+                db.UsuarioActual.Add(newUser);
                 db.SaveChanges();
             }
             else

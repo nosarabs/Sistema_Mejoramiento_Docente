@@ -73,9 +73,11 @@
                                 <a href="/Users/Index">Usuarios &#9660;</a>
                                 <ul>
                                     <li><a href="/Users/Index">Administración de usuarios</a></li>
-
+                                    @{ if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
+                                    {
                                     <li><a href="/Permissions/Index">Administración de perfiles</a></li>
-
+                                    }else{}
+                                    }
                                 </ul>
                             </li>
                         }

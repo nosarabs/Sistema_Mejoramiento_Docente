@@ -17,6 +17,10 @@ namespace AppIntegrador.Models
 
         public List<SelectListItem> PerfilesSeleccionables { get; set; }
 
+        public string NombreCarrera { get; set; }
+
+        public string NombreEnfasis { get; set; }
+
         public ConfigViewHolder()
         {
             List<string> PerfilesString = new List<string>();
@@ -36,6 +40,10 @@ namespace AppIntegrador.Models
                     PerfilesSeleccionables.Add(new SelectListItem() { Text = NombrePerfil });
                 }
             }
+            Carrera carrera = db.Carrera.Find(CurrentUser.getUserMajorId());
+            this.NombreCarrera = carrera.Nombre;
+            Enfasis enfasis = db.Enfasis.Find(CurrentUser.getUserMajorId(), CurrentUser.getUserEmphasisId());
+            this.NombreEnfasis = enfasis.Nombre;
         }
     }
 }
