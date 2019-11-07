@@ -50,7 +50,14 @@
                             </div>
                         </div>
                     </div>
+                    @Html.LabelFor(model => model.Profesor)
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DropDownList("profesores", null, htmlAttributes: new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
+
 
                 <div class="form-group">
                     <div class="row">
@@ -111,8 +118,18 @@
 </div>
 
 @section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#profesores-selector').multiselect({
+                enableFiltering: true
+            });
+        });
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
+
 
     <script type="text/javascript">
         $(function () {
@@ -247,4 +264,6 @@
             actualizarAccionables(plan, obj, desc);
         }
     </script>
+
+
 }

@@ -17,8 +17,10 @@
     else
     {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        @Styles.Render("~/Content/Main.css")      
+        @Styles.Render("~/Content/Main.css")
         @Styles.Render("~/Content/bs4.3.1")
+        @Styles.Render("~/packages/Bootstrap.Multiselect.0.9.13/Css/bootstrap-multiselect.css")
+
         if (ViewBag.EnableBS4NoNavBar != true)
         {
             @Styles.Render("~/Content/css")
@@ -138,7 +140,7 @@
         <br />
     }
 
-   <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
+    <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
@@ -152,6 +154,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect.js")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect-collapsible-groups.js")
     }
     @RenderSection("scripts", required: false)
 

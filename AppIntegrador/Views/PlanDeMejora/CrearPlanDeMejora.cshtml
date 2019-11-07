@@ -8,6 +8,7 @@
 @model AppIntegrador.Models.Metadata.PlanDeMejoraMetadata
 @Scripts.Render("~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js")
 
+
 @{
     ViewBag.Title = "CrearPlanDeMejora";
 }
@@ -51,12 +52,16 @@
                             @Html.LabelFor(model => model.fechaInicio, "Inicio")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new {
+                                    @Html.EditorFor(model => model.fechaInicio, new
+                                    {
+                                        htmlAttributes = new
+                                        {
                                     id = "fechaInicioPlanDM",
                                     @class = "form-control",
-                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')" 
-                                    //@onchange = "validarInicioPDM()" 
-                               } })
+                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
+                                    //@onchange = "validarInicioPDM()"
+                               }
+                                    })
                                     <span class="error">
                                         <p id="fechaInicioPlanDM_msj" class="regularMsj">Inicio plan de mejora.</p>
                                     </span>
@@ -67,11 +72,15 @@
                             @Html.LabelFor(model => model.fechaFin, "Fin")
                             <div class="row">
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new {
+                                    @Html.EditorFor(model => model.fechaFin, new
+                                    {
+                                        htmlAttributes = new
+                                        {
                                     id = "fechaFinalPlanDM",
                                     @class = "form-control",
                                     @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
-                               } })
+                               }
+                                    })
                                     <span class="error">
                                         <p id="fechaFinalPlanDM_msj" class="regularMsj">Fin plan de mejora.</p>
                                     </span>
@@ -84,7 +93,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="botonCentrado">
-                                <input type="submit" id="sendPDMListo" value="Crear Plan de Mejora" class="btn btn-success" disabled/>
+                                <input type="submit" id="sendPDMListo" value="Crear Plan de Mejora" class="btn btn-success" disabled />
                             </div>
                         </div>
                     </div>
@@ -99,7 +108,6 @@
     </div>
 </div>
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

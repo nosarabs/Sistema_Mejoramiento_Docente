@@ -214,6 +214,7 @@ namespace AppIntegrador.Controllers
                 db.Entry(planDeMejora).State = EntityState.Modified;
                 db.SaveChanges();
             }
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
@@ -281,6 +282,7 @@ namespace AppIntegrador.Controllers
             }
             //return RedirectToAction("Index");
             ViewBag.IdPlan = id;
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("EditarPlanDeMejora2", planTemp);
         }
 
