@@ -8,6 +8,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data;
 using System.Data.Entity;
 using System.Net;
+using System.IO;
 using AppIntegrador.Models;
 using System.Text.RegularExpressions;
 
@@ -17,10 +18,41 @@ namespace AppIntegrador.Controllers
     public class CSVController : Controller
     {
         ArchivoCSV fila;
-        LlenarCSV ll = new LlenarCSV();
-        bool datosValidos;
+
         public ActionResult Index()
         {
+            return View(); //TODO: Cambiar esto. Fue usado solo para prueba
+        }
+
+        [HttpPost]
+        public ActionResult Index(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/ArchivoCSV"),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "Archivo subido exitosamente";
+                    carga(path);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "Por favor especifique un archivo";
+            }
+           
+            return View();
+        }
+
+        private void carga(string path)
+        {
+            bool datosValidos = true;
+            LlenarCSV ll = new LlenarCSV();
+
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
                 SeparatorChar = ',', //Indica qué es lo que separa cada valor en el archivo
@@ -29,9 +61,9 @@ namespace AppIntegrador.Controllers
             };
             CsvContext cc = new CsvContext();
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
-            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>("c:\\Users\\Denisse Alfaro\\Documents\\prueba.csv", inputFileDescription); //TODO: De momento el path está fijo
+            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>(path, inputFileDescription); //TODO: De momento el path está fijo
             List<ArchivoCSV> lista = datos.ToList();
-            
+
             foreach (ArchivoCSV f in lista)
             {
                 datosValidos = validarEntradas(f);
@@ -39,16 +71,18 @@ namespace AppIntegrador.Controllers
 
             if (datosValidos)
             {
-                //Carga en la base de datos
+                foreach (ArchivoCSV f in lista)
+                {
+                    ll.insertarDatos(f);
+                }
             }
-
-            return View(lista[0]); //TODO: Cambiar esto. Fue usado solo para prueba
         }
 
         private bool validarEntradas (ArchivoCSV archivo)
         {
             bool numerosValidos = validaNumeros(archivo);
             bool longitudesValidas = validaLongitudes(archivo);
+
             if(numerosValidos && longitudesValidas)
             {
                 return true;
