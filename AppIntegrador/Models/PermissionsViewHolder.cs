@@ -33,9 +33,9 @@ namespace AppIntegrador.Models
 
         public string EnfasisSeleccionados { get; set; }
 
-        public string [] PersonasSeleccionadas { get; set; }
+        public bool PersonasSeleccionadas { get; set; }
 
-        public int[] PermisosSeleccionados { get; set; }
+        public bool PermisosSeleccionados { get; set; }
 
         public int PerfilesSeleccionados { get; set; }
 
