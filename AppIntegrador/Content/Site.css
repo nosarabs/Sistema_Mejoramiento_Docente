@@ -422,6 +422,11 @@ html, body {
     padding-top: 1%;
 }
 
+::-webkit-inner-spin-button {
+    display: none;
+}
+
+
 .botonCentrado {
     padding: 10px;
     text-align: center;

@@ -11,102 +11,103 @@
         </div>
     </div>
 
-    <div class="planDiv">
+    <div class="card card-default">
+        <div class="card-body">
 
-        <h2>Crear Plan de mejora @ViewBag.IdPlan </h2>
+            @if (ViewBag.editar == true)
+            {
+                <h2>Editar Plan de mejora @ViewBag.IdPlan </h2>
+            }
+            else
+            {
+                <h2>Crear Plan de mejora @ViewBag.IdPlan </h2>
+            }
 
-        <form role="form" id="newPlan" action="EditarPlanDeMejora2" method="post">
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.codigo)
+            <form role="form" id="newPlan" action="EditarPlanDeMejora2" method="post">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.codigo)
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-8">
-                        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
-                        <div class="row">
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { 
-                                    @class = "form-control",
-                                    id = "objetivoNombreDePDM",
-                                    @onkeyup = "cambioNombreObjetivoPDM(this)"
-                                } })
-                                <span><p id="objetivoNombreDePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { 
-                                    @class = "form-control",
-                                    id = "fechaInicioObjetivoPDM",
-                                    @onkeyup = "validarFechasObjetivosPDM('fechaFinalObjetivoPDM', 'fechaFinalObjetivoPDM')"
-                                } })
-                                <span><p id="fechaInicioObjetivoPDM_eror" class="regularMsj">50 letras restantes.</p> </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { 
-                                    @class = "form-control",
-                                    id = "fechaFinalObjetivoPDM",
-                                    @onkeyup = "validarFechasObjetivosPDM('fechaFinalObjetivoPDM', 'fechaFinalObjetivoPDM')"
-                                } })
-                                <span><p id="fechaFinalObjetivoPDM_eror" class="regularMsj">50 letras restantes.</p> </span>
-                            </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="botonCentrado">
+                            <input type="submit" value="Guardar" class="btn-azulUCR" />
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="botonCentrado">
-                        <input id="btnCreacionObjetivo" type="submit" value="Guardar" class="btn btn-success" />
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        <div class="planDiv2">
-            <div id="crearNuevoObjetivo">
-                <h2>Objetivos del Plan de mejora @ViewBag.IdPlan </h2>
-                <div id="crear">
-                    @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
-                </div>
-            </div>
-            <div>
-                <h4 style="text-align:center">Lista de objetivos</h4>
-
-                <div id="divObjetivos">
-                    @Html.Partial("_objetivosDelPlan", Model.Objetivo)
-                </div>
-            </div>
-
-            <div class="planDiv3">
-                <div id="crearNuevaAccion">
-                    <h2>Seleccione un Objetivo</h2>
-                    <div id="crearAccion">
-                    </div>
-                </div>
-                <div>
-                    <h4 style="text-align:center">Lista de acciones de mejora</h4>
-                    <div id="divAcciones">
-                    </div>
-                </div>
-                <div class="planDiv2">
-                    <div id="crearNuevoAccionable">
-                        <h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>
-                        <div id="crearAccionable">
+            <div class="card card-default">
+                <div class="card-body grisUCR1">
+                    <div id="crearNuevoObjetivo">
+                        <h2>Objetivos del Plan de mejora @ViewBag.IdPlan </h2>
+                        <div id="crear">
+                            @Html.Action("divObjetivo", new { id = ViewBag.IdPlan })
                         </div>
                     </div>
                     <div>
-                        <h4 style="text-align:center">Lista de accionables</h4>
-                        <div id="divAccionables">
+                        <h4 style="text-align:center">Lista de objetivos</h4>
+
+                        <div id="divObjetivos">
+                            @Html.Partial("_objetivosDelPlan", Model.Objetivo)
+                        </div>
+                    </div>
+
+                    <div class="card card-default">
+                        <div class="card-body grisUCR2">
+                            <div id="crearNuevaAccion">
+                                <h2>Seleccione un Objetivo</h2>
+                                <div id="crearAccion">
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="text-align:center">Lista de acciones de mejora</h4>
+                                <div id="divAcciones">
+                                </div>
+                            </div>
+                            <div class="planDiv2">
+                                <div id="crearNuevoAccionable">
+                                    <h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>
+                                    <div id="crearAccionable">
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 style="text-align:center">Lista de accionables</h4>
+                                    <div id="divAccionables">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -225,7 +226,7 @@
         function actualizarAccionables(plan, obj, desc) {
             $.ajax({
                 type: 'GET',
-                url: "@Url.Content("/Accionables/AccionesDeObjetivo/")",
+                url: "@Url.Content("/Accionables/TablaAccionables/")",
                 data: {
                       //Data need to pass as parameter
                       codPlan: plan,
@@ -248,9 +249,9 @@
         }
     </script>
     <script>
-        function cargarAccionables(plan, obj) {
+        function cargarAccionables(plan, obj, desc) {
             //alert("en la funcion cargar  id:"+plan+" y obj:"+obj);
-            actualizarAccionables(plan, obj);
+            actualizarAccionables(plan, obj, desc);
         }
     </script>
 }
