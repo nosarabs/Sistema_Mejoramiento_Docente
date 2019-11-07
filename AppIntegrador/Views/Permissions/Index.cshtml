@@ -17,7 +17,7 @@
     {
         <div class="row" style="display:flex; padding-left:15px; ">
             <div class="col-md-4 pl-0" style="flex:50%;">
-                @Html.Label("Seleccione perfiles")
+                @Html.Label("Seleccione perfil")
                 <br />
                 @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control", @required = "required" })
                 <br />
@@ -63,7 +63,7 @@
                                     @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
                                 </td>
                                 <td class="col-3 text-center">
-                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox" })
+                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
                                 </td>
                             </tr>
                         }
@@ -98,7 +98,7 @@
                                     @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox" })
+                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class= "profileCheckbox", onclick = "saveChanges()"})
                                 </td>
                             </tr>
                         }
@@ -107,7 +107,7 @@
             </div>
         </div>
 
-        <input id="create-save" type="submit" value="Guardar cambios" class="btn-azulUCR" />
+        <input type="hidden" id="isUser" value="false" name="isUser">
     }
 </div>
 
@@ -145,9 +145,32 @@
                         $("#Personas_"+ i + "__HasProfileInEmph").prop('checked', result.persons[i].Checked);
                     });
                 })
-    window.onload = function loadDefaultValue() {
+                $("#IndexForm").submit(function(e){
+                    e.preventDefault();
+                    var actionUrl = $(this).attr("action");
+                    $.post(actionUrl ,$(this).serialize());
+                });
+                function saveChangesUser() {
+                    window.document.getElementById("isUser").value = true;
+                    var myForm = window.document.getElementById("IndexForm");
+                    submitForm(myForm);
+                }
+                function saveChanges() {
+                    window.document.getElementById("isUser").value = false;
+                    var myForm = window.document.getElementById("IndexForm");
+                    submitForm(myForm);
+                }
+                // Esto permite que se dispare el onsubmit del form para que se haga de forma asincrónica
+                window.submitForm = function(form) {
+                    //Se simula la interacción del usuario con un botón para que onsubmit se ejecute
+                    var button = form.ownerDocument.createElement('input');
+                    button.style.display = 'none';
+                    button.type = 'submit';
+                    form.appendChild(button).click();
+                    form.removeChild(button);
+                };
+                window.onload = function loadDefaultValue() {
                     $('#EnfasisSeleccionados').find('option').remove();
-
                     $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
@@ -158,10 +181,12 @@
 <!-- TAM-3.4 Scripts para seleccionar todas las casillas de usuarios y permisos -->
 <script>
     $('#select_all_users').click(function () {
-        $('.userCheckbox').prop('checked', this.checked)
+        $('.userCheckbox').prop('checked', this.checked);
+        saveChangesUser();
     });
     $('#select_all_profiles').click(function () {
-        $('.profileCheckbox').prop('checked', this.checked)
+        $('.profileCheckbox').prop('checked', this.checked);
+        saveChanges();
     });
 </script>
 @section Scripts {
@@ -169,4 +194,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquerymin")
     @Scripts.Render("~/bundles/custom")
+    @Scripts.Render("~/bundles/popper1.14.7")
 }
