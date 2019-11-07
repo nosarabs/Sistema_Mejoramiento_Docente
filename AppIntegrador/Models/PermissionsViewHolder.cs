@@ -55,8 +55,9 @@ namespace AppIntegrador.Models
             {
                 permiso.ActiveInProfileEmph = false;
             }
-            this.Personas = db.Persona.OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
+            this.Personas = db.Persona.Where(item => !item.Borrado).OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
                                       ThenBy(item => item.Nombre1).ThenBy(item => item.Nombre2).ToList();
+
             foreach (Persona persona in this.Personas)
             {
                 persona.HasProfileInEmph = false;
