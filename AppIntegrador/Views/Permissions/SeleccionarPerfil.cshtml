@@ -19,7 +19,7 @@
     @using (Html.BeginForm("GuardarSeleccion", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
-            <div class="col-md-4" style="flex:50%;">
+            <div class="col-md-4 pl-0" style="flex:50%;">
                 @Html.Label("Seleccione perfil")
                 <br />
                 @Html.DropDownListFor(model => model.ListaPerfiles, Model.PerfilesSeleccionables, new { @class = "form-control", @required = "required" })
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-azulUCR">Guardar</button>
+        <button type="submit" class="btn-azulUCR">Seleccionar</button>
         @Html.ActionLink("Cancelar", "Index", "Home", new object { }, new { @class = "btn-blancoUCR" })
     }
 

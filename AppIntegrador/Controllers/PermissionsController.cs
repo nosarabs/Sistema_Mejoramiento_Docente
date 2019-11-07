@@ -41,6 +41,7 @@ namespace AppIntegrador.Controllers
             CurrentUser.MajorId = ListaCarreras;
             CurrentUser.EmphasisId = ListaEnfasis;
             //Tirar aqui un aviso de que la configuracion ha sido cambiada.
+            TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
             return RedirectToAction("Index", "Home");
         }
 
