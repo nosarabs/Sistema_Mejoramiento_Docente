@@ -157,22 +157,25 @@ canvas{
 /*Estilos para dashboard en general:*/
 .container-fluid {
     height: 100%;
-    padding:1%;
+    padding: 1%;
+    padding-top: 0;
 }
 
 .container-fluid .h4, h4 {
     text-align: center;
+    font-size: medium !important;
 }
 
 .container-fluid .h5, h5 {
-    text-align: center;
-    font-size: smaller;
+    text-align: left;
+    font-size: smaller !important;
 }
 
 .container-fluid .row {
-    height: inherit; 
+    height: inherit;
     padding: 1% !important;
-    padding-bottom:  3% !important;
+    padding-top: 0 !important;
+    padding-bottom: 3% !important;
 }
 
 /*Estilo para columna de filtros (izquierda)*/
@@ -206,6 +209,15 @@ canvas{
     background-color: #dee2e6 !important;
 }
 
-.select {
+.select 
+{
     width: 100% !important;
+    border-radius: 5px 5px 5px 5px;
+    font-size: small;
+}
+
+.select .option {
+    width: inherit;
+    border-radius: 5px 5px 5px 5px;
+    font-size: small ;
 }

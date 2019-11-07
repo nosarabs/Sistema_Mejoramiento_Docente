@@ -12,185 +12,27 @@
         <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
 
-        @*<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>*@
-
         <script src="~/Scripts/Visualizacion/filtros.js"></script>
         <link rel="stylesheet" href="~/Content/Visualizacion/bootstrap-multiselect.css" type="text/css" />
 
         <script type="text/javascript" src="~/Scripts/Visualizacion/bootstrap-multiselect.js"></script>
-
-        @*<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>*@
     </head>
 
     <body>
+        <h3>Dashboard</h3>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3" id="panelFiltros">
-                    <h4>Categorías</h4>
+                    <h4>Filtros</h4>
                     <script>
                         var filtros = new Filtros();
                         filtros.crearFiltros();
                     </script>
-
-                    @*<div class="container" id="containerFiltros">*@
-
-
-                    @*<div class="example">*@
-
-
-                    @*<h5>Unidad Académica</h5>
-        <span class="multiselect-native-select">
-            <select id="example-getting-started" multiple="multiple">
-                <option value="ECCI"></option>
-                <option value="Derecho"></option>
-            </select>
-            <div class="btn-group">
-                <button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="None selected" aria-expanded="false">
-                    <span class="multiselect-selected-text">Seleccione una opción...</span>
-                    <b class="caret"></b>
-                </button>
-                <ul class="multiselect-container dropdown-menu">
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="ECCI">
-                                <input type="checkbox" value="ECCI"> ECCI
-                            </label>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="Derecho">
-                                <input type="checkbox" value="Derecho"> Derecho
-                            </label>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-        </span>
-
-        <p>
-
-        <span class="multiselect-native-select">
-            <select id="boot-multiselect-demo" multiple="multiple">
-                <option value="jQuery">jQuery Tutorials</option>
-                <option value="Bootstrap">Bootstrap Framework</option>
-                <option value="HTML">HTML</option>
-                <option value="CSS">CSS</option>
-                <option value="Angular">Angular</option>
-                <option value="Angular">javascript</option>
-                <option value="Java">Java</option>
-                <option value="Python">Python</option>
-                <option value="MySQL">MySQL</option>
-                <option value="Oracle">Oracle</option>
-            </select>
-            <div class="btn-group" style="width: 250px;">
-                <button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="Elija" aria-expanded="false" style="width: 100%; overflow: hidden; text-overflow: ellipsis;">
-                    <span class="multiselect-selected-text">jQuery Tutorials, HTML, Angular</span>
-                    <b class="caret"></b>
-                </button>
-                <ul class="multiselect-container dropdown-menu">
-                    <li class="multiselect-item multiselect-filter" value="0">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                            <input class="form-control multiselect-search" type="text" placeholder="Search">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button>
-                            </span>
-                        </div>
-                    </li>
-                    <li class="multiselect-item multiselect-all">
-                        <a tabindex="0" class="multiselect-all">
-                            <label class="checkbox">
-                                <input type="checkbox" value="multiselect-all">  Select all
-                            </label>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a tabindex="0">
-                            <label class="checkbox" title="jQuery Tutorials">
-                                <input type="checkbox" value="jQuery"> jQuery Tutorials
-                            </label>
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="Bootstrap Framework">
-                                <input type="checkbox" value="Bootstrap"> Bootstrap Framework
-                            </label></a></li><li class="active"><a tabindex="0">
-                            <label class="checkbox" title="HTML">
-                                <input type="checkbox" value="HTML"> HTML
-                            </label>
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="CSS">
-                                <input type="checkbox" value="CSS"> CSS
-                            </label>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="Angular">
-                                <input type="checkbox" value="Angular"> Angular
-                            </label>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a tabindex="0">
-                            <label class="checkbox" title="javascript">
-                                <input type="checkbox" value="Angular"> javascript
-                            </label>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a tabindex="0">
-                            <label class="checkbox" title="Java">
-                                <input type="checkbox" value="Java"> Java
-                            </label>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </span>*@
-
-                    @*<div class="container">
-            <div class="example">
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $('#boot-multiselect-demo').multiselect({
-                            includeSelectAllOption: true,
-                            buttonWidth: 250,
-                            enableFiltering: true
-                        });
-                    });
-                </script>
-                <select id="boot-multiselect-demo" multiple="multiple">
-                    <option value="jQuery">jQuery Tutorials</option>
-                    <option value="Bootstrap">Bootstrap Framework</option>
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="Angular">Angular</option>
-                    <option value="Angular">javascript</option>
-                    <option value="Java">Java</option>
-                    <option value="Python">Python</option>
-                    <option value="MySQL">MySQL</option>
-                    <option value="Oracle">Oracle</option>
-                </select>
-            </div>
-        </div>*@
-                    @*</div>*@
                 </div>
-                @*</div>*@
 
                 <div class="col" id="panelDashboard">
-                    <h4>Dashboard</h4>
+
                 </div>
             </div>
-        </div>    
-    </body>
+        </div>
+</body>

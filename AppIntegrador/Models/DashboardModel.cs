@@ -43,7 +43,9 @@ namespace AppIntegrador.Models
     //Clase para representar los profesores del curso
     public class Profesores
     {
-        public String nombre { get; set; }
+        public String correo { get; set; }
+        public String nombre1 { get; set; }
+        public String nombre2 { get; set; }
         public String apellido1 { get; set; }
         public String apellido2 { get; set; }
     }
