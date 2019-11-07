@@ -294,17 +294,17 @@ namespace AppIntegrador.Controllers
             {
                 if (InsertSeccionTienePregunta(seccion, null))
                 {
-                    return PartialView("~/Views/Seccion/_CreateSeccionPartial");
+                    return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml");
                 }
                 else
                 {
                     // Notifique que ocurrió un error
                     ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
-                    return View("~/Views/Seccion/_CreateSeccionPartial");
+                    return View("~/Views/Seccion/_CreateSeccionPartial.cshtml");
                 }
             }
 
-            return View("~/Views/Seccion/_CreateSeccionPartial");
+            return View("~/Views/Seccion/_CreateSeccionPartial.cshtml");
         }
 
         // GET: Formularios/Edit/5

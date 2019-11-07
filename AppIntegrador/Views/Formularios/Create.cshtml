@@ -236,6 +236,28 @@
         }
     </script>
 
+    @*Permite que los checkboxes sean persistentes a través del refrescamiento de la página.*@
+
+
+    <script>
+        var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+            $checkboxes = $("#checkbox-container :checkbox");
+
+        $checkboxes.on("change", function(){
+          $checkboxes.each(function(){
+              checkboxValues[this.id] = this.checked;
+              console.log(this.id + "Checked")
+          });
+  
+          localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+        });
+
+        // On page load
+        $.each(checkboxValues, function(key, value) {
+          $("#" + key).prop('checked', value);
+        });
+    </script>
+
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
