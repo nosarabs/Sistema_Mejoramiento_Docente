@@ -369,23 +369,22 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSeccion([Bind(Include = "Codigo,Nombre")] Seccion seccion)
+        public ActionResult AgregarSeccion(Seccion seccion)
         {
-            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
-            {
-                if (InsertSeccionTienePregunta(seccion, null))
-                {
-                    return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml");
-                }
-                else
-                {
-                    // Notifique que ocurrió un error
-                    ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
-                    return View("~/Views/Seccion/_CreateSeccionPartial.cshtml");
-                }
-            }
+            return Json(new { guardadoExitoso = seccion != null && InsertSeccion(seccion) });
+        }
 
-            return View("~/Views/Seccion/_CreateSeccionPartial.cshtml");
+        [HttpPost]
+        public ActionResult ActualizarBancoSecciones()
+        {
+            crearFormulario.seccion = db.Seccion;
+            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
+        }
+        [HttpPost]
+        public ActionResult ActualizarCrearSeccion()
+        {
+            crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearFormulario.crearSeccionModel);
         }
 
         // GET: Formularios/Edit/5
@@ -531,7 +530,7 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
+        private bool InsertSeccion(Seccion seccion)
         {
             try
             {
@@ -543,14 +542,6 @@ namespace AppIntegrador.Controllers
             catch (System.Data.Entity.Core.EntityCommandExecutionException)
             {
                 return false;
-            }
-
-            if (preguntas != null)
-            {
-                for (int index = 0; index < preguntas.Count; ++index)
-                {
-                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
-                }
             }
             return true;
         }

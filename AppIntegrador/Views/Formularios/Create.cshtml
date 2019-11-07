@@ -112,9 +112,11 @@
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
-                                                                    <div id="ModalAgregarSecciones">
-                                                                        @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
-                                                                        <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                                                    <div id="BancoDeSecciones">
+                                                                        <div id="ModalAgregarSecciones">
+                                                                            @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
+                                                                        </div>
+                                                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
                                                                     </div>
                                                                     <div id="ModalCrearSeccion">
                                                                         @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
