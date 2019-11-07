@@ -73,9 +73,11 @@
                                 <a href="/Users/Index">Usuarios &#9660;</a>
                                 <ul>
                                     <li><a href="/Users/Index">Administración de usuarios</a></li>
-
+                                    @{ if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
+                                    {
                                     <li><a href="/Permissions/Index">Administración de perfiles</a></li>
-
+                                    }else{}
+                                    }
                                 </ul>
                             </li>
                         }
@@ -127,9 +129,9 @@
                             </ul>
                         </li>
                         <li><a href="/Home/About">Acerca de</a></li>                        
-                        <li class="ml-auto align-self-center mr-4"><a href="Permissions/SeleccionarPerfil">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</a></li>
+                        <li class="ml-auto align-self-center mr-4">@Html.ActionLink("Perfil: " + @AppIntegrador.Models.CurrentUser.getUserProfile(), "SeleccionarPerfil", "Permissions")</li>
                     </ul>
-                    
+
                 </div>
             </div>
         </div>

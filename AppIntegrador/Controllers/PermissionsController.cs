@@ -37,10 +37,10 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarSeleccion(string ListaPerfiles, string ListaCarreras, string ListaEnfasis)
         {
-            CurrentUser.Profile = ListaPerfiles;
-            CurrentUser.MajorId = ListaCarreras;
-            CurrentUser.EmphasisId = ListaEnfasis;
-            //Tirar aqui un aviso de que la configuracion ha sido cambiada.
+            CurrentUser.setUserProfile(ListaPerfiles);
+            CurrentUser.setUserMajor(ListaCarreras);
+            CurrentUser.setUserEmphasis(ListaEnfasis);
+
             TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
             return RedirectToAction("Index", "Home");
         }
@@ -49,6 +49,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarPermisos(PermissionsViewHolder model)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             int codPerfil = model.PerfilesSeleccionados;
             string perfil = model.Perfiles[codPerfil].NombrePerfil;
             string codCarrera = model.CarrerasSeleccionadas;
@@ -59,7 +64,7 @@ namespace AppIntegrador.Controllers
             //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
             for (int i = 0; i < Personas.Count; ++i)
             {
-                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil , codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
             }
 
             //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
@@ -67,7 +72,7 @@ namespace AppIntegrador.Controllers
             {
                 db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
             }
-            
+
             //TO-DO Aviso de que la configuracion fue cambiada
             return View("Index", model);
         }
@@ -175,7 +180,25 @@ namespace AppIntegrador.Controllers
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
                     enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
-                enfasis.Add("0" + "," + "Tronco común");
+
+            }
+            return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarEnfasisDeCarreraPorPerfil(string value, string profile)
+        {
+            List<string> enfasis = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaEnfasis = from Enfasis in db.EnfasisXCarreraXPerfil(CurrentUser.getUsername(), value, profile)
+                                   select Enfasis;
+                foreach (var codigoEnfasis in listaEnfasis)
+                {
+                    string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
+                    enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
+                }
+
             }
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }
@@ -186,7 +209,7 @@ namespace AppIntegrador.Controllers
             List<string> carreras = new List<string>();
             using (var context = new DataIntegradorEntities())
             {
-                var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.Username, perfilSeleccionado)
+                var listaCarreras = from Resultado in db.CarrerasXPerfilXUsuario(CurrentUser.getUsername(), perfilSeleccionado)
                                     select Resultado;
                 foreach (var carrera in listaCarreras)
                 {
@@ -195,12 +218,12 @@ namespace AppIntegrador.Controllers
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
         }
-        
+
         /* TAM 3.7 Carga todos los perfiles que tiene asignados un usuario */
         [HttpGet]
         public JsonResult CargarPerfil()
         {
-            string username = CurrentUser.Username;
+            string username = CurrentUser.getUsername();
             List<string> perfiles = new List<string>();
             using (var context = new DataIntegradorEntities())
             {
@@ -215,15 +238,14 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public JsonResult CargarDatosDefault()
         {
-            string profile = CurrentUser.Profile;
-            Carrera carrera = db.Carrera.Find(CurrentUser.MajorId);
-            Enfasis enfasis = db.Enfasis.Find(CurrentUser.MajorId, CurrentUser.EmphasisId);
+            string profile = CurrentUser.getUserProfile();
+            Carrera carrera = db.Carrera.Find(CurrentUser.getUserMajorId());
+            Enfasis enfasis = db.Enfasis.Find(CurrentUser.getUserMajorId(), CurrentUser.getUserEmphasisId());
             string major = carrera.Codigo + "," + carrera.Nombre;
             string emphasis = enfasis.Codigo + "," + enfasis.Nombre;
             return Json(new { defaultProfile = profile, defaultMajor = major, defaultEmphasis = emphasis }, JsonRequestBehavior.AllowGet);
 
         }
-
 
     }
     
