@@ -211,7 +211,6 @@
 
         var panelfiltros = document.getElementById("panelFiltros");
         panelfiltros.appendChild(container);
-        this.recuperarFiltros(container);
 
     }
 

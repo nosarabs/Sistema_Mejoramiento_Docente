@@ -14,13 +14,14 @@ CREATE FUNCTION ObtenerFormulariosFiltros (
 )
 RETURNS @formulariosFiltros TABLE
 (
-	FCodigo VARCHAR(8),	/*Código del formulario.*/
-	CSigla VARCHAR(10),	/*Sigla del curso.*/
-	GNumero TINYINT,	/*Número de grupo.*/
-	GSemestre TINYINT,	/*Número de semestre.*/
-	GAnno INT,			/*Año.*/
-	FechaInicio DATE,	/*Fecha de inicio del periodo de llenado el formulario.*/
-	FechaFin DATE		/*Fecha de finalización del periodo de llenado del formulario.*/
+	FCodigo VARCHAR(8),		/*Código del formulario.*/
+	FNombre NVARCHAR(250),	/*Nombre del formulario*/
+	CSigla VARCHAR(10),		/*Sigla del curso.*/
+	GNumero TINYINT,		/*Número de grupo.*/
+	GSemestre TINYINT,		/*Número de semestre.*/
+	GAnno INT,				/*Año.*/
+	FechaInicio DATE,		/*Fecha de inicio del periodo de llenado el formulario.*/
+	FechaFin DATE			/*Fecha de finalización del periodo de llenado del formulario.*/
 )
 AS
 BEGIN
@@ -28,16 +29,17 @@ BEGIN
 	/*Almacena resultados de forma temporal para poder hacer las intersecciones.*/
 	DECLARE @formulariosTemp TABLE
 	(
-		FCodigo VARCHAR(8),	/*Código del formulario.*/
-		CSigla VARCHAR(10),	/*Sigla del curso.*/
-		GNumero TINYINT,	/*Número de grupo.*/
-		GSemestre TINYINT,	/*Número de semestre.*/
-		GAnno INT,			/*Año.*/
-		FechaInicio DATE,	/*Fecha de inicio del periodo de llenado el formulario.*/
-		FechaFin DATE		/*Fecha de finalización del periodo de llenado del formulario.*/
+		FCodigo VARCHAR(8),		/*Código del formulario.*/
+		FNombre NVARCHAR(250),	/*Nombre del formulario*/
+		CSigla VARCHAR(10),		/*Sigla del curso.*/
+		GNumero TINYINT,		/*Número de grupo.*/
+		GSemestre TINYINT,		/*Número de semestre.*/
+		GAnno INT,				/*Año.*/
+		FechaInicio DATE,		/*Fecha de inicio del periodo de llenado el formulario.*/
+		FechaFin DATE			/*Fecha de finalización del periodo de llenado del formulario.*/
 	);
 
-	INSERT INTO @formulariosFiltros SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin FROM Periodo_activa_por;
+	INSERT INTO @formulariosFiltros SELECT PAP.FCodigo, F.Nombre, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin FROM Periodo_activa_por AS PAP JOIN Formulario AS F ON PAP.FCodigo = F.Codigo;
 	
 	/*Si el parámetro no es nulo, se toma en cuenta para el filtro.*/
 	IF (@codigoUA IS NOT NULL)
@@ -45,17 +47,17 @@ BEGIN
 
 		/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
 			INSERT INTO @formulariosTemp
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM ObtenerFormulariosUA(@codigoUA)
 			INTERSECT
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM @formulariosFiltros;
 
 			/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
 			DELETE FROM @formulariosFiltros;
 
 			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM @formulariosTemp;
 
 			DELETE FROM @formulariosTemp;
@@ -68,17 +70,17 @@ BEGIN
 
 			/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
 			INSERT INTO @formulariosTemp
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM ObtenerFormulariosCarreraEnfasis(@codigoCarrera, @codigoEnfasis)
 			INTERSECT
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM @formulariosFiltros;
 
 			/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
 			DELETE FROM @formulariosFiltros;
 
 			INSERT INTO @formulariosFiltros
-			SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+			SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 			FROM @formulariosTemp;
 
 			DELETE FROM @formulariosTemp;
@@ -91,17 +93,17 @@ BEGIN
 
 				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
 				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM ObtenerFormulariosGrupo(@siglaCurso, @numeroGrupo, @semestre, @anno)
 				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM @formulariosFiltros;
 
 				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
 				DELETE FROM @formulariosFiltros;
 
 				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM @formulariosTemp;
 
 				DELETE FROM @formulariosTemp;
@@ -114,17 +116,17 @@ BEGIN
 
 				/*Llena formulariosTemp con la intersección de los resultados del nuevo filtro y los resultados de formulariosFiltros.*/
 				INSERT INTO @formulariosTemp
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM ObtenerFormulariosProfesor(@correoProfesor)
 				INTERSECT
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM @formulariosFiltros;
 
 				/*Limpia las variables y actualiza formulariosFiltros con el nuevo resultado.*/
 				DELETE FROM @formulariosFiltros;
 
 				INSERT INTO @formulariosFiltros
-				SELECT FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
+				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM @formulariosTemp;
 
 				DELETE FROM @formulariosTemp;

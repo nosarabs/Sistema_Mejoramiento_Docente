@@ -74,3 +74,49 @@
             </div>
         </div>
 </body>
+<!--Como la página web se carga tan rápido, se agregó está sección para asegurarse de que se carga JQuery antes de usar Ajax en el script.-->
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/jquery-3.3.1.js");
+
+    <script>
+
+        //Todo parámetro de algún filtro que un usuario no seleccione, debe ser enviado como null.
+        var codigoUA = null;
+        var codigoCarrera = null;
+        var codigoEnfasis = null;
+        var siglaCurso = null;
+        var numeroGrupo = null;
+        var semestre = null;
+        var anno = null;
+        var correoProfesor = null;
+
+        //Llamado al controlador que recupera los formularios.
+        $.ajax({
+            url: '/Dashboard/ObtenerFormularios',
+            data: {
+                codigoUA: codigoUA,
+                codigoCarrera: codigoCarrera,
+                codigoEnfasis: codigoEnfasis,
+                siglaCurso: siglaCurso,
+                numeroGrupo: numeroGrupo,
+                semestre: semestre,
+                anno: anno,
+                correoProfesor: correoProfesor
+            },
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (resultados) {
+                //Se imprime la información de cada formulario para verificar el llamado.
+                alert("Length: " + resultados.length);
+                for (var i = 0; i < resultados.length; ++i) {
+                    alert("Código: " + resultados[i].FCodigo + "\nNombre: " + resultados[i].FNombre + "\nCurso: " + resultados[i].CSigla + "\nGrupo: " + resultados[i].GNumero + "\nSemestre: " + resultados[i].GSemestre + "\nAño: " + resultados[i].GAnno + "\nFecha Inicio: " + resultados[i].FechaInicio + "\nFecha Fin: " + resultados[i].FechaFin);
+                }
+            }
+        });
+
+    </script>
+
+}
+
