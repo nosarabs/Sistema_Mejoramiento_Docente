@@ -14,7 +14,9 @@
 @foreach (var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
 {
     <div class="card-body opcion-pequena">
-        <input type="checkbox" name="@opcionesname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones.Contains(opcion.Orden) ? "checked" : "") />
-        @opcion.Texto
+        <label for="@opcionesname @opcion.Orden">
+            <input type="checkbox" id="@opcionesname @opcion.Orden" name="@opcionesname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones.Contains(opcion.Orden) ? "checked" : "") />
+            @opcion.Texto
+        </label>
     </div>
 }
