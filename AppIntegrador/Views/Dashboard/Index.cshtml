@@ -5,3 +5,22 @@
 
 <h2>Index</h2>
 
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-3.3.1.js")
+    <script>
+        var correo = "@HttpContext.Current.User.Identity.Name";
+
+            $.ajax({
+                url: '/Dashboard/ObtenerPromedioProfesor',
+                data: { correo : correo
+                },
+                type: 'post',
+                dataType: 'json',
+                async: false,
+                success: function (resultados) {
+                    alert(resultados);
+                }
+            });
+    </script>
+}
+

@@ -24,16 +24,16 @@ namespace AppIntegrador.Controllers
         //Berta Sánchez Jalet
         //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
         //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 8/10
-        public String ObtenerPromedioProfesor(Usuario objUser)
+        //Cumplimiento: 10/10
+        public String ObtenerPromedioProfesor(String correo)
         {
-            String correo = HttpContext.User.Identity.Name;
             System.Diagnostics.Debug.WriteLine(correo);
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
 
             db.PromedioProfesor(correo,resultPromedio);
+            System.Diagnostics.Debug.WriteLine(resultPromedio);
 
             return serializer.Serialize(resultPromedio.Value);
         }
