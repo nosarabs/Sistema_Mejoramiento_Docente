@@ -5,7 +5,8 @@
 
 CREATE PROCEDURE [dbo].[PromedioProfesor]
 	(@correo VARCHAR(50),
-	 @promedio FLOAT OUTPUT)
+	 @promedio FLOAT OUTPUT,
+	 @cantidad INT OUTPUT)
 	 
 AS
 BEGIN
@@ -14,7 +15,6 @@ DECLARE @max AS INT
 DECLARE @inc AS INT
 DECLARE @opcion AS TINYINT
 DECLARE @valor AS FLOAT = 0
-DECLARE @cantidad AS INT
 
 	SELECT @min = E.Minimo, @max = E.Maximo, @inc = E.Incremento
 	FROM Escalar AS E 

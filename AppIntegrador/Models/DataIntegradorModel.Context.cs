@@ -649,13 +649,13 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio);
         }
     
-        public virtual int PromedioProfesor(string correo, ObjectParameter promedio)
+        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
         {
             var correoParameter = correo != null ?
                 new ObjectParameter("correo", correo) :
                 new ObjectParameter("correo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
         }
     }
 }

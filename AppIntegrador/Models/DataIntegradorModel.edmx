@@ -1783,6 +1783,7 @@
         <Function Name="PromedioProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
+          <Parameter Name="cantidad" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
@@ -3123,6 +3124,7 @@
           <FunctionImport Name="PromedioProfesor">
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
+            <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Activa_por">
