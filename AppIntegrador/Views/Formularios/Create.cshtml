@@ -87,8 +87,7 @@
                             <div class="card-body grisUCR2  ">
                                 <h3>Secciones del formulario</h3>
                                 <hr />
-                                <div class="form-group col-md-12">
-                                    @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
+                                <div class="form-group col-md-12" id="seccionesActuales" style="height: 200px; overflow-y: scroll;">
                                 </div>
 
                                 <div class="form-group">
@@ -169,4 +168,3 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
 }
-
