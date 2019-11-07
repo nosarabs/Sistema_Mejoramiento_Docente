@@ -41,7 +41,7 @@ namespace AppIntegrador.Controllers
             CurrentUser.setUserMajor(ListaCarreras);
             CurrentUser.setUserEmphasis(ListaEnfasis);
 
-            TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
+            TempData["sweetalertmessage"] = "Cambios guardados";
             return RedirectToAction("Index", "Home");
         }
 
