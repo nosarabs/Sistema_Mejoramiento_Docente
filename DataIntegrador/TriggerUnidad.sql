@@ -1,6 +1,6 @@
 ﻿CREATE TRIGGER [TriggerUnidad]
 	ON [dbo].[UnidadAcademica]
-	FOR INSERT
+	INSTEAD OF INSERT
 	AS
 	DECLARE @codigo varchar(10)
 	SELECT @codigo = i.Codigo
