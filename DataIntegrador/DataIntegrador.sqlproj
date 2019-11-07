@@ -159,6 +159,13 @@
     <Build Include="InsertarEstudianteCSV.sql" />
     <Build Include="InsertarFuncionarioCSV.sql" />
     <Build Include="TriggerUnidad.sql" />
+    <Build Include="TriggerCarrera.sql" />
+    <Build Include="TriggerEnfasis.sql" />
+    <Build Include="TriggerCurso.sql" />
+    <Build Include="TriggerGrupo.sql" />
+    <Build Include="TriggerFuncionario.sql" />
+    <Build Include="TriggerProfesor.sql" />
+    <Build Include="TriggerEstudiante.sql" />
     <Build Include="InsertarTrabajaEn.sql" />
     <Build Include="InsertarInscrita_En.sql" />
     <Build Include="InsertarPertenece_a.sql" />

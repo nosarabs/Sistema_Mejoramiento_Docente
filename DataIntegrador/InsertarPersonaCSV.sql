@@ -6,6 +6,9 @@
 	@TipoId varchar(30)
 AS
 BEGIN
-	INSERT INTO Persona(Correo, Identificacion, Nombre1, Apellido1, TipoIdentificacion)
-	VALUES (@Correo, @Id, @Nombre, @Apellido, @TipoId)
+	IF(@Correo NOT IN (SELECT Correo FROM Persona))
+	BEGIN
+		INSERT INTO Persona(Correo, Identificacion, Nombre1, Apellido1, TipoIdentificacion)
+		VALUES (@Correo, @Id, @Nombre, @Apellido, @TipoId)
+	END
 END
