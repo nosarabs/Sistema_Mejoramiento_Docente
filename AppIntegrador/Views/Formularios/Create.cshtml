@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.Hidden("formularioCreado", null, new { @id = "formularioCreado", @Value = "0"})
     @*RIP CF5: Creación de un tabla para organizar la información*@
     <table class="table">
         <thead>
@@ -31,16 +32,17 @@
                                            {
                                                @class = "validar-agregar-secciones form-control",
                                                id = "textCode",
-                                               name = "textCode",
+                                               name = "formulario.Codigo",
                                                @maxlength = "8",
                                                required = "required",
                                                placeholder = "Código",
                                                rows = "5",
-                                               @onkeyup = "contarCaracteres(this)"
+                                               @onkeyup = "contarCaracteres(this)",
+                                               @title = "Código requerido"
                                            }
                                        })
                                             <div class="contador small float-right">0/8 caracteres usados</div>
-                                            @Html.ValidationMessageFor(model => model.Formulario.Codigo, "", new { @style = "color:red" })
+                                            <label id="validacion-codigo" style="color: red;"></label>    
                                         </div>
                                     </div>
 
@@ -53,12 +55,13 @@
                                                {
                                                    @class = "validar-agregar-secciones form-control",
                                                    id = "textName",
-                                                   name = "textName",
+                                                   name = "formulario.Nombre",
                                                    @maxlength = "250",
                                                    required = "required",
                                                    placeholder = "Nombre del formulario",
                                                    rows = "5",
-                                                   @onkeyup = "contarCaracteres(this)"
+                                                   @onkeyup = "contarCaracteres(this)",
+                                                   @title = "Nombre del formulario requerido"
                                                }
                                            })
 
@@ -133,7 +136,7 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             @*Mensaje final de creación de sección*@
-                            <input type="submit" value="Crear" class="btn-azulUCR" id="Create" />
+                            <input type="submit" value="Crear" class="btn-azulUCR" id="CreateFormulario" />
                             @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
                         </div>
                     </div>
@@ -144,6 +147,13 @@
 
 
 }
+
+<style>
+    .error
+    {
+        border: 1px solid red;
+    }
+</style>
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jquery")*@
@@ -158,6 +168,10 @@
         $(document).ready(function () {
             agregarsecciones.init();
             validarEntradasAgregarSecciones();
+            if ('@ViewBag.Message' == "Fallido") {
+                document.getElementById("validacion-codigo").textContent = "Código en uso";
+                $("#textCode").addClass("error");
+            }
         });
     </script>
 
