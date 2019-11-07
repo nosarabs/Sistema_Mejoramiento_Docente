@@ -82,7 +82,7 @@
                             <div class="card-body grisUCR2  ">
                                 <h2>Secciones del formulario</h2>
                                 <hr />
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-12" id="seccionesActuales" style="height: 250px; overflow-y: scroll;">
                                     @Html.Partial("/Views/Formularios/_SeccionesActualesPartial.cshtml", Model.seccion)
                                 </div>
 
@@ -171,10 +171,11 @@
                 type: "POST",
                 url: "/Formularios/AsociarSesionesAFormulario",
                 data: JSON.stringify(resultado),
-                dataType: "json",
+                dataType: "html",
                 traditional: true,
-                success: function () {
+                success: function (data) {
                     resultado = []
+                    $('#seccionesActuales').html(data);
                 },
                 error: function () {
 
