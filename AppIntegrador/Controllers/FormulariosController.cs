@@ -233,17 +233,27 @@ namespace AppIntegrador.Controllers
                         if (respuestas != null)
                         {
 
+                            /* Manera de hacerlo con Linq. No acepta parámetros nulos.
                             var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                         && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                         && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                         && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                            */
+                            var respuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                                                                                     codSeccion, pregunta.Pregunta.Codigo);
+
                             if (respuestaGuardada != null && respuestaGuardada.ToList().Any())
                             {
                                 pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
-                                var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+
+                                /* Manera de hacerlo con Linq. No acepta parámetros nulos.
+                                 * var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                         && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                         && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                         && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                                */
+                                var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                                                                                     codSeccion, pregunta.Pregunta.Codigo);
                                 pregunta.Opciones = new List<int>();
                                 if (opcionesGuardadas != null)
                                 {
@@ -261,7 +271,8 @@ namespace AppIntegrador.Controllers
                                                                     && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                     && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                     && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                        if (respuestaGuardada != null)
+                        
+                        if (respuestaGuardada != null && respuestaGuardada.Any())
                         {
                             pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                         }

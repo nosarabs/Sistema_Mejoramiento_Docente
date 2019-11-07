@@ -225,10 +225,16 @@
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerOpcionesSeleccionadas_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerRespuestasAFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerRespuestasAPreguntaConOpciones_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
