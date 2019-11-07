@@ -175,7 +175,25 @@ namespace AppIntegrador.Controllers
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
                     enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
-                enfasis.Add("0" + "," + "Tronco común");
+                
+            }
+            return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarEnfasisDeCarreraPorPerfil(string value, string profile)
+        {
+            List<string> enfasis = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaEnfasis = from Enfasis in db.EnfasisXCarreraXPerfil(CurrentUser.getUsername(), value, profile)
+                                   select Enfasis;
+                foreach (var codigoEnfasis in listaEnfasis)
+                {
+                    string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
+                    enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
+                }
+
             }
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }
