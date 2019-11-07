@@ -36,58 +36,68 @@
         var cuerpoPrincipal = document.createElement("div");
         cuerpoPrincipal.className = "cuerpoPrincipal";
 
+        var contadorPreguntasSeccion = 0;
+
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
-            var codigoSeccion = listaPreguntas[i].codigoSeccion;
-            var codigoPregunta = listaPreguntas[i].codigoPregunta;
-            var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
-            var tipoPregunta = listaPreguntas[i].tipoPregunta;
-            var boton = this.crearBoton(codigoPregunta, textoPregunta);
-            cuerpoPrincipal.appendChild(boton);
+            // Chequea si la pregunta evaluada pertenece o no a la sección
+            if (("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
 
-            var base;
+                var codigoSeccion = listaPreguntas[i].codigoSeccion;
+                var codigoPregunta = listaPreguntas[i].codigoPregunta;
+                var textoPregunta = String(contadorPreguntasSeccion + 1) + ". " + listaPreguntas[i].textoPregunta;
+                var tipoPregunta = listaPreguntas[i].tipoPregunta;
+                var boton = this.crearBoton(codigoPregunta, textoPregunta);
+                cuerpoPrincipal.appendChild(boton);
 
-            switch (tipoPregunta) {
+                contadorPreguntasSeccion += 1;
 
-                case "texto_abierto":
-                    base = new BaseTexto(tipoPregunta);
-                    insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    break;
+                var base;
 
-                case "escala":
-                    base = new BaseConEstadisticas(tipoPregunta);
-                    insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    break;
+                switch (tipoPregunta) {
 
-                case "seleccion_unica":
-                    base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    break;
+                    case "texto_abierto":
+                        base = new BaseTexto(tipoPregunta);
+                        insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        break;
 
-                case "seleccion_multiple":
-                    base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    break;
+                    case "escala":
+                        base = new BaseConEstadisticas(tipoPregunta);
+                        insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        break;
 
-                case "seleccion_cerrada":
-                    base = new BaseDosCol(tipoPregunta);
-                    insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                    break;
+                    case "seleccion_unica":
+                        base = new BaseDosCol(tipoPregunta);
+                        insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        break;
 
+                    case "seleccion_multiple":
+                        base = new BaseDosCol(tipoPregunta);
+                        insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        break;
+
+                    case "seleccion_cerrada":
+                        base = new BaseDosCol(tipoPregunta);
+                        insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                        break;
+
+                }
+
+                if (tipoPregunta != "texto_abierto") {
+
+                    insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                }
+
+                cuerpoPrincipal.appendChild(base.getBase());
+
+                var contenedor = document.getElementById(idContenedor);
+                contenedor.appendChild(cuerpoPrincipal);
             }
-
-            if (tipoPregunta != "texto_abierto")
-            {
-
-                insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+            else {
+                contadorPreguntasSeccion = 0;
             }
-
-            cuerpoPrincipal.appendChild(base.getBase());
-
-            var contenedor = document.getElementById(idContenedor);
-            contenedor.appendChild(cuerpoPrincipal);
-
+            
         }
 
     }

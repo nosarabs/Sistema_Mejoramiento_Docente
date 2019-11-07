@@ -21,24 +21,24 @@
 <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
 <script src="~/Scripts/Visualizacion/botones.js"></script>
 
-<div class="row">
+<div>
 
-    <div class="col-md-12">
+    <div class="col-md-12" id="seccionesContainer">
         <!--Si el modelo viene vacío, significa que no se ha seleccionado un formulario todavía
-    o que este viene sin secciones-->
+        o que este viene sin secciones-->
         @if (Model.Secciones.Count() == 0)
         {
             <p>
-                Aún no se han creado acciones de mejora en el objetivo seleccionado
+                Aún no hay secciones para desplegar
             </p>
         }
         else
         {
             <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
             <!--En caso de que el modelo venga lleno, se llama a las funciones en javscript para
-        visualizar las secciones referentes al formulario
+            visualizar las secciones referentes al formulario-->
 
-        var listaSecciones = Html.Raw(Model.Secciones);-->
+            var listaSecciones = Html.Raw(Model.Secciones);
 
             <script>
                 var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
@@ -51,33 +51,28 @@
                 var listaPreguntas = @Html.Raw(Model.Preguntas);
 
                 var botones = new Botones();
-                
+
 
             </script>
             for (var item = 0; item < Model.Secciones.Count(); ++item)
             {
-                <button class="collapsible"> @(item + 1). @Html.DisplayFor(modelItem => Model.Secciones.ElementAt(item).textoSeccion)</button>
-                <div class="panel" id=@Model.Secciones.ElementAt(item).codigoSeccion>
+                /* FUNCIONA PERO SALEN TODAS LAS PREGUNTAS DE TODAS LAS SECCIONES DE PICHAZO
+                <script>
+                    var boton = botones.crearBoton("Sec @Model.Secciones.ElementAt(item).codigoSeccion", "@Model.Secciones.ElementAt(item).textoSeccion");
+                    var i = document.getElementById("seccionesContainer");
+                    i.appendChild(boton);
+                    botones.crearBotones ("Sec @Model.Secciones.ElementAt(item).codigoSeccion", listaPreguntas);
+                </script>
+                */
+                // Se crean los collapsibles iniciales, para las secciones
+                <button class="collapsible" name="seccioncita"> Sec. @(item + 1). @Html.DisplayFor(modelItem => Model.Secciones.ElementAt(item).textoSeccion)</button>
+                <div class="panel" id="Sec @Model.Secciones.ElementAt(item).codigoSeccion">
                     <script>
-                        //botones.crearBotones ("00000002", listaPreguntas);
+                        // Dentro de cada sección, se crean los botones con sus preguntas
+                        botones.crearBotones ("Sec @Model.Secciones.ElementAt(item).codigoSeccion", listaPreguntas);
                     </script>
                 </div>
             }
-
-
-            /*
-             * @Model.Secciones.ElementAt(item).codigoSeccion
-             * foreach (var item in Model.Secciones)
-            {
-                <button class="collapsible"> @Html.DisplayFor(modelItem => item.textoSeccion)</button>
-                <div class="panel">
-                    <p>Lorem ipsum...</p>
-                </div>
-                /*<strong>Codigo:  </strong> @Html.DisplayFor(modelItem => item.codigoSeccion)
-                <strong>Nombre:  </strong> @Html.DisplayFor(modelItem => item.textoSeccion)
-                <br />
-            }*/
-
         }
         <br />
         <br />
@@ -86,9 +81,10 @@
 
 </div>
 
+
 <script>
 
-    var acc = document.getElementsByClassName("collapsible");
+    var acc = document.getElementsByName("seccioncita");
     var i;
 
     for (var index = 0; index < acc.length; ++index) {
@@ -105,7 +101,7 @@
             } else {
                 panel.style.display = "block";
             }
-            
+
         });
     }
 </script>
