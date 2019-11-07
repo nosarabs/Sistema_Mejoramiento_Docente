@@ -14,6 +14,7 @@ namespace AppIntegrador.Models
     public partial class ObtenerFormulariosCarreraEnfasis_Result
     {
         public string FCodigo { get; set; }
+        public string FNombre { get; set; }
         public string CSigla { get; set; }
         public Nullable<byte> GNumero { get; set; }
         public Nullable<byte> GSemestre { get; set; }
