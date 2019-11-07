@@ -41,6 +41,10 @@ namespace AppIntegrador.Controllers
 
         public ActionResult LlenarFormulario(string id)
         {
+            if(HttpContext == null)
+            {
+                return Redirect("~/");
+            }
             Formulario formularioDB = db.Formulario.Find(id);
             if (formularioDB == null)
             {
@@ -48,12 +52,6 @@ namespace AppIntegrador.Controllers
             }
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
-
-            /* Antes se utilizaba Linq para obtener estas respuestas, pero Linq no acepta parámetros nulos por lo que se cambió por un procedimiento almacenado
-            var respuestasList Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
-                                                   && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
-                                                    && x.GAnno == 2019 && x.GSemestre == 2);
-            */
 
             var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
 
@@ -76,7 +74,26 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            if (seccionesDeFormulario != null)
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas);
+
+            return View(formulario);
+        }
+
+        public ActionResult DesplegarFormulario(string id)
+        {
+            Formulario formularioDB = db.Formulario.Find(id);
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
+
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null);
+
+            return PartialView("SeccionConPreguntas", formulario.Secciones);
+        }
+
+        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario, 
+            Respuestas_a_formulario respuestas)
+        {
+            if (formulario != null && seccionesDeFormulario != null)
             {
                 foreach (var seccion in seccionesDeFormulario.ToList())
                 {
@@ -96,47 +113,9 @@ namespace AppIntegrador.Controllers
                 }
 
             }
-
-            return View(formulario);
         }
 
-
-        public ActionResult DesplegarFormulario(string id)
-        {
-            Formulario formularioDB = db.Formulario.Find(id);
-            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
-            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
-
-            /* Antes se utilizaba Linq para obtener estas respuestas, pero Linq no acepta parámetros nulos por lo que se cambió por un procedimiento almacenado
-            var respuestasList Respuestas_a_formulario.Where(x => x.Correo.Equals(HttpContext.User.Identity.Name)
-                                                   && x.CSigla.Equals("CI0128") && x.FCodigo.Equals(formularioDB.Codigo) && x.GNumero == 1
-                                                    && x.GAnno == 2019 && x.GSemestre == 2);
-            */
-
-
-
-            if (seccionesDeFormulario != null)
-            {
-                foreach (var seccion in seccionesDeFormulario.ToList())
-                {
-                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
-                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
-                    foreach (var pregunta in preguntas)
-                    {
-                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
-                        {
-                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                            OrdenSeccion = nuevaSeccion.Orden,
-                            OrdenPregunta = pregunta.Orden
-                        });
-                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, null);
-                    }
-                    formulario.Secciones.Add(nuevaSeccion);
-                }
-            }
-            return PartialView("SeccionConPreguntas", formulario.Secciones);
-        }
-        // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
+        // Retorna la vista "parcial" de pregunta Respuesta libre (.cshtml)
         public ActionResult RespuestaLibre()
         {
             ViewBag.message = "RespuestaLibre";
