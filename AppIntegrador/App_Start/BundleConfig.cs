@@ -41,7 +41,8 @@ namespace AppIntegrador
             "~/Scripts/popper.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
-            "~/Content/login.css",
+            "~/Content/UsuariosYPerfiles/login.css",
+            "~/Content/UsuariosYPerfiles/Perfiles.css",
             "~/Content/Plugins/animate.css"));
 
             // Custom bundles

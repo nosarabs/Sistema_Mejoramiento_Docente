@@ -81,8 +81,8 @@
                         }
                         else
                         {
-                            <li class="disabled">
-                                <a>Usuarios</a>
+                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar esta area">
+                                <span style="color:gray" >Usuarios &#9660;</span>
                             </li>
                         }
                         <li>
@@ -126,10 +126,10 @@
                                 <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
                             </ul>
                         </li>
-                        <li><a href="/Home/About">Acerca de</a></li>                        
-                        <li class="ml-auto align-self-center mr-4"><a href="/Permissions/SeleccionarPerfil">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</a></li>
+                        <li><a href="/Home/About">Acerca de</a></li>
+                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
                     </ul>
-                    
+
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
         <br />
     }
 
-   <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
+    <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
@@ -203,6 +203,13 @@
                 return false;
             });
         });
+    </script>
+
+    <!--Se usa un tooltip para indicar al usuario porque la opcion del navbar esta desabilitada-->
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 </body>
 

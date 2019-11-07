@@ -160,6 +160,7 @@
     <Build Include="Formularios\Procedimientos\EliminarRespuestasDeFormulario.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuarioPerfil.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
+    <Build Include="UsuarioActual.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

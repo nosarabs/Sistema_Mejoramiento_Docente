@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
+@Styles.Render("~/Content/users&profiles")
 
 <div class="container">
     <div class="row" style="display:flex; padding-left:15px; ">
@@ -15,7 +16,7 @@
     @using (Html.BeginForm("GuardarPermisos", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
-            <div class="col-md-4" style="flex:50%;">
+            <div class="col-md-4 pl-0" style="flex:50%;">
                 @Html.Label("Seleccione perfiles")
                 <br />
                 @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control", @required = "required" })
@@ -36,66 +37,64 @@
             </div>
         </div>
 
-        <div style="padding:15px;"></div>
-        <div style="max-height:650px; overflow-x:auto;">
-            <div class="col-md-12" style="display:flex; padding-left:15px;">
-
-                <div class="col-md-6" style="display:flex; float:left;">
-
-                    <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate; float:left; max-height:400px; overflow:scroll;">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.Label("Usuarios")
-                                </th>
-                                <th>
-                                    @Html.Label("Perfil asignado a Usuario")
-                                    <span class="float-right">
-                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", onclick = "saveChangesUser()" })
-                                    </span>
-                                </th>
-                            </tr>
-                        </thead>
-
+        <div class="row my-4">
+            <div class="col-6">
+                <table class="table table-fixed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-3">
+                                @Html.Label("Usuarios")
+                            </th>
+                            <th class="col-3">
+                                @Html.Label("Perfil asignado a Usuario")
+                                <span class="float-right">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", onclick = "saveChangesUser()" })
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @for (int i = 0; i < Model.Personas.Count(); ++i)
                         {
                             <tr>
-                                <td>
-                                    @Html.HiddenFor(model => model.Personas[i].Correo)
-                                    @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                                @Html.HiddenFor(model => model.Personas[i].Correo)
+                                @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                                <td class="col-3">
                                     @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
                                 </td>
-                                <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class= "userCheckbox", onclick = "saveChangesUser()"})
+                                <td class="col-3 text-center">
+                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
                                 </td>
                             </tr>
                         }
-                    </table>
-                </div>
+                    </tbody>
+                </table>
 
-                <div class="col-md-6" style="display:flex; float:right">
+            </div>
 
-                    <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style="position: sticky;  top: 0; border-collapse: separate; float:right; max-height:400px; overflow:scroll;">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.Label("Permisos")
-                                </th>
-                                <th>
-                                    @Html.Label("Asignado a Perfil")
-                                    <span class="float-right">
-                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", onclick = "saveChanges()" })
-                                    </span>
-                                </th>
-                            </tr>
-                        </thead>
+            <div class="col-md-6">
 
+                <table class="table table-fixed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.Label("Permisos")
+                            </th>
+                            <th>
+                                @Html.Label("Asignado a Perfil")
+                                <span class="float-right">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", onclick = "saveChanges()" })
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @for (int i = 0; i < Model.Permisos.Count(); ++i)
                         {
                             <tr>
+                                @Html.HiddenFor(model => model.Permisos[i].Id)
+                                @Html.HiddenFor(model => model.Permisos[i].Descripcion)
                                 <td>
-                                    @Html.HiddenFor(model => model.Permisos[i].Id)
-                                    @Html.HiddenFor(model => model.Permisos[i].Descripcion)
                                     @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                                 <td style="text-align:center;">
@@ -103,12 +102,9 @@
                                 </td>
                             </tr>
                         }
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-            <br />
-            <hr />
-            <br />
         </div>
 
         <input type="hidden" id="isUser" value="false" name="isUser">
@@ -174,6 +170,7 @@
                     form.removeChild(button);
                 };
                 window.onload = function loadDefaultValue() {
+                    $('#EnfasisSeleccionados').find('option').remove();
                     $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
@@ -185,10 +182,10 @@
 <script>
     $('#select_all_users').click(function () {
         $('.userCheckbox').prop('checked', this.checked)
-    });  
+    });
     $('#select_all_profiles').click(function () {
         $('.profileCheckbox').prop('checked', this.checked)
-    });  
+    });
 </script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
