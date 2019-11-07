@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="CodeFirstStoreFunctions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.CodeFirstStoreFunctions.1.2.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
     </Reference>
@@ -61,11 +64,20 @@
       <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq, Version=4.13.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>packages\Moq.4.13.1\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -167,10 +179,8 @@
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CarrerasXPerfilXUsuario_Result1.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CurrentUser.cs" />
+    <Compile Include="Models\ConfigViewHolder.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -219,7 +229,6 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ConfigViewHolder.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
@@ -345,6 +354,8 @@
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
@@ -367,6 +378,97 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Index.cshtml" />
+    <Content Include="Content\BootstrapSccs\bootstrap-grid.scss" />
+    <Content Include="Content\BootstrapSccs\bootstrap-reboot.scss" />
+    <Content Include="Content\BootstrapSccs\bootstrap.scss" />
+    <Content Include="Content\BootstrapSccs\_alert.scss" />
+    <Content Include="Content\BootstrapSccs\_badge.scss" />
+    <Content Include="Content\BootstrapSccs\_breadcrumb.scss" />
+    <Content Include="Content\BootstrapSccs\_button-group.scss" />
+    <Content Include="Content\BootstrapSccs\_buttons.scss" />
+    <Content Include="Content\BootstrapSccs\_card.scss" />
+    <Content Include="Content\BootstrapSccs\_carousel.scss" />
+    <Content Include="Content\BootstrapSccs\_close.scss" />
+    <Content Include="Content\BootstrapSccs\_code.scss" />
+    <Content Include="Content\BootstrapSccs\_custom-forms.scss" />
+    <Content Include="Content\BootstrapSccs\_dropdown.scss" />
+    <Content Include="Content\BootstrapSccs\_forms.scss" />
+    <Content Include="Content\BootstrapSccs\_functions.scss" />
+    <Content Include="Content\BootstrapSccs\_grid.scss" />
+    <Content Include="Content\BootstrapSccs\_images.scss" />
+    <Content Include="Content\BootstrapSccs\_input-group.scss" />
+    <Content Include="Content\BootstrapSccs\_jumbotron.scss" />
+    <Content Include="Content\BootstrapSccs\_list-group.scss" />
+    <Content Include="Content\BootstrapSccs\_media.scss" />
+    <Content Include="Content\BootstrapSccs\_mixins.scss" />
+    <Content Include="Content\BootstrapSccs\_modal.scss" />
+    <Content Include="Content\BootstrapSccs\_nav.scss" />
+    <Content Include="Content\BootstrapSccs\_navbar.scss" />
+    <Content Include="Content\BootstrapSccs\_pagination.scss" />
+    <Content Include="Content\BootstrapSccs\_popover.scss" />
+    <Content Include="Content\BootstrapSccs\_print.scss" />
+    <Content Include="Content\BootstrapSccs\_progress.scss" />
+    <Content Include="Content\BootstrapSccs\_reboot.scss" />
+    <Content Include="Content\BootstrapSccs\_root.scss" />
+    <Content Include="Content\BootstrapSccs\_spinners.scss" />
+    <Content Include="Content\BootstrapSccs\_tables.scss" />
+    <Content Include="Content\BootstrapSccs\_toasts.scss" />
+    <Content Include="Content\BootstrapSccs\_tooltip.scss" />
+    <Content Include="Content\BootstrapSccs\_transitions.scss" />
+    <Content Include="Content\BootstrapSccs\_type.scss" />
+    <Content Include="Content\BootstrapSccs\_utilities.scss" />
+    <Content Include="Content\BootstrapSccs\_variables.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_alert.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_background-variant.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_badge.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_border-radius.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_box-shadow.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_breakpoints.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_buttons.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_caret.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_clearfix.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_deprecate.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_float.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_forms.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_gradients.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_grid-framework.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_grid.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_hover.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_image.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_list-group.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_lists.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_nav-divider.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_pagination.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_reset-text.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_resize.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_screen-reader.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_size.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_table-row.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-emphasis.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-hide.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_text-truncate.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_transition.scss" />
+    <Content Include="Content\BootstrapSccs\mixins\_visibility.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_align.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_background.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_borders.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_clearfix.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_display.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_embed.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_flex.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_float.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_overflow.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_position.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_screenreaders.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_shadows.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_sizing.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_spacing.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_stretched-link.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_text.scss" />
+    <Content Include="Content\BootstrapSccs\utilities\_visibility.scss" />
+    <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
+    <Content Include="compilerconfig.json" />
+    <Content Include="Content\Main.scss" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
@@ -383,6 +485,16 @@
     <Content Include="Scripts\Formularios\CargarPreguntas.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
@@ -393,13 +505,8 @@
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -484,6 +591,12 @@
     <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
+    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
+    <Content Include="Views\Preguntas\Estilos.cshtml" />
+    <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
+    <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
+    <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
+    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
     <Content Include="Views\Permissions\SeleccionarPerfil.cshtml" />
@@ -501,8 +614,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -556,9 +667,11 @@
     <Error Condition="!Exists('packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetCore.Analyzers.2.9.6\build\Microsoft.NetCore.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NetFramework.Analyzers.2.9.6\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.6\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+    <Error Condition="!Exists('packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets" Condition="Exists('packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" />
   <Import Project="packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

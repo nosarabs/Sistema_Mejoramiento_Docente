@@ -18,13 +18,33 @@ namespace AppIntegrador.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+
 
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
 
         /*Max number of failed login attempts before temporarily locking the account.*/
         private const int MAX_FAILED_ATTEMPTS = 3;
+        private DataIntegradorEntities db;
+        public HomeController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public HomeController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
+        public HomeController(DataIntegradorEntities db, Usuario objUser)
+        {
+            this.db = db;
+            FormsAuth forms = new FormsAuth();
+            forms.Login(objUser.Username);
+            //FormsAuthentication.SetAuthCookie(objUser.Username, false);
+            ConfigureSession(objUser.Username);
+        }
+
 
         public ActionResult Index()
         {
@@ -385,4 +405,24 @@ namespace AppIntegrador.Controllers
             return View();
         }
     }
+
+    interface IAuthentication
+    {
+        void Login(string username);
+        void Logout();
+    }
+
+    class FormsAuth : IAuthentication
+    {
+        public void Login(string username)
+        {
+            FormsAuthentication.SetAuthCookie(username, false);
+        }
+
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
+    }
+
 }

@@ -28,8 +28,8 @@
             <input type="password" class="form-control col-7" id="contrasennaConfirmar" name="contrasennaConfirmar" />
             <p class="text-danger" id="contrasennaConfirmarErrorJS">@Html.ValidationMessageFor(model => model.Password, "")</p>
         </div>
-        <button type="submit" class="btn btn-info mr-3">Cambiar Contraseña</button>
-        @Html.ActionLink("Salir", "Index", "Home", new object { }, new { @class = "btn btn-light border-secondary" })
+        <button type="submit" class="btn-azulUCR mr-3">Cambiar Contraseña</button>
+        @Html.ActionLink("Cancelar", "Index", "Home", new object { }, new { @class = "btn-blancoUCR border-secondary" })
 
     }
 </div>
