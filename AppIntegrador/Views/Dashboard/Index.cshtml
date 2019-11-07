@@ -24,13 +24,14 @@
         });
 
         $.ajax({
-            url: '/Dashboard/ObtenerPromedioCurso',
+            url: '/Dashboard/ObtenerPromedioCursos',
             data: {correo: correo},
             type: 'post',
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados);
+                alert(resultados.promedio);
+                alert(resultados.cantidad);
             }
         });
        

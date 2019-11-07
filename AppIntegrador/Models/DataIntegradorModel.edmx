@@ -1779,6 +1779,7 @@
         <Function Name="PromedioCursos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
+          <Parameter Name="cantidad" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PromedioProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="varchar" Mode="In" />
@@ -3120,6 +3121,7 @@
           <FunctionImport Name="PromedioCursos">
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
+            <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PromedioProfesor">
             <Parameter Name="correo" Mode="In" Type="String" />

@@ -39,12 +39,12 @@ namespace AppIntegrador.Controllers
 
             db.PromedioProfesor(correo, resultPromedio, resultCantidad);
 
-            Resultado r;
+            Resultado p;
 
-            r.promedio = Convert.ToSingle(resultPromedio.Value);
-            r.cantidad = Convert.ToInt32(resultCantidad.Value);
+            p.promedio = Convert.ToSingle(resultPromedio.Value);
+            p.cantidad = Convert.ToInt32(resultCantidad.Value);
 
-            return serializer.Serialize(r);
+            return serializer.Serialize(p);
         }
 
         //Berta Sánchez Jalet
@@ -56,10 +56,16 @@ namespace AppIntegrador.Controllers
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
 
-            db.PromedioCursos(correo, resultPromedio);
+            db.PromedioCursos(correo, resultPromedio, resultCantidad);
 
-            return serializer.Serialize(resultPromedio.Value);
+            Resultado c;
+
+            c.promedio = Convert.ToSingle(resultPromedio.Value);
+            c.cantidad = Convert.ToInt32(resultCantidad.Value);
+
+            return serializer.Serialize(c);
         }
     }   
 }

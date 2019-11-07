@@ -7,12 +7,13 @@
 
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
-            data: {correo: correo},
+            data: { correo: correo },
             type: 'post',
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados);
+                alert(resultados.promedio);
+                alert(resultados.cantidad);
             }
         });
     }
