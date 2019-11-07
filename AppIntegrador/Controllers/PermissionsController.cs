@@ -41,13 +41,13 @@ namespace AppIntegrador.Controllers
             CurrentUser.setUserMajor(ListaCarreras);
             CurrentUser.setUserEmphasis(ListaEnfasis);
 
-            TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
+            TempData["sweetalertmessage"] = "Cambios guardados";
             return RedirectToAction("Index", "Home");
         }
 
         /*TAM 3.4 Task 1 */
         [HttpPost]
-        public ActionResult GuardarPermisos(PermissionsViewHolder model)
+        public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
             if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
             {
@@ -61,20 +61,23 @@ namespace AppIntegrador.Controllers
             List<Persona> Personas = model.Personas;
             List<Permiso> Permisos = model.Permisos;
 
-            //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
-            for (int i = 0; i < Personas.Count; ++i)
+            if (isUser)
             {
-                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+                //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
+                for (int i = 0; i < Personas.Count; ++i)
+                {
+                    db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+                }
             }
-
-            //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
-            for (int i = 0; i < Permisos.Count; ++i)
+            else
             {
-                db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+                //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
+                for (int i = 0; i < Permisos.Count; ++i)
+                {
+                    db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+                }
             }
-
-            //TO-DO Aviso de que la configuracion fue cambiada
-            return View("Index", model);
+            return new EmptyResult();
         }
         /* Fin TAM 3.4 Task 1*/
 
