@@ -166,6 +166,11 @@
     <Build Include="TriggerFuncionario.sql" />
     <Build Include="TriggerProfesor.sql" />
     <Build Include="TriggerEstudiante.sql" />
+    <Build Include="InsertarTrabajaEn.sql" />
+    <Build Include="InsertarInscrita_En.sql" />
+    <Build Include="InsertarPertenece_a.sql" />
+    <Build Include="InsertarImparte.sql" />
+    <Build Include="InsertarEmpadronadoEn.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
