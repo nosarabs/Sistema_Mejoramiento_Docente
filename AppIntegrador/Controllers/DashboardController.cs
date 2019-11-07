@@ -14,6 +14,11 @@ namespace AppIntegrador.Controllers
     public class DashboardController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        struct Resultado
+        {
+            public float promedio;
+            public int cantidad;
+        }
 
         // GET: Dashboard
         public ActionResult Index()
@@ -32,9 +37,14 @@ namespace AppIntegrador.Controllers
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
             ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
 
-            db.PromedioProfesor(correo,resultPromedio,resultCantidad);
- 
-            return serializer.Serialize(resultPromedio.Value);
+            db.PromedioProfesor(correo, resultPromedio, resultCantidad);
+
+            Resultado r;
+
+            r.promedio = Convert.ToSingle(resultPromedio.Value);
+            r.cantidad = Convert.ToInt32(resultCantidad.Value);
+
+            return serializer.Serialize(r);
         }
 
         //Berta Sánchez Jalet
@@ -51,7 +61,5 @@ namespace AppIntegrador.Controllers
 
             return serializer.Serialize(resultPromedio.Value);
         }
-    }
-
-    
+    }   
 }

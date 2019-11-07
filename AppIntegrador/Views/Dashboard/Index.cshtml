@@ -10,8 +10,6 @@
     <script>
 
         var correo = "@HttpContext.Current.User.Identity.Name";
-        var cantidad
-        var promedioProfesor
 
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
@@ -20,7 +18,9 @@
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados);
+                var obj = JSON.parse(resultados);
+                alert(obj.cantidad);
+                alert(obj.promedio);
             }
         });
 
