@@ -13,8 +13,7 @@ RETURNS @returntable TABLE
 AS
 BEGIN
 	INSERT @returntable
-	SELECT DISTINCT C.Codigo, C.Nombre FROM UsuarioPerfil AS UP JOIN PerfilPermiso AS PP on UP.Perfil= PP.Perfil
-	JOIN Carrera AS C ON UP.CodCarrera = C.Codigo
+	SELECT DISTINCT C.Codigo, C.Nombre FROM UsuarioPerfil AS UP JOIN Carrera AS C ON UP.CodCarrera = C.Codigo
 	WHERE UP.Usuario = @correoUsuario AND UP.Perfil = @perfil
 	RETURN
 END

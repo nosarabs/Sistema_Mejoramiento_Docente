@@ -258,6 +258,7 @@ namespace AppIntegrador.Controllers
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
+            CurrentUser.deleteCurrentUser();
             return RedirectToAction("Index");
         }
 
@@ -331,10 +332,7 @@ namespace AppIntegrador.Controllers
          la interfaz de permisos con esa información.*/
         private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
         {
-            CurrentUser.Username = correoUsuario;
-            CurrentUser.Profile = perfil;
-            CurrentUser.MajorId = codCarrera;
-            CurrentUser.EmphasisId = codEnfasis;
+            CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
         }
 
         public ActionResult CambiarContrasenna()
@@ -359,7 +357,7 @@ namespace AppIntegrador.Controllers
             ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
 
             // Se ejecuta el procedimiento almacenado
-            db.LoginUsuario(CurrentUser.Username, contrasennaActual, loginResult);
+            db.LoginUsuario(CurrentUser.getUsername(), contrasennaActual, loginResult);
             if((int)loginResult.Value != 0)
             {
                 ModelState.AddModelError("Username", "Contraseña Incorrecta.");
@@ -372,14 +370,14 @@ namespace AppIntegrador.Controllers
                 }
                 else
                 {
-                    db.ChangePassword(CurrentUser.Username, contrasennaNueva);
+                    db.ChangePassword(CurrentUser.getUsername(), contrasennaNueva);
                     db.SaveChanges();
 
                     //Enviamos un correo al usuario alertando del cambio
                     EmailNotification notification = new EmailNotification();
 
                     List<string> users = new List<string>();
-                    users.Add(CurrentUser.Username);
+                    users.Add(CurrentUser.getUsername());
 
                     //Creamos un timestamp para agregarlo al correo
                     var timestamp = DateTime.Now;
@@ -388,18 +386,18 @@ namespace AppIntegrador.Controllers
 
                     notification.SendNotification(users,
                         "Cambio de contraseña",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
                         "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
                         "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr");
 
                     //HTML implementation pending
 
                     //notification.SendNotification(users, 
                     //    "Cambio de contraseña",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
                     //    "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
+                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
                     //    "<br>Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins a marcelo.jenkins@ecci.ucr.ac.cr");
 
                     ViewBag.typeMessage = "success";
@@ -428,6 +426,7 @@ namespace AppIntegrador.Controllers
         public void Logout()
         {
             FormsAuthentication.SignOut();
+            CurrentUser.deleteCurrentUser();
         }
     }
 

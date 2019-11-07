@@ -146,6 +146,8 @@
                     });
                 })
     window.onload = function loadDefaultValue() {
+                    $('#EnfasisSeleccionados').find('option').remove();
+
                     $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
