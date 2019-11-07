@@ -72,6 +72,37 @@ namespace AppIntegrador.Models
                 cmd10.CommandType = CommandType.StoredProcedure;
                 cmd10.Parameters.AddWithValue("@Correo", archivos.CorreoEstudiante);
 
+                SqlCommand cmd11 = new SqlCommand("InsertarEmpadronadoEn", con);
+                cmd11.CommandType = CommandType.StoredProcedure;
+                cmd11.Parameters.AddWithValue("@CorreoEstudiante", archivos.CorreoEstudiante);
+                cmd11.Parameters.AddWithValue("@CodEnfasis", archivos.CodigoEnfasis);
+                cmd11.Parameters.AddWithValue("@CodCarrera", archivos.CodigoCarrera);
+
+                SqlCommand cmd12 = new SqlCommand("InsertarImparte", con);
+                cmd12.CommandType = CommandType.StoredProcedure;
+                cmd12.Parameters.AddWithValue("@CorreoProfesor", archivos.CorreoProfesor);
+                cmd12.Parameters.AddWithValue("@SiglaCurso", archivos.SiglaCurso);
+                cmd12.Parameters.AddWithValue("@NumGrupo", archivos.NumeroGrupo);
+                cmd12.Parameters.AddWithValue("@Semestre", archivos.Semestre);
+                cmd12.Parameters.AddWithValue("@Anno", archivos.Anno);
+
+                SqlCommand cmd13 = new SqlCommand("InsertarInscrita_En", con);
+                cmd13.CommandType = CommandType.StoredProcedure;
+                cmd13.Parameters.AddWithValue("@CodUnidadAc", archivos.CodigoUnidad);
+                cmd13.Parameters.AddWithValue("@CodCarrera", archivos.CodigoCarrera);
+            
+
+                SqlCommand cmd14 = new SqlCommand("InsertarPertenece_a", con);
+                cmd14.CommandType = CommandType.StoredProcedure;
+                cmd14.Parameters.AddWithValue("@CodCarrera", archivos.CodigoCarrera);
+                cmd14.Parameters.AddWithValue("@CodEnfasis", archivos.CodigoEnfasis);
+                cmd14.Parameters.AddWithValue("@SiglaCurso", archivos.SiglaCurso);
+
+                SqlCommand cmd15 = new SqlCommand("InsertarTrabajaEn", con);
+                cmd15.CommandType = CommandType.StoredProcedure;
+                cmd15.Parameters.AddWithValue("@CodUnidadAcademica", archivos.CodigoUnidad);
+                cmd15.Parameters.AddWithValue("@CorreoFuncionario", archivos.CorreoEstudiante);
+
                 con.Open(); //Abre conexion con la db
 
                 cmd.ExecuteNonQuery();
@@ -84,6 +115,14 @@ namespace AppIntegrador.Models
                 cmd8.ExecuteNonQuery();
                 cmd9.ExecuteNonQuery();
                 cmd10.ExecuteNonQuery();
+                cmd11.ExecuteNonQuery();
+                cmd12.ExecuteNonQuery();
+                cmd13.ExecuteNonQuery();
+                cmd14.ExecuteNonQuery();
+                cmd15.ExecuteNonQuery();
+
+
+
 
                 con.Close(); //Cierra la conexion
             }
