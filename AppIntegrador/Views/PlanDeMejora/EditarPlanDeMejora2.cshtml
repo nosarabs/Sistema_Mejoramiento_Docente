@@ -25,8 +25,12 @@
                         @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
                         <div class="row">
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { 
+                                    @class = "form-control",
+                                    id = "objetivoNombreDePDM",
+                                    @onkeyup = "cambioNombreObjetivoPDM(this)"
+                                } })
+                                <span><p id="objetivoNombreDePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
                             </div>
                         </div>
                     </div>
@@ -34,8 +38,12 @@
                         @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { 
+                                    @class = "form-control",
+                                    id = "fechaInicioObjetivoPDM",
+                                    @onkeyup = "validarFechasObjetivosPDM('fechaFinalObjetivoPDM', 'fechaFinalObjetivoPDM')"
+                                } })
+                                <span><p id="fechaInicioObjetivoPDM_eror" class="regularMsj">50 letras restantes.</p> </span>
                             </div>
                         </div>
                     </div>
@@ -43,8 +51,12 @@
                         @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
                         <div class="row">
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { 
+                                    @class = "form-control",
+                                    id = "fechaFinalObjetivoPDM",
+                                    @onkeyup = "validarFechasObjetivosPDM('fechaFinalObjetivoPDM', 'fechaFinalObjetivoPDM')"
+                                } })
+                                <span><p id="fechaFinalObjetivoPDM_eror" class="regularMsj">50 letras restantes.</p> </span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +66,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="botonCentrado">
-                        <input type="submit" value="Guardar" class="btn btn-success" />
+                        <input id="btnCreacionObjetivo" type="submit" value="Guardar" class="btn btn-success" />
                     </div>
                 </div>
             </div>

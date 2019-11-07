@@ -1,303 +1,465 @@
-﻿let msjEspaciosSobrantes = "Te quedan ";
-let msjFechaMuyAntes = "No puede ser antes de hoy."
+﻿// Class that validates the "Planes de Mejora" form
+class Validador {
+    _maxNameCharacters = -1;
+    _maxDescriptionCharacters = -1;
 
-let msjFechaInicioMuyAdelanteDeFinal = "Inválida, no puede ser después de la fecha final."
-let msjFechaFinalMuyAtrasDeInicio = "Inválida, no puede ser antes de la fecha de inicio."
+    _minDate = Date.now();
+    _maxDate = Date.now();
 
-let msjRegularFechaInicio = "Recuerda que no puede ser antes del día de hoy.";
-let msjRegularFechaFinal = "Recuerda que no puede ser antes del día de inicio.";
+    _minDateStr = '';
+    _maxDateStr = '';
 
-let mensajeFechaInicioDefault = "Fecha de inicio.";
-let mensajeFechaFinalDefault = "Fecha de finalización.";
+    _minDateNumber = -1;
+    _maxDateNumber = -1;
 
-let listo = "Fecha Válida";
+    _validDateMsj = '';
+    _invalidDateMsj = '';
+    _endMsj = '.';
+    _remainingLettersMsj = '';
 
-const idBoton = "sendPDMListo"
-const idPlanDeMejoraNombre = "nombrePlanDM";
+    _submitBtnId = '';
+    _validSubmitForm = false;
+    _initialDateTooLate = '';
+    _tooSoonFinalDate = '';
+    _tooSoonAnyDateCompareToMinimum = '';
+    _validDateMsj = '';
+    _defaultStartDateMsj = '';
+    _defaultFinalDateMsj = '';
 
-let today = Date.now();
-const maximoCaracteresNombrePlan = 50;
-let validacionPorFechas = false;
-let validacionPorNombrePlan = false;
+    _totalValidations = 0;
+    _arrOfValidations = [];
 
-// Funcion que se encarga de devolver un valor numerico que representa el str que se le manda 
-// como parametro, se espera que el mismo sea una fecha
-function hmsToSecondsOnly(str) {
-    var p = str.split('-'),
-        s = 0, m = 1;
-    while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
+    /*
+     EFE:
+        Construct an instance of the Validator class
+     REQ:
+               maxCaracName: max amount of characters for the name.
+        maxCaracDescription: max amount of characters for the description.
+                    minDate: minimum date that the validator will accept.
+                submitBtnId: id of the button of submit that the validator will manage.
+     MOD:
+        ---
+     */
+    constructor(maxCaracName, maxCaracDescription, minDate, maxDate, submitBtnId) {
+        this._maxNameCharacters = maxCaracName;
+        this._maxDescriptionCharacters = maxCaracDescription;
+
+        this._minDate = minDate;
+        this._maxDate = maxDate;
+
+        this._minDateStr = this.setStrDate(this._minDate);
+        this._maxDateStr = this.setStrDate(this._maxDate);
+
+        this._minDateNumber = this.getIntOfDate(this._minDateStr);
+        this._maxDateNumber = this.getIntOfDate(this._maxDateStr);
+
+        this._submitBtnId = submitBtnId;
+        this._subMsjAcro = "_subMsj";
+
+        this._validDateMsj = 'Fecha Válida.';
+        this._invalidDateMsj = 'Fecha Inválida, tiene que estar entre ';
+        this._endMsj = '.';
+        this._remainingLettersMsj = 'Te quedan: ';
+        this._errorStartAfterEndMsj = 'No puede ser despues de la fecha de Fin.';
+        this._errorEndBeforeStartMsj = 'No puede ser antes de la fecha de Inicio.';
+        
+        // Disabling the submit button
+        this.disableSubmit(true);
     }
-    return s;
-}
 
-// Funcion que convierte la fecha de hoy a formato anno-mes-dia
-function todayStringDate() {
-    var dateObj = new Date(today);
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    newdate = year + "-" + month + "-" + day;
-    return newdate;
-}
-
-// Viendo los segundos de la fecha actual
-var numToday = hmsToSecondsOnly(todayStringDate());
-
-// Metodo que me dice los segundos del elemento con el id que se pide en el parametro
-function getSeconds(valorId) {
-    // Buscando el elemento en el DOM
-    let elemento = document.getElementById(valorId);
-    if (elemento.value) {
-        // Si el elemento existe
-        let seconds = hmsToSecondsOnly(elemento.value);
-        // Retornando los segundo que implica la fecha del elemento
-        return seconds;
-    } else {
-        //En caso de que el elemento no exista
-        return -1;
+    /*
+     EFE:
+        The following are simple set methods to display messages according the needs
+     REQ:
+        msj: A string that represents the msj that will be displayed.
+     MOD:
+        The corresponding instance variable.
+     */
+    setRemainingLettersInitialMsj(msj) {
+        this._remainingLettersMsj = msj;
     }
-}
-
-//Metodo que se encarga de asignarle el error del parametro al segundo elemento del Dom que 
-//viene por parametro, el tercer parametro es si es un error o no
-function cambiarMensaje(mensaje, element, error) {
-    document.getElementById(element.id).innerHTML = mensaje;
-    if (error) {
-        document.getElementById(element.id).classList.remove('correct');
-        document.getElementById(element.id).classList.add('redError');
-    } else {
-        document.getElementById(element.id).classList.remove('redError');
-        document.getElementById(element.id).classList.add('correct');
+    setValidDateMsj(msj) {
+        this._validDateMsj = msj;
     }
-}
 
-// Metodo que se encarga de ver si la fecha enviada es valida si no es anterior 
-// al dia de hoy, se asume que el elemento es un input de fecha
-// La fecha puede ser igual al dia de hoy
-function esValidaPorHoy(elemento) {
-    let numElemento = hmsToSecondsOnly(elemento.value);
-    if (numElemento >= numToday) {
-        return true;
-    } else {
-        return false;
+    /*
+     EFE:
+        Print some of the important values saved by the object
+     REQ:
+        ---
+     MOD:
+        ---
+     */
+    printInfo() {
+        console.log('       this._maxNameCharacters = ' + this._maxNameCharacters);
+        console.log('this._maxDescriptionCharacters = ' + this._maxDescriptionCharacters);
+        console.log('             this._submitBtnId = ' + this._submitBtnId);
+        console.log('');
+        console.log('                 this._minDate = ' + this._minDate);
+        console.log('           this._minDateNumber = ' + this._minDateNumber);
+        console.log('---------------------------------');
+
+        console.log('                 this._maxDate = ' + this._maxDate);
+        console.log('           this._maxDateNumber = ' + this._maxDateNumber);
+        console.log('---------------------------------' );
+
+        console.log('         this._validSubmitForm = ' + this._validSubmitForm);
+        console.log('');
+        console.log('');
     }
-}
 
+    /*
+     EFE:
+        Disable and enables the submit button that the validator will manage
+     REQ:
+        status: status of the disabled attribute of the submit button.
+     MOD:
+        Disabled status of the submit button.
+     */
+    disableSubmit(status) {
+        this._validSubmitForm = !status;
+        document.getElementById(this._submitBtnId).disabled = status;
+    }
 
-//Funcion que se encarga de ver si la fechaA es anterior a la fechaB
-//El proposito principal de la función es la reutilización del código
-//Y tambien da verdadero si las fechas son las mismas
-function esAntes(elementoA, elementoB) {
-    let timeElementoA = hmsToSecondsOnly(elementoA.value);
-    let timeElementoB = hmsToSecondsOnly(elementoB.value);
-    return timeElementoA <= timeElementoB ? true : false;
-}
-
-// Metodo que se encarga de validar los ids de las fechas que se ingresan como parametro
-// La primer fecha se espera que sea antes de la segunda fecha ingeresadas como parametros
-function validarFechas(idFechaUno, idFechaDos) {
-    let fechaUno = document.getElementById(idFechaUno);
-    let msjUno = document.getElementById(idFechaUno + '_msj');
-    let fechaDos = document.getElementById(idFechaDos);
-    let msjDos = document.getElementById(idFechaDos + '_msj');
-
-    // Variable para la validación de fechas
-    this.validacionPorFechas = false;
-
-    // Si existen ambas fechas
-    if (fechaUno.value && fechaDos.value) { // Ambas fechas estan definidas
-        // Validando ambas fechas por el dia de hoy y que la de incio sea antes que la final
-        let validaPorHoyInicio = esValidaPorHoy(fechaUno);
-        let validaPorHoyFinal = esValidaPorHoy(fechaDos);
-        let ordenValidoDeFechas = esAntes(fechaUno, fechaDos);
-
-        if (validaPorHoyInicio && validaPorHoyFinal && ordenValidoDeFechas) {
-            cambiarMensaje(listo, msjUno, false);
-            cambiarMensaje(listo, msjDos, false);
-            this.validacionPorFechas = true;
-        } else {
-            // Para la fecha de inicio
-            if (!validaPorHoyInicio) {
-                cambiarMensaje(msjFechaMuyAntes, msjUno, true);
+    /*
+     EFE: 
+        Another way to turn a date into a numeric value
+     REQ: 
+        str: string that represents a day in the format day-month-year
+     MOD:
+        ---
+     */
+    strdDateToNumber(dateStr) {
+        let result = 1;
+        while (dateStr.length > 0) {
+            let index = dateStr.indexOf('-');
+            let elemento;
+            if (index == -1) {
+                elemento = dateStr
             } else {
-                if (ordenValidoDeFechas) {
-                    cambiarMensaje(listo, msjUno, false);
-                } else {
-                    cambiarMensaje(msjFechaInicioMuyAdelanteDeFinal, msjUno, true);
-                }
+                elemento = dateStr.substr(0, index);
             }
-            // Para la fecha final
-            if (!validaPorHoyFinal) {
-                cambiarMensaje(msjFechaMuyAntes, msjDos, true);
+            result = result * parseInt(elemento);
+            if (dateStr.length == 1) {
+                break;
             } else {
-                if (ordenValidoDeFechas) {
-                    cambiarMensaje(listo, msjDos, false);
-                } else {
-                    cambiarMensaje(msjFechaFinalMuyAtrasDeInicio, msjDos, true);
-                }
+                dateStr = dateStr.substr(index + 1, dateStr.length - 1);
             }
         }
 
-    } else { //Si solo existe una de las fechas o ninguna
+        return result;
+    }
 
+    /*
+     EFE: 
+        turns a date into the format day-month-year
+     REQ: 
+        date: a date object
+     MOD:
+        ---
+     */
+    setStrDate(date) {
+        let tmpDate = new Date(date);
+        let day = tmpDate.getDate();
+        var month = tmpDate.getMonth() + 1 ; //months from 1-12
+        var year = tmpDate.getFullYear();
+
+        let newdate = year + "-" + month + "-" + day;
+
+        return newdate;
+    }
+
+    /*
+     EFE: 
+        turns a date into the format day-month-year
+     REQ: 
+        date: a date object
+     MOD:
+        ---
+     */
+    getIntOfDate(date) {
+        let tmp = new Date(date);
+        return tmp.getTime();
+    }
+
+    /*
+     EFE:
+        Changes the innerHtml of the dom element with the specific id,
+        and changes the style of the dom element, adds the style according to
+        the fourth parameter
+     REQ:
+        domObject: DOM object
+          newMesj: message that will be displayed by the dom element.
+         newStyle: the style that will be removed or added to the dom element.
+         addStyle: tells if the style will be added or removed.
+     MOD:
+        The style and the inner html that displays the DOM element.
+     */
+    changeMsj(domObjectId, newMesj, newStyle, addStyle) {
+        document.getElementById(domObjectId).innerHTML = newMesj;
+        //if (addStyle) {
+        //    document.getElementById(domObject.id).classList.add(newStyle);
+        //} else {
+        //    document.getElementById(domObject.id).classList.remove(newStyle);
+        //}
+    }
+
+    /*
+     EFE:
+        Set the amount of characters left of the textElement in the textElementSubMsj
+     REQ:
+          textElement: dom element that will wait for input of the user.
+        maxCharacters: the max amount if characters that the element, textElement, will/can have.
+     MOD:
+        DOM element message represented by the textElement.
+     */
+    countTextElements(textElement, maxCharacters) {
+        let totalCharactersWritten = document.getElementById(textElement.id).value.length;
+
+        var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
+
+        let unusedSpaces = maxCharacters - totalCharactersWritten;
+
+        subMessageDomElement.innerHTML = this._remainingLettersMsj + unusedSpaces + '.';
+        return totalCharactersWritten;
+    }
+
+    /* 
+     EFE:
+        Validates if there is something selected by the user in the select object (selectElement).
+     REQ:
+        selectElement: DOM element of type slelect
+     MOD:
+        ---
+     */
+    validateSomethingInSelectInput(selectElement) {
+        let result = false;
+
+
+        return result;
+    }
+
+    /*
+     EFE:
+        Validates if the firstDate is before the secondDate
+     REQ:
+         firstDate: A DOM object that is of type date, and must have a value
+        secondDate: A DOM object that is of type date, and must have a value
+     MOD:
+        ---
+     */
+    validateOrderOfDates(firstDate, secondDate) {
+        let result = false;
+        let firstDateNumber = this.dateToNumber(this.dateToSTR(firstDate.value));
+        let secondDateNumber = this.dateToNumber(this.dateToSTR(secondDate.value));
+        if (firstDateNumber <= secondDateNumber) {
+            result = true;
+        }
+        return result;
+    }
+
+    /*
+     EFE:
+        Validates the date dom element if it is between the minDate and the maxDate.
+        It could be the min or max
+        Otherwise the function returns false
+     REQ:
+        dateObj: A DOM object that is of type date, and must have a value
+     MOD:
+        ---
+     */
+    validateDateInsideLimits(dateObj) {
+        let result = false;
+
+        let tempDate = new Date(dateObj);
+
+        //Turn the minimun date to number
+        let strDate = this.setStrDate(tempDate);
+        let intDate = this.getIntOfDate(strDate);
+
+        //console.log('           min = ' + this._minDateNumber);
+        //console.log('      tempDate = ' + strDate);
+        //console.log('       intDate = ' + intDate);
+        //console.log('           max = ' + this._maxDateNumber);
+        //console.log('');
+
+        if (intDate >= this._minDateNumber && intDate <= this._maxDateNumber) {
+            result = true;
+        }
+        else {
+            result = false;
+        }
+        return result;
+    }
+
+    /*
+     EFE:
+        Sets the error mesaje for a dom element
+     REQ:
+        bigElementId: element that is wrong and needs a msj
+     MOD:
+        dom element spacified in the parameters
+     */
+    getOutOfRangeMsj(bigElementId) {
+        let result = this._invalidDateMsj + '(' + this._minDateStr + ') ' + ' - (' + this._maxDateStr + ')';
+        let elem = document.getElementById(bigElementId + this._subMsjAcro);
+        elem.innerHTML = result;
+    }
+
+    /*
+     EFE:
+        Determines the amount of validations that we are going to use
+     REQ:
+        totalValidations: integer of all the validation that are going to be applied.
+     MOD:
+        totalValidations: the instance value
+     */
+    setTotalValidations(totalValidations) {
+        this._totalValidations = totalValidations;
+    }
+
+    /*
+     EFE:
+        Method that will save all the results of the validations in the instance array
+     REQ:
+        validationResult: a boolean result of a validation
+     MOD:
+        arrOfValidations list
+     */
+    addValidation(validationResult) {
+        this._arrOfValidations.push(validationResult);
+    }
+
+    /*
+     EFE:
+        Returns true if all the validations are passed, false otherwise
+     REQ:
+        ---
+     MOD:
+        ---
+     */
+    validityOfForm() {
+        let result = false;
+        let amountOfTrues = 0;
+        for (let index = 0; index < this._arrOfValidations.length; ++index) {
+            if (this._arrOfValidations[index]) {
+                amountOfTrues = amountOfTrues + 1;
+            }
+        }
+
+        if (amountOfTrues === this._totalValidations) {
+            result = true;
+            document.getElementById(this._submitBtnId).disabled = false;
+        } else {
+            result = false;
+            document.getElementById(this._submitBtnId).disabled = true;
+        }
+
+        return result;
+    }
+
+    /* 
+     EFE:
+        Validates if there is something written by the user in the input text field (textElement).
+     REQ:
+        testElement: DOM element of type text
+     MOD:
+        ---
+     */
+    validateSomethingInTextInput(textElement) {
+        let result = false;
+        let totalCharactersWritten = this.countTextElements(textElement, this._maxNameCharacters);
+        //Validating only if there are characters on the field
+        if (totalCharactersWritten > 0) {
+            result = true;
+        }
+        this.addValidation(result);
+        return result;
+    }
+
+    /*
+     EFE:
+        Method that validates if the firstDate is before the secondDate.
+     REQ:
+         dateOne: DOM element that represents a date.
+         dateTwo: DOM element that represents a date.
+     MOD:
+        --
+     */
+    validateDates(dateOne, dateTwo) {
+        let result = false;
+        let resultFechaInicial = false;
+        let resultFechaFinal = false;
+
+        let fechaUno = document.getElementById(dateOne.id);
+        let fechaDos = document.getElementById(dateTwo.id);
+
+        // The following dates are according to the current location
+        let f1 = new Date(fechaUno.value + 'CST');
+        let f2 = new Date(fechaDos.value + 'CST');
+
+        // Looking if the dates are inside the min and max dates values
         if (fechaUno.value) {
-            //Solo existe la primera
-            // Validando por el dia de hoy
-            fechasValidas = esValidaPorHoy(fechaUno);
-            if (fechasValidas) {
-                cambiarMensaje(listo, msjUno, false);
+            resultFechaInicial = this.validateDateInsideLimits(f1);
+            if (!resultFechaInicial) {
+                resultFechaInicial = false;
+                this.getOutOfRangeMsj(dateOne.id);
             } else {
-                cambiarMensaje(msjFechaMuyAntes, msjUno, true);
-            }
-        } else {
-            if (fechaDos.value) {
-                // Solo existe la segunda
-                fechasValidas = esValidaPorHoy(fechaDos);
-                if (fechasValidas) {
-                    cambiarMensaje(listo, msjDos, false);
-                } else {
-                    cambiarMensaje(msjFechaMuyAntes, msjDos, true);
-                }
-            } else {
-                //No existe ninguna
-                cambiarMensaje(mensajeFechaInicioDefault, msjUno, false);
-                cambiarMensaje(mensajeFechaFinalDefault, msjDos, false);
+                resultFechaInicial = true;
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, '-', false);
             }
         }
-    }
-
-    activarBotonSubmit();
-}
-
-
-// Metodo que se encarga de validar la fecha de inicio de un plan de mejora
-function validarInicioPDM() {
-    let resultado = false;
-    // Toma del elemento del DOM que corresponde a la fecha de inicio de un plan
-    let elementoFechaInicio = document.getElementById('fechaInicioPlanDM');
-    let elementoFechaFinal = document.getElementById('fechaFinalPlanDM');
-    validadoPorFechas(false);
-
-    // Validando con respecto a la fecha de hoy
-    let fechaValida = esValidaPorHoy(elementoFechaInicio);
-    if (fechaValida && elementoFechaFinal.value) {
-        // La fecha de inicio es validada por la fecha de hoy
-        // Y la fechaFinal de los planes de mejora ya tiene un valor
-        let fechaFinalValida = esValidaPorHoy(elementoFechaFinal);
-        let elem1 = document.getElementById(elementoFechaInicio.id + '_msj');
-        let elem2 = document.getElementById(elementoFechaFinal.id + '_msj');
-        if (fechaFinalValida) {
-            // Analizando el caso en el que la fecha final es válida por el dia de hoy
-            if (esAntes(elementoFechaInicio, elementoFechaFinal)) {
-                //Analizando el caso de exito de fechas
-                setDOMvalues(listo, elem1, false);
-                setDOMvalues(listo, elem2, false);
-                validadoPorFechas(true);
-                resultado = true;
+        if (fechaDos.value) {
+            resultFechaFinal = this.validateDateInsideLimits(f2);
+            if (!resultFechaFinal) {
+                resultFechaFinal = false;
+                this.getOutOfRangeMsj(dateTwo.id);
             } else {
-                //Caso en que la fecha de inicio no es antes de la final
-                setDOMvalues(msjFechaInicioMuyAdelanteDeFinal, elem1, true);
-                setDOMvalues(msjFechaFinalMuyAtrasDeInicio, elem2, true);
+                resultFechaFinal = true;
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, '-', false);
             }
-        } else {
-            // Caso en que la fecha final es menor que hoy
-            setDOMvalues(listo, elem1, true);
-            setDOMvalues(msjFechaMuyAntes, elem2, true);
         }
-    } else { // Analizando el caso en el que solo se ha ingresado la fecha de inicio
-        if (fechaValida) {
-            let elem = document.getElementById(elementoFechaInicio.id + '_msj');
-            setDOMvalues(listo, elem, false);
-        } else {
-            // Caso en el que la fecha de inicio no es válida
-            let elem = document.getElementById(elementoFechaInicio.id + '_msj');
-            setDOMvalues(msjFechaMuyAntes, elem, true);
-        }
-    }
-    return resultado;   
-}
 
-// Metodo que se encarga de validar la fecha de inicio de un plan de mejora
-function validarFinPDM() {
-    let resultado = false;
-    // Toma del elemento del DOM que corresponde a la fecha de inicio de un plan
-    let elementoFechaInicio = document.getElementById('fechaInicioPlanDM');
-    let elementoFechaFinal = document.getElementById('fechaFinalPlanDM');
-    validadoPorFechas(false);
+        result = resultFechaInicial && resultFechaFinal;
 
-    // Validando con respecto a la fecha de hoy
-    let fechaValida = esValidaPorHoy(elementoFechaFinal);
+        //Now we are looking for the order of the dates
+        if (fechaUno.value && fechaDos.value && result) {
+            let fechaInicioStr = this.setStrDate(f1);
+            let fechaInicioInt = this.getIntOfDate(fechaInicioStr);
 
-    if (fechaValida && elementoFechaInicio.value) {
-        // La fecha final es validada por la fecha de hoy
-        // Y la fechaInicio de los planes de mejora ya tiene un valor
-        let fechaInicioValida = esValidaPorHoy(elementoFechaInicio);
-        let elem1 = document.getElementById(elementoFechaInicio.id + '_msj');
-        let elem2 = document.getElementById(elementoFechaFinal.id + '_msj');
-        if (fechaInicioValida) {
-            // Analizando el caso en el que la fecha final es válida por el dia de hoy
-            if (esAntes(elementoFechaInicio, elementoFechaFinal)) {
-                //Analizando el caso de exito de fechas
-                setDOMvalues(listo, elem1, false);
-                setDOMvalues(listo, elem2, false);
-                validadoPorFechas(false);
-                resultado = true;
+            let fechaFinalStr = this.setStrDate(f2);
+            let fechaFinalInt = this.getIntOfDate(fechaFinalStr);
+
+            if (fechaFinalInt >= fechaInicioInt) {
+                result = true;
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, '-', false);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, '-', false);
             } else {
-                //Caso en que la fecha de inicio no es antes de la final
-                setDOMvalues(msjFechaInicioMuyAdelanteDeFinal, elem1, true);
-                setDOMvalues(msjFechaFinalMuyAtrasDeInicio, elem2, true);
+                result = false;
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._errorStartAfterEndMsj, '-', false);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._errorEndBeforeStartMsj, '-', false);
             }
-        } else {
-            // Caso en que la fecha inicio es menor que hoy
-            setDOMvalues(listo, elem2, true);
-            setDOMvalues(msjFechaMuyAntes, elem1, true);
         }
-    } else { // Analizando el caso en el que solo se ha ingresado la fecha final
-        if (fechaValida) {
-            let elem = document.getElementById(elementoFechaFinal.id + '_msj');
-            setDOMvalues(listo, elem, false);
-        } else {
-            // Caso en el que la fecha final no es válida
-            let elem = document.getElementById(elementoFechaFinal.id + '_msj');
-            setDOMvalues(msjFechaMuyAntes, elem, true);
-        }
-    }
-    return resultado;
-}
-
-//////// VALIDACIÓN DEL TEXTO QUE REPRESENTA EL NOMBRE DEL PLAN DE MEJORA ////////
-
-// Funcion que se encarga de decir la cantidad de letras que le quedan al usuario
-// para agregar en el nombre del plan de mejora
-function cambioNombrePlan(nombrePlan) {
-    let cantidadCaracteres = nombrePlan.value.length;
-
-    var errorMessage = document.getElementById("nombrePDM_eror");
-    let espaciosSobrantes = maximoCaracteresNombrePlan - cantidadCaracteres;
-
-    errorMessage.innerHTML = msjEspaciosSobrantes + espaciosSobrantes + " letras.";
-    validarNombreDePlan(espaciosSobrantes);
-    activarBotonSubmit();
-}
-
-// Funcion que se encarga de ver si el nombre del plan de mejora es valido
-function validarNombreDePlan(espaciosSobrantes) {
-    // La unica validacion que se hace es que tenga caracteres
-    let cantidadCaracteres = document.getElementById(idPlanDeMejoraNombre).value.length;
-    this.validacionPorNombrePlan = false;
-    if (cantidadCaracteres > 0) {
-        this.validacionPorNombrePlan = true;
+        this.addValidation(result);
+        return result;
     }
 }
 
-//// METODOS PARA LA ACTIVACION DEL BOTON DE ENVIO DE LOS PLANES DE MEJORA ////
-function activarBotonSubmit() {
-    let elementoBoton = document.getElementById(idBoton);
-    if (this.validacionPorFechas && this.validacionPorNombrePlan) {
-        elementoBoton.disabled = false;
-    } else {
-        elementoBoton.disabled = true;
-    }
+
+function validarPlanDeMejora() {
+    let fechaInicioPlan = document.getElementById('fechaInicioPlanDM');
+    let fechaFinalPlan = document.getElementById('fechaFinalPlanDM');
+    let nombrePlan = document.getElementById('nombrePlanDM');
+
+    // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
+    let minDate = new Date(); // Todays Date
+    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+    let validator = new Validador(50, 50, minDate, topDate, 'sendPDMListo');
+
+    //Definimos la cantidad de validaciones
+    validator.setTotalValidations(2);
+
+    // Ahora haciendo las validaciones
+    validator.validateSomethingInTextInput(nombrePlan);
+    validator.validateDates(fechaInicioPlan, fechaFinalPlan);  
 }

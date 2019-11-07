@@ -36,12 +36,12 @@
                                         {
                                             @class = "form-control",
                                             id = "nombrePlanDM",
-                                            @onkeyup = "cambioNombrePlan(this)",
+                                            @onkeyup = "validarPlanDeMejora()",
                                             placeholder = "Máximo 50 caracteres",
                                             maxlength = "50"
                                         }
                                     })
-                                    <span><p id="nombrePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
+                                    <span><p id="nombrePlanDM_subMsj" class="regularMsj">50 letras restantes.</p> </span>
                                 </div>
                             </div>
                         </div>
@@ -52,11 +52,11 @@
                                     @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new {
                                     id = "fechaInicioPlanDM",
                                     @class = "form-control",
-                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')" 
+                                    @onchange = "validarPlanDeMejora()" 
                                     //@onchange = "validarInicioPDM()" 
                                } })
                                     <span class="error">
-                                        <p id="fechaInicioPlanDM_msj" class="regularMsj">Inicio plan de mejora.</p>
+                                        <p id="fechaInicioPlanDM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
                                     </span>
                                 </div>
                             </div>
@@ -68,10 +68,10 @@
                                     @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new {
                                     id = "fechaFinalPlanDM",
                                     @class = "form-control",
-                                    @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
+                                    @onchange = "validarPlanDeMejora()"
                                } })
                                     <span class="error">
-                                        <p id="fechaFinalPlanDM_msj" class="regularMsj">Fin plan de mejora.</p>
+                                        <p id="fechaFinalPlanDM_subMsj" class="regularMsj">Fin plan de mejora.</p>
                                     </span>
                                 </div>
                             </div>
