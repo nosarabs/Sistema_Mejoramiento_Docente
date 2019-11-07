@@ -6,16 +6,6 @@
 <h2>Index</h2>
 <script src="~/Scripts/Visualizacion/graficosDashboard.js"></script>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-3.3.1.js")
-    <script>
-        var correo = "@HttpContext.Current.User.Identity.Name";
-        var x = new GraficosDashboard();
-        x.recuperarPromedioProfesor(correo);
-        x.recuperarPromedioCursos(correo);
-    </script>
-}
-
 <!--Como la página web se carga tan rápido, se agregó está sección para asegurarse de que se carga JQuery antes de usar Ajax en el script.-->
 @section Scripts {
 
@@ -58,6 +48,13 @@
             }
         });
 
+    </script>
+
+    <script>
+        var correo = "@HttpContext.Current.User.Identity.Name";
+        var x = new GraficosDashboard();
+        x.recuperarPromedioProfesor(correo);
+        x.recuperarPromedioCursos(correo);
     </script>
 
 }
