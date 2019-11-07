@@ -29,21 +29,15 @@ namespace AppIntegrador.Models
 
         public MultiSelectList ListaPersonas { get; set; }
 
-        public string[] CarrerasSeleccionadas { get; set; }
+        public string CarrerasSeleccionadas { get; set; }
 
-        public string[] EnfasisSeleccionados { get; set; }
+        public string EnfasisSeleccionados { get; set; }
 
         public string [] PersonasSeleccionadas { get; set; }
 
         public int[] PermisosSeleccionados { get; set; }
 
-        public int[] PerfilesSeleccionados { get; set; }
-
-        public int PerfilSeleccionado { get; set; }
-
-        public int CarreraSeleccionada { get; set; }
-
-        public int EnfasisSeleccionado { get; set; }
+        public int PerfilesSeleccionados { get; set; }
 
         public PermissionsViewHolder()
         {
