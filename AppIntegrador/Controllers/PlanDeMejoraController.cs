@@ -27,7 +27,7 @@ namespace AppIntegrador.Controllers
             ViewBag.nombre = context.User.Identity.Name;
             return View("Index", db.PlanDeMejora.ToList());
         }
-        
+
         public ActionResult Index(String nombre)
         {
             ObjectParameter count = new ObjectParameter("count", 999);
@@ -226,6 +226,7 @@ namespace AppIntegrador.Controllers
                 db.Entry(planDeMejora).State = EntityState.Modified;
                 db.SaveChanges();
             }
+            ViewBag.IdPlan = planDeMejora.codigo;
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
@@ -285,16 +286,13 @@ namespace AppIntegrador.Controllers
                     planTemp.fechaInicio = fechaInicio;
                     planTemp.fechaFin = fechaFin;
                     this.Create(planTemp);
-                }
-                else
-                {
-                    //return RedirectToAction("Index", ViewBag.Fecha = -1);
+
+                    ViewBag.IdPlan = id;
+                    ViewBag.editar = false;
+                    return View("EditarPlanDeMejora2", planTemp);
                 }
             }
-            //return RedirectToAction("Index");
-            ViewBag.IdPlan = id;
-            ViewBag.editar = false;
-            return View("EditarPlanDeMejora2", planTemp);
+            return RedirectToAction("Index");
         }
 
         // Method that edits one "PlanDeMejora"
