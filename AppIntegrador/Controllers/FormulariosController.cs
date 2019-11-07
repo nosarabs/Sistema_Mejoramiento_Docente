@@ -41,6 +41,10 @@ namespace AppIntegrador.Controllers
 
         public ActionResult LlenarFormulario(string id)
         {
+            if(HttpContext == null)
+            {
+                return Redirect("~/");
+            }
             Formulario formularioDB = db.Formulario.Find(id);
             if (formularioDB == null)
             {
