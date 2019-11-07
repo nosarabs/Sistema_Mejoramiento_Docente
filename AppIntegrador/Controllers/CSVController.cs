@@ -44,7 +44,7 @@ namespace AppIntegrador.Controllers
             {
                 ViewBag.Message = "Por favor especifique un archivo";
             }
-           
+
             return View();
         }
 
@@ -78,36 +78,38 @@ namespace AppIntegrador.Controllers
                 }
             }*/
 
-            
+
             var archivoValido = true;
 
             fila = lista[0];
-            //Se valida cada fila de CSV
-            foreach(ArchivoCSV f in lista)
+            if (validarEntradas(fila)) // si la primera linea esta con blancos no se pueden ingresar
             {
-                cargaFila(f); // actualiza fila y copia el valor anterior para los espacios en blanco
-                if (!validarEntradas(fila))
-                {
-                    archivoValido = false;
-                }
-            }
-            if (archivoValido) // si todas las filas son correctas inserta
-            {
+                //Se valida cada fila de CSV
                 foreach (ArchivoCSV f in lista)
                 {
-                    cargaFila(f);
-                    ll.insertarDatos(fila); //inserta fila
+                    cargaFila(f); // actualiza fila y copia el valor anterior para los espacios en blanco
+                    if (!validarEntradas(fila))
+                    {
+                        archivoValido = false;
+                    }
+                }
+                if (archivoValido) // si todas las filas son correctas inserta
+                {
+                    foreach (ArchivoCSV f in lista)
+                    {
+                        cargaFila(f);
+                        ll.insertarDatos(fila); //inserta fila
+                    }
                 }
             }
-            
         }
 
-        private bool validarEntradas (ArchivoCSV archivo)
+        private bool validarEntradas(ArchivoCSV archivo)
         {
             bool numerosValidos = validaNumeros(archivo);
             bool longitudesValidas = validaLongitudes(archivo);
 
-            if(numerosValidos && longitudesValidas)
+            if (numerosValidos && longitudesValidas)
             {
                 return true;
             }
@@ -121,7 +123,7 @@ namespace AppIntegrador.Controllers
         {
             /*NumGrupo*/
             /*Compara que el valor ingresado sea un numero positivo*/
-            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && !int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo>0)  //NumGrupo
+            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && !int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo > 0)  //NumGrupo
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("NumGrupo");
@@ -153,7 +155,7 @@ namespace AppIntegrador.Controllers
                 System.Diagnostics.Debug.WriteLine("CodigoUnidad");
                 return false;
             }
-            if (!String.IsNullOrEmpty(archivo.NombreFacultad) &&  archivo.NombreFacultad.Length > 50) //nombreFacultad
+            if (!String.IsNullOrEmpty(archivo.NombreFacultad) && archivo.NombreFacultad.Length > 50) //nombreFacultad
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("nombreFacultad");
@@ -205,7 +207,7 @@ namespace AppIntegrador.Controllers
                 System.Diagnostics.Debug.WriteLine("CorreoDocente");
                 return false;
             }
-            if (!String.IsNullOrEmpty(archivo.IdProfesor) &&  archivo.IdProfesor.Length > 30) //Id Profesor
+            if (!String.IsNullOrEmpty(archivo.IdProfesor) && archivo.IdProfesor.Length > 30) //Id Profesor
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("Id Profesor");
@@ -219,7 +221,7 @@ namespace AppIntegrador.Controllers
 
                 return false;
             }
-            if (!String.IsNullOrEmpty(archivo.ApellidoProfesor) &&  archivo.ApellidoProfesor.Length > 15) //apellidoProfa
+            if (!String.IsNullOrEmpty(archivo.ApellidoProfesor) && archivo.ApellidoProfesor.Length > 15) //apellidoProfa
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("apellido Profe");
@@ -246,7 +248,7 @@ namespace AppIntegrador.Controllers
                 System.Diagnostics.Debug.WriteLine("IdEstudiante");
                 return false;
             }
-            if (!String.IsNullOrEmpty(archivo.NombreEstudiante) &&  archivo.NombreEstudiante.Length > 15) //Nombre Estudiante
+            if (!String.IsNullOrEmpty(archivo.NombreEstudiante) && archivo.NombreEstudiante.Length > 15) //Nombre Estudiante
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("Nombre Estudiante");
