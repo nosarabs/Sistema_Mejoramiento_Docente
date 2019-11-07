@@ -19,7 +19,7 @@
     @using (Html.BeginForm("GuardarSeleccion", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
-            <div class="col-md-4" style="flex:50%;">
+            <div class="col-md-4 pl-0" style="flex:50%;">
                 @Html.Label("Seleccione perfil")
                 <br />
                 @Html.DropDownListFor(model => model.ListaPerfiles, Model.PerfilesSeleccionables, new { @class = "form-control", @required = "required" })
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-azulUCR">Guardar</button>
+        <button type="submit" class="btn-azulUCR">Seleccionar</button>
         @Html.ActionLink("Cancelar", "Index", "Home", new object { }, new { @class = "btn-blancoUCR" })
     }
 
@@ -54,6 +54,7 @@
     $("#ListaPerfiles").on("change", function () {
                     $("#ListaCarreras").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     cargarCarreras($("#ListaPerfiles option:selected").val());
+                    cargarEnfasisXPerfil('@AppIntegrador.Models.CurrentUser.getUserMajorId()', $("#ListaPerfiles option:selected").val());
                 })
                 function cargarCarreras(val) {
                     $.getJSON('@Url.Action("CargarCarreras", "Permissions")' + "?perfilSeleccionado=" + val, function (result) {
@@ -69,11 +70,13 @@
 
     $("#ListaCarreras").on("change", function(){
                     $("#ListaEnfasis").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
-                    cargarEnfasis($("#ListaCarreras option:selected").val());
+                    cargarEnfasisXPerfil($("#ListaCarreras option:selected").val(), '@AppIntegrador.Models.CurrentUser.getUserProfile()');
+                    
                 })
-    function cargarEnfasis(val) {
+
+    function cargarEnfasisXPerfil(val, profile) {
         
-        $.getJSON('@Url.Action("CargarEnfasisDeCarrera", "Permissions")' + "?value=" + val, function (result) {
+        $.getJSON('@Url.Action("CargarEnfasisDeCarreraPorPerfil", "Permissions")' + "?value=" + val + "&profile=" + profile, function (result) {
             $("#ListaEnfasis").children().remove();
 
             var data = result.data;
@@ -95,15 +98,10 @@
                         $("#ListaCarreras").append("<option value=" + major[0] + ">" + major[1] + "</option>");
                         cargarCarreras(result.defaultProfile);
                     }
-                    if (emphasis.length > 1) {
-                        $("#ListaEnfasis").append("<option value=" + emphasis[0] + ">" + emphasis[1] + "</option>");
-                        cargarEnfasis(emphasis[0]);
-                    }
-                    $('#ListaCarreras option:contains("'+ major[1] +'")').attr("selected", "selected");
-                    $('#ListaEnfasis option:contains("'+ emphasis[1] +'")').attr("selected", "selected");
-                    $('#ListaPerfiles option:contains("' + result.defaultProfile + '")').attr("selected", "selected");
+                    $('#ListaPerfiles').val(result.defaultProfile);
+                    $("#ListaCarreras").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+                    $("#ListaEnfasis").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     
-
                 })
                 }
 </script>

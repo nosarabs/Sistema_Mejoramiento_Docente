@@ -12,13 +12,12 @@
         </div>
     </div>
     <br />
-    @using (Html.BeginForm("Index", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
+    @using (Html.BeginForm("GuardarPermisos", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
     {
         <div class="row" style="display:flex; padding-left:15px; ">
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione perfiles")
                 <br />
-
                 @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control", @required = "required" })
                 <br />
             </div>
@@ -51,6 +50,9 @@
                                 </th>
                                 <th>
                                     @Html.Label("Perfil asignado a Usuario")
+                                    <span class="float-right">
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users" })
+                                    </span>
                                 </th>
                             </tr>
                         </thead>
@@ -64,7 +66,7 @@
                                     @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph)
+                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class= "userCheckbox"})
                                 </td>
                             </tr>
                         }
@@ -81,6 +83,9 @@
                                 </th>
                                 <th>
                                     @Html.Label("Asignado a Perfil")
+                                    <span class="float-right">
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles" })
+                                    </span>
                                 </th>
                             </tr>
                         </thead>
@@ -94,7 +99,7 @@
                                     @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph)
+                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class= "profileCheckbox"})
                                 </td>
                             </tr>
                         }
@@ -150,6 +155,16 @@
                     $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                 }
 
+</script>
+
+<!-- TAM-3.4 Scripts para seleccionar todas las casillas de usuarios y permisos -->
+<script>
+    $('#select_all_users').click(function () {
+        $('.userCheckbox').prop('checked', this.checked)
+    });  
+    $('#select_all_profiles').click(function () {
+        $('.profileCheckbox').prop('checked', this.checked)
+    });  
 </script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

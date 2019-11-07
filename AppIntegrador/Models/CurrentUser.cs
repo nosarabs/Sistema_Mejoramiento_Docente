@@ -22,6 +22,10 @@ namespace AppIntegrador.Models
 
         public static string getUserProfile() { return Profile; }
 
+        public static string getUserMajorId() { return MajorId;  }
+
+        public static string getUserEmphasisId() { return EmphasisId; }
+
     }
 
 }

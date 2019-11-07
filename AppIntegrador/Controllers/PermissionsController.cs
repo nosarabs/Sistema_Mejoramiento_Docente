@@ -41,8 +41,37 @@ namespace AppIntegrador.Controllers
             CurrentUser.MajorId = ListaCarreras;
             CurrentUser.EmphasisId = ListaEnfasis;
             //Tirar aqui un aviso de que la configuracion ha sido cambiada.
+            TempData["sweetalertmessage"] = "Su perfil ha sido guardado";
             return RedirectToAction("Index", "Home");
         }
+
+        /*TAM 3.4 Task 1 */
+        [HttpPost]
+        public ActionResult GuardarPermisos(PermissionsViewHolder model)
+        {
+            int codPerfil = model.PerfilesSeleccionados;
+            string perfil = model.Perfiles[codPerfil].NombrePerfil;
+            string codCarrera = model.CarrerasSeleccionadas;
+            string codEnfasis = model.EnfasisSeleccionados;
+            List<Persona> Personas = model.Personas;
+            List<Permiso> Permisos = model.Permisos;
+
+            //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
+            for (int i = 0; i < Personas.Count; ++i)
+            {
+                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil , codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+            }
+
+            //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
+            for (int i = 0; i < Permisos.Count; ++i)
+            {
+                db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+            }
+            
+            //TO-DO Aviso de que la configuracion fue cambiada
+            return View("Index", model);
+        }
+        /* Fin TAM 3.4 Task 1*/
 
         /* Se llama cuando se selecciona un énfasis en la página, para cargar los checkboxes según la configuración seleccionada.*/
         [HttpPost]
@@ -146,7 +175,25 @@ namespace AppIntegrador.Controllers
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
                     enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
-                enfasis.Add("0" + "," + "Tronco común");
+                
+            }
+            return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CargarEnfasisDeCarreraPorPerfil(string value, string profile)
+        {
+            List<string> enfasis = new List<string>();
+            using (var context = new DataIntegradorEntities())
+            {
+                var listaEnfasis = from Enfasis in db.EnfasisXCarreraXPerfil(CurrentUser.getUsername(), value, profile)
+                                   select Enfasis;
+                foreach (var codigoEnfasis in listaEnfasis)
+                {
+                    string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
+                    enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
+                }
+
             }
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }
@@ -166,7 +213,8 @@ namespace AppIntegrador.Controllers
             }
             return Json(new { data = carreras }, JsonRequestBehavior.AllowGet);
         }
-
+        
+        /* TAM 3.7 Carga todos los perfiles que tiene asignados un usuario */
         [HttpGet]
         public JsonResult CargarPerfil()
         {

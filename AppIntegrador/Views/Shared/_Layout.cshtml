@@ -33,16 +33,17 @@
     {
         <div class="">
             <div>
-                <div class="mainBar">
-                    <div class="smallItem">
+                <div class="mainBar row align-items-center">
+                    <div class="col m-0 text-left">
                         <a href="https://www.ucr.ac.cr" class="svg" id="firma-ucr" target="_blank" tabindex="2">
                             <img height="50" src="~/Content/images/logo_ucr.png" alt="Logo Universidad de Costa Rica">
                         </a>
                     </div>
-                    <div class="nombreProyecto biggeritem">
+                    <div class="nombreProyecto col m-0 text-center">
                         @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
                     </div>
-                    <div class="smallItem">
+                    <div class="col m-0 text-right">
+                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
@@ -51,14 +52,14 @@
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
                                 <!-- <a class="dropdown-item" href="#">Configuración</a> -->
-                                @Html.ActionLink("Seleccionar perfil", "SeleccionarPerfil", "Permissions", new object { }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Seleccionar Perfil", "SeleccionarPerfil", "Permissions", new object { }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
                             </div>
                         </div>
                         <!--TAM-9.2 - Imagen default de usuario-->
-                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
+
                     </div>
                 </div>
             </div>
@@ -81,13 +82,7 @@
                         else
                         {
                             <li class="disabled">
-                                <a href="/Users/Index">Usuarios &#9660;</a>
-                                <ul>
-                                    <li><a>Administración de usuarios</a></li>
-
-                                    <li><a>Administración de perfiles</a></li>
-
-                                </ul>
+                                <a>Usuarios</a>
                             </li>
                         }
                         <li>
@@ -131,11 +126,10 @@
                                 <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
                             </ul>
                         </li>
-                        <li><a href="/Home/About">Acerca de</a></li>
-                        
-                        <li><a href="#">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</a></li>
+                        <li><a href="/Home/About">Acerca de</a></li>                        
+                        <li class="ml-auto align-self-center mr-4">@Html.ActionLink("Perfil: " + @AppIntegrador.Models.CurrentUser.getUserProfile(), "SeleccionarPerfil", "Permissions")</li>
                     </ul>
-                    
+
                 </div>
             </div>
         </div>
