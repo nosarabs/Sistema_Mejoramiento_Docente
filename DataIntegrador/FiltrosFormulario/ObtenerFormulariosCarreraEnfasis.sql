@@ -38,34 +38,6 @@ BEGIN
 
 		END;
 
-	END
-	ELSE
-	BEGIN
-
-		/*Si el código de la carrera no es nulo, verifica si es válido y recupera la información de los formularios.*/
-		IF (@codigoCarrera IS NOT NULL)
-		BEGIN
-
-			/*Si el código de la carrera es válido, recupera la información de los formularios.*/
-			IF (EXISTS (SELECT * FROM Carrera WHERE Codigo = @codigoCarrera))
-			BEGIN
-
-				INSERT INTO @formulariosCarreraEnfasis
-				SELECT	PAP.FCodigo, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
-				FROM	Periodo_activa_por AS PAP
-				WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
-						AND EXISTS	(
-										SELECT *
-										FROM UnidadAcademica AS U
-										JOIN Inscrita_en AS I ON U.Codigo = I.CodUnidadAc
-										JOIN Pertenece_a AS PE ON I.CodCarrera = PE.CodCarrera
-										WHERE PE.CodCarrera = @codigoCarrera AND PE.SiglaCurso = PAP.CSigla /*Solo de formularios activados para los cursos que contiene el énfasis.*/
-									);
-
-			END;
-
-		END;
-
 	END;
 
 	RETURN;

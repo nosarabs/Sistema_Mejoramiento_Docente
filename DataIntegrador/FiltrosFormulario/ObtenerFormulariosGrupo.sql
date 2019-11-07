@@ -1,8 +1,8 @@
 ﻿/*
-Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a un grupo con cierto número.
+Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a un grupo.
 Esta información se necesita para filtrar respuestas a formulario.
 */
-CREATE FUNCTION ObtenerFormulariosGrupo (@numeroGrupo AS TINYINT)
+CREATE FUNCTION ObtenerFormulariosGrupo (@siglaCurso AS VARCHAR(10), @numeroGrupo AS TINYINT, @semestre AS TINYINT, @anno AS INT)
 RETURNS @formulariosGrupo TABLE
 (
 	FCodigo VARCHAR(8),	/*Código del formulario.*/
@@ -16,19 +16,23 @@ RETURNS @formulariosGrupo TABLE
 AS
 BEGIN
 	
-	/*Si el número de grupo no es nulo, verifica si es válido y recupera la información de los formularios.*/
-	IF (@numeroGrupo IS NOT NULL)
+	/*Si los parámetros del grupo no son nulos, verifica si son válidos y recupera la información de los formularios.*/
+	IF (@siglaCurso IS NOT NULL AND @numeroGrupo IS NOT NULL AND @semestre IS NOT NULL AND @anno IS NOT NULL)
 	BEGIN
 
-		/*Si el número de grupo es válido, recupera la información de los formularios.*/
-		IF (EXISTS (SELECT * FROM Grupo WHERE NumGrupo = @numeroGrupo))
+		/*Si los parámetros de grupo son válidos, recupera la información de los formularios.*/
+		IF (EXISTS (SELECT * FROM Grupo WHERE SiglaCurso = @siglaCurso AND NumGrupo = @numeroGrupo AND Semestre = @semestre AND Anno = @anno))
 		BEGIN
 
 			INSERT INTO @formulariosGrupo
 			SELECT	PAP.FCodigo, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
 			FROM	Periodo_activa_por AS PAP
 			WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
-					AND PAP.GNumero = @numeroGrupo;			 /*Solo de formularios que pertenecen al grupo con el número parámetro.*/
+					AND PAP.CSigla = @siglaCurso			/*Solo de formularios que pertenecen al grupo parámetro.*/
+					AND PAP.GNumero = @numeroGrupo
+					AND PAP.GSemestre = @semestre
+					AND PAP.GAnno = @anno;
+					
 
 		END;
 
