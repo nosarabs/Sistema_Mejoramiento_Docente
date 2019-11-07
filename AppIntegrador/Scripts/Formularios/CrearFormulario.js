@@ -32,43 +32,44 @@ $("#ActualizarVistaFiltros").click(function () {
     });
 })
 
-function mostrarSecciones() {
+function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
 
     resultado = { Codigo, Nombre };
     console.log(JSON.stringify(resultado));
 
-    $.ajax({
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        url: "/Formularios/AgregarFormulario",
-        data: JSON.stringify(resultado),
-        dataType: "json",
-        traditional: true,
-        success: function (data) {
-            if (data.guardadoExitoso) {
-                $("#secciones").removeAttr("hidden");
-                $(".validar-agregar-secciones").each(function () {
-                    this.disabled = "disabled";
-                    return true;
-                });
-                $('#CrearFormulario').disabled = "disabled";
+    if (document.getElementById("formularioCreado").value == 0) {
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            type: "POST",
+            url: "/Formularios/AgregarFormulario",
+            data: JSON.stringify(resultado),
+            dataType: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.guardadoExitoso) {
+                    $(".validar-agregar-secciones").each(function () {
+                        this.disabled = "disabled";
+                        return true;
+                    })
 
-                $("#secciones").removeAttr("hidden");
+                    console.log("Todo es trivial");
+                    document.getElementById("validacion-codigo").textContent = "";
+                    $("#textCode").removeClass("error");
+                    document.getElementById("formularioCreado").setAttribute("value", "1");
 
-                console.log("Todo es trivial");
-                document.getElementById("validacion-codigo").textContent = "";
-                $("#textCode").removeClass("error");
-                document.getElementById("formularioCreado").setAttribute("value", "1");
-
-                // document.getElementById("CreateFormulario").value = "Guardar";
+                    CrearModal();
+                }
+                else {
+                    console.log("Cmamo");
+                    document.getElementById("validacion-codigo").textContent = "Código en uso";
+                    $("#textCode").addClass("error");
+                }
             }
-            else {
-                console.log("Cmamo");
-                document.getElementById("validacion-codigo").textContent = "Código en uso";
-                $("#textCode").addClass("error");
-            }
-        }
-    });
+        });
+    }
+    else {
+        CrearModal();
+    }
 }

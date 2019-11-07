@@ -123,7 +123,7 @@ namespace AppIntegrador.Tests.Controllers
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
             // Act
-            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+            var result = controller.LlenarFormulario(codFormulario);
 
             // Assert
             Assert.IsNotNull(result);
@@ -185,7 +185,7 @@ namespace AppIntegrador.Tests.Controllers
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
-            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+            var result = controller.LlenarFormulario(codFormulario);
 
             Assert.IsNotNull(result);
         }
@@ -231,7 +231,7 @@ namespace AppIntegrador.Tests.Controllers
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
-            ViewResult result = controller.LlenarFormulario(codFormulario) as ViewResult;
+            var result = controller.LlenarFormulario(codFormulario);
 
             Assert.IsNotNull(result);
         }

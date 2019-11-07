@@ -19,7 +19,7 @@
         <div style="display: inline-block; padding:2px; text-align: center;">
             <label for="@radname @index">
                 @index<br />
-                <input type="radio" name="@radname" id="@radname @index" value="@index" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == index ? "checked" : "") />
+                <input type="radio" class="radio-grande" name="@radname" id="@radname @index" value="@index" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == index ? "checked" : "") />
             </label>
         </div>
     }
