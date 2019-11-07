@@ -171,6 +171,7 @@
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+    <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
     <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
 
     <script>
@@ -181,45 +182,6 @@
                 document.getElementById("validacion-codigo").textContent = "Código en uso";
                 $("#textCode").addClass("error");
             }
-        });
-    </script>
-
-
-
-    <script>
-        function GuardarSeccion() {
-           $.ajax({
-               url: "@Url.Action("CreateSeccion", "Formularios")",
-               type: "post",
-               //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
-               data: $("form").serialize(), //if you need to post Model data, use this
-               success: function (result) {
-                   $("#ModalCrearSeccion").html(result);
-                   CerrarCrearSeccion();
-               }
-           });
-        }
-    </script>
-
-    @*Permite que los checkboxes sean persistentes a través del refrescamiento de la página.*@
-
-
-    <script>
-        var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
-            $checkboxes = $("#checkbox-container :checkbox");
-
-        $checkboxes.on("change", function(){
-          $checkboxes.each(function(){
-              checkboxValues[this.id] = this.checked;
-              console.log(this.id + "Checked")
-          });
-  
-          localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
-        });
-
-        // On page load
-        $.each(checkboxValues, function(key, value) {
-          $("#" + key).prop('checked', value);
         });
     </script>
 

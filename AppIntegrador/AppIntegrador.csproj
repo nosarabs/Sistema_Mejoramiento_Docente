@@ -480,6 +480,7 @@
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Formularios\FormulariosModal.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
