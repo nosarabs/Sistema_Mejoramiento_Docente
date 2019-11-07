@@ -47,7 +47,7 @@ namespace AppIntegrador.Controllers
 
         /*TAM 3.4 Task 1 */
         [HttpPost]
-        public ActionResult GuardarPermisos(PermissionsViewHolder model)
+        public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
             int codPerfil = model.PerfilesSeleccionados;
             string perfil = model.Perfiles[codPerfil].NombrePerfil;
@@ -56,20 +56,23 @@ namespace AppIntegrador.Controllers
             List<Persona> Personas = model.Personas;
             List<Permiso> Permisos = model.Permisos;
 
-            //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
-            for (int i = 0; i < Personas.Count; ++i)
+            if (isUser)
             {
-                db.AgregarUsuarioPerfil(Personas[i].Correo, perfil , codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+                //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
+                for (int i = 0; i < Personas.Count; ++i)
+                {
+                    db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
+                }
             }
-
-            //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
-            for (int i = 0; i < Permisos.Count; ++i)
+            else
             {
-                db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+                //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
+                for (int i = 0; i < Permisos.Count; ++i)
+                {
+                    db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
+                }
             }
-            
-            //TO-DO Aviso de que la configuracion fue cambiada
-            return View("Index", model);
+            return new EmptyResult();
         }
         /* Fin TAM 3.4 Task 1*/
 
@@ -175,7 +178,6 @@ namespace AppIntegrador.Controllers
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
                     enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
-                enfasis.Add("0" + "," + "Tronco común");
             }
             return Json(new { data = enfasis }, JsonRequestBehavior.AllowGet);
         }

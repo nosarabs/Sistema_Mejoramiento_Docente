@@ -51,7 +51,7 @@
                                 <th>
                                     @Html.Label("Perfil asignado a Usuario")
                                     <span class="float-right">
-                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users" })
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", onclick = "saveChangesUser()" })
                                     </span>
                                 </th>
                             </tr>
@@ -66,7 +66,7 @@
                                     @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class= "userCheckbox"})
+                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class= "userCheckbox", onclick = "saveChangesUser()"})
                                 </td>
                             </tr>
                         }
@@ -84,7 +84,7 @@
                                 <th>
                                     @Html.Label("Asignado a Perfil")
                                     <span class="float-right">
-                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles" })
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", onclick = "saveChanges()" })
                                     </span>
                                 </th>
                             </tr>
@@ -99,7 +99,7 @@
                                     @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class= "profileCheckbox"})
+                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class= "profileCheckbox", onclick = "saveChanges()"})
                                 </td>
                             </tr>
                         }
@@ -111,7 +111,7 @@
             <br />
         </div>
 
-        <input id="create-save" type="submit" value="Guardar cambios" class="btn-azulUCR" />
+        <input type="hidden" id="isUser" value="false" name="isUser">
     }
 </div>
 
@@ -149,7 +149,31 @@
                         $("#Personas_"+ i + "__HasProfileInEmph").prop('checked', result.persons[i].Checked);
                     });
                 })
-    window.onload = function loadDefaultValue() {
+                $("#IndexForm").submit(function(e){
+                    e.preventDefault();
+                    var actionUrl = $(this).attr("action");
+                    $.post(actionUrl ,$(this).serialize());
+                });
+                function saveChangesUser() {
+                    window.document.getElementById("isUser").value = true;
+                    var myForm = window.document.getElementById("IndexForm");
+                    submitForm(myForm);
+                }
+                function saveChanges() {
+                    window.document.getElementById("isUser").value = false;
+                    var myForm = window.document.getElementById("IndexForm");
+                    submitForm(myForm);
+                }
+                // Esto permite que se dispare el onsubmit del form para que se haga de forma asincrónica
+                window.submitForm = function(form) {
+                    //Se simula la interacción del usuario con un botón para que onsubmit se ejecute
+                    var button = form.ownerDocument.createElement('input');
+                    button.style.display = 'none';
+                    button.type = 'submit';
+                    form.appendChild(button).click();
+                    form.removeChild(button);
+                };
+                window.onload = function loadDefaultValue() {
                     $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
                     $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
@@ -171,4 +195,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquerymin")
     @Scripts.Render("~/bundles/custom")
+    @Scripts.Render("~/bundles/popper1.14.7")
 }
