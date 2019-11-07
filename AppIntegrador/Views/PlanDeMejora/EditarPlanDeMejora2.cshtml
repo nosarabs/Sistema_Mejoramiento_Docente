@@ -96,23 +96,27 @@
                                 <div id="divAcciones">
                                 </div>
                             </div>
-                            <div class="planDiv2">
-                                <div id="crearNuevoAccionable">
-                                    <h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>
-                                    <div id="crearAccionable">
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 style="text-align:center">Lista de accionables</h4>
-                                    <div id="divAccionables">
-                                    </div>
+
+                            <div class="card card-default">
+                                <div class="card-body grisUCR3">
+
+                                        <div id="crearNuevoAccionable">
+                                            <h2>Seleccione una Acción de mejora</h2>
+                                            @*<h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>*@
+                                            <div id="crearAccionable">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 style="text-align:center">Lista de accionables</h4>
+                                            <div id="divAccionables">
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -164,7 +168,7 @@
                 type: 'GET',
                 url: "@Url.Content("/AccionDeMejora/divAccion/")",
                 data: {
-                      //Data need to pass as parameter
+                      //parámetros para el controlador
                       plan: plan,
                       nombObj: obj
                       },
@@ -188,7 +192,7 @@
                 type: 'GET',
                 url: "@Url.Content("/Accionables/Create/")",
                 data: {
-                      //Data need to pass as parameter
+                      //parámetros para el controlador
                       codPlan: plan,
                       nombObj: obj,
                       descripAcMej: acm
@@ -200,7 +204,7 @@
                 }
             });
 
-            //actualizarAccionesDeMejora(plan, obj);
+            actualizarAccionables(plan, obj, acm);
         };
     </script>
 
@@ -210,7 +214,7 @@
                 type: 'GET',
                 url: "@Url.Content("/AccionDeMejora/AccionesDeObjetivo/")",
                 data: {
-                      //Data need to pass as parameter
+                      //parámetros para el controlador
                       plan: plan,
                       nombObj: obj
                       },
@@ -228,7 +232,7 @@
                 type: 'GET',
                 url: "@Url.Content("/Accionables/TablaAccionables/")",
                 data: {
-                      //Data need to pass as parameter
+                      //parámetros para el controlador
                       codPlan: plan,
                       nombObj: obj,
                       descripAcMej: desc
