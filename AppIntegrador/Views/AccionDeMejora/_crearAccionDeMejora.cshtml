@@ -50,7 +50,7 @@
                             @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new 
                             { 
                                 @class = "form-control",
-                                id = 'fechaInicioADM',
+                                id = "fechaInicioADM",
                                 @onchange = "validacionADM()"
                             } })
                             <span class="error">
@@ -69,7 +69,7 @@
                             @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new 
                             { 
                                 @class = "form-control" ,
-                                id = 'fechaFinalADM',
+                                id = "fechaFinalADM"    ,
                                 @onchange = "validacionADM()"
                             } })
                             <span class="error">
@@ -99,7 +99,7 @@
                     })
                     @*@Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })*@
                     <span class="error">
-                        <p id="fechaInicioADM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                        <p id="descripcionADM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
                     </span>
                 </div>
             </div>
@@ -128,12 +128,16 @@
     function validacionADM() {
         let fechaInicioObjetivo = document.getElementById('fechaInicioADM');
         let fechaFinalObjetivo = document.getElementById('fechaFinalADM');
-        let nombreObjetivo = document.getElementById('descripcionADM');
+        let descripcionObjetivo = document.getElementById('descripcionADM');
 
         // Dejando el limite superior e inferior con respecto a las fechas que tiene el plan de mejora
-        let temp = document.getElementById('fechaInicioADM').value;
+        let temp = `@Session["fechaInicioObjetivo"]`;
+        temp = temp.substr(0, temp.indexOf(' '));
         let minDate = new Date(temp + 'CST');
-        temp = document.getElementById('fechaFinalADM').value;
+
+
+        temp = `@Session["fechaFinObjetivo"]`;
+        temp = temp.substr(0, temp.indexOf(' '));
         let topDate = new Date(temp + 'CST');
 
         let validatorObjetivos = new Validador(50, 250, minDate, topDate, 'enviarNuevoPDMButton');
@@ -141,7 +145,7 @@
         //Definimos la cantidad de validaciones
         validatorObjetivos.setTotalValidations(2);
 
-        //// Ahora haciendo las validaciones
+        // Ahora haciendo las validaciones
         validatorObjetivos.validateSomethingInTextInput(descripcionObjetivo, 250);
         validatorObjetivos.validateDates(fechaInicioObjetivo, fechaFinalObjetivo);
 

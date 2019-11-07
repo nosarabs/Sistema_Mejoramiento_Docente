@@ -327,6 +327,8 @@ class Validador {
             }
         }
 
+        
+
         if (amountOfTrues === this._totalValidations) {
             result = true;
             document.getElementById(this._submitBtnId).disabled = false;

@@ -31,29 +31,77 @@
                     @Html.TextBoxFor(model => model.descripcion, new
                     {
                         @class = "form-control",
-                        maxlength = "250"
+                        maxlength = "250",
+                        id = "descripcionACC",
+                        @onkeyup = "validacionACC()"
                     })
-                    @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                    <span class="error">
+                        <p id="descripcionACC_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                    </span>
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "col-form-label" })
-                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new 
+                        { 
+                            @class = "form-control",
+                            id = "fechaInicioACC",
+                            @onchange = "validacionACC()"
+                        } })
+                    <span class="error">
+                        <p id="fechaInicioACC_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                    </span>
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "col-form-label" })
-                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new 
+                    { 
+                        @class = "form-control",
+                        id = "fechaFinalACC",
+                        @onchange = "validacionACC()"
+                    } })
+                    <span class="error">
+                        <p id="fechaFinalACC_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <input type="submit" id="crearAccion" value="Crear accionable" class="btn btn-primary offset-md-6 col-md-4" />
+                <input type="submit" id="crearAccionable234" value="Crear accionable" class="btn-azulUCR" disabled/>
             </div>
         </div>
     }
 </form>
+
+
+<script>
+    function validacionACC() {
+        let fechaInicioACC = document.getElementById('fechaInicioACC');
+        let fechaFinalACC = document.getElementById('fechaFinalACC');
+        let descripcionACC = document.getElementById('descripcionACC');
+
+        // Dejando el limite superior e inferior con respecto a las fechas que tiene el plan de mejora
+        let temp = `@Session["fechaInicioAccionDeMejora"]`;
+        temp = temp.substr(0, temp.indexOf(' '));
+        let minDate = new Date(temp + 'CST');
+
+
+        temp = `@Session["fechaFinAccionDeMejora"]`;
+        temp = temp.substr(0, temp.indexOf(' '));
+        let topDate = new Date(temp + 'CST');
+
+        let validatorAccionables = new Validador(50, 250, minDate, topDate, 'crearAccionable234');
+
+        //Definimos la cantidad de validaciones
+        validatorAccionables.setTotalValidations(2);
+
+        // Ahora haciendo las validaciones
+        validatorAccionables.validateSomethingInTextInput(descripcionACC, 250);
+        validatorAccionables.validateDates(fechaInicioACC, fechaFinalACC);
+
+        validatorAccionables.validityOfForm();
+    }
+</script>
 
 <script>
 $(function () {

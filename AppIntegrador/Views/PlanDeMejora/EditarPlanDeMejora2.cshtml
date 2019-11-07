@@ -213,7 +213,7 @@
     </script>
 
     <script>
-        clickObjetivo = function (id, plan, obj) {
+        clickObjetivo = function (id, plan, obj, fechaInicioObjetivo, fechaFinObjetivo) {
             //alert("plan id:" + plan + " nombre obj:" + obj + " id obj:" + id);
             var content = '<h2>Acciones de mejora del Objetivo ' + id + '</h2>' + '<div id="crearAccion"></div>';
             document.getElementById('crearNuevaAccion').innerHTML = content;
@@ -222,8 +222,10 @@
                 url: "@Url.Content("/AccionDeMejora/divAccion/")",
                 data: {
                       //Data need to pass as parameter
-                      plan: plan,
-                      nombObj: obj
+                        plan: plan,
+                        nombObj: obj,
+                    fechaInicioObjetivo: fechaInicioObjetivo,
+                        fechaFinObjetivo: fechaFinObjetivo
                       },
                 dataType: 'html',
                 success:function(result)
@@ -237,7 +239,7 @@
     </script>
 
     <script>
-        clickAccionDeMejora = function (id, plan, obj, acm) {
+        clickAccionDeMejora = function (id, plan, obj, acm, fechaInicioAccionDeMejora, fechaFinAccionDeMejora) {
             //alert("ID: " + plan + "\nNombre objetivo: " + obj + "\nID objetivo: " + id + "\nDescripción de la acción de mejora:" + acm);
             var content = '<h2>Accionables de la acción de mejora ' + id + '</h2>' + '<div id="crearAccionable"></div>';
             document.getElementById('crearNuevoAccionable').innerHTML = content;
@@ -248,7 +250,9 @@
                       //Data need to pass as parameter
                       codPlan: plan,
                       nombObj: obj,
-                      descripAcMej: acm
+                        descripAcMej: acm,
+                        fechaInicioAccionDeMejora: fechaInicioAccionDeMejora,
+                        fechaFinAccionDeMejora: fechaFinAccionDeMejora
                       },
                 dataType: 'html',
                 success:function(result)
