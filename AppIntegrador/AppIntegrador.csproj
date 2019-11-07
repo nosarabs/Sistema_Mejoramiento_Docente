@@ -323,6 +323,9 @@
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioActual.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UsuarioPerfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -358,6 +361,8 @@
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\UsuariosYPerfiles\login.css" />
+    <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
