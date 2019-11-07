@@ -14,6 +14,9 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroUA";
         seleccion.className = "select";
+
+        //seleccion.onclick = this.recuperarFiltros(container);
+
         var option = document.createElement("option");
         option.className = "option";
         option.value = "";
@@ -42,6 +45,7 @@
             }
         });
         //Se agrega el elemento select a la vista
+        seleccion.onchange = function () { recuperarUnidadAcademicaSeleccionada() };
         container.appendChild(seleccion);
     }
 
@@ -89,6 +93,7 @@
             }
         });
         //Se agrega el elemento select a la vista
+        seleccion.onchange = function () { recuperarCarreraEnfasis() };
         container.appendChild(seleccion);
     }
 
@@ -132,6 +137,8 @@
             }
         });
         //Se agrega el elemento select a la vista
+        seleccion.onchange = function () { recuperarCursoGrupo() };
+
         container.appendChild(seleccion);
     }
 
@@ -184,13 +191,14 @@
             }
         });
         //Se agrega el elemento select a la vista
+        seleccion.onchange = function () { recuperarProfesor() };
         container.appendChild(seleccion);
     }
 
     //Método que construye el panel de filtros
     crearFiltros()
     {
-        //Se crea un contenedo para agregarlo luego a la vista
+        //Se crea un contenedor para agregarlo luego a la vista
         var container = document.createElement("container");
         container.className = "container";
         container.id = "containerFiltros";
@@ -203,5 +211,23 @@
 
         var panelfiltros = document.getElementById("panelFiltros");
         panelfiltros.appendChild(container);
+        this.recuperarFiltros(container);
+
     }
+
+    //recuperarFiltros()
+    //{
+    //    var cont = document.getElementById("containerFiltros");
+
+    //    var e = document.getElementById("filtroUA");
+    //    var strUser = e.options[e.selectedIndex].value;
+    //    alert(strUser);
+
+    //    //var ua = document.getElementById("");
+        
+    //    //var p = document.createElement("textbox");
+    //    //p.className = "textbox";
+    //    //p.textContent = "qwe";
+    //    //container.appendChild(p);
+    //}
 }

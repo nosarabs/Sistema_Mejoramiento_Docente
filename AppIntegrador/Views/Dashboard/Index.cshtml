@@ -28,6 +28,44 @@
                         var filtros = new Filtros();
                         filtros.crearFiltros();
                     </script>
+
+                    <script>
+                        function recuperarUnidadAcademicaSeleccionada()
+                        {
+                            var ua = document.getElementById("filtroUA");
+                            var uaSeleccionada = ua.options[ua.selectedIndex].value;
+                            var s = uaSeleccionada.split("/");
+                        }
+                        function recuperarCarreraEnfasis()
+                        {
+                            var ce = document.getElementById("filtroCarreraEnfasis");
+                            var ceSeleccionada = ce.options[ce.selectedIndex].value;
+                            var s = ceSeleccionada.split("/");
+                        }
+                        function recuperarCursoGrupo()
+                        {
+                            var cg = document.getElementById("filtroCursoGrupo");
+                            var cgSeleccionada = cg.options[cg.selectedIndex].value;
+                            var s = cgSeleccionada.split("/");
+                        }
+                        function recuperarProfesor()
+                        {
+                            var p = document.getElementById("filtroProfesores");
+                            var pSeleccionada = p.options[p.selectedIndex].value;
+                            var s = pSeleccionada.split("/");
+                        }
+
+                        function recuperarFiltros()
+                        {
+                            this.recuperarUnidadAcademicaSeleccionada();
+                            this.recuperarCarreraEnfasis();
+                            this.recuperarCursoGrupo();
+                            this.recuperarProfesor();
+                        }
+
+
+                    </script>
+                   
                 </div>
 
                 <div class="col" id="panelDashboard">
