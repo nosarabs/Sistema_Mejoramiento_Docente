@@ -239,27 +239,30 @@ namespace AppIntegrador.Controllers
                                                                         && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                         && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
                             */
-                            var respuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                            var resultadoRespuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
                                                                                      codSeccion, pregunta.Pregunta.Codigo);
-
-                            if (respuestaGuardada != null && respuestaGuardada.ToList().Any())
+                            if (resultadoRespuestaGuardada != null)
                             {
-                                pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
-
-                                /* Manera de hacerlo con Linq. No acepta parámetros nulos.
-                                 * var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                        && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                        && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                        && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                                */
-                                var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
-                                                                                     codSeccion, pregunta.Pregunta.Codigo);
-                                pregunta.Opciones = new List<int>();
-                                if (opcionesGuardadas != null)
+                                var respuestaGuardada = resultadoRespuestaGuardada.ToList();
+                                if (respuestaGuardada.Any())
                                 {
-                                    foreach (var opcion in opcionesGuardadas)
+                                    pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
+
+                                    /* Manera de hacerlo con Linq. No acepta parámetros nulos.
+                                     * var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                                                                            && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
+                                                                            && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
+                                                                            && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                                    */
+                                    var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
+                                                                                         codSeccion, pregunta.Pregunta.Codigo);
+                                    pregunta.Opciones = new List<int>();
+                                    if (opcionesGuardadas != null)
                                     {
-                                        pregunta.Opciones.Add(opcion.OpcionSeleccionada);
+                                        foreach (var opcion in opcionesGuardadas.ToList())
+                                        {
+                                            pregunta.Opciones.Add(opcion.OpcionSeleccionada);
+                                        }
                                     }
                                 }
                             }
@@ -267,14 +270,18 @@ namespace AppIntegrador.Controllers
                     }
                     else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
-                        var respuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
+                        var resultadoRespuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
                                                                     && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
                                                                     && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
                                                                     && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
                         
-                        if (respuestaGuardada != null && respuestaGuardada.Any())
+                        if (resultadoRespuestaGuardada != null)
                         {
-                            pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
+                            var respuestaGuardada = resultadoRespuestaGuardada.ToList();
+                            if(respuestaGuardada.Any())
+                            {
+                                pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
+                            }
                         }
                     }
                 }

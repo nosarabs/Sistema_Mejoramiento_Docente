@@ -52,7 +52,7 @@
 }
 
 .radio-dibujo {
-    transform: scale(1.5);
+    @extend .radio-grande;
     margin-left: 10px;
     margin-bottom: 16px;
 }
@@ -86,12 +86,16 @@
 }
 
 .opcion-pequena {
-    padding-top: 1px !important;
-    padding-bottom: 1px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
 }
 
 .sticky-bottom {
     position: sticky;
     bottom: 0;
     margin-bottom: 10px;
+}
+
+.radio-grande {
+    transform: scale(1.5);
 }
