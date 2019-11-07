@@ -47,8 +47,15 @@
                     @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
                     <div class="row">
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new 
+                            { 
+                                @class = "form-control",
+                                id = 'fechaInicioADM',
+                                @onchange = "validacionADM()"
+                            } })
+                            <span class="error">
+                                <p id="fechaInicioADM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -59,8 +66,15 @@
                     @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
                     <div class="row">
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new 
+                            { 
+                                @class = "form-control" ,
+                                id = 'fechaFinalADM',
+                                @onchange = "validacionADM()"
+                            } })
+                            <span class="error">
+                                <p id="fechaFinalADM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -79,10 +93,14 @@
                         rows = "2",
                         maxlength = "250",
                         style = "resize:vertical",
-                        placeholder = "Máximo 250 caracteres"
+                        placeholder = "Máximo 250 caracteres",
+                        id = "descripcionADM",
+                        @onkeyup = "validacionADM()"
                     })
                     @*@Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                    <span class="error">
+                        <p id="fechaInicioADM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
+                    </span>
                 </div>
             </div>
         </div>
@@ -99,12 +117,38 @@
         <div class="form-group">
             <div class="row">
                 <div class="botonCentrado">
-                    <input type="submit" value="Crear" class="btn-azulUCR" />
+                    <input type="submit" id="enviarNuevoPDMButton" value="Crear" class="btn-azulUCR" disabled />
                 </div>
             </div>
         </div>
     }
 </form>
+
+<script>
+    function validacionADM() {
+        let fechaInicioObjetivo = document.getElementById('fechaInicioADM');
+        let fechaFinalObjetivo = document.getElementById('fechaFinalADM');
+        let nombreObjetivo = document.getElementById('descripcionADM');
+
+        // Dejando el limite superior e inferior con respecto a las fechas que tiene el plan de mejora
+        let temp = document.getElementById('fechaInicioADM').value;
+        let minDate = new Date(temp + 'CST');
+        temp = document.getElementById('fechaFinalADM').value;
+        let topDate = new Date(temp + 'CST');
+
+        let validatorObjetivos = new Validador(50, 250, minDate, topDate, 'enviarNuevoPDMButton');
+
+        //Definimos la cantidad de validaciones
+        validatorObjetivos.setTotalValidations(2);
+
+        //// Ahora haciendo las validaciones
+        validatorObjetivos.validateSomethingInTextInput(descripcionObjetivo, 250);
+        validatorObjetivos.validateDates(fechaInicioObjetivo, fechaFinalObjetivo);
+
+        validatorObjetivos.validityOfForm();
+    }
+</script>
+
 
 <script>
     $(function () {

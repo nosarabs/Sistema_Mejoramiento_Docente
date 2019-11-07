@@ -486,7 +486,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\PlanesDeMejora\analizarTiemposPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />

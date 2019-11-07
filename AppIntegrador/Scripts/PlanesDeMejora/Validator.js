@@ -204,26 +204,6 @@ class Validador {
         //}
     }
 
-    /*
-     EFE:
-        Set the amount of characters left of the textElement in the textElementSubMsj
-     REQ:
-          textElement: dom element that will wait for input of the user.
-        maxCharacters: the max amount if characters that the element, textElement, will/can have.
-     MOD:
-        DOM element message represented by the textElement.
-     */
-    countTextElements(textElement, maxCharacters) {
-        let totalCharactersWritten = document.getElementById(textElement.id).value.length;
-
-        var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
-
-        let unusedSpaces = maxCharacters - totalCharactersWritten;
-
-        subMessageDomElement.innerHTML = this._remainingLettersMsj + unusedSpaces + '.';
-        return totalCharactersWritten;
-    }
-
     /* 
      EFE:
         Validates if there is something selected by the user in the select object (selectElement).
@@ -358,6 +338,26 @@ class Validador {
         return result;
     }
 
+    /*
+     EFE:
+        Set the amount of characters left of the textElement in the textElementSubMsj
+     REQ:
+          textElement: dom element that will wait for input of the user.
+        maxCharacters: the max amount if characters that the element, textElement, will/can have.
+     MOD:
+        DOM element message represented by the textElement.
+     */
+    countTextElements(textElement, maxCharacters) {
+        let totalCharactersWritten = document.getElementById(textElement.id).value.length;
+
+        var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
+
+        let unusedSpaces = maxCharacters - totalCharactersWritten;
+
+        subMessageDomElement.innerHTML = this._remainingLettersMsj + unusedSpaces + '.';
+        return totalCharactersWritten;
+    }
+
     /* 
      EFE:
         Validates if there is something written by the user in the input text field (textElement).
@@ -366,9 +366,9 @@ class Validador {
      MOD:
         ---
      */
-    validateSomethingInTextInput(textElement) {
+    validateSomethingInTextInput(textElement, maxAmountOfElements) {
         let result = false;
-        let totalCharactersWritten = this.countTextElements(textElement, this._maxNameCharacters);
+        let totalCharactersWritten = this.countTextElements(textElement, maxAmountOfElements);
         //Validating only if there are characters on the field
         if (totalCharactersWritten > 0) {
             result = true;
@@ -446,20 +446,20 @@ class Validador {
 }
 
 
-function validarPlanDeMejora() {
-    let fechaInicioPlan = document.getElementById('fechaInicioPlanDM');
-    let fechaFinalPlan = document.getElementById('fechaFinalPlanDM');
-    let nombrePlan = document.getElementById('nombrePlanDM');
+//function validarPlanDeMejora() {
+//    let fechaInicioPlan = document.getElementById('fechaInicioPlanDM');
+//    let fechaFinalPlan = document.getElementById('fechaFinalPlanDM');
+//    let nombrePlan = document.getElementById('nombrePlanDM');
 
-    // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
-    let minDate = new Date(); // Todays Date
-    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
-    let validator = new Validador(50, 50, minDate, topDate, 'sendPDMListo');
+//    // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
+//    let minDate = new Date(); // Todays Date
+//    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+//    let validator = new Validador(50, 50, minDate, topDate, 'sendPDMListo');
 
-    //Definimos la cantidad de validaciones
-    validator.setTotalValidations(2);
+//    //Definimos la cantidad de validaciones
+//    validator.setTotalValidations(2);
 
-    // Ahora haciendo las validaciones
-    validator.validateSomethingInTextInput(nombrePlan);
-    validator.validateDates(fechaInicioPlan, fechaFinalPlan);  
-}
+//    // Ahora haciendo las validaciones
+//    validator.validateSomethingInTextInput(nombrePlan);
+//    validator.validateDates(fechaInicioPlan, fechaFinalPlan);  
+//}
