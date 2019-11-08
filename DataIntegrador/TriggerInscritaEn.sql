@@ -1,4 +1,4 @@
-﻿CREATE TRIGGER [TriggerInscritaEn]
+﻿CREATE TRIGGER [TriggerInscritaEn] 
 	ON [dbo].[Inscrita_En]
 	INSTEAD OF INSERT
 	AS
