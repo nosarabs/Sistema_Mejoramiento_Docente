@@ -71,12 +71,19 @@ namespace AppIntegrador.Controllers
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
+
             int codPerfil = model.PerfilesSeleccionados;
             string perfil = model.Perfiles[codPerfil].NombrePerfil;
             string codCarrera = model.CarrerasSeleccionadas;
             string codEnfasis = model.EnfasisSeleccionados;
             List<Persona> Personas = model.Personas;
             List<Permiso> Permisos = model.Permisos;
+
+            if ((perfil == null) || (codCarrera == null) || (codEnfasis == null))
+            {
+                TempData["alertmessage"] = "Algo salió mal. Intente de nuevo.";
+                return new EmptyResult();
+            }
 
             if (isUser)
             {

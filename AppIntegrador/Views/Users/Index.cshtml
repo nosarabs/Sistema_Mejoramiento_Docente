@@ -14,15 +14,17 @@
                 Administración de usuarios
             </h2>
         </div>
-        @{if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.CREAR_USUARIOS))
-        {
+        @{if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.CREAR_USUARIOS))
+            {
 
-        <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
+                <div class="column" style="padding-right:15px; flex:50%; text-align:right; vertical-align:bottom;">
 
-            <p>@Html.ActionLink("Agregar usuario", "Create", "Create", new { @class = "btn btn-Nuevo" })</p>
-        </div>
-        }else{
-        }
+                    <p>@Html.ActionLink("Agregar usuario", "Create", "Create", new { @class = "btn btn-Nuevo" })</p>
+                </div>
+            }
+            else
+            {
+            }
         }
     </div>
     <br />
@@ -84,8 +86,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Persona.Nombre2)
                     </td>
-                    <td>
-                        @Html.EditorFor(modelItem => item.Usuario.Activo, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    <td class="text-center">
+                        @if (item.Usuario.Activo)
+                        {
+                            <i class="fa fa-check"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-times"></i>
+                        }
                     </td>
                     <!--TAM-3.6-1: Condicionales que muestran los botones de ver detalles, editar y borrar si el usuario tiene un perfil
                             con permisos de acceder a esas funcionalidades, sino entonces no muestra los botones y bloquea los intentos de acceso
@@ -101,59 +110,63 @@
                         @Html.ActionLink("Editar", "Edit", new
                         {
 
-                                username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
-                                domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
+                                                username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                                                domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
 
-                        },
-                                new
-                                {
-                                    @class = "btn-azulUCR"
+                                        },
+                                                new
+                                                {
+                                                    @class = "btn-azulUCR"
+                                                }
+                                        )
+                                    }
+                                    else
+                                    {
+
+                                    }
                                 }
-                        )
-                    }else{
-                        
-                    }
-                    }
-                    @{ if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS))
-                    { 
-                        @Html.ActionLink("Detalles", "Details", new
-                        {
-                                username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
-                                domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
-                        },
-                                new
-                                {
-                                    @class = "btn-blancoUCR"
+                                @{ if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS))
+                                    {
+                                        @Html.ActionLink("Detalles", "Details", new
+                                        {
+                                                username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                                                domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""
+                                        },
+                                                new
+                                                {
+                                                    @class = "btn-blancoUCR"
+                                                }
+
+                                        )
+                                    }
+                                    else
+                                    {
+                                    }
+                                }
+                                @{
+                                    if (item.Persona.Correo != "admin@mail.com" && AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
+                                    {
+                                        @Html.ActionLink("Borrar", "DeleteConfirmed", new
+                                   {
+                                       username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
+                                       domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : "",
+                                       confirmed = true
+                                   },
+                                        new
+                                        {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
+                                            onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
+                                            "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
+                                            @class = "btn-rojoUCR"
+                                        })
+                                    }
+                                    else
+                                    {
+
+                                    }
                                 }
 
-                        )
-                    }else{
-                    }
-                    }
-                        @{
-                            if (item.Persona.Correo != "admin@mail.com" && AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
-                            {
-                                @Html.ActionLink("Borrar", "DeleteConfirmed", new
-                           {
-                               username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
-                               domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : "",
-                               confirmed = true
-                           },
-                                new
-                                {    /*User Story TAM-2.3: Show a popup window to confirm before deleting the selected user.*/
-                                    onclick = "return confirm('¿Está seguro que desea borrar al usuario " + item.Persona.Correo + "? " +
-                                    "Esto borra los datos de esta persona y lo deja sin acceso al sistema.')",
-                                    @class = "btn-rojoUCR"
-                                })
-                            }
-                            else
-                            {
-                                
-                            }
+                            </td>
                         }
-
-                    </td>
-                    }
                     }
 
                 </tr>
@@ -166,6 +179,7 @@
 @*//If there is a message in ViewBag.Message it displays it as an alert*@
 @section Scripts
     {
+    <script src="https://use.fontawesome.com/4889cf49d6.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/custom")
     @if (!string.IsNullOrEmpty(ViewBag.typeMessage))
