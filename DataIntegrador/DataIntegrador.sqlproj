@@ -176,6 +176,8 @@
     <Build Include="TriggerInscritaEn.sql" />
     <Build Include="TriggerPertenece_a.sql" />
     <Build Include="TriggerTrabajaEn.sql" />
+    <Build Include="InsertarMatriculado_en.sql" />
+    <Build Include="TriggerMatriculado_en.sql" />
     <Build Include="PromedioProfesor.sql" />
     <Build Include="PromedioCursos.sql" />
   </ItemGroup>
