@@ -630,6 +630,8 @@
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\DetallesPlanDeMejora.cshtml" />
     <Content Include="Views\Objetivos\_listarObjetivos.cshtml" />
+    <Content Include="Views\AccionDeMejora\_listarAcciones.cshtml" />
+    <Content Include="Views\Accionables\_listarAccionables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

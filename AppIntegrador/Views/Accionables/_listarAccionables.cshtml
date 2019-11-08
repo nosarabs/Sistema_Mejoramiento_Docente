@@ -1,14 +1,10 @@
-﻿@model IEnumerable<AppIntegrador.Models.Objetivo>
-
-@{ 
-    var numObj = 1;
-}
+﻿@model IEnumerable<AppIntegrador.Models.Accionable>
 
 @if (Model.Count() == 0)
 {
     <div class="centeredText">
         <p>
-            Aún no se han creado Objetivos en este Plan de mejora.
+            Aún no se han creado Acciones de mejora en este Objetivo.
         </p>
     </div>
 }
@@ -16,9 +12,8 @@ else
 {
     <table class="table">
         <colgroup>
-            <col class="TablasNumero">
-            <col class="TablasNombre">
-            <col class="TablasDescripcion">
+            <col style="width: 50%;">
+            <col style="width: 10%;">
             <col class="TablasFecha">
             <col class="TablasFecha">
         </colgroup>
@@ -26,13 +21,10 @@ else
         <thead class="thead-light">
             <tr>
                 <th>
-                    #
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.progreso)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fechaInicio)
@@ -42,19 +34,15 @@ else
                 </th>
             </tr>
         </thead>
-
-        @foreach (var item in Model)
-        {
-            <tbody>
-                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@item.codPlan, `@item.nombre`)">
-                    <td>
-                        @numObj
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nombre)
-                    </td>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.progreso)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.fechaInicio)
@@ -63,9 +51,7 @@ else
                         @Html.DisplayFor(modelItem => item.fechaFin)
                     </td>
                 </tr>
-            </tbody>
-            numObj++;
-        }
-
+            }
+        </tbody>
     </table>
 }

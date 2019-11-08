@@ -86,13 +86,17 @@ namespace AppIntegrador.Controllers
 
         }
 
-        public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej)
+        public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej, bool edit = true)
         {
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
 
             IEnumerable<AppIntegrador.Models.Accionable> accionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            if( edit == false)
+            {
+                return PartialView("_listarAccionables", accionables);
+            }
             return PartialView("_Tabla", accionables);
         }
 
