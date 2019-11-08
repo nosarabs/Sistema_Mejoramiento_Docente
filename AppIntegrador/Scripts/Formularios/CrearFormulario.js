@@ -37,7 +37,6 @@ function ValidarCodigo() {
     var Nombre = document.getElementById("textName").value;
 
     resultado = { Codigo, Nombre };
-    console.log(JSON.stringify(resultado));
 
     if (document.getElementById("formularioCreado").value == 0) {
         $.ajax({
@@ -54,7 +53,6 @@ function ValidarCodigo() {
                         return true;
                     })
 
-                    console.log("Todo es trivial");
                     document.getElementById("validacion-codigo").textContent = "";
                     $("#textCode").removeClass("error");
                     document.getElementById("formularioCreado").setAttribute("value", "1");
@@ -62,7 +60,6 @@ function ValidarCodigo() {
                     CrearModal();
                 }
                 else {
-                    console.log("Cmamo");
                     document.getElementById("validacion-codigo").textContent = "Código en uso";
                     $("#textCode").addClass("error");
                 }

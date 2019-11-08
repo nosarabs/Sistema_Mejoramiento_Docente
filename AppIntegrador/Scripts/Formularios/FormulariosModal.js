@@ -77,6 +77,9 @@ $checkboxes.on("change", function () {
 });
 
 // On page load
-$.each(checkboxValues, function (key, value) {
-    $("#" + key).prop('checked', value);
+$(document).ready(function () {
+    $(checkboxValues).each(function (key, value) {
+        $("#" + key).prop('checked', value);
+    });
 });
+
