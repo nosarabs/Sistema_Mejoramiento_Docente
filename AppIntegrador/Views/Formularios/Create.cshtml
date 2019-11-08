@@ -7,20 +7,18 @@
 @*<form id="__AjaxAntiForgeryForm" action="#" method="post"><%= Html.AntiForgeryToken()%></form>*@
 
 <div class="container">
-    <h3>Crear Formulario</h3>
-
     @using (Html.BeginForm())
     {
-
         @Html.AntiForgeryToken()
 
         @Html.Hidden("formularioCreado", null, new { @id = "formularioCreado", @Value = "0" })
         @*RIP CF5: Creación de un tabla para organizar la información*@
         <div class="card card-body shadow">
+            <h3>Crear Formulario</h3>
             @*Acomodar el código y el nombre en el mismo nivel*@
             <div class="card card-default shadow">
                 <div class="card-body grisUCR2">
-                    <div class=" row">
+                    <div class="row">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group col-lg-2">
                             <div>
@@ -83,7 +81,7 @@
                     <div class="form-group">
                         <div class="">
                             @*Posibilidad de agregar sección*@
-                            <input type="button" value="Añadir secciones" class="btn-azulUCR float-right validar-agregar-secciones" id="AgregarSeccion" onclick="ValidarCodigo()" />
+                            <input type="button" value="Añadir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo()" />
                         </div>
                     </div>
                     <div class="form-horizontal card-group">
@@ -95,7 +93,7 @@
                                             <div id="ModalAgregarSecciones">
                                                 @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
                                             </div>
-                                            <input type="button" class="btn-azulUCR float-right CrearSeccionModal" value="Crear Sección" />
+                                            <input type="button" class="btn-linkUCR float-right CrearSeccionModal" value="Crear Sección" />
                                         </div>
                                         <div id="ModalCrearSeccion">
                                             @{Html.RenderPartial("/Views/Seccion/_CreateSeccionPartial.cshtml", Model.crearSeccionModel);}
@@ -124,24 +122,24 @@
     }
 </div>
 
-    <style>
-        .error {
-            border: 1px solid red;
-        }
-    </style>
+<style>
+    .error {
+        border: 1px solid red;
+    }
+</style>
 
     }
-    @section Scripts {
-        @*@Scripts.Render("~/bundles/jquery")*@
-        @*@Scripts.Render("~/bundles/jqueryval/")*@
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/jqueryval/")*@
 
-        <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
-        <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
-        <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
-        <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
-        <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+    <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
+    <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
 
-        <script>
+    <script>
         $(document).ready(function () {
             agregarsecciones.init();
             validarEntradasAgregarSecciones();
@@ -150,10 +148,10 @@
                 $("#textCode").addClass("error");
             }
         });
-        </script>
+    </script>
 
-        <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
-        <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
-    }
+}
