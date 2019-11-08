@@ -35,29 +35,62 @@
 
 function CrearModal() {
     $('#ExampleModal').modal();
-    $('#ModalAgregarSecciones').show();
+    $('#BancoDeSecciones').show();
+    $('#ModalCrearSeccion').hide();
 }
+function CerrarModalSecciones() {
+    $('ExampleModal').modal('hide')
+}
+
 $('.CrearSeccionModal').click(function () {
     $('#ModalCrearSeccion').show("fast");
-    $('#ModalAgregarSecciones').hide("fast");
+    $('#BancoDeSecciones').hide("fast");
 });
-$('#ExampleModal').on('show.bs.modal', function (event) {
-    $('#ModalCrearSeccion').hide();
-})
+
 function CerrarCrearSeccion() {
     $('#ModalCrearSeccion').hide("fast");
-    $('#ModalAgregarSecciones').show("fast");
+    $('#BancoDeSecciones').show("fast");
 }
 
 function GuardarSeccion() {
+    var Codigo = document.getElementById("sectionCode").value;
+    var Nombre = document.getElementById("sectionName").value;
+
+    resultado = { Codigo, Nombre };
+    console.log(JSON.stringify(resultado));
+
     $.ajax({
-        url: '@Url.Action("CreateSeccion", "Formularios")',
-        type: "post",
-        //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
-        data: $("form").serialize(), //if you need to post Model data, use this
-        success: function (result) {
-            $("#ModalCrearSeccion").html(result);
-            CerrarCrearSeccion();
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/AgregarSeccion",
+        data: JSON.stringify(resultado),
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+            if (data.guardadoExitoso) {
+                $.ajax({
+                    url: "/Formularios/ActualizarBancoSecciones",
+                    type: "post",
+                    dataType: "html",
+                    success: function (result) {
+                        $("#ModalAgregarSecciones").html(result);
+                        agregarsecciones.init()
+                        CerrarCrearSeccion();                        
+                    }
+                })
+                $.ajax({
+                    url: "/Formularios/ActualizarCrearSeccion",
+                    type: "post",
+                    dataType: "html",
+                    success: function (result) {
+                        $("#ModalCrearSeccion").html(result);
+                    }
+                })
+            }
+            else {
+                document.getElementById("validacion-codigo-seccion").textContent = "Código en uso";
+                $("#sectionCode").addClass("error");
+            }
         }
     });
 }
@@ -70,7 +103,7 @@ var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
 $checkboxes.on("change", function () {
     $checkboxes.each(function () {
         checkboxValues[this.id] = this.checked;
-        console.log(this.id + "Checked")
+        //console.log(this.id + "Checked")
     });
 
     localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
