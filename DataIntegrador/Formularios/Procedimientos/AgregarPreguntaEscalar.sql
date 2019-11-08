@@ -20,7 +20,7 @@ BEGIN
 	VALUES (@cod,@enunciado,@type);
 
 	-- Una vez creada la pregunta, se puede crear su subclase, Pregunta_con_opciones 
-		MERGE INTO Pregunta_con_opciones AS Target
+	MERGE INTO Pregunta_con_opciones AS Target
 	USING (VALUES 
 		(@cod, @justificacion)
 	)

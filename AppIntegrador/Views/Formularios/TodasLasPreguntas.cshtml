@@ -12,6 +12,8 @@
     @Html.Hidden("secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta +
                 "].Pregunta.Codigo", null, new { @Value = pregunta.Pregunta.Codigo })
     <div class="card card-primary full">
+        @(pregunta.OrdenPregunta + 1).
+        @Html.DisplayFor(model => pregunta.Pregunta.Enunciado)
         @if (pregunta.Pregunta.Tipo == "S")
         {
             { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
@@ -38,68 +40,15 @@
             string justificacionname = "secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta + "].RespuestaLibreOJustificacion";
             if (pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
             {
-                <textarea class="form-control long-textbox col-md-12" style="width: 100%;max-width: 100%; min-width: 100%" cols="50"
-                          name="@justificacionname" maxlength="250">@pregunta.RespuestaLibreOJustificacion</textarea>
+                <div class="card-body grisUCR2">
+                    <div style="margin: -0.5%">
+                        @pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion
+                        <textarea class="form-control long-textbox col-md-12 redondeado" style="width: 100%;max-width: 100%; min-width: 100%" cols="50"
+                                  name="@justificacionname" maxlength="250">@pregunta.RespuestaLibreOJustificacion</textarea>
+                    </div>
+                </div>
             }
         }
     </div>
 }
-
-    @*RIP-EDF6*@
-    <style>
-        .card {
-            margin-bottom: 20px;
-            background-color: white;
-            border: 1px solid #939393;
-            border-radius: 4px;
-            font: "robot";
-            font-size: 18px;
-            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-            margin-left: 20%;
-            margin-right: 20%;
-        }
-
-        .card-primary > .card-heading {
-            color: #000;
-            background-color: #e9e9e9;
-            border-color: #888b8f;
-            .card-body
-
-        {
-            padding: 10px;
-            padding-bottom: 10px;
-            background-color: white;
-            padding-bottom: 5px;
-        }
-
-        .card-primary > .card-heading {
-            color: #000;
-            .card-body
-
-        {
-            padding: 10px;
-            padding-bottom: 10px;
-            background-color: white;
-            padding-bottom: 5px;
-        }
-
-        .card-primary {
-            border-color: #646464;
-            background-color: #c4c4c4;
-            .card-body
-
-        {
-            padding: 5px;
-        }
-        }
-    </style>
-
-
-    <style>
-        .card-body {
-            margin-left: 1%;
-            padding: 0.5%;
-        }
-    </style>
 

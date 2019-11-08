@@ -10,24 +10,13 @@
     en vez de crear uno o varios modelos distintos.*@
 @{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
     string opcionesname = respuestaname + ".Opciones";}
-<div class="card card-primary full">
-    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
-    @foreach(var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
-    {
-        <div class="card-body">
-            <input type="checkbox" name="@opcionesname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones.Contains(opcion.Orden) ? "checked" : "")/>
+
+@foreach (var opcion in Model.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion)
+{
+    <div class="card-body opcion-pequena">
+        <label for="@opcionesname @opcion.Orden">
+            <input type="checkbox" class="radio-grande" id="@opcionesname @opcion.Orden" name="@opcionesname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones.Contains(opcion.Orden) ? "checked" : "") />
             @opcion.Texto
-        </div>
-    }
-
-    @if (!Request["rad"].IsEmpty())
-    {
-        <ul>
-
-            @foreach (var selection in Request["rad"].Split(','))
-            {
-                <li>@selection</li>
-            }
-        </ul>
-    }
-</div>
+        </label>
+    </div>
+}

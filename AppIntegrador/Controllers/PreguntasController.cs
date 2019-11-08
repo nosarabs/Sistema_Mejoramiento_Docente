@@ -15,7 +15,6 @@ namespace AppIntegrador.Controllers
             return View("Create");
         }
 
-
         public ActionResult GuardarRespuestaLibre(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
@@ -25,7 +24,7 @@ namespace AppIntegrador.Controllers
                 {
                     // se trata de guardar la pregunta de respuesta libre 
                     if (db.AgregarPreguntaRespuestaLibre(pregunta.Codigo, "L", pregunta.Enunciado) == 0)
-                    { 
+                    {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -40,7 +39,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("GuardarRespuestaLibre");
+            return View("Create");
         }
 
         public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
@@ -67,14 +66,52 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("GuardarPreguntaSiNo");
+            return View("Create");
         }
+
+        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta, int min, int max)
+        {
+            // asegurarse que exista la preguna
+            if (pregunta != null)
+            {
+                if (max > min)
+                {
+                    try
+                    {
+                        // se trata de guardar la pregunta de con opciones de
+                        if (db.AgregarPreguntaEscalar(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, 1, min, max) == 0)
+                        {
+                            // si se presentó un problema, se devuelve el codigo de error
+                            ModelState.AddModelError("Codigo", "Código ya en uso.");
+                            return View(pregunta);
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException)
+                    {
+                        // si se presentó un problema, se devuelve el codigo de error
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
+                }
+                else
+                {
+                    // si está intentando poner un rango inválido
+                    ModelState.AddModelError("min", "El mínimo debe ser menor al máximo");
+                    return View(pregunta);
+                }
+            }
+
+            ViewBag.message = "Crear pregunta";
+            return View("Create");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
+        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
         {
-            if(pregunta == null || Opciones == null)
+            // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
+            if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
             {
                 ModelState.AddModelError("", "Datos incompletos");
                 return View("Create");
@@ -90,6 +127,7 @@ namespace AppIntegrador.Controllers
                     case "M": break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
+                    case "E": return GuardarPreguntaEscalar(pregunta, min, max);
                 }
                 bool validOptions = Opciones != null;
                 if (validOptions)
@@ -111,7 +149,7 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
                     {
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -128,8 +166,9 @@ namespace AppIntegrador.Controllers
                     db.AgregarOpcion(pregunta.Codigo, (byte)opcion.Orden, opcion.Texto);
                 }
 
+                ModelState.Clear();
                 ViewBag.Message = "Exitoso";
-                return View();
+                return View("Create");
             }
             else
             {
@@ -144,6 +183,14 @@ namespace AppIntegrador.Controllers
             ViewBag.message = "Respuesta Libre";
             return View("RespuestaLibre");
         }
+
+        // Retorna la vista "parcial" de Pregunta Escalar (.cshtml)
+        public ActionResult PreguntaEscalar()
+        {
+            ViewBag.message = "Pregunta Escalar";
+            return View("PreguntaEscalar");
+        }
+
         // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
         public ActionResult PreguntaSiNo()
         {
@@ -160,12 +207,13 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpGet]
-        public ActionResult OpcionesDeSeleccion(int i)
+        public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
-            if(i < 0)
+            if (i < 0)
             {
                 return null;
             }
+            ViewBag.Tipo = Tipo;
             ViewBag.i = i;
             return View("OpcionesDeSeleccion");
         }
