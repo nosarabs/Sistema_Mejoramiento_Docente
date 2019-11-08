@@ -362,6 +362,76 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
+        [HttpPost]
+        public ActionResult ActualizarBancoPreguntas(string input0, string input1, string input2, string input3)
+        {
+            var pregunta = db.Pregunta;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null && input3 == null)
+            {
+                ViewBag.filtro = "Ninguno";
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
+            }
+            // si se selecionó el código  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Codigo.Contains(input1)).ToList());
+            }
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Enunciado: " + input2;
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Enunciado.Contains(input2)).ToList());
+            }
+            // si se seleccionó el tipo
+            else if (input3.Length > 0)
+            {
+                var aux = "";
+                switch (input3)
+                {
+                    case "U":
+                        aux = "Selección Única";
+                        break;
+                    case "M":
+                        aux = "Selección Múltiple";
+                        break;
+                    case "L":
+                        aux = "Respuesta libre";
+                        break;
+                    case "S":
+                        aux = "Sí/No/NR";
+                        break;
+                    case "E":
+                        aux = "Escalar";
+                        break;
+                    default:
+                        break;
+                }
+                ViewBag.filtro = "Tipo: " + aux;
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Tipo.Contains(input3)).ToList());
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
+            }
+        }
+        
+        [HttpPost]
+        public ActionResult AgregarPreguntasASeccion(String codigoFormulario, String codigoSeccion, List<Pregunta> preguntas)
+        {
+            var seccion = db.Seccion.Find(codigoSeccion);
+            InsertSeccionTienePregunta(seccion, preguntas);
+            Formulario formularioDB = db.Formulario.Find( codigoFormulario );
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(codigoFormulario);
+            return PartialView("~/Views/Formularios/SeccionConPreguntas.cshtml", formulario.Secciones);
+
+        }
+
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -566,6 +636,17 @@ namespace AppIntegrador.Controllers
             catch (System.Data.Entity.Core.EntityCommandExecutionException)
             {
                 return false;
+            }
+            return true;
+        }
+        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta> preguntas)
+        {
+            if (preguntas != null)
+            {
+                for (int index = 0; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                }
             }
             return true;
         }

@@ -24,7 +24,6 @@
         traditional: true,
         success: function (data) {
             resultado = [];
-            console.log(data);
             $('#seccionesActuales').html(data);
         },
         error: function () {

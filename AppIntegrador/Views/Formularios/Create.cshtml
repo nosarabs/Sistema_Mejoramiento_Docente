@@ -124,36 +124,42 @@
     }
 </div>
 
-    <style>
-        .error {
-            border: 1px solid red;
-        }
-    </style>
+<style>
+    .error {
+        border: 1px solid red;
+    }
+</style>
 
     }
-    @section Scripts {
-        @*@Scripts.Render("~/bundles/jquery")*@
-        @*@Scripts.Render("~/bundles/jqueryval/")*@
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/jqueryval/")*@
 
-        <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
-        <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
-        <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
-        <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
-        <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
+    <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
+    <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+    <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
+    <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntasModal.js"></script>
 
-        <script>
+
+
+
+    <script>
         $(document).ready(function () {
             agregarsecciones.init();
+            agregarPreguntas.init();
+            GenerarModalPreguntas();
             validarEntradasAgregarSecciones();
             if ('@ViewBag.Message' == "Fallido") {
                 document.getElementById("validacion-codigo").textContent = "Código en uso";
                 $("#textCode").addClass("error");
             }
         });
-        </script>
+    </script>
 
-        <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
-        <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
 
-    }
+}
