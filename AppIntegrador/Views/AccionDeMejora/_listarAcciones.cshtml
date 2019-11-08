@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<AppIntegrador.Models.AccionDeMejora>
 
+@{
+    var numAccionable = 1;
+}
+
 @if (Model.Count() == 0)
 {
     <div class="centeredText">
@@ -12,13 +16,17 @@ else
 {
     <table class="table">
         <colgroup>
-            <col style="width: 60%;">
+            <col class="TablasNumero">
+            <col style="width: 57%;">
             <col class="TablasFecha">
             <col class="TablasFecha">
         </colgroup>
 
         <thead class="thead-light">
             <tr>
+                <th>
+                    #
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Objetivo.descripcion)
                 </th>
@@ -35,9 +43,12 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="FilaTablasPlanesDeMejora">
+                <tr class="FilaTablasPlanesDeMejora" onclick="clickAccionDeMejora(@numAccionable, @item.codPlan, `@item.nombreObj`, `@item.descripcion`)" )>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Objetivo.descripcion)
+                        @numAccionable
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcion)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.fechaInicio)
@@ -46,7 +57,20 @@ else
                         @Html.DisplayFor(modelItem => item.fechaFin)
                     </td>
                 </tr>
+                numAccionable++;
             }
         </tbody>
     </table>
+    <div class="card card-default">
+        <div class="card-body grisUCR3">
+            <div>
+                <div id="encabezadoAccionable">
+                    <h4 style="text-align:center">Lista de Accionables</h4>
+                    <h2 style="text-align:center">Seleccione una acción de mejora</h2>
+                </div>
+                <div id="divAccionables">
+                </div>
+            </div>
+        </div>
+    </div>
 }

@@ -46,7 +46,7 @@ else
         @foreach (var item in Model)
         {
             <tbody>
-                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@item.codPlan, `@item.nombre`)">
+                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@numObj, @item.codPlan, `@item.nombre`)">
                     <td>
                         @numObj
                     </td>
