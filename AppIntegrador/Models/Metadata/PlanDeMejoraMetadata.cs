@@ -6,6 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppIntegrador.Models.Metadata
 {
+    [MetadataType(typeof(PlanDeMejoraMetadata))]
+    public partial class PlanDeMejora
+    {
+    }
+
     public class PlanDeMejoraMetadata
     {
         [Display(Name = "Código")]
@@ -15,7 +20,7 @@ namespace AppIntegrador.Models.Metadata
 
         [Display(Name = "Nombre")]
         [DataType(DataType.Text)]
-        [MaxLength(30, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
+        [MaxLength(50, ErrorMessage = "La longitud máxima de este campo es de 30 caracteres")]
         [Required]
         public string nombre { get; set; }
 
@@ -28,8 +33,12 @@ namespace AppIntegrador.Models.Metadata
         [Display(Name = "Fin")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        [Required]
+        [Required]        
         public Nullable<System.DateTime> fechaFin { get; set; }
+
+        [Display(Name = "Profesores Asignados")]
+        public virtual ICollection<Profesor> Profesor { get; set; }
+
 
     }
 }
