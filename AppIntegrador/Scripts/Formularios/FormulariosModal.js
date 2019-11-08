@@ -21,6 +21,7 @@
         traditional: true,
         success: function (data) {
             resultado = [];
+            seccionesAsociadas = [];
             $('#seccionesActuales').html(data);
         },
         error: function () {
