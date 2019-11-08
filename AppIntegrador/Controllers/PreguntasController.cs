@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
                 {
                     // se trata de guardar la pregunta de respuesta libre 
                     if (db.AgregarPreguntaRespuestaLibre(pregunta.Codigo, "L", pregunta.Enunciado) == 0)
-                    { 
+                    {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -39,7 +39,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return PartialView("GuardarRespuestaLibre");
+            return View("Create");
         }
 
         public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
@@ -66,7 +66,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return PartialView("GuardarPreguntaSiNo");
+            return View("Create");
         }
 
         public ActionResult GuardarPreguntaEscalar(Pregunta pregunta)
@@ -93,7 +93,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("GuardarPreguntaSiNo");
+            return View("Create");
         }
 
 
@@ -102,7 +102,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
-            if(pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M") )
+            if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
             {
                 ModelState.AddModelError("", "Datos incompletos");
                 return View("Create");
@@ -200,7 +200,7 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
-            if(i < 0)
+            if (i < 0)
             {
                 return null;
             }
