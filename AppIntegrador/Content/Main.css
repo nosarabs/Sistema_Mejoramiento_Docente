@@ -7200,8 +7200,8 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   cursor: grabbing; }
 
 .opcion-pequena {
-  padding-top: 1px !important;
-  padding-bottom: 1px !important; }
+  padding-top: 2px !important;
+  padding-bottom: 2px !important; }
 
 .sticky-bottom {
   position: sticky;
