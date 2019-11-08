@@ -15,6 +15,8 @@
         public SeccionConPreguntas seccionConPreguntas{ get; set; }
         
 
+        public List<SeccionConPreguntas> seccionesConPreguntas { get; set; }
+
         public bool Creado { get; set; }
     }
 
