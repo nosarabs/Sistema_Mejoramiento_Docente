@@ -101,7 +101,6 @@ namespace AppIntegrador.Controllers
                     db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
                 }
             }
-            TempData["sweetalertmessage"] = "Cambios guardados";
             return new EmptyResult();
         }
         /* Fin TAM 3.4-1.*/

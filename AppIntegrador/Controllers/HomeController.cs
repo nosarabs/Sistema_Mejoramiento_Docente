@@ -271,7 +271,7 @@ namespace AppIntegrador.Controllers
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-            CurrentUser.deleteCurrentUser();
+            CurrentUser.deleteCurrentUser(HttpContext.User.Identity.Name);
             return RedirectToAction("Index");
         }
 
