@@ -165,6 +165,7 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarAccionDeMejora.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
+    <Build Include="PlanesDeMejora\SeAsignaA.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
