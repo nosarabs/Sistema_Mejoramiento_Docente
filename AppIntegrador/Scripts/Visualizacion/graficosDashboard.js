@@ -7,7 +7,8 @@ class GraficosDashboard {
     constructor() { }
 
     recuperarPromedioProfesor(correo) {
-
+        var promedioP;
+        var cantidadP;
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
             data: { correo: correo },
@@ -15,16 +16,19 @@ class GraficosDashboard {
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados.promedio);
-                alert(resultados.cantidad);
+
+                promedioP = resultados.promedio;
+                cantidadP = resultados.cantidad;
+
             }
 
         });
-
+        return [promedioP, cantidadP];
     }
 
-    recuperarPromedioCursos(correo) {
-
+     recuperarPromedioCursos(correo) {
+        var promedioP;
+        var cantidadP;
         $.ajax({
             url: '/Dashboard/ObtenerPromedioCursos',
             data: { correo: correo },
@@ -32,10 +36,13 @@ class GraficosDashboard {
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados.promedio);
-                alert(resultados.cantidad);
+                promedioP = resultados.promedio;
+                cantidadP = resultados.cantidad;
+
             }
+
         });
-    }
+        return [promedioP, cantidadP];
+     }
 
 }

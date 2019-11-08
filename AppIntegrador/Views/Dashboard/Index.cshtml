@@ -172,22 +172,30 @@
                 </script>
             </div>
 
-            <div class="col" id="panelDashboard">
+            <div class="col-9" id="panelDashboard">
+                @section Scripts {
+                    @Scripts.Render("~/Scripts/jquery-3.3.1.js");
+                
+                <script>
+                    var correo = "@HttpContext.Current.User.Identity.Name";
+                    var a = new GraficosDashboard();
+                    var x = a.recuperarPromedioProfesor(correo);
+                    var y = a.recuperarPromedioCursos(correo);
+                    document.write("Mi Calificación Promedio es de " + x[0] + " con " + x[1] + " respuestas. </br>");
+                    document.write("Calificación de Cursos Promedio " + y[0] + " con " + y[1] + " respuestas.");
+                    
 
+
+                    
+
+                 
+                </script>
+
+                }
             </div>
         </div>
     </div>
 </body>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-3.3.1.js");
-}
-    <script>
-        var correo = "@HttpContext.Current.User.Identity.Name";
-        var x = new GraficosDashboard();
-        x.recuperarPromedioProfesor(correo);
-        x.recuperarPromedioCursos(correo);
-    </script>
 
-}
 
