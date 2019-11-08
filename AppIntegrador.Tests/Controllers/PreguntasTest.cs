@@ -307,7 +307,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarRespuestaLibre(null) as ViewResult;
 
-            Assert.AreEqual("GuardarRespuestaLibre", result.ViewName);
+            Assert.AreEqual("Create", result.ViewName);
         }
 
         // Historia RIP-CBX
@@ -317,7 +317,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarPreguntaSiNo(null) as ViewResult;
 
-            Assert.AreEqual("GuardarPreguntaSiNo", result.ViewName);
+            Assert.AreEqual("Create", result.ViewName);
         }
 
         // Historia RIP-CBX
