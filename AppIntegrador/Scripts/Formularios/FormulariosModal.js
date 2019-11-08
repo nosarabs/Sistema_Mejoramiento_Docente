@@ -1,6 +1,4 @@
 ﻿$('#ExampleModal').on('hide.bs.modal', function () {
-    console.log('Todo es trivial')
-
     var seccionesAsociadas = []
     var index = 0;
     var beforeElement = true;
@@ -14,7 +12,6 @@
     var nombre = document.getElementById("textName").value
 
     var resultado = { codigo, nombre, seccionesAsociadas };
-    console.log(JSON.stringify(resultado));
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -24,7 +21,6 @@
         traditional: true,
         success: function (data) {
             resultado = [];
-            console.log(data);
             $('#seccionesActuales').html(data);
         },
         error: function () {
