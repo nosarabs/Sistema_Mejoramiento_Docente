@@ -7177,7 +7177,6 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   background-color: #fdfdfd; }
 
 .radio-dibujo {
-  transform: scale(1.5);
   margin-left: 10px;
   margin-bottom: 16px; }
 
@@ -7201,5 +7200,13 @@ a.text-dark:hover, a.btn-blancoUCR:hover, a.text-dark:focus, a.btn-blancoUCR:foc
   cursor: grabbing; }
 
 .opcion-pequena {
-  padding-top: 1px !important;
-  padding-bottom: 1px !important; }
+  padding-top: 2px !important;
+  padding-bottom: 2px !important; }
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  margin-bottom: 10px; }
+
+.radio-grande, .radio-dibujo {
+  transform: scale(1.5); }

@@ -13,7 +13,7 @@
 {
     <div class='card-body opcion-pequena'>
         <label for="@radname @opcion.Orden">
-            <input type="radio" id="@radname @opcion.Orden" name="@radname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == opcion.Orden ? "checked" : "") />
+            <input type="radio" class="radio-grande" id="@radname @opcion.Orden" name="@radname" value="@opcion.Orden" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == opcion.Orden ? "checked" : "") />
 
             @Html.DisplayFor(model => opcion.Texto)
         </label>

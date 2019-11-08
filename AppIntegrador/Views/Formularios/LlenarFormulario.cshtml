@@ -10,20 +10,20 @@
         <div class="card card-header shadow">
             <h2 id="encabezado" class="text-center">@Html.DisplayFor(model => model.Formulario.Nombre)</h2>
         </div>
-
+        <br />
 
         <div id="section-container">
             @{ Html.RenderPartial("SeccionConPreguntas", Model.Secciones); }
         </div>
 
-
-        <div class="form-group float-right" style="margin-right: 21%;">
+        <div class="card card-body shadow form-group float-right sticky-bottom">
             <div>
-                <button type="submit" class="btn btn-info">Guardar Respuestas</button>
+                <button type="submit" class="btn-azulUCR">Guardar Respuestas</button>
 
                 @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn-blancoUCR" })
             </div>
         </div>
+
     }
 
 </div>

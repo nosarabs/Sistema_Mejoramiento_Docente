@@ -35,17 +35,17 @@ function validarEntradas() {
 }
 
 function validarEntradasAgregarSecciones() {
-    var todoLleno = true;
-    if (todoLleno == true) {
+    var todoLlenoSecciones = true;
+    if (todoLlenoSecciones == true) {
         $(".validar-agregar-secciones").each(function () {
             if ($(this).val() == '') {
-                todoLleno = false;
+                todoLlenoSecciones = false;
                 // Equivalente a un break, pero JQuery ocupa que sea 
                 // con un return por la nueva función que se "crea"
                 return false;
             }
         })
     }
-
-    $('#CrearFormulario').prop('disabled', !todoLleno);
+    $('#AgregarSeccion').prop('disabled', !todoLlenoSecciones);
+    $('#CreateFormulario').prop('disabled', !todoLlenoSecciones);
 }
