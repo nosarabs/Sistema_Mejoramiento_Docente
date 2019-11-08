@@ -55,8 +55,15 @@ namespace AppIntegrador.Models
             {
                 permiso.ActiveInProfileEmph = false;
             }
-            this.Personas = db.Persona.Where(item => !item.Borrado).OrderBy(item => item.Apellido1).ThenBy(item => item.Apellido2).
-                                      ThenBy(item => item.Nombre1).ThenBy(item => item.Nombre2).ToList();
+            /*Lista todas las personas en la base de datos del sistema, ordenadas por apellidos y luego por nombres.*/
+            /*El usuario admin@mail.com no se muestra para que no se pueda quitar permisos él mismo. Por defecto ya 
+             tiene todos los permisos disponibles.*/
+            this.Personas = db.Persona.Where(item => !item.Borrado && item.Correo != "admin@mail.com").
+                                       OrderBy(item => item.Apellido1).
+                                       ThenBy(item => item.Apellido2).
+                                       ThenBy(item => item.Nombre1).
+                                       ThenBy(item => item.Nombre2).
+                                       ToList();
 
             foreach (Persona persona in this.Personas)
             {

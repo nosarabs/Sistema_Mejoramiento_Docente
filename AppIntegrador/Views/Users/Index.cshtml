@@ -51,18 +51,18 @@
                     <th class="users-list">
                         @Html.DisplayNameFor(model => model.Usuario.Activo)
                     </th>
-                    @{ if (!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
-                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
-                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
-                        {
-                        }
-                        else
-                        {
-
-                            <th class="users-list">
-                                <p style="text-align:center; display:table-cell;">Acciones</p>
-                            </th>
-                        }
+                    <!--TAM-3.6-1: Condicional que muestra la columna de acciones en la tabla de usuarios si el usuario tiene un perfil
+                            con permisos de acceder a esa funcionalidad, sino entonces no muestra la columna.-->
+                    @{ if(!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
+                          !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
+                          !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
+                    {
+                    }else{
+                   
+                    <th class="users-list">
+                        <p style="text-align:center; display:table-cell;">Acciones</p>
+                    </th>
+                    }
                     }
                 </tr>
             </thead>
@@ -96,18 +96,19 @@
                             <i class="fa fa-times"></i>
                         }
                     </td>
-                    @{ if (!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
-                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
-                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
+                    <!--TAM-3.6-1: Condicionales que muestran los botones de ver detalles, editar y borrar si el usuario tiene un perfil
+                            con permisos de acceder a esas funcionalidades, sino entonces no muestra los botones y bloquea los intentos de acceso
+                            por otros medios.-->
+                    @{ if(!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
+                          !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
+                          !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
+                    {
+                    }else{
+                    <td style="text-align:center;">
+                    @{ if(AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
+                    {
+                        @Html.ActionLink("Editar", "Edit", new
                         {
-                        }
-                        else
-                        {
-                            <td style="text-align:center;">
-                                @{ if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
-                                    {
-                                        @Html.ActionLink("Editar", "Edit", new
-                                        {
 
                                                 username = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(0, item.Persona.Correo.LastIndexOf('.')) : item.Persona.Correo,
                                                 domain = item.Persona.Correo.Contains('.') ? item.Persona.Correo.Substring(item.Persona.Correo.LastIndexOf('.')) : ""

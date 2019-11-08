@@ -102,9 +102,13 @@ namespace AppIntegrador.Models
                     db.SaveChanges();
                 }//TO-DO: Por algún motivo genera excepciones aquí, arreglar esto.
                 catch (Exception e) {
-                    return;
+                    Console.WriteLine(e.Message);
                 }
             }
+            Username = username;
+            Profile = profile;
+            MajorId = majorId;
+            EmphasisId = emphasisId;
         }
 
         public static void deleteCurrentUser(string username = null)
