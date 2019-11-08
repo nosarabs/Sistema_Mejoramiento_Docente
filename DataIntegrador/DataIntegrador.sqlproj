@@ -164,6 +164,10 @@
     <Build Include="Formularios\Procedimientos\EliminarSeccionFormulario.sql" />
     <Build Include="Formularios\Procedimientos\EliminarPreguntaDeSeccion.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerRespuestaLibreGuardada.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuarioPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
+    <Build Include="UsuarioActual.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\BorrarPersona.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
