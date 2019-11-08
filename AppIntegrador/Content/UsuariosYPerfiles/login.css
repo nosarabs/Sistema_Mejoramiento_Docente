@@ -1,0 +1,107 @@
+﻿
+.mainBarText {
+    color: black;
+    font-size: 2em;
+}
+
+.mainBarText {
+    color: black;
+    font-size: 1em;
+}
+
+.ucr-logo {
+    width: 30%;
+    min-width: 400px;
+}
+
+.logo-styles {
+    padding-left: 15px;
+}
+
+#greybg{
+    background-color: #e6e6e6;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+.blue-box {
+    max-width: 450px;
+    min-width: 390px;
+    padding: 15px 15px 5px;
+    border: 1px solid black;
+    background: linear-gradient(180deg, rgba(0,93,164,1) 0%, rgba(176,237,253,1) 100%);
+}
+
+#login_error {
+    color: red;
+}
+
+/*body {
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+}*/
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    /*/width: 100%;*/
+    min-height: 87vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-foot {
+    display: flex;
+    justify-content: center;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}
+
+#container_users {
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.users-list {
+    position:sticky;
+    top:0;
+    background-color:white;
+}
+
+.container-details-header {
+    text-align: right;
+    font-weight:bold;
+}
+
+.container-details-data {
+    text-align: left;
+}

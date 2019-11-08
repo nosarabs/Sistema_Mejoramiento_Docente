@@ -33,8 +33,12 @@ namespace AppIntegrador.Models.Metadata
         [Display(Name = "Fin")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        [Required]
+        [Required]        
         public Nullable<System.DateTime> fechaFin { get; set; }
+
+        [Display(Name = "Profesores Asignados")]
+        public virtual ICollection<Profesor> Profesor { get; set; }
+
 
     }
 }

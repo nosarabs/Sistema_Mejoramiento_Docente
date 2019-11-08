@@ -153,71 +153,7 @@ namespace AppIntegrador.Controllers
             return View("Create", crearSeccion);
         }
 
-        // GET: Seccion/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(seccion);
-        }
-
-        // POST: Seccion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Seccion seccion)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(seccion).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(seccion);
-        }
-
-        // GET: Seccion/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(seccion);
-        }
-
-        // POST: Seccion/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Seccion seccion = db.Seccion.Find(id);
-            db.Seccion.Remove(seccion);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+       
         private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
         {
             try

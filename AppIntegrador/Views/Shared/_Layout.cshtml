@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>Sistema de Mejoramiento Docente</title>
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     @{ bool EnableBS4SiteWide = true;}
     <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
@@ -19,6 +19,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         @Styles.Render("~/Content/Main.css")
         @Styles.Render("~/Content/bs4.3.1")
+        @Styles.Render("~/packages/Bootstrap.Multiselect.0.9.13/Css/bootstrap-multiselect.css")
+
         if (ViewBag.EnableBS4NoNavBar != true)
         {
             @Styles.Render("~/Content/css")
@@ -31,31 +33,32 @@
     {
         <div class="">
             <div>
-                <div class="mainBar">
-                    <div class="smallItem">
+                <div class="mainBar row align-items-center">
+                    <div class="col m-0 text-left">
                         <a href="https://www.ucr.ac.cr" class="svg" id="firma-ucr" target="_blank" tabindex="2">
                             <img height="50" src="~/Content/images/logo_ucr.png" alt="Logo Universidad de Costa Rica">
                         </a>
                     </div>
-                    <div class="nombreProyecto biggeritem">
-                        <p class="mainProjectTitle">Sistema de Mejoramiento Docente</p>
+                    <div class="nombreProyecto col m-0 text-center">
+                        @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
                     </div>
-                    <div class="smallItem">
+                    <div class="col m-0 text-right">
+                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
-                                @HttpContext.Current.User.Identity.Name &#9660;
+                                @HttpContext.Current.User.Identity.Name &#9660;<br />
                             </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                <a class="dropdown-item" href="#">Configuración</a>
+                                @Html.ActionLink("Seleccionar Perfil", "SeleccionarPerfil", "Permissions", new object { }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
                             </div>
                         </div>
                         <!--TAM-9.2 - Imagen default de usuario-->
-                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
+
                     </div>
                 </div>
             </div>
@@ -63,6 +66,9 @@
                 <div id="header">
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
+                        <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
+                            con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+                            por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -73,6 +79,12 @@
                                     <li><a href="/Permissions/Index">Administración de perfiles</a></li>
 
                                 </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                <span style="color:gray" >Usuarios &#9660;</span>
                             </li>
                         }
                         <li>
@@ -88,15 +100,13 @@
                                 <li>
                                     <a href="">Sección &#9658;</a>
                                     <ul>
-                                        <li><a href="/Seccion/Create">Crear Sección</a></li>
                                         <li><a href="/Seccion/Index">Ver Sección</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="">Preguntas &#9658;</a>
                                     <ul>
-                                        <li><a href="/Preguntas/Create">Crear pregunta NEW</a></li>
-                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                     </ul>
                                 </li>
@@ -119,6 +129,7 @@
                                         <li><a href="#">Acciones de Mejora</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
                             </ul>
                         </li>
                         <li>
@@ -128,7 +139,9 @@
                             </ul>
                         </li>
                         <li><a href="/Home/About">Acerca de</a></li>
+                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -136,7 +149,7 @@
         <br />
     }
 
-   <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
+    <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
@@ -150,6 +163,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect.js")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect-collapsible-groups.js")
     }
     @RenderSection("scripts", required: false)
 
@@ -202,6 +217,13 @@
                 return false;
             });
         });
+    </script>
+
+    <!--Se usa un tooltip para indicar al usuario porque la opcion del navbar esta desabilitada-->
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 </body>
 

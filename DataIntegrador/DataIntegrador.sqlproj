@@ -158,11 +158,20 @@
     <Build Include="Formularios\Procedimientos\GuardarOpcionesSeleccionadas.sql" />
     <Build Include="Formularios\Procedimientos\AgregarPreguntaEscalar.sql" />
     <Build Include="Formularios\Procedimientos\EliminarRespuestasDeFormulario.sql" />
-    <Build Include="Formularios\Procedimientos\AgregarSeccionesConPreguntas.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerRespuestasAFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerRespuestasAPreguntaConOpciones.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerOpcionesSeleccionadas.sql" />
+    <Build Include="Formularios\Procedimientos\EliminarSeccionFormulario.sql" />
+    <Build Include="Formularios\Procedimientos\EliminarPreguntaDeSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerRespuestaLibreGuardada.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarUsuarioPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
+    <Build Include="UsuarioActual.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\BorrarPersona.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarAccionDeMejora.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
-    <Build Include="Usuarios y Perfiles\Procedures\ModificarDatosPersona.sql" />
+    <Build Include="PlanesDeMejora\SeAsignaA.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

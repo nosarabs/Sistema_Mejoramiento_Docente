@@ -165,6 +165,14 @@ namespace AppIntegrador.Controllers
             return RedirectToAction("Index", "PlanDeMejora");
         }
 
+        [HttpGet]
+        public PartialViewResult listaDeObjetivos(int id)
+        {
+            ViewBag.IdPlan = id;
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivos = db.Objetivo.Where(o => o.codPlan == id);
+            return PartialView("_listarObjetivos", objetivos);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
