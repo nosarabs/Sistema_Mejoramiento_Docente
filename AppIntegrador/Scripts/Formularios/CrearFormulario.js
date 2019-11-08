@@ -35,16 +35,12 @@ $("#ActualizarVistaFiltros").click(function () {
 
 
 function BorrarSeccion(Scod) {
-    console.log('Todo es trivial')
-
     var FCodigo = document.getElementById("textCode").value
     var SCodigo = Scod
     var resultado = { FCodigo, SCodigo };
 
     var id = FCodigo
     var result = { id };
-
-    console.log(JSON.stringify(resultado));
 
     $.ajax({
         contentType: "application/json; charset=utf-8",
@@ -55,7 +51,6 @@ function BorrarSeccion(Scod) {
         traditional: true,
         success: function (data) {
             if (data.eliminadoExitoso) {
-                console.log(data);
                 $.ajax({
                     contentType: "application/json; charset=utf-8",
                     type: "POST",
@@ -65,7 +60,6 @@ function BorrarSeccion(Scod) {
                     traditional: true,
                     success: function (data) {
                         resultado = [];
-                        console.log(data);
                         $('#seccionesActuales').html(data);
                     },
                     error: function () {
