@@ -119,6 +119,11 @@
 
 @section Scripts {
 
+
+
+    @*@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")*@
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#profesores-selector').multiselect({
@@ -126,11 +131,6 @@
             });
         });
     </script>
-
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
-
-
     <script type="text/javascript">
         $(function () {
 
