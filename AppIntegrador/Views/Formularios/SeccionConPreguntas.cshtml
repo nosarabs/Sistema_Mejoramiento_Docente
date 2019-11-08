@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-
-
 @foreach (var item in Model)
 {
 
@@ -13,17 +11,14 @@
     <div class="card card-primary shadow">
 
         <div class='card-header'>
+            @displayOrden.
+            @Html.DisplayFor(model => item.Nombre)
             @if (item.Edicion)
             {
                 <div class="col-lg-11 col-md-10" style="margin-top: 18px">
-                    @Html.DisplayFor(model => item.Nombre)
-                    @Html.DisplayFor(model => item.CodigoSeccion)
                     <button type="button" [disabled]="true" class="remove-button btn btn-danger" id="borrarSec" style="margin-right: 18px" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
                 </div>
             }
-
-            @*@displayOrden.*@
-            @*@Html.DisplayFor(model => item.Nombre)*@
         </div>
         <div class='card-body '>
             @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
