@@ -36,7 +36,7 @@
                 <br />
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row my-4">
             <div class="col-6">
                 <table class="table table-fixed table-striped table-bordered">
@@ -98,7 +98,7 @@
                                     @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                                 <td style="text-align:center;">
-                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class= "profileCheckbox", onclick = "saveChanges()"})
+                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox", onclick = "saveChanges()" })
                                 </td>
                             </tr>
                         }
@@ -108,6 +108,9 @@
         </div>
 
         <input type="hidden" id="isUser" value="false" name="isUser">
+        <div class="clearfix">
+            <div class=" float-right"><div class="fa fa-check" id="estadoGuardar" role="status"></div></div>
+        </div>
     }
 </div>
 
@@ -132,7 +135,7 @@
         $('.selectpicker').selectpicker('render');
         $('.selectpicker').selectpicker('refresh');
     })
-                
+
     function cargarEnfasis(val) {
         $.getJSON('@Url.Action("CargarEnfasisDeCarrera", "Permissions")' + "?value=" + val, function (result) {
             $('#EnfasisSeleccionados').find('option').remove();
@@ -149,7 +152,7 @@
             enableDisableCheckboxes(true);
         })
     }
-                
+
     $("#EnfasisSeleccionados").on("change", function () {
         var profile = window.document.getElementById("PerfilesSeleccionados");
         var major = window.document.getElementById("CarrerasSeleccionadas");
@@ -162,7 +165,7 @@
         $('.selectpicker').selectpicker('render');
         $('.selectpicker').selectpicker('refresh');
         reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode);
-                    
+
     })
 
     /*Función para volver a cargar los datos de los checkboxes cuando se cambia el perfil, carrera o énfasis.*/
@@ -191,7 +194,7 @@
         $("#select_all_profiles").attr('disabled', disable);
         $("#select_all_users").attr('disabled', disable);
     }
-                
+
     window.onload = function loadDefaultValue() {
         $('#EnfasisSeleccionados').find('option').remove();
         $('#EnfasisSeleccionados').selectpicker('refresh');
@@ -201,10 +204,15 @@
         enableDisableCheckboxes(true);
     }
 
-    $("#IndexForm").submit(function(e){
+    $("#IndexForm").submit(function (e) {        
         e.preventDefault();
+        $("#estadoGuardar").toggleClass("fa-check spinner-border")
         var actionUrl = $(this).attr("action");
-        $.post(actionUrl ,$(this).serialize());
+        $.post(actionUrl, $(this).serialize());
+        setTimeout(function () {
+            $("#estadoGuardar").toggleClass("fa-check spinner-border");
+        }, 250);
+        
     });
     function saveChangesUser() {
         window.document.getElementById("isUser").value = true;
@@ -241,6 +249,7 @@
 </script>
 
 @section Scripts {
+    <script src="https://use.fontawesome.com/4889cf49d6.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquerymin")
