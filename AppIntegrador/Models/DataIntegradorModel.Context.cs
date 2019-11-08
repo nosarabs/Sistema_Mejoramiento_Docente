@@ -750,5 +750,90 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarFuncionarioCSV", correoParameter);
         }
+    
+        public virtual int InsertarEmpadronadoEn(string correoEstudiante, string codCarrera, string codEnfasis)
+        {
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("CorreoEstudiante", correoEstudiante) :
+                new ObjectParameter("CorreoEstudiante", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("CodEnfasis", codEnfasis) :
+                new ObjectParameter("CodEnfasis", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarEmpadronadoEn", correoEstudianteParameter, codCarreraParameter, codEnfasisParameter);
+        }
+    
+        public virtual int InsertarImparte(string correoProfesor, string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno)
+        {
+            var correoProfesorParameter = correoProfesor != null ?
+                new ObjectParameter("CorreoProfesor", correoProfesor) :
+                new ObjectParameter("CorreoProfesor", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarImparte", correoProfesorParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter);
+        }
+    
+        public virtual int InsertarInscrita_En(string codUnidadAc, string codCarrera)
+        {
+            var codUnidadAcParameter = codUnidadAc != null ?
+                new ObjectParameter("CodUnidadAc", codUnidadAc) :
+                new ObjectParameter("CodUnidadAc", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarInscrita_En", codUnidadAcParameter, codCarreraParameter);
+        }
+    
+        public virtual int InsertarPertenece_a(string codCarrera, string codEnfasis, string siglaCurso)
+        {
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("CodEnfasis", codEnfasis) :
+                new ObjectParameter("CodEnfasis", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarPertenece_a", codCarreraParameter, codEnfasisParameter, siglaCursoParameter);
+        }
+    
+        public virtual int InsertarTrabajaEn(string correoFuncionario, string codUnidadAcademica)
+        {
+            var correoFuncionarioParameter = correoFuncionario != null ?
+                new ObjectParameter("CorreoFuncionario", correoFuncionario) :
+                new ObjectParameter("CorreoFuncionario", typeof(string));
+    
+            var codUnidadAcademicaParameter = codUnidadAcademica != null ?
+                new ObjectParameter("CodUnidadAcademica", codUnidadAcademica) :
+                new ObjectParameter("CodUnidadAcademica", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarTrabajaEn", correoFuncionarioParameter, codUnidadAcademicaParameter);
+        }
     }
 }

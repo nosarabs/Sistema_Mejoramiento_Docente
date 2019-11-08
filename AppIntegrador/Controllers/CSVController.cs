@@ -60,6 +60,11 @@ namespace AppIntegrador.Controllers
             db.InsertarProfesorCSV(fila.CorreoProfesor);
             db.InsertarPersonaCSV(fila.CorreoEstudiante, fila.IdEstudiante, fila.NombreEstudiante, fila.ApellidoEstudiante, fila.TipoIdEstudiante);
             db.InsertarEstudianteCSV(fila.CorreoEstudiante);
+            db.InsertarImparte(fila.CorreoProfesor, fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
+            db.InsertarInscrita_En(fila.CodigoUnidad, fila.CodigoCarrera);
+            db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
+            db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
+            db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
         }
         private void carga(string path)
         {
