@@ -164,7 +164,15 @@
                             var fechaFin = f[7];
 
                             //Aquí se recarga la vista parcial con los parámetros del formulario.
-                            //Llamado...
+                            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
+                            link = link.replace('codigoFormularioValor', codigoFormulario);
+                            link = link.replace('siglaCursoValor', siglaCurso);
+                            link = link.replace('numeroGrupoValor', numeroGrupo);
+                            link = link.replace('semestreValor', semestre);
+                            link = link.replace('annoValor', anno);
+                            link = link.replace('fechaInicioValor', fechaInicio);
+                            link = link.replace('fechaFinValor', fechaFin);
+                            $('#panelDashboard').html(link);
 
                         }
 
