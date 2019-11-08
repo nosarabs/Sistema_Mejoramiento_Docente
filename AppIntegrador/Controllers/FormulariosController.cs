@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
-        public ActionResult DesplegarFormulario(string id)
+        public List<SeccionConPreguntas> ObtenerSeccionConPreguntas(string id)
         {
             Formulario formularioDB = db.Formulario.Find(id);
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
@@ -91,7 +91,12 @@ namespace AppIntegrador.Controllers
             {
                 seccion.Edicion = true;
             }
-            return PartialView("SeccionConPreguntas", formulario.Secciones);
+            return formulario.Secciones;
+        }
+
+        public ActionResult DesplegarFormulario(string id)
+        {
+            return PartialView("SeccionConPreguntas", ObtenerSeccionConPreguntas(id));
         }
 
 
@@ -358,6 +363,8 @@ namespace AppIntegrador.Controllers
         {
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            crearFormulario.Formulario = new Formulario();
+            crearFormulario.Creado = false;
             ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
@@ -366,19 +373,29 @@ namespace AppIntegrador.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones, int? formularioCreado)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, int? formularioCreado)
         {
-            if(formularioCreado == 1)
-            {
-                return RedirectToAction("Index");
-            }
             crearFormulario.seccion = db.Seccion;
+            crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            crearFormulario.Formulario = formulario;
+            if (formulario != null)
+            {
+                crearFormulario.seccionesConPreguntas = ObtenerSeccionConPreguntas(formulario.Codigo);
+            }
+            ViewBag.Version = "Creacion";
+            if (formularioCreado == 1)
+            {
+                ViewBag.Message = "Exitoso";
+                crearFormulario.Creado = true;
+                return View(crearFormulario);
+            }
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
                 if (InsertFormulario(formulario))
                 {
+                    crearFormulario.Creado = true;
                     ViewBag.Message = "Exitoso";
-                    return RedirectToAction("Index");
+                    return View(crearFormulario);
                 }
                 else
                 {
