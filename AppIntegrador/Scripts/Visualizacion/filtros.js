@@ -19,7 +19,7 @@
 
         var option = document.createElement("option");
         option.className = "option";
-        option.value = null;
+        option.value = "null";
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);   
@@ -65,7 +65,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = null;
+        option.value = "null";
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -109,7 +109,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = null;
+        option.value = "null";
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -154,7 +154,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = null;
+        option.value = "null";
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -206,7 +206,7 @@
         var option = document.createElement("option");
         option.className = "option";
 
-        option.value = null;
+        option.value = "null";
         option.text = "Seleccione una opción...";
 
         seleccion.appendChild(option);
@@ -220,19 +220,32 @@
             dataType: 'json',
             async: false,
             success: function (resultados) {
+
                 //Ciclo que crea cada option para luego agregarlo al select
 
                 for (var i = 0; i < resultados.length; ++i) {
+
+                    var fechaInicio = resultados[i].FechaInicio;
+                    var fechaFin = resultados[i].FechaFin;
+                    var parsedFechaInicio = new Date(parseInt(fechaInicio.substr(6)));
+                    var parsedFechaFin = new Date(parseInt(fechaFin.substr(6)));
+                    var newFechaInicio = new Date(parsedFechaInicio);
+                    var newFechaFin = new Date(parsedFechaFin);
+                    var stringFechaInicio = newFechaInicio.toLocaleDateString("es-ES");
+                    var stringFechaFin = newFechaFin.toLocaleDateString("es-ES");
+
                     var option = document.createElement("option");
                     option.className = "option";
-                    option.value = resultados[i].FCodigo;
-                    option.text = resultados[i].FCodigo +" - "+resultados[i].FNombre;
+                    option.value = resultados[i].FCodigo + "*" + resultados[i].FNombre + "*" + resultados[i].CSigla + "*" + resultados[i].GNumero + "*" + resultados[i].GSemestre + "*" + resultados[i].GAnno + "*" + stringFechaInicio + "*" + stringFechaFin;
+                    option.text = resultados[i].FCodigo + " - " + resultados[i].FNombre + " - " + resultados[i].CSigla + " - " + resultados[i].GNumero + " - " + resultados[i].GSemestre + " - " + resultados[i].GAnno + " - " + stringFechaInicio + " - " + stringFechaFin;
                     seleccion.appendChild(option);
+
                 }
+
             }
         });
         //Se agrega el elemento select a la vista
-        seleccion.onchange = function () { recuperarFiltros() };
+        seleccion.onchange = function () { actualizarVistaParcial() };
         container.appendChild(seleccion);
     }
 
