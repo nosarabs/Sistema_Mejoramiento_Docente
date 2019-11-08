@@ -12,37 +12,42 @@ using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
 using System.Globalization;
+using Security.Authentication;
 
 namespace AppIntegrador.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
     {
-
-
+        private DataIntegradorEntities db;
+        private readonly IAuth auth;
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
 
         /*Max number of failed login attempts before temporarily locking the account.*/
         private const int MAX_FAILED_ATTEMPTS = 3;
-        private DataIntegradorEntities db;
         public HomeController()
         {
             db = new DataIntegradorEntities();
+            auth = new FormsAuth();
         }
 
         public HomeController(DataIntegradorEntities db)
         {
             this.db = db;
+            auth = new FormsAuth();
         }
 
-        public HomeController(DataIntegradorEntities db, Usuario objUser)
+        public HomeController(IAuth auth)
+        {
+            this.auth = auth;
+            db = new DataIntegradorEntities();
+        }
+
+        public HomeController(DataIntegradorEntities db, IAuth auth)
         {
             this.db = db;
-            FormsAuth forms = new FormsAuth();
-            forms.Login(objUser.Username);
-            //FormsAuthentication.SetAuthCookie(objUser.Username, false);
-            ConfigureSession(objUser.Username);
+            this.auth = auth;
         }
 
 
@@ -132,7 +137,7 @@ namespace AppIntegrador.Controllers
                         /*Si la sesión puede ser configurada, es decir, el usuario tiene perfiles asociados, puede entrar.*/
                         if (ConfigureSession(objUser.Username))
                         {
-                            FormsAuthentication.SetAuthCookie(objUser.Username, false);
+                            auth.SetAuthCookie(objUser.Username, false);
                             return RedirectToAction("Index");
                         }
                         /*Sino, no puede entrar al sistema sin perfiles asociados.*/
@@ -261,7 +266,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Logout()
         {
             /*TAM 1.1.1: Modificado para que no guarde la sesión del usuario la siguiente vez que se ingrese al sistema.*/
-            FormsAuthentication.SignOut();
+            auth.SignOut();
             Session.Clear();
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -407,32 +412,10 @@ namespace AppIntegrador.Controllers
 
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
-                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
                 }
             }
-
             return View();
         }
     }
-
-    interface IAuthentication
-    {
-        void Login(string username);
-        void Logout();
-    }
-
-    class FormsAuth : IAuthentication
-    {
-        public void Login(string username)
-        {
-            FormsAuthentication.SetAuthCookie(username, false);
-        }
-
-        public void Logout()
-        {
-            FormsAuthentication.SignOut();
-            CurrentUser.deleteCurrentUser();
-        }
-    }
-
 }
