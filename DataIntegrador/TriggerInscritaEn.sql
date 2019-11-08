@@ -2,7 +2,7 @@
 	ON [dbo].[Inscrita_En]
 	INSTEAD OF INSERT
 	AS
-	declare @CodUnidad varchar(50)
+	declare @CodUnidad varchar(10)
 	declare @CodCarrera varchar(10)
 
 	select @CodUnidad = i.CodUnidadAc, @CodCarrera = i.CodCarrera

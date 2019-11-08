@@ -8,7 +8,7 @@
 	select @correoEst = i.CorreoEstudiante, @codCarrera = i.CodCarrera, @codEnfas = i.CodEnfasis
 	from inserted i
 	BEGIN
-		if(@correoEst not in (select correo from Estudiante) or @codCarrera not in (select Codigo from Carrera) or @codEnfas not in (select Codigo from Enfasis))
+		if(@correoEst not in (select CorreoEstudiante from Empadronado_en) or @codCarrera not in (select CodCarrera from Empadronado_en) or @codEnfas not in (select CodEnfasis from Empadronado_en))
 		begin
 		insert into Empadronado_en select * from inserted
 		end

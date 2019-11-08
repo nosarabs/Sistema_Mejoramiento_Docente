@@ -2,9 +2,9 @@
 	ON [dbo].[Pertenece_a]
 	INSTEAD OF INSERT
 	AS
-	declare @CodCarrera varchar(50)
+	declare @CodCarrera varchar(10)
 	declare @SiglaCurso varchar(10)
-	declare @codEnf tinyint
+	declare @codEnf varchar(10)
 	select @CodCarrera = i.CodCarrera, @SiglaCurso = i.SiglaCurso, @codEnf = i.CodEnfasis
 	from inserted i
 	BEGIN

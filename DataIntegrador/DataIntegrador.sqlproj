@@ -175,6 +175,7 @@
     <Build Include="TriggerImparte.sql" />
     <Build Include="TriggerInscritaEn.sql" />
     <Build Include="TriggerPertenece_a.sql" />
+    <Build Include="TriggerTrabajaEn.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

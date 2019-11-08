@@ -75,16 +75,16 @@ namespace AppIntegrador.Models
                 SqlCommand cmd11 = new SqlCommand("InsertarEmpadronadoEn", con);
                 cmd11.CommandType = CommandType.StoredProcedure;
                 cmd11.Parameters.AddWithValue("@CorreoEstudiante", archivos.CorreoEstudiante);
-                cmd11.Parameters.AddWithValue("@CodEnfasis", archivos.CodigoEnfasis);
                 cmd11.Parameters.AddWithValue("@CodCarrera", archivos.CodigoCarrera);
+                cmd11.Parameters.AddWithValue("@CodEnfasis", archivos.CodigoEnfasis);
 
                 SqlCommand cmd12 = new SqlCommand("InsertarImparte", con);
                 cmd12.CommandType = CommandType.StoredProcedure;
                 cmd12.Parameters.AddWithValue("@CorreoProfesor", archivos.CorreoProfesor);
                 cmd12.Parameters.AddWithValue("@SiglaCurso", archivos.SiglaCurso);
-                cmd12.Parameters.AddWithValue("@NumGrupo", archivos.NumeroGrupo);
-                cmd12.Parameters.AddWithValue("@Semestre", archivos.Semestre);
-                cmd12.Parameters.AddWithValue("@Anno", archivos.Anno);
+                cmd12.Parameters.AddWithValue("@NumGrupo", Int32.Parse(archivos.NumeroGrupo));
+                cmd12.Parameters.AddWithValue("@Semestre", Int32.Parse(archivos.Semestre));
+                cmd12.Parameters.AddWithValue("@Anno", Int32.Parse(archivos.Anno));
 
                 SqlCommand cmd13 = new SqlCommand("InsertarInscrita_En", con);
                 cmd13.CommandType = CommandType.StoredProcedure;
@@ -101,7 +101,7 @@ namespace AppIntegrador.Models
                 SqlCommand cmd15 = new SqlCommand("InsertarTrabajaEn", con);
                 cmd15.CommandType = CommandType.StoredProcedure;
                 cmd15.Parameters.AddWithValue("@CodUnidadAcademica", archivos.CodigoUnidad);
-                cmd15.Parameters.AddWithValue("@CorreoFuncionario", archivos.CorreoEstudiante);
+                cmd15.Parameters.AddWithValue("@CorreoFuncionario", archivos.CorreoProfesor);
 
                 con.Open(); //Abre conexion con la db
 
@@ -115,11 +115,11 @@ namespace AppIntegrador.Models
                 cmd8.ExecuteNonQuery();
                 cmd9.ExecuteNonQuery();
                 cmd10.ExecuteNonQuery();
-            /*    cmd11.ExecuteNonQuery();
+                cmd11.ExecuteNonQuery();
                 cmd12.ExecuteNonQuery();
                 cmd13.ExecuteNonQuery();
                 cmd14.ExecuteNonQuery();
-                cmd15.ExecuteNonQuery();*/
+                cmd15.ExecuteNonQuery();
 
 
 
