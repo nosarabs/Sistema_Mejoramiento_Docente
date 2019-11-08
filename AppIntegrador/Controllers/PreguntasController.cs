@@ -69,25 +69,34 @@ namespace AppIntegrador.Controllers
             return View("Create");
         }
 
-        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta)
+        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta, int min, int max)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
             {
-                try
+                if (max > min)
                 {
-                    // se trata de guardar la pregunta de con opciones de
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    try
+                    {
+                        // se trata de guardar la pregunta de con opciones de
+                        if (db.AgregarPreguntaEscalar(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, 1, min, max) == 0)
+                        {
+                            // si se presentó un problema, se devuelve el codigo de error
+                            ModelState.AddModelError("Codigo", "Código ya en uso.");
+                            return View(pregunta);
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException)
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
                     }
                 }
-                catch (System.Data.SqlClient.SqlException)
+                else
                 {
-                    // si se presentó un problema, se devuelve el codigo de error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    // si está intentando poner un rango inválido
+                    ModelState.AddModelError("min", "El mínimo debe ser menor al máximo");
                     return View(pregunta);
                 }
             }
@@ -118,7 +127,7 @@ namespace AppIntegrador.Controllers
                     case "M": break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
-                    case "E": return GuardarPreguntaEscalar(pregunta);
+                    case "E": return GuardarPreguntaEscalar(pregunta, min, max);
                 }
                 bool validOptions = Opciones != null;
                 if (validOptions)
