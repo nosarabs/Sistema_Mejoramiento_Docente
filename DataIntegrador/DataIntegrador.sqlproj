@@ -176,6 +176,8 @@
     <Build Include="TriggerInscritaEn.sql" />
     <Build Include="TriggerPertenece_a.sql" />
     <Build Include="TriggerTrabajaEn.sql" />
+    <Build Include="PromedioProfesor.sql" />
+    <Build Include="PromedioCursos.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

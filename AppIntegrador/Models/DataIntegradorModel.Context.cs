@@ -835,5 +835,23 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarTrabajaEn", correoFuncionarioParameter, codUnidadAcademicaParameter);
         }
+    
+        public virtual int PromedioCursos(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio, cantidad);
+        }
+    
+        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
+        }
     }
 }
