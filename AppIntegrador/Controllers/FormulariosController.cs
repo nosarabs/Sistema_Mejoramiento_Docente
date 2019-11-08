@@ -87,7 +87,49 @@ namespace AppIntegrador.Controllers
 
             ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null);
 
+            foreach (var seccion in formulario.Secciones)
+            {
+                seccion.Edicion = true;
+            }
             return PartialView("SeccionConPreguntas", formulario.Secciones);
+        }
+
+
+        public ActionResult SPROCButton()
+        {
+            //try
+            //{
+            //    db.uspCallTables("MyDB.temp.Table1");
+            //    return RedirectToAction("Index");
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    throw;
+            //}
+            return null;
+        }
+
+
+        [HttpPost]
+        public bool BorrarSeccion(string FCodigo, string SCodigo)
+        {
+            if (FCodigo != null && SCodigo != null)
+            {
+                try
+                {
+                    if (db.EliminarSeccionFormulario(FCodigo, SCodigo) == 0)
+                    {
+                        return false;
+                    }
+                }
+                catch (System.Data.Entity.Core.EntityCommandExecutionException)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
 
         public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario, 
@@ -198,26 +240,28 @@ namespace AppIntegrador.Controllers
                 {
                     if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
                     {
-                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList().FirstOrDefault();
+                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Find(pregunta.Pregunta.Codigo);
                         if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
                         {
-                            pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion =
-                                db.Opciones_de_seleccion.Where(x => x.Codigo.Equals(pregunta.Pregunta.Codigo)).ToList();
+                            var resultadoObtenerOpciones = db.ObtenerOpcionesDePregunta(pregunta.Pregunta.Codigo);
+                            
+                            if(resultadoObtenerOpciones != null)
+                            {
+                                pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion = new List<Opciones_de_seleccion>();
+                                foreach (var opcion in resultadoObtenerOpciones.ToList())
+                                {
+                                    pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion.Add
+                                        (new Opciones_de_seleccion { Codigo = pregunta.Pregunta.Codigo, Orden = opcion.Orden, Texto = opcion.Texto });
+                                }
+                            }
                         }
                         else if (pregunta.Pregunta.Tipo == "E")
                         {
-                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Where(x => x.Codigo.Equals(pregunta.Pregunta.Pregunta_con_opciones.Escalar.Codigo)).ToList().FirstOrDefault();
+                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Find(pregunta.Pregunta.Codigo);
                         }
 
                         if (respuestas != null)
                         {
-
-                            /* Manera de hacerlo con Linq. No acepta parámetros nulos.
-                            var respuestaGuardada = db.Responde_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                        && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                        && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                        && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                            */
                             var resultadoRespuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
                                                                                      codSeccion, pregunta.Pregunta.Codigo);
                             if (resultadoRespuestaGuardada != null)
@@ -227,12 +271,6 @@ namespace AppIntegrador.Controllers
                                 {
                                     pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
 
-                                    /* Manera de hacerlo con Linq. No acepta parámetros nulos.
-                                     * var opcionesGuardadas = db.Opciones_seleccionadas_respuesta_con_opciones.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                            && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                            && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                            && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
-                                    */
                                     var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
                                                                                          codSeccion, pregunta.Pregunta.Codigo);
                                     pregunta.Opciones = new List<int>();
@@ -320,6 +358,7 @@ namespace AppIntegrador.Controllers
         {
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
 
@@ -471,7 +510,6 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-
             return DesplegarFormulario(form.Codigo);
         }
 
@@ -568,6 +606,10 @@ namespace AppIntegrador.Controllers
             return Json(new { guardadoExitoso = formulario != null && InsertFormulario(formulario) });
         }
 
-
+        [HttpPost]
+        public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
+        {
+            return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+        }
     }
 }
