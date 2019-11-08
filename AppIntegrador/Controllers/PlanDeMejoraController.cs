@@ -108,6 +108,7 @@ namespace AppIntegrador.Controllers
         public ActionResult CreateNuevo()
         {
             AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("CrearPlanDeMejora", plan);
         }
 
@@ -197,6 +198,7 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             ViewBag.Editar = true;
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
@@ -226,6 +228,7 @@ namespace AppIntegrador.Controllers
                 db.Entry(planDeMejora).State = EntityState.Modified;
                 db.SaveChanges();
             }
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             ViewBag.IdPlan = planDeMejora.codigo;
             return View("EditarPlanDeMejora2", planDeMejora);
         }
@@ -265,11 +268,34 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
+        //Modificado por: Christian Asch
+        //Historia a la que pertenece: MOS-1.4.2 "Como usuario administrativo quiero que se notifique a los involucrados sobre el inicio de un plan, objetivo o acción de mejora para que los involucrados puedan estar informados"
+        //Envía un correo cada profesor que está asignado al plan avisándole que ha sido asignado.
+        private void EnviarCorreoSobreCreacionPlan(PlanDeMejora plan)
+        {
+            List<string> involucrados = new List<string>();
+            foreach(Profesor profesor in plan.Profesor)
+            {
+                involucrados.Add(profesor.Correo);
+            }
+            Utilities.EmailNotification emailNotification = new Utilities.EmailNotification();
+
+            string asunto = "Creación de un nuevo plan de mejora";
+
+            string texto = "Usted ha sido involucrado en el plan de mejora llamado: " + plan.nombre + "<br>Con código: " + plan.codigo;
+            texto += "<br>Este plan iniciará el " + plan.fechaInicio.ToString();
+            texto += "<br>Favor no responder directamente a este correo";
+            string textoAlt = "<body><p>" + texto + "</p></body>";
+
+
+            _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
+        }
+
         //Modificado por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
         //crea un plan de mejora con un id que se determina automáticamente
         //retorna el view que permite editar un plan de mejora completo para añadir objetivos, acciones y accionables
-        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin)
+        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin, List<String> Profesor)
         {
             int id = -1;
             var planTemp = new PlanDeMejora();
@@ -285,14 +311,28 @@ namespace AppIntegrador.Controllers
                     planTemp.nombre = nombre;
                     planTemp.fechaInicio = fechaInicio;
                     planTemp.fechaFin = fechaFin;
+
+                    if(Profesor != null)
+                    {
+                        foreach(String correo in Profesor)
+                        {
+                            var prof = db.Profesor.Find(correo);
+                            planTemp.Profesor.Add(prof);
+                        }
+                        EnviarCorreoSobreCreacionPlan(planTemp);
+                    }
                     this.Create(planTemp);
 
                     ViewBag.IdPlan = id;
                     ViewBag.editar = false;
+                    ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
                     return View("EditarPlanDeMejora2", planTemp);
                 }
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            ViewBag.IdPlan = id;
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+            return View("EditarPlanDeMejora2", planTemp);
         }
 
         // Method that edits one "PlanDeMejora"
