@@ -4,14 +4,15 @@
 @{
     ViewBag.Title = "Borrado";
     Layout = null;
-    //var objModel = Model;
+    var objModel = Model;
     //string objectiveNum = this.ViewData.ContainsKey("objectiveNumber") ? this.ViewData["objectiveNumber"].ToString() : string.Empty;
 
-    string idModalBorradoAccionable = "idModal-";
-    //idModalBorrado += @objModel.codPlan.ToString();
-    //idModalBorrado += '-';
-    //idModalBorrado += @objectiveNum;
-    //idModalBorrado += "-delete";
+    string idModalBorradoAccionable = "idModalAccionable-";
+    idModalBorradoAccionable += @objModel.codPlan.ToString();
+    idModalBorradoAccionable += '-';
+    idModalBorradoAccionable += @objModel.descripcion;
+    idModalBorradoAccionable += @objModel.descripAcMej;
+    idModalBorradoAccionable += "-delete";
 
 }
 
@@ -65,20 +66,41 @@
             </div>
 
             <div class="modal-footer">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
 
+                <form action="DeleteAccionable" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="botonCentrado">
                         <div class="form-actions no-color">
                             <input type="submit" value="Borrar" class="btn btn-danger" />
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
-                }
+                </form>
+
             </div>
         </div>
     </div>
 </div>
 
 
+@*@section Scripts{
+    <script>
+$(function () {
+    $("#borrarAccionableB").submit(function (e) {
+        var id = @model. "@Session["codPlan"]";
+        var objetivo = "@Session["nombreObj"]";
+        var desc = "@Session["descripAcMej"]";
+
+        e.preventDefault();
+        $.ajax({
+            url: '/Accionables/Create/',
+            type: 'post',
+            data: $('#accionableForm').serialize(),
+            success: function () {
+                cargarAccionables(id, objetivo, desc);
+            }
+        });
+    });
+});
+    </script>
+}*@

@@ -155,6 +155,19 @@ namespace AppIntegrador.Controllers
             return RedirectToAction("Index");
         }
 
+        // POST: Accionables/Delete/5
+        [HttpPost, ActionName("DeleteAccionable")]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult DeleteAccionable(int codPlan, string nombObj, string descripAcMej, string descripAccionable)
+        {
+            Accionable accionable = db.Accionable.Find(codPlan, nombObj, descripAcMej, descripAccionable);
+            db.Accionable.Remove(accionable);
+            db.SaveChanges();
+            IEnumerable<AppIntegrador.Models.Accionable> listaAccionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            return PartialView("_Tabla", listaAccionables);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -163,5 +176,6 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

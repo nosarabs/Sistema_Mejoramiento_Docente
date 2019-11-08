@@ -4,25 +4,30 @@
 @{
     ViewBag.Title = "Borrado";
     Layout = null;
-    //var objModel = Model;
-    //string objectiveNum = this.ViewData.ContainsKey("objectiveNumber") ? this.ViewData["objectiveNumber"].ToString() : string.Empty;
+    var modelito = Model;
+    string accionNum = this.ViewData.ContainsKey("accionNumber") ? this.ViewData["accionNumber"].ToString() : string.Empty;
 
-    string idModalBorrado = "idModal-";
-    //idModalBorrado += @objModel.codPlan.ToString();
-    //idModalBorrado += '-';
-    //idModalBorrado += @objectiveNum;
-    //idModalBorrado += "-delete";
+    string idModalBorradoAccionDeMejora = "idModalAccionDeMejora-";
+    idModalBorradoAccionDeMejora += @modelito.codPlan.ToString();
+    idModalBorradoAccionDeMejora += '-';
+    idModalBorradoAccionDeMejora += @modelito.nombreObj;
+    idModalBorradoAccionDeMejora += '-';
+    idModalBorradoAccionDeMejora += @modelito.descripcion;
+    idModalBorradoAccionDeMejora += "-delete";
 
+    <script>
+        console.log("@idModalBorradoAccionDeMejora");
+    </script>
 }
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@idModalBorrado">
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@idModalBorradoAccionDeMejora">
     Borrar
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="@idModalBorrado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="@idModalBorradoAccionDeMejora" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
