@@ -14,13 +14,12 @@
         <tr>
             <td style="width:36%">
 
+                <h2>Crear Sección</h2>
                 <div class="form-horizontal card-group">
 
                     <div class="card card-default">
 
-                        <div class="card-body test2">
-                            <hr />
-                            <h2>Crear Sección</h2>
+                        <div class="card-body grisUCR2">
                             <div class="form-horizontal row">
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -30,18 +29,19 @@
                                         {
                                             htmlAttributes = new
                                             {
-                                                @class = "validar form-control",
-                                                id = "textCode",
-                                                name = "textCode",
+                                                @class = "validar-crear-seccion form-control",
+                                                id = "sectionCode",
+                                                name = "sectionCode",
                                                 @maxlength = "8",
                                                 required = "required",
                                                 placeholder = "Código",
                                                 rows = "5",
-                                                @onkeyup = "contarCaracteres(this)"
+                                                @onkeyup = "contarCaracteres(this)",
+                                                @title = "Código requerido"
                                             }
                                         })
                                         <div class="contador small float-right">0/8 caracteres usados</div>
-                                        @Html.ValidationMessageFor(model => model.Seccion.Codigo, "", new { @style = "color:red" })
+                                        <label id="validacion-codigo-seccion" style="color: red;"></label>
                                     </div>
                                 </div>
 
@@ -52,14 +52,15 @@
                                             {
                                                 htmlAttributes = new
                                                 {
-                                                    @class = "validar form-control",
-                                                    id = "textName",
-                                                    name = "textName",
+                                                    @class = "validar-crear-seccion form-control",
+                                                    id = "sectionName",
+                                                    name = "sectionName",
                                                     @maxlength = "250",
                                                     required = "required",
-                                                    placeholder = "Nombre del formulario",
+                                                    placeholder = "Nombre de la sección",
                                                     rows = "5",
-                                                    @onkeyup = "contarCaracteres(this)"
+                                                    @onkeyup = "contarCaracteres(this)",
+                                                    @title = "Nombre de la sección requerido"
                                                 }
                                             })
 
@@ -69,10 +70,10 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-lg-offset-2 col-lg-10">
+                                <div class="form-group col-lg-10">
                                     <div>
-                                        <input type="button" value="Regresar al banco de Secciones" class="btn-blancoUCR" onclick="CerrarCrearSeccion()" />
-                                        <input type="button" value="Guardar" class="btn btn-outline-light text-dark bg-white border-secondary" onclick="GuardarSeccion()" />
+                                        <input type="button" value="Guardar" class="btn-azulUCR float-right" onclick="GuardarSeccion()" />
+                                        <input type="button" value="Regresar al banco de Secciones" class="btn-blancoUCR float-right" onclick="CerrarCrearSeccion()" />
                                     </div>
                                 </div>
                             </div>
