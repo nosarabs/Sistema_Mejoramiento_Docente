@@ -152,16 +152,21 @@
 
                         f = this.recuperarFormulario();
 
-                        var codigoFormulario = f[0];
-                        var siglaCurso = f[2];
-                        var numeroGrupo = f[3];
-                        var semestre = f[4];
-                        var anno = f[5];
-                        var fechaInicio = f[6];
-                        var fechaFin = f[7];
+                        if (f != null)
+                        {
 
-                        //Aquí se recarga la vista parcial con los parámetros del formulario.
-                        //Llamado...
+                            var codigoFormulario = f[0];
+                            var siglaCurso = f[2];
+                            var numeroGrupo = f[3];
+                            var semestre = f[4];
+                            var anno = f[5];
+                            var fechaInicio = f[6];
+                            var fechaFin = f[7];
+
+                            //Aquí se recarga la vista parcial con los parámetros del formulario.
+                            //Llamado...
+
+                        }
 
                     }
                 </script>
