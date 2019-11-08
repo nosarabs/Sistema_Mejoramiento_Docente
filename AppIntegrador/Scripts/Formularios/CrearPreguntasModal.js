@@ -6,7 +6,6 @@ function GenerarModalPreguntas() {
 }
 function ImportarBancoPreguntas() {
     var resultado = ["", "", "", ""];
-    console.log(JSON.stringify(resultado));
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -109,22 +108,25 @@ function deselectPregunta(codigo) {
 function addPreguntaToSeccion(codigoSeccion) {
 
     var codigoFormulario = document.getElementById("textCode").value;
+    var result = [];
+    // (Workaround) Codigo trae el código del formulario, Enunciado el de la sección
+    result.push({ 'Codigo': codigoFormulario, 'Enunciado': codigoSeccion, 'Tipo': null });
 
     var index = 0;
-    var preguntasAsociadas = [];
     var beforeElement = true;
     while (index < agregarPreguntas.current() && beforeElement) {
         var pregunta = document.getElementById("preguntas[" + index + "].Codigo");
-        preguntasAsociadas.push(pregunta.value);
+        // Workaround para mandar las preguntas, como en la versión vieja de borrar opciones
+        result.push({ 'Codigo': pregunta.value, 'Enunciado': null, 'Tipo': null });
         ++index;
     }
+    console.log(result)
 
-    console.log(JSON.stringify(resultado));
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
         url: "/Formularios/AgregarPreguntasASeccion",
-        data: JSON.stringify({ codigoFormulario:codigoFormulario, codigoSeccion:codigoSeccion, preguntas:preguntasAsociadas}),
+        data: JSON.stringify(result),
         dataType: "html",
         traditional: true,
         success: function (data) {

@@ -421,11 +421,15 @@ namespace AppIntegrador.Controllers
         }
         
         [HttpPost]
-        public ActionResult AgregarPreguntasASeccion(String codigoFormulario, String codigoSeccion, List<Pregunta> preguntas)
+        public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
         {
+            string codigoFormulario = preguntas[0].Codigo;
+            string codigoSeccion = preguntas[0].Enunciado;
             var seccion = db.Seccion.Find(codigoSeccion);
+
             InsertSeccionTienePregunta(seccion, preguntas);
-            Formulario formularioDB = db.Formulario.Find( codigoFormulario );
+
+            Formulario formularioDB = db.Formulario.Find(codigoFormulario);
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(codigoFormulario);
             return PartialView("~/Views/Formularios/SeccionConPreguntas.cshtml", formulario.Secciones);
@@ -643,7 +647,8 @@ namespace AppIntegrador.Controllers
         {
             if (preguntas != null)
             {
-                for (int index = 0; index < preguntas.Count; ++index)
+                // Empieza en 1 porque el índice 0 trae el código del formulario y la sección
+                for (int index = 1; index < preguntas.Count; ++index)
                 {
                     db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
                 }
