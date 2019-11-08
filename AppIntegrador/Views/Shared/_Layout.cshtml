@@ -51,7 +51,6 @@
                             </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                <!-- <a class="dropdown-item" href="#">Configuración</a> -->
                                 @Html.ActionLink("Seleccionar Perfil", "SeleccionarPerfil", "Permissions", new object { }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
@@ -67,6 +66,9 @@
                 <div id="header">
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
+                        <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
+                            con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+                            por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>

@@ -36,7 +36,7 @@
                 <br />
             </div>
         </div>
-
+        <br/>
         <div class="row my-4">
             <div class="col-6">
                 <table class="table table-fixed table-striped table-bordered">
@@ -121,12 +121,16 @@
         var selectedMajorCode = $("#CarrerasSeleccionadas").val();
         var selectedEmphCode = $("#EnfasisSeleccionados").val();
         clearCheckboxes();
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
         reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode);
     })
 
     $("#CarrerasSeleccionadas").on("change", function () {
         clearCheckboxes();
         cargarEnfasis($(this).val());
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
     })
                 
     function cargarEnfasis(val) {
@@ -140,6 +144,9 @@
                 $("#EnfasisSeleccionados").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
             }
             $("#EnfasisSeleccionados").selectpicker('refresh');
+            $('.selectpicker').selectpicker('render');
+            $('.selectpicker').selectpicker('refresh');
+            enableDisableCheckboxes(true);
         })
     }
                 
@@ -151,6 +158,9 @@
         var selectedProfileName = profile.options[profile.selectedIndex].text;
         var selectedMajorCode = major.options[major.selectedIndex].value;
         var selectedEmphCode = emphasis.options[emphasis.selectedIndex].value;
+        enableDisableCheckboxes(false);
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
         reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode);
                     
     })
@@ -174,6 +184,13 @@
         for (var i = 0; i < @Model.Personas.Count(); ++i)
             $("#Personas_" + i + "__HasProfileInEmph").prop('checked', false);
     }
+
+    function enableDisableCheckboxes(disable) {
+        $(".profileCheckbox").attr('disabled', disable);
+        $(".userCheckbox").attr('disabled', disable);
+        $("#select_all_profiles").attr('disabled', disable);
+        $("#select_all_users").attr('disabled', disable);
+    }
                 
     window.onload = function loadDefaultValue() {
         $('#EnfasisSeleccionados').find('option').remove();
@@ -181,6 +198,7 @@
         $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
         $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
         $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+        enableDisableCheckboxes(true);
     }
 
     $("#IndexForm").submit(function(e){
