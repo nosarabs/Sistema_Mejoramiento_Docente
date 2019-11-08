@@ -443,7 +443,7 @@ namespace AppIntegrador.Tests.Controllers
 
 
         [TestMethod]
-        public void TestGuardarRespuestasAPregunta()
+        public void TestGuardarRespuestasAPreguntaSeleccionUnica()
         {
             var mockDb = new Mock<DataIntegradorEntities>();
 
@@ -520,6 +520,82 @@ namespace AppIntegrador.Tests.Controllers
                 Pregunta = pregunta,
                 Opciones = opcionesDePregunta,
                 RespuestaLibreOJustificacion = "Para que cubra más del coberage"
+            };
+
+            // Si no se cae en esta linea, significa que el guardar funciona correctamente
+            controller.GuardarRespuestaAPregunta(preguntaConSeccion, codSeccion, respuestas);
+
+        }
+
+        [TestMethod]
+        public void TestGuardarRespuestasAPreguntaLibre()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPSU";
+            string codSeccion = "SECCPSU";
+            string codPregunta = "PREGSU";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas de seleccion única"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            ObtenerSeccionesDeFormulario_Result seccion = new ObtenerSeccionesDeFormulario_Result
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección de prueba",
+                Orden = 0
+            };
+
+            var mockedObtenerSecciones = SetupMockProcedure<ObtenerSeccionesDeFormulario_Result>
+                (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
+            mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
+
+            Pregunta pregunta = new Pregunta()
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Qué piensa de Brexit?",
+                Tipo = "L"
+            };
+
+            Pregunta_con_opciones pregunta_Con_Opciones = new Pregunta_con_opciones
+            {
+                Codigo = codPregunta,
+                Pregunta_con_opciones_de_seleccion = new Pregunta_con_opciones_de_seleccion()
+            };
+            mockDb.Setup(x => x.Pregunta_con_opciones.Find(codPregunta)).Returns(pregunta_Con_Opciones);
+
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            List<int> opcionesDePregunta = new List<int>();
+            opcionesDePregunta.Append(0);
+
+            SetupHttpContext(controller);
+
+            Respuestas_a_formulario respuestas = new Respuestas_a_formulario()
+            {
+                FCodigo = codFormulario,
+                Correo = "admin@mail.com",
+                CSigla = "CI0128",
+                GNumero = 2,
+                GAnno = 2019,
+                GSemestre = 2,
+                Fecha = DateTime.Today,
+                Finalizado = false
+            };
+
+            PreguntaConNumeroSeccion preguntaConSeccion = new PreguntaConNumeroSeccion()
+            {
+                OrdenSeccion = 0,
+                OrdenPregunta = 0,
+                Pregunta = pregunta,
+                RespuestaLibreOJustificacion = "Para que cubra más del coverage"
             };
 
             // Si no se cae en esta linea, significa que el guardar funciona correctamente
