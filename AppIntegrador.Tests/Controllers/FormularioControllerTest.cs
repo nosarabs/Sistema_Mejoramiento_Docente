@@ -471,16 +471,12 @@ namespace AppIntegrador.Tests.Controllers
                 (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
             mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
 
-            ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
+            Pregunta pregunta = new Pregunta()
             {
                 Codigo = codPregunta,
                 Enunciado = "¿Si no sé, es la _?",
-                Tipo = "U",
-                Orden = 0,
+                Tipo = "U"
             };
-            var mockedObtenerPreguntas = SetupMockProcedure<ObtenerPreguntasDeSeccion_Result>
-                (new List<ObtenerPreguntasDeSeccion_Result> { pregunta });
-            mockDb.Setup(x => x.ObtenerPreguntasDeSeccion(codSeccion)).Returns(mockedObtenerPreguntas.Object);
 
             Pregunta_con_opciones pregunta_Con_Opciones = new Pregunta_con_opciones
             {
@@ -499,6 +495,9 @@ namespace AppIntegrador.Tests.Controllers
             mockDb.Setup(x => x.ObtenerOpcionesDePregunta(codPregunta)).Returns(mockedOpciones.Object);
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            List<int> opcionesDePregunta = new List<int>();
+            opcionesDePregunta.Append(0);
 
             SetupHttpContext(controller);
 
@@ -519,17 +518,14 @@ namespace AppIntegrador.Tests.Controllers
                 OrdenSeccion = 0,
                 OrdenPregunta = 0,
                 Pregunta = pregunta,
-                Opciones = pregunta.Opciones,
-                RespuestaLibreOJustificacion = pregunta.TituloCampoObservacion
+                Opciones = opcionesDePregunta,
+                RespuestaLibreOJustificacion = "Para que cubra más del coberage"
             };
 
-            //mockDb.Setup(m => m.Respuestas_a_formulario.Find(codFormulario)).returns(respuestas);
+            // Si no se cae en esta linea, significa que el guardar funciona correctamente
+            controller.GuardarRespuestaAPregunta(preguntaConSeccion, codSeccion, respuestas);
 
-            var result = controller.GuardarRespuestaAPregunta(preguntaConSeccion, codSeccion, respuestas );
-
-            Assert.IsNotNull(result);
         }
-        //public void GuardarRespuestaAPregunta(PreguntaConNumeroSeccion pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
 
         [TestMethod]
         public void TestBorrarSeccion()
@@ -567,7 +563,6 @@ namespace AppIntegrador.Tests.Controllers
                 Tipo = "U",
                 Orden = 0,
             };
-
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
