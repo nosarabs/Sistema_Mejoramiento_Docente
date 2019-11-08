@@ -47,9 +47,6 @@ function BorrarSeccion(Scod) {
     var SCodigo = Scod
     var resultado = { FCodigo, SCodigo };
 
-    var id = FCodigo
-    var result = { id };
-
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -59,21 +56,7 @@ function BorrarSeccion(Scod) {
         traditional: true,
         success: function (data) {
             if (data.eliminadoExitoso) {
-                $.ajax({
-                    contentType: "application/json; charset=utf-8",
-                    type: "POST",
-                    url: "/Formularios/DesplegarFormulario",
-                    data: JSON.stringify(result),
-                    dataType: "html",
-                    traditional: true,
-                    success: function (data) {
-                        resultado = [];
-                        $('#seccionesActuales').html(data);
-                    },
-                    error: function () {
-
-                    }
-                });
+                ActualizarSecciones();
             }
         },
         error: function () {
@@ -82,7 +65,25 @@ function BorrarSeccion(Scod) {
     });
 }
 
+function ActualizarSecciones() {
+    var id = document.getElementById("textCode").value;
+    var result = { id };
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/DesplegarFormulario",
+        data: JSON.stringify(result),
+        dataType: "html",
+        traditional: true,
+        success: function (data) {
+            resultado = [];
+            $('#seccionesActuales').html(data);
+        },
+        error: function () {
 
+        }
+    });
+}
 
 function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
@@ -100,10 +101,10 @@ function ValidarCodigo() {
             traditional: true,
             success: function (data) {
                 if (data.guardadoExitoso) {
-                    $(".validar-agregar-secciones").each(function () {
+                    /*$(".validar-agregar-secciones").each(function () {
                         this.disabled = "disabled";
                         return true;
-                    })
+                    })*/
                     document.getElementById("validacion-codigo").textContent = "";
                     $("#textCode").removeClass("error");
                     document.getElementById("formularioCreado").setAttribute("value", "1");
