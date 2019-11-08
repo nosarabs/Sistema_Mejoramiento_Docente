@@ -99,7 +99,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
+        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones, int min, int max)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
             if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
