@@ -96,7 +96,6 @@ function ValidarCodigo() {
                         this.disabled = "disabled";
                         return true;
                     })
-
                     document.getElementById("validacion-codigo").textContent = "";
                     $("#textCode").removeClass("error");
                     document.getElementById("formularioCreado").setAttribute("value", "1");
