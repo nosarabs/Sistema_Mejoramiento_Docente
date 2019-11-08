@@ -835,5 +835,48 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarTrabajaEn", correoFuncionarioParameter, codUnidadAcademicaParameter);
         }
+    
+        public virtual int InsertarMatriculado_en(string correo, string sigla, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("Sigla", sigla) :
+                new ObjectParameter("Sigla", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarMatriculado_en", correoParameter, siglaParameter, numGrupoParameter, semestreParameter, annoParameter);
+        }
+    
+        public virtual int PromedioCursos(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio, cantidad);
+        }
+    
+        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
+        }
     }
 }
