@@ -12,6 +12,7 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Routing;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -300,6 +301,52 @@ namespace AppIntegrador.Tests.Controllers
             FormulariosController controller = new FormulariosController(mockDb.Object);
             var result = controller.Create(formulario, 1);
 
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestAplicarFiltros()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            Seccion seccion = new Seccion()
+            {
+                Codigo = "CI0128IE",
+                Nombre = "Sección de prueba"
+            };
+
+            Seccion seccion2 = new Seccion()
+            {
+                Codigo = "CI0122IE",
+                Nombre = "Sección de p3ueba"
+            };
+
+            IQueryable<Seccion> secciones = new List<Seccion> { seccion, seccion2 }.AsQueryable();
+
+            var mock = new Mock<DbSet<Seccion>>();
+
+            mock.As<IQueryable<Seccion>>().Setup(m => m.Provider).Returns(secciones.Provider);
+            mock.As<IQueryable<Seccion>>().Setup(m => m.Expression).Returns(secciones.Expression);
+            mock.As<IQueryable<Seccion>>().Setup(m => m.ElementType).Returns(secciones.ElementType);
+            mock.As<IQueryable<Seccion>>().Setup(m => m.GetEnumerator()).Returns(secciones.GetEnumerator());
+
+            mockDb.Setup(x => x.Seccion).Returns(mock.Object);
+
+            // Se prueba que el método no se caiga con parámetros nulos
+            var result = controller.AplicarFiltro(null,null,null);
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un paramétro de código formulario real
+            var result1 = controller.AplicarFiltro("CI0128", "", "");
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un parámetro de nombre real
+            var result2 = controller.AplicarFiltro("", "Prueba", "");
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un parámetro de tipo de pregunta real
+            var result3 = controller.AplicarFiltro("", "", "libre");
             Assert.IsNotNull(result);
         }
 
