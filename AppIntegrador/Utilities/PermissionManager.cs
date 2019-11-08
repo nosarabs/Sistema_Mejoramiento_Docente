@@ -84,27 +84,27 @@ namespace AppIntegrador.Utilities
         public bool IsUserAuthorized(PermissionManager.Permission permissionId)
         {
             /*Both major and emphasis are null*/
-            if(CurrentUser.EmphasisId == null && CurrentUser.MajorId == null)
+            if(CurrentUser.getUserEmphasisId() == null && CurrentUser.getUserMajorId() == null)
                 return IsAllowed(
-                CurrentUser.Username,
-                CurrentUser.Profile,
+                CurrentUser.getUsername(),
+                CurrentUser.getUserProfile(),
                 permissionId
             );
             /*Only emphasis is null*/
-            else if (CurrentUser.EmphasisId == null)
+            else if (CurrentUser.getUserEmphasisId() == null)
                 return IsAllowed(
-                CurrentUser.Username,
-                CurrentUser.Profile,
-                CurrentUser.MajorId,
+                CurrentUser.getUsername(),
+                CurrentUser.getUserProfile(),
+                CurrentUser.getUserMajorId(),
                 permissionId
             );
             /*All parameters supplied*/
             else
             return this.IsAllowed(
-                CurrentUser.Username,
-                CurrentUser.Profile,
-                CurrentUser.MajorId,
-                CurrentUser.EmphasisId,
+                CurrentUser.getUsername(),
+                CurrentUser.getUserProfile(),
+                CurrentUser.getUserMajorId(),
+                CurrentUser.getUserEmphasisId(),
                 permissionId
             );
         }
