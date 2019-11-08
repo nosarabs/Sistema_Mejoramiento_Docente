@@ -146,7 +146,7 @@
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
     <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
     <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
@@ -157,9 +157,22 @@
                 $("#textCode").addClass("error");
             }
             else if (msg == "Exitoso") {
-                alert("Todo es trivial");
+                const el = document.createElement('div')
+                swal({
+                    title: "Formulario guardado exitosamente!",
+                    type: "success",
+                    text: "Puede ser visto en el banco de formularios",
+                    icon: 'success',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
+                });
+
+
             }
         });
+
     </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
