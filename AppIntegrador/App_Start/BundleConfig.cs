@@ -43,7 +43,8 @@ namespace AppIntegrador
             "~/Scripts/popper.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
-            "~/Content/login.css",
+            "~/Content/UsuariosYPerfiles/login.css",
+            "~/Content/UsuariosYPerfiles/Perfiles.css",
             "~/Content/Plugins/animate.css"));
 
             // Custom bundles
@@ -54,7 +55,8 @@ namespace AppIntegrador
                       "~/Scripts/UsuariosYPerfiles/login.js",
                       "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js",
                       "~/Scripts/UsuariosYPerfiles/alertsHandler.js",
-                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js"
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js",
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select-min.js"
                       ));
 
         }

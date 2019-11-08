@@ -31,31 +31,32 @@
     {
         <div class="">
             <div>
-                <div class="mainBar">
-                    <div class="smallItem">
+                <div class="mainBar row align-items-center">
+                    <div class="col m-0 text-left">
                         <a href="https://www.ucr.ac.cr" class="svg" id="firma-ucr" target="_blank" tabindex="2">
                             <img height="50" src="~/Content/images/logo_ucr.png" alt="Logo Universidad de Costa Rica">
                         </a>
                     </div>
-                    <div class="nombreProyecto biggeritem">
-                        <p class="mainProjectTitle">Sistema de Mejoramiento Docente</p>
+                    <div class="nombreProyecto col m-0 text-center">
+                        @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
                     </div>
-                    <div class="smallItem">
+                    <div class="col m-0 text-right">
+                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
-                                @HttpContext.Current.User.Identity.Name &#9660;
+                                @HttpContext.Current.User.Identity.Name &#9660;<br />
                             </button>
                             <div class="dropdown-content">
                                 <!--Modificar los dos últimos argumentos cuando ya se tengan los controladores respectivos-->
-                                <a class="dropdown-item" href="#">Configuración</a>
+                                @Html.ActionLink("Seleccionar Perfil", "SeleccionarPerfil", "Permissions", new object { }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Cambiar Contraseña", "CambiarContrasenna", "Home", new object { }, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Salir", "Logout", "Home", new object { }, new { @class = "dropdown-item" })
                             </div>
                         </div>
                         <!--TAM-9.2 - Imagen default de usuario-->
-                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
+
                     </div>
                 </div>
             </div>
@@ -63,6 +64,9 @@
                 <div id="header">
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
+                        <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
+                            con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+                            por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -73,6 +77,12 @@
                                     <li><a href="/Permissions/Index">Administración de perfiles</a></li>
 
                                 </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                <span style="color:gray" >Usuarios &#9660;</span>
                             </li>
                         }
                         <li>
@@ -128,7 +138,9 @@
                             </ul>
                         </li>
                         <li><a href="/Home/About">Acerca de</a></li>
+                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -136,7 +148,7 @@
         <br />
     }
 
-   <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
+    <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
     {
@@ -202,6 +214,13 @@
                 return false;
             });
         });
+    </script>
+
+    <!--Se usa un tooltip para indicar al usuario porque la opcion del navbar esta desabilitada-->
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 </body>
 
