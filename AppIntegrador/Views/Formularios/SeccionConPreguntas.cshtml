@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<AppIntegrador.Models.SeccionConPreguntas>
-
 @{
     Layout = null;
 }
@@ -16,10 +15,13 @@
         <div class='card-header'>
             @if (item.Edicion)
             {
-                @Html.DisplayFor(model => item.Nombre)
-                @Html.DisplayFor(model => item.CodigoSeccion)
-                @*<input type="radio" class="checkmark radio-dibujo" aria-label="..." checked style="margin-top: 30px; margin-left: 60%">*@
+                <div class="col-lg-11 col-md-10" style="margin-top: 18px">
+                    @Html.DisplayFor(model => item.Nombre)
+                    @Html.DisplayFor(model => item.CodigoSeccion)
+                    <button type="button" [disabled]="true" class="remove-button btn btn-danger" id="borrarSec" style="margin-right: 18px" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
+                </div>
             }
+
             @*@displayOrden.*@
             @*@Html.DisplayFor(model => item.Nombre)*@
         </div>
@@ -42,3 +44,4 @@
         font-size: 20px;
     }
 </style>
+

@@ -32,6 +32,38 @@ $("#ActualizarVistaFiltros").click(function () {
     });
 })
 
+
+
+function BorrarSeccion(Scod) {
+    console.log('Todo es trivial')
+
+    var FCodigo = document.getElementById("textCode").value
+    var SCodigo = Scod
+    var resultado = { FCodigo, SCodigo };
+    console.log(JSON.stringify(resultado));
+
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/EliminarSeccion",
+        data: JSON.stringify(resultado),
+        dataType: "html",
+        traditional: true,
+        success: function (data) {
+            if (data.guardadoExitoso) {
+
+                console.log(data);
+                $('#seccionesActuales').html(data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+
+
 function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
