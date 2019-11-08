@@ -15,7 +15,6 @@ namespace AppIntegrador.Controllers
             return View("Create");
         }
 
-
         public ActionResult GuardarRespuestaLibre(Pregunta pregunta)
         {
             // asegurarse que exista la preguna
@@ -40,7 +39,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("GuardarRespuestaLibre");
+            return PartialView("GuardarRespuestaLibre");
         }
 
         public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
@@ -67,14 +66,43 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
+            return PartialView("GuardarPreguntaSiNo");
+        }
+
+        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta)
+        {
+            // asegurarse que exista la preguna
+            if (pregunta != null)
+            {
+                try
+                {
+                    // se trata de guardar la pregunta de con opciones de
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    {
+                        // si se presentó un problema, se devuelve el codigo de error
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");
+                        return View(pregunta);
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException)
+                {
+                    // si se presentó un problema, se devuelve el codigo de error
+                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    return View(pregunta);
+                }
+            }
+
+            ViewBag.message = "Crear pregunta";
             return View("GuardarPreguntaSiNo");
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
         {
-            if(pregunta == null || Opciones == null)
+            // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
+            if(pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M") )
             {
                 ModelState.AddModelError("", "Datos incompletos");
                 return View("Create");
@@ -90,6 +118,7 @@ namespace AppIntegrador.Controllers
                     case "M": break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
+                    case "E": return GuardarPreguntaEscalar(pregunta);
                 }
                 bool validOptions = Opciones != null;
                 if (validOptions)
