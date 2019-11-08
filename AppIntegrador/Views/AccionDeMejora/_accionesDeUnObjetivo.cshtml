@@ -74,8 +74,9 @@
                         </td>
                         <td>
                             <div>
-                                @Html.ActionLink("Editar", "Edit", "AccionDeMejora", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn-blancoUCR" })
-                                @Html.ActionLink("Borrar", "Delete", "AccionDeMejora", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn-rojoUCR" })
+                                @*@Html.ActionLink("Editar", "Edit", "AccionDeMejora", new { plan = item.codPlan, obj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn-blancoUCR" })*@
+                                @*@Html.ActionLink("Borrar", "Delete", "AccionDeMejora", new { plan = item.codPlan, nombObj = item.nombreObj, descripcion = item.descripcion }, new { @class = "modal-link btn-rojoUCR" })*@
+                                @Html.Partial("~/Views/AccionDeMejora/_deleteModal.cshtml", item)
                             </div>
                             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })*@
                         </td>

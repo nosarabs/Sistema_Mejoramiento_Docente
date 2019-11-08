@@ -86,13 +86,17 @@ namespace AppIntegrador.Controllers
 
         }
 
-        public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej)
+        public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej, bool edit = true)
         {
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
 
             IEnumerable<AppIntegrador.Models.Accionable> accionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            if( edit == false)
+            {
+                return PartialView("_listarAccionables", accionables);
+            }
             return PartialView("_Tabla", accionables);
         }
 
@@ -155,6 +159,19 @@ namespace AppIntegrador.Controllers
             return RedirectToAction("Index");
         }
 
+        // POST: Accionables/Delete/5
+        [HttpPost, ActionName("DeleteAccionable")]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult DeleteAccionable(int codPlan, string nombObj, string descripAcMej, string descripAccionable)
+        {
+            Accionable accionable = db.Accionable.Find(codPlan, nombObj, descripAcMej, descripAccionable);
+            db.Accionable.Remove(accionable);
+            db.SaveChanges();
+            IEnumerable<AppIntegrador.Models.Accionable> listaAccionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            return PartialView("_Tabla", listaAccionables);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -163,5 +180,6 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
