@@ -1600,6 +1600,10 @@
           <Parameter Name="PCod" Type="char" Mode="In" />
           <Parameter Name="Desviacion" Type="float" Mode="InOut" />
         </Function>
+        <Function Name="EliminarPreguntaDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SCodigo" Type="varchar" Mode="In" />
+          <Parameter Name="PCodigo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="EliminarRespuestasDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codFormulario" Type="varchar" Mode="In" />
           <Parameter Name="correo" Type="varchar" Mode="In" />
@@ -3848,6 +3852,10 @@
             <Parameter Name="codSeccion" Mode="In" Type="String" />
             <Parameter Name="codPregunta" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="EliminarPreguntaDeSeccion">
+            <Parameter Name="SCodigo" Mode="In" Type="String" />
+            <Parameter Name="PCodigo" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4525,6 +4533,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EliminarPreguntaDeSeccion" FunctionName="DataIntegradorModel.Store.EliminarPreguntaDeSeccion" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
