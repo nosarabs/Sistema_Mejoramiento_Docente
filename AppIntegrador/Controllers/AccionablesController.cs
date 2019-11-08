@@ -37,18 +37,22 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Accionables/Create
-        public ActionResult Create(int codPlan, string nombObj, string descripAcMej)
+        public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora)
         {
 
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
             ViewBag.progreso = 0;
+            ViewBag.fechaInicioAccionDeMejora = fechaInicioAccionDeMejora;
+            ViewBag.fechaFinAccionDeMejora = fechaFinAccionDeMejora;
 
             Session["codPlan"] = codPlan;
             Session["nombreObj"] = nombObj;
             Session["descripAcMej"] = descripAcMej;
             Session["progreso"] = 0;
+            Session["fechaInicioAccionDeMejora"] = fechaInicioAccionDeMejora;
+            Session["fechaFinAccionDeMejora"] = fechaFinAccionDeMejora;
 
             Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
             return PartialView("_Create", accionable);

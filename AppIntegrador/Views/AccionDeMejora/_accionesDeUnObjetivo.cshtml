@@ -59,7 +59,7 @@
             @foreach (var item in Model)
             {
                 <tbody>
-                    <tr class="FilaTablasPlanesDeMejora" onclick="clickAccionDeMejora(@numAccion ,@item.codPlan, `@item.nombreObj`, `@item.descripcion`);">
+                    <tr class="FilaTablasPlanesDeMejora" onclick="clickAccionDeMejora(@numAccion ,@item.codPlan, `@item.nombreObj`, `@item.descripcion`, `@item.fechaInicio`, `@item.fechaFin`);">
                         <td>
                             @numAccion
                         </td>

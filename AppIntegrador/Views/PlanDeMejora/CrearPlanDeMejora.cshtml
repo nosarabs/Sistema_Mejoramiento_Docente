@@ -6,8 +6,7 @@
 
 
 @model AppIntegrador.Models.Metadata.PlanDeMejoraMetadata
-@Scripts.Render("~/Scripts/PlanesDeMejora/analizarTiemposPlanDeMejora.js")
-
+@Scripts.Render("~/Scripts/PlanesDeMejora/Validator.js")
 
 @{
     ViewBag.Title = "CrearPlanDeMejora";
@@ -29,7 +28,7 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 @Html.LabelFor(model => model.nombre, "Nombre")
                                 <div class="row">
                                     <div class="col-md-10">
@@ -39,63 +38,53 @@
                                             {
                                                 @class = "form-control",
                                                 id = "nombrePlanDM",
-                                                @onkeyup = "cambioNombrePlan(this)",
+                                                @onkeyup = "validarPlanDeMejora()",
                                                 placeholder = "Máximo 50 caracteres",
                                                 maxlength = "50"
                                             }
                                         })
-                                        <span><p id="nombrePDM_eror" class="regularMsj">50 letras restantes.</p> </span>
+                                        <span><p id="nombrePlanDM_subMsj" class="regularMsj">50 letras restantes.</p> </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 @Html.LabelFor(model => model.fechaInicio, "Inicio")
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @Html.EditorFor(model => model.fechaInicio, new
-                                        {
-                                            htmlAttributes = new
-                                            {
+                                        @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new {
                                         id = "fechaInicioPlanDM",
                                         @class = "form-control",
-                                        @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
-                                        //@onchange = "validarInicioPDM()"
-                                   }
-                                        })
+                                        @onchange = "validarPlanDeMejora()" 
+                                   } })
                                         <span class="error">
-                                            <p id="fechaInicioPlanDM_msj" class="regularMsj">Inicio plan de mejora.</p>
+                                            <p id="fechaInicioPlanDM_subMsj" class="regularMsj">Inicio plan de mejora.</p>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 @Html.LabelFor(model => model.fechaFin, "Fin")
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @Html.EditorFor(model => model.fechaFin, new
-                                        {
-                                            htmlAttributes = new
-                                            {
+                                        @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new {
                                         id = "fechaFinalPlanDM",
                                         @class = "form-control",
-                                        @onchange = "validarFechas('fechaInicioPlanDM', 'fechaFinalPlanDM')"
-                                   }
-                                        })
+                                        @onchange = "validarPlanDeMejora()"
+                                    } })
                                         <span class="error">
-                                            <p id="fechaFinalPlanDM_msj" class="regularMsj">Fin plan de mejora.</p>
+                                            <p id="fechaFinalPlanDM_subMsj" class="regularMsj">Fin plan de mejora.</p>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @Html.LabelFor(model => model.Profesor)
+                 @Html.LabelFor(model => model.Profesor)
                     <div class="row">
                         <div class="col-md-3">
                             @*@Html.DropDownList("profesores", null, htmlAttributes: new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })*@
                             @*@Html.DropDownListFor(model => model.Profesor, new SelectList(Model.Profesor, "correo", "correo"), new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })*@
                             @Html.DropDownListFor(model => model.Profesor, (SelectList) ViewBag.profesores, new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })
-
                         </div>
                     </div>
 
@@ -116,10 +105,30 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
+<script>
+    function validarPlanDeMejora() {
+        let fechaInicioPlan = document.getElementById('fechaInicioPlanDM');
+        let fechaFinalPlan = document.getElementById('fechaFinalPlanDM');
+        let nombrePlan = document.getElementById('nombrePlanDM');
+
+        // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
+        let minDate = new Date(); // Todays Date
+        let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+        let validator = new Validador(50, 50, minDate, topDate, 'sendPDMListo');
+
+        //Definimos la cantidad de validaciones
+        validator.setTotalValidations(2);
+
+        // Ahora haciendo las validaciones
+        validator.validateSomethingInTextInput(nombrePlan, 50);
+        validator.validateDates(fechaInicioPlan, fechaFinalPlan);  
+
+        validator.validityOfForm();
+    }
+</script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#profesores-selector').multiselect({

@@ -169,11 +169,15 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        public PartialViewResult divAccion(int plan, string nombObj) {
+        public PartialViewResult divAccion(int plan, string nombObj, string fechaInicioObjetivo, string fechaFinObjetivo) {
             ViewBag.IdPlan = plan;
             ViewBag.nomObj = nombObj;
+            ViewBag.fechaInicioObjetivo = fechaInicioObjetivo;
+            ViewBag.fechaFinObjetivo = fechaFinObjetivo;
             Session["idPlan"] = plan;
             Session["nombreObj"] = nombObj;
+            Session["fechaInicioObjetivo"] = fechaInicioObjetivo;
+            Session["fechaFinObjetivo"] = fechaFinObjetivo;
 
             AppIntegrador.Models.Metadata.AccionDeMejoraMetadata accion = new AppIntegrador.Models.Metadata.AccionDeMejoraMetadata();
             return PartialView("_crearAccionDeMejora", accion);

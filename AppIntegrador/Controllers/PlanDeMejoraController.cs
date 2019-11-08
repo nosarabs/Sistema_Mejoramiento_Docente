@@ -27,7 +27,7 @@ namespace AppIntegrador.Controllers
             ViewBag.nombre = context.User.Identity.Name;
             return View("Index", db.PlanDeMejora.ToList());
         }
-        
+
         public ActionResult Index(String nombre)
         {
             ObjectParameter count = new ObjectParameter("count", 999);
@@ -175,18 +175,31 @@ namespace AppIntegrador.Controllers
             return View("Index");
         }
 
-        public ActionResult EditarPlanDeMejora(int? id)
+        //public ActionResult EditarPlanDeMejora(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+        //    if (planDeMejora == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(planDeMejora);
+        //}
+
+        //Agregado por: Johan Córdoba
+        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+        //permite editar los datos de un plan de mejora 
+        //retorna la vista de editar para que puedan ser añadidos los objetivos, acciones y acionables al mismo
+        public ActionResult EditarPlanDeMejora(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            if (planDeMejora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(planDeMejora);
+            ViewBag.Editar = true;
+            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+            return View("EditarPlanDeMejora2", planDeMejora);
         }
 
         [HttpPost]
@@ -216,6 +229,7 @@ namespace AppIntegrador.Controllers
                 db.SaveChanges();
             }
             ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+            ViewBag.IdPlan = planDeMejora.codigo;
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
@@ -308,10 +322,11 @@ namespace AppIntegrador.Controllers
                         EnviarCorreoSobreCreacionPlan(planTemp);
                     }
                     this.Create(planTemp);
-                }
-                else
-                {
-                    //return RedirectToAction("Index", ViewBag.Fecha = -1);
+
+                    ViewBag.IdPlan = id;
+                    ViewBag.editar = false;
+                    ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+                    return View("EditarPlanDeMejora2", planTemp);
                 }
             }
             //return RedirectToAction("Index");

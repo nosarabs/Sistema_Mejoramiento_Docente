@@ -101,7 +101,7 @@
                                     @Html.DisplayFor(modelItem => plan.fechaFin)
                                 </td>
                                 <td>
-                                    @Html.Partial("~/Views/PlanDeMejora/_editPlanDeMejora.cshtml", plan)
+                                    @Html.ActionLink("Editar","EditarPlanDeMejora","PlanDeMejora", new { id = plan.codigo}, new { @class = "btn-blancoUCR" })
                                     @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
                                 </td>
                             </tr>

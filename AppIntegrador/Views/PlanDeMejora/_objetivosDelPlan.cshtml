@@ -15,6 +15,7 @@
 *@
 @{
     var numObj = 1;
+    ViewBag.EnableBS4NoNavBar = true;
  }
 
 
@@ -64,7 +65,7 @@ else
         @foreach (var obj in Model)
         {
             <tbody id="dataOb">
-                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@numObj ,@obj.codPlan, `@obj.nombre`);">
+                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@numObj ,@obj.codPlan, `@obj.nombre`, `@obj.fechaInicio`, `@obj.fechaFin`);">
                     <td>
                         @numObj
                     </td>
@@ -82,10 +83,11 @@ else
                     </td>
                     <td>
                         <div>
-                            @Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn-blancoUCR" })
-                            @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn-rojoUCR" })
+                        @*@Html.ActionLink("Editar", "Edit", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn-blancoUCR" })*@
+                        @Html.Partial("~/Views/Objetivos/_EditPartialModal.cshtml", obj, new ViewDataDictionary { { "objectiveNumber", numObj} })
+
+                        @Html.ActionLink("Borrar", "Delete", "Objetivos", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn-rojoUCR" } )
                         </div>
-                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                     </td>
                 </tr>
             </tbody>
