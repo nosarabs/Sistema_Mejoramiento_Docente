@@ -1,0 +1,158 @@
+﻿
+
+.wrapperPlanesDeMejora {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 5%;
+}
+
+    .wrapperPlanesDeMejora .item1 {
+        color: red;
+    }
+
+.alignRight {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.alignCenter {
+    display: flex;
+    align-items: stretch;
+}
+
+.alignLeft {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.sameRow {
+    background-color: red !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sameColumn {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    text-align: center;
+}
+
+.greyOneBackground {
+    background-color: #D4D4D4 !important;
+    border-radius: 25px;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
+}
+
+.greyTwoBackground {
+    background-color: #F1F1F1 !important;
+    border-radius: 25px;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between
+}
+
+.fullWidthPlanesDeMejora {
+    width: 100%;
+}
+
+.nombrePDM_eror {
+    font-size: 12px;
+}
+
+.redError {
+    color: red;
+}
+
+.correct {
+    color: green;
+}
+
+.regularMsj {
+    font-size: 12px;
+}
+
+.hideElement {
+    display: none;
+}
+
+.topAlign {
+    display: flex;
+    align-items: flex-start;
+}
+
+
+.sameRow .halfSeccion {
+    flex-grow: 2;
+}
+
+.sameRow .quarterSeccion {
+    flex-grow: 1;
+}
+
+.sameRowCheckboxes {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0% !important;
+}
+
+.checkboxPDM {
+    margin-top: 0 !important;
+    font-size: 12px;
+    font-weight: 500 !important;
+    margin-bottom: 0%;
+}
+
+.sameRowSelect {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+
+.item1PDM {
+    display: flex;
+    flex-grow: 2;
+}
+
+.item2PDM {
+    display: flex;
+    flex-grow: 1;
+}
+
+.item3PDM {
+    display: flex;
+    flex-grow: 1;
+}
+
+
+.wrapperObjetivosPDM {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.labelItem {
+    flex-grow: 2;
+    background-color: red;
+}
+
+.dataItem {
+    flex-grow: 4;
+    background-color: blue;
+}

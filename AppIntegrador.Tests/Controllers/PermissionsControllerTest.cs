@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Security.Principal;
 using System.IO;
+using System.Web.Helpers;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -39,6 +40,77 @@ namespace AppIntegrador.Tests.Controllers
             string result = new JavaScriptSerializer().Serialize(checkboxes.Data);
 
             Assert.AreEqual(test, result);
+        }
+
+        [TestMethod]
+        public void TestCargarCheckboxesNull()
+        {
+            PermissionsController controller = new PermissionsController();
+            JsonResult checkboxes = controller.CargarCheckboxes(null, null, "0000000001", "0000000001");
+            string result = new JavaScriptSerializer().Serialize(checkboxes.Data);
+            string expected = "{\"persons\":\"\",\"permissions\":\"\"}";
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void EntrarCargarUsuariosSinPermiso()
+        {
+
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            tempData["SessionVariable"] = "admin";
+            PermissionsController controller = new PermissionsController()
+            {
+                TempData = tempData
+            };
+            RedirectToRouteResult result = controller.Index() as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "Index");
+            dictionary.Add("controller", "Home");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(tempData["alertmessage"], "No tiene permisos para acceder a esta página.");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+            Assert.AreEqual(result.RouteValues["controller"], expected.RouteValues["controller"]);
+        }
+
+        [TestMethod]
+        public void TestIndexNotNull()
+        {
+            PermissionsController controller = new PermissionsController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+            Assert.IsNotNull(controller.Index());
+        }
+
+        [TestMethod]
+        public void TestSeleccionarPerfilNotNull()
+        {
+            PermissionsController controller = new PermissionsController();
+            Assert.IsNotNull(controller.SeleccionarPerfil());
+        }
+
+        [TestMethod]
+        public void TestGuardarSeleccion()
+        {
+            PermissionsController controller = new PermissionsController();
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            controller.GuardarSeleccion("Profesor", "0000000001", "0000000001");
+            Assert.AreEqual(CurrentUser.getUserProfile(), "Profesor");
+            Assert.AreEqual(CurrentUser.getUserMajorId(), "0000000001");
+            Assert.AreEqual(CurrentUser.getUserEmphasisId(), "0000000001");
+        }
+
+        [TestMethod]
+        public void TestCargarEnfasisDeCarrera()
+        {
+            PermissionsController controller = new PermissionsController();
+            JsonResult json = controller.CargarEnfasisDeCarrera("0000000001");
+            string result = new JavaScriptSerializer().Serialize(json.Data);
+            string expected = "{\"data\":[\"0000000000,Tronco Común\",\"0000000001,Ingeniería de Software\",\"0000000002,Ciencias de la Computación\",\"0000000003,Tecnologías de la Información\"]}";
+            Assert.AreEqual(result, expected);
         }
 
         [TestInitialize]
