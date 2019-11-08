@@ -9,17 +9,18 @@
     @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion })
     var displayOrden = item.Orden + 1;
     <div class="card card-primary shadow">
-
-        <div class='card-header'>
-            @displayOrden.
-            @Html.DisplayFor(model => item.Nombre)
-            @if (item.Edicion)
-            {
-                <div class="col-lg-11 col-md-10" style="margin-top: 18px">
-                    <button type="button" [disabled]="true" class="remove-button btn btn-danger" id="borrarSec" style="margin-right: 18px" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
+            <div class='card-header'>
+                <div class="row">
+                    <span style=" font-size: 20px;" class = "col-lg-11 col-md-10" >
+                        @displayOrden.
+                        @Html.DisplayFor(model => item.Nombre, new { style = "font-size: 20px;"})
+                    </span>
+                    @if (item.Edicion)
+                    {
+                        <button type="button" [disabled]="true" class="remove-button btn btn-danger" style="margin-left: 3%" id="borrarSec" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
+                    }
                 </div>
-            }
-        </div>
+            </div>
         <div class='card-body '>
             @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
         </div>

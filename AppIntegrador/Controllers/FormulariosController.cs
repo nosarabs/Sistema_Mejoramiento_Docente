@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
-        public ActionResult DesplegarFormulario(string id)
+        public List<SeccionConPreguntas> ObtenerSeccionConPreguntas(string id)
         {
             Formulario formularioDB = db.Formulario.Find(id);
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
@@ -91,25 +91,13 @@ namespace AppIntegrador.Controllers
             {
                 seccion.Edicion = true;
             }
-            return PartialView("SeccionConPreguntas", formulario.Secciones);
+            return formulario.Secciones;
         }
 
-
-        public ActionResult SPROCButton()
+        public ActionResult DesplegarFormulario(string id)
         {
-            //try
-            //{
-            //    db.uspCallTables("MyDB.temp.Table1");
-            //    return RedirectToAction("Index");
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
-            return null;
+            return PartialView("SeccionConPreguntas", ObtenerSeccionConPreguntas(id));
         }
-
 
         [HttpPost]
         public bool BorrarSeccion(string FCodigo, string SCodigo)
@@ -287,10 +275,8 @@ namespace AppIntegrador.Controllers
                     }
                     else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
-                        var resultadoRespuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                        var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
+                                                                    respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
                         
                         if (resultadoRespuestaGuardada != null)
                         {
@@ -358,6 +344,8 @@ namespace AppIntegrador.Controllers
         {
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            crearFormulario.Formulario = new Formulario();
+            crearFormulario.Creado = false;
             ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
@@ -440,19 +428,29 @@ namespace AppIntegrador.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, List<Seccion> secciones, int? formularioCreado)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Formulario formulario, int? formularioCreado)
         {
-            if(formularioCreado == 1)
-            {
-                return RedirectToAction("Index");
-            }
             crearFormulario.seccion = db.Seccion;
+            crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            crearFormulario.Formulario = formulario;
+            if (formulario != null)
+            {
+                crearFormulario.seccionesConPreguntas = ObtenerSeccionConPreguntas(formulario.Codigo);
+            }
+            ViewBag.Version = "Creacion";
+            if (formularioCreado == 1)
+            {
+                ViewBag.Message = "Exitoso";
+                crearFormulario.Creado = true;
+                return View(crearFormulario);
+            }
             if (ModelState.IsValid && formulario.Codigo.Length > 0 && formulario.Nombre.Length > 0)
             {
                 if (InsertFormulario(formulario))
                 {
+                    crearFormulario.Creado = true;
                     ViewBag.Message = "Exitoso";
-                    return RedirectToAction("Index");
+                    return View(crearFormulario);
                 }
                 else
                 {

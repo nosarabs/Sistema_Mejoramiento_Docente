@@ -10,10 +10,13 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class CarrerasXPerfilXUsuario_Result
+    public partial class UsuarioActual
     {
-        public string codCarrera { get; set; }
-        public string nombreCarrera { get; set; }
+        public string CorreoUsuario { get; set; }
+        public string Perfil { get; set; }
+        public string CodCarrera { get; set; }
+        public string CodEnfasis { get; set; }
     }
 }

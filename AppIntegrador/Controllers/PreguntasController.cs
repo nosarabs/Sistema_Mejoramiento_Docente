@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
                 {
                     // se trata de guardar la pregunta de respuesta libre 
                     if (db.AgregarPreguntaRespuestaLibre(pregunta.Codigo, "L", pregunta.Enunciado) == 0)
-                    { 
+                    {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
@@ -39,7 +39,7 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return PartialView("GuardarRespuestaLibre");
+            return View("Create");
         }
 
         public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
@@ -66,43 +66,52 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.message = "Crear pregunta";
-            return PartialView("GuardarPreguntaSiNo");
+            return View("Create");
         }
 
-        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta)
+        public ActionResult GuardarPreguntaEscalar(Pregunta pregunta, int min, int max)
         {
             // asegurarse que exista la preguna
             if (pregunta != null)
             {
-                try
+                if (max > min)
                 {
-                    // se trata de guardar la pregunta de con opciones de
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    try
+                    {
+                        // se trata de guardar la pregunta de con opciones de
+                        if (db.AgregarPreguntaEscalar(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, 1, min, max) == 0)
+                        {
+                            // si se presentó un problema, se devuelve el codigo de error
+                            ModelState.AddModelError("Codigo", "Código ya en uso.");
+                            return View(pregunta);
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException)
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
                     }
                 }
-                catch (System.Data.SqlClient.SqlException)
+                else
                 {
-                    // si se presentó un problema, se devuelve el codigo de error
-                    ModelState.AddModelError("Codigo", "Código ya en uso.");
+                    // si está intentando poner un rango inválido
+                    ModelState.AddModelError("min", "El mínimo debe ser menor al máximo");
                     return View(pregunta);
                 }
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("GuardarPreguntaSiNo");
+            return View("Create");
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones)
+        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
-            if(pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M") )
+            if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
             {
                 ModelState.AddModelError("", "Datos incompletos");
                 return View("Create");
@@ -118,7 +127,7 @@ namespace AppIntegrador.Controllers
                     case "M": break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
-                    case "E": return GuardarPreguntaEscalar(pregunta);
+                    case "E": return GuardarPreguntaEscalar(pregunta, min, max);
                 }
                 bool validOptions = Opciones != null;
                 if (validOptions)
@@ -200,7 +209,7 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
-            if(i < 0)
+            if (i < 0)
             {
                 return null;
             }

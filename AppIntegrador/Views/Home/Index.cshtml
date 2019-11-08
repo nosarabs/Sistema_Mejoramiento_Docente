@@ -15,8 +15,20 @@
     @Scripts.Render("~/bundles/custom")
     @if (!string.IsNullOrEmpty(ViewBag.typeMessage))
     {
-        <script type="text/javascript">
+        if (ViewBag.typeMessage != "sweetalertmessage")
+        {
+            <script type="text/javascript">
                 customAlert('danger','@ViewBag.AlertMessage');
-        </script>
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                    Swal.fire({
+                        type: 'success',
+                        title: '@ViewBag.AlertMessage',
+                        });
+            </script>
+        }
     }
 }

@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[UsuarioActual]
+(
+	CorreoUsuario VARCHAR(50) NOT NULL PRIMARY KEY,
+	Perfil VARCHAR(50) NOT NULL,
+	CodCarrera VARCHAR(10) NOT NULL,
+	CodEnfasis VARCHAR(10) NOT NULL
+)

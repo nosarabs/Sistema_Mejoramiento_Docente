@@ -24,13 +24,6 @@ p.uppercase {
     height: 5% !important;
 }
 
-.mainBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 2%;
-    padding-left: 2%;
-}
 
 .smallItem {
     flex-grow: 1;
