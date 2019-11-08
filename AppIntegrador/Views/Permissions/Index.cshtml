@@ -19,20 +19,20 @@
             <div class="col-md-4 pl-0" style="flex:50%;">
                 @Html.Label("Seleccione perfil")
                 <br />
-                @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control selectpicker", data_live_search = "true", @required = "required" })
+                @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar perfil", @required = "required" })
                 <br />
             </div>
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione carrera")
                 <br />
 
-                @Html.DropDownListFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "form-control selectpicker", data_live_search = "true", @required = "required" })
+                @Html.DropDownListFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar carrera", @required = "required" })
                 <br />
             </div>
             <div class="col-md-4" style="flex:50%;">
                 @Html.Label("Seleccione énfasis")
                 <br />
-                @Html.DropDownListFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "form-control selectpicker", data_live_search = "true", @required = "required" })
+                @Html.DropDownListFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar énfasis", @required = "required" })
                 <br />
             </div>
         </div>
