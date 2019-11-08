@@ -398,27 +398,6 @@ namespace AppIntegrador.Tests.Controllers
                 Orden = 0
             };
 
-            var mockedObtenerSecciones = SetupMockProcedure<ObtenerSeccionesDeFormulario_Result>
-                (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
-            mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
-
-            ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
-            {
-                Codigo = codPregunta,
-                Enunciado = "¿Es esta su pregunta sin opciones favorita?",
-                Tipo = "U",
-                Orden = 0
-            };
-            var mockedObtenerPreguntas = SetupMockProcedure<ObtenerPreguntasDeSeccion_Result>
-                (new List<ObtenerPreguntasDeSeccion_Result> { pregunta });
-            mockDb.Setup(x => x.ObtenerPreguntasDeSeccion(codSeccion)).Returns(mockedObtenerPreguntas.Object);
-
-            Pregunta_con_opciones pregunta_Con_Opciones = new Pregunta_con_opciones
-            {
-                Codigo = codPregunta
-            };
-            mockDb.Setup(x => x.Pregunta_con_opciones.Find(codPregunta)).Returns(pregunta_Con_Opciones);
-
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
             SetupHttpContext(controller);
@@ -428,8 +407,43 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        // RIP-ELF
         [TestMethod]
-        public void TestBorrarSeccion()
+        public void TestObtenerSeccionesConPreguntas()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPNUL";
+            string codSeccion = "SECCPNUL";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas con opciones nulas"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            ObtenerSeccionesDeFormulario_Result seccion = new ObtenerSeccionesDeFormulario_Result
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección de prueba con preguntas con opciones nulas",
+                Orden = 0
+            };
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            SetupHttpContext(controller);
+
+            var result = controller.ObtenerSeccionConPreguntas(codFormulario);
+
+            Assert.IsNotNull(result);
+        }
+
+
+        [TestMethod]
+        public void TestGuardarRespuestasAPregunta()
         {
             var mockDb = new Mock<DataIntegradorEntities>();
 
@@ -488,7 +502,78 @@ namespace AppIntegrador.Tests.Controllers
 
             SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            Respuestas_a_formulario respuestas = new Respuestas_a_formulario()
+            {
+                FCodigo = codFormulario,
+                Correo = "admin@mail.com",
+                CSigla = "CI0128",
+                GNumero = 2,
+                GAnno = 2019,
+                GSemestre = 2,
+                Fecha = DateTime.Today,
+                Finalizado = false
+            };
+
+            PreguntaConNumeroSeccion preguntaConSeccion = new PreguntaConNumeroSeccion()
+            {
+                OrdenSeccion = 0,
+                OrdenPregunta = 0,
+                Pregunta = pregunta,
+                Opciones = pregunta.Opciones,
+                RespuestaLibreOJustificacion = pregunta.TituloCampoObservacion
+            };
+
+            //mockDb.Setup(m => m.Respuestas_a_formulario.Find(codFormulario)).returns(respuestas);
+
+            var result = controller.GuardarRespuestaAPregunta(preguntaConSeccion, codSeccion, respuestas );
+
+            Assert.IsNotNull(result);
+        }
+        //public void GuardarRespuestaAPregunta(PreguntaConNumeroSeccion pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
+
+        [TestMethod]
+        public void TestBorrarSeccion()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPSU";
+            string codSeccion = "SECCPSU";
+            string codPregunta = "PREGSU";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas de seleccion única"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            ObtenerSeccionesDeFormulario_Result seccion = new ObtenerSeccionesDeFormulario_Result
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección de prueba",
+                Orden = 0
+            };
+
+            var mockedObtenerSecciones = SetupMockProcedure<ObtenerSeccionesDeFormulario_Result>
+                (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
+            mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
+
+            ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Si no sé, es la _?",
+                Tipo = "U",
+                Orden = 0,
+            };
+
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            SetupHttpContext(controller);
+
+            var result = controller.BorrarSeccion(codFormulario, codSeccion);
 
             Assert.IsNotNull(result);
         }
