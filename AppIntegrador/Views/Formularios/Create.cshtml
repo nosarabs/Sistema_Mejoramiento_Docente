@@ -12,7 +12,7 @@
         <div>
             @Html.AntiForgeryToken()
 
-            @Html.Hidden("formularioCreado", null, new { @id = "formularioCreado", @Value = "0" })
+            @Html.Hidden("formularioCreado", null, new { @id = "formularioCreado", @Value = @Model.Creado ? "1" : "0" })
             @*RIP CF5: Creación de un tabla para organizar la información*@
             <div class="card card-body shadow">
                 <h3>Crear Formulario</h3>
@@ -35,7 +35,8 @@
                                             placeholder = "Código",
                                             rows = "5",
                                             @onkeyup = "contarCaracteres(this)",
-                                            @title = "Código requerido"
+                                            @title = "Código requerido",
+                                            @Value = Model.Formulario.Codigo
                                         }
                                     })
                                     <div class="contador small float-right">0/8 caracteres usados</div>
@@ -58,7 +59,8 @@
                                            placeholder = "Nombre del formulario",
                                            rows = "5",
                                            @onkeyup = "contarCaracteres(this)",
-                                           @title = "Nombre del formulario requerido"
+                                           @title = "Nombre del formulario requerido",
+                                           @Value = Model.Formulario.Nombre
                                        }
                                    })
 
@@ -77,6 +79,10 @@
                         <h3>Secciones del formulario</h3>
                         <hr />
                         <div class="form-group col-md-12" id="seccionesActuales">
+                            @if (Model.seccionesConPreguntas != null)
+                            {
+                                Html.RenderPartial("/Views/Formularios/SeccionConPreguntas.cshtml", Model.seccionesConPreguntas);
+                            }
                         </div>
 
                         <div class="form-group">
@@ -145,9 +151,13 @@
         $(document).ready(function () {
             agregarsecciones.init();
             validarEntradasAgregarSecciones();
-            if ('@ViewBag.Message' == "Fallido") {
+            var msg = '@ViewBag.Message';
+            if (msg == "Fallido") {
                 document.getElementById("validacion-codigo").textContent = "Código en uso";
                 $("#textCode").addClass("error");
+            }
+            else if (msg == "Exitoso") {
+                alert("Todo es trivial");
             }
         });
     </script>
