@@ -49,6 +49,8 @@
                     <th class="users-list">
                         @Html.DisplayNameFor(model => model.Usuario.Activo)
                     </th>
+                    <!--TAM-3.6-1: Condicional que muestra la columna de acciones en la tabla de usuarios si el usuario tiene un perfil
+                            con permisos de acceder a esa funcionalidad, sino entonces no muestra la columna.-->
                     @{ if(!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))
@@ -85,6 +87,9 @@
                     <td>
                         @Html.EditorFor(modelItem => item.Usuario.Activo, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                     </td>
+                    <!--TAM-3.6-1: Condicionales que muestran los botones de ver detalles, editar y borrar si el usuario tiene un perfil
+                            con permisos de acceder a esas funcionalidades, sino entonces no muestra los botones y bloquea los intentos de acceso
+                            por otros medios.-->
                     @{ if(!AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.VER_DETALLES_USUARIOS) &&
                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS) &&
                           !AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.BORRAR_USUARIOS))

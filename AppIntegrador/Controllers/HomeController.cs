@@ -134,9 +134,17 @@ namespace AppIntegrador.Controllers
                     // Credenciales correctos
                     if (result == 0)
                     {
-                        auth.SetAuthCookie(objUser.Username, false);
-                        ConfigureSession(objUser.Username);
-                        return RedirectToAction("Index");
+                        /*Si la sesión puede ser configurada, es decir, el usuario tiene perfiles asociados, puede entrar.*/
+                        if (ConfigureSession(objUser.Username))
+                        {
+                            auth.SetAuthCookie(objUser.Username, false);
+                            return RedirectToAction("Index");
+                        }
+                        /*Sino, no puede entrar al sistema sin perfiles asociados.*/
+                        else
+                        {
+                            ModelState.AddModelError("Password", "Esta cuenta no está debidamente configurada. Contacte al administrador del sitio.");
+                        }
                     }
                     else
                     {
@@ -315,7 +323,7 @@ namespace AppIntegrador.Controllers
             return View("PasswordReset");
         }
 
-        private void ConfigureSession(string username)
+        private bool ConfigureSession(string username)
         {
             /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
              énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
@@ -327,10 +335,16 @@ namespace AppIntegrador.Controllers
             ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
             db.SugerirConfiguracion(username, mejorPerfil, mejorCarrera, mejorEnfasis);
 
+            /*Si el usuario no tiene perfiles asociados, no puede entrar al sistema. Se redirecciona a login con un mensaje de error.*/
+            if (mejorPerfil.Value.Equals(DBNull.Value))
+            {
+                return false;
+            }
             /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
              donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
              y no atrasar a los demás equipos.*/
-            SetUserData(username, (mejorPerfil.Value.Equals(DBNull.Value) ? "Superusuario" : (string)mejorPerfil.Value), (mejorCarrera.Value.Equals(DBNull.Value) ? null : (string)mejorCarrera.Value), (mejorEnfasis.Value.Equals(DBNull.Value) ? null : (string)mejorEnfasis.Value));
+            SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            return true;
         }
 
         /*TAM-3.1, 3.2 y 3.6: Función que guarda los datos relevantes del usuario loggeado para poder consultar
@@ -398,10 +412,9 @@ namespace AppIntegrador.Controllers
 
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
-                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
                 }
             }
-
             return View();
         }
     }
