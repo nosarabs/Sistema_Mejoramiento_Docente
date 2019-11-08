@@ -158,8 +158,10 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
+        /* what
+         * [TestMethod]
         public void test
+        */
 
     }
 }
