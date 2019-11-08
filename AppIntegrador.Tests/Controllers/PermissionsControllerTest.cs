@@ -5,6 +5,9 @@ using System;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Security.Authentication;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -15,6 +18,17 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestCargarPerfil()
         {
+            var formsAuthMock = new Mock<IAuth>();
+            HomeController homeController = new HomeController(formsAuthMock.Object);
+            Usuario usuario = new Usuario();
+            usuario.Username = "admin@mail.com";
+            usuario.Password = "admin@mail.com";
+            usuario.Activo = true;
+
+            Task<ActionResult> login = homeController.Login(usuario);
+
+            Assert.IsNotNull(login);
+
             PermissionsController controller = new PermissionsController();
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             JsonResult perfiles = controller.CargarPerfil();
