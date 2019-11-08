@@ -115,11 +115,11 @@ namespace AppIntegrador.Models
                 cmd8.ExecuteNonQuery();
                 cmd9.ExecuteNonQuery();
                 cmd10.ExecuteNonQuery();
-                cmd11.ExecuteNonQuery();
+            /*    cmd11.ExecuteNonQuery();
                 cmd12.ExecuteNonQuery();
                 cmd13.ExecuteNonQuery();
                 cmd14.ExecuteNonQuery();
-                cmd15.ExecuteNonQuery();
+                cmd15.ExecuteNonQuery();*/
 
 
 
