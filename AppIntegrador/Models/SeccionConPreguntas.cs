@@ -11,5 +11,6 @@ namespace AppIntegrador.Models
         public string Nombre { get; set; }
         public List<PreguntaConNumeroSeccion> Preguntas { get; set; }
         public int Orden { get; set; }
+        public bool Edicion { get; set; }
     }
 }

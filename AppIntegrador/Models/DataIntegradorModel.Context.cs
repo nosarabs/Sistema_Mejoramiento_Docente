@@ -958,6 +958,19 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAPreguntaConOpciones_Result>("ObtenerRespuestasAPreguntaConOpciones", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
         }
     
+        public virtual int EliminarSeccionFormulario(string fCodigo, string sCodigo)
+        {
+            var fCodigoParameter = fCodigo != null ?
+                new ObjectParameter("FCodigo", fCodigo) :
+                new ObjectParameter("FCodigo", typeof(string));
+    
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarSeccionFormulario", fCodigoParameter, sCodigoParameter);
+        }
+    
         public virtual int EliminarPreguntaDeSeccion(string sCodigo, string pCodigo)
         {
             var sCodigoParameter = sCodigo != null ?
