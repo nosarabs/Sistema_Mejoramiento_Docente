@@ -15,8 +15,8 @@ class GraficosDashboard {
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados.promedio);
-                alert(resultados.cantidad);
+                //alert(resultados.promedio);
+                //alert(resultados.cantidad);
             }
 
         });
@@ -32,8 +32,8 @@ class GraficosDashboard {
             dataType: 'json',
             async: false,
             success: function (resultados) {
-                alert(resultados.promedio);
-                alert(resultados.cantidad);
+                //alert(resultados.promedio);
+                //alert(resultados.cantidad);
             }
         });
     }

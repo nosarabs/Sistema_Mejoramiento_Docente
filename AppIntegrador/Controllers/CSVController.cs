@@ -68,7 +68,6 @@ namespace AppIntegrador.Controllers
             db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
             db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
             db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
-            db.InsertarMatriculado_en(fila.CorreoEstudiante, fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
         }
        public bool carga(string path)
         {
