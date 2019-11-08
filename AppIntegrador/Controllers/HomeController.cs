@@ -192,8 +192,8 @@ namespace AppIntegrador.Controllers
                 /*If the counter reached the max failed attempts count, lock the account, except for the admin.*/
                 if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin@mail.com")
                 {
-                    ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
-                        " 5 minutos antes de intentar de nuevo.");
+                    ModelState.AddModelError("Password", "Este usuario está bloqueado temporalmente.\nIntente de nuevo" +
+                        " más tarde.");
 
                     /*Removes the failed attempts count from the system for this user.*/
                     System.Web.HttpContext.Current.Application.Remove(objUser.Username);
@@ -271,7 +271,7 @@ namespace AppIntegrador.Controllers
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
-            CurrentUser.deleteCurrentUser();
+            CurrentUser.deleteCurrentUser(HttpContext.User.Identity.Name);
             return RedirectToAction("Index");
         }
 

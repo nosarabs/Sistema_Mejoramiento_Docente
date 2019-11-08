@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
             if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
-                return RedirectToAction("../Home/Index");
+                return RedirectToAction("Index", "Home");
             }
             PermissionsViewHolder model = new PermissionsViewHolder();
 
@@ -101,7 +101,6 @@ namespace AppIntegrador.Controllers
                     db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
                 }
             }
-            TempData["sweetalertmessage"] = "Cambios guardados";
             return new EmptyResult();
         }
         /* Fin TAM 3.4-1.*/

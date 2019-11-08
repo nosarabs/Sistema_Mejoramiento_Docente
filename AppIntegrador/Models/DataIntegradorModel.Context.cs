@@ -849,6 +849,45 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
         }
     
+        public virtual int BorrarAccionDeMejora(Nullable<int> codigoPlan, string nombreObj, string descripcion)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarAccionDeMejora", codigoPlanParameter, nombreObjParameter, descripcionParameter);
+        }
+    
+        public virtual int BorrarObjetivo(Nullable<int> codigoPlan, string nombreObj)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarObjetivo", codigoPlanParameter, nombreObjParameter);
+        }
+    
+        public virtual int BorrarPlan(Nullable<int> codigoPlan)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarPlan", codigoPlanParameter);
+        }
+    
         public virtual int EliminarPreguntaDeSeccion(string sCodigo, string pCodigo)
         {
             var sCodigoParameter = sCodigo != null ?
