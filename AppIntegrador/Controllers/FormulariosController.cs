@@ -695,5 +695,14 @@ namespace AppIntegrador.Controllers
         {
             return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
         }
+
+        [HttpPost]
+        public ActionResult AgregarPreguntas(List<Pregunta> preguntas)
+        {
+            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(preguntas) });
+        }
+
     }
 }
+
+

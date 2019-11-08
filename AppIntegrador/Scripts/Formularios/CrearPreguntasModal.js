@@ -125,20 +125,22 @@ function addPreguntaToSeccion(codigoSeccion) {
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
-        url: "/Formularios/AgregarPreguntasASeccion",
+        url: "/Formularios/AgregarPreguntas",
         data: JSON.stringify(result),
-        dataType: "html",
+        dataType: "json",
         traditional: true,
-        success: function (data) {
-            resultado = [];
-            $('#seccionesActuales').html(data);
+        success: function(data) {
+            console.log("todo bien")
+            if (data.insertadoExitoso) {
+                console.log("todo bien x2")
+                ActualizarSecciones();
+            }
+        },
+        error: function () {
+
         },
     })
 
 
 }
-
-
-
-
 
