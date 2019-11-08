@@ -41,11 +41,9 @@ AS
 					SET @PerfilPoderoso = @PerfilI
 					SET @CarreraPoderosa = @CarreraI
 					SET @EnfasisPoderoso = @EnfasisI
-
+					SET @CantidadPermisosAnterior = @CantidadPermisos	
 				END
 
-				SET @CantidadPermisosAnterior = @CantidadPermisos
-				
 				FETCH NEXT FROM k INTO @EnfasisI
 
 				END
