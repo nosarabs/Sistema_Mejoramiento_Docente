@@ -153,3 +153,71 @@ canvas{
 .caret {
     display: none;
 }
+
+/*Estilos para dashboard en general:*/
+.container-fluid {
+    height: 100%;
+    padding: 1%;
+    padding-top: 0;
+}
+
+.container-fluid .h4, h4 {
+    text-align: center;
+    font-size: medium !important;
+}
+
+.container-fluid .h5, h5 {
+    text-align: left;
+    font-size: smaller !important;
+}
+
+.container-fluid .row {
+    height: inherit;
+    padding: 1% !important;
+    padding-top: 0 !important;
+    padding-bottom: 3% !important;
+}
+
+/*Estilo para columna de filtros (izquierda)*/
+.container-fluid .row .col-3 {
+    background-color: #fbfbfb;
+    height: inherit;
+    margin: 1% !important;
+    padding: 1%;
+    border: 1px solid rgba(0,0,0,.075);
+    border-radius: 3px;
+}
+
+/*Estilo para la columna donde se despliegan los resultados*/
+.container-fluid .row .col {
+    background-color: #fbfbfb;
+    height: inherit;
+    margin-right: 1% !important;
+    margin: 0 !important;
+    padding: 1%;
+    border: 1px solid rgba(0,0,0,.075);
+    border-radius: 3px;
+}
+
+.multiselect-container > li > a > label.checkbox {
+    padding: 2%;
+    background-color: none;
+    width: inherit;
+}
+
+.btn {
+    background-color: #dee2e6 !important;
+}
+
+.select 
+{
+    width: 100% !important;
+    border-radius: 5px 5px 5px 5px;
+    font-size: small;
+}
+
+.select .option {
+    width: inherit;
+    border-radius: 5px 5px 5px 5px;
+    font-size: small ;
+}
