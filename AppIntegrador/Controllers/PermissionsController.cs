@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
             if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
-                return RedirectToAction("../Home/Index");
+                return RedirectToAction("Index", "Home");
             }
             PermissionsViewHolder model = new PermissionsViewHolder();
 
