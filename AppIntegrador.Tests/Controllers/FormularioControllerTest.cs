@@ -604,6 +604,137 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void TestGuardarRespuestas()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPSU";
+            string codSeccion1 = "SECCPSU";
+            string codSeccion2 = "DSIFSDAF";
+            string codPregunta = "PREGSU";
+            string codPregunta2 = "Pregun2";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas de seleccion única"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            Seccion seccion = new Seccion()
+            {
+                Codigo = codSeccion1,
+                Nombre = "Sección de prueba"
+            };
+
+            Seccion seccion2 = new Seccion()
+            {
+                Codigo = codSeccion2,
+                Nombre = "Sección de prueba 2"
+            };
+
+            Pregunta pregunta = new Pregunta()
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Qué piensa de Brexit?",
+                Tipo = "L"
+            };
+
+            Pregunta pregunta2 = new Pregunta()
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Qué piensa de Brexit?",
+                Tipo = "U"
+            };
+
+            Seccion_tiene_pregunta seccion_con_pregunta_1 = new Seccion_tiene_pregunta()
+            {
+                PCodigo = codPregunta,
+                SCodigo = codSeccion1
+            };
+
+            Seccion_tiene_pregunta seccion_con_pregunta_2 = new Seccion_tiene_pregunta()
+            {
+                PCodigo = codPregunta2,
+                SCodigo = codSeccion2
+            };
+
+            Pregunta_con_opciones pregunta_Con_Opciones = new Pregunta_con_opciones
+            {
+                Codigo = codPregunta,
+                Pregunta_con_opciones_de_seleccion = new Pregunta_con_opciones_de_seleccion()
+            };
+            mockDb.Setup(x => x.Pregunta_con_opciones.Find(codPregunta)).Returns(pregunta_Con_Opciones);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            List<int> opcionesDePregunta = new List<int>();
+            opcionesDePregunta.Append(0);
+
+            SetupHttpContext(controller);
+
+            Respuestas_a_formulario respuestas = new Respuestas_a_formulario()
+            {
+                FCodigo = codFormulario,
+                Correo = "admin@mail.com",
+                CSigla = "CI0128",
+                GNumero = 2,
+                GAnno = 2019,
+                GSemestre = 2,
+                Fecha = DateTime.Today,
+                Finalizado = false
+            };
+
+            PreguntaConNumeroSeccion preguntaConSeccion1 = new PreguntaConNumeroSeccion()
+            {
+                OrdenSeccion = 0,
+                OrdenPregunta = 0,
+                Pregunta = pregunta,
+                RespuestaLibreOJustificacion = "Libre"
+            };
+
+            PreguntaConNumeroSeccion preguntaConSeccion2 = new PreguntaConNumeroSeccion()
+            {
+                OrdenSeccion = 1,
+                OrdenPregunta = 0,
+                Pregunta = pregunta2,
+                RespuestaLibreOJustificacion = "Unica"
+            };
+
+            List<PreguntaConNumeroSeccion> preguntas = new List<PreguntaConNumeroSeccion>();
+            preguntas.Append(preguntaConSeccion1);
+            preguntas.Append(preguntaConSeccion2);
+
+            SeccionConPreguntas seccionP = new SeccionConPreguntas()
+            {
+                CodigoSeccion = codSeccion1,
+                Nombre = "nsdlkfj;a",
+                Preguntas = preguntas,
+                Orden = 0,
+                Edicion = true
+            };
+
+            SeccionConPreguntas seccionP2 = new SeccionConPreguntas()
+            {
+                CodigoSeccion = codSeccion2,
+                Nombre = "seccion2nsdlkfj;a",
+                Preguntas = preguntas,
+                Orden = 0,
+                Edicion = true
+            };
+
+            List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>();
+            secciones.Append(seccionP);
+            secciones.Append(seccionP2);
+
+            // Si no se cae en esta linea, significa que el guardar funciona correctamente
+            controller.GuardarRespuestas(respuestas, secciones);
+
+        }
+
+        [TestMethod]
         public void TestBorrarSeccion()
         {
             var mockDb = new Mock<DataIntegradorEntities>();
