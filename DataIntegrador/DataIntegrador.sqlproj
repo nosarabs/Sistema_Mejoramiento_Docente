@@ -163,6 +163,7 @@
     <Build Include="Formularios\Procedimientos\ObtenerOpcionesSeleccionadas.sql" />
     <Build Include="Formularios\Procedimientos\EliminarSeccionFormulario.sql" />
     <Build Include="Formularios\Procedimientos\EliminarPreguntaDeSeccion.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerRespuestaLibreGuardada.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

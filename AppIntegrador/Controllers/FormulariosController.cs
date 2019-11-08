@@ -292,10 +292,8 @@ namespace AppIntegrador.Controllers
                     }
                     else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
-                        var resultadoRespuestaGuardada = db.Responde_respuesta_libre.Where(x => x.Correo.Equals(respuestas.Correo) && x.CSigla.Equals(respuestas.CSigla)
-                                                                    && x.GNumero == respuestas.GNumero && x.GSemestre == respuestas.GSemestre
-                                                                    && x.GAnno == respuestas.GAnno && x.FCodigo.Equals(respuestas.FCodigo)
-                                                                    && x.SCodigo.Equals(codSeccion) && x.PCodigo.Equals(pregunta.Pregunta.Codigo));
+                        var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
+                                                                    respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
                         
                         if (resultadoRespuestaGuardada != null)
                         {
