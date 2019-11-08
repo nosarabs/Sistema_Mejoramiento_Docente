@@ -75,8 +75,9 @@
                         </td>
                         <td>
                             <div>
-                                @*@Html.ActionLink("Editar", "Edit", "Accionable", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })
-                                @Html.ActionLink("Borrar", "Delete", "Accionable", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-danger" })*@
+                                @*@Html.ActionLink("Editar", "Edit", "Accionable", new { plan = obj.codPlan, title = obj.nombre }, new { @class = "modal-link btn btn-primary" })*@
+                                @*@Html.ActionLink("Borrar", "Delete", "Accionable", new { plan = item.codPlan, title = item.nombre }, new { @class = "modal-link btn btn-danger" })*@
+                                @Html.Partial("~/Views/Accionables/_deleteModal.cshtml", item)
                             </div>
                         </td>
                     </tr>
