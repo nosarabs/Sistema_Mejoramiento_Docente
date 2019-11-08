@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="es">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>Sistema de Mejoramiento Docente</title>
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     @{ bool EnableBS4SiteWide = true;}
     <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @if (ViewBag.EnableBS4NoNavBar != true && ViewBag.EnableBS4 != true && EnableBS4SiteWide == false)
@@ -17,15 +17,15 @@
     else
     {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        @Styles.Render("~/Content/Main.css")      
+        @Styles.Render("~/Content/Main.css")
         @Styles.Render("~/Content/bs4.3.1")
+        @Styles.Render("~/packages/Bootstrap.Multiselect.0.9.13/Css/bootstrap-multiselect.css")
+
         if (ViewBag.EnableBS4NoNavBar != true)
         {
             @Styles.Render("~/Content/css")
         }
     }
-
-
 </head>
 <body>
     <!--No siempre se debe cargar el Navbar, se usa viebag para desabilitarla-->
@@ -100,26 +100,36 @@
                                 <li>
                                     <a href="">Sección &#9658;</a>
                                     <ul>
-                                        <li><a href="/Seccion/Create">Crear Sección</a></li>
                                         <li><a href="/Seccion/Index">Ver Sección</a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="">Preguntas &#9658;</a>
                                     <ul>
-                                        <li><a href="/Preguntas/Create">Crear pregunta NEW</a></li>
-                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Create">Crear Pregunta</a></li>
+                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="">Planes de Mejora &#9660;</a>
+                            <a href="">Planes de mejora &#9660;</a>
                             <ul>
-                                <li><a href="/PlanDeMejora/Index">Planes de Mejora</a></li>
-                                <li><a href="#">Banco de Objetivos</a></li>
-                                <li><a href="#">Banco de Acciones de Mejora</a></li>
+                                <li>
+                                    <a href="">Mis planes &#9658;</a>
+                                    <ul>
+                                        <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
+                                        <li><a href="/PlanDeMejora/CreateNuevo">Crear plan</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Bancos &#9658;</a>
+                                    <ul>
+                                        <li><a href="#">Objetivos</a></li>
+                                        <li><a href="#">Acciones de Mejora</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
                             </ul>
                         </li>
                         <li>
@@ -153,6 +163,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect.js")
+        @Scripts.Render("~/packages/Bootstrap.Multiselect.0.9.13/Scripts/bootstrap-multiselect-collapsible-groups.js")
     }
     @RenderSection("scripts", required: false)
 

@@ -84,6 +84,17 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void PreguntaEscalarNoNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.PreguntaEscalar() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void RespuestaLibreNulo()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -110,7 +121,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.OpcionesDeSeleccion(1) as ViewResult;
+            ViewResult result = preguntas.OpcionesDeSeleccion(1, 'U') as ViewResult;
 
             Assert.IsNotNull(result);
         }
@@ -121,7 +132,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.OpcionesDeSeleccion(-1) as ViewResult;
+            ViewResult result = preguntas.OpcionesDeSeleccion(-1, 'U') as ViewResult;
 
             Assert.IsNull(result);
         }
@@ -165,7 +176,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.Create(null, null) as ViewResult;
+            ViewResult result = preguntas.Create(null, null, 0, 0) as ViewResult;
 
             Assert.IsNotNull(result);
         }
@@ -183,7 +194,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = ""
             };
 
-            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
 
             Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Datos incompletos");
         }
@@ -201,7 +212,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = "adsadsaa",
             };
 
-            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
 
             Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Una pregunta de selección única necesita al menos una opción");
         }
@@ -221,7 +232,7 @@ namespace AppIntegrador.Tests.Controllers
         public void ProbarOpciones()
         {
             var controller = new PreguntasController();
-            var result = controller.OpcionesDeSeleccion(7) as ViewResult;
+            var result = controller.OpcionesDeSeleccion(7, 'U') as ViewResult;
 
             Assert.AreEqual("OpcionesDeSeleccion", result.ViewName);
         }
@@ -244,6 +255,16 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.PreguntaSiNo() as ViewResult;
 
             Assert.AreEqual("PreguntaSiNo", result.ViewName);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
+        public void ProbarPreguntaEscalar()
+        {
+            var controller = new PreguntasController();
+            var result = controller.PreguntaEscalar() as ViewResult;
+
+            Assert.AreEqual("PreguntaEscalar", result.ViewName);
         }
 
         // Historia RIP-CBX
@@ -286,7 +307,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarRespuestaLibre(null) as ViewResult;
 
-            Assert.AreEqual("GuardarRespuestaLibre", result.ViewName);
+            Assert.AreEqual("Create", result.ViewName);
         }
 
         // Historia RIP-CBX
@@ -296,7 +317,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarPreguntaSiNo(null) as ViewResult;
 
-            Assert.AreEqual("GuardarPreguntaSiNo", result.ViewName);
+            Assert.AreEqual("Create", result.ViewName);
         }
 
         // Historia RIP-CBX
@@ -312,7 +333,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = ""
             };
 
-            ViewResult result = preguntas.Create(pregunta, null) as ViewResult;
+            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
 
             Assert.AreEqual("Create", result.ViewName);
         }

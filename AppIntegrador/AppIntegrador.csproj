@@ -149,6 +149,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
@@ -156,11 +157,13 @@
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
+    <Compile Include="Controllers\PlanesDeMejoraBI\PlanDeMejoraBI.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\SeccionesController.cs" />
+    <Compile Include="Controllers\TipoObjetivosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +232,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
@@ -238,7 +242,19 @@
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerOpcionesSeleccionadas_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerRespuestaLibreGuardada_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerRespuestasAFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerRespuestasAPreguntaConOpciones_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
@@ -492,8 +508,10 @@
     <Content Include="Scripts\Formularios\agregarsecciones.js" />
     <Content Include="Scripts\Formularios\CargarPreguntas.js" />
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
+    <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Formularios\FormulariosModal.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -597,15 +615,35 @@
     <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
-    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
     <Content Include="Views\Preguntas\Estilos.cshtml" />
     <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
     <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
     <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
-    <Content Include="Views\Formularios\_SeccionesActualesPartial.cshtml" />
+    <Content Include="Views\Seccion\_CreateSeccionPartial.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
+    <Content Include="Views\Preguntas\PreguntaEscalar.cshtml" />
     <Content Include="Views\Permissions\SeleccionarPerfil.cshtml" />
+    <Content Include="Views\Accionables\Delete.cshtml" />
+    <Content Include="Views\Accionables\Details.cshtml" />
+    <Content Include="Views\Accionables\Edit.cshtml" />
+    <Content Include="Views\Accionables\Index.cshtml" />
+    <Content Include="Views\Accionables\_Create.cshtml" />
+    <Content Include="Views\Accionables\_Tabla.cshtml" />
+    <Content Include="Views\AccionDeMejora\_accionesDeUnObjetivo.cshtml" />
+    <Content Include="Views\AccionDeMejora\_crearAccionDeMejora.cshtml" />
+    <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
+    <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
+    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
+    <Content Include="Views\TipoObjetivos\Create.cshtml" />
+    <Content Include="Views\TipoObjetivos\Delete.cshtml" />
+    <Content Include="Views\TipoObjetivos\Details.cshtml" />
+    <Content Include="Views\TipoObjetivos\Edit.cshtml" />
+    <Content Include="Views\TipoObjetivos\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\DetallesPlanDeMejora.cshtml" />
+    <Content Include="Views\Objetivos\_listarObjetivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

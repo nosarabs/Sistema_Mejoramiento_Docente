@@ -64,6 +64,32 @@ namespace AppIntegrador.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public EmptyResult CrearAccionDeMejora([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
+        {
+            bool error = false;
+
+            if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
+            {
+                if ((DateTime.Compare(accionDeMejora.fechaInicio.Value, accionDeMejora.fechaFin.Value) > 0))
+                {
+                    error = true;
+                }
+            }
+            if (!error)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.AccionDeMejora.Add(accionDeMejora);
+                    db.SaveChanges(); IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == accionDeMejora.codPlan && o.nombreObj == accionDeMejora.nombreObj);
+
+                    return new EmptyResult();
+                }
+            }
+            return new EmptyResult();
+        }
+
         // GET: AccionDeMejora/Edit/5
         // Corresponde a MOS 1.3 (2)
         public ActionResult Edit(int plan, string obj, string descripcion)
@@ -141,6 +167,29 @@ namespace AppIntegrador.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public PartialViewResult divAccion(int plan, string nombObj, string fechaInicioObjetivo, string fechaFinObjetivo) {
+            ViewBag.IdPlan = plan;
+            ViewBag.nomObj = nombObj;
+            ViewBag.fechaInicioObjetivo = fechaInicioObjetivo;
+            ViewBag.fechaFinObjetivo = fechaFinObjetivo;
+            Session["idPlan"] = plan;
+            Session["nombreObj"] = nombObj;
+            Session["fechaInicioObjetivo"] = fechaInicioObjetivo;
+            Session["fechaFinObjetivo"] = fechaFinObjetivo;
+
+            AppIntegrador.Models.Metadata.AccionDeMejoraMetadata accion = new AppIntegrador.Models.Metadata.AccionDeMejoraMetadata();
+            return PartialView("_crearAccionDeMejora", accion);
+        }
+
+        public ActionResult AccionesDeObjetivo(int plan, string nombObj)
+        {
+            ViewBag.idPlan = plan;
+            ViewBag.nombreObj = nombObj;
+
+            IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == plan && o.nombreObj == nombObj);
+            return PartialView("_accionesDeUnObjetivo", acciones);
         }
 
     }
