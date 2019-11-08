@@ -533,7 +533,38 @@ namespace AppIntegrador.Tests.Controllers
                 (new List<ObtenerPreguntasDeSeccion_Result> { pregunta });
             mockDb.Setup(x => x.ObtenerPreguntasDeSeccion(codSeccion)).Returns(mockedObtenerPreguntas.Object);
 
-            
+            ObtenerRespuestasAFormulario_Result respuestas = new ObtenerRespuestasAFormulario_Result
+            {
+                Correo = "admin@mail.com",
+                CSigla = "CI0128",
+                GNumero = 1,
+                GAnno = 2019,
+                GSemestre = 2,
+                FCodigo = codFormulario,
+            };
+
+            // Se prepara el retorno del procedimiento almacenado en el mock
+            var mockedObtenerRespuestas = SetupMockProcedure<ObtenerRespuestasAFormulario_Result>
+                (new List<ObtenerRespuestasAFormulario_Result> { respuestas });
+            mockDb.Setup(x => x.ObtenerRespuestasAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
+                respuestas.GAnno, respuestas.GSemestre)).Returns(mockedObtenerRespuestas.Object);
+
+            var respuestaLibreList = new List<ObtenerRespuestaLibreGuardada_Result>
+            {
+                new ObtenerRespuestaLibreGuardada_Result
+                {
+                    FCodigo = respuestas.FCodigo,
+                    Correo = respuestas.Correo,
+                    CSigla = respuestas.CSigla,
+                    GNumero = respuestas.GNumero,
+                    GAnno = respuestas.GAnno,
+                    GSemestre = respuestas.GSemestre,
+                    SCodigo = codSeccion,
+                    PCodigo = codPregunta
+                }
+            };
+            mockDb.Setup(x => x.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
+                respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion)).Returns(respuestaLibreList.AsQueryable());
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
