@@ -1,0 +1,13 @@
+CodigoUnidad, NombreFacultad, CodigoCarrera, NombreCarrera, CodigoEnfasis, NombreEnfasis, SiglaCurso, NombreCurso, NumeroGrupo, Anno, Semestre, CorreoProfesor, IdProfesor, NombreProfesor, ApellidoProfesor, TipoIdProfesor, CorreoEstudiante, IdEstudiante, NombreEstudiante, ApellidoEstudiante, TipoIdEstudiante
+1111111111, Facultad Ingeniería, 1234567890, Computación con Varios Enfásis, IS, Ingeniería del Software, CI1010, Diseño de Software, 1, 2019, 1, AC@mail.com, 3692154875, Allan, Calderón, Cedula, DE@mail.com, 305040275, Daniel, Escamilla, Cedula
+ , , , , , , , , , , , , , , , ,DA@mail.com, 201545698, Denisse, Alfaro, Cedula	
+ , , , , , , , , , , , , , , , ,BS@mail,com, 123658266, Berta, Sanchez, Cedula									
+ , , , , , , , , , , , , , , , ,JZ@mail.com, 778899665, Josué, Zeledón, Cedula					
+ , , , , , , , , , , , , , , , ,AM@mail.com, 132165658, Andrés, Mesén, Cedula
+ , , , , , ,CI1011, Desarrollo Web, 1, 2019, 2, BS@mail.com, 265489516, Braulio, Solano, Cedula, DE@mail.com, 305040275, Daniel, Escamilla, Cedula					
+ , , , , , , , , , , , , , , , ,DA@mail.com, 201545698,	Denisse, Alfaro, Cedula					
+ , , , , , , , , , , , , , , , ,BS@mail,com, 123658266, Berta, Sanchez, Cedula		
+ , , , , , ,CI1011, Desarrollo Web, 2, 2019, 2, BS@mail.com, 265489516, Braulio, Solano, Cedula, JZ@mail.com, 778899665, Josué, Zeledón, Cedula												
+ , , , ,TI, Técnologías de la Información, CI1022, Modelaje y Optimización, 1, 2018, 2, IA@mail.com, 203010456, Ileana, Alpizar, Cedula, DO@mail.com, 442165444, Diego, Orozco, Cedula	
+ , , , , , , , , , , , , , , , ,SF@mail.com, 442165444, Steven, Fernandez, Cedula																						
+ , , , , , , , ,1 ,2019,2 ,IA@mail.com ,203010456, Ileana, Alpizar, Cedula, TB@mail.com, 205436152, Tatiana, Briones, Cedula

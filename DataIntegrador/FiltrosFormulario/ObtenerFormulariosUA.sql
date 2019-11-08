@@ -5,13 +5,14 @@ Esta información se necesita para filtrar respuestas a formulario.
 CREATE FUNCTION ObtenerFormulariosUA (@codigoUA AS VARCHAR(10))
 RETURNS @formulariosUA TABLE
 (
-	FCodigo VARCHAR(8),	/*Código del formulario.*/
-	CSigla VARCHAR(10),	/*Sigla del curso.*/
-	GNumero TINYINT,	/*Número de grupo.*/
-	GSemestre TINYINT,	/*Número de semestre.*/
-	GAnno INT,			/*Año.*/
-	FechaInicio DATE,	/*Fecha de inicio del periodo de llenado el formulario.*/
-	FechaFin DATE		/*Fecha de finalización del periodo de llenado del formulario.*/
+	FCodigo VARCHAR(8),		/*Código del formulario.*/
+	FNombre NVARCHAR(250),	/*Nombre del formulario*/
+	CSigla VARCHAR(10),		/*Sigla del curso.*/
+	GNumero TINYINT,		/*Número de grupo.*/
+	GSemestre TINYINT,		/*Número de semestre.*/
+	GAnno INT,				/*Año.*/
+	FechaInicio DATE,		/*Fecha de inicio del periodo de llenado el formulario.*/
+	FechaFin DATE			/*Fecha de finalización del periodo de llenado del formulario.*/
 )
 AS
 BEGIN
@@ -25,8 +26,8 @@ BEGIN
 		BEGIN
 
 			INSERT INTO @formulariosUA
-			SELECT	PAP.FCodigo, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
-			FROM	Periodo_activa_por AS PAP
+			SELECT	PAP.FCodigo, F.Nombre, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
+			FROM	Periodo_activa_por AS PAP JOIN Formulario AS F ON PAP.FCodigo = F.Codigo
 			WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
 					AND EXISTS	(
 									SELECT *
