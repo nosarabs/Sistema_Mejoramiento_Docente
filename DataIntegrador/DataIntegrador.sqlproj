@@ -178,6 +178,8 @@
     <Build Include="TriggerTrabajaEn.sql" />
     <Build Include="InsertarMatriculado_en.sql" />
     <Build Include="TriggerMatriculado_en.sql" />
+    <Build Include="PromedioProfesor.sql" />
+    <Build Include="PromedioCursos.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

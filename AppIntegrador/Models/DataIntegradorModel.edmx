@@ -4544,6 +4544,8 @@
           <FunctionImportMapping FunctionImportName="InsertarMatriculado_en" FunctionName="DataIntegradorModel.Store.InsertarMatriculado_en" />
           <FunctionImportMapping FunctionImportName="PromedioCursos" FunctionName="DataIntegradorModel.Store.PromedioCursos" />
           <FunctionImportMapping FunctionImportName="PromedioProfesor" FunctionName="DataIntegradorModel.Store.PromedioProfesor" />
+          <FunctionImportMapping FunctionImportName="PromedioCursos" FunctionName="DataIntegradorModel.Store.PromedioCursos" />
+          <FunctionImportMapping FunctionImportName="PromedioProfesor" FunctionName="DataIntegradorModel.Store.PromedioProfesor" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

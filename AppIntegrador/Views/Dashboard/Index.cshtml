@@ -8,6 +8,7 @@
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
 
+
     <link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="~/Content/Visualizacion/bootstrap-multiselect.css" type="text/css" />
 
     <script type="text/javascript" src="~/Scripts/Visualizacion/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/Visualizacion/graficosDashboard.js"></script>
 </head>
 
 <body>
@@ -180,3 +182,12 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery-3.3.1.js");
 }
+    <script>
+        var correo = "@HttpContext.Current.User.Identity.Name";
+        var x = new GraficosDashboard();
+        x.recuperarPromedioProfesor(correo);
+        x.recuperarPromedioCursos(correo);
+    </script>
+
+}
+
