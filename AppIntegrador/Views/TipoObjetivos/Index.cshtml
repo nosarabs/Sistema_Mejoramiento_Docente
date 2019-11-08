@@ -41,9 +41,22 @@
                     @Html.DisplayFor(modelItem => item.nombre)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.nombre }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.nombre }, new { @class = "btn btn-default" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.nombre }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.nombre }, new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Details", "Details", new { id = item.nombre }, new { @class = "btn btn-default" })*@
+
+
+                    @*
+                       Cambiado por: casch
+                       Este cambio responde a la historia:
+                       MOS-8 Como Usuario administrativo quiero poder agregar tipos de objetivos para dar opciones a la hora de crear los objetivos
+                    *@
+                    @Html.ActionLink("Borrar", "DeleteConfirmed", 
+                                    new { id = item.nombre,
+                                          confirmed = true },
+                                    new { onclick = "return confirm('¿Está seguro que desea borrar este tipo de objetivo? " +
+                                                    "Esto dejará sin tipo a los objetivos que lo utilizan.')",
+                                        @class = "btn btn-danger"
+                                    })
                 </td>
             </tr>
         }

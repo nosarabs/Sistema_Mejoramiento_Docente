@@ -89,7 +89,14 @@
                             </div>
                         </div>
                     </div>
+                    @Html.LabelFor(model => model.Profesor)
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DropDownList("profesores", null, htmlAttributes: new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
+
 
                 <div class="form-group">
                     <div class="row">
@@ -130,11 +137,10 @@
                             </div>
 
                             <div class="card card-default">
-                                <div class="card-body grisUCR3">
+                                <div class="card-body grisUCR3" id="divDeAccionables">
 
                                         <div id="crearNuevoAccionable">
                                             <h2>Seleccione una Acción de mejora</h2>
-                                            @*<h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>*@
                                             <div id="crearAccionable">
                                             </div>
                                         </div>
@@ -154,8 +160,11 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
+
+
+
+    @*@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")*@
 
 
     <script>
@@ -182,6 +191,13 @@
     </script>
 
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#profesores-selector').multiselect({
+                enableFiltering: true
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(function () {
 
@@ -239,6 +255,18 @@
             });
 
             actualizarAccionesDeMejora(plan, obj);
+
+            var content = '<div id="crearNuevoAccionable">\
+                                            <h2>Seleccione una Acción de mejora</h2>\
+                                            <div id="crearAccionable">\
+                                            </div>\
+                                        </div>\
+                                        <div>\
+                                            <h4 style="text-align:center">Lista de accionables</h4>\
+                                            <div id="divAccionables">\
+                                            </div>\
+                                        </div>';
+            document.getElementById('divDeAccionables').innerHTML = content;
         };
     </script>
 
@@ -319,4 +347,6 @@
             actualizarAccionables(plan, obj, desc);
         }
     </script>
+
+
 }
