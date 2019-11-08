@@ -1614,6 +1614,11 @@
           <Parameter Name="Sigla" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="InsertarEmpadronadoEn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CorreoEstudiante" Type="varchar" Mode="In" />
+          <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="CodEnfasis" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertarEnfasisCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
           <Parameter Name="Codigo" Type="varchar" Mode="In" />
@@ -1631,6 +1636,17 @@
           <Parameter Name="Semestre" Type="tinyint" Mode="In" />
           <Parameter Name="Anno" Type="int" Mode="In" />
         </Function>
+        <Function Name="InsertarImparte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CorreoProfesor" Type="varchar" Mode="In" />
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="Semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="Anno" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertarInscrita_En" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodUnidadAc" Type="varchar" Mode="In" />
+          <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertarPersonaCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Id" Type="varchar" Mode="In" />
@@ -1638,8 +1654,17 @@
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="TipoId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="InsertarPertenece_a" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="CodEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertarProfesorCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarTrabajaEn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CorreoFuncionario" Type="varchar" Mode="In" />
+          <Parameter Name="CodUnidadAcademica" Type="varchar" Mode="In" />
         </Function>
         <Function Name="InsertarUnidadCSV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodUnidad" Type="varchar" Mode="In" />
@@ -3106,10 +3131,10 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosProfesor_Result)">
-            <Parameter Name="correoProfesor" Mode="In" Type="String" />
+          <Parameter Name="correoProfesor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)">
-            <Parameter Name="codigoUA" Mode="In" Type="String" />
+          <Parameter Name="codigoUA" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarCarreraCSV">
             <Parameter Name="Cod" Mode="In" Type="String" />
@@ -3148,7 +3173,32 @@
             <Parameter Name="Nfacultad" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarFuncionarioCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarEmpadronadoEn">
+            <Parameter Name="CorreoEstudiante" Mode="In" Type="String" />
+            <Parameter Name="CodCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodEnfasis" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarImparte">
+            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarInscrita_En">
+            <Parameter Name="CodUnidadAc" Mode="In" Type="String" />
+            <Parameter Name="CodCarrera" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarPertenece_a">
+            <Parameter Name="CodCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodEnfasis" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarTrabajaEn">
+            <Parameter Name="CorreoFuncionario" Mode="In" Type="String" />
+            <Parameter Name="CodUnidadAcademica" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PromedioCursos">
             <Parameter Name="correo" Mode="In" Type="String" />
@@ -4472,6 +4522,11 @@
           <FunctionImportMapping FunctionImportName="InsertarProfesorCSV" FunctionName="DataIntegradorModel.Store.InsertarProfesorCSV" />
           <FunctionImportMapping FunctionImportName="InsertarUnidadCSV" FunctionName="DataIntegradorModel.Store.InsertarUnidadCSV" />
           <FunctionImportMapping FunctionImportName="InsertarFuncionarioCSV" FunctionName="DataIntegradorModel.Store.InsertarFuncionarioCSV" />
+          <FunctionImportMapping FunctionImportName="InsertarEmpadronadoEn" FunctionName="DataIntegradorModel.Store.InsertarEmpadronadoEn" />
+          <FunctionImportMapping FunctionImportName="InsertarImparte" FunctionName="DataIntegradorModel.Store.InsertarImparte" />
+          <FunctionImportMapping FunctionImportName="InsertarInscrita_En" FunctionName="DataIntegradorModel.Store.InsertarInscrita_En" />
+          <FunctionImportMapping FunctionImportName="InsertarPertenece_a" FunctionName="DataIntegradorModel.Store.InsertarPertenece_a" />
+          <FunctionImportMapping FunctionImportName="InsertarTrabajaEn" FunctionName="DataIntegradorModel.Store.InsertarTrabajaEn" />
           <FunctionImportMapping FunctionImportName="PromedioCursos" FunctionName="DataIntegradorModel.Store.PromedioCursos" />
           <FunctionImportMapping FunctionImportName="PromedioProfesor" FunctionName="DataIntegradorModel.Store.PromedioProfesor" />
         </EntityContainerMapping>
