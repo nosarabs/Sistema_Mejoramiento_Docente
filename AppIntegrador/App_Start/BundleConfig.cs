@@ -53,7 +53,8 @@ namespace AppIntegrador
                       "~/Scripts/UsuariosYPerfiles/login.js",
                       "~/Scripts/UsuariosYPerfiles/dirrtyUsers.js",
                       "~/Scripts/UsuariosYPerfiles/alertsHandler.js",
-                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js"
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select.js",
+                      "~/Scripts/UsuariosYPerfiles/bootstrap-select-min.js"
                       ));
 
         }

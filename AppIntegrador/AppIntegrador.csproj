@@ -347,6 +347,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
+    <Compile Include="Utilities\FormsAuth.cs" />
+    <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +363,7 @@
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
@@ -504,9 +507,7 @@
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
-    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />

@@ -9,6 +9,8 @@ using AppIntegrador.Controllers;
 using AppIntegrador.Models;
 using System.Threading.Tasks;
 using System.Web.Security;
+using Security.Authentication;
+using Moq;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -41,7 +43,7 @@ namespace AppIntegrador.Tests.Controllers
 
         /* TAM-1.1.6 Redirección Login */
         [TestMethod]
-        public void Login()
+        public void LoginView()
         {
             // Arrange
             HomeController controller = new HomeController();
@@ -54,7 +56,7 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-        public void PasswordReset()
+        public void PasswordResetView()
         {
             // Arrange
             HomeController controller = new HomeController();
@@ -70,11 +72,29 @@ namespace AppIntegrador.Tests.Controllers
         public void LoginAdminSuccess()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var formsAuthMock = new Mock<IAuth>();
+            HomeController controller = new HomeController(formsAuthMock.Object);
 
             Usuario usuario = new Usuario();
             usuario.Username = "admin@mail.com";
             usuario.Password = "admin@mail.com";
+            usuario.Activo = true;
+
+            Task<ActionResult> result = controller.Login(usuario);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void LoginAdminFailure()
+        {
+            // Arrange
+            var formsAuthMock = new Mock<IAuth>();
+            HomeController controller = new HomeController(formsAuthMock.Object);
+
+            Usuario usuario = new Usuario();
+            usuario.Username = "admin@mail.com";
+            usuario.Password = "wrongOne";
             usuario.Activo = true;
 
             Task<ActionResult> result = controller.Login(usuario);
@@ -86,20 +106,21 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public async Task CambiarContrasenna()
         {
+            var formsAuthMock = new Mock<IAuth>();
+            HomeController hc = new HomeController(formsAuthMock.Object);
+
             string contrasennaActual = "admin@mail.com";
             string contrasennaNueva = "test";
             string contrasennaConfirmar = "test";
-            DataIntegradorEntities db = new DataIntegradorEntities();
             Usuario usuario = new Usuario();
             usuario.Username = "admin@mail.com";
             usuario.Password = "admin@mail.com";
             usuario.Activo = true;
 
-            //HomeController hc = new HomeController(db, usuario);
-            //var result = await hc.CambiarContrasenna(contrasennaActual, contrasennaNueva, contrasennaConfirmar) as ViewResult;
+            var login = await hc.Login(usuario);
+            var result = await hc.CambiarContrasenna(contrasennaActual, contrasennaNueva, contrasennaConfirmar) as ViewResult;
 
-            //Assert.IsNotNull(result.ViewBag.NotifyTitle);
-
+            Assert.IsNotNull(result.ViewBag.NotifyTitle);
         }
     }
 }
