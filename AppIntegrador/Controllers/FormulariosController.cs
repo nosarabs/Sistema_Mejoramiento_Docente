@@ -87,7 +87,49 @@ namespace AppIntegrador.Controllers
 
             ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null);
 
+            foreach (var seccion in formulario.Secciones)
+            {
+                seccion.Edicion = true;
+            }
             return PartialView("SeccionConPreguntas", formulario.Secciones);
+        }
+
+
+        public ActionResult SPROCButton()
+        {
+            //try
+            //{
+            //    db.uspCallTables("MyDB.temp.Table1");
+            //    return RedirectToAction("Index");
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    throw;
+            //}
+            return null;
+        }
+
+
+        [HttpPost]
+        public bool BorrarSeccion(string FCodigo, string SCodigo)
+        {
+            if (FCodigo != null && SCodigo != null)
+            {
+                try
+                {
+                    if (db.EliminarSeccionFormulario(FCodigo, SCodigo) == 0)
+                    {
+                        return false;
+                    }
+                }
+                catch (System.Data.Entity.Core.EntityCommandExecutionException)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
 
         public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario, 
@@ -316,6 +358,7 @@ namespace AppIntegrador.Controllers
         {
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
+            ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
 
@@ -467,7 +510,6 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-
             return DesplegarFormulario(form.Codigo);
         }
 
@@ -564,6 +606,10 @@ namespace AppIntegrador.Controllers
             return Json(new { guardadoExitoso = formulario != null && InsertFormulario(formulario) });
         }
 
-
+        [HttpPost]
+        public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
+        {
+            return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+        }
     }
 }

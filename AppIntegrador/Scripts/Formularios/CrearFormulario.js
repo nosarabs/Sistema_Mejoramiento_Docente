@@ -32,12 +32,55 @@ $("#ActualizarVistaFiltros").click(function () {
     });
 })
 
+
+
+function BorrarSeccion(Scod) {
+    var FCodigo = document.getElementById("textCode").value
+    var SCodigo = Scod
+    var resultado = { FCodigo, SCodigo };
+
+    var id = FCodigo
+    var result = { id };
+
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/EliminarSeccion",
+        data: JSON.stringify(resultado),
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+            if (data.eliminadoExitoso) {
+                $.ajax({
+                    contentType: "application/json; charset=utf-8",
+                    type: "POST",
+                    url: "/Formularios/DesplegarFormulario",
+                    data: JSON.stringify(result),
+                    dataType: "html",
+                    traditional: true,
+                    success: function (data) {
+                        resultado = [];
+                        $('#seccionesActuales').html(data);
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+
+
 function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
 
     resultado = { Codigo, Nombre };
-    console.log(JSON.stringify(resultado));
 
     if (document.getElementById("formularioCreado").value == 0) {
         $.ajax({
@@ -53,8 +96,6 @@ function ValidarCodigo() {
                         this.disabled = "disabled";
                         return true;
                     })
-
-                    console.log("Todo es trivial");
                     document.getElementById("validacion-codigo").textContent = "";
                     $("#textCode").removeClass("error");
                     document.getElementById("formularioCreado").setAttribute("value", "1");
@@ -62,7 +103,6 @@ function ValidarCodigo() {
                     CrearModal();
                 }
                 else {
-                    console.log("Cmamo");
                     document.getElementById("validacion-codigo").textContent = "Código en uso";
                     $("#textCode").addClass("error");
                 }
