@@ -32,16 +32,25 @@
 </div>
 
 
-<div class="col-md-12" style="display: block ruby">
-    De:
-    <select name="min" class="form-control" style="width: 6%">
-        <option value="0">0</option>
-        <option value="9">9</option>
+
+<div class="row align-content-lg-start" style="display: block ruby">
+    <text style="padding: 7px">  De:   </text>
+    <select name="min" class="form-control" name="min" style="width: 7%">
+
+        @*Se muestran las opciones para el valor mínimo del 0 al 9*@
+        @for (var i = 0; i < 10; i++)
+        {
+            <option value="@i">@i</option>
+        }
     </select>
-    a
-    <select name="max" class="form-control" style="width: 6%">
-        <option value="1">1</option>
-        <option value="10">10</option>
+    <text style="padding: 7px">  a  </text>
+    <select name="max" class="form-control" name="max" style="width: 8%">
+
+        @*Se muestran las opciones para el valor mínimo del 1 al 10*@
+        @for (var i = 1; i < 11; i++)
+        {
+            <option value="@i">@i</option>
+        }
     </select>
 
 </div>

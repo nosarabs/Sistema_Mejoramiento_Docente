@@ -35,16 +35,17 @@ $("#ActualizarVistaFiltros").click(function () {
 
 
 function BorrarSeccion(Scod) {
-    console.log('Todo es trivial')
+    // Arregla la vista cuando se deselecciona
+    var seccionBanco = document.getElementById("sec(" + Scod + ")");
+    $(seccionBanco).removeAttr("hidden");
+    var checkboxBanco = $(seccionBanco).children().children();
+    checkboxBanco = $(checkboxBanco).children();
+    $(checkboxBanco).trigger("click");
+
 
     var FCodigo = document.getElementById("textCode").value
     var SCodigo = Scod
     var resultado = { FCodigo, SCodigo };
-
-    var id = FCodigo
-    var result = { id };
-
-    console.log(JSON.stringify(resultado));
 
     $.ajax({
         contentType: "application/json; charset=utf-8",
@@ -55,23 +56,7 @@ function BorrarSeccion(Scod) {
         traditional: true,
         success: function (data) {
             if (data.eliminadoExitoso) {
-                console.log(data);
-                $.ajax({
-                    contentType: "application/json; charset=utf-8",
-                    type: "POST",
-                    url: "/Formularios/DesplegarFormulario",
-                    data: JSON.stringify(result),
-                    dataType: "html",
-                    traditional: true,
-                    success: function (data) {
-                        resultado = [];
-                        console.log(data);
-                        $('#seccionesActuales').html(data);
-                    },
-                    error: function () {
-
-                    }
-                });
+                ActualizarSecciones();
             }
         },
         error: function () {
@@ -80,14 +65,31 @@ function BorrarSeccion(Scod) {
     });
 }
 
+function ActualizarSecciones() {
+    var id = document.getElementById("textCode").value;
+    var result = { id };
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/DesplegarFormulario",
+        data: JSON.stringify(result),
+        dataType: "html",
+        traditional: true,
+        success: function (data) {
+            resultado = [];
+            $('#seccionesActuales').html(data);
+        },
+        error: function () {
 
+        }
+    });
+}
 
 function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
 
     resultado = { Codigo, Nombre };
-    console.log(JSON.stringify(resultado));
 
     if (document.getElementById("formularioCreado").value == 0) {
         $.ajax({
@@ -99,12 +101,10 @@ function ValidarCodigo() {
             traditional: true,
             success: function (data) {
                 if (data.guardadoExitoso) {
-                    $(".validar-agregar-secciones").each(function () {
+                    /*$(".validar-agregar-secciones").each(function () {
                         this.disabled = "disabled";
                         return true;
-                    })
-
-                    console.log("Todo es trivial");
+                    })*/
                     document.getElementById("validacion-codigo").textContent = "";
                     $("#textCode").removeClass("error");
                     document.getElementById("formularioCreado").setAttribute("value", "1");
@@ -112,7 +112,6 @@ function ValidarCodigo() {
                     CrearModal();
                 }
                 else {
-                    console.log("Cmamo");
                     document.getElementById("validacion-codigo").textContent = "Código en uso";
                     $("#textCode").addClass("error");
                 }

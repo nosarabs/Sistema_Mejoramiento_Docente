@@ -125,19 +125,30 @@
     <br />
     <br />
     <div class="col-md-6 col-centered" style="text-align:center">
-        <p>
-            @Html.ActionLink("Editar", "Edit", new
-        {
-            username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
-            domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
-        },
-                        new
-                        {
-                            @class = "btn btn-primary"
-                        }
+        <!--TAM-3.6-1: Condicional que muestra el botón de editar si el usuario tiene un perfil
+            con permisos de acceder a esa funcionalidad, sino entonces no lo muestra y bloquea los intentos de acceso
+            por otros medios.-->
+        @{if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
+            {
 
-        )
-            @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
-        </p>
+                <p>
+                    @Html.ActionLink("Editar", "Edit", new
+               {
+                   username = Model.Persona.Correo.Substring(0, Model.Persona.Correo.LastIndexOf('.')),
+                   domain = Model.Persona.Correo.Substring(Model.Persona.Correo.LastIndexOf('.'))
+               },
+                                      new
+                                      {
+                                          @class = "btn-azulUCR"
+                                      }
+
+                      )
+                    @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
+                </p>
+            }
+            else {
+                <p>@Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn-blancoUCR" })</p>
+            }
+        }
     </div>
 </div>

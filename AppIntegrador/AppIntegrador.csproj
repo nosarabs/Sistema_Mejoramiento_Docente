@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="CodeFirstStoreFunctions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.CodeFirstStoreFunctions.1.2.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
     </Reference>
@@ -61,11 +64,20 @@
       <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq, Version=4.13.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>packages\Moq.4.13.1\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -168,6 +180,7 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
+    <Compile Include="Models\ConfigViewHolder.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -231,6 +244,9 @@
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerRespuestaLibreGuardada_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerRespuestasAFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -261,10 +277,12 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\PlanDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -289,6 +307,7 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfilePermissionViewHolder.cs" />
     <Compile Include="Models\Responde_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -316,6 +335,9 @@
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioActual.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UsuarioPerfil.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -337,6 +359,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Utilities\EmailNotification.cs" />
+    <Compile Include="Utilities\FormsAuth.cs" />
+    <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +375,9 @@
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
+    <Content Include="Content\UsuariosYPerfiles\login.css" />
+    <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
     <Content Include="Content\login.css" />
@@ -371,13 +398,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Index.cshtml" />
-    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataIntegradorModel.edmx.diagram">
-      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\BootstrapSccs\bootstrap-grid.scss" />
     <Content Include="Content\BootstrapSccs\bootstrap-reboot.scss" />
     <Content Include="Content\BootstrapSccs\bootstrap.scss" />
@@ -469,6 +489,13 @@
     <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
     <Content Include="compilerconfig.json" />
     <Content Include="Content\Main.scss" />
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
@@ -495,9 +522,7 @@
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\UsuariosYPerfiles\alertsHandler.js" />
-    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select.js" />
     <Content Include="Scripts\UsuariosYPerfiles\dirrtyUsers.js" />
     <Content Include="Scripts\UsuariosYPerfiles\login.js" />
     <Content Include="Scripts\Formularios\DesactivarBotonCrear.js" />
@@ -595,6 +620,7 @@
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
     <Content Include="Views\Preguntas\PreguntaEscalar.cshtml" />
+    <Content Include="Views\Permissions\SeleccionarPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
