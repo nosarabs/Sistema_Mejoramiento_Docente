@@ -393,10 +393,9 @@ namespace AppIntegrador.Controllers
 
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
-                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
                 }
             }
-
             return View();
         }
     }

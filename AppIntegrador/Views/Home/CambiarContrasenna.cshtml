@@ -29,7 +29,7 @@
                 <div class="form-group col-9 pl-0">
                     <label for="contrasennaNueva">Contraseña Nueva</label>
                     <div class="input-group" id="show_hide_password">
-                        <input type="password" class="form-control" id="contrasennaNueva" name="contrasennaNueva" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" autocomplete="off" required/>
+                        <input type="password" class="form-control" id="contrasennaNueva" name="contrasennaNueva" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" autocomplete="off" required />
                         <div class="input-group-append">
                             <div class="input-group-text"><i class="fa fa-eye toggle-password" toggle="#contrasennaNueva" style="cursor:pointer" aria-hidden="true"></i></div>
                         </div>
@@ -39,11 +39,11 @@
                 <div class="form-group  col-9 pl-0">
                     <label for="contrasennaConfirmar">Confirmar Contraseña</label>
                     <div class="input-group" id="show_hide_password">
-                        <input type="password" class="form-control" id="contrasennaConfirmar" name="contrasennaConfirmar" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" autocomplete="off" required/>
+                        <input type="password" class="form-control" id="contrasennaConfirmar" name="contrasennaConfirmar" data-toggle="popover" data-placement="left" data-trigger="manual" data-title="Mayúsculas activadas" autocomplete="off" required />
                         <div class="input-group-append">
                             <div class="input-group-text"><i class="fa fa-eye toggle-password" toggle="#contrasennaConfirmar" style="cursor:pointer" aria-hidden="true"></i></div>
                         </div>
-                    </div>                 
+                    </div>
                     <p class="text-danger" id="contrasennaConfirmarErrorJS">@Html.ValidationMessageFor(model => model.Password, "")</p>
                 </div>
                 <button type="submit" class="btn-azulUCR mr-3">Cambiar Contraseña</button>
@@ -77,7 +77,12 @@
                     Swal.fire({
                         type: 'success',
                         title: '@ViewBag.NotifyTitle',
-                        });
+                        text: '@ViewBag.NotifyMessage',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false
+                    }).then(function(){
+                        window.location.href = "/Home/Logout";
+                    });
                 </script>
                 @*<script type="text/javascript">
                         customAlert('success','@ViewBag.NotifyMessage');
