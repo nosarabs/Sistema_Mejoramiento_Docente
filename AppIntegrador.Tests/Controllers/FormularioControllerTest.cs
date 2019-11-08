@@ -266,6 +266,44 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void TestCreateFailed()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            string codFormulario = "CI0128G2";
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formularios de prueba para CI0128"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+            var result = controller.Create(formulario, 0);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestCreateSuccesful()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            string codFormulario = "CI0128G2";
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formularios de prueba para CI0128"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+            var result = controller.Create(formulario, 1);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void TestLlenarFormulariosConPreguntasEscalarConRespuestaGuardadaDataMock()
         {
             var mockDb = new Mock<DataIntegradorEntities>();
@@ -511,7 +549,7 @@ namespace AppIntegrador.Tests.Controllers
                 GSemestre = 2,
                 Fecha = DateTime.Today,
                 Finalizado = false
-            };
+            }; 
 
             PreguntaConNumeroSeccion preguntaConSeccion = new PreguntaConNumeroSeccion()
             {
@@ -519,7 +557,7 @@ namespace AppIntegrador.Tests.Controllers
                 OrdenPregunta = 0,
                 Pregunta = pregunta,
                 Opciones = opcionesDePregunta,
-                RespuestaLibreOJustificacion = "Para que cubra más del coberage"
+                RespuestaLibreOJustificacion = "Para que cubra más del coverage"
             };
 
             // Si no se cae en esta linea, significa que el guardar funciona correctamente
