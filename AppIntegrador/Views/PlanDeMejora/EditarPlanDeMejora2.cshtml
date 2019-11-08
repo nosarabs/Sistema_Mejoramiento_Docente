@@ -130,11 +130,10 @@
                             </div>
 
                             <div class="card card-default">
-                                <div class="card-body grisUCR3">
+                                <div class="card-body grisUCR3" id="divDeAccionables">
 
                                         <div id="crearNuevoAccionable">
                                             <h2>Seleccione una Acción de mejora</h2>
-                                            @*<h2>Lista de accionables del accionable @ViewBag.ObjetivoSeleccionado</h2>*@
                                             <div id="crearAccionable">
                                             </div>
                                         </div>
@@ -239,6 +238,18 @@
             });
 
             actualizarAccionesDeMejora(plan, obj);
+
+            var content = '<div id="crearNuevoAccionable">\
+                                            <h2>Seleccione una Acción de mejora</h2>\
+                                            <div id="crearAccionable">\
+                                            </div>\
+                                        </div>\
+                                        <div>\
+                                            <h4 style="text-align:center">Lista de accionables</h4>\
+                                            <div id="divAccionables">\
+                                            </div>\
+                                        </div>';
+            document.getElementById('divDeAccionables').innerHTML = content;
         };
     </script>
 
