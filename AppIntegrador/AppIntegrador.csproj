@@ -486,6 +486,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
@@ -608,6 +609,7 @@
     <Content Include="Seccion\Details.cshtml" />
     <Content Include="Seccion\Edit.cshtml" />
     <Content Include="Seccion\Index.cshtml" />
+    <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
