@@ -983,5 +983,138 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntaDeSeccion", sCodigoParameter, pCodigoParameter);
         }
+    
+        public virtual int GuardarRespuestaAPregunta1(string tipo, string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string justificacion, Nullable<byte> opcionSeleccionada, string observacion)
+        {
+            var tipoParameter = tipo != null ?
+                new ObjectParameter("tipo", tipo) :
+                new ObjectParameter("tipo", typeof(string));
+    
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("numGrupo", numGrupo) :
+                new ObjectParameter("numGrupo", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("fecha", fecha) :
+                new ObjectParameter("fecha", typeof(System.DateTime));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            var codseccionParameter = codseccion != null ?
+                new ObjectParameter("codseccion", codseccion) :
+                new ObjectParameter("codseccion", typeof(string));
+    
+            var justificacionParameter = justificacion != null ?
+                new ObjectParameter("justificacion", justificacion) :
+                new ObjectParameter("justificacion", typeof(string));
+    
+            var opcionSeleccionadaParameter = opcionSeleccionada.HasValue ?
+                new ObjectParameter("opcionSeleccionada", opcionSeleccionada) :
+                new ObjectParameter("opcionSeleccionada", typeof(byte));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("observacion", observacion) :
+                new ObjectParameter("observacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPregunta1", tipoParameter, codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, justificacionParameter, opcionSeleccionadaParameter, observacionParameter);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "ObtenerRespuestaLibre")]
+        public virtual IQueryable<ObtenerRespuestaLibre_Result> ObtenerRespuestaLibre(string fCodigo, string correo, string cSigla, Nullable<byte> gNumero, Nullable<int> gAnno, Nullable<byte> gSemestre, string pCodigo, string sCodigo)
+        {
+            var fCodigoParameter = fCodigo != null ?
+                new ObjectParameter("FCodigo", fCodigo) :
+                new ObjectParameter("FCodigo", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var cSiglaParameter = cSigla != null ?
+                new ObjectParameter("CSigla", cSigla) :
+                new ObjectParameter("CSigla", typeof(string));
+    
+            var gNumeroParameter = gNumero.HasValue ?
+                new ObjectParameter("GNumero", gNumero) :
+                new ObjectParameter("GNumero", typeof(byte));
+    
+            var gAnnoParameter = gAnno.HasValue ?
+                new ObjectParameter("GAnno", gAnno) :
+                new ObjectParameter("GAnno", typeof(int));
+    
+            var gSemestreParameter = gSemestre.HasValue ?
+                new ObjectParameter("GSemestre", gSemestre) :
+                new ObjectParameter("GSemestre", typeof(byte));
+    
+            var pCodigoParameter = pCodigo != null ?
+                new ObjectParameter("PCodigo", pCodigo) :
+                new ObjectParameter("PCodigo", typeof(string));
+    
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerRespuestaLibre_Result>("[DataIntegradorEntities].[ObtenerRespuestaLibre](@FCodigo, @Correo, @CSigla, @GNumero, @GAnno, @GSemestre, @PCodigo, @SCodigo)", fCodigoParameter, correoParameter, cSiglaParameter, gNumeroParameter, gAnnoParameter, gSemestreParameter, pCodigoParameter, sCodigoParameter);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "ObtenerRespuestaLibreGuardada")]
+        public virtual IQueryable<ObtenerRespuestaLibreGuardada_Result> ObtenerRespuestaLibreGuardada(string fCodigo, string correo, string cSigla, Nullable<byte> gNumero, Nullable<int> gAnno, Nullable<byte> gSemestre, string pCodigo, string sCodigo)
+        {
+            var fCodigoParameter = fCodigo != null ?
+                new ObjectParameter("FCodigo", fCodigo) :
+                new ObjectParameter("FCodigo", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var cSiglaParameter = cSigla != null ?
+                new ObjectParameter("CSigla", cSigla) :
+                new ObjectParameter("CSigla", typeof(string));
+    
+            var gNumeroParameter = gNumero.HasValue ?
+                new ObjectParameter("GNumero", gNumero) :
+                new ObjectParameter("GNumero", typeof(byte));
+    
+            var gAnnoParameter = gAnno.HasValue ?
+                new ObjectParameter("GAnno", gAnno) :
+                new ObjectParameter("GAnno", typeof(int));
+    
+            var gSemestreParameter = gSemestre.HasValue ?
+                new ObjectParameter("GSemestre", gSemestre) :
+                new ObjectParameter("GSemestre", typeof(byte));
+    
+            var pCodigoParameter = pCodigo != null ?
+                new ObjectParameter("PCodigo", pCodigo) :
+                new ObjectParameter("PCodigo", typeof(string));
+    
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerRespuestaLibreGuardada_Result>("[DataIntegradorEntities].[ObtenerRespuestaLibreGuardada](@FCodigo, @Correo, @CSigla, @GNumero, @GAnno, @GSemestre, @PCodigo, @SCodigo)", fCodigoParameter, correoParameter, cSiglaParameter, gNumeroParameter, gAnnoParameter, gSemestreParameter, pCodigoParameter, sCodigoParameter);
+        }
     }
 }
