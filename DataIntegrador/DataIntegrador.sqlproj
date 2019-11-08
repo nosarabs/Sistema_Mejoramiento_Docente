@@ -171,6 +171,10 @@
     <Build Include="InsertarPertenece_a.sql" />
     <Build Include="InsertarImparte.sql" />
     <Build Include="InsertarEmpadronadoEn.sql" />
+    <Build Include="Usuarios y Perfiles\EmpadronadoEnInsertar.sql" />
+    <Build Include="TriggerImparte.sql" />
+    <Build Include="TriggerInscritaEn.sql" />
+    <Build Include="TriggerPertenece_a.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
