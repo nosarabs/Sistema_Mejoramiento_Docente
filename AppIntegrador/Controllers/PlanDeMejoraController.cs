@@ -377,5 +377,13 @@ namespace AppIntegrador.Controllers
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == Id);
             return PartialView("_objetivosDelPlan", objetivosDePlan);
         }
+
+        [HttpGet]
+        public ActionResult Detalles(int id)
+        {
+            ViewBag.IdPlan = id;
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+            return View("DetallesPlanDeMejora", planDeMejora);
+        }
     }
 }

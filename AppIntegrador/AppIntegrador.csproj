@@ -608,6 +608,8 @@
     <Content Include="Seccion\Details.cshtml" />
     <Content Include="Seccion\Edit.cshtml" />
     <Content Include="Seccion\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\DetallesPlanDeMejora.cshtml" />
+    <Content Include="Views\Objetivos\_listarObjetivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
