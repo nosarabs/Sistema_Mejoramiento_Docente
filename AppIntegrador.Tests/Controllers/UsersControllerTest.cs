@@ -23,14 +23,84 @@ namespace AppIntegrador.Tests.Controllers
         public void UsersIndexNotNull()
         {
             UsersController controller = new UsersController();
-
-            //HttpContext.Current.Session.Add("Username", "admin@mail.com");
-            //HttpContext.Current.Session.Add("Profile", "Superusuario");
-            //HttpContext.Current.Session.Add("Profile", "0000000001");
-            //HttpContext.Current.Session.Add("EmphasisId", "0000000001");
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
 
-            Assert.IsNotNull(controller.Index());
+            ViewResult result = controller.Index() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void UsersIndexResultName()
+        {
+            UsersController controller = new UsersController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = controller.Index() as ViewResult;
+
+            Assert.AreEqual("Index", result.ViewName);
+        }
+
+        [TestMethod]
+        public void UserCreateNotNull()
+        {
+            UsersController controller = new UsersController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = controller.Create() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void UsersCreateResultName()
+        {
+            UsersController controller = new UsersController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = controller.Create() as ViewResult;
+
+            Assert.AreEqual("Create", result.ViewName);
+        }
+
+        [TestMethod]
+        public void DetailsNotNull()
+        {
+            UsersController controller = new UsersController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = controller.Details("admin@", "mail.com") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void EditNotNull()
+        {
+            UsersController controller = new UsersController();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = controller.Edit("admin@", "mail.com") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void CreateChangesSaved()
+        {
+            var database = new Mock<DataIntegradorEntities>();
+            UsersController controller = new UsersController(database.Object);
+
+            Persona nuevaPersona = new Persona();
+            nuevaPersona.Correo = "newusertest@mail.com";
+            nuevaPersona.Nombre1 = "Test";
+            nuevaPersona.Apellido1 = "Nuevo";
+            nuevaPersona.TipoIdentificacion = "Cédula";
+            nuevaPersona.Identificacion = "120540712";
+
+            ViewResult result = controller.Create(nuevaPersona) as ViewResult;
+
+            Assert.IsNotNull(result);
         }
 
         [TestInitialize]

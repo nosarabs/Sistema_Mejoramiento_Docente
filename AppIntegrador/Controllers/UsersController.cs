@@ -18,7 +18,17 @@ namespace AppIntegrador.Controllers
     {
         private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
 
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public UsersController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public UsersController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Users
         /*Shows the list of users and persons in the database. Only displays users whose associated person exists.
@@ -62,7 +72,7 @@ namespace AppIntegrador.Controllers
                                      Persona = p
                                  };
             usuarioPersona.OrderBy(up => up.Persona.Identificacion);
-            return View(usuarioPersona);
+            return View("Index",usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
 
@@ -99,7 +109,7 @@ namespace AppIntegrador.Controllers
                 return HttpNotFound();
             }
 
-            return View(usuarioPersona);
+            return View("Details", usuarioPersona);
         }
         /*End of user story TAM-2.9.*/
 
@@ -115,7 +125,7 @@ namespace AppIntegrador.Controllers
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne");
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo");
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password");
-            return View();
+            return View("Create");
         }
 
         // POST: Users/Create
@@ -240,7 +250,7 @@ namespace AppIntegrador.Controllers
             System.Web.HttpContext.Current.Application["CurrentEditingUser"] = usuarioPersona.Usuario.Username;
 
             /*Return the joint view of the selected User and Person as one plain entity.*/
-            return View(usuarioPersona);
+            return View("Edit", usuarioPersona);
         }
 
         // POST: Users/Edit/5
