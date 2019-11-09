@@ -42,30 +42,33 @@
                 <table class="table table-fixed table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th class="col-3">
-                                @Html.Label("Usuarios")
-                            </th>
-                            <th class="col-3">
-                                @Html.Label("Perfil asignado a Usuario")
-                                <span class="float-right">
-                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users" })
+                            
+                            <th style="width:30%;">
+                                @Html.Label("Usuario seleccionado", new { @style = "text-align:center" })
+                                <span class="float-left">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", @class="text-center" })
                                 </span>
                             </th>
-                        </tr>
-                    </thead>
+                            <th class="text-center" style="vertical-align:middle">
+                                @Html.Label("Usuarios", new { @class = "text-center" })
+
+                            </th>
+
+</thead>
                     <tbody>
                         @for (int i = 0; i < Model.Personas.Count(); ++i)
                         {
-                            <tr>
-                                @Html.HiddenFor(model => model.Personas[i].Correo)
-                                @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
-                                <td class="col-3">
-                                    @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
-                                </td>
-                                <td class="col-3 text-center">
-                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
-                                </td>
-                            </tr>
+                        <tr>
+                            @Html.HiddenFor(model => model.Personas[i].Correo)
+                            @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                            <td class="text-center" style="width:43%;">
+                                @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
+                            </td>
+                            <td class="col-3">
+                                @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
+                            </td>
+
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -77,14 +80,15 @@
                 <table class="table table-fixed table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.Label("Permisos")
-                            </th>
-                            <th>
-                                @Html.Label("Asignado a Perfil")
-                                <span class="float-right">
-                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles" })
+                            <th style="width:30%;">
+                                @Html.Label("Permiso seleccionado", new { @class = "float-right", @style = "text-align:center"})
+                                <span class="text-center">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", @class = "text-center" })
                                 </span>
+                            </th>
+                            <th class="text-center" style="vertical-align:middle">
+                                @Html.Label("Permisos", new { @class = "text-center"})
+                                
                             </th>
                         </tr>
                     </thead>
@@ -94,11 +98,11 @@
                             <tr>
                                 @Html.HiddenFor(model => model.Permisos[i].Id)
                                 @Html.HiddenFor(model => model.Permisos[i].Descripcion)
-                                <td>
-                                    @Html.DisplayFor(model => model.Permisos[i].Descripcion)
-                                </td>
-                                <td style="text-align:center;">
+                                <td style="width:30%;" class="text-center">
                                     @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox", onclick = "saveChanges()" })
+                                </td>
+                                <td style="text-align:left;">
+                                    @Html.DisplayFor(model => model.Permisos[i].Descripcion)
                                 </td>
                             </tr>
                         }
@@ -176,6 +180,11 @@
                     $("#Permisos_" + i + "__ActiveInProfileEmph").prop('checked', result.permissions[i].Checked);
                 for (var i = 0; i < result.persons.length; ++i)
                     $("#Personas_" + i + "__HasProfileInEmph").prop('checked', result.persons[i].Checked);
+                /*El superusuario tiene todos los permisos, y no se pueden quitar.*/
+                if (selectedProfileName == 'Superusuario') {
+                    $(".profileCheckbox").attr('disabled', true);
+                    $("#select_all_profiles").attr('disabled', true);
+                }
 
             })
         }
