@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AppIntegrador.Utilities;
 
-namespace AppIntegrador
+namespace AppIntegrador.Controllers
 {
     public class UsersController : Controller
     {
