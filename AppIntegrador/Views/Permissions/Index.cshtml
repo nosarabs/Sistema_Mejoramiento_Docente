@@ -4,119 +4,122 @@
 }
 @Styles.Render("~/Content/users&profiles")
 
-<div class="container">
-    <div class="row" style="display:flex; padding-left:15px; ">
-        <div class="column" style="flex:50%;">
-            <h2>
-                Administración de permisos y perfiles
-            </h2>
-        </div>
-    </div>
-    <br />
-    @using (Html.BeginForm("GuardarPermisos", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
-    {
+    <div class="container">
         <div class="row" style="display:flex; padding-left:15px; ">
-            <div class="col-md-4 pl-0" style="flex:50%;">
-                @Html.Label("Seleccione perfil")
-                <br />
-                @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar perfil", @required = "required" })
-                <br />
-            </div>
-            <div class="col-md-4" style="flex:50%;">
-                @Html.Label("Seleccione carrera")
-                <br />
-
-                @Html.DropDownListFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar carrera", @required = "required" })
-                <br />
-            </div>
-            <div class="col-md-4" style="flex:50%;">
-                @Html.Label("Seleccione énfasis")
-                <br />
-                @Html.DropDownListFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar énfasis", @required = "required" })
-                <br />
+            <div class="column" style="flex:50%;">
+                <h2>
+                    Administración de permisos y perfiles
+                </h2>
             </div>
         </div>
         <br />
-        <div class="row my-4">
-            <div class="col-6">
-                <table class="table table-fixed table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            
-                            <th style="width:30%;">
-                                @Html.Label("Usuario seleccionado", new { @style = "text-align:center" })
-                                <span class="float-left">
-                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", @class="text-center" })
-                                </span>
-                            </th>
-                            <th class="text-center" style="vertical-align:middle">
-                                @Html.Label("Usuarios", new { @class = "text-center" })
+        @using (Html.BeginForm("GuardarPermisos", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
+        {
+            <div class="row" style="display:flex; padding-left:15px; ">
+                <div class="col-md-4 pl-0" style="flex:50%;">
+                    @Html.Label("Seleccione perfil")
+                    <br />
+                    @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar perfil", @required = "required" })
+                    <br />
+                </div>
+                <div class="col-md-4" style="flex:50%;">
+                    @Html.Label("Seleccione carrera")
+                    <br />
 
-                            </th>
-
-</thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Personas.Count(); ++i)
-                        {
-                        <tr>
-                            @Html.HiddenFor(model => model.Personas[i].Correo)
-                            @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
-                            <td class="text-center" style="width:43%;">
-                                @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
-                            </td>
-                            <td class="col-3">
-                                @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
-                            </td>
-
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-
+                    @Html.DropDownListFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar carrera", @required = "required" })
+                    <br />
+                </div>
+                <div class="col-md-4" style="flex:50%;">
+                    @Html.Label("Seleccione énfasis")
+                    <br />
+                    @Html.DropDownListFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar énfasis", @required = "required" })
+                    <br />
+                </div>
             </div>
-
-            <div class="col-md-6">
-
-                <table class="table table-fixed table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="width:30%;">
-                                @Html.Label("Permiso seleccionado", new { @class = "float-right", @style = "text-align:center"})
-                                <span class="text-center">
-                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", @class = "text-center" })
-                                </span>
-                            </th>
-                            <th class="text-center" style="vertical-align:middle">
-                                @Html.Label("Permisos", new { @class = "text-center"})
-                                
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Permisos.Count(); ++i)
-                        {
+            <br />
+            <div class="row my-4">
+                <div class="col-6">
+                    <table class="table table-fixed table-striped table-bordered">
+                        <thead>
                             <tr>
-                                @Html.HiddenFor(model => model.Permisos[i].Id)
-                                @Html.HiddenFor(model => model.Permisos[i].Descripcion)
-                                <td style="width:30%;" class="text-center">
-                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox", onclick = "saveChanges()" })
-                                </td>
-                                <td style="text-align:left;">
-                                    @Html.DisplayFor(model => model.Permisos[i].Descripcion)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <input type="hidden" id="isUser" value="false" name="isUser">
-        <div class="clearfix">
-            <div class=" float-right"><div class="fa fa-check" id="estadoGuardar" role="status"></div></div>
-        </div>
-    }
-</div>
+                                <th style="width:30%;">
+                                    @Html.Label("Usuario seleccionado", new { @style = "text-align:center" })
+                                    <span class="float-left">
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users", @class = "text-center" })
+                                    </span>
+                                </th>
+                                <th class="text-center" style="vertical-align:middle">
+                                    @Html.Label("Usuarios", new { @class = "text-center" })
+
+                                </th>
+
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Personas.Count(); ++i)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(model => model.Personas[i].Correo)
+                                    @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                                    <td class="text-center" style="width:43%;">
+                                        @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
+                                    </td>
+                                    <td class="col-3">
+                                        @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <table class="table table-fixed table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">
+                                    @Html.Label("Permiso seleccionado", new { @class = "float-right", @style = "text-align:center" })
+                                    <span class="text-center">
+                                        @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles", @class = "text-center" })
+                                    </span>
+                                </th>
+                                <th class="text-center" style="vertical-align:middle">
+                                    @Html.Label("Permisos", new { @class = "text-center" })
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Permisos.Count(); ++i)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(model => model.Permisos[i].Id)
+                                    @Html.HiddenFor(model => model.Permisos[i].Descripcion)
+                                    <td style="width:30%;" class="text-center">
+                                        @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox", onclick = "saveChanges()" })
+                                    </td>
+                                    <td style="text-align:left;">
+                                        @Html.DisplayFor(model => model.Permisos[i].Descripcion)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <input type="hidden" id="isUser" value="false" name="isUser">
+            <div class="clearfix">
+                <div class=" float-right"><div class="fa fa-check" id="estadoGuardar" role="status"></div></div>
+            </div>
+            <!--
+        <input type="submit" class="btn-azulUCR" value="Guardar"/>
+            -->
+        }
+    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -252,8 +255,15 @@
         saveChangesUser();
     });
     $('#select_all_profiles').click(function () {
-        $('.profileCheckbox').prop('checked', this.checked);
-        saveChanges();
+        if ($('#select_all_profiles').is(':checked')) {
+            if (confirm('¿Está seguro de asignar todos los permisos a este perfil?')) {
+                $('.profileCheckbox').prop('checked', true);
+                saveChangesUser();
+            } 
+        } else if (confirm('¿Está seguro de quitar todos los permisos a este perfil?')) {
+                $('.profileCheckbox').prop('checked', false);
+                saveChangesUser();
+        }
     });
 </script>
 
