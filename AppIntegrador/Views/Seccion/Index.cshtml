@@ -68,6 +68,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Codigo })
+                </td>
             </tr>
         }
     </table>

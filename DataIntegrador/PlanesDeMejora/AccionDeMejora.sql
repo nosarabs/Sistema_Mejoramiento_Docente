@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[AccionDeMejora]
 	fechaInicio date,
 	fechaFin date,
 	codPlantilla int,
-
+	borrado bit,
 	constraint DateOrderAM check(fechaFin >= fechaInicio),
 	constraint PK_AccionDeMejora primary key(codPlan, nombreObj, descripcion),
 	constraint FK_AccionDeMejora_Objetivo foreign key(codPlan, nombreObj) references Objetivo(codPlan, nombre) on delete cascade,

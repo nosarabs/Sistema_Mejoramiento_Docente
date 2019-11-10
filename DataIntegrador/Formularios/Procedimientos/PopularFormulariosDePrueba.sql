@@ -25,8 +25,8 @@ BEGIN
 	-- Asigna las secciones a este formulario de prueba
 	MERGE INTO Formulario_tiene_seccion AS Target
 	USING (VALUES
-		('FORMSU01', 'INFOPROF', 1),
-		('FORMSU01', 'SUPRUEBA', 2),
+		('FORMSU01', 'INFOPROF', 0),
+		('FORMSU01', 'SUPRUEBA', 1),
 		('CI0128G1', 'CI0128S1', 0),
 		('CI0128G1', 'CI0128S2', 1),
 		('CI0128G1', 'CI0128S3', 2),

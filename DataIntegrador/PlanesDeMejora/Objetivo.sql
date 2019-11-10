@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[Objetivo]
 	fechaFin date,
 	nombTipoObj varchar(50),
 	codPlantilla int,
-
+	borrado bit,
 	constraint DateOrderObj check(fechaFin >= fechaInicio),
 	constraint PK_Objetivo primary key(codPlan, nombre),
 	constraint FK_Objetivo_Plan foreign key(codPlan) references PlanDeMejora(codigo) on delete cascade,

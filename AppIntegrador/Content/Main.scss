@@ -1,0 +1,101 @@
+﻿
+@import "BootstrapSccs/bootstrap.scss";
+
+.btn-blancoUCR {
+    @extend .btn;
+    @extend .btn-light;
+    @extend .text-dark;
+    @extend .border-secondary;
+}
+
+.btn-azulUCR {
+    @extend .btn;
+    @extend .azulUCR;
+}
+
+.btn-azulUCR:hover {
+    color: #fff;
+    background-color: #0678b5;
+}
+
+.redondeado {
+    border-radius: 15px !important;
+}
+
+.btn-rojoUCR {
+    @extend .btn;
+    @extend .btn-danger;
+}
+
+.btn-linkUCR {
+    @extend .btn;
+    @extend .btn-link;
+}
+
+.grisUCR1 {
+    background-color: #e9e9e9;
+    @extend .redondeado;
+}
+
+.grisUCR2 {
+    background-color: #f1f1f1;
+    @extend .redondeado;
+}
+
+.grisUCR3 {
+    background-color: #fdfdfd;
+    @extend .redondeado;
+}
+
+.card {
+    @extend .redondeado;
+}
+
+.radio-dibujo {
+    @extend .radio-grande;
+    margin-left: 10px;
+    margin-bottom: 16px;
+}
+
+.icono-sort {
+    margin-left: 10px;
+    margin-top: 2.9%;
+}
+
+.azulUCR {
+    color: #fff;
+    background-color: #41ade7;
+}
+
+.orden {
+    display: none;
+}
+
+.sortable-container {
+    @extend .grisUCR1;
+}
+
+.sortable-container:hover {
+    background-color: lightgrey;
+    cursor: grab;
+}
+
+.sortable-container:active {
+    background-color: #c4c4c4;
+    cursor: grabbing;
+}
+
+.opcion-pequena {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+.sticky-bottom {
+    position: sticky;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+.radio-grande {
+    transform: scale(1.5);
+}

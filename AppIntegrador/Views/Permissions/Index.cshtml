@@ -1,0 +1,272 @@
+﻿@model AppIntegrador.Models.PermissionsViewHolder
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/users&profiles")
+
+<div class="container">
+    <div class="row" style="display:flex; padding-left:15px; ">
+        <div class="column" style="flex:50%;">
+            <h2>
+                Administración de permisos y perfiles
+            </h2>
+        </div>
+    </div>
+    <br />
+    @using (Html.BeginForm("GuardarPermisos", "Permissions", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "IndexForm" }))
+    {
+        <div class="row" style="display:flex; padding-left:15px; ">
+            <div class="col-md-4 pl-0" style="flex:50%;">
+                @Html.Label("Seleccione perfil")
+                <br />
+                @Html.DropDownListFor(model => model.PerfilesSeleccionados, Model.ListaPerfiles, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar perfil", @required = "required" })
+                <br />
+            </div>
+            <div class="col-md-4" style="flex:50%;">
+                @Html.Label("Seleccione carrera")
+                <br />
+
+                @Html.DropDownListFor(model => model.CarrerasSeleccionadas, Model.ListaCarreras, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar carrera", @required = "required" })
+                <br />
+            </div>
+            <div class="col-md-4" style="flex:50%;">
+                @Html.Label("Seleccione énfasis")
+                <br />
+                @Html.DropDownListFor(model => model.EnfasisSeleccionados, Model.ListaEnfasis, new { @class = "form-control selectpicker", data_live_search = "true", data_live_search_placeholder = "Buscar énfasis", @required = "required" })
+                <br />
+            </div>
+        </div>
+        <br />
+        <div class="row my-4">
+            <div class="col-6">
+                <table class="table table-fixed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-3">
+                                @Html.Label("Usuarios")
+                            </th>
+                            <th class="col-3">
+                                @Html.Label("Perfil asignado a Usuario")
+                                <span class="float-right">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_users" })
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Personas.Count(); ++i)
+                        {
+                            <tr>
+                                @Html.HiddenFor(model => model.Personas[i].Correo)
+                                @Html.HiddenFor(model => model.Personas[i].NombreCompleto)
+                                <td class="col-3">
+                                    @Html.DisplayFor(model => model.Personas[i].NombreCompleto)
+                                </td>
+                                <td class="col-3 text-center">
+                                    @Html.CheckBoxFor(model => model.Personas[i].HasProfileInEmph, new { @class = "userCheckbox", onclick = "saveChangesUser()" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <table class="table table-fixed table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.Label("Permisos")
+                            </th>
+                            <th>
+                                @Html.Label("Asignado a Perfil")
+                                <span class="float-right">
+                                    @Html.CheckBoxFor(model => model.PersonasSeleccionadas, new { id = "select_all_profiles" })
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Permisos.Count(); ++i)
+                        {
+                            <tr>
+                                @Html.HiddenFor(model => model.Permisos[i].Id)
+                                @Html.HiddenFor(model => model.Permisos[i].Descripcion)
+                                <td>
+                                    @Html.DisplayFor(model => model.Permisos[i].Descripcion)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.CheckBoxFor(model => model.Permisos[i].ActiveInProfileEmph, new { @class = "profileCheckbox", onclick = "saveChanges()" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <input type="hidden" id="isUser" value="false" name="isUser">
+        <div class="clearfix">
+            <div class=" float-right"><div class="fa fa-check" id="estadoGuardar" role="status"></div></div>
+        </div>
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!--Script con jQuery para la funcionalidad de los dropdowns de selección de perfil, carrera y énfasis.-->
+<script>
+    $("#PerfilesSeleccionados").on("change", function () {
+        var selectedProfileCode = $(this).val();
+        var selectedProfileName = $("#PerfilesSeleccionados option:selected").text();
+        var selectedMajorCode = $("#CarrerasSeleccionadas").val();
+        var selectedEmphCode = $("#EnfasisSeleccionados").val();
+        clearCheckboxes();
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
+        reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode);
+    })
+
+    $("#CarrerasSeleccionadas").on("change", function () {
+        clearCheckboxes();
+        cargarEnfasis($(this).val());
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
+    })
+
+    function cargarEnfasis(val) {
+        $.getJSON('@Url.Action("CargarEnfasisDeCarrera", "Permissions")' + "?value=" + val, function (result) {
+            $('#EnfasisSeleccionados').find('option').remove();
+            $('#EnfasisSeleccionados').selectpicker('refresh');
+            $("#EnfasisSeleccionados").html("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+            var data = result.data;
+            for (var i = 0; i < data.length; ++i) {
+                var splitted = data[i].toString().split(",");
+                $("#EnfasisSeleccionados").append("<option value=" + splitted[0] + ">" + splitted[1] + "</option>");
+            }
+            $("#EnfasisSeleccionados").selectpicker('refresh');
+            $('.selectpicker').selectpicker('render');
+            $('.selectpicker').selectpicker('refresh');
+            enableDisableCheckboxes(true);
+        })
+    }
+
+    $("#EnfasisSeleccionados").on("change", function () {
+        var profile = window.document.getElementById("PerfilesSeleccionados");
+        var major = window.document.getElementById("CarrerasSeleccionadas");
+        var emphasis = window.document.getElementById("EnfasisSeleccionados");
+        var selectedProfileCode = profile.options[profile.selectedIndex].value;
+        var selectedProfileName = profile.options[profile.selectedIndex].text;
+        var selectedMajorCode = major.options[major.selectedIndex].value;
+        var selectedEmphCode = emphasis.options[emphasis.selectedIndex].value;
+        enableDisableCheckboxes(false);
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
+        reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode);
+
+    })
+
+    /*Función para volver a cargar los datos de los checkboxes cuando se cambia el perfil, carrera o énfasis.*/
+    function reloadCheckboxes(selectedProfileCode, selectedProfileName, selectedMajorCode, selectedEmphCode) {
+        if (selectedProfileCode != null && selectedProfileName != null && selectedMajorCode != null && selectedEmphCode != null) {
+            $.post("CargarCheckboxes", { profileCode: selectedProfileCode, profileName: selectedProfileName, majorCode: selectedMajorCode, emphCode: selectedEmphCode }, function (result) {
+                for (var i = 0; i < result.permissions.length; ++i)
+                    $("#Permisos_" + i + "__ActiveInProfileEmph").prop('checked', result.permissions[i].Checked);
+                for (var i = 0; i < result.persons.length; ++i)
+                    $("#Personas_" + i + "__HasProfileInEmph").prop('checked', result.persons[i].Checked);
+
+            })
+        }
+    }
+    /*Función para limpiar los checkboxes cuando cambia el perfil o la carrera seleccionada, y que no quede información vieja.*/
+    function clearCheckboxes() {
+        for (var i = 0; i < @Model.Permisos.Count(); ++i)
+            $("#Permisos_" + i + "__ActiveInProfileEmph").prop('checked', false);
+        for (var i = 0; i < @Model.Personas.Count(); ++i)
+            $("#Personas_" + i + "__HasProfileInEmph").prop('checked', false);
+    }
+
+    function enableDisableCheckboxes(disable) {
+        $(".profileCheckbox").attr('disabled', disable);
+        $(".userCheckbox").attr('disabled', disable);
+        $("#select_all_profiles").attr('disabled', disable);
+        $("#select_all_users").attr('disabled', disable);
+    }
+
+    window.onload = function loadDefaultValue() {
+        $('#EnfasisSeleccionados').find('option').remove();
+        $('#EnfasisSeleccionados').selectpicker('refresh');
+        $("#PerfilesSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+        $("#EnfasisSeleccionados").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+        $("#CarrerasSeleccionadas").append("<option value=\"\" selected disabled hidden >Nada seleccionado</option>");
+        enableDisableCheckboxes(true);
+    }
+
+    $("#IndexForm").submit(function (e) {        
+        e.preventDefault();
+        $("#estadoGuardar").toggleClass("fa-check spinner-border")
+        var actionUrl = $(this).attr("action");
+        $.post(actionUrl, $(this).serialize());
+        setTimeout(function () {
+            $("#estadoGuardar").toggleClass("fa-check spinner-border");
+        }, 250);
+        
+    });
+    function saveChangesUser() {
+        window.document.getElementById("isUser").value = true;
+        var myForm = window.document.getElementById("IndexForm");
+        submitForm(myForm);
+    }
+    function saveChanges() {
+        window.document.getElementById("isUser").value = false;
+        var myForm = window.document.getElementById("IndexForm");
+        submitForm(myForm);
+    }
+    // Esto permite que se dispare el onsubmit del form para que se haga de forma asincrónica
+    window.submitForm = function(form) {
+        //Se simula la interacción del usuario con un botón para que onsubmit se ejecute
+        var button = form.ownerDocument.createElement('input');
+        button.style.display = 'none';
+        button.type = 'submit';
+        form.appendChild(button).click();
+        form.removeChild(button);
+    };
+
+</script>
+
+<!-- TAM-3.4 Scripts para seleccionar todas las casillas de usuarios y permisos -->
+<script>
+    $('#select_all_users').click(function () {
+        $('.userCheckbox').prop('checked', this.checked);
+        saveChangesUser();
+    });
+    $('#select_all_profiles').click(function () {
+        $('.profileCheckbox').prop('checked', this.checked);
+        saveChanges();
+    });
+</script>
+
+@section Scripts {
+    <script src="https://use.fontawesome.com/4889cf49d6.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquerymin")
+    @Scripts.Render("~/bundles/custom")
+    @Scripts.Render("~/bundles/popper1.14.7")
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>-->
