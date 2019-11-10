@@ -147,7 +147,7 @@ namespace AppIntegrador.Controllers
 
                 List<Persona> Personas = db.Persona.ToList();
                 // Validamos campos de Identificación según su tipo y el formato del Carné
-                if (!this.ValidateInputFields(persona, persona.Estudiante))
+                if (!this.ValidateInputFields(persona))
                     return View(persona);
 
                 //Confirmamos si alguna persona existe con ese correo
@@ -263,7 +263,7 @@ namespace AppIntegrador.Controllers
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
-            if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+            if (!this.ValidateInputFields(usuarioPersona.Persona))
                 return View(usuarioPersona);
 
             if (ModelState.IsValid &&
@@ -361,10 +361,6 @@ namespace AppIntegrador.Controllers
             usuarioPersonaRefreshed.Persona = personaEdited;
             usuarioPersonaRefreshed.Usuario = usuarioEdited;
 
-            ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", usuarioPersona.Persona.Correo);
-            ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", usuarioPersona.Persona.Correo);
-            ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
-
             /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
             //System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
             System.Web.HttpContext.Current.Application["CurrentEditingUser"] = mailToSearch;
@@ -423,7 +419,7 @@ namespace AppIntegrador.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ValidateInputFields(Persona persona, Estudiante estudiante)
+        private bool ValidateInputFields(Persona persona)
         {
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
