@@ -162,7 +162,6 @@
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
-    <Compile Include="Controllers\SeccionesController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
