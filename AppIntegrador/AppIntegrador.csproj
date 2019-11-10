@@ -435,7 +435,6 @@
     <Content Include="Content\Visualizacion\bootstrap-multiselect.css" />
     <Content Include="Content\Visualizacion\bootstrap.min.css" />
     <Content Include="Content\Visualizacion\styles.css" />
-    <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -541,7 +540,6 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
