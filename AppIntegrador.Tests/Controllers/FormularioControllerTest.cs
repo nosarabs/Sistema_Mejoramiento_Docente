@@ -101,6 +101,52 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual("Index", result.ViewName);
         }
 
+        [TestMethod]
+        public void TestIndexFilters()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            Formulario form = new Formulario()
+            {
+                Codigo = "CI0128IE",
+                Nombre = "Sección de prueba"
+            };
+
+            Formulario form2 = new Formulario()
+            {
+                Codigo = "CI0122IE",
+                Nombre = "Sección de p3ueba"
+            };
+
+            IQueryable<Formulario> formularios = new List<Formulario> { form, form2 }.AsQueryable();
+
+            var mock = new Mock<DbSet<Formulario>>();
+
+            mock.As<IQueryable<Formulario>>().Setup(m => m.Provider).Returns(formularios.Provider);
+            mock.As<IQueryable<Formulario>>().Setup(m => m.Expression).Returns(formularios.Expression);
+            mock.As<IQueryable<Formulario>>().Setup(m => m.ElementType).Returns(formularios.ElementType);
+            mock.As<IQueryable<Formulario>>().Setup(m => m.GetEnumerator()).Returns(formularios.GetEnumerator());
+
+            mockDb.Setup(x => x.Formulario).Returns(mock.Object);
+
+            // Se prueba que el método no se caiga con parámetros nulos
+            var result = controller.Index(null, null, null);
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un paramétro de código formulario real
+            var result1 = controller.Index("CI0128", "", "");
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un parámetro de nombre real
+            var result2 = controller.Index("", "Prueba", "");
+            Assert.IsNotNull(result);
+
+            // Se prueba que el método no se caiga con un parámetro de tipo de pregunta real
+            var result3 = controller.Index("", "", "libre");
+            Assert.IsNotNull(result);
+        }
+
         /*[TestMethod]
         public void TextIndexNotNullAndView()
         {
