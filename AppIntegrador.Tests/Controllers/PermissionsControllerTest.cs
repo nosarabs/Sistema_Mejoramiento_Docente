@@ -9,6 +9,8 @@ using System.Web;
 using System.Security.Principal;
 using System.IO;
 using System.Web.Helpers;
+using System.Web.SessionState;
+using System.Reflection;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -116,22 +118,41 @@ namespace AppIntegrador.Tests.Controllers
         [TestInitialize]
         public void Init()
         {
-            HttpContext.Current = new HttpContext(
-            new HttpRequest("", "http://localhost:44334/Home/Login", ""),
-            new HttpResponse(new StringWriter())
-            );
+            // We need to setup the Current HTTP Context as follows:            
 
-            // User is logged in
-            HttpContext.Current.User = new GenericPrincipal(
-                new GenericIdentity("admin@mail.com"),
-                new string[0]
-                );
+            // Step 1: Setup the HTTP Request
+            var httpRequest = new HttpRequest("", "http://localhost/", "");
 
-            // User is logged out
-            HttpContext.Current.User = new GenericPrincipal(
-                new GenericIdentity(String.Empty),
-                new string[0]
-                );
+            // Step 2: Setup the HTTP Response
+            var httpResponce = new HttpResponse(new StringWriter());
+
+            // Step 3: Setup the Http Context
+            var httpContext = new HttpContext(httpRequest, httpResponce);
+            var sessionContainer =
+                new HttpSessionStateContainer("admin@mail.com",
+                                               new SessionStateItemCollection(),
+                                               new HttpStaticObjectsCollection(),
+                                               10,
+                                               true,
+                                               HttpCookieMode.AutoDetect,
+                                               SessionStateMode.InProc,
+                                               false);
+            httpContext.Items["AspSession"] =
+                typeof(HttpSessionState)
+                .GetConstructor(
+                                    BindingFlags.NonPublic | BindingFlags.Instance,
+                                    null,
+                                    CallingConventions.Standard,
+                                    new[] { typeof(HttpSessionStateContainer) },
+                                    null)
+                .Invoke(new object[] { sessionContainer });
+
+            var fakeIdentity = new GenericIdentity("admin@mail.com");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            // Step 4: Assign the Context
+            HttpContext.Current = httpContext;
+            HttpContext.Current.User = principal;
         }
     }
 }

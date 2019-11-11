@@ -12,13 +12,23 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AppIntegrador.Utilities;
 
-namespace AppIntegrador
+namespace AppIntegrador.Controllers
 {
     public class UsersController : Controller
     {
         private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
 
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public UsersController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public UsersController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Users
         /*Shows the list of users and persons in the database. Only displays users whose associated person exists.
@@ -62,7 +72,7 @@ namespace AppIntegrador
                                      Persona = p
                                  };
             usuarioPersona.OrderBy(up => up.Persona.Identificacion);
-            return View(usuarioPersona);
+            return View("Index",usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
 
@@ -99,7 +109,7 @@ namespace AppIntegrador
                 return HttpNotFound();
             }
 
-            return View(usuarioPersona);
+            return View("Details", usuarioPersona);
         }
         /*End of user story TAM-2.9.*/
 
@@ -115,7 +125,7 @@ namespace AppIntegrador
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne");
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo");
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password");
-            return View();
+            return View("Create");
         }
 
         // POST: Users/Create
@@ -137,7 +147,7 @@ namespace AppIntegrador
 
                 List<Persona> Personas = db.Persona.ToList();
                 // Validamos campos de Identificación según su tipo y el formato del Carné
-                if (!this.ValidateInputFields(persona, persona.Estudiante))
+                if (!this.ValidateInputFields(persona))
                     return View(persona);
 
                 //Confirmamos si alguna persona existe con ese correo
@@ -240,7 +250,7 @@ namespace AppIntegrador
             System.Web.HttpContext.Current.Application["CurrentEditingUser"] = usuarioPersona.Usuario.Username;
 
             /*Return the joint view of the selected User and Person as one plain entity.*/
-            return View(usuarioPersona);
+            return View("Edit", usuarioPersona);
         }
 
         // POST: Users/Edit/5
@@ -253,7 +263,7 @@ namespace AppIntegrador
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
-            if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+            if (!this.ValidateInputFields(usuarioPersona.Persona))
                 return View(usuarioPersona);
 
             if (ModelState.IsValid &&
@@ -351,10 +361,6 @@ namespace AppIntegrador
             usuarioPersonaRefreshed.Persona = personaEdited;
             usuarioPersonaRefreshed.Usuario = usuarioEdited;
 
-            ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", usuarioPersona.Persona.Correo);
-            ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", usuarioPersona.Persona.Correo);
-            ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
-
             /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
             //System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
             System.Web.HttpContext.Current.Application["CurrentEditingUser"] = mailToSearch;
@@ -413,7 +419,7 @@ namespace AppIntegrador
             base.Dispose(disposing);
         }
 
-        private bool ValidateInputFields(Persona persona, Estudiante estudiante)
+        private bool ValidateInputFields(Persona persona)
         {
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
