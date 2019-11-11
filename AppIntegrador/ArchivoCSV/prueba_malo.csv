@@ -1,0 +1,4 @@
+CodigoUnidad, NombreFacultad, CodigoCarrera, NombreCarrera, CodigoEnfasis, NombreEnfasis, SiglaCurso, NombreCurso, NumeroGrupo, Anno, Semestre, CorreoProfesor, IdProfesor, NombreProfesor, ApellidoProfesor, TipoIdProfesor, CorreoEstudiante, IdEstudiante, NombreEstudiante, ApellidoEstudiante, TipoIdEstudiante
+11111111116666666666666666666666666666666666666666666,Facultad de economicas,1234567890,Computacion,7777777777,Ingeniera de software,CI010,Diseno,1,2019,1,da@mail.com,1234567890,Alan,Calderon,Cedula,de@mail.com,2345678901,Denisse,Alfaro,Cedula
+67676767,Facultad de letras,3333333,Neurologia,44444444,Anatomia,ME4010,Anatomia I,1,2018,1,eb@mail.com,163110929,Juan,Saravia,Cedula,bg@mail.com,901029345,Daniel,Escamilla,Cedula
+ , , , , , , , , , , ,cc@mail.com,2673613,Ismael,Gutierrez,Cedula,uh@mail.com,676767676,Berta,Sanchez,Cedula
