@@ -177,6 +177,13 @@ namespace AppIntegrador.Tests.Controllers
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //Nos aseguramos que admin quede deslogeado despues de cada test.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+        }
     }
 }
 

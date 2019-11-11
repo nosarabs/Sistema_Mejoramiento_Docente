@@ -57,7 +57,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void EntrarCargarUsuariosSinPermiso()
         {
-
+            
             CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
             var httpContext = new HttpContext(
                 new HttpRequest("", "http://localhost:44334/Home/Login", ""),
@@ -91,6 +91,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestSeleccionarPerfilNotNull()
         {
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             PermissionsController controller = new PermissionsController();
             Assert.IsNotNull(controller.SeleccionarPerfil());
         }
@@ -119,6 +120,9 @@ namespace AppIntegrador.Tests.Controllers
         [TestInitialize]
         public void Init()
         {
+            //No aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
             // We need to setup the Current HTTP Context as follows:            
 
             // Step 1: Setup the HTTP Request
