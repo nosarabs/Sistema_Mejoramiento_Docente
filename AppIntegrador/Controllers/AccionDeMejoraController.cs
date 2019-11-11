@@ -183,14 +183,17 @@ namespace AppIntegrador.Controllers
             return PartialView("_crearAccionDeMejora", accion);
         }
 
-        public ActionResult AccionesDeObjetivo(int plan, string nombObj)
+        public ActionResult AccionesDeObjetivo(int plan, string nombObj, bool edit = true)
         {
             ViewBag.idPlan = plan;
             ViewBag.nombreObj = nombObj;
 
             IEnumerable<AppIntegrador.Models.AccionDeMejora> acciones = db.AccionDeMejora.Where(o => o.codPlan == plan && o.nombreObj == nombObj);
+            if (edit == false)
+            {
+                return PartialView("_listarAcciones", acciones);
+            }
             return PartialView("_accionesDeUnObjetivo", acciones);
         }
-
     }
 }

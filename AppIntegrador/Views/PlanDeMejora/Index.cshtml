@@ -15,105 +15,101 @@
 
 <div class="fullWidth">
 
-    <div class="planDiv">
-        @*
+    <div class="card card-default">
+        <div class="card-body">
+            @*
             Modificado por: Johan Córdoba
             Historia a la que pertenece: MOS-1.1 "agregar, modificar, borrar y consultar los planes de mejora"
             Diversos cambios para que todas las vistas tengan la misma forma.
-        *@
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="impText">Planes de Mejora</h2>
-            </div>
-            <div class="col-md-2">
+            *@
+            <div class="row">
+
+                <div class="col-md-8">
+                    <h2 class="impText">Planes de Mejora creados</h2>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                        
+                    @Html.ActionLink("Nuevo Plan de Mejora", "CreateNuevo", "PlanDeMejora", null, new { @class = "btn-azulUCR col-md-12" })
+                </div>
 
             </div>
-            <div class="col-md-2">
-                <br />
-                @Html.ActionLink("Nuevo Plan de Mejora", "CreateNuevo", "PlanDeMejora", null, new { @class = "btn btn-Nuevo col-md-12" })
-            </div>
 
-        </div>
+            @if (Model.Count() == 0)
+            {
+                <div class="centeredText">
+                    <p>
+                        Aún no se han creado planes de mejora
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <table class="table">
+                        <colgroup>
+                            <col style="width: 35%;">
+                            <col class="TablasFecha">
+                            <col class="TablasFecha">
+                            <col class="TablasOpciones">
+                        </colgroup>
 
-        @if (Model.Count() == 0)
-        {
-            <div class="centeredText">
-                <p>
-                    Aún no se han creado planes de mejora
-                </p>
-            </div>
-        }
-        else
-        {
-            <div>
-                <table class="table">
-                    <colgroup>
-                        <col class="TablasNombre">
-                        <col class="TablasFecha">
-                        <col class="TablasFecha">
-                        <col class="TablasOpciones">
-                    </colgroup>
-
-                    <thead>
-
-                        <tr class="EncabezadoTabla">
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.nombre)
-                            </th>
-                            <th>
-                                Creado por
-                            </th>
-                            @*<th> Se mantiene ya que posteriormente se va a implementar la opción
-                                Asignado a
-                            </th>*@
-                            <th>
-                                @Html.DisplayNameFor(model => model.fechaInicio)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.fechaFin)
-                            </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                    </thead>
-
-                    @foreach (var plan in Model)
-                    {
-                        <tbody id="data">
-                            <tr onclick="clickPlan(@plan.codigo)">
-                                <td>
-                                    @Html.DisplayFor(modelItem => plan.nombre)
-                                </td>
-                                <td> 
-                                    @HttpContext.Current.User.Identity.Name
-                                </td>
-                                @*<td>
-                                    @HttpContext.Current.User.Identity.Name
-                                </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => plan.fechaInicio)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => plan.fechaFin)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Editar", "EditarPlanDeMejora", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
-                                    @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                                    @Html.ActionLink("Detalles", "Detalles", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
-                                </td>
+                        <thead class="thead-light">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nombre)
+                                </th>
+                                @*<th>
+                                    Creado por
+                                </th>
+                                <th> Se mantiene ya que posteriormente se va a implementar la opción
+                                    Asignado a
+                                </th>*@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaInicio)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaFin)
+                                </th>
+                                <th>
+                                    Opciones
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody id="data">
+
+                            @foreach (var plan in Model)
+                            {
+                                <tr onclick="clickPlan(@plan.codigo)">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => plan.nombre)
+                                    </td>
+                                    @*<td>
+                                        @HttpContext.Current.User.Identity.Name
+                                    </td>
+                                    <td>
+                                        @HttpContext.Current.User.Identity.Name
+                                    </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => plan.fechaInicio)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => plan.fechaFin)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Editar", "EditarPlanDeMejora", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
+                                        @Html.ActionLink("Detalles", "Detalles", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
+                                        @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
-                    }
-                </table>
-
-                <hr />
-            </div>
-
-        }
+                     </table>
+                </div>
+            }
+        </div>
     </div>
-
 </div>
 
 

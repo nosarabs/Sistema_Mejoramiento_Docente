@@ -124,6 +124,7 @@
     }
 </form>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     function validacionADM() {
         let fechaInicioObjetivo = document.getElementById('fechaInicioADM');
@@ -170,6 +171,17 @@
                     cargarAccionesDeMejora(id, objetivo);
                 }
             });
-        });
+
+            swal({
+                title: "Acción de mejora guardada exitosamente!",
+                type: "success",
+                text: "Puede ser visto la lista de acciones de mejora del objetivo",
+                icon: 'success',
+
+                timer: 100000,
+                showConfirmButton: true
+
+            });
+    });
     });
 </script>

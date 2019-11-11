@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="botonCentrado">
-                            <input type="submit" id='sendPDMListo' value="Guardar" class="btn-azulUCR" disabled/>
+                            <input type="submit" id='sendPDMListo' value="Guardar" class="btn-azulUCR" disabled />
                         </div>
                     </div>
                 </div>
@@ -139,16 +139,16 @@
                             <div class="card card-default">
                                 <div class="card-body grisUCR3" id="divDeAccionables">
 
-                                        <div id="crearNuevoAccionable">
-                                            <h2>Seleccione una Acción de mejora</h2>
-                                            <div id="crearAccionable">
-                                            </div>
+                                    <div id="crearNuevoAccionable">
+                                        <h2>Seleccione una Acción de mejora</h2>
+                                        <div id="crearAccionable">
                                         </div>
-                                        <div>
-                                            <h4 style="text-align:center">Lista de accionables</h4>
-                                            <div id="divAccionables">
-                                            </div>
+                                    </div>
+                                    <div>
+                                        <h4 style="text-align:center">Lista de accionables</h4>
+                                        <div id="divAccionables">
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +157,7 @@
             </div>
         </div>
     </div>
+    @Html.ActionLink("Terminar", "Index", "PlanDeMejora", new { @class = "btn-azulUCR" })
 </div>
 
 @section Scripts {
@@ -164,8 +165,8 @@
 
 
     @*@Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")*@
-
+        @Scripts.Render("~/bundles/jquery")*@
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         // PARA LA VALIDACION DE LOS PLANES DE MEJORA
@@ -198,6 +199,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(function () {
 
@@ -225,6 +227,17 @@
                             }
                         });
                     }
+                });
+
+                swal({
+                    title: "Objetivo guardado exitosamente!",
+                    type: "success",
+                    text: "Puede ser visto la lista de objetivos",
+                    icon: 'success',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
                 });
             });
 

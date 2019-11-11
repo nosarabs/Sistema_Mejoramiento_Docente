@@ -1,14 +1,14 @@
-﻿@model IEnumerable<AppIntegrador.Models.Objetivo>
+﻿@model IEnumerable<AppIntegrador.Models.AccionDeMejora>
 
-@{ 
-    var numObj = 1;
+@{
+    var numAccionable = 1;
 }
 
 @if (Model.Count() == 0)
 {
     <div class="centeredText">
         <p>
-            Aún no se han creado Objetivos en este Plan de mejora.
+            Aún no se han creado Acciones de mejora en este Objetivo.
         </p>
     </div>
 }
@@ -17,8 +17,7 @@ else
     <table class="table">
         <colgroup>
             <col class="TablasNumero">
-            <col class="TablasNombre">
-            <col class="TablasDescripcion">
+            <col style="width: 57%;">
             <col class="TablasFecha">
             <col class="TablasFecha">
         </colgroup>
@@ -29,10 +28,7 @@ else
                     #
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.descripcion)
+                    @Html.DisplayNameFor(model => model.Objetivo.descripcion)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fechaInicio)
@@ -40,18 +36,16 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
+
             </tr>
         </thead>
 
-        @foreach (var item in Model)
-        {
-            <tbody>
-                <tr class="FilaTablasPlanesDeMejora" onclick="clickObjetivo(@numObj, @item.codPlan, `@item.nombre`)">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="FilaTablasPlanesDeMejora" onclick="clickAccionDeMejora(@numAccionable, @item.codPlan, `@item.nombreObj`, `@item.descripcion`)" )>
                     <td>
-                        @numObj
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nombre)
+                        @numAccionable
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.descripcion)
@@ -63,9 +57,20 @@ else
                         @Html.DisplayFor(modelItem => item.fechaFin)
                     </td>
                 </tr>
-            </tbody>
-            numObj++;
-        }
-
+                numAccionable++;
+            }
+        </tbody>
     </table>
+    <div class="card card-default">
+        <div class="card-body grisUCR3">
+            <div>
+                <div id="encabezadoAccionable">
+                    <h4 style="text-align:center">Lista de Accionables</h4>
+                    <h2 style="text-align:center">Seleccione una acción de mejora</h2>
+                </div>
+                <div id="divAccionables">
+                </div>
+            </div>
+        </div>
+    </div>
 }
