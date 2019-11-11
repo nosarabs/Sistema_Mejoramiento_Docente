@@ -47,21 +47,6 @@ namespace AppIntegrador.Controllers
                 return View(seccion.ToList());
             }
         }
-       
-        // GET: Seccion/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(seccion);
-        }
 
         // GET: Seccion/Create
         public ActionResult Create()
