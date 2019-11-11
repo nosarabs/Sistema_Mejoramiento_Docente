@@ -246,24 +246,6 @@ namespace AppIntegrador.Controllers
                     if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
                     {
                         pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Find(pregunta.Pregunta.Codigo);
-                        if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
-                        {
-                            var resultadoObtenerOpciones = db.ObtenerOpcionesDePregunta(pregunta.Pregunta.Codigo);
-                            
-                            if(resultadoObtenerOpciones != null)
-                            {
-                                pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion = new List<Opciones_de_seleccion>();
-                                foreach (var opcion in resultadoObtenerOpciones.ToList())
-                                {
-                                    pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion.Add
-                                        (new Opciones_de_seleccion { Codigo = pregunta.Pregunta.Codigo, Orden = opcion.Orden, Texto = opcion.Texto });
-                                }
-                            }
-                        }
-                        else if (pregunta.Pregunta.Tipo == "E")
-                        {
-                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Find(pregunta.Pregunta.Codigo);
-                        }
 
                         if (respuestas != null)
                         {
