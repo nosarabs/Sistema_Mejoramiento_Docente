@@ -74,3 +74,8 @@ ul, ol {
 .nombreProyecto {
     font-size: 2em !important;
 }
+
+.mainProjectTitle {
+    font-weight: bold;
+    font-size: 0.6em;
+}

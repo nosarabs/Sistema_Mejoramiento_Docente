@@ -12,45 +12,37 @@ namespace AppIntegrador.Models
 
     public static class CurrentUser
     {
-        private static string Username { get; set; }
-
-        private static string Profile { get; set; }
-
-        private static string MajorId { get; set; }
-
-        private static string EmphasisId { get; set; }
-
         public static string getUsername()
         {
             updateCurrentUser();
-            return Username;
+            return (string) HttpContext.Current.Session["Username"];
         }
 
         public static string getUserProfile()
         {
             updateCurrentUser();
-            return Profile;
+            return (string) HttpContext.Current.Session["Profile"];
         }
 
         public static string getUserMajorId()
         {
             updateCurrentUser();
-            return MajorId;
+            return (string) HttpContext.Current.Session["MajorId"];
         }
 
         public static string getUserEmphasisId()
         {
             updateCurrentUser();
-            return EmphasisId;
+            return (string) HttpContext.Current.Session["EmphasisId"];
         }
 
         public static void setUserProfile(string profile)
         {
             updateCurrentUser();
-            Profile = profile;
+            HttpContext.Current.Session["Profile"] = profile;
             DataIntegradorEntities db = new DataIntegradorEntities();
             UsuarioActual user = new UsuarioActual();
-            user = db.UsuarioActual.Find(Username);
+            user = db.UsuarioActual.Find(getUsername());
             user.Perfil = profile;
             db.SaveChanges();
         }
@@ -58,10 +50,10 @@ namespace AppIntegrador.Models
         public static void setUserMajor(string major)
         {
             updateCurrentUser();
-            MajorId = major;
+            HttpContext.Current.Session["MajorId"] = major;
             DataIntegradorEntities db = new DataIntegradorEntities();
             UsuarioActual user = new UsuarioActual();
-            user = db.UsuarioActual.Find(Username);
+            user = db.UsuarioActual.Find(getUsername());
             user.CodCarrera = major;
             db.SaveChanges();
         }
@@ -69,10 +61,10 @@ namespace AppIntegrador.Models
         public static void setUserEmphasis(string emphasis)
         {
             updateCurrentUser();
-            EmphasisId = emphasis;
+            HttpContext.Current.Session["EmphasisId"] = emphasis;
             DataIntegradorEntities db = new DataIntegradorEntities();
             UsuarioActual user = new UsuarioActual();
-            user = db.UsuarioActual.Find(Username);
+            user = db.UsuarioActual.Find(getUsername());
             user.CodEnfasis = emphasis;
             db.SaveChanges();
         }
@@ -105,22 +97,21 @@ namespace AppIntegrador.Models
                     Console.WriteLine(e.Message);
                 }
             }
-            Username = username;
-            Profile = profile;
-            MajorId = majorId;
-            EmphasisId = emphasisId;
+            HttpContext.Current.Session["Username"] = username;
+            HttpContext.Current.Session["Profile"] = profile;
+            HttpContext.Current.Session["MajorId"] = majorId;
+            HttpContext.Current.Session["EmphasisId"] = emphasisId;
         }
 
-        public static void deleteCurrentUser(string username = null)
+        public static void deleteCurrentUser(string username)
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
             UsuarioActual newUser = new UsuarioActual();
-            newUser.CorreoUsuario = username != null? username : Username;
+            newUser.CorreoUsuario = (username != null? username : (string)HttpContext.Current.Session["Username"]);
             if (username == null)
             {
-                newUser.Perfil = Profile;
-                newUser.CodCarrera = MajorId;
-                newUser.CodEnfasis = EmphasisId;
+                Console.WriteLine("Error al borrar el usuario.");
+                return;
             }
             else {
                 UsuarioActual otroUsuario = db.UsuarioActual.Find(username);
@@ -134,23 +125,30 @@ namespace AppIntegrador.Models
                 db.UsuarioActual.Attach(newUser);
             }
             db.UsuarioActual.Remove(newUser);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         //Método para actualizar desde base de datos los datos del usuario actual, en caso de que se borren
         //automáticamente. 
         private static void updateCurrentUser()
         {
-            if (Username == null || System.Web.HttpContext.Current.User.Identity.Name != Username) {
+            if ((string)HttpContext.Current.Session["Username"] == null || System.Web.HttpContext.Current.User.Identity.Name != (string)HttpContext.Current.Session["Username"]) {
                 DataIntegradorEntities db = new DataIntegradorEntities();
                 string name = System.Web.HttpContext.Current.User.Identity.Name;
                 UsuarioActual user = db.UsuarioActual.Find(name);
                 if (user != null)
                 {
-                    Username = user.CorreoUsuario;
-                    Profile = user.Perfil;
-                    MajorId = user.CodCarrera;
-                    EmphasisId = user.CodEnfasis;
+                    HttpContext.Current.Session["Username"] = user.CorreoUsuario;
+                    HttpContext.Current.Session["Profile"] = user.Perfil;
+                    HttpContext.Current.Session["MajorId"] = user.CodCarrera;
+                    HttpContext.Current.Session["EmphasisId"] = user.CodEnfasis;
                 }
             }
         }

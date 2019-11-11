@@ -26,6 +26,7 @@ namespace AppIntegrador.Models
         public Nullable<System.DateTime> fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
         public Nullable<int> codPlantilla { get; set; }
+        public Nullable<bool> borrado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accionable> Accionable { get; set; }

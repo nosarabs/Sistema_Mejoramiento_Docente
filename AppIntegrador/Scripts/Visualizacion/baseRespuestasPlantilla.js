@@ -4,9 +4,7 @@
 
         this.base = document.createElement("div");
         this.base.className = "row content";
-    
-  
-        this.base.id = "tipo";
+        this.base.id = tipo;
 
     }
 

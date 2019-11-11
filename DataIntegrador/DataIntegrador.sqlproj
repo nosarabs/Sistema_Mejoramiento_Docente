@@ -67,6 +67,7 @@
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
     <Folder Include="Usuarios y Perfiles\Functions" />
+    <Folder Include="FiltrosFormulario" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -168,6 +169,46 @@
     <Build Include="Usuarios y Perfiles\Procedures\AgregarPerfilPermiso.sql" />
     <Build Include="UsuarioActual.sql" />
     <Build Include="Usuarios y Perfiles\Triggers\BorrarPersona.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarAccionDeMejora.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
+    <Build Include="PlanesDeMejora\SeAsignaA.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
+    <Build Include="FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
+    <Build Include="InsertarUnidadCSV.sql" />
+    <Build Include="InsertarCarreraCSV.sql" />
+    <Build Include="InsertarEnfasisCSV.sql" />
+    <Build Include="InsertarCursoCSV.sql" />
+    <Build Include="InsertarGrupoCSV.sql" />
+    <Build Include="InsertarPersonaCSV.sql" />
+    <Build Include="InsertarProfesorCSV.sql" />
+    <Build Include="InsertarEstudianteCSV.sql" />
+    <Build Include="InsertarFuncionarioCSV.sql" />
+    <Build Include="TriggerUnidad.sql" />
+    <Build Include="TriggerCarrera.sql" />
+    <Build Include="TriggerEnfasis.sql" />
+    <Build Include="TriggerCurso.sql" />
+    <Build Include="TriggerGrupo.sql" />
+    <Build Include="TriggerFuncionario.sql" />
+    <Build Include="TriggerProfesor.sql" />
+    <Build Include="TriggerEstudiante.sql" />
+    <Build Include="InsertarTrabajaEn.sql" />
+    <Build Include="InsertarInscrita_En.sql" />
+    <Build Include="InsertarPertenece_a.sql" />
+    <Build Include="InsertarImparte.sql" />
+    <Build Include="InsertarEmpadronadoEn.sql" />
+    <Build Include="Usuarios y Perfiles\EmpadronadoEnInsertar.sql" />
+    <Build Include="TriggerImparte.sql" />
+    <Build Include="TriggerInscritaEn.sql" />
+    <Build Include="TriggerPertenece_a.sql" />
+    <Build Include="TriggerTrabajaEn.sql" />
+    <Build Include="PromedioProfesor.sql" />
+    <Build Include="PromedioCursos.sql" />
+    <Build Include="InsertarMatriculado_en.sql" />
+    <Build Include="TriggerMatriculado_en.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
