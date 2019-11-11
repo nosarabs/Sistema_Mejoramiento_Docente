@@ -54,14 +54,27 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="CodeFirstStoreFunctions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.CodeFirstStoreFunctions.1.2.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.1.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>packages\ExcelDataReader.3.1.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="LINQtoCSV, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\LINQtoCSV.1.5.0.0\lib\net35\LINQtoCSV.dll</HintPath>
+    </Reference>
+    <Reference Include="LINQtoCSV.Excel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\LINQtoCSV.Excel.1.0.1\lib\net452\LINQtoCSV.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq, Version=4.13.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
@@ -70,6 +83,14 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -139,6 +160,7 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -151,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -183,12 +206,14 @@
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
+    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -232,10 +257,26 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
+    <Compile Include="Models\LlenarCSV.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
     <Compile Include="Models\Objetivo.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
@@ -378,16 +419,6 @@
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
-    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
-    <Content Include="Content\UsuariosYPerfiles\login.css" />
-    <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
-    <Content Include="Content\Visualizacion\bootstrap.min.css" />
-    <Content Include="Content\Visualizacion\styles.css" />
-    <Content Include="Content\login.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
@@ -398,6 +429,16 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
+    <Content Include="Content\UsuariosYPerfiles\login.css" />
+    <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
+    <Content Include="Content\Visualizacion\bootstrap-multiselect.css" />
+    <Content Include="Content\Visualizacion\bootstrap.min.css" />
+    <Content Include="Content\Visualizacion\styles.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Index.cshtml" />
@@ -499,7 +540,6 @@
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -534,12 +574,16 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
+    <Content Include="Scripts\Visualizacion\bootstrap-multiselect.js" />
     <Content Include="Scripts\Visualizacion\botones.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />
     <Content Include="Scripts\Visualizacion\chroma.js" />
+    <Content Include="Scripts\CSVuploader.js" />
     <Content Include="Scripts\Visualizacion\estadisticas.js" />
+    <Content Include="Scripts\Visualizacion\filtros.js" />
     <Content Include="Scripts\Visualizacion\graficos.js" />
+    <Content Include="Scripts\Visualizacion\graficosDashboard.js" />
     <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
     <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
@@ -648,9 +692,11 @@
     <Content Include="Views\Objetivos\_listarObjetivos.cshtml" />
     <Content Include="Views\AccionDeMejora\_listarAcciones.cshtml" />
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
+    <Content Include="Views\CSV\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ArchivoCSV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

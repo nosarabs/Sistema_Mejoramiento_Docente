@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
         // GET: ResultadosFormulario
-        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano)
+        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, string fechaInicio, string fechaFin)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -28,6 +29,8 @@ namespace AppIntegrador.Controllers
                 NumeroGrupo = serializer.Serialize(numeroGrupo),
                 Semestre = serializer.Serialize(semestre),
                 Ano = serializer.Serialize(ano),
+                FechaInicio = serializer.Serialize(fechaInicio),
+                FechaFin = serializer.Serialize(fechaFin),
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
             };
             return View(modelo);
@@ -43,7 +46,7 @@ namespace AppIntegrador.Controllers
                                 join p in db.Pregunta on sp.PCodigo equals p.Codigo
                                 where f.Codigo == codigoFormulario
                                 orderby fs.Orden, sp.Orden
-                                select new Preguntas { codigoPregunta = p.Codigo, textoPregunta = p.Enunciado };
+                                select new Preguntas { codigoSeccion = sp.SCodigo, codigoPregunta = p.Codigo, textoPregunta = p.Enunciado };
 
             var listaPreguntas = preguntas.ToList();
 
@@ -82,7 +85,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeX);
         }
 
-        public String ObtenerRespuestasEscala(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        public String ObtenerRespuestasEscala(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -111,7 +114,10 @@ namespace AppIntegrador.Controllers
                                           && f.GNumero == numeroGrupo
                                           && f.GSemestre == semestre
                                           && f.GAnno == ano
+                                          && f.SCodigo == codigoSeccion
                                           && f.PCodigo == codigoPregunta
+                                          && f.Fecha >= fechaInicio
+                                          && f.Fecha <= fechaFin
                                           select f.OpcionSeleccionada).Count();
                 ejeY.Add(contadorRespuestas);
                 ++numOpcion;
@@ -119,7 +125,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeY);
         }
 
-        public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -129,7 +135,10 @@ namespace AppIntegrador.Controllers
                              && rrl.GNumero == numeroGrupo
                              && rrl.GSemestre == semestre
                              && rrl.GAnno == ano
+                             && rrl.SCodigo == codigoSeccion
                              && rrl.PCodigo == codigoPregunta
+                             && rrl.Fecha >= fechaInicio
+                             && rrl.Fecha <= fechaFin
                              select new SelectListItem { Value = rrl.Observacion };
 
             return serializer.Serialize(respuestas.ToList());
@@ -181,7 +190,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(opciones);
         }
 
-        public String ObtenerOpcionesSeleccionadasPreguntasSeleccion(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta, int numOpciones)
+        public String ObtenerOpcionesSeleccionadasPreguntasSeleccion(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta, int numOpciones)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> respuestas = new List<int>();
@@ -197,14 +206,17 @@ namespace AppIntegrador.Controllers
                         && osrco.GNumero == numeroGrupo
                         && osrco.GSemestre == semestre
                         && osrco.GAnno == ano
+                        && osrco.SCodigo == codigoSeccion
                         && osrco.PCodigo == codigoPregunta
+                        && osrco.Fecha >= fechaInicio
+                        && osrco.Fecha <= fechaFin
                      select osrco).Count());
             }
                                           
             return serializer.Serialize(respuestas);
         }
 
-        public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
@@ -215,28 +227,31 @@ namespace AppIntegrador.Controllers
                                 && rrco.GNumero == numeroGrupo
                                 && rrco.GSemestre == semestre
                                 && rrco.GAnno == ano
+                                && rrco.SCodigo == codigoSeccion
                                 && rrco.PCodigo == codigoPregunta
+                                && rrco.Fecha >= fechaInicio
+                                && rrco.Fecha <= fechaFin
                                 select new SelectListItem { Value = rrco.Justificacion };
 
             return serializer.Serialize(respuestas.ToList());
         }
 
-        public String obtenerDesviacionEstandar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta) {
+        public String obtenerDesviacionEstandar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta) {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultado = new ObjectParameter("Desviacion", typeof(float));
-            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultado);
+            db.DesviacionEstandarEscalar(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, resultado);
 
             return serializer.Serialize(resultado.Value);
 
         }
 
 
-        public String getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        public String getMedianaRespuestaEscalar(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultadoMediana = new ObjectParameter("mediana", typeof(float));
-            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultadoMediana);
+            db.Mediana(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, resultadoMediana);
 
             return serializer.Serialize(resultadoMediana.Value);
         }
@@ -245,11 +260,11 @@ namespace AppIntegrador.Controllers
         //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
         //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 
         //Cumplimiento: 7/10
-        public String getPromedio(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, String codigoPregunta)
+        public String getPromedio(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, codigoPregunta, resultPromedio);
+            db.PromedioRespuestasPreguntaEscalaNumerica(codigoFormulario, siglaCurso, numeroGrupo, ano, semestre, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, resultPromedio);
 
             return serializer.Serialize(resultPromedio.Value);
         }
