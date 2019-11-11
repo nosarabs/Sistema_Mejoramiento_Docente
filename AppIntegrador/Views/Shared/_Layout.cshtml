@@ -67,8 +67,8 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
-                            con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
-                            por otros medios.-->
+        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+        por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -84,7 +84,7 @@
                         else
                         {
                             <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                <span style="color:gray" >Usuarios &#9660;</span>
+                                <span style="color:gray">Usuarios &#9660;</span>
                             </li>
                         }
                         <li>
@@ -135,7 +135,13 @@
                         <li>
                             <a href="">Visualización &#9660;</a>
                             <ul>
-                                <li><a href="/ResultadosFormulario/Formulario?codigoFormulario=00000001&siglaCurso=CI0128&numeroGrupo=1&semestre=2&ano=2019">Formulario</a></li>
+                                <li><a href="/Dashboard/Index">Dashboard</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Carga de Datos &#9660;</a>
+                            <ul>
+                                <li><a href="/CSV/Index">Carga de archivo CSV</a></li>
                             </ul>
                         </li>
                         <li><a href="/Home/About">Acerca de</a></li>
