@@ -134,7 +134,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             SeccionController seccionController = new SeccionController();
 
-            ViewResult result = seccionController.Create("00000001", null, null, null) as ViewResult;
+            ViewResult result = seccionController.Create("00000001", "", "", "") as ViewResult;
             Assert.IsNotNull(result);
 
         }
@@ -154,19 +154,19 @@ namespace AppIntegrador.Tests.Controllers
         {
             SeccionController seccionController = new SeccionController();
 
-            ViewResult result = seccionController.Create(null, null , "U", null) as ViewResult;
+            ViewResult result = seccionController.Create("", "", "U", "") as ViewResult;
             Assert.IsNotNull(result);
 
-            result = seccionController.Create(null, null, "M", null) as ViewResult;
+            result = seccionController.Create("", "", "M", "") as ViewResult;
             Assert.IsNotNull(result);
 
-            result = seccionController.Create(null, null, "L", null) as ViewResult;
+            result = seccionController.Create("", "", "L", "") as ViewResult;
             Assert.IsNotNull(result);
 
-            result = seccionController.Create(null, null, "S", null) as ViewResult;
+            result = seccionController.Create("", "", "S", "") as ViewResult;
             Assert.IsNotNull(result);
 
-            result = seccionController.Create(null, null, "E", null) as ViewResult;
+            result = seccionController.Create("", "", "E", "") as ViewResult;
             Assert.IsNotNull(result);
         }
     }
