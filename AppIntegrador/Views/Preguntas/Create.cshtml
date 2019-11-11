@@ -19,6 +19,30 @@
                     <div class="card card-default shadow">
                         <div class="card-body grisUCR2">
                             <div class="row">
+                                <div class="col-lg-3">
+                                    @*<div>
+                <button name="@Html.NameFor(m => m.Tipo)" value="-" id="@Html.NameFor(m => m.Tipo)" class="btn btn-secondary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="texto-btn">Escoger tipo</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu col-lg-10" style="margin-left: 7.5%" aria-labelledby="Tipo">
+                    <li value="U"><a href="#">Opción única</a></li>
+                    <li value="M"><a href="#">Opción múltiple</a></li>
+                    <li value="L"><a href="#">Respuesta libre</a></li>
+                    <li value="E"><a href="#">Escalar</a></li>
+                    <li value="S"><a href="#">Sí / No / No responde</a></li>
+                </ul>
+            </div>*@
+
+                                    <select id="Tipo" name="Tipo" class="form-control">
+                                        <option value="-">Escoger tipo</option>
+                                        <option value="U">Opción única</option>
+                                        <option value="M">Opción múltiple</option>
+                                        <option value="L">Respuesta libre</option>
+                                        <option value="E">Escalar</option>
+                                        <option value="S">Sí / No / No responde</option>
+                                    </select>
+                                </div>
                                 <div class="col-lg-2">
                                     @Html.EditorFor(model => model.Codigo, new
                                     {
@@ -36,30 +60,6 @@
                                     @*Historia MSU: que el mensaje de error salga en rojo*@
                                     <br />
                                     @Html.ValidationMessageFor(model => model.Codigo, "", new { @style = "color:red" })
-                                </div>
-                                <div class="col-lg-3">
-                                    @*<div>
-                                            <button name="@Html.NameFor(m => m.Tipo)" value="-" id="@Html.NameFor(m => m.Tipo)" class="btn btn-secondary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                <span class="texto-btn">Escoger tipo</span>
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu col-lg-10" style="margin-left: 7.5%" aria-labelledby="Tipo">
-                                                <li value="U"><a href="#">Opción única</a></li>
-                                                <li value="M"><a href="#">Opción múltiple</a></li>
-                                                <li value="L"><a href="#">Respuesta libre</a></li>
-                                                <li value="E"><a href="#">Escalar</a></li>
-                                                <li value="S"><a href="#">Sí / No / No responde</a></li>
-                                            </ul>
-                                        </div>*@
-
-                                    <select id="Tipo" name="Tipo" class="form-control">
-                                        <option value="-">Escoger tipo</option>
-                                        <option value="U">Opción única</option>
-                                        <option value="M">Opción múltiple</option>
-                                        <option value="L">Respuesta libre</option>
-                                        <option value="E">Escalar</option>
-                                        <option value="S">Sí / No / No responde</option>
-                                    </select>
                                 </div>
                             </div>
                             <br />

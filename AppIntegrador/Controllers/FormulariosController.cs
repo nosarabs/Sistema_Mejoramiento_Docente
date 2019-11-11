@@ -99,23 +99,6 @@ namespace AppIntegrador.Controllers
             return PartialView("SeccionConPreguntas", ObtenerSeccionConPreguntas(id));
         }
 
-
-        public ActionResult SPROCButton()
-        {
-            //try
-            //{
-            //    db.uspCallTables("MyDB.temp.Table1");
-            //    return RedirectToAction("Index");
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
-            return null;
-        }
-
-
         [HttpPost]
         public bool BorrarSeccion(string FCodigo, string SCodigo)
         {

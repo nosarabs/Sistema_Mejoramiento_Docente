@@ -35,6 +35,14 @@ $("#ActualizarVistaFiltros").click(function () {
 
 
 function BorrarSeccion(Scod) {
+    // Arregla la vista cuando se deselecciona
+    var seccionBanco = document.getElementById("sec(" + Scod + ")");
+    $(seccionBanco).removeAttr("hidden");
+    var checkboxBanco = $(seccionBanco).children().children();
+    checkboxBanco = $(checkboxBanco).children();
+    $(checkboxBanco).trigger("click");
+
+
     var FCodigo = document.getElementById("textCode").value
     var SCodigo = Scod
     var resultado = { FCodigo, SCodigo };
