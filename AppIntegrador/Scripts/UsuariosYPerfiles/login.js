@@ -2,8 +2,7 @@
 //Obtenido de: https://www.bootply.com/P8lWXlkW1O en 2019.10.17
 $('[type=password]').keypress(function (e) {
     //Solo se ocupa mencionar si el capslocks esta prendido cuando el usuario NO esta viendo la contrasenna en texto plano
-    if (document.getElementById("password-eye").classList.contains("fa-eye")) 
-    {
+    if (document.getElementById("password-eye").classList.contains("fa-eye")) {
         var $password = $(this),
             tooltipVisible = $('.tooltip').is(':visible'),
             s = String.fromCharCode(e.which);
@@ -59,16 +58,14 @@ function completarCorreo() {
 }
 
 //Si no tiene un @ entonces se le agrega @ucr.ac.cr, despues se confirma si la entrada tiene un formato adecuado de correo y se presenta un mensaje de error si no.
-function validateEmail(input, warningOutput)
-{   
+function validateEmail(input, warningOutput) {
     var username = input.value;
 
     if (verificarSiCorreoBienFormateado(username)) {
         warningOutput.innerHTML = "";
         return true;
     }
-    else
-    {
+    else {
         warningOutput.innerHTML = "<p>El correo no posee un formato válido</p>";
         return false;
     }
@@ -81,29 +78,36 @@ function verificarTamanno(control, maxnoat, maxtotal, warningOutput) {
     size = control.value.length;
     username = control.value;
     if (!verificarSiContieneArroba(username)) {
-        if (size > maxnoat)
-        {
+        if (size > maxnoat) {
             control.value = control.value.substring(0, maxnoat);
             size = control.value.length;
             warningOutput.innerHTML = "<p>Un nombre de usario debe ser menor a " + maxnoat + " caracteres</p>";
         }
-        else
-        {
+        else {
             warningOutput.innerHTML = "";
         }
     }
-    else 
-    {
-        if (size > maxtotal)
-        {
+    else {
+        if (size > maxtotal) {
             control.value = control.value.substring(0, maxtotal);
             size = control.value.length;
             warningOutput.innerHTML = "<p>Un correo debe ser menor a " + maxtotal + " caracteres</p>";
         }
-        else
-        {
+        else {
             warningOutput.innerHTML = "";
         }
+    }
+}
+
+function validarNuevaContrasenna() {
+    if (document.getElementById('contrasennaNueva').value != document.getElementById('contrasennaConfirmar').value)
+    {
+        document.getElementById('contrasennaConfirmarErrorJS').innerHTML = "Las contraseña nueva y su confirmacion no son iguales.";
+        return false;
+    }
+    else {
+        document.getElementById('contrasennaConfirmarErrorJS').innerHTML = "";
+        return true;
     }
 }
 

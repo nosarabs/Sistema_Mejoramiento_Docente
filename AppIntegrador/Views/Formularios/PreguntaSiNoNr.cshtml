@@ -6,104 +6,28 @@
 
 @*RIP-EDF6*@
 
-@*Se ocupa el código de la pregunta para poder guardar las respuestas*@
-@Html.Hidden("secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
-        "].Pregunta.Codigo", null, new { @Value = Model.Pregunta.Codigo })
-
-@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa, 
-   en vez de crear uno o varios modelos distintos.*@
-@{string radname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta +
-          "].Pregunta.Responde_respuesta_con_opciones[0].Opciones_seleccionadas_respuesta_con_opciones[0].OpcionSeleccionada"; }
-<div class="card card-primary full">
-    @Html.DisplayFor(model => Model.Pregunta.Enunciado)
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="0" />
-
+@*Se está aprovechando que los modelos tienen referencias a tablas a las que tiene llave foránea o viceversa,
+    en vez de crear uno o varios modelos distintos.*@
+@{string respuestaname = "secciones[" + Model.OrdenSeccion + "].Preguntas[" + Model.OrdenPregunta + "]";
+    string radname = respuestaname + ".Opciones[0]";}
+<div class='card-body opcion-pequena' >
+    <label for="@radname 0">
+        <input type="radio" class="radio-grande" name="@radname" id="@radname 0" value="0" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 0 ? "checked" : "") />
         Sí
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="1" />
-
-        No
-    </div>
-
-    <div class='card-body'>
-
-        <input type="radio" name="@radname" value="2" />
-
-        No responde
-    </div>
+    </label>
 </div>
 
-@if (!Request["rad"].IsEmpty())
-{
-    <ul>
+<div class='card-body opcion-pequena'>
+    <label for="@radname 1">
+        <input type="radio" class="radio-grande" name="@radname" id="@radname 1" value="1" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 1 ? "checked" : "") />
+        No
+    </label>
+</div>
 
-        @foreach (var selection in Request["rad"].Split(','))
-        {
-            <li>@selection</li>
-        }
-    </ul>
-}
+<div class='card-body opcion-pequena'>
+    <label for="@radname 2">
+        <input type="radio" class="radio-grande" name="@radname" id="@radname 2" value="2" @(Model.Opciones != null && Model.Opciones.Any() && Model.Opciones[0] == 2 ? "checked" : "") />
+        No sabe/no responde
+    </label>
+</div>
 
-@*RIP-EDF6*@
-<style>
-    .card {
-        margin-bottom: 20px;
-        background-color: white;
-        border: 1px solid #939393;
-        border-radius: 4px;
-        font: "robot";
-        font-size: 18px;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        margin-left: 20%;
-        margin-right: 20%;
-    }
-
-    .card-primary > .card-heading {
-        color: #000;
-        background-color: #e9e9e9;
-        border-color: #888b8f;
-        .card-body
-
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
-
-    .card-primary > .card-heading {
-        color: #000;
-        .card-body
-
-    {
-        padding: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        padding-bottom: 5px;
-    }
-
-    .card-primary {
-        border-color: #646464;
-        background-color: #c4c4c4;
-        .card-body
-
-    {
-        padding: 5px;
-    }
-    }
-</style>
-
-
-<style>
-    .card-body {
-        margin-left: 1%;
-        padding: 0.5%;
-    }
-</style>

@@ -1,0 +1,4 @@
+CodigoUnidad, NombreFacultad, CodigoCarrera, NombreCarrera, CodigoEnfasis, NombreEnfasis, SiglaCurso, NombreCurso, NumeroGrupo, Anno, Semestre, CorreoProfesor, IdProfesor, NombreProfesor, ApellidoProfesor, TipoIdProfesor, CorreoEstudiante, IdEstudiante, NombreEstudiante, ApellidoEstudiante, TipoIdEstudiante
+1111111111, Facultad Ingeniería, 1234567890, Computación con Varios Enfásis, IS, Ingeniería del Software, CI1010, Diseño de Software, 1, 2019, 1, AC@mail.com, 3692154875, Allan, Calderón, Cedula, DE@mail.com, 305040275, Daniel, Escamilla, Cedula
+2222222222, Facultad Letras, 234567890, Ingles, TR, Traduccion, LE0102, Traduccion I, 1, 2019, 1, DC@mail.com, 1111111, Juan, Saravia, Cedula, DA@mail.com, 16260329, Denisse, Alfaro, Cedula
+3333333333, Facultad Medicina, 888888, Medicina, ME, Anatomia, ME1001, Anatomia I, 1, 2019, 1, ed@mail.com, 2222222, Alan, Alfaro, Cedula, al@mail.com, 9281932, Patricia, Parrales, Cedula

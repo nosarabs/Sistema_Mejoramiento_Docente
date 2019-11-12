@@ -10,20 +10,31 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Text;
 using System.Text.RegularExpressions;
+using AppIntegrador.Utilities;
 
-namespace AppIntegrador
+namespace AppIntegrador.Controllers
 {
     public class UsersController : Controller
     {
         private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
 
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public UsersController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public UsersController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Users
         /*Shows the list of users and persons in the database. Only displays users whose associated person exists.
          Users created without a person won't be shown.*/
 
-         /*Responds to User Story TAM-2.1.*/
+        /*Responds to User Story TAM-2.1.*/
         public ActionResult Index()
         {
             //Verificamos si hay un mensaje de alerta de alguna de las operanciones realizadas, si lo hay lo desplegamos con javascript
@@ -38,10 +49,9 @@ namespace AppIntegrador
                 ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
-            string username = HttpContext.User.Identity.Name;
-            if (username != "admin@mail.com")
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_USUARIOS))
             {
-                TempData["alertmessage"] = "Solo el administrador puede accesar esta página";
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
                 return RedirectToAction("../Home/Index");
             }
             /*To show the list of all users first fetch all the users and persons in the database, and join them 
@@ -54,6 +64,7 @@ namespace AppIntegrador
             var usuarioPersona = from u in Usuarios
                                  join p in Personas on u.Username equals p.Correo into table1
                                  where u.Username != "admin@mail.com"
+                                 && u.Persona.Borrado == false
                                  from p in table1.ToList()
                                  select new UsuarioPersona
                                  {
@@ -61,7 +72,7 @@ namespace AppIntegrador
                                      Persona = p
                                  };
             usuarioPersona.OrderBy(up => up.Persona.Identificacion);
-            return View(usuarioPersona);
+            return View("Index",usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
 
@@ -70,6 +81,11 @@ namespace AppIntegrador
         /*Responds to User Story TAM-2.9.*/
         public ActionResult Details(string username, string domain)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_DETALLES_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             /* Full query string is splitted into username and domain to avoid problems while sending the string to 
              * the controller. Ex: username: john.doe@mail, domain: .com*/
             string id = username + domain;
@@ -93,7 +109,7 @@ namespace AppIntegrador
                 return HttpNotFound();
             }
 
-            return View(usuarioPersona);
+            return View("Details", usuarioPersona);
         }
         /*End of user story TAM-2.9.*/
 
@@ -101,10 +117,15 @@ namespace AppIntegrador
         /*Two functions corresponding to User Story TAM-2.2.*/
         public ActionResult Create()
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne");
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo");
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password");
-            return View();
+            return View("Create");
         }
 
         // POST: Users/Create
@@ -112,6 +133,12 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Create(Persona persona)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (ModelState.IsValid && persona != null)
             {
                 /*To create a new user-person, first create the user using the stored procedure "AgregarUsuario"
@@ -120,11 +147,24 @@ namespace AppIntegrador
 
                 List<Persona> Personas = db.Persona.ToList();
                 // Validamos campos de Identificación según su tipo y el formato del Carné
-                if (!this.ValidateInputFields(persona, persona.Estudiante))
+                if (!this.ValidateInputFields(persona))
                     return View(persona);
 
                 //Confirmamos si alguna persona existe con ese correo
-                if (db.Persona.Find(persona.Correo) == null)
+                var resultadoDB = db.Persona.Find(persona.Correo);
+                
+                //Si la persona existe pero esta borrada entonces se deja el resultado como null para que el controllador lo inserte normalmente
+                //La base de datos por su lado sabe como manejar un insert de alguien que ya existe.
+                if (resultadoDB != null) 
+                {
+                    if (resultadoDB.Borrado == true)
+                    {
+                        ModelState.AddModelError("Correo", "Esta persona fue previamente borrada del sistema, por favor usar un correo diferente.");
+                        return View(persona);
+                    }
+                }
+
+                if (resultadoDB == null)
                 {
                     ObjectParameter result = new ObjectParameter("result", typeof(bool));
                     db.CheckID(persona.Identificacion, result);
@@ -139,7 +179,7 @@ namespace AppIntegrador
                             persona.Estudiante.Correo = persona.Correo;
                         }
                         else
-                        {                            
+                        {
                             persona.Estudiante = null;
                         }
 
@@ -166,7 +206,7 @@ namespace AppIntegrador
             ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", persona.Correo);
             ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", persona.Correo);
             ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", persona.Usuario);
- 
+
             return View(persona);
         }
         /*End of User Story TAM-2.2.*/
@@ -176,6 +216,11 @@ namespace AppIntegrador
         /*Respond to User Story 2.4.*/
         public ActionResult Edit(string username, string domain)
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             string id = username + domain;
 
             if (id == null)
@@ -205,7 +250,7 @@ namespace AppIntegrador
             System.Web.HttpContext.Current.Application["CurrentEditingUser"] = usuarioPersona.Usuario.Username;
 
             /*Return the joint view of the selected User and Person as one plain entity.*/
-            return View(usuarioPersona);
+            return View("Edit", usuarioPersona);
         }
 
         // POST: Users/Edit/5
@@ -213,16 +258,22 @@ namespace AppIntegrador
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
-            if (!this.ValidateInputFields(usuarioPersona.Persona, usuarioPersona.Persona.Estudiante))
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+            if (!this.ValidateInputFields(usuarioPersona.Persona))
                 return View(usuarioPersona);
 
-            if (ModelState.IsValid && 
-                usuarioPersona != null && 
-                usuarioPersona.Persona != null || 
-                usuarioPersona.Usuario != null )
+            if (ModelState.IsValid &&
+                usuarioPersona != null &&
+                usuarioPersona.Persona != null ||
+                usuarioPersona.Usuario != null)
             {
                 /*To edit an user, first fetch it from the database using the stored email in the other edit function.*/
-                using (var db = new DataIntegradorEntities()) {
+                using (var db = new DataIntegradorEntities())
+                {
 
                     string formerUserMail = (string)System.Web.HttpContext.Current.Application["CurrentEditingUser"];
                     var originalUser = db.Usuario.SingleOrDefault(u => u.Username == formerUserMail);
@@ -256,7 +307,7 @@ namespace AppIntegrador
                             }
                         }
                         originalPerson = db.Persona.SingleOrDefault(p => p.Correo == usuarioPersona.Persona.Correo);
-                        
+
                         /*Updates each editable field of the selected user, and then stores the data back to the DB.*/
                         originalPerson.Nombre1 = usuarioPersona.Persona.Nombre1;
                         originalPerson.Nombre2 = usuarioPersona.Persona.Nombre2;
@@ -264,7 +315,7 @@ namespace AppIntegrador
                         originalPerson.Apellido2 = usuarioPersona.Persona.Apellido2;
                         originalPerson.CorreoAlt = usuarioPersona.Persona.CorreoAlt;
                         originalPerson.TipoIdentificacion = usuarioPersona.Persona.TipoIdentificacion;
-                        originalPerson.Identificacion= usuarioPersona.Persona.Identificacion;
+                        originalPerson.Identificacion = usuarioPersona.Persona.Identificacion;
 
                         //Si hay un cambio en el Carne entonces agregar el atributo Estudiante a la persona original para poder editarlo
                         if (usuarioPersona.Persona.Estudiante.Carne != null)
@@ -276,7 +327,8 @@ namespace AppIntegrador
                             originalPerson.Estudiante.Correo = usuarioPersona.Persona.Correo;
                             originalPerson.Estudiante.Carne = usuarioPersona.Persona.Estudiante.Carne;
                         }
-                        else if (originalPerson.Estudiante != null) {
+                        else if (originalPerson.Estudiante != null)
+                        {
                             originalPerson.Estudiante.Carne = null;
                         }
 
@@ -299,7 +351,7 @@ namespace AppIntegrador
 
             string originalMail = (string)System.Web.HttpContext.Current.Application["CurrentEditingUser"];
             string mailToSearch = usuarioPersona.Persona.Correo == null ? originalMail : usuarioPersona.Persona.Correo;
-            
+
             /*Searches the user and person tuples associated to the edited user.*/
             Usuario usuarioEdited = db.Usuario.Find(mailToSearch);
             Persona personaEdited = db.Persona.Find(mailToSearch);
@@ -308,10 +360,6 @@ namespace AppIntegrador
             UsuarioPersona usuarioPersonaRefreshed = new UsuarioPersona();
             usuarioPersonaRefreshed.Persona = personaEdited;
             usuarioPersonaRefreshed.Usuario = usuarioEdited;
-
-            ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", usuarioPersona.Persona.Correo);
-            ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", usuarioPersona.Persona.Correo);
-            ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", usuarioPersona.Persona.Usuario);
 
             /*Removes the temporal stored mail, saved in the first Edit() funcion.*/
             //System.Web.HttpContext.Current.Application.Remove("CurrentEditingUser");
@@ -323,7 +371,7 @@ namespace AppIntegrador
         /*End of User Story TAM-2.4.*/
 
         // POST: Users/Delete/5
-        
+
         /*Deletes a selected user if the action was confirmed in the view.*/
         /*Responds to User Story TAM-2.3.*/
         public ActionResult DeleteConfirmed(string username, string domain, bool confirmed)
@@ -338,7 +386,7 @@ namespace AppIntegrador
 
             if (persona != null)
             {
-                if(id != "admin@mail.com")
+                if (id != "admin@mail.com")
                 {
                     /*Both user and person tuples are deleted from the database.*/
                     /*TO-DO: make the person deletion optional, user able to choose deleting only the user.*/
@@ -351,12 +399,13 @@ namespace AppIntegrador
                 }
 
             }
-            else {
+            else
+            {
                 /*Error message to be shown at page footer.*/
                 /*TO-DO: find a better way of showing errors.*/
                 TempData["alertmessage"] = "No se pudo borrar el usuario";
             }
-            
+
             return RedirectToAction("Index");
         }
         /*End of User Story TAM-2.4.*/
@@ -370,7 +419,7 @@ namespace AppIntegrador
             base.Dispose(disposing);
         }
 
-        private bool ValidateInputFields(Persona persona, Estudiante estudiante)
+        private bool ValidateInputFields(Persona persona)
         {
             if (persona.Estudiante != null && persona.Estudiante.Carne != null)
             {
@@ -402,7 +451,8 @@ namespace AppIntegrador
         {
             string pattern;
             Regex regexResult;
-            switch (tipo) {
+            switch (tipo)
+            {
                 case TIPO_ID.CEDULA:
                     pattern = @"^[1-9]\d{8}$";
                     regexResult = new Regex(pattern);

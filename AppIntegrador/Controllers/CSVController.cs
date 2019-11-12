@@ -35,7 +35,10 @@ namespace AppIntegrador.Controllers
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
                     ViewBag.Message = "Archivo subido exitosamente";
-                    carga(path);
+                    if (!carga(path))
+                    {
+                        ViewBag.Message = "ERROR en la carga";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -66,7 +69,7 @@ namespace AppIntegrador.Controllers
             db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
             db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
         }
-        private void carga(string path)
+       public bool carga(string path)
         {
             bool datosValidos = true;
 
@@ -103,7 +106,9 @@ namespace AppIntegrador.Controllers
                         insertarDatos(fila); //inserta fila
                     }
                 }
+                return true;
             }
+            return false;
         }
 
         private bool validarEntradas(ArchivoCSV archivo)

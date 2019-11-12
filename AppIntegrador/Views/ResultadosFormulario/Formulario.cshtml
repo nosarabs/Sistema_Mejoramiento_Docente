@@ -12,25 +12,7 @@
 
     </head>
 
-    <body id="Body">
-        <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">@Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home")</li>
-                    <li class="breadcrumb-item">Visualización</li>
-                    <li class="breadcrumb-item">Curso @Model.SiglaCurso</li>
-                    <li class="breadcrumb-item">Año @Model.Ano</li>
-                    <li class="breadcrumb-item">Semestre @Model.Semestre</li>
-                    <li class="breadcrumb-item">Grupo @Model.NumeroGrupo</li>
-                    <li class="breadcrumb-item active" aria-current="page">Formulario @Model.CodigoFormulario</li>
-                </ol>
-            </nav>
-        </div>
-        <!--Para visualizar toda la wea de la vista parcial-->
-        <div>
-            @Html.Partial("~/Views/Dashboard/SeccionesFormularioFiltrado.cshtml", Model)
-            
-        </div>
+    <body>
 
         <script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
         <script src="~/Scripts/Visualizacion/Chart.js"></script>
@@ -55,7 +37,7 @@
         var listaPreguntas = @Html.Raw(Model.Preguntas);
 
         var botones = new Botones();
-        botones.crearBotones("Body", listaPreguntas);
+        botones.crearBotones(listaPreguntas);
 
         </script>
 
