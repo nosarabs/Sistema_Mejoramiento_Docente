@@ -35,6 +35,32 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void CreateDataMockTest()
+        {
+            var mockdb = new Mock<DataIntegradorEntities>();
+            String nombre = "Curso";
+            TipoObjetivo to = new TipoObjetivo() { nombre = nombre };
+
+            mockdb.Setup(m => m.TipoObjetivo.Add(to));
+            mockdb.Setup(m => m.SaveChanges());
+
+            var controller = new TipoObjetivosController(mockdb.Object);
+            var result = controller.Create(to);
+            Assert.IsNotNull(result);
+            controller.Dispose();
+        }
+
+        [TestMethod]
+        public void CreateIntegrationTest()
+        {
+            TipoObjetivo tipoObjetivo = new TipoObjetivo();
+            tipoObjetivo.nombre = "ParaPruebas";
+            var controller = new TipoObjetivosController();
+            var result = controller.Create(tipoObjetivo);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void TestDetailsDataMock()
         {
             var mockdb = new Mock<DataIntegradorEntities>();
@@ -47,6 +73,30 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual(result.Model, to);
         }
 
+        [TestMethod]
+        public void DeleteConfirmedDataMockTest()
+        {
+            var mockdb = new Mock<DataIntegradorEntities>();
+            String nombre = "Curso";
+            TipoObjetivo to = new TipoObjetivo() { nombre = nombre };
+            mockdb.Setup(m => m.TipoObjetivo.Find(nombre)).Returns(to);
+
+            var controller = new TipoObjetivosController(mockdb.Object);
+            var result = controller.DeleteConfirmed(nombre, true);
+            Assert.IsNotNull(result);
+            controller.Dispose();
+        }
+
+        [TestMethod]
+        public void DeleteConfirmedIntegrationTest()
+        {
+            String nombre = "ParaPruebas";
+
+            var controller = new TipoObjetivosController();
+            var result = controller.DeleteConfirmed(nombre, true);
+            Assert.IsNotNull(result);
+            controller.Dispose();
+        }
 
         //[TestMethod]
         //public void IndexAtLeastThreeTest()
