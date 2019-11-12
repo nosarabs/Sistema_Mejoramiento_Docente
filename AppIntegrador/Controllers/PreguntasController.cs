@@ -6,7 +6,18 @@ namespace AppIntegrador.Controllers
 {
     public class PreguntasController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+        private DataIntegradorEntities @object;
+
+        public PreguntasController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public PreguntasController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Preguntas/Create
         public ActionResult Create()
