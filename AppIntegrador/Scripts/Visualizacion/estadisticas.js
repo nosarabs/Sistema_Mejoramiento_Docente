@@ -2,9 +2,9 @@
 
     constructor() { }
 
-    recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var media;
+        var media = null;
         $.ajax({
             url: "/ResultadosFormulario/getPromedio",
             data: {
@@ -13,13 +13,21 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                codigoSeccion: codigoSeccion,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
-                media = resultados.toFixed(2);
+
+                if (resultados !== null) {
+
+                    media = resultados.toFixed(2);
+
+                }
             }
         });
 
@@ -27,9 +35,9 @@
 
     }
 
-    recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var mediana;
+        var mediana = null;
         $.ajax({
             url: "/ResultadosFormulario/getMedianaRespuestaEscalar",
             data: {
@@ -38,13 +46,21 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                codigoSeccion: codigoSeccion,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
-                mediana = resultados.toFixed(2);
+
+                if (resultados !== null) {
+
+                    mediana = resultados.toFixed(2);
+
+                }
             }
         });
 
@@ -52,9 +68,9 @@
 
     }
 
-    recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var desviacion;
+        var desviacion = null;
         $.ajax({
             url: "/ResultadosFormulario/obtenerDesviacionEstandar",
             data: {
@@ -63,13 +79,21 @@
                 numeroGrupo: numeroGrupo,
                 semestre: semestre,
                 ano: ano,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                codigoSeccion: codigoSeccion,
                 codigoPregunta: codigoPregunta
             },
             type: "post",
             dataType: "json",
             async: false,
             success: function (resultados) {
-                desviacion = resultados.toFixed(2);
+
+                if (resultados !== null) {
+
+                    desviacion = resultados.toFixed(2);
+
+                }
             }
         });
 
@@ -77,40 +101,50 @@
 
     }
 
-    generarEstadisticas(row, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta) {
+    generarEstadisticas(row, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var media = this.recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var mediana = this.recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
-        var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, codigoPregunta);
+        var media = this.recuperarMedia(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var mediana = this.recuperarMediana(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var desviacion = this.recuperarDesviacion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
 
-        var colMedia = row.firstElementChild;
-        var colMediana = colMedia.nextElementSibling;
-        var colDesviacion = colMediana.nextElementSibling;
+        var resultado = 0;
 
-        var mediaTitulo = document.createElement("h5");
-        mediaTitulo.innerText = "Promedio";
-        var medianaTitulo = document.createElement("h5");
-        medianaTitulo.innerText = "Mediana";
-        var desviacionTitulo = document.createElement("h5");
-        desviacionTitulo.innerText = "Desviación Estándar";
+        if (typeof media !== null && typeof mediana !== null && typeof desviacion !== null) {
 
-        var mediaDiv = document.createElement("div");
-        mediaDiv.className = "estadisticas";
-        mediaDiv.innerText = ("" + media).replace(".", ",");
-        var medianaDiv = document.createElement("div");
-        medianaDiv.className = "estadisticas";
-        medianaDiv.innerText = ("" + mediana).replace(".", ",");
-        var desviacionDiv = document.createElement("div");
-        desviacionDiv.className = "estadisticas";
-        desviacionDiv.innerText = ("" + desviacion).replace(".", ",");
+            resultado = 1;
+
+            var colMedia = row.firstElementChild;
+            var colMediana = colMedia.nextElementSibling;
+            var colDesviacion = colMediana.nextElementSibling;
+
+            var mediaTitulo = document.createElement("h5");
+            mediaTitulo.innerText = "Promedio";
+            var medianaTitulo = document.createElement("h5");
+            medianaTitulo.innerText = "Mediana";
+            var desviacionTitulo = document.createElement("h5");
+            desviacionTitulo.innerText = "Desviación Estándar";
+
+            var mediaDiv = document.createElement("div");
+            mediaDiv.className = "estadisticas";
+            mediaDiv.innerText = ("" + media).replace(".", ",");
+            var medianaDiv = document.createElement("div");
+            medianaDiv.className = "estadisticas";
+            medianaDiv.innerText = ("" + mediana).replace(".", ",");
+            var desviacionDiv = document.createElement("div");
+            desviacionDiv.className = "estadisticas";
+            desviacionDiv.innerText = ("" + desviacion).replace(".", ",");
 
 
-        colMedia.appendChild(mediaTitulo);
-        colMedia.appendChild(mediaDiv);
-        colMediana.appendChild(medianaTitulo);
-        colMediana.appendChild(medianaDiv);
-        colDesviacion.appendChild(desviacionTitulo);
-        colDesviacion.appendChild(desviacionDiv);
+            colMedia.appendChild(mediaTitulo);
+            colMedia.appendChild(mediaDiv);
+            colMediana.appendChild(medianaTitulo);
+            colMediana.appendChild(medianaDiv);
+            colDesviacion.appendChild(desviacionTitulo);
+            colDesviacion.appendChild(desviacionDiv);
+
+        }
+
+        return resultado;
 
     }
 

@@ -12,19 +12,44 @@ using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
 using System.Globalization;
+using Security.Authentication;
 
 namespace AppIntegrador.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
-
+        private DataIntegradorEntities db;
+        private readonly IAuth auth;
         /*5 minutes timeout when an user fails to login 3 times in a row.*/
         private const int LOGIN_TIMEOUT = 300000;
 
         /*Max number of failed login attempts before temporarily locking the account.*/
         private const int MAX_FAILED_ATTEMPTS = 3;
+        public HomeController()
+        {
+            db = new DataIntegradorEntities();
+            auth = new FormsAuth();
+        }
+
+        public HomeController(DataIntegradorEntities db)
+        {
+            this.db = db;
+            auth = new FormsAuth();
+        }
+
+        public HomeController(IAuth auth)
+        {
+            this.auth = auth;
+            db = new DataIntegradorEntities();
+        }
+
+        public HomeController(DataIntegradorEntities db, IAuth auth)
+        {
+            this.db = db;
+            this.auth = auth;
+        }
+
 
         public ActionResult Index()
         {
@@ -34,6 +59,12 @@ namespace AppIntegrador.Controllers
                 ViewBag.typeMessage = "alert";
                 ViewBag.AlertMessage = TempData["alertmessage"].ToString();
             }
+            if (TempData["sweetalertmessage"] != null)
+            {
+                ViewBag.typeMessage = "sweetalertmessage";
+                ViewBag.AlertMessage = TempData["sweetalertmessage"].ToString();
+            }
+
 
             if (!User.Identity.IsAuthenticated)
             {
@@ -103,9 +134,17 @@ namespace AppIntegrador.Controllers
                     // Credenciales correctos
                     if (result == 0)
                     {
-                        FormsAuthentication.SetAuthCookie(objUser.Username, false);
-                        ConfigureSession(objUser.Username);
-                        return RedirectToAction("Index");
+                        /*Si la sesión puede ser configurada, es decir, el usuario tiene perfiles asociados, puede entrar.*/
+                        if (ConfigureSession(objUser.Username))
+                        {
+                            auth.SetAuthCookie(objUser.Username, false);
+                            return RedirectToAction("Index");
+                        }
+                        /*Sino, no puede entrar al sistema sin perfiles asociados.*/
+                        else
+                        {
+                            ModelState.AddModelError("Password", "Esta cuenta no está debidamente configurada. Contacte al administrador del sitio.");
+                        }
                     }
                     else
                     {
@@ -153,8 +192,8 @@ namespace AppIntegrador.Controllers
                 /*If the counter reached the max failed attempts count, lock the account, except for the admin.*/
                 if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin@mail.com")
                 {
-                    ModelState.AddModelError("Password", "¡Ha excedido el límite de intentos fallidos!\nDebe esperar" +
-                        " 5 minutos antes de intentar de nuevo.");
+                    ModelState.AddModelError("Password", "Este usuario está bloqueado temporalmente.\nIntente de nuevo" +
+                        " más tarde.");
 
                     /*Removes the failed attempts count from the system for this user.*/
                     System.Web.HttpContext.Current.Application.Remove(objUser.Username);
@@ -227,11 +266,12 @@ namespace AppIntegrador.Controllers
         public ActionResult Logout()
         {
             /*TAM 1.1.1: Modificado para que no guarde la sesión del usuario la siguiente vez que se ingrese al sistema.*/
-            FormsAuthentication.SignOut();
+            auth.SignOut();
             Session.Clear();
             Session.Abandon();
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
+            CurrentUser.deleteCurrentUser(HttpContext.User.Identity.Name);
             return RedirectToAction("Index");
         }
 
@@ -283,7 +323,7 @@ namespace AppIntegrador.Controllers
             return View("PasswordReset");
         }
 
-        private void ConfigureSession(string username)
+        private bool ConfigureSession(string username)
         {
             /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
              énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
@@ -295,20 +335,23 @@ namespace AppIntegrador.Controllers
             ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
             db.SugerirConfiguracion(username, mejorPerfil, mejorCarrera, mejorEnfasis);
 
+            /*Si el usuario no tiene perfiles asociados, no puede entrar al sistema. Se redirecciona a login con un mensaje de error.*/
+            if (mejorPerfil.Value.Equals(DBNull.Value))
+            {
+                return false;
+            }
             /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
              donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
              y no atrasar a los demás equipos.*/
-            SetUserData(username, (mejorPerfil.Value.Equals(DBNull.Value) ? "Superusuario" : (string)mejorPerfil.Value), (mejorCarrera.Value.Equals(DBNull.Value) ? null : (string)mejorCarrera.Value), (mejorEnfasis.Value.Equals(DBNull.Value) ? null : (string)mejorEnfasis.Value));
+            SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            return true;
         }
 
         /*TAM-3.1, 3.2 y 3.6: Función que guarda los datos relevantes del usuario loggeado para poder consultar
          la interfaz de permisos con esa información.*/
         private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
         {
-            CurrentUser.Username = correoUsuario;
-            CurrentUser.Profile = perfil;
-            CurrentUser.MajorId = codCarrera;
-            CurrentUser.EmphasisId = codEnfasis;
+            CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
         }
 
         public ActionResult CambiarContrasenna()
@@ -333,7 +376,7 @@ namespace AppIntegrador.Controllers
             ObjectParameter loginResult = new ObjectParameter("result", typeof(Int32));
 
             // Se ejecuta el procedimiento almacenado
-            db.LoginUsuario(CurrentUser.Username, contrasennaActual, loginResult);
+            db.LoginUsuario(CurrentUser.getUsername(), contrasennaActual, loginResult);
             if((int)loginResult.Value != 0)
             {
                 ModelState.AddModelError("Username", "Contraseña Incorrecta.");
@@ -346,14 +389,14 @@ namespace AppIntegrador.Controllers
                 }
                 else
                 {
-                    db.ChangePassword(CurrentUser.Username, contrasennaNueva);
+                    db.ChangePassword(CurrentUser.getUsername(), contrasennaNueva);
                     db.SaveChanges();
 
                     //Enviamos un correo al usuario alertando del cambio
                     EmailNotification notification = new EmailNotification();
 
                     List<string> users = new List<string>();
-                    users.Add(CurrentUser.Username);
+                    users.Add(CurrentUser.getUsername());
 
                     //Creamos un timestamp para agregarlo al correo
                     var timestamp = DateTime.Now;
@@ -362,26 +405,16 @@ namespace AppIntegrador.Controllers
 
                     notification.SendNotification(users,
                         "Cambio de contraseña",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr");
-
-                    //HTML implementation pending
-
-                    //notification.SendNotification(users, 
-                    //    "Cambio de contraseña",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                    //    "Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins por medio de marcelo.jenkins@ecci.ucr.ac.cr",
-                    //    "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.Username + ". <br> El " + fechaSalida + " a las " + horaSalida + "." +
-                    //    "<br>Si usted no realizó este cambio por favor contactarse de inmediato con Marcelo Jenkins a marcelo.jenkins@ecci.ucr.ac.cr");
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + CurrentUser.getUsername() + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
 
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
-                    ViewBag.NotifyMessage = "Puede seguir navegando el sitio";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
                 }
             }
-
             return View();
         }
     }

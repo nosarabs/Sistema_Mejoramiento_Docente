@@ -24,21 +24,21 @@
                             <div class="form-group col-lg-2">
                                 <div>
                                     @Html.EditorFor(model => model.Formulario.Codigo, new
-                                    {
-                                        htmlAttributes = new
-                                        {
-                                            @class = "validar-agregar-secciones form-control",
-                                            id = "textCode",
-                                            name = "formulario.Codigo",
-                                            @maxlength = "8",
-                                            required = "required",
-                                            placeholder = "Código",
-                                            rows = "5",
-                                            @onkeyup = "contarCaracteres(this)",
-                                            @title = "Código requerido",
-                                            @Value = Model.Formulario.Codigo
-                                        }
-                                    })
+                               {
+                                   htmlAttributes = new
+                                   {
+                                       @class = "validar-agregar-secciones form-control",
+                                       id = "textCode",
+                                       name = "formulario.Codigo",
+                                       @maxlength = "8",
+                                       required = "required",
+                                       placeholder = "Código",
+                                       rows = "5",
+                                       @onkeyup = "contarCaracteres(this)",
+                                       @title = "Código requerido",
+                                       @Value = Model.Formulario.Codigo
+                                   }
+                               })
                                     <div class="contador small float-right">0/8 caracteres usados</div>
                                     <label id="validacion-codigo" style="color: red;"></label>
                                 </div>
@@ -97,7 +97,7 @@
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <div id="BancoDeSecciones">
-                                                <div id="ModalAgregarSecciones">
+                                                <div id="ModalAgregarSecciones" style="width:auto">
                                                     @{Html.RenderPartial("/Views/Seccion/_SeccionPartial.cshtml", Model.seccion);}
                                                 </div>
                                                 <input type="button" class="btn-linkUCR float-right CrearSeccionModal" value="Crear Sección" />
@@ -136,7 +136,7 @@
     }
 </style>
 
-    }
+
 @section Scripts {
     @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/jqueryval/")*@
@@ -146,10 +146,16 @@
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
     <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
     <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntasModal.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
+            agregarPreguntas.init();
+            GenerarModalPreguntas();
             validarEntradasAgregarSecciones();
             var msg = '@ViewBag.Message';
             if (msg == "Fallido") {
@@ -157,9 +163,22 @@
                 $("#textCode").addClass("error");
             }
             else if (msg == "Exitoso") {
-                alert("Todo es trivial");
+                const el = document.createElement('div')
+                swal({
+                    title: "¡Formulario guardado exitosamente!",
+                    type: "success",
+                    text: "Puede ser visto en el banco de formularios",
+                    icon: 'success',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
+                });
+
+
             }
         });
+
     </script>
 
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">

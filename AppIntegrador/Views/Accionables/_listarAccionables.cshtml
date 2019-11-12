@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AppIntegrador.Models.Accionable>
+
+@if (Model.Count() == 0)
+{
+    <div class="centeredText">
+        <p>
+            Aún no se han creado Acciones de mejora en este Objetivo.
+        </p>
+    </div>
+}
+else
+{
+    <table class="table">
+        <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 10%;">
+            <col class="TablasFecha">
+            <col class="TablasFecha">
+        </colgroup>
+
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.progreso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaFin)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.progreso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaFin)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

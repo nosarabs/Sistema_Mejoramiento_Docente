@@ -1,0 +1,51 @@
+﻿@model AppIntegrador.Models.ArchivoCSV
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CSVuploader.js"></script>
+
+<div class="fullWidth">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="impText">Carga CSV</h2 class="impText">
+        </div></div>
+</div>
+            <div class="container mt-3">
+
+                @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    <label for="file">Subir archivo CSV:</label>
+                    <div class="custom-file mb-3">
+
+                        <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
+                        <label class="custom-file-label" for="customFile">Elija un archivo</label>
+                    </div>
+
+                    <br>
+                    <br>
+                    <div class="mt-3">
+                        <input type="submit" value="Subir CSV" class="btn btn-primary" />
+                    </div>
+                    <br>
+                    <br>
+
+                    @ViewBag.Message
+                }
+
+
+                <script>
+                    //refactorizar
+                    $(".custom-file-input").on("change", function () {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    });
+                </script>
+
+            </div>
+

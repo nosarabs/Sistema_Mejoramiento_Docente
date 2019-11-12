@@ -14,5 +14,6 @@ namespace AppIntegrador.Models
     public partial class CarrerasXPerfilXUsuario_Result
     {
         public string codCarrera { get; set; }
+        public string nombreCarrera { get; set; }
     }
 }

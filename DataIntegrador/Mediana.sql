@@ -1,11 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[Mediana]
 (
-	@codigoFormulario char(8),
+	@codigoFormulario varchar(8),
 	@siglaCurso varchar(10),
 	@numeroGrupo tinyint,
 	@anio int,
 	@semestre tinyint,
-	@codigoPregunta char(8),
+	@fechaInicio date,
+	@fechaFin date,
+	@codigoSeccion varchar(8),
+	@codigoPregunta varchar(8),
 	@mediana FLOAT OUTPUT
 )
 AS
@@ -19,7 +22,10 @@ BEGIN
 		  o.GNumero = @numeroGrupo and
 		  o.GAnno = @anio and
 		  o.GSemestre = @semestre and
-		  o.PCodigo = @codigoPregunta
+		  o.SCodigo = @codigoSeccion and
+		  o.PCodigo = @codigoPregunta and
+		  o.Fecha >= @fechaInicio and
+		  o.Fecha <= @fechaFin
 	ORDER BY o.FCodigo
 END
 RETURN 0

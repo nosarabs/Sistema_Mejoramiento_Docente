@@ -1,0 +1,166 @@
+﻿@model AppIntegrador.Models.PlanDeMejora
+@*
+    Creado por: Johan Córdoba
+    Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
+    Vista que contiene todo el plan de mejora después de creado y permite añadir objetivos, acciones y accionables
+*@
+
+<div class="fullWidth">
+
+    <div class="card card-default">
+        <div class="card-body">
+            
+            <h2>Detalles del Plan de mejora @ViewBag.IdPlan </h2>
+
+            <form>
+                @Html.HiddenFor(model => model.codigo)
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.nombre, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            disabled= "disabled"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fechaInicio, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            disabled= "disabled"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label" })
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.fechaFin, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            disabled= "disabled"
+                                        }
+                                    })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="card card-default">
+                <div class="card-body grisUCR1">
+                    <div>
+                        <h2>Objetivos del Plan de mejora @ViewBag.IdPlan </h2>
+                    </div>
+                    <div>
+                        <div id="listaDeObjetivos">
+                            @Html.Action("listaDeObjetivos", "Objetivos", new { id = ViewBag.IdPlan })
+                        </div>
+                    </div>
+
+                    <div class="card card-default">
+                        <div class="card-body grisUCR2">
+                            <div>
+                                <div id="encabezadoAccion">
+                                    <h4 style="text-align:center">Lista de acciones de mejora</h4>
+                                    <h2 style="text-align:center">Seleccione un objetivo</h2>
+                                </div>
+                                <div id="divAcciones">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="botonCentrado">
+        @Html.ActionLink("Volver", "Index", "PlanDeMejora", new { @class = "btn-blancoUCR" })
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        clickObjetivo = function (id, plan, obj) {
+            var content = '<h2>Acciones de mejora del Objetivo ' + id + '</h2>';
+            document.getElementById('encabezadoAccion').innerHTML = content;
+            actualizarAccionesDeMejora(plan, obj);
+        };
+    </script>
+
+    <script>
+        clickAccionDeMejora = function (id, plan, obj, acm) {
+            var content = '<h2>Accionables de la Acción de mejora ' + id + '</h2>';
+            document.getElementById('encabezadoAccionable').innerHTML = content;
+            actualizarAccionables(plan, obj, acm);
+        };
+    </script>
+
+    <script>
+        function actualizarAccionesDeMejora(plan, obj) {
+            var edit = false;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/AccionDeMejora/AccionesDeObjetivo/")",
+                data: {
+                      //parámetros para el controlador
+                      plan: plan,
+                      nombObj: obj,
+                      edit: edit
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#divAcciones').html(result);
+                }
+            });
+        }
+    </script>
+    <script>
+        function actualizarAccionables(plan, obj, desc) {
+            var edit = false;
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Content("/Accionables/TablaAccionables/")",
+                data: {
+                      //parámetros para el controlador
+                      codPlan: plan,
+                      nombObj: obj,
+                      descripAcMej: desc,
+                      edit: edit
+                      },
+                dataType: 'html',
+                success:function(result)
+                {
+                    $('#divAccionables').html(result);
+                }
+            });
+        }
+    </script>
+}
+
+
