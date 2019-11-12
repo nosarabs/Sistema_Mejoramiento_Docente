@@ -47,14 +47,14 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Detalles", tipoObjetivo);
         }
 
         // GET: TipoObjetivos/Create
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return View("Crear");
         }
 
         // POST: TipoObjetivos/Create
@@ -100,7 +100,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Editar", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Edit/5
@@ -131,7 +131,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Eliminar", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Delete/5
