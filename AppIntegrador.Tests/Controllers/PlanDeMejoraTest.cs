@@ -105,6 +105,18 @@ namespace AppIntegrador.Tests.Controllers
             controller.Dispose();
         }
 
+        [TestMethod]
+        public void CrearPlanDeMejoraIntegrationTest()
+        {
+            String planNombre = "Plan de prueba de integración";
+            DateTime inicio = new DateTime(2019, 12, 01);
+            DateTime Fin = new DateTime(2020, 12, 01);
+            int id = 1111;
+
+            var controller = new PlanDeMejoraController();
+            var result = controller.CrearPlanDeMejora(planNombre, inicio, Fin, null, id);
+            Assert.IsNotNull(result);
+        }
 
     }
 }
