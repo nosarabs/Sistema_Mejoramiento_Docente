@@ -4,8 +4,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador.Controllers;
 using AppIntegrador.Models;
+using System.Web.Mvc;
 using Moq;
-using System.Data.Entity.Core.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -14,6 +14,20 @@ namespace AppIntegrador.Tests.Controllers
     [TestClass]
     public class DashboardControllerTest
     {
+
+        [TestMethod]
+        public void IndexNotNullTest()
+        {
+            //Arrange
+            DashboardController controller = new DashboardController();
+
+            //Act
+            ViewResult view = controller.Index() as ViewResult;
+
+            //Assert
+            Assert.IsNotNull(view);
+        }
+
         [TestMethod]
         public void ObtenerFormulariosTest()
         {
@@ -65,14 +79,33 @@ namespace AppIntegrador.Tests.Controllers
             //Assert
 
             //Se comparan los miembros del formulario dummy con los del formulario retornado por el controlador
-            Assert.AreEqual(dummyData[0].FCodigo, formularios[0].FCodigo);
-            Assert.AreEqual(dummyData[0].FNombre, formularios[0].FNombre);
-            Assert.AreEqual(dummyData[0].CSigla, formularios[0].CSigla);
-            Assert.AreEqual(dummyData[0].GNumero, formularios[0].GNumero);
-            Assert.AreEqual(dummyData[0].GSemestre, formularios[0].GSemestre);
-            Assert.AreEqual(dummyData[0].GAnno, formularios[0].GAnno);
-            Assert.AreEqual(dummyData[0].FechaInicio, formularios[0].FechaInicio);
-            Assert.AreEqual(dummyData[0].FechaFin, formularios[0].FechaFin);
+            Assert.IsTrue(CompararFormularios(dummyData, formularios));
+        }
+
+        private bool CompararFormularios (List<ObtenerFormulariosFiltros_Result> dummyFormularios, List<ObtenerFormulariosFiltros_Result> controllerformularios)
+        {
+            bool resultado = dummyFormularios.Count() == controllerformularios.Count();
+            int indice = 0;
+            ObtenerFormulariosFiltros_Result dummyFormulario, controllerFormulario;
+
+            while (resultado && indice < dummyFormularios.Count())
+            {
+                dummyFormulario = dummyFormularios[indice];
+                controllerFormulario = controllerformularios[indice];
+
+                resultado =     dummyFormulario.FCodigo.Equals(controllerFormulario.FCodigo)
+                                && dummyFormulario.FNombre.Equals(controllerFormulario.FNombre)
+                                && dummyFormulario.CSigla.Equals(controllerFormulario.CSigla)
+                                && dummyFormulario.GNumero.Equals(controllerFormulario.GNumero)
+                                && dummyFormulario.GSemestre.Equals(controllerFormulario.GSemestre)
+                                && dummyFormulario.GAnno.Equals(controllerFormulario.GAnno)
+                                && dummyFormulario.FechaInicio.Equals(controllerFormulario.FechaInicio)
+                                && dummyFormulario.FechaFin.Equals(controllerFormulario.FechaFin);
+
+                ++indice;
+            }
+
+            return resultado;
         }
     }
 }
