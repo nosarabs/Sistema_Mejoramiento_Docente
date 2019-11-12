@@ -227,12 +227,9 @@
 
                     var fechaInicio = resultados[i].FechaInicio;
                     var fechaFin = resultados[i].FechaFin;
-                    var parsedFechaInicio = new Date(parseInt(fechaInicio.substr(6)));
-                    var parsedFechaFin = new Date(parseInt(fechaFin.substr(6)));
-                    var newFechaInicio = new Date(parsedFechaInicio);
-                    var newFechaFin = new Date(parsedFechaFin);
-                    var stringFechaInicio = newFechaInicio.toLocaleDateString("es-ES");
-                    var stringFechaFin = newFechaFin.toLocaleDateString("es-ES");
+
+                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString();
+                    var stringFechaFin = new Date(fechaFin).toLocaleDateString();
 
                     var option = document.createElement("option");
                     option.className = "option";
