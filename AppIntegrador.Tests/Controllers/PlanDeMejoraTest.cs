@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
 using System.Web;
+using Moq;
+using AppIntegrador.Models;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -32,6 +34,14 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void TestIndexName()
+        {
+            PlanDeMejoraController plan = new PlanDeMejoraController();
+            var indexResult = plan.Index("admin") as ViewResult;
+            Assert.AreEqual("Index", indexResult.ViewName);
+            plan.Dispose();
+        }
 
         [TestMethod]
         public void CreateNuevo() 
@@ -41,10 +51,6 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(resultado);
         }
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
         public TestContext TestContext
         {
             get
@@ -80,18 +86,23 @@ namespace AppIntegrador.Tests.Controllers
         #endregion
 
         [TestMethod]
-        public void TestIndexView()
+        public void CrearPlanDeMejoraDataMockTest()
         {
-            //HttpContext context = System.Web.HttpContext.Current;
-            
-            //// Arrange
-            //var controller = new PlanDeMejoraController();
+            var db = new Mock<DataIntegradorEntities>();
+            String planNombre = "Plan de prueba";
+            DateTime inicio = new DateTime(2019,12,01);
+            DateTime Fin = new DateTime(2020, 12, 01);
+            int id = 1000;
 
-            //// Act
-            //ViewResult result = controller.Index("admin") as ViewResult;
+            PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin};
 
-            //// Assert
-            //Assert.IsNotNull(result);
+            db.Setup(m => m.PlanDeMejora.Add(plan));
+            db.Setup(m => m.SaveChanges());
+
+            var controller = new PlanDeMejoraController(db.Object);
+            var result = controller.CrearPlanDeMejora(planNombre, inicio, Fin, null, id);
+            Assert.IsNotNull(result);
+            controller.Dispose();
         }
 
 

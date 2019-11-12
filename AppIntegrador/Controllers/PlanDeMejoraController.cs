@@ -15,7 +15,17 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public PlanDeMejoraController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public PlanDeMejoraController(DataIntegradorEntities mdb)
+        {
+            this.db = mdb;
+        }
 
         // GET: PlanDeMejora
         [HttpGet]
@@ -36,7 +46,7 @@ namespace AppIntegrador.Controllers
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = nombre;
-            return View(db.PlanDeMejora.ToList());
+            return View("Index", db.PlanDeMejora.ToList());
         }
 
         /*
@@ -187,19 +197,26 @@ namespace AppIntegrador.Controllers
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
         //crea un plan de mejora con un id que se determina automáticamente
         //retorna el view que permite editar un plan de mejora completo para añadir objetivos, acciones y accionables
-        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin, List<String> Profesor)
+        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin, List<String> Profesor, int id = -1)
         {
-            int id = -1;
             var planTemp = new PlanDeMejora();
             if (nombre != null && fechaInicio != null && fechaFin != null)
             {
                 if (DateTime.Compare(fechaInicio, fechaFin) < 0)
                 {
-
-                    var plans = this.db.PlanDeMejora.ToList();
-                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                    planTemp.codigo = codigoTemporal + 1;
-                    id = planTemp.codigo;
+                    if(id == -1)
+                    {
+                        var plans = this.db.PlanDeMejora.ToList();
+                        var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
+                        planTemp.codigo = codigoTemporal + 1;
+                        id = planTemp.codigo;
+                        ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+                    }
+                    else
+                    {
+                        planTemp.codigo = id;
+                    }
+                    
                     planTemp.nombre = nombre;
                     planTemp.fechaInicio = fechaInicio;
                     planTemp.fechaFin = fechaFin;
@@ -217,7 +234,7 @@ namespace AppIntegrador.Controllers
 
                     ViewBag.IdPlan = id;
                     ViewBag.editar = false;
-                    ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
+                    
                     return View("EditarPlanDeMejora2", planTemp);
                 }
             }
