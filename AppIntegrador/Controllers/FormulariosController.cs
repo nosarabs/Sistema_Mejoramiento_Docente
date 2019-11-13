@@ -41,7 +41,7 @@ namespace AppIntegrador.Controllers
 
         public ActionResult LlenarFormulario(string id)
         {
-            if(HttpContext == null)
+            if (HttpContext == null)
             {
                 return Redirect("~/");
             }
@@ -120,7 +120,7 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
-        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario, 
+        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
             Respuestas_a_formulario respuestas)
         {
             if (formulario != null && seccionesDeFormulario != null)
@@ -259,11 +259,11 @@ namespace AppIntegrador.Controllers
                     {
                         var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
                                                                     respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
-                        
+
                         if (resultadoRespuestaGuardada != null)
                         {
                             var respuestaGuardada = resultadoRespuestaGuardada.ToList();
-                            if(respuestaGuardada.Any())
+                            if (respuestaGuardada.Any())
                             {
                                 pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                             }
@@ -389,7 +389,7 @@ namespace AppIntegrador.Controllers
                 return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
             }
         }
-        
+
         [HttpPost]
         public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
         {
@@ -684,6 +684,70 @@ namespace AppIntegrador.Controllers
             return Json(new { insertadoExitoso = AgregarPreguntasASeccion(preguntas) });
         }
 
+        [HttpGet]
+        public ActionResult SeccionConPreguntas(string id)
+        {
+            // Armar objeto independiente del formulario
+            SeccionConPreguntas seccion = ArmarSeccion(id);
+
+            if(seccion == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Meter seccion en una lista por la naturaleza de la vista
+            List<SeccionConPreguntas> listaSeccion = new List<SeccionConPreguntas>
+            {
+                seccion
+            };
+
+            return View(listaSeccion);
+        }
+
+        public SeccionConPreguntas ArmarSeccion(string id)
+        {
+            // Sacar codigo y nombre de la BD
+            Seccion secDB = db.Seccion.Find(id);
+
+            if(secDB == null)
+            {
+                return null;
+            }
+
+            SeccionConPreguntas seccion = new SeccionConPreguntas();
+
+            // Asignar datos de la DB al objeto especial
+            seccion.CodigoSeccion = secDB.Codigo;
+            seccion.Nombre = secDB.Nombre;
+            seccion.Orden = 0;
+
+            // Sacar las preguntas y obtener opciones y/o justificaciones
+            seccion.Preguntas = ArmarPreguntas(seccion);
+            ObtenerInformacionDePreguntas(seccion.Preguntas, seccion.CodigoSeccion, null);
+
+            return seccion;
+        }
+
+        public List<PreguntaConNumeroSeccion> ArmarPreguntas(SeccionConPreguntas seccion)
+        {
+            List<PreguntaConNumeroSeccion> listaPreguntas = new List<PreguntaConNumeroSeccion>();
+
+            // Sacar preguntas con el procedimiento almacenado
+            List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.CodigoSeccion).ToList();
+
+            // Poblar la lista de preguntas seg[un lo obtenido del procedimiento
+            foreach (var pregunta in preguntas)
+            {
+                listaPreguntas.Add(new PreguntaConNumeroSeccion
+                {
+                    Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                    OrdenSeccion = seccion.Orden,
+                    OrdenPregunta = pregunta.Orden
+                });
+            }
+
+            return listaPreguntas;
+        }
     }
 }
 

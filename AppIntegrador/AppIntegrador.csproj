@@ -623,7 +623,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
-    <Content Include="Views\Seccion\Details.cshtml" />
+    <Content Include="Views\Seccion\VistaPrevia.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
     <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
