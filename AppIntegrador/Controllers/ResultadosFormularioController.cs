@@ -31,7 +31,7 @@ namespace AppIntegrador.Controllers
                 Ano = serializer.Serialize(ano),
                 FechaInicio = serializer.Serialize(fechaInicio),
                 FechaFin = serializer.Serialize(fechaFin),
-                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
+                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
                 Secciones = ObtenerSecciones(codigoFormulario)
             };
             return View(modelo);

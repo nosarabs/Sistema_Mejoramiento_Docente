@@ -29,7 +29,7 @@
 
     }
 
-    crearBotones(idContenedor, listaPreguntas) {
+    crearBotones(/*idContenedor, */listaPreguntas) {
 
         var insertaContenidos = new InsertaContenidos();
 
@@ -41,7 +41,7 @@
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
             // Chequea si la pregunta evaluada pertenece o no a la sección
-            if (("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
+            //if (("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
 
                 var codigoSeccion = listaPreguntas[i].codigoSeccion;
                 var codigoPregunta = listaPreguntas[i].codigoPregunta;
@@ -91,12 +91,12 @@
 
                 cuerpoPrincipal.appendChild(base.getBase());
 
-                var contenedor = document.getElementById(idContenedor);
-                contenedor.appendChild(cuerpoPrincipal);
-            }
+                //var contenedor = document.getElementById(idContenedor);
+                document.body.appendChild(cuerpoPrincipal);
+            /*}
             else {
                 contadorPreguntasSeccion = 0;
-            }
+            }*/
             
         }
 
