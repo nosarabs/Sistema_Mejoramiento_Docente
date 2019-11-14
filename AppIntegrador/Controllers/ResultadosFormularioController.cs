@@ -14,7 +14,17 @@ namespace AppIntegrador.Controllers
 {
     public class ResultadosFormularioController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public ResultadosFormularioController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public ResultadosFormularioController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: ResultadosFormulario
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, string fechaInicio, string fechaFin)
