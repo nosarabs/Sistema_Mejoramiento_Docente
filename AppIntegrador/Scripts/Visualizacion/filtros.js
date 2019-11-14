@@ -228,8 +228,8 @@
                     var fechaInicio = resultados[i].FechaInicio;
                     var fechaFin = resultados[i].FechaFin;
 
-                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString();
-                    var stringFechaFin = new Date(fechaFin).toLocaleDateString();
+                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+                    var stringFechaFin = new Date(fechaFin).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
                     var option = document.createElement("option");
                     option.className = "option";
