@@ -429,7 +429,9 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\PlanDeMejora\CrearPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
@@ -607,7 +609,6 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
     <Content Include="Views\PlanDeMejora\Delete.cshtml" />
     <Content Include="Views\PlanDeMejora\Details.cshtml" />
     <Content Include="Views\PlanDeMejora\Edit.cshtml" />
@@ -649,7 +650,6 @@
     <Content Include="Views\Home\PasswordReset.cshtml" />
     <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
     <Content Include="Views\Preguntas\Create.cshtml" />
@@ -679,7 +679,6 @@
     <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
-    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
     <Content Include="Views\TipoObjetivos\Delete.cshtml" />
     <Content Include="Views\TipoObjetivos\Details.cshtml" />

@@ -50,70 +50,40 @@ namespace AppIntegrador.Controllers
         }
 
         /*
-            Modificado por: Johan Córdoba
+            Modificado por: Johan Córdoba, Christian Asch
             Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
             Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
             Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
         */
-        public ActionResult Create()
-        {
-            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
-            return View("_crearPlanDeMejora", plan);
-        }
-
         public ActionResult Crear()
         {
             PlanDeMejora plan = new PlanDeMejora();
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             return View("Crear", plan);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Crear(PlanDeMejora plan, List<String> ProfeSeleccionado)
+        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado)
         {
-            return Index();
-        }
-
-        //Añadido por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //Retorna la nueva vista de creación de planes de mejora adaptada a las solicitudes del PO.
-        public ActionResult CreateNuevo()
-        {
-            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-            return View("CrearPlanDeMejora", plan);
-        }
-
-        //Modificado por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //crea un plan de mejora este método solo es llamado internamente por lo que retorna un void
-        //pero esto puede cambiarse para que retorne true o false y validad la creación
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
-        {
-            if (ModelState.IsValid)
+            Profesor profe;
+            if (ModelState.IsValid && plan != null)
             {
-                try
+                plan.codigo = db.PlanDeMejora.ToList().Count;
+                if(ProfeSeleccionado != null)
                 {
-                    db.PlanDeMejora.Add(planDeMejora);
-                    db.SaveChanges();
-                    //return RedirectToAction("Index");
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (var errors in ex.EntityValidationErrors)
+                    foreach(var correo in ProfeSeleccionado)
                     {
-                        foreach (var validationError in errors.ValidationErrors)
-                        {
-                            // get the error message 
-                            string errorMessage = validationError.ErrorMessage;
-                        }
+                        profe = db.Profesor.Find(correo);
+                        profe.PlanDeMejora.Add(plan);
+                        plan.Profesor.Add(profe);
                     }
                 }
+                db.PlanDeMejora.Add(plan);
+                db.SaveChanges();
             }
-
-            //return View(planDeMejora);
+            //return Index();
+            return EditarPlanDeMejora(plan.codigo);
         }
 
         //Agregado por: Johan Córdoba
@@ -203,57 +173,6 @@ namespace AppIntegrador.Controllers
 
 
             _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
-        }
-
-        //Modificado por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //crea un plan de mejora con un id que se determina automáticamente
-        //retorna el view que permite editar un plan de mejora completo para añadir objetivos, acciones y accionables
-        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin, List<String> Profesor, int id = -1)
-        {
-            var planTemp = new PlanDeMejora();
-            if (nombre != null && fechaInicio != null && fechaFin != null)
-            {
-                if (DateTime.Compare(fechaInicio, fechaFin) < 0)
-                {
-                    if(id == -1)
-                    {
-                        var plans = this.db.PlanDeMejora.ToList();
-                        var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                        planTemp.codigo = codigoTemporal + 1;
-                        id = planTemp.codigo;
-                        ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-                    }
-                    else
-                    {
-                        planTemp.codigo = id;
-                    }
-                    
-                    planTemp.nombre = nombre;
-                    planTemp.fechaInicio = fechaInicio;
-                    planTemp.fechaFin = fechaFin;
-
-                    if(Profesor != null)
-                    {
-                        foreach(String correo in Profesor)
-                        {
-                            var prof = db.Profesor.Find(correo);
-                            planTemp.Profesor.Add(prof);
-                        }
-                        EnviarCorreoSobreCreacionPlan(planTemp);
-                    }
-                    this.Create(planTemp);
-
-                    ViewBag.IdPlan = id;
-                    ViewBag.editar = false;
-                    
-                    return View("EditarPlanDeMejora2", planTemp);
-                }
-            }
-            //return RedirectToAction("Index");
-            ViewBag.IdPlan = id;
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-            return View("EditarPlanDeMejora2", planTemp);
         }
 
         // Method that deletes one "PlanDeMejora"

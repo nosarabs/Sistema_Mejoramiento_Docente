@@ -64,3 +64,23 @@ function agregarProfesores() {
 function modalProfes() {
     $('#ModalProfesores').modal();
 }
+
+function validarPlanDeMejora() {
+    let fechaInicioPlan = document.getElementById('campoFechaInicioPlanMejora');
+    let fechaFinalPlan = document.getElementById('campoFechaFinPlanMejora');
+    let nombrePlan = document.getElementById('campoNombrePlanMejora');
+
+    // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
+    let minDate = new Date(); // Todays Date
+    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+    let validator = new Validador(50, 50, minDate, topDate, 'CrearPlanBoton');
+
+    //Definimos la cantidad de validaciones
+    validator.setTotalValidations(2);
+
+    // Ahora haciendo las validaciones
+    validator.validateSomethingInTextInput(nombrePlan, 50);
+    validator.validateDates(fechaInicioPlan, fechaFinalPlan);
+
+    validator.validityOfForm();
+}
