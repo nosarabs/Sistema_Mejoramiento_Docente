@@ -21,6 +21,15 @@ namespace AppIntegrador.Controllers
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
         }
+
+        //// Para el caso de pruebas
+        //public ActionResult Index()
+        //{
+        //    var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
+        //    return View(objetivo.ToList());
+        //}
+
+
         public ActionResult accionesObjetivo(string id, string nomb)
         {
             var idPlan = -1;
@@ -154,6 +163,14 @@ namespace AppIntegrador.Controllers
             db.Objetivo.Remove(objetivo);
             db.SaveChanges();
             return RedirectToAction("Index", "PlanDeMejora");
+        }
+
+        [HttpGet]
+        public PartialViewResult listaDeObjetivos(int id)
+        {
+            ViewBag.IdPlan = id;
+            IEnumerable<AppIntegrador.Models.Objetivo> objetivos = db.Objetivo.Where(o => o.codPlan == id);
+            return PartialView("_listarObjetivos", objetivos);
         }
 
         protected override void Dispose(bool disposing)

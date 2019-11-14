@@ -8,12 +8,25 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.Entity.Core.Objects;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace AppIntegrador.Controllers
 {
     public class DashboardController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public DashboardController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public DashboardController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
         struct Resultado
         {
             public float promedio;
@@ -156,14 +169,11 @@ namespace AppIntegrador.Controllers
             string sigCurso = String.IsNullOrEmpty(siglaCurso) ? null : siglaCurso;
             string corrProfesor = String.IsNullOrEmpty(correoProfesor) ? null : correoProfesor;
 
-            //Permite serializar objetos para enviarlos como JSONs.
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
             //Llamado a la función de tabla que recupera los formularios según los parámetros de los filtros.
             var formularios = db.ObtenerFormulariosFiltros(codUA, codCarrera, codEnfasis, sigCurso, numeroGrupo, semestre, anno, corrProfesor);
 
             //Retorna la lista de formularios serializada.
-            return serializer.Serialize(formularios.ToList());
+            return JsonConvert.SerializeObject(formularios.ToList(), new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
 
         }
     }   
