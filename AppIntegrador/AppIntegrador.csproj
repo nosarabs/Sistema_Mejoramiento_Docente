@@ -549,6 +549,7 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="ArchivoCSV\archivo.csv" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -696,7 +697,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ArchivoCSV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
