@@ -10,6 +10,10 @@
 *.userosscache
 *.sln.docstates
 
+# Self generated css files
+AppIntegrador/Content/Main.css
+AppIntegrador/Content/Main.min.css
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

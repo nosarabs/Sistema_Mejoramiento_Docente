@@ -4,20 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+@Scripts.Render("~/Scripts/jquery-3.4.1.js")
+@Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
+@Scripts.Render("~/Scripts/Visualizacion/filtros.js")
+@Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
+@Styles.Render("~/Content/Visualizacion/styles.css")
+@Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
+@Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+
 <head>
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
-
-
-    <link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-
-    <script src="~/Scripts/Visualizacion/filtros.js"></script>
-    <link rel="stylesheet" href="~/Content/Visualizacion/bootstrap-multiselect.css" type="text/css" />
-
-    <script type="text/javascript" src="~/Scripts/Visualizacion/bootstrap-multiselect.js"></script>
-    <script src="~/Scripts/Visualizacion/graficosDashboard.js"></script>
 </head>
 
 <body>
@@ -99,12 +96,9 @@
 
                                     var fechaInicio = resultados[i].FechaInicio;
                                     var fechaFin = resultados[i].FechaFin;
-                                    var parsedFechaInicio = new Date(parseInt(fechaInicio.substr(6)));
-                                    var parsedFechaFin = new Date(parseInt(fechaFin.substr(6)));
-                                    var newFechaInicio = new Date(parsedFechaInicio);
-                                    var newFechaFin = new Date(parsedFechaFin);
-                                    var stringFechaInicio = newFechaInicio.toLocaleDateString("es-ES");
-                                    var stringFechaFin = newFechaFin.toLocaleDateString("es-ES");
+
+                                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString();
+                                    var stringFechaFin = new Date(fechaFin).toLocaleDateString();
 
                                     option = document.createElement("option");
                                     option.className = "option";
@@ -187,15 +181,10 @@
     </div>
 </body>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-3.3.1.js");
-}
-    <script>
-        var correo = "@HttpContext.Current.User.Identity.Name";
-        var x = new GraficosDashboard();
-        x.recuperarPromedioProfesor(correo);
-        x.recuperarPromedioCursos(correo);
-    </script>
-
-}
+<script>
+    var correo = "@HttpContext.Current.User.Identity.Name";
+    var x = new GraficosDashboard();
+    x.recuperarPromedioProfesor(correo);
+    x.recuperarPromedioCursos(correo);
+</script>
 

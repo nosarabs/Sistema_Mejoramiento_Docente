@@ -16,7 +16,6 @@ namespace AppIntegrador.Tests.Controllers
     {
         [TestMethod]
         // Prueba de que la vista no sea nula
-        // Todo: asociarlo al modelo del entity framework.
         public void TestIndexNotNull()
         {
             // Arrange
@@ -42,5 +41,127 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexFiltroCodigoNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("0000001","","") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexFiltroNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index(null,null,null) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexTipoU()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "", "U") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexTipoM()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "", "M") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexTipoL()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "", "L") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexTipoS()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "", "S") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexTipoE()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "", "E") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        //RIP CF5
+        // Prueba de que la vista no sea nula
+        public void TestCreateIndexFiltroEnunciadoNotNull()
+        {
+            // Arrange
+            SeccionController seccionController = new SeccionController();
+
+            // Act
+            ViewResult result = seccionController.Index("", "Info", "") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        /* what
+         * [TestMethod]
+        public void test
+        */
+
     }
 }
