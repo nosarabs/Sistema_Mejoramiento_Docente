@@ -115,32 +115,6 @@ namespace AppIntegrador.Controllers
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
-        // GET: PlanDeMejora/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            if (planDeMejora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(planDeMejora);
-        }
-
-        // POST: PlanDeMejora/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            db.PlanDeMejora.Remove(planDeMejora);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -176,7 +150,9 @@ namespace AppIntegrador.Controllers
         // Method that deletes one "PlanDeMejora"
         public ActionResult BorrarPlan(int codigoPlan)
         {
-            this.DeleteConfirmed(codigoPlan);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(codigoPlan);
+            db.PlanDeMejora.Remove(planDeMejora);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -191,7 +167,6 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             return PartialView("_crearObjetivo", objetivo);
         }
-
 
         //Modificado por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
@@ -227,9 +202,6 @@ namespace AppIntegrador.Controllers
             //return RedirectToAction("Index", "PlanDeMejora");
             return new EmptyResult();
         }
-
-
-
 
         //Añadido por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
