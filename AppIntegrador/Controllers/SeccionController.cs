@@ -17,6 +17,7 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db = new DataIntegradorEntities();
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
+
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
         {
@@ -161,6 +162,21 @@ namespace AppIntegrador.Controllers
                 }
             }
             return true;
+        }
+
+        [HttpGet]
+        public ActionResult VistaPrevia(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Seccion seccion = db.Seccion.Find(id);
+            if (seccion == null)
+            {
+                return HttpNotFound();
+            }
+            return View(seccion);
         }
 
     }

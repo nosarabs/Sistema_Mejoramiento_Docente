@@ -76,6 +76,9 @@
                 <th>
                     Tipo
                 </th>
+                <th>
+                    Acciones
+                </th>
             </tr>
         </thead>
         @foreach (var item in Model)
@@ -92,23 +95,26 @@
                     {
                         <p>Selección Única</p>
                     }
-                    else if(item.Tipo == "M")
+                    else if (item.Tipo == "M")
                     {
                         <p>Selección Múltiple</p>
                     }
-                    else if(item.Tipo == "L")
+                    else if (item.Tipo == "L")
                     {
                         <p>Respuesta Libre</p>
                     }
-                    else if(item.Tipo == "S")
+                    else if (item.Tipo == "S")
                     {
                         <p>Sí/No/NR</p>
                     }
-                    else if(item.Tipo == "E")
+                    else if (item.Tipo == "E")
                     {
                         <p>Escalar</p>
                     }
                     @**@
+                </td>
+                <td>
+                    @Html.ActionLink("Vista previa", "VistaPrevia", "Preguntas", new { id = item.Codigo }, null)
                 </td>
             </tr>
         }
@@ -116,31 +122,7 @@
 </div>
 
 <style>
-    .test2 {
-        background: #fbfbfb;
-    }
 
-    input.QuestionCheckbox {
-        width: 30px;
-        height: 30px;
-    }
-
-    .form-control {
-        width: 25%;
-    }
-
-    .my-form-control {
-        width: 10%;
-        display: inline
-    }
-
-    .btn {
-        border: 1px solid #ccc;
-    }
-
-    .card-body {
-        padding: 10px;
-    }
 </style>
 
 
