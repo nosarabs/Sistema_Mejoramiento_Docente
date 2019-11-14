@@ -82,8 +82,6 @@
                  @Html.LabelFor(model => model.Profesor)
                     <div class="row">
                         <div class="col-md-3">
-                            @*@Html.DropDownList("profesores", null, htmlAttributes: new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })*@
-                            @*@Html.DropDownListFor(model => model.Profesor, new SelectList(Model.Profesor, "correo", "correo"), new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })*@
                             @Html.DropDownListFor(model => model.Profesor, (SelectList) ViewBag.profesores, new { id = "profesores-selector", multiple = "multiple", @class = "form-control" })
                         </div>
                     </div>

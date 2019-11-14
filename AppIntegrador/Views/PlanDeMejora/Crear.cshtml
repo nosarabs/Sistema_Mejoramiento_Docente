@@ -1,0 +1,107 @@
+﻿@model AppIntegrador.Models.PlanDeMejora
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<div class="container">
+    @using (Html.BeginForm(null, "PlanDeMejora"))
+    {
+        <div>
+            @Html.AntiForgeryToken()
+            <div class="card card-body shadow">
+                <h2>Crear plan de mejora</h2>
+                <div class="card card-default shadow">
+                    <div class="card-body grisUCR2">
+                        <div class="row">
+                            <div class="form-group col-lg-7">
+                                <h5>@Html.DisplayNameFor(model => model.nombre)</h5>
+                                <div col-lg-10>
+                                    @Html.EditorFor(model => model.nombre, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            id = "campoNombrePlanMejora",
+                                            @maxlength = "50",
+                                            required = "required",
+                                            placeholder = "Nombre del plan",
+                                        }
+                                    }
+                                    )
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2 offset-lg-1">
+                                <h5>@Html.DisplayNameFor(model => model.fechaInicio)</h5>
+                                <div>
+                                    @Html.EditorFor(model => model.fechaInicio, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            id = "campoFechaInicioPlanMejora"
+                                        }
+                                    }
+                                    )
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <h5>@Html.DisplayNameFor(model => model.fechaFin)</h5>
+                                <div>
+                                    @Html.EditorFor(model => model.fechaFin, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @class = "form-control",
+                                            id = "campoFechaFinPlanMejora"
+                                        }
+                                    }
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h4>Profesores que se asignarán</h4>
+                        @if (Model.Profesor.Count > 0)
+                        {
+                            <!--Aqui va una tabla-->
+                        }
+                        else
+                        {
+                            <div>
+                                Aun no se han escogido profesores para el plan.
+                            </div>
+                        }
+                        <input type="button" value="Añadir profesores" class="btn-azulUCR float-right" id="AgregarProfesoresBoton" onclick="modalProfes()" />
+                    </div>
+                    <div class="form-horizontal card-group">
+                        <div class="modal fade" id="ModalProfesores" tabindex="-1" role="dialog" aria-labelledby="ModalProfesoresLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div id="ModalAgregarProfesoresInterno" style="width:auto">
+                                            @{Html.RenderPartial("_AnadirProfesores", Model.Profesor);}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn-azulUCR " onclick="agregarProfesores()" data-dismiss="modal">Agregar profesores seleccionados</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="card card-body shadow form-group float-right sticky-bottom">
+                <div>
+                    <input type="submit" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" />
+                    @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts{
+    @Scripts.Render("~/Scripts/PlanDeMejora/CrearPlanDeMejora.js")
+    }

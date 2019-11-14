@@ -61,6 +61,18 @@ namespace AppIntegrador.Controllers
             return View("_crearPlanDeMejora", plan);
         }
 
+        public ActionResult Crear()
+        {
+            PlanDeMejora plan = new PlanDeMejora();
+            ViewBag.ProfesoresLista = db.Profesor.ToList();
+            return View("Crear", plan);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Crear(PlanDeMejora plan, List<String> ProfeSeleccionado)
+        {
+            return Index();
+        }
 
         //Añadido por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
