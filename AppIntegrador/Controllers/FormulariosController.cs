@@ -735,7 +735,7 @@ namespace AppIntegrador.Controllers
             // Sacar preguntas con el procedimiento almacenado
             List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.CodigoSeccion).ToList();
 
-            // Poblar la lista de preguntas seg[un lo obtenido del procedimiento
+            // Poblar la lista de preguntas segun lo obtenido del procedimiento
             foreach (var pregunta in preguntas)
             {
                 listaPreguntas.Add(new PreguntaConNumeroSeccion
@@ -747,6 +747,27 @@ namespace AppIntegrador.Controllers
             }
 
             return listaPreguntas;
+        }
+
+        [HttpGet]
+        public ActionResult TodasLasPreguntas(string id)
+        {
+            Pregunta pregDB = db.Pregunta.Find(id);
+            if (pregDB == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            PreguntaConNumeroSeccion pregTmp = new PreguntaConNumeroSeccion
+            {
+                Pregunta = pregDB,
+            };
+            List<PreguntaConNumeroSeccion> listaPregunta = new List<PreguntaConNumeroSeccion>();
+            listaPregunta.Add(pregTmp);
+
+            ObtenerInformacionDePreguntas(listaPregunta, null, null);
+
+            return View(listaPregunta);
         }
     }
 }
