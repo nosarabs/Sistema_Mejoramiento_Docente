@@ -69,7 +69,6 @@ namespace AppIntegrador.Controllers
             Profesor profe;
             if (ModelState.IsValid && plan != null)
             {
-                plan.codigo = db.PlanDeMejora.ToList().Count;
                 if(ProfeSeleccionado != null)
                 {
                     foreach(var correo in ProfeSeleccionado)
@@ -95,7 +94,6 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             ViewBag.Editar = true;
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 

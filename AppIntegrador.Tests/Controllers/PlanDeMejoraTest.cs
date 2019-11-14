@@ -8,6 +8,7 @@ using AppIntegrador.Controllers;
 using System.Web;
 using Moq;
 using AppIntegrador.Models;
+using System.Data.Entity;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -47,7 +48,7 @@ namespace AppIntegrador.Tests.Controllers
         public void CreateNuevo() 
         {
             PlanDeMejoraController controlador = new PlanDeMejoraController();
-            ViewResult resultado = controlador.CreateNuevo() as ViewResult;
+            ViewResult resultado = controlador.Crear() as ViewResult;
             Assert.IsNotNull(resultado);
         }
 
@@ -88,19 +89,18 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void CrearPlanDeMejoraDataMockTest()
         {
+            DataIntegradorEntities test = new DataIntegradorEntities();
             var db = new Mock<DataIntegradorEntities>();
             String planNombre = "Plan de prueba";
             DateTime inicio = new DateTime(2019,12,01);
             DateTime Fin = new DateTime(2020, 12, 01);
-            int id = 1000;
 
             PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin};
 
             db.Setup(m => m.PlanDeMejora.Add(plan));
             db.Setup(m => m.SaveChanges());
-
             var controller = new PlanDeMejoraController(db.Object);
-            var result = controller.CrearPlanDeMejora(planNombre, inicio, Fin, null, id);
+            var result = controller.Crear(plan, null);
             Assert.IsNotNull(result);
             controller.Dispose();
         }
@@ -111,10 +111,11 @@ namespace AppIntegrador.Tests.Controllers
             String planNombre = "Plan de prueba de integración";
             DateTime inicio = new DateTime(2019, 12, 01);
             DateTime Fin = new DateTime(2020, 12, 01);
-            int id = 1111;
+
+            PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin };
 
             var controller = new PlanDeMejoraController();
-            var result = controller.CrearPlanDeMejora(planNombre, inicio, Fin, null, id);
+            var result = controller.Crear(plan, null);
             Assert.IsNotNull(result);
         }
 
