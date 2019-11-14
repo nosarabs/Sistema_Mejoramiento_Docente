@@ -332,7 +332,7 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult ActualizarBancoPreguntas(string input0, string input1, string input2, string input3)
         {
             var pregunta = db.Pregunta;
@@ -388,7 +388,7 @@ namespace AppIntegrador.Controllers
                 ViewBag.filtro = "Ninguno";
                 return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
             }
-        }
+        }*/
 
         [HttpPost]
         public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
