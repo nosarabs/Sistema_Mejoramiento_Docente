@@ -39,6 +39,47 @@ namespace AppIntegrador.Controllers
             return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 
+        [HttpGet]
+        public ActionResult VistaPrevia(string id)
+        {
+            if (HttpContext == null)
+            {
+                return Redirect("~/");
+            }
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
+            {
+                return RedirectToAction("Index");
+            }
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
+
+            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+
+            Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
+
+            if (respuestasObtenidas != null)
+            {
+                var respuestasList = respuestasObtenidas.FirstOrDefault();
+
+                if (respuestasList != null)
+                {
+                    respuestas.FCodigo = respuestasList.FCodigo;
+                    respuestas.Correo = respuestasList.Correo;
+                    respuestas.CSigla = respuestasList.CSigla;
+                    respuestas.Fecha = respuestasList.Fecha;
+                    respuestas.Finalizado = respuestas.Finalizado;
+                    respuestas.GAnno = respuestasList.GAnno;
+                    respuestas.GNumero = respuestasList.GNumero;
+                    respuestas.GSemestre = respuestasList.GSemestre;
+                }
+            }
+
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas);
+
+            return View(formulario);
+        }
+
         public ActionResult LlenarFormulario(string id)
         {
             if (HttpContext == null)
@@ -665,6 +706,7 @@ namespace AppIntegrador.Controllers
             }
             return true;
         }
+
 
         [HttpPost]
         public ActionResult AgregarFormulario(Formulario formulario)

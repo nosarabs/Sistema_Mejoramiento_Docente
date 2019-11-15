@@ -695,6 +695,7 @@
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
+    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
