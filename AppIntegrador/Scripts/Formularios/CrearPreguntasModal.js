@@ -5,20 +5,12 @@ function GenerarModalPreguntas() {
     $('ModalPartialBancoPreguntas').show();
 }
 function ImportarBancoPreguntas() {
-    var resultado = ["", "", "", ""];
     $.ajax({
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        url: "/Formularios/ActualizarBancoPreguntas",
-        data: JSON.stringify(resultado),
+        type: "post",
+        url: "/Preguntas/ActualizarBancoPreguntas",
         dataType: "html",
-        traditional: true,
         success: function (data) {
-            resultado = [];
             $('#ModalPartialBancoPreguntas').html(data);
-        },
-        error: function () {
-
         }
     });
 }
@@ -38,7 +30,7 @@ function FiltrarBancoPreguntas() {
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
-        url: "/Formularios/ActualizarBancoPreguntas",
+        url: "/Preguntas/ActualizarBancoPreguntas",
         data: JSON.stringify(resultado),
         dataType: "html",
         traditional: true,
