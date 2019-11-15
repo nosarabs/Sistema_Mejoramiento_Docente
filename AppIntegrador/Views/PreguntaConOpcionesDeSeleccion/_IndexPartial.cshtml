@@ -99,8 +99,7 @@
                                 <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none; width: 41%;" maxlength="250">
 
                                 @* campo de filtrado para seleccionar el Tipo *@
-                            <select class="form-control" type="text" name="input3" id="type-option" style="display:none; width: 38%;">
-                                >
+                            <select class="form-control" type="text" name="input3" id="type-option" style="display:none; width: 38%;">                                
                                 <option value="">Tipos de preguntas</option>
                                 <option value="U">Selección Única</option>
                                 <option value="M">Selección Múltiple</option>
@@ -113,6 +112,7 @@
                                 <input type="submit"
                                        name="submit"
                                        value="Filtrar"
+                                       onclick="FiltrarBancoPreguntas()"
                                        class="btn btn-outline-light text-dark bg-white border-secondary" />
                                 <br />
                             </form>
