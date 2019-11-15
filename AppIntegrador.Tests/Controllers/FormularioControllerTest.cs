@@ -1145,6 +1145,51 @@ namespace AppIntegrador.Tests.Controllers
                 }
             }
         }
+
+        [TestMethod]
+        public void ProbarVistaPreviaNula()
+        {
+            FormulariosController controller = new FormulariosController();
+            var result = controller.SeccionConPreguntas(null) as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaSeccExiste()
+        {
+            FormulariosController controller = new FormulariosController();
+            var result = controller.SeccionConPreguntas("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaSeccNoExiste()
+        {
+            FormulariosController controller = new FormulariosController();
+            var result = controller.SeccionConPreguntas("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregFormNoExiste()
+        {
+            FormulariosController controller = new FormulariosController();
+            var result = controller.TodasLasPreguntas("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregFormExiste()
+        {
+            FormulariosController controller = new FormulariosController();
+            var result = controller.TodasLasPreguntas("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
     }
     class TestableObjectResult<T> : ObjectResult<T>
     {
