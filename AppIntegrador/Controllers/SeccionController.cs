@@ -179,5 +179,16 @@ namespace AppIntegrador.Controllers
             return View(seccion);
         }
 
+        [HttpPost]
+        public ActionResult ActualizarBancoSecciones()
+        {
+            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", db.Seccion);
+        }
+        [HttpPost]
+        public ActionResult ActualizarCrearSeccion()
+        {
+            crearSeccion = new CrearSeccionModel();
+            return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearSeccion);
+        }
     }
 }
