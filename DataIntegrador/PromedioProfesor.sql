@@ -29,8 +29,21 @@ DECLARE @valor AS FLOAT = 0
 	INSERT INTO @Resultados
 		SELECT  O.OpcionSeleccionada 
 		FROM	Opciones_seleccionadas_respuesta_con_opciones AS O
-				JOIN Imparte AS I ON O.GNumero = I.NumGrupo
-		WHERE I.CorreoProfesor = @correo AND O.PCodigo = 'INFPROF'
+				JOIN Grupo AS G ON O.CSigla = G.SiglaCurso
+					AND O.GNumero = G.NumGrupo
+					AND O.GSemestre = G.Semestre
+					AND O.GAnno = G.Anno
+				JOIN Imparte AS I ON G.SiglaCurso = I.SiglaCurso 
+					AND G.NumGrupo = I.NumGrupo
+					AND G.Semestre = I.Semestre
+					AND G.Anno = I.Anno
+		WHERE I.CorreoProfesor = @correo 
+			AND O.PCodigo = 'INFPROF'
+			AND O.FCodigo IN (
+								SELECT ObtenerFormulariosFiltros(
+										
+								)
+							)
 
 	DECLARE C CURSOR FOR SELECT Opcion_seleccionada FROM @Resultados
 	OPEN C
