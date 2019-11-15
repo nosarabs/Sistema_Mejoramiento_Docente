@@ -109,7 +109,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Usuario objUser)
+        public ActionResult Login(Usuario objUser, string returnUrl)
         {
 
             ViewBag.EnableBS4NoNavBar = true;
@@ -138,6 +138,10 @@ namespace AppIntegrador.Controllers
                         if (ConfigureSession(objUser.Username))
                         {
                             auth.SetAuthCookie(objUser.Username, false);
+                            if (returnUrl != null)
+                            {
+                                return Redirect(returnUrl);
+                            }
                             return RedirectToAction("Index");
                         }
                         /*Sino, no puede entrar al sistema sin perfiles asociados.*/

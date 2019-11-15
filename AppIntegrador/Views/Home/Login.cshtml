@@ -16,7 +16,7 @@
         <div class="row">
             <div class="blue-box">
                 <img class="ucr-logo mb-2" src='/Content/images/logo_ucr.png' border='0' alt='logo-ucr' />
-                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
+                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post,
                     new
                     {
                         @class = "login-form",
