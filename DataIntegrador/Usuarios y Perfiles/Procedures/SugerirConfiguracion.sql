@@ -1,4 +1,9 @@
-﻿CREATE PROCEDURE [dbo].[SugerirConfiguracion]
+﻿/*Procedimiento para escoger el perfil en la carrera y énfasis que genere más valor al usuario al ingresar al sistema.
+Es decir, la combinación de esos tres factores en el que posea más permisos para hacer cosas en el sistema.
+Devuelve mediante parámetros de salida el perfil, la carrera y el énfasis en el que tiene más permisos.
+El programa lo utiliza para configurar estas opciones al usuario cuando inicia sesión.*/
+
+CREATE PROCEDURE [dbo].[SugerirConfiguracion]
 	@CorreoUsuario VARCHAR(50),
 	@PerfilPoderoso VARCHAR(50) OUTPUT,
 	@CarreraPoderosa VARCHAR(10) OUTPUT,
@@ -36,6 +41,7 @@ AS
 				SELECT @CantidadPermisos = COUNT(*) FROM PerfilPermiso
 				WHERE Perfil = @PerfilI AND  CodCarrera = @CarreraI AND CodEnfasis = @EnfasisI
 
+				/*Si la cantidad de permisos en esta combinación es mayor que la anterior, selecciónela.*/
 				IF(@CantidadPermisos >= @CantidadPermisosAnterior)
 				BEGIN
 					SET @PerfilPoderoso = @PerfilI

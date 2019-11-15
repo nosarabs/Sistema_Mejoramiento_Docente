@@ -12,6 +12,7 @@ namespace AppIntegrador.Models
 
     public static class CurrentUser
     {
+
         public static string getUsername()
         {
             updateCurrentUser();
@@ -35,6 +36,18 @@ namespace AppIntegrador.Models
             updateCurrentUser();
             return (string) HttpContext.Current.Session["EmphasisId"];
         }
+
+        public static int getUserLoginFailures()
+        {          
+            return (int)HttpContext.Current.Session["LoginFailures"];
+        }
+
+
+        public static void setUserLoginFailures(int loginFailures)
+        {
+            HttpContext.Current.Session["LoginFailures"] = loginFailures;
+        }
+
 
         public static void setUserProfile(string profile)
         {
@@ -69,6 +82,11 @@ namespace AppIntegrador.Models
             db.SaveChanges();
         }
 
+        public static void setLoginFailures(int failures)
+        {
+            HttpContext.Current.Session["LoginFailures"] = failures;
+        }
+
         //Método que guarda en la base de datos los datos del usuario loggeado. Busca primero si ya está en la tabla,
         //si ya está lo borra, y luego lo inserta de nuevo para habilitar su sesión.
         public static void setCurrentUser(string username, string profile, string majorId, string emphasisId)
@@ -101,6 +119,7 @@ namespace AppIntegrador.Models
             HttpContext.Current.Session["Profile"] = profile;
             HttpContext.Current.Session["MajorId"] = majorId;
             HttpContext.Current.Session["EmphasisId"] = emphasisId;
+            HttpContext.Current.Session["LoginFailures"] = 0;
         }
 
         public static void deleteCurrentUser(string username)

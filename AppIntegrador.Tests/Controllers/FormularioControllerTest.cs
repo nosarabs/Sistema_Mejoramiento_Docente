@@ -147,15 +147,47 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        /*[TestMethod]
-        public void TextIndexNotNullAndView()
+        [TestMethod]
+        public void TestAsociarSeccionesAFormulario()
         {
-            FormulariosController controller = new FormulariosController();
-            ViewResult result = controller.LlenarFormulario() as ViewResult;
-            Assert.IsNotNull(result, "Null");
-            Assert.AreEqual("Index", result.ViewName, "ViewName");
-        }*/
+            // la variable para realizar el mock
+            var mockDb = new Mock<DataIntegradorEntities>();
 
+            string codFormulario = "CI0128G2";
+            string nombreFormulario = "Formulario de prueba";
+            string codSeccion = "Secci01";
+
+            // Se crea un formulario para el mock de la base de datos
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = nombreFormulario
+            };
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            // Se crea una sección de prueba
+            ObtenerSeccionesDeFormulario_Result seccion = new ObtenerSeccionesDeFormulario_Result
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección sobre algo",
+                Orden = 0
+            };
+
+            // Se crea un objeto de prueba de tipo SeccionesFormulario
+            FormulariosController.SeccionesFormulario formularioPrueba = new FormulariosController.SeccionesFormulario();
+            formularioPrueba.codigo = codFormulario;
+            formularioPrueba.nombre = nombreFormulario;
+            formularioPrueba.seccionesAsociadas = new List<String>();
+            formularioPrueba.seccionesAsociadas.Add(codSeccion);
+
+            // Instancia del controller para accesar a los métodos que se probarán de FormulariosController
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            // Se llama el método del controller para ver si devuelve un resultado válido
+            var result = controller.AsociarSesionesAFormulario(formularioPrueba);
+
+            Assert.IsNotNull(result);
+        }
 
         [TestMethod]
         public void TestLlenarFormulariosSinHttpContextDataMock()
