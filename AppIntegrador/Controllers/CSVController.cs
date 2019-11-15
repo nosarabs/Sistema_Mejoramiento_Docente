@@ -55,21 +55,30 @@ namespace AppIntegrador.Controllers
         }
         private void insertarDatos(ArchivoCSV fila)
         {
-            db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
-            db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
-            db.InsertarEnfasisCSV(fila.CodigoCarrera, fila.CodigoEnfasis, fila.NombreEnfasis);
-            db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
-            db.InsertarGrupoCSV(fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
-          //  db.InsertarPersonaCSV(fila.CorreoProfesor, fila.IdProfesor, fila.NombreProfesor, fila.ApellidoProfesor, fila.IdProfesor);
-            db.InsertarFuncionarioCSV(fila.CorreoProfesor);
-            db.InsertarProfesorCSV(fila.CorreoProfesor);
-           // db.InsertarPersonaCSV(fila.CorreoEstudiante, fila.IdEstudiante, fila.NombreEstudiante, fila.ApellidoEstudiante, fila.TipoIdEstudiante);
-            db.InsertarEstudianteCSV(fila.CorreoEstudiante);
-            db.InsertarImparte(fila.CorreoProfesor, fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
-            db.InsertarInscrita_En(fila.CodigoUnidad, fila.CodigoCarrera);
-            db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
-            db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
-            db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
+            try
+            {
+                db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
+                db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
+                db.InsertarInscrita_En(fila.CodigoUnidadCarrera, fila.CodigoCarrera);
+                db.InsertarEnfasisCSV(fila.CodigoCarreraEnfasis, fila.CodigoEnfasis, fila.NombreEnfasis);
+                db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
+                db.InsertarPertenece_a(fila.CodigoCarreraCurso, fila.CodigoEnfasisCurso, fila.SiglaCurso);
+                db.InsertarGrupoCSV(fila.SiglaCursoGrupo, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
+                db.InsertarPersonaCSV(fila.CorreoPersona, fila.IdPersona, fila.NombrePersona, fila.ApellidoPersona, fila.TipoIdPersona);
+                db.InsertarFuncionarioCSV(fila.CorreoProfesor);
+                db.InsertarProfesorCSV(fila.CorreoProfesor);
+                db.InsertarEstudianteCSV(fila.CorreoEstudiante);
+                db.InsertarMatriculado_en(fila.CorreoMatricula, fila.SiglaCursoMatricula, Convert.ToByte(fila.NumeroGrupoMatricula), Convert.ToByte(fila.SemestreMatricula), Convert.ToInt32(fila.AnnoMatricula));
+                db.InsertarImparte(fila.CorreoProfesorImparte, fila.SiglaCursoImparte, Convert.ToByte(fila.NumeroGrupoImparte), Convert.ToByte(fila.SemestreGrupoImparte), Convert.ToInt32(fila.AnnoGrupoImparte));
+                /*   db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
+                   db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);*/
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message.ToString());
+            }
+
+
         }
        public bool carga(string path)
         {
@@ -89,21 +98,19 @@ namespace AppIntegrador.Controllers
             //Se valida cada fila de CSV
             foreach (ArchivoCSV f in lista)
             {
-                System.Diagnostics.Debug.WriteLine(f.CodigoUnidad);
-                /*       if (!validarEntradas(f))
-                       {
-                          archivoValido = false;
-                          return archivoValido;
-                       }*/
+                if (!validarEntradas(f))
+                {
+                    archivoValido = false;
+                    return archivoValido;
+                }
             }
-         /*   if (archivoValido) // si todas las filas son correctas inserta
+            if (archivoValido) // si todas las filas son correctas inserta
             {
-                 foreach (ArchivoCSV f in lista)
-                 {
- 
+                foreach (ArchivoCSV f in lista)
+                {
                     insertarDatos(f); //inserta fila
-                 }
-            }*/
+                }
+            }
             return archivoValido;
         }
 
@@ -126,21 +133,21 @@ namespace AppIntegrador.Controllers
         {
             /*NumGrupo*/
             /*Compara que el valor ingresado sea un numero positivo*/
-            if (!int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo > 0)  //NumGrupo
+            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && !int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo < 0)  //NumGrupo
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("NumGrupo");
                 return false;
             }
             /*Compara que el valor ingresado sea un numero positivo*/
-            if (!int.TryParse(archivo.Anno, out int anno) && anno < 0)  //anno
+            if (!String.IsNullOrEmpty(archivo.Anno) && !int.TryParse(archivo.Anno, out int anno) && anno < 0)  //anno
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("anno");
                 return false;
             }
             /*Compara que el valor ingresado sea un numero positivo menor o igual a 3*/
-            if (!int.TryParse(archivo.Semestre, out int semestre) && semestre < 0 && semestre > 3)  //semestre
+            if (!String.IsNullOrEmpty(archivo.Semestre) && !int.TryParse(archivo.Semestre, out int semestre) && semestre < 0 && semestre > 3)  //semestre
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("semestre");
@@ -152,66 +159,66 @@ namespace AppIntegrador.Controllers
         private bool validaLongitudes(ArchivoCSV archivo)
         {
             /*Unidad academica*/
-            if (archivo.CodigoUnidad.Length > 10) //CodigoUnidad
+            if (!String.IsNullOrEmpty(archivo.CodigoUnidad) && archivo.CodigoUnidad.Length > 10) //CodigoUnidad
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("CodigoUnidad");
                 return false;
             }
-            if (archivo.NombreFacultad.Length > 50) //nombreFacultad
+            if (!String.IsNullOrEmpty(archivo.NombreFacultad) && archivo.NombreFacultad.Length > 50) //nombreFacultad
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("nombreFacultad");
                 return false;
             }
             /*Carrera*/
-            if (archivo.CodigoCarrera.Length > 10) //CodigoCarrera
+            if (!String.IsNullOrEmpty(archivo.CodigoCarrera) && archivo.CodigoCarrera.Length > 10) //CodigoCarrera
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("CodigoCarrera");
                 return false;
             }
-            if (archivo.NombreCarrera.Length > 50) //NombreCarrera
+            if (!String.IsNullOrEmpty(archivo.NombreCarrera) && archivo.NombreCarrera.Length > 50) //NombreCarrera
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("NombreCarrera");
                 return false;
             }
             /*Enfasis*/
-            if (archivo.CodigoEnfasis.Length > 10) //CodigoEnfasis
+            if (!String.IsNullOrEmpty(archivo.CodigoEnfasis) && archivo.CodigoEnfasis.Length > 10) //CodigoEnfasis
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("CodigoEnfasis");
                 return false;
             }
-            if (archivo.NombreEnfasis.Length > 50) //NombreEnfasis
+            if (!String.IsNullOrEmpty(archivo.NombreEnfasis) && archivo.NombreEnfasis.Length > 50) //NombreEnfasis
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("NombreEnfasis");
                 return false;
             }
             /*Curso*/
-            if (archivo.SiglaCurso.Length > 10) //Sigla Curso
+            if (!String.IsNullOrEmpty(archivo.SiglaCurso) && archivo.SiglaCurso.Length > 10) //Sigla Curso
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("Sigla Curso");
                 return false;
             }
-            if (archivo.NombreCurso.Length > 50) //NombreCurso
+            if (!String.IsNullOrEmpty(archivo.NombreCurso) && archivo.NombreCurso.Length > 50) //NombreCurso
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("NombreCurso");
                 return false;
             }
             /*Profesor*/
-            if (archivo.CorreoProfesor.Length > 50) //CorreoDocente
+            if (!String.IsNullOrEmpty(archivo.CorreoProfesor) && archivo.CorreoProfesor.Length > 50) //CorreoDocente
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("CorreoDocente");
                 return false;
             }
             /*Estudiante*/
-            if (archivo.CorreoEstudiante.Length > 50) //CorreoEstudiantes
+            if (!String.IsNullOrEmpty(archivo.CorreoEstudiante) && archivo.CorreoEstudiante.Length > 50) //CorreoEstudiantes
             {
                 /*Imprimir donde fallo*/
                 System.Diagnostics.Debug.WriteLine("CorreoEstudiantes");

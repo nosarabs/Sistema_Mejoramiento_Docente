@@ -6,7 +6,7 @@
 	SELECT @correo = i.Correo
 	FROM inserted i
 	BEGIN
-		IF(@correo NOT IN (SELECT Correo FROM Estudiante))
+		IF(@correo NOT IN (SELECT Correo FROM Estudiante) and @correo not like '')
 		BEGIN
 			INSERT INTO Estudiante SELECT * FROM inserted
 		END

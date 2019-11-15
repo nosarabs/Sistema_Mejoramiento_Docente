@@ -36,6 +36,7 @@ namespace AppIntegrador.Models
         public string ApellidoPersona { get; set; }
         public string CorreoProfesor { get; set; }
         public string CorreoEstudiante { get; set; }
+        public string CorreoProfesorImparte { get; set; }
         public string SiglaCursoImparte { get; set; }
         public string NumeroGrupoImparte { get; set; }
         public string SemestreGrupoImparte { get; set; }
