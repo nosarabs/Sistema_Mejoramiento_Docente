@@ -20,6 +20,7 @@ namespace AppIntegrador.Models
         public String FechaFin { get; set; }
         public String Preguntas { get; set; }
         public IEnumerable<Secciones> Secciones { get; set; }
+        public IEnumerable<SelectListItem> Seccioncitas { get; set; }
     }
 
     public class Preguntas
