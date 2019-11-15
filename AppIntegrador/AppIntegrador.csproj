@@ -244,6 +244,7 @@
     <Compile Include="Models\Estudiante.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FiltrosModelContext.cs" />
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -264,21 +265,7 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\ObtenerFormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
