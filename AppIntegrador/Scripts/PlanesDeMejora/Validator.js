@@ -348,7 +348,7 @@ class Validador {
      */
     countTextElements(textElement, maxCharacters) {
         let totalCharactersWritten = document.getElementById(textElement.id).value.length;
-        console.log(textElement.id + this._subMsjAcro);
+        //console.log(textElement.id + this._subMsjAcro);
         var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
 
 

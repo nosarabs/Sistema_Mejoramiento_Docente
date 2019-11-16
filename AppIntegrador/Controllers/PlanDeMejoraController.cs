@@ -55,9 +55,12 @@ namespace AppIntegrador.Controllers
             Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
             Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
         */
-        public ActionResult Crear()
+        public ActionResult Crear(PlanDeMejora plan = null)
         {
-            PlanDeMejora plan = new PlanDeMejora();
+            if(plan == null)
+            {
+                plan = new PlanDeMejora();
+            }
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             return View("Crear", plan);
         }
@@ -75,14 +78,28 @@ namespace AppIntegrador.Controllers
                     {
                         profe = db.Profesor.Find(correo);
                         profe.PlanDeMejora.Add(plan);
-                        plan.Profesor.Add(profe);
+                        if(!plan.Profesor.Contains(profe))
+                            plan.Profesor.Add(profe);
                     }
                 }
                 db.PlanDeMejora.Add(plan);
                 db.SaveChanges();
             }
-            //return Index();
             return EditarPlanDeMejora(plan.codigo);
+        }
+        [HttpPost]
+        public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
+        {
+            List<Profesor> profesores = new List<Profesor>();
+            if(ProfeSeleccionado != null)
+            {
+                foreach (var correo in ProfeSeleccionado)
+                {
+                    var profesor = db.Profesor.Find(correo);
+                    profesores.Add(profesor);
+                }
+            }
+            return PartialView("_TablaProfesores", profesores);
         }
 
         //Agregado por: Johan Córdoba

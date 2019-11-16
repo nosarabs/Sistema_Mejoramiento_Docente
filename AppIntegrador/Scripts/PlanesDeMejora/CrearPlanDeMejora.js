@@ -56,8 +56,18 @@ function agregarProfesores() {
     for (let index = 0; index < cantidadProfes.current(); ++index) {
         let profe = document.getElementById("profes[" + index + "].correo");
         profe.setAttribute("name", "ProfeSeleccionado");
-        console.log(profe.value);
     }
+    $.ajax({
+        type: 'POST',
+        url: "AnadirProfes",
+        data: $('form').serialize(),
+        dataType: 'html', //dataType - html
+        success: function (result)
+        {
+            console.log(result);
+            $("#divTablaProfesores").html(result);
+        }
+    });
 }
 
 

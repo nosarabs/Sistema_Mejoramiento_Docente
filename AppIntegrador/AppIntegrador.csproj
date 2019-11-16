@@ -691,6 +691,7 @@
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\Crear.cshtml" />
     <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
