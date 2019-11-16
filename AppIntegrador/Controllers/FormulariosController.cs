@@ -142,6 +142,27 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
+        [HttpPost]
+        public bool BorrarPregunta(string SCodigo, string PCodigo)
+        {
+            if (SCodigo != null && PCodigo != null)
+            {
+                try
+                {
+                    if (db.EliminarPreguntaDeSeccion(SCodigo, PCodigo) == 0)
+                    {
+                        return false;
+                    }
+                }
+                catch (System.Data.Entity.Core.EntityCommandExecutionException)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
         public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
             Respuestas_a_formulario respuestas)
         {
@@ -157,7 +178,9 @@ namespace AppIntegrador.Controllers
                         {
                             Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
                             OrdenSeccion = nuevaSeccion.Orden,
-                            OrdenPregunta = pregunta.Orden
+                            CodigoSeccion = nuevaSeccion.CodigoSeccion,
+                            OrdenPregunta = pregunta.Orden,
+                            Edit = true
                         });
                         ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }
@@ -628,6 +651,12 @@ namespace AppIntegrador.Controllers
         public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
         {
             return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+        }
+
+        [HttpPost]
+        public ActionResult EliminarPregunta(string SCodigo, string PCodigo)
+        {
+            return Json(new { eliminadoExitoso = BorrarPregunta(SCodigo, PCodigo) });
         }
 
         [HttpPost]
