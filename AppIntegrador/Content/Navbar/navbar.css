@@ -20,9 +20,9 @@ ul, ol {
 }
 
 .nav {
-    z-index: 5;
+    z-index: 5 !important;
     background-color: #F5F5F5 !important;
-    width: 100%;
+    width: 100% !important;
 }
 
     .nav > li {
@@ -31,7 +31,7 @@ ul, ol {
 
     .nav li a {
         background-color: #F5F5F5;
-        color: black;
+        color: black !important;
         text-decoration: none;
         padding: 10px 12px;
         display: block;
@@ -39,15 +39,15 @@ ul, ol {
     }
 
         .nav li a:hover {
-            background-color: #434343;
-            color: white;
+            background-color: #434343 !important;
+            color: white !important;
             z-index: 5 !important;
         }
 
     .nav li ul {
         display: none;
-        position: absolute;
-        min-width: 150px;
+        position: absolute !important;
+        min-width: 150px !important;
     }
 
     .nav li:hover > ul {
@@ -66,11 +66,16 @@ ul, ol {
         }
 
 .barraNavegacionLogos {
-    max-height: var(--alturaNavBars);
+    max-height: var(--alturaNavBars) !important;
     width: 100%;
     display: flex;
 }
 
 .nombreProyecto {
     font-size: 2em !important;
+}
+
+.mainProjectTitle {
+    font-weight: bold;
+    font-size: 0.6em;
 }

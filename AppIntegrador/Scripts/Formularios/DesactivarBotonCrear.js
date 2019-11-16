@@ -4,6 +4,10 @@ $(document).on("keyup", ".validar", function () {
     validarEntradas();
 })
 
+$(document).on("keyup", ".validar-agregar-secciones", function () {
+    validarEntradasAgregarSecciones();
+})
+
 $(document).on("keyup", "#txtJustificationNumber", function () {
     validarEntradas();
 })
@@ -28,4 +32,20 @@ function validarEntradas() {
     }
 
     $('#Create').prop('disabled', !todoLleno);
+}
+
+function validarEntradasAgregarSecciones() {
+    var todoLlenoSecciones = true;
+    if (todoLlenoSecciones == true) {
+        $(".validar-agregar-secciones").each(function () {
+            if ($(this).val() == '') {
+                todoLlenoSecciones = false;
+                // Equivalente a un break, pero JQuery ocupa que sea 
+                // con un return por la nueva función que se "crea"
+                return false;
+            }
+        })
+    }
+    $('#AgregarSeccion').prop('disabled', !todoLlenoSecciones);
+    $('#CreateFormulario').prop('disabled', !todoLlenoSecciones);
 }

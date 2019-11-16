@@ -4,18 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+@Scripts.Render("~/Scripts/jquery-3.4.1.js")
+@Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
+@Scripts.Render("~/Scripts/Visualizacion/filtros.js")
+@Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
+@Styles.Render("~/Content/Visualizacion/styles.css")
+@Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
+@Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+
 <head>
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
-
-    <link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-
-    <script src="~/Scripts/Visualizacion/filtros.js"></script>
-    <link rel="stylesheet" href="~/Content/Visualizacion/bootstrap-multiselect.css" type="text/css" />
-
-    <script type="text/javascript" src="~/Scripts/Visualizacion/bootstrap-multiselect.js"></script>
 </head>
 
 <body>
@@ -61,7 +60,8 @@
                         return fSeleccionado == "null" ? null : fSeleccionado.split("*");
                     }
                     //Función que actualiza el filtro de formularios.
-                    function actualizarFiltroFormularios(codigoUA, codigoCarrera, codigoEnfasis, siglaCurso, numeroGrupo, semestre, anno, correoProfesor) {
+                    function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+                        $('#panelDashboard').html("");
                         var f = document.getElementById("filtroFormularios");
                         while (f.firstChild) {
 
@@ -72,14 +72,10 @@
                         $.ajax({
                             url: '/Dashboard/ObtenerFormularios',
                             data: {
-                                codigoUA: codigoUA,
-                                codigoCarrera: codigoCarrera,
-                                codigoEnfasis: codigoEnfasis,
-                                siglaCurso: siglaCurso,
-                                numeroGrupo: numeroGrupo,
-                                semestre: semestre,
-                                anno: anno,
-                                correoProfesor: correoProfesor
+                                unidadesAcademicas: unidadesAcademicas,
+                                carrerasEnfasis: carrerasEnfasis,
+                                grupos: grupos,
+                                profesores: profesores
                             },
                             type: 'post',
                             dataType: 'json',
@@ -97,12 +93,9 @@
 
                                     var fechaInicio = resultados[i].FechaInicio;
                                     var fechaFin = resultados[i].FechaFin;
-                                    var parsedFechaInicio = new Date(parseInt(fechaInicio.substr(6)));
-                                    var parsedFechaFin = new Date(parseInt(fechaFin.substr(6)));
-                                    var newFechaInicio = new Date(parsedFechaInicio);
-                                    var newFechaFin = new Date(parsedFechaFin);
-                                    var stringFechaInicio = newFechaInicio.toLocaleDateString("es-ES");
-                                    var stringFechaFin = newFechaFin.toLocaleDateString("es-ES");
+
+                                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+                                    var stringFechaFin = new Date(fechaFin).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
                                     option = document.createElement("option");
                                     option.className = "option";
@@ -143,23 +136,42 @@
 
                         var correoProf = this.recuperarProfesor();
 
-                        this.actualizarFiltroFormularios(ua, codCarrera, codEnfasis, sigla, numGrupo, semestre, anno, correoProf);
+                        var unidadesAcademicas = ua == null ? null : [{ codigo: ua }];
+                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ codigoCarrera: codCarrera, codigoEnfasis: codEnfasis }];
+                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ siglaCurso: sigla, numGrupo: numGrupo, semestre: semestre, anno: anno }];
+                        var profesores = correoProf == null ? null : [{ correo: correoProf }];
+
+                        this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                     }
                     //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
                     function actualizarVistaParcial() {
 
+                        $('#panelDashboard').html("");
                         f = this.recuperarFormulario();
 
-                        var codigoFormulario = f[0];
-                        var siglaCurso = f[2];
-                        var numeroGrupo = f[3];
-                        var semestre = f[4];
-                        var anno = f[5];
-                        var fechaInicio = f[6];
-                        var fechaFin = f[7];
+                        if (f != null)
+                        {
 
-                        //Aquí se recarga la vista parcial con los parámetros del formulario.
-                        //Llamado...
+                            var codigoFormulario = f[0];
+                            var siglaCurso = f[2];
+                            var numeroGrupo = f[3];
+                            var semestre = f[4];
+                            var anno = f[5];
+                            var fechaInicio = f[6];
+                            var fechaFin = f[7];
+
+                            //Aquí se recarga la vista parcial con los parámetros del formulario.
+                            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
+                            link = link.replace('codigoFormularioValor', codigoFormulario);
+                            link = link.replace('siglaCursoValor', siglaCurso);
+                            link = link.replace('numeroGrupoValor', numeroGrupo);
+                            link = link.replace('semestreValor', semestre);
+                            link = link.replace('annoValor', anno);
+                            link = link.replace('fechaInicioValor', fechaInicio);
+                            link = link.replace('fechaFinValor', fechaFin);
+                            $('#panelDashboard').html(link);
+
+                        }
 
                     }
                 </script>
@@ -172,6 +184,10 @@
     </div>
 </body>
 
-@section Scripts {
-    @Scripts.Render("~/Scripts/jquery-3.3.1.js");
-}
+<script>
+    var correo = "@HttpContext.Current.User.Identity.Name";
+    var x = new GraficosDashboard();
+    x.recuperarPromedioProfesor(correo);
+    x.recuperarPromedioCursos(correo);
+</script>
+

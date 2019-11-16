@@ -14,10 +14,20 @@ namespace AppIntegrador.Controllers
 {
     public class ResultadosFormularioController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public ResultadosFormularioController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public ResultadosFormularioController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: ResultadosFormulario
-        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin)
+        public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, string fechaInicio, string fechaFin)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -29,8 +39,8 @@ namespace AppIntegrador.Controllers
                 NumeroGrupo = serializer.Serialize(numeroGrupo),
                 Semestre = serializer.Serialize(semestre),
                 Ano = serializer.Serialize(ano),
-                FechaInicio = serializer.Serialize(fechaInicio.ToString(new CultureInfo("es-ES"))),
-                FechaFin = serializer.Serialize(fechaFin.ToString(new CultureInfo("es-ES"))),
+                FechaInicio = serializer.Serialize(fechaInicio),
+                FechaFin = serializer.Serialize(fechaFin),
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
             };
             return View(modelo);

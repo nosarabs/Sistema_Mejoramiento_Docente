@@ -17,6 +17,7 @@ namespace AppIntegrador.Controllers
 {
     public class CSVController : Controller
     {
+        private DataIntegradorEntities db = new DataIntegradorEntities();
         ArchivoCSV fila;
 
         public ActionResult Index()
@@ -34,7 +35,10 @@ namespace AppIntegrador.Controllers
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
                     ViewBag.Message = "Archivo subido exitosamente";
-                    carga(path);
+                    if (!carga(path))
+                    {
+                        ViewBag.Message = "ERROR en la carga";
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -47,11 +51,27 @@ namespace AppIntegrador.Controllers
 
             return View();
         }
-
-        private void carga(string path)
+        private void insertarDatos(ArchivoCSV fila)
+        {
+            db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
+            db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
+            db.InsertarEnfasisCSV(fila.CodigoCarrera, fila.CodigoEnfasis, fila.NombreEnfasis);
+            db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
+            db.InsertarGrupoCSV(fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
+            db.InsertarPersonaCSV(fila.CorreoProfesor, fila.IdProfesor, fila.NombreProfesor, fila.ApellidoProfesor, fila.IdProfesor);
+            db.InsertarFuncionarioCSV(fila.CorreoProfesor);
+            db.InsertarProfesorCSV(fila.CorreoProfesor);
+            db.InsertarPersonaCSV(fila.CorreoEstudiante, fila.IdEstudiante, fila.NombreEstudiante, fila.ApellidoEstudiante, fila.TipoIdEstudiante);
+            db.InsertarEstudianteCSV(fila.CorreoEstudiante);
+            db.InsertarImparte(fila.CorreoProfesor, fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
+            db.InsertarInscrita_En(fila.CodigoUnidad, fila.CodigoCarrera);
+            db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
+            db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
+            db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
+        }
+       public bool carga(string path)
         {
             bool datosValidos = true;
-            LlenarCSV ll = new LlenarCSV();
 
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -83,10 +103,12 @@ namespace AppIntegrador.Controllers
                     foreach (ArchivoCSV f in lista)
                     {
                         cargaFila(f);
-                        ll.insertarDatos(fila); //inserta fila
+                        insertarDatos(fila); //inserta fila
                     }
                 }
+                return true;
             }
+            return false;
         }
 
         private bool validarEntradas(ArchivoCSV archivo)

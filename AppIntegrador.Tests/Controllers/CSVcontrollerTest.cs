@@ -34,7 +34,7 @@ namespace AppIntegrador.Tests.Controllers
             var httpContextMock = new Mock<HttpContextBase>();
             var serverMock = new Mock<HttpServerUtilityBase>();
             //Mock el path original
-            serverMock.Setup(x => x.MapPath("~/ArchivoCSV")).Returns(Path.GetFullPath(@"C:\Users\Denisse Alfaro\Documents"));
+            serverMock.Setup(x => x.MapPath("./ArchivoCSV")).Returns(Path.GetFullPath("../../ArchivoCSVtest"));
             
             //Mockeamos el objeto HTTPContext.Server con el servidor ya mockeado:
             httpContextMock.Setup(x => x.Server).Returns(serverMock.Object);
@@ -44,7 +44,7 @@ namespace AppIntegrador.Tests.Controllers
             controller.ControllerContext = new ControllerContext(httpContextMock.Object, new RouteData(), controller);
 
             //Insertamos el csv 
-            string filePath = Path.GetFullPath(@"C:\Users\Denisse Alfaro\Documents\prueba.csv");
+            string filePath = Path.GetFullPath("../../ArchivoCSVtest/prueba.csv");
             FileStream fileStream = new FileStream(filePath, FileMode.Open);
 
             //Cargamos el mock
@@ -60,5 +60,19 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void TestCarga()
+        {
+            // Arrange
+            //Creo el controlador y su contexto
+            CSVController controller = new CSVController();
+            var file = @"../../ArchivoCSVtest/prueba.csv";
+            // Act
+            var result = controller.carga(file);
+            // Assert
+            Assert.IsTrue(result);
+        }
+
     }
 }
