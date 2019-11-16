@@ -68,6 +68,7 @@
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
     <Folder Include="Usuarios y Perfiles\Functions" />
     <Folder Include="FiltrosFormulario" />
+    <Folder Include="Usuarios y Perfiles\Indices" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -209,6 +210,7 @@
     <Build Include="PromedioCursos.sql" />
     <Build Include="InsertarMatriculado_en.sql" />
     <Build Include="TriggerMatriculado_en.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
