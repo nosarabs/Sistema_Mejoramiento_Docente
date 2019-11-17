@@ -15,7 +15,18 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public PlanDeMejoraController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public PlanDeMejoraController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
 
         // GET: PlanDeMejora
         [HttpGet]
