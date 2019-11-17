@@ -147,6 +147,9 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ArchivoCSVtest\prueba_malo.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +158,7 @@
       <Name>AppIntegrador</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ArchivoCSVtest\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

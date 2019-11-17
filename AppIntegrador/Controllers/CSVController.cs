@@ -114,7 +114,7 @@ namespace AppIntegrador.Controllers
             return archivoValido;
         }
 
-        private bool validarEntradas(ArchivoCSV archivo)
+        public bool validarEntradas(ArchivoCSV archivo)
         {
             bool numerosValidos = validaNumeros(archivo); //Validar que los datos numéricos son correctos
             bool longitudesValidas = validaLongitudes(archivo); //Validar que las longitudes de los caracteres son correctas
@@ -133,24 +133,18 @@ namespace AppIntegrador.Controllers
         {
             /*NumGrupo*/
             /*Compara que el valor ingresado sea un numero positivo*/
-            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && !int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo < 0)  //NumGrupo
+            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && (!int.TryParse(archivo.NumeroGrupo, out int numGrupo) || numGrupo < 0))  //NumGrupo
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NumGrupo");
                 return false;
             }
             /*Compara que el valor ingresado sea un numero positivo*/
-            if (!String.IsNullOrEmpty(archivo.Anno) && !int.TryParse(archivo.Anno, out int anno) && anno < 0)  //anno
+            if (!String.IsNullOrEmpty(archivo.Anno) && (!int.TryParse(archivo.Anno, out int anno) || anno < 0))  //anno
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("anno");
                 return false;
             }
             /*Compara que el valor ingresado sea un numero positivo menor o igual a 3*/
-            if (!String.IsNullOrEmpty(archivo.Semestre) && !int.TryParse(archivo.Semestre, out int semestre) && semestre < 0 && semestre > 3)  //semestre
+            if (!String.IsNullOrEmpty(archivo.Semestre) && (!int.TryParse(archivo.Semestre, out int semestre) || semestre < 0 || semestre > 3))  //semestre
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("semestre");
                 return false;
             }
             return true;
@@ -161,67 +155,47 @@ namespace AppIntegrador.Controllers
             /*Unidad academica*/
             if (!String.IsNullOrEmpty(archivo.CodigoUnidad) && archivo.CodigoUnidad.Length > 10) //CodigoUnidad
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoUnidad");
                 return false;
             }
             if (!String.IsNullOrEmpty(archivo.NombreFacultad) && archivo.NombreFacultad.Length > 50) //nombreFacultad
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("nombreFacultad");
                 return false;
             }
             /*Carrera*/
             if (!String.IsNullOrEmpty(archivo.CodigoCarrera) && archivo.CodigoCarrera.Length > 10) //CodigoCarrera
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoCarrera");
+            { 
                 return false;
             }
             if (!String.IsNullOrEmpty(archivo.NombreCarrera) && archivo.NombreCarrera.Length > 50) //NombreCarrera
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreCarrera");
                 return false;
             }
             /*Enfasis*/
             if (!String.IsNullOrEmpty(archivo.CodigoEnfasis) && archivo.CodigoEnfasis.Length > 10) //CodigoEnfasis
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoEnfasis");
                 return false;
             }
             if (!String.IsNullOrEmpty(archivo.NombreEnfasis) && archivo.NombreEnfasis.Length > 50) //NombreEnfasis
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreEnfasis");
+            { 
                 return false;
             }
             /*Curso*/
             if (!String.IsNullOrEmpty(archivo.SiglaCurso) && archivo.SiglaCurso.Length > 10) //Sigla Curso
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("Sigla Curso");
                 return false;
             }
             if (!String.IsNullOrEmpty(archivo.NombreCurso) && archivo.NombreCurso.Length > 50) //NombreCurso
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreCurso");
                 return false;
             }
             /*Profesor*/
             if (!String.IsNullOrEmpty(archivo.CorreoProfesor) && archivo.CorreoProfesor.Length > 50) //CorreoDocente
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CorreoDocente");
                 return false;
             }
             /*Estudiante*/
             if (!String.IsNullOrEmpty(archivo.CorreoEstudiante) && archivo.CorreoEstudiante.Length > 50) //CorreoEstudiantes
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CorreoEstudiantes");
                 return false;
             }
             return true;
