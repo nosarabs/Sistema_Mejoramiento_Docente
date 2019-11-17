@@ -178,6 +178,11 @@
             </div>
 
             <div class="col" id="panelDashboard">
+                <p id="pP"></p>
+                <p id="pN"></p>
+
+                <p id="cP"></p>
+                <p id="cN"></p>
 
             </div>
         </div>
@@ -187,7 +192,19 @@
 <script>
     var correo = "@HttpContext.Current.User.Identity.Name";
     var x = new GraficosDashboard();
-    x.recuperarPromedioProfesor(correo);
-    x.recuperarPromedioCursos(correo);
+
+    var profe = x.recuperarPromedioProfesor(correo);
+    var profeP = profe[0];
+    var profeN = profe[1];
+
+    var curso = x.recuperarPromedioCursos(correo); 
+    var cursoP = curso[0];
+    var cursoN = [1];
+
+    document.getElementById("pP").innerHTML = profeP;
+    document.getElementById("pN").innerHTML = profeN;
+    document.getElementById("cP").innerHTML = cursoP;
+    document.getElementById("cN").innerHTML = cursoN;
+
 </script>
 
