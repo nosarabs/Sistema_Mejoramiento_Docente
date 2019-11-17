@@ -43,7 +43,7 @@ namespace AppIntegrador.Controllers
             ViewBag.CSigla = new SelectList(db.Grupo, "SiglaCurso", "SiglaCurso");
             ViewBag.GNumero = new SelectList(db.Grupo, "NumGrupo", "NumGrupo");
             ViewBag.GAnno = new SelectList(db.Grupo, "Anno", "Anno");
-            ViewBag.Semestre = new SelectList(db.Grupo, "Semestre", "Semestre");
+            ViewBag.GSemestre = new SelectList(db.Grupo, "Semestre", "Semestre");
 
 
             return View();
