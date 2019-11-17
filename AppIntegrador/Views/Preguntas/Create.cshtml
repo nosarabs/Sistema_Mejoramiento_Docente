@@ -4,10 +4,10 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 <div class="container">
-    <h3>Crear pregunta</h3>
     <div class="card card-default shadow">
         @*test3*@
         <div class="card-body">
+            <h3>Crear pregunta</h3>
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
@@ -52,7 +52,8 @@
                                             @maxlength = "8",
                                             required = "required",
                                             @onkeyup = "contarCaracteres(this)",
-                                            @placeholder = "Código"
+                                            @placeholder = "Código",
+                                            @id = "PreguntaCodigo"
                                         }
                                     })
 
@@ -63,7 +64,7 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="col-lg-12">
+                            <div>
                                 @Html.TextAreaFor(model => model.Enunciado, new
                                 {
                                     @class = "validar form-control long-textbox",
@@ -73,7 +74,8 @@
                                     data_val = "true",
                                     data_val_length_max = "250",
                                     @onkeyup = "contarCaracteres(this)",
-                                    @placeholder = "Enunciado de la pregunta"
+                                    @placeholder = "Enunciado de la pregunta",
+                                    @id = "PreguntaEnunciado"
                                 })
 
                                 <div class="contador small float-right">0/250 caracteres usados</div>

@@ -60,7 +60,8 @@
                         return fSeleccionado == "null" ? null : fSeleccionado.split("*");
                     }
                     //Función que actualiza el filtro de formularios.
-                    function actualizarFiltroFormularios(codigoUA, codigoCarrera, codigoEnfasis, siglaCurso, numeroGrupo, semestre, anno, correoProfesor) {
+                    function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+                        $('#panelDashboard').html("");
                         var f = document.getElementById("filtroFormularios");
                         while (f.firstChild) {
 
@@ -71,14 +72,10 @@
                         $.ajax({
                             url: '/Dashboard/ObtenerFormularios',
                             data: {
-                                codigoUA: codigoUA,
-                                codigoCarrera: codigoCarrera,
-                                codigoEnfasis: codigoEnfasis,
-                                siglaCurso: siglaCurso,
-                                numeroGrupo: numeroGrupo,
-                                semestre: semestre,
-                                anno: anno,
-                                correoProfesor: correoProfesor
+                                unidadesAcademicas: unidadesAcademicas,
+                                carrerasEnfasis: carrerasEnfasis,
+                                grupos: grupos,
+                                profesores: profesores
                             },
                             type: 'post',
                             dataType: 'json',
@@ -139,11 +136,17 @@
 
                         var correoProf = this.recuperarProfesor();
 
-                        this.actualizarFiltroFormularios(ua, codCarrera, codEnfasis, sigla, numGrupo, semestre, anno, correoProf);
+                        var unidadesAcademicas = ua == null ? null : [{ codigo: ua }];
+                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ codigoCarrera: codCarrera, codigoEnfasis: codEnfasis }];
+                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ siglaCurso: sigla, numGrupo: numGrupo, semestre: semestre, anno: anno }];
+                        var profesores = correoProf == null ? null : [{ correo: correoProf }];
+
+                        this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                     }
                     //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
                     function actualizarVistaParcial() {
 
+                        $('#panelDashboard').html("");
                         f = this.recuperarFormulario();
 
                         if (f != null)
