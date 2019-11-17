@@ -1225,6 +1225,108 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void TestEliminarSeccionNoNull()
+        {
+            string codFormulario = "TESTPSU";
+            string codSeccion = "SECCPSU";
+
+
+            FormulariosController controller = new FormulariosController();
+
+            SetupHttpContext(controller);
+
+            var result = controller.EliminarSeccion(codFormulario, codSeccion);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestEliminarPreguntaNoNull()
+        {
+            string codSeccion = "SECCPSU";
+            string codPregunta = "PREGSU";
+
+            FormulariosController controller = new FormulariosController();
+
+            SetupHttpContext(controller);
+
+            var result = controller.EliminarPregunta(codSeccion, codPregunta);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestEliminarSeccionNull()
+        {
+            FormulariosController controller = new FormulariosController();
+
+            SetupHttpContext(controller);
+
+            var result = controller.EliminarSeccion(null, null);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void TestEliminarPreguntaNull()
+        {
+            FormulariosController controller = new FormulariosController();
+
+            SetupHttpContext(controller);
+
+            var result = controller.EliminarPregunta(null, null);
+
+            Assert.IsNull(result);
+        }
+
+       
+        [TestMethod]
+        public void TestBorrarPregunta()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            string codFormulario = "TESTPSU";
+            string codSeccion = "SECCPSU";
+            string codPregunta = "PREGSU";
+
+            // Se crea el formulario de prueba
+            Formulario formulario = new Formulario()
+            {
+                Codigo = codFormulario,
+                Nombre = "Formulario de prueba con preguntas de seleccion única"
+            };
+
+            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
+
+            ObtenerSeccionesDeFormulario_Result seccion = new ObtenerSeccionesDeFormulario_Result
+            {
+                Codigo = codSeccion,
+                Nombre = "Sección de prueba",
+                Orden = 0
+            };
+
+            var mockedObtenerSecciones = SetupMockProcedure<ObtenerSeccionesDeFormulario_Result>
+                (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
+            mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
+
+            ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
+            {
+                Codigo = codPregunta,
+                Enunciado = "¿Si no sé, es la _?",
+                Tipo = "U",
+                Orden = 0,
+            };
+
+            FormulariosController controller = new FormulariosController(mockDb.Object);
+
+            SetupHttpContext(controller);
+
+            var result = controller.BorrarPregunta(codSeccion, codPregunta);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void TestLlenarFormulariosConPreguntasDeOpcionUnica()
         {
             var mockDb = new Mock<DataIntegradorEntities>();

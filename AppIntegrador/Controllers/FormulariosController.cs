@@ -650,13 +650,27 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
         {
-            return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            if (FCodigo != null && SCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost]
         public ActionResult EliminarPregunta(string SCodigo, string PCodigo)
         {
-            return Json(new { eliminadoExitoso = BorrarPregunta(SCodigo, PCodigo) });
+            if (SCodigo != null && PCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarPregunta(SCodigo, PCodigo) });
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost]
