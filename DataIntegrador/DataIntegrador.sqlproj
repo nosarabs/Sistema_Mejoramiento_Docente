@@ -67,7 +67,8 @@
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
     <Folder Include="Usuarios y Perfiles\Functions" />
-    <Folder Include="FiltrosFormulario" />
+    <Folder Include="Filtros" />
+    <Folder Include="Filtros\FiltrosFormulario" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -173,11 +174,6 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
     <Build Include="PlanesDeMejora\SeAsignaA.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
     <Build Include="InsertarUnidadCSV.sql" />
     <Build Include="InsertarCarreraCSV.sql" />
     <Build Include="InsertarEnfasisCSV.sql" />
@@ -210,6 +206,12 @@
     <Build Include="InsertarMatriculado_en.sql" />
     <Build Include="TriggerMatriculado_en.sql" />
     <Build Include="Index_persona.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosUA.sql" />
+    <Build Include="Filtros\Tipos_filtros.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

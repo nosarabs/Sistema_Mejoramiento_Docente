@@ -2,13 +2,6 @@
 Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a los grupos dados como parámetro.
 Esta información se necesita para filtrar respuestas a formulario.
 */
-
-/*Parámetro de ObtenerFormulariosGrupo*/
-CREATE TYPE FiltroGrupos
-AS TABLE (SiglaCurso VARCHAR(10), NumeroGrupo TINYINT, Semestre TINYINT, Anno INT, PRIMARY KEY (SiglaCurso, NumeroGrupo, Semestre, Anno))
-
-GO
-
 CREATE FUNCTION ObtenerFormulariosGrupo (@Grupos FiltroGrupos READONLY)
 RETURNS @formulariosGrupo TABLE
 (
