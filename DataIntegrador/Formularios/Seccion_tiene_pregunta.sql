@@ -16,11 +16,12 @@ CREATE TRIGGER [dbo].[ActualizarOrdenPregunta]
 	AS
 	BEGIN
 		DECLARE @orden INT
+		DECLARE @sec VARCHAR(8)
 
-		SELECT @orden = d.[Orden]
+		SELECT @orden = d.[Orden], @sec = d.[SCodigo]
 		FROM deleted d;
 
 		UPDATE [Seccion_tiene_pregunta]
 		SET Orden = Orden - 1
-		WHERE Orden > @orden;
+		WHERE Orden > @orden AND  SCodigo = @sec
 	END

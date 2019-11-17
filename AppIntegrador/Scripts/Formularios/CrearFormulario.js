@@ -46,8 +46,10 @@ function BorrarPregunta(Scod, Pcod) {
         dataType: "json",
         traditional: true,
         success: function (data) {
+            console.log("ak7")
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
+                console.log("ak6+1")
             }
         },
         error: function () {
