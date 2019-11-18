@@ -14,9 +14,12 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Data.Entity.SqlServer;
+
     public partial class DataIntegradorEntities : DbContext
     {
+        private static string __hack = typeof(SqlProviderServices).ToString();
+
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
