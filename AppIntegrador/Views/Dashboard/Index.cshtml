@@ -174,23 +174,6 @@
 
                     }
 
-                    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
-                        //var correo = "@HttpContext.Current.User.Identity.Name";
-                        var x = new GraficosDashboard();
-
-                        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
-                        var profeP = profe[0];
-                        var profeN = profe[1];
-
-                        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores); 
-                        var cursoP = curso[0];
-                        var cursoN = [1];
-
-                        document.getElementById("pP").innerHTML = profeP;
-                        document.getElementById("pN").innerHTML = profeN;
-                        document.getElementById("cP").innerHTML = cursoP;
-                        document.getElementById("cN").innerHTML = cursoN;
-                    }
                 </script>
             </div>
 
@@ -201,9 +184,34 @@
                 <p id="cP"></p>
                 <p id="cN"></p>
 
+                <script>
+                    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+
+                        var x = new GraficosDashboard();
+
+                        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        var profeP = profe[0];
+                        var profeN = profe[1];
+
+                        alert(profeP);
+
+                        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        var cursoP = curso[0];
+                        var cursoN = [1];
+
+                        document.getElementById("pP").innerHTML = profeP;
+                        document.getElementById("pN").innerHTML = profeN;
+                        document.getElementById("cP").innerHTML = cursoP;
+                        document.getElementById("cN").innerHTML = cursoN;
+                    }
+
+                </script>
+
             </div>
         </div>
     </div>
 </body>
+
+
 
 
