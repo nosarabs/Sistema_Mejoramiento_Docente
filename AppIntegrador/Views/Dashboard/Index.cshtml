@@ -142,6 +142,7 @@
                         var profesores = correoProf == null ? null : [{ correo: correoProf }];
 
                         this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                     }
                     //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
                     function actualizarVistaParcial() {
@@ -174,6 +175,24 @@
                         }
 
                     }
+
+                    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+                        //var correo = "@HttpContext.Current.User.Identity.Name";
+                        var x = new GraficosDashboard();
+
+                        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        var profeP = profe[0];
+                        var profeN = profe[1];
+
+                        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores); 
+                        var cursoP = curso[0];
+                        var cursoN = [1];
+
+                        document.getElementById("pP").innerHTML = profeP;
+                        document.getElementById("pN").innerHTML = profeN;
+                        document.getElementById("cP").innerHTML = cursoP;
+                        document.getElementById("cN").innerHTML = cursoN;
+                    }
                 </script>
             </div>
 
@@ -189,22 +208,4 @@
     </div>
 </body>
 
-<script>
-    var correo = "@HttpContext.Current.User.Identity.Name";
-    var x = new GraficosDashboard();
-
-    var profe = x.recuperarPromedioProfesor(correo);
-    var profeP = profe[0];
-    var profeN = profe[1];
-
-    var curso = x.recuperarPromedioCursos(correo); 
-    var cursoP = curso[0];
-    var cursoN = [1];
-
-    document.getElementById("pP").innerHTML = profeP;
-    document.getElementById("pN").innerHTML = profeN;
-    document.getElementById("cP").innerHTML = cursoP;
-    document.getElementById("cN").innerHTML = cursoN;
-
-</script>
 

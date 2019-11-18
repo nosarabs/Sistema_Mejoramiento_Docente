@@ -103,8 +103,8 @@ namespace AppIntegrador.Controllers
         //Berta Sánchez Jalet
         //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
         //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 10/10
-        public String ObtenerPromedioProfesor(String correo)
+        //Cumplimiento: 8/10
+        public String ObtenerPromedioProfesor(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<Profesores> profesores)
         {
                 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -112,37 +112,48 @@ namespace AppIntegrador.Controllers
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
             ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
 
-            db.PromedioProfesor(correo, resultPromedio, resultCantidad);
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
+
+            db.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado p;
 
-            if(!(resultPromedio.Value is DBNull))
+            if (!(resultPromedio.Value is DBNull))
             {
                 p.promedio = Convert.ToSingle(resultPromedio.Value);
                 p.cantidad = Convert.ToInt32(resultCantidad.Value);
-            } else
+            }
+            else
             {
                 p.cantidad = 0;
                 p.promedio = 0;
             }
-            
+
 
             return serializer.Serialize(p);
         }
 
-        //Berta Sánchez Jalet'Object cannot be cast from DBNull to other types.'
-
+        //Berta Sánchez Jalet
         //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
         //Tarea técnica: Crear funciones en el Controlador.
         //Cumplimiento: 8/10
-        public String ObtenerPromedioCursos(String correo)
+        public String ObtenerPromedioCursos(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<Profesores> profesores)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
             ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
             ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
 
-            db.PromedioCursos(correo, resultPromedio, resultCantidad);
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
+
+            db.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado c;
 
@@ -150,7 +161,8 @@ namespace AppIntegrador.Controllers
             {
                 c.promedio = Convert.ToSingle(resultPromedio.Value);
                 c.cantidad = Convert.ToInt32(resultCantidad.Value);
-            } else
+            }
+            else
             {
                 c.cantidad = 0;
                 c.promedio = 0;
@@ -158,6 +170,8 @@ namespace AppIntegrador.Controllers
 
             return serializer.Serialize(c);
         }
+
+        // TESTED
         //Retorna un string con la lista de formularios que pueden ser visualizados con base en los parámetros de los filtros.
         public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<Profesores> profesores)
         {

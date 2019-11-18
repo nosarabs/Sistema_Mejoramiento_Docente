@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1931,12 +1931,10 @@
         <Function Name="PopularFormulariosDePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PromedioCursos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
           <Parameter Name="cantidad" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PromedioProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="promedio" Type="float" Mode="InOut" />
           <Parameter Name="cantidad" Type="int" Mode="InOut" />
         </Function>
@@ -2315,8 +2313,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3834,7 +3831,7 @@
             <Parameter Name="perfil" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
-            <Parameter Name="codCarrera" Mode="In" Type="String" />
+          <Parameter Name="codCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EnfasisXCarreraXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarreraXPerfil_Result)">
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
@@ -3852,7 +3849,7 @@
             <Parameter Name="SCodigo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PerfilesXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.PerfilesXUsuario_Result)">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
+          <Parameter Name="correoUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AgregarFormulario">
             <Parameter Name="codigo" Mode="In" Type="String" />
@@ -3934,7 +3931,7 @@
             <Parameter Name="nombreObj" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BorrarPlan">
-            <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
+          <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ChangePassword">
             <Parameter Name="username" Mode="In" Type="String" />
@@ -4036,10 +4033,10 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarEstudianteCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarFuncionarioCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarGrupoCSV">
             <Parameter Name="SiglaCurso" Mode="In" Type="String" />
@@ -4078,7 +4075,7 @@
             <Parameter Name="SiglaCurso" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarProfesorCSV">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarTrabajaEn">
             <Parameter Name="CorreoFuncionario" Mode="In" Type="String" />
@@ -4111,7 +4108,7 @@
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-            <Parameter Name="questionCode" Mode="In" Type="String" />
+          <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesSeleccionadas" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesSeleccionadas_Result)">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
@@ -4124,7 +4121,7 @@
             <Parameter Name="codPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
-            <Parameter Name="sectionCode" Mode="In" Type="String" />
+          <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerRespuestasAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerRespuestasAFormulario_Result)">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
@@ -4145,18 +4142,16 @@
             <Parameter Name="codPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
-            <Parameter Name="CodForm" Mode="In" Type="String" />
+          <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularFormulariosConSecciones" />
           <FunctionImport Name="PopularFormulariosDePrueba" />
           <FunctionImport Name="PopularSeccionesConPreguntas" />
           <FunctionImport Name="PromedioCursos">
-            <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
             <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PromedioProfesor">
-            <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
             <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
           </FunctionImport>

@@ -6,12 +6,17 @@ class GraficosDashboard {
 
     constructor() { }
 
-    recuperarPromedioProfesor(correo) {
+    recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
         var promedio;
         var cantidad;
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
-            data: { correo: correo },
+            data: {
+                unidadesAcademicas: unidadesAcademicas,
+                carrerasEnfasis: carrerasEnfasis,
+                grupos: grupos,
+                profesores: profesores
+            },
             type: 'post',
             dataType: 'json',
             async: false,
@@ -24,12 +29,17 @@ class GraficosDashboard {
         return [promedio, cantidad]
     }
 
-    recuperarPromedioCursos(correo) {
+    recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
         var promedio;
         var cantidad;
         $.ajax({
             url: '/Dashboard/ObtenerPromedioCursos',
-            data: { correo: correo },
+            data: {
+                    unidadesAcademicas: unidadesAcademicas,
+                    carrerasEnfasis: carrerasEnfasis,
+                    grupos: grupos,
+                    profesores: profesores
+            },
             type: 'post',
             dataType: 'json',
             async: false,
