@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -8,10 +7,8 @@ using AppIntegrador.Models;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
-using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
-using System.Globalization;
 using Security.Authentication;
 
 namespace AppIntegrador.Controllers
