@@ -20,12 +20,12 @@ namespace AppIntegrador.Tests.Controllers
             EnlaceSeguroController controller = new EnlaceSeguroController(db);
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
 
-            string url1 = controller.ObtenerEnlaceSeguro("/Home/About/");
-            string url2 = controller.ObtenerEnlaceSeguro("/Home/About/");
+            string url1 = controller.ObtenerEnlaceSeguro("https://localhost:44334/Home/About/");
+            string url2 = controller.ObtenerEnlaceSeguro("https://localhost:44334/Home/About/");
 
-            // Obtener el hash solamente - 40 para deshacerse de /EnlaceSeguro/RedireccionSegura/
-            string hash1 = url1.Substring(40);
-            string hash2 = url2.Substring(40);
+            // Obtener el hash solamente, deshacerse de /EnlaceSeguro/RedireccionSegura?urlHash=
+            string hash1 = url1.Substring(url1.LastIndexOf("=") + 1);
+            string hash2 = url2.Substring(url2.LastIndexOf("=") + 1);
 
             // Eliminar las tuplas insertadas
             EnlaceSeguro es1 = db.EnlaceSeguro.Find(hash1);
@@ -53,10 +53,36 @@ namespace AppIntegrador.Tests.Controllers
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
 
             // Permitir solamente a admin@mail.com
-            string url = controller.ObtenerEnlaceSeguro("/Home/About/", "admin@mail.com");
+            string url = controller.ObtenerEnlaceSeguro("https://localhost:44334/Home/About/", "admin@mail.com");
 
-            // Obtener el hash solamente - 40 para deshacerse de /EnlaceSeguro/RedireccionSegura?urlHash=
-            string hash = url.Substring(40);
+            // Obtener el hash solamente, deshacerse de /EnlaceSeguro/RedireccionSegura?urlHash=
+            string hash = url.Substring(url.LastIndexOf("=") + 1);
+
+            var result = controller.RedireccionSegura(hash) as RedirectResult;
+
+            // Eliminar las tuplas insertadas
+            EnlaceSeguro es = db.EnlaceSeguro.Find(hash);
+            if (es != null)
+            {
+                db.EnlaceSeguro.Remove(es);
+                db.SaveChanges();
+            }
+
+            Assert.AreEqual("https://localhost:44334/Home/About/", result.Url);
+        }
+
+        [TestMethod]
+        public void TestRedireccionEnlaceSeguroIncorrecto()
+        {
+            DataIntegradorEntities db = new DataIntegradorEntities();
+            EnlaceSeguroController controller = new EnlaceSeguroController(db);
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            // Permitir solamente a tamales@mail.com
+            string url = controller.ObtenerEnlaceSeguro("/Home/About/", "tamales@mail.com");
+
+            // Obtener el hash solamente, deshacerse de /EnlaceSeguro/RedireccionSegura?urlHash=
+            string hash = url.Substring(url.LastIndexOf("=") + 1);
 
             var result = controller.RedireccionSegura(hash) as RedirectToRouteResult;
 
@@ -68,7 +94,7 @@ namespace AppIntegrador.Tests.Controllers
                 db.SaveChanges();
             }
 
-            Assert.AreEqual("About", result.RouteValues["action"]);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
         }
 
         [TestInitialize]

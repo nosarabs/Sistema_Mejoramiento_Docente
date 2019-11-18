@@ -11,7 +11,7 @@ BEGIN
     SET NOCOUNT ON
 
 	DECLARE @salt UNIQUEIDENTIFIER=NEWID()
-	SET @resultadohash = HASHBYTES('SHA2_256', @urlReal+CAST(@salt AS VARCHAR(36)))
+	SET @resultadohash = CONVERT (VARCHAR(64), HASHBYTES('SHA2_256', @urlReal+CAST(@salt AS VARCHAR(36))), 2)
 	IF @usuarioAsociado IS NULL AND @expira IS NULL
 	BEGIN
 		INSERT INTO EnlaceSeguro ([Hash], UrlReal)
