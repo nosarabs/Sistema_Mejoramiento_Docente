@@ -19,13 +19,4 @@ namespace AppIntegrador.Models
         public String codigo { get; set; }
         public String nombre { get; set; }
     }
-
-    //Clase para representar las Carreras con sus respectivos énfasis
-    public class CarrerasEnfasis
-    {
-        public String codigoCarrera { get; set; }
-        public String nombreCarrera { get; set; }
-        public String codigoEnfasis { get; set; }
-        public String nombreEnfasis { get; set; }
-    }
 }

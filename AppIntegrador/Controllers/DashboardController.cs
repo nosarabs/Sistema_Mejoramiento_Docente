@@ -116,23 +116,25 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(unidadesAcademicas.ToList());
         }
 
-        //Función que devuelve json con los énfasis de las carreras
-        public String getCarreraEnfasis()
+        //Retorna un string con la lista de carreras y énfasis que aparecen en el filtro con base en los parámetros de los otros filtros.
+        public String ObtenerCarrerasEnfasis(List<UnidadesAcademicas> unidadesAcademicas, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            // Se construye un objeto de tipo CarrerasEnfasis con los énfasis de cada carrera
-            var carrerasEnfasis = from e in db.Enfasis
-                      join c in db.Carrera on e.CodCarrera equals c.Codigo
-                      orderby c.Nombre, e.Nombre
-                      select new CarrerasEnfasis { codigoCarrera = c.Codigo, nombreCarrera = c.Nombre, codigoEnfasis = e.Codigo, nombreEnfasis = e.Nombre};
+            //Se crean los parámetros que deben enviarse al procedimiento
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
 
-            // Se convierte a JSON la lista con las carrerasEnfasis
-            return serializer.Serialize(carrerasEnfasis.ToList());
+            //Llamado a la función de tabla que recupera las carreras y énfasis según los parámetros de los filtros.
+            var carrerasEnfasis = fdb.ObtenerCarrerasEnfasisFiltros(uas, gs, ps);
+
+            //Retorna la lista de formularios serializada.
+            return JsonConvert.SerializeObject(carrerasEnfasis.ToList());
+
         }
 
-        //Función que devuelve JSON con los grupos de un curso, con su respectivo número y período
-        public String ObtenerGrupos(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<ProfesoresFiltros> profesores)
+        //Retorna un string con la lista de grupos que aparecen en el filtro con base en los parámetros de los otros filtros.
+        public String ObtenerGrupos(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -140,23 +142,23 @@ namespace AppIntegrador.Controllers
             var ces = CrearTablaCE(carrerasEnfasis);
             var ps = CrearTablaP(profesores);
 
-            //Llamado a la función de tabla que recupera los formularios según los parámetros de los filtros.
-            var formularios = fdb.ObtenerGruposFiltros(uas, ces, ps);
+            //Llamado a la función de tabla que recupera los grupos según los parámetros de los filtros.
+            var grupos = fdb.ObtenerGruposFiltros(uas, ces, ps);
 
             //Retorna la lista de formularios serializada.
-            return JsonConvert.SerializeObject(formularios.ToList());
+            return JsonConvert.SerializeObject(grupos.ToList());
 
         }
 
         //Retorna un string con la lista de profesores que aparecen en el filtro con base en los parámetros de los otros filtros.
-        public String ObtenerProfesores(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<GruposFiltros> grupos)
+        public String ObtenerProfesores(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos)
         {
             //Se crean los parámetros que deben enviarse al procedimiento
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
 
-            //Llamado a la función de tabla que recupera los formularios según los parámetros de los filtros.
+            //Llamado a la función de tabla que recupera los profesores según los parámetros de los filtros.
             var profesores = fdb.ObtenerProfesoresFiltros(uas, ces, gs);
 
             //Retorna la lista de formularios serializada.
@@ -164,7 +166,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Retorna un string con la lista de formularios que pueden ser visualizados con base en los parámetros de los filtros.
-        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
+        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -221,7 +223,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Crea un DataTable de carreras y énfasis a partir de una lista
-        static DataTable CrearTablaCE(List<CarrerasEnfasis> carrerasEnfasis)
+        static DataTable CrearTablaCE(List<CarrerasEnfasisFiltros> carrerasEnfasis)
         {
             //Inicializa la variable como nula
             DataTable dt = null;
@@ -251,7 +253,7 @@ namespace AppIntegrador.Controllers
                         {
                             if (carrerasEnfasis[i] != null)
                             {
-                                dt.Rows.Add(carrerasEnfasis[i].codigoCarrera, carrerasEnfasis[i].codigoEnfasis);
+                                dt.Rows.Add(carrerasEnfasis[i].CodCarrera, carrerasEnfasis[i].CodEnfasis);
                             }
                         }
                     }

@@ -102,7 +102,7 @@ namespace AppIntegrador.Tests.Controllers
 
             //Se crean los parámetros del controlador
             var unidadesAcademicas = new List<UnidadesAcademicas> { new UnidadesAcademicas { codigo = "01" } };
-            var carrerasEnfasis = new List<CarrerasEnfasis> { new CarrerasEnfasis { codigoCarrera = "01", codigoEnfasis = "01" } };
+            var carrerasEnfasis = new List<CarrerasEnfasisFiltros> { new CarrerasEnfasisFiltros { CodCarrera = "01", CodEnfasis = "01" } };
             var grupos = new List<GruposFiltros> { new GruposFiltros { SiglaCurso = "CI0128", NumGrupo = 1, Semestre = 2, Anno = 2019 } };
             var profesores = new List<ProfesoresFiltros> { new ProfesoresFiltros { Correo = "ismael@mail.com" } };
 

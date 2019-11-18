@@ -201,6 +201,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
