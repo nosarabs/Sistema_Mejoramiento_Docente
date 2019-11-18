@@ -265,7 +265,8 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerFormulariosFiltros.cs" />
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

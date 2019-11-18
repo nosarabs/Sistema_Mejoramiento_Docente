@@ -42,6 +42,67 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        //Berta Sánchez Jalet
+        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+        //Tarea técnica: Crear funciones en el Controlador.
+        //Cumplimiento: 10/10
+        public String ObtenerPromedioProfesor(String correo)
+        {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
+
+            db.PromedioProfesor(correo, resultPromedio, resultCantidad);
+
+            Resultado p;
+
+            if (!(resultPromedio.Value is DBNull))
+            {
+                p.promedio = Convert.ToSingle(resultPromedio.Value);
+                p.cantidad = Convert.ToInt32(resultCantidad.Value);
+            }
+            else
+            {
+                p.cantidad = 0;
+                p.promedio = 0;
+            }
+
+
+            return serializer.Serialize(p);
+        }
+
+        //Berta Sánchez Jalet'Object cannot be cast from DBNull to other types.'
+
+        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+        //Tarea técnica: Crear funciones en el Controlador.
+        //Cumplimiento: 8/10
+        public String ObtenerPromedioCursos(String correo)
+        {
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
+            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
+
+            db.PromedioCursos(correo, resultPromedio, resultCantidad);
+
+            Resultado c;
+
+            if (!(resultPromedio.Value is DBNull))
+            {
+                c.promedio = Convert.ToSingle(resultPromedio.Value);
+                c.cantidad = Convert.ToInt32(resultCantidad.Value);
+            }
+            else
+            {
+                c.cantidad = 0;
+                c.promedio = 0;
+            }
+
+            return serializer.Serialize(c);
+        }
+
         //Función que devuelve las unidades académicas con su respectivo código y nombre
         public String getUnidadesAcademicas()
         {
@@ -85,81 +146,23 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(cursoGrupo.ToList());
         }
 
-        //Función que devuelve un JSON con el nombre completo de los profesores
-        public String getProfesores()
+        //Retorna un string con la lista de profesores que aparecen en el filtro con base en los parámetros de los otros filtros.
+        public String ObtenerProfesores(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos)
         {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            //Se crean los parámetros que deben enviarse al procedimiento
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
 
-            // Se construye un objeto de tipo Profesor con su nombre completo
-            var profesores = from prof in db.Profesor
-                             join per in db.Persona on prof.Correo equals per.Correo
-                             orderby per.Apellido1, per.Apellido2, per.Nombre1, per.Nombre2
-                             select new Profesores { correo = prof.Correo, nombre1 = per.Nombre1, nombre2 = per.Nombre2, apellido1 = per.Apellido1, apellido2 = per.Apellido2 };
+            //Llamado a la función de tabla que recupera los formularios según los parámetros de los filtros.
+            var profesores = fdb.ObtenerProfesoresFiltros(uas, ces, gs);
 
-            // Se convierte a JSON la lista con el nombre completo de los profesores
-            return serializer.Serialize(profesores.ToList());
+            //Retorna la lista de formularios serializada.
+            return JsonConvert.SerializeObject(profesores.ToList());
         }
 
-        //Berta Sánchez Jalet
-        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-        //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 10/10
-        public String ObtenerPromedioProfesor(String correo)
-        {
-                
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
-
-            db.PromedioProfesor(correo, resultPromedio, resultCantidad);
-
-            Resultado p;
-
-            if(!(resultPromedio.Value is DBNull))
-            {
-                p.promedio = Convert.ToSingle(resultPromedio.Value);
-                p.cantidad = Convert.ToInt32(resultCantidad.Value);
-            } else
-            {
-                p.cantidad = 0;
-                p.promedio = 0;
-            }
-            
-
-            return serializer.Serialize(p);
-        }
-
-        //Berta Sánchez Jalet'Object cannot be cast from DBNull to other types.'
-
-        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-        //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 8/10
-        public String ObtenerPromedioCursos(String correo)
-        {
-
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
-
-            db.PromedioCursos(correo, resultPromedio, resultCantidad);
-
-            Resultado c;
-
-            if (!(resultPromedio.Value is DBNull))
-            {
-                c.promedio = Convert.ToSingle(resultPromedio.Value);
-                c.cantidad = Convert.ToInt32(resultCantidad.Value);
-            } else
-            {
-                c.cantidad = 0;
-                c.promedio = 0;
-            }
-
-            return serializer.Serialize(c);
-        }
         //Retorna un string con la lista de formularios que pueden ser visualizados con base en los parámetros de los filtros.
-        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<Profesores> profesores)
+        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -298,7 +301,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Crea un DataTable de profesores a partir de una lista
-        static DataTable CrearTablaP(List<Profesores> profesores)
+        static DataTable CrearTablaP(List<ProfesoresFiltros> profesores)
         {
             //Inicializa la variable como nula
             DataTable dt = null;
@@ -327,7 +330,7 @@ namespace AppIntegrador.Controllers
                         {
                             if (profesores[i] != null)
                             {
-                                dt.Rows.Add(profesores[i].correo);
+                                dt.Rows.Add(profesores[i].Correo);
                             }
                         }
                     }

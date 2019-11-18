@@ -39,21 +39,4 @@ namespace AppIntegrador.Models
         public Nullable<int> anno { get; set; }
 
     }
-
-    //Clase para representar los profesores del curso
-    public class Profesores
-    {
-        public String correo { get; set; }
-        public String nombre1 { get; set; }
-        public String nombre2 { get; set; }
-        public String apellido1 { get; set; }
-        public String apellido2 { get; set; }
-    }
-
-    //Clase para representar los formularios
-    public class Formularios
-    {
-        public String codigo { get; set; }
-        public String nombre { get; set; }
-    }
 }
