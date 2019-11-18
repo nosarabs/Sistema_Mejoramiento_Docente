@@ -212,6 +212,8 @@
     <Build Include="TriggerMatriculado_en.sql" />
     <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
     <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
+    <Build Include="EnlaceSeguro.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
