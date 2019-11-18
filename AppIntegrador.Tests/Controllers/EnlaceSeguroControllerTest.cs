@@ -6,9 +6,9 @@ namespace AppIntegrador.Tests.Controllers
     [TestClass]
     public class EnlaceSeguroControllerTest
     {
-        [TestMethod]
-        public void ObtenerEnlaceSeguroTest()
-        {
-        }
+        //[TestMethod]
+        //public void ObtenerEnlaceSeguroTest()
+        //{
+        //}
     }
 }

@@ -109,7 +109,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Usuario objUser, string returnUrl)
+        public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
             ViewBag.EnableBS4NoNavBar = true;
