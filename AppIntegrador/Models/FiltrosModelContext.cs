@@ -131,5 +131,57 @@
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<FormulariosFiltros>("SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin FROM [ObtenerFormulariosFiltros](@UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores)", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter).AsQueryable();
         }
+
+        [DbFunction("Entities", "PromedioProfesor")]
+        public virtual int PromedioProfesor(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad)
+        {
+            var FiltroUnidadesAcademicasParameter = FiltroUnidadesAcademicas != null ?
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured) { Value = FiltroUnidadesAcademicas } :
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured);
+            FiltroUnidadesAcademicasParameter.TypeName = "dbo.FiltroUnidadesAcademicas";
+
+            var FiltroCarrerasEnfasisParameter = FiltroCarrerasEnfasis != null ?
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured) { Value = FiltroCarrerasEnfasis } :
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured);
+            FiltroCarrerasEnfasisParameter.TypeName = "dbo.FiltroCarrerasEnfasis";
+
+            var FiltroGruposParameter = FiltroGrupos != null ?
+                new SqlParameter("@Grupos", SqlDbType.Structured) { Value = FiltroGrupos } :
+                new SqlParameter("@Grupos", SqlDbType.Structured);
+            FiltroGruposParameter.TypeName = "dbo.FiltroGrupos";
+
+            var FiltroProfesoresParameter = FiltroProfesores != null ?
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured) { Value = FiltroProfesores } :
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured);
+            FiltroProfesoresParameter.TypeName = "dbo.FiltroProfesores";
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioProfesor] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad);
+        }
+
+        [DbFunction("Entities", "PromedioCursos")]
+        public virtual int PromedioCursos(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad)
+        {
+            var FiltroUnidadesAcademicasParameter = FiltroUnidadesAcademicas != null ?
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured) { Value = FiltroUnidadesAcademicas } :
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured);
+            FiltroUnidadesAcademicasParameter.TypeName = "dbo.FiltroUnidadesAcademicas";
+
+            var FiltroCarrerasEnfasisParameter = FiltroCarrerasEnfasis != null ?
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured) { Value = FiltroCarrerasEnfasis } :
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured);
+            FiltroCarrerasEnfasisParameter.TypeName = "dbo.FiltroCarrerasEnfasis";
+
+            var FiltroGruposParameter = FiltroGrupos != null ?
+                new SqlParameter("@Grupos", SqlDbType.Structured) { Value = FiltroGrupos } :
+                new SqlParameter("@Grupos", SqlDbType.Structured);
+            FiltroGruposParameter.TypeName = "dbo.FiltroGrupos";
+
+            var FiltroProfesoresParameter = FiltroProfesores != null ?
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured) { Value = FiltroProfesores } :
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured);
+            FiltroProfesoresParameter.TypeName = "dbo.FiltroProfesores";
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioCursos] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad);
+        }
     }
 }

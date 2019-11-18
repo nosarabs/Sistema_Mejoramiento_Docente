@@ -10,6 +10,7 @@ using AppIntegrador.Models;
 using System.Data.Entity.Core.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Data.SqlClient;
 
 namespace AppIntegrador.Controllers
 {
@@ -45,16 +46,24 @@ namespace AppIntegrador.Controllers
         //Berta Sánchez Jalet
         //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
         //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 10/10
-        public String ObtenerPromedioProfesor(String correo)
+        //Cumplimiento: 8/10
+        public String ObtenerPromedioProfesor(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
+            var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
+            resultPromedio.Direction = ParameterDirection.Output;
 
-            db.PromedioProfesor(correo, resultPromedio, resultCantidad);
+            var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
+            resultCantidad.Direction = ParameterDirection.Output;
+
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
+
+            fdb.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado p;
 
@@ -73,19 +82,27 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(p);
         }
 
-        //Berta Sánchez Jalet'Object cannot be cast from DBNull to other types.'
-
+        //Berta Sánchez Jalet
         //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
         //Tarea técnica: Crear funciones en el Controlador.
         //Cumplimiento: 8/10
-        public String ObtenerPromedioCursos(String correo)
+        public String ObtenerPromedioCursos(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
 
-            db.PromedioCursos(correo, resultPromedio, resultCantidad);
+            var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
+            resultPromedio.Direction = ParameterDirection.Output;
+
+            var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
+            resultCantidad.Direction = ParameterDirection.Output;
+
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
+
+            fdb.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado c;
 
