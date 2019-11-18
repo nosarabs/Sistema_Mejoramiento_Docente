@@ -10,6 +10,7 @@ using AppIntegrador.Models;
 using System.Data.Entity.Core.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Data.SqlClient;
 
 namespace AppIntegrador.Controllers
 {
@@ -51,15 +52,18 @@ namespace AppIntegrador.Controllers
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
+            var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
+            resultPromedio.Direction = ParameterDirection.Output;
+
+            var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
+            resultCantidad.Direction = ParameterDirection.Output;
 
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
-            fdb.PromedioProfesor(uas, ces, gs, ps, ref resultPromedio, ref resultCantidad);
+            fdb.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado p;
 
@@ -87,15 +91,18 @@ namespace AppIntegrador.Controllers
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            ObjectParameter resultPromedio = new ObjectParameter("promedio", typeof(float));
-            ObjectParameter resultCantidad = new ObjectParameter("cantidad", typeof(int));
+            var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
+            resultPromedio.Direction = ParameterDirection.Output;
+
+            var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
+            resultCantidad.Direction = ParameterDirection.Output;
 
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
-            fdb.PromedioCursos(uas, ces, gs, ps, ref resultPromedio, ref resultCantidad);
+            fdb.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad);
 
             Resultado c;
 

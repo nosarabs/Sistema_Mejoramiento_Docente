@@ -8,8 +8,8 @@ CREATE PROCEDURE [dbo].[PromedioCursos]
 		@CarrerasEnfasis FiltroCarrerasEnfasis READONLY,
 		@Grupos FiltroGrupos READONLY,
 		@CorreosProfesores FiltroProfesores READONLY,
-		@promedio FLOAT = -1 OUTPUT,
-		@cantidad INT = 1 OUTPUT
+		@promedio FLOAT OUTPUT,
+		@cantidad INT OUTPUT
 	)
 	 
 AS
@@ -22,6 +22,8 @@ DECLARE @inc AS INT
 DECLARE @opcion AS TINYINT
 DECLARE @valor AS FLOAT = 0
 
+	SET @promedio = -1;
+
 	SELECT @min = E.Minimo, @max = E.Maximo, @inc = E.Incremento
 	FROM Escalar AS E 
 	WHERE E.Codigo = 'INFCURSO'
@@ -31,25 +33,9 @@ DECLARE @valor AS FLOAT = 0
 	INSERT INTO @Resultados
 		SELECT  O.OpcionSeleccionada 
 		FROM	Opciones_seleccionadas_respuesta_con_opciones AS O
-				JOIN Grupo AS G ON O.CSigla = G.SiglaCurso
-					AND O.GNumero = G.NumGrupo
-					AND O.GSemestre = G.Semestre
-					AND O.GAnno = G.Anno
-				JOIN Imparte AS I ON G.SiglaCurso = I.SiglaCurso 
-					AND G.NumGrupo = I.NumGrupo
-					AND G.Semestre = I.Semestre
-					AND G.Anno = I.Anno
-		WHERE O.PCodigo = 'INFCURSO'
-			AND O.FCodigo IN (SELECT dbo.ObtenerFormulariosFiltros(
-								@UnidadesAcademicas,
-								@CarrerasEnfasis,
-								@Grupos,
-								@CorreosProfesores))
-			AND I.CorreoProfesor IN (SELECT dbo.ObtenerFormulariosFiltros(
-										@UnidadesAcademicas,
-										@CarrerasEnfasis,
-										@Grupos,
-										@CorreosProfesores))
+		WHERE O.PCodigo = 'INFCURSO' AND EXISTS (SELECT *
+												FROM ObtenerFormulariosFiltros(@UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores)
+												WHERE FCodigo = O.FCodigo AND CSigla = O.CSigla AND GNumero = O.GNumero AND GSemestre = O.GSemestre AND GAnno = O.GAnno);
 
 	DECLARE C CURSOR FOR SELECT Opcion_seleccionada FROM @Resultados
 	OPEN C
@@ -65,7 +51,9 @@ DECLARE @valor AS FLOAT = 0
 	SELECT @cantidad = COUNT(*)
 	FROM @Resultados
 
-	SET @promedio = @valor / @cantidad;
+	IF (@cantidad != 0)
+	BEGIN
+		SET @promedio = @valor / @cantidad;
+	END
 
 END
-RETURN 0
