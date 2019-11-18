@@ -34,9 +34,9 @@ namespace AppIntegrador.Models
     {
         public String siglaCurso { get; set; }
         public String nombreCurso { get; set; }
-        public int numGrupo { get; set; }
-        public int semestre { get; set; }
-        public int anno { get; set; }
+        public Nullable<byte> numGrupo { get; set; }
+        public Nullable<byte> semestre { get; set; }
+        public Nullable<int> anno { get; set; }
 
     }
 

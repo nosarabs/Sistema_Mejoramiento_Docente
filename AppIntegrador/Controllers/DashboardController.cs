@@ -16,15 +16,18 @@ namespace AppIntegrador.Controllers
     public class DashboardController : Controller
     {
         private DataIntegradorEntities db;
+        private FiltrosEntities fdb;
 
         public DashboardController()
         {
             db = new DataIntegradorEntities();
+            fdb = new FiltrosEntities();
         }
 
-        public DashboardController(DataIntegradorEntities db)
+        public DashboardController(DataIntegradorEntities db, FiltrosEntities fdb)
         {
             this.db = db;
+            this.fdb = fdb;
         }
 
         struct Resultado
@@ -156,25 +159,181 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(c);
         }
         //Retorna un string con la lista de formularios que pueden ser visualizados con base en los parámetros de los filtros.
-        public String ObtenerFormularios(string codigoUA, string codigoCarrera, string codigoEnfasis, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<byte> semestre, Nullable<int> anno, string correoProfesor)
+        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasis> carrerasEnfasis, List<CursoGrupo> grupos, List<Profesores> profesores)
         {
 
-            /*Este método se pretende llamar con un ajax desde Javascript, debido a que los parámetros de tipo string que se pasan como null desde el Ajax
-             aquí se reciben como string vacío "", se hace un checkeo de si los parámetros de tipo string están vacíos y en caso de ser así les asigna un null.
-             Se utilizó la función IsNullOrEmpty por conveniencia, pero en realidad solo se necesita la revisión de si está vacío.*/
-
-            string codUA = String.IsNullOrEmpty(codigoUA) ? null : codigoUA;
-            string codCarrera = String.IsNullOrEmpty(codigoCarrera) ? null : codigoCarrera;
-            string codEnfasis = String.IsNullOrEmpty(codigoEnfasis) ? null : codigoEnfasis;
-            string sigCurso = String.IsNullOrEmpty(siglaCurso) ? null : siglaCurso;
-            string corrProfesor = String.IsNullOrEmpty(correoProfesor) ? null : correoProfesor;
+            //Se crean los parámetros que deben enviarse al procedimiento
+            var uas = CrearTablaUA(unidadesAcademicas);
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
 
             //Llamado a la función de tabla que recupera los formularios según los parámetros de los filtros.
-            var formularios = db.ObtenerFormulariosFiltros(codUA, codCarrera, codEnfasis, sigCurso, numeroGrupo, semestre, anno, corrProfesor);
+            var formularios = fdb.ObtenerFormulariosFiltros(uas, ces, gs, ps);
 
-            //Retorna la lista de formularios serializada.
-            return JsonConvert.SerializeObject(formularios.ToList(), new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+           //Retorna la lista de formularios serializada.
+           return JsonConvert.SerializeObject(formularios.ToList(), new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+           
+        }
 
+        //Crea un DataTable de unidades académicas a partir de una lista
+        static DataTable CrearTablaUA(List<UnidadesAcademicas> unidadesAcademicas)
+        {
+            //Inicializa la variable como nula
+            DataTable dt = null;
+
+            //Verifica si la lista no es nula
+            if (unidadesAcademicas != null)
+            {
+                /*Si la cantidad de elementos en la lista es mayor o igual a 1 y su primer elemento no es nulo crea la tabla.
+                 Esta verificación se hace porque cuando se hace el request con ajax del método del controlador que utiliza esta
+                 función, al pasar la lista como nula, el controlador recibe una lista con un único elemento nulo. Por lo tanto,
+                 esta verificación es necesaria hasta tanto no se descubra como hacer que el controlador reciba la lista como nula
+                 utilizando la solicitud con Ajax.*/
+                if (unidadesAcademicas.Count >= 1 && unidadesAcademicas[0] != null)
+                {
+                    //Crea una nueva tabla
+                    using (dt = new DataTable())
+                    {
+                        //Limpia la tabla
+                        dt.Clear();
+
+                        //Añade las columnas necesarias a la tabla
+                        dt.Columns.Add("CodigoUA", typeof(string));
+
+                        //Llena la tabla con el contenido de la lista
+                        for (int i = 0; i < unidadesAcademicas.Count; ++i)
+                        {
+                            if (unidadesAcademicas[i] != null)
+                            {
+                                dt.Rows.Add(unidadesAcademicas[i].codigo);
+                            }
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
+        //Crea un DataTable de carreras y énfasis a partir de una lista
+        static DataTable CrearTablaCE(List<CarrerasEnfasis> carrerasEnfasis)
+        {
+            //Inicializa la variable como nula
+            DataTable dt = null;
+
+            //Verifica si la lista no es nula
+            if (carrerasEnfasis != null)
+            {
+                /*Si la cantidad de elementos en la lista es mayor o igual a 1 y su primer elemento no es nulo crea la tabla.
+                 Esta verificación se hace porque cuando se hace el request con ajax del método del controlador que utiliza esta
+                 función, al pasar la lista como nula, el controlador recibe una lista con un único elemento nulo. Por lo tanto,
+                 esta verificación es necesaria hasta tanto no se descubra como hacer que el controlador reciba la lista como nula
+                 utilizando la solicitud con Ajax.*/
+                if (carrerasEnfasis.Count >= 1 && carrerasEnfasis[0] != null)
+                {
+                    //Crea una nueva tabla
+                    using (dt = new DataTable())
+                    {
+                        //Limpia la tabla
+                        dt.Clear();
+
+                        //Añade las columnas necesarias a la tabla
+                        dt.Columns.Add("CodigoCarrera", typeof(string));
+                        dt.Columns.Add("CodigoEnfasis", typeof(string));
+
+                        //Llena la tabla con el contenido de la lista
+                        for (int i = 0; i < carrerasEnfasis.Count; ++i)
+                        {
+                            if (carrerasEnfasis[i] != null)
+                            {
+                                dt.Rows.Add(carrerasEnfasis[i].codigoCarrera, carrerasEnfasis[i].codigoEnfasis);
+                            }
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
+        //Crea un DataTable de grupos a partir de una lista
+        static DataTable CrearTablaG(List<CursoGrupo> grupos)
+        {
+            //Inicializa la variable como nula
+            DataTable dt = null;
+
+            //Verifica si la lista no es nula
+            if (grupos != null)
+            {
+                /*Si la cantidad de elementos en la lista es mayor o igual a 1 y su primer elemento no es nulo crea la tabla.
+                 Esta verificación se hace porque cuando se hace el request con ajax del método del controlador que utiliza esta
+                 función, al pasar la lista como nula, el controlador recibe una lista con un único elemento nulo. Por lo tanto,
+                 esta verificación es necesaria hasta tanto no se descubra como hacer que el controlador reciba la lista como nula
+                 utilizando la solicitud con Ajax.*/
+                if (grupos.Count >= 1 && grupos[0] != null)
+                {
+                    //Crea una nueva tabla
+                    using (dt = new DataTable())
+                    {
+                        //Limpia la tabla
+                        dt.Clear();
+
+                        //Añade las columnas necesarias a la tabla
+                        dt.Columns.Add("SiglaCurso", typeof(string));
+                        dt.Columns.Add("NumeroGrupo", typeof(byte));
+                        dt.Columns.Add("Semestre", typeof(byte));
+                        dt.Columns.Add("Anno", typeof(int));
+
+                        //Llena la tabla con el contenido de la lista
+                        for (int i = 0; i < grupos.Count; ++i)
+                        {
+                            if (grupos[i] != null)
+                            {
+                                dt.Rows.Add(grupos[i].siglaCurso, grupos[i].numGrupo, grupos[i].semestre, grupos[i].anno);
+                            }
+                        }
+                    }
+                }
+            }
+            return dt;
+        }
+
+        //Crea un DataTable de profesores a partir de una lista
+        static DataTable CrearTablaP(List<Profesores> profesores)
+        {
+            //Inicializa la variable como nula
+            DataTable dt = null;
+
+            //Verifica si la lista no es nula
+            if (profesores != null)
+            {
+                /*Si la cantidad de elementos en la lista es mayor o igual a 1 y su primer elemento no es nulo crea la tabla.
+                 Esta verificación se hace porque cuando se hace el request con ajax del método del controlador que utiliza esta
+                 función, al pasar la lista como nula, el controlador recibe una lista con un único elemento nulo. Por lo tanto,
+                 esta verificación es necesaria hasta tanto no se descubra como hacer que el controlador reciba la lista como nula
+                 utilizando la solicitud con Ajax.*/
+                if (profesores.Count >= 1 && profesores[0] != null)
+                {
+                    //Crea una nueva tabla
+                    using (dt = new DataTable())
+                    {
+                        //Limpia la tabla
+                        dt.Clear();
+
+                        //Añade las columnas necesarias a la tabla
+                        dt.Columns.Add("CorreoProfesor", typeof(string));
+
+                        //Llena la tabla con el contenido de la lista
+                        for (int i = 0; i < profesores.Count; ++i)
+                        {
+                            if (profesores[i] != null)
+                            {
+                                dt.Rows.Add(profesores[i].correo);
+                            }
+                        }
+                    }
+                }
+            }
+            return dt;
         }
     }   
 }
