@@ -134,10 +134,10 @@
 
                         var correoProf = this.recuperarProfesor();
 
-                        var unidadesAcademicas = ua == null ? null : [{ codigo: ua }];
-                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ codigoCarrera: codCarrera, codigoEnfasis: codEnfasis }];
-                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ siglaCurso: sigla, numGrupo: numGrupo, semestre: semestre, anno: anno }];
-                        var profesores = correoProf == null ? null : [{ correo: correoProf }];
+                        var unidadesAcademicas = ua == null ? null : [{ CodigoUA: ua }];
+                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ CodCarrera: codCarrera, CodEnfasis: codEnfasis }];
+                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ SiglaCurso: sigla, NumGrupo: numGrupo, Semestre: semestre, Anno: anno }];
+                        var profesores = correoProf == null ? null : [{ Correo: correoProf }];
 
                         this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                     }
