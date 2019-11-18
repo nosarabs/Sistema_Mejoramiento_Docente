@@ -1,16 +1,9 @@
 ﻿/*
-Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a los profesores dados como parámetro.
+Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen las unidades académicas dadas como parámetro.
 Esta información se necesita para filtrar respuestas a formulario.
 */
-
-/*Parámetro de ObtenerFormulariosProfesor*/
-CREATE TYPE FiltroProfesores
-AS TABLE (CorreoProfesor VARCHAR(50) PRIMARY KEY)
-
-GO
-
-CREATE FUNCTION ObtenerFormulariosProfesor (@CorreosProfesores FiltroProfesores READONLY)
-RETURNS @formulariosProfesor TABLE
+CREATE FUNCTION ObtenerFormulariosUA (@UnidadesAcademicas FiltroUnidadesAcademicas READONLY)
+RETURNS @formulariosUA TABLE
 (
 	FCodigo VARCHAR(8),		/*Código del formulario.*/
 	FNombre NVARCHAR(250),	/*Nombre del formulario*/
@@ -38,22 +31,22 @@ BEGIN
 		FechaFin DATE,			/*Fecha de finalización del periodo de llenado del formulario.*/
 		PRIMARY KEY (FCodigo, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin)
 	);
-
-	DECLARE @correoProfesor VARCHAR(50);
-	DECLARE P CURSOR FOR SELECT CorreoProfesor FROM @CorreosProfesores;
-
-	OPEN P;
-	FETCH NEXT FROM P INTO @correoProfesor;
 	
+	DECLARE @codigoUA VARCHAR(10);
+	DECLARE UA CURSOR FOR SELECT CodigoUA FROM @UnidadesAcademicas;
+
+	OPEN UA;
+	FETCH NEXT FROM UA INTO @codigoUA;
+
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN
 
-		/*Si el correo del profesor no es nulo, verifica si es válido y recupera la información de los formularios.*/
-		IF (@correoProfesor IS NOT NULL)
+		/*Si el código de la unidad académica no es nulo, verifica si es válido y recupera la información de los formularios.*/
+		IF (@codigoUA IS NOT NULL)
 		BEGIN
 
-			/*Si el correo del profesor es válido, recupera la información de los formularios.*/
-			IF (EXISTS (SELECT * FROM Profesor WHERE Correo = @correoProfesor))
+			/*Si el código de la unidad académica es válido, recupera la información de los formularios.*/
+			IF (EXISTS (SELECT * FROM UnidadAcademica WHERE Codigo = @codigoUA))
 			BEGIN
 
 				INSERT INTO @formulariosTemp
@@ -62,21 +55,19 @@ BEGIN
 				WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
 						AND EXISTS	(
 										SELECT *
-										FROM Imparte AS I
-										WHERE I.CorreoProfesor = @correoProfesor /*Solo de formularios activados para el profesor con el correo parámetro de cierto grupo.*/
-										AND I.SiglaCurso = PAP.CSigla
-										AND I.NumGrupo = PAP.GNumero
-										AND I.Semestre = PAP.GSemestre
-										AND I.Anno = PAP.GAnno
+										FROM UnidadAcademica AS U
+										JOIN Inscrita_en AS I ON U.Codigo = I.CodUnidadAc
+										JOIN Pertenece_a AS PE ON I.CodCarrera = PE.CodCarrera
+										WHERE U.Codigo = @codigoUA AND PE.SiglaCurso = PAP.CSigla /*Solo de formularios activados para los cursos que contiene la unidad académica.*/
 									)
 				UNION
 				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
-				FROM @formulariosProfesor;
+				FROM @formulariosUA;
 
-				/*Limpia las variables y actualiza formulariosProfesor con el nuevo resultado.*/
-				DELETE FROM @formulariosProfesor;
+				/*Limpia las variables y actualiza formulariosUA con el nuevo resultado.*/
+				DELETE FROM @formulariosUA;
 
-				INSERT INTO @formulariosProfesor
+				INSERT INTO @formulariosUA
 				SELECT FCodigo, FNombre, CSigla, GNumero, GSemestre, GAnno, FechaInicio, FechaFin
 				FROM @formulariosTemp;
 
@@ -86,12 +77,12 @@ BEGIN
 
 		END;
 
-		FETCH NEXT FROM P INTO @correoProfesor;
+		FETCH NEXT FROM UA INTO @codigoUA;
 
 	END;
 
-	CLOSE P;
-	DEALLOCATE P;
+	CLOSE UA;
+	DEALLOCATE UA;
 
 	RETURN;
 

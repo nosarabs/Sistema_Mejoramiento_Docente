@@ -2,7 +2,7 @@
 
 namespace AppIntegrador.Models
 {
-    public partial class ObtenerFormulariosFiltros
+    public partial class FormulariosFiltros
     {
         public string FCodigo { get; set; }
         public string FNombre { get; set; }

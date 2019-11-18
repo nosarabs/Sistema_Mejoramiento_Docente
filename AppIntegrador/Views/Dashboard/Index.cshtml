@@ -1,6 +1,4 @@
-﻿@model AppIntegrador.Models.Dashboard
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -59,6 +57,46 @@
                         var fSeleccionado = f.options[f.selectedIndex].value;
                         return fSeleccionado == "null" ? null : fSeleccionado.split("*");
                     }
+
+                    //Función para actualizar el filtro de Carrera-Énfasis
+                    function actualizarFiltroCarreraEnfasis(unidadesAcademicas, grupos, profesores) {
+                        $('#panelDashboard').html("");
+                        var f = document.getElementById("filtroCarreraEnfasis");
+                        while (f.firstChild) {
+                            f.removeChild(f.firstChild);
+                        }
+                        //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
+                        $.ajax({
+                            url: '/Dashboard/ObtenerCarrerasEnfasis',
+                            data: {
+                                unidadesAcademicas: unidadesAcademicas,
+                                grupos: grupos,
+                                profesores: profesores
+                            },
+                            type: 'post',
+                            dataType: 'json',
+                            async: false,
+                            success: function (resultados)
+                            {
+                                var option = document.createElement("option");
+                                option.className = "option";
+                                option.value = "null";
+                                option.text = "Seleccione una opción...";
+                                f.appendChild(option);
+
+                                //Ciclo que crea cada option a partir de los resultados devueltos por la base de datos, para luego agregarlo al select correspondiente
+                                for (var i = 0; i < resultados.length; ++i) {
+                                     var option = document.createElement("option");
+                                    option.className = "option";
+                                    option.value = resultados[i].CodCarrera + "/" + resultados[i].CodEnfasis;
+                                    option.text = resultados[i].NomCarrera  + " - " + resultados[i].NomEnfasis;
+                                    f.appendChild(option);
+                                }
+
+                            }
+                        });
+                    }
+                
                     //Función que actualiza el filtro de formularios.
                     function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
                         $('#panelDashboard').html("");
@@ -136,12 +174,14 @@
 
                         var correoProf = this.recuperarProfesor();
 
-                        var unidadesAcademicas = ua == null ? null : [{ codigo: ua }];
-                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ codigoCarrera: codCarrera, codigoEnfasis: codEnfasis }];
-                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ siglaCurso: sigla, numGrupo: numGrupo, semestre: semestre, anno: anno }];
-                        var profesores = correoProf == null ? null : [{ correo: correoProf }];
+                        var unidadesAcademicas = ua == null ? null : [{ CodigoUA: ua }];
+                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ CodCarrera: codCarrera, CodEnfasis: codEnfasis }];
+                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ SiglaCurso: sigla, NumGrupo: numGrupo, Semestre: semestre, Anno: anno }];
+                        var profesores = correoProf == null ? null : [{ Correo: correoProf }];
 
+                        this.actualizarFiltroCarreraEnfasis(unidadesAcademicas, grupos, profesores);
                         this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        
                     }
                     //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
                     function actualizarVistaParcial() {
