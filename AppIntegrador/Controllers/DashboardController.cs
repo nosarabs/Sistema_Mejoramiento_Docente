@@ -103,21 +103,25 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(c);
         }
 
-        //Función que devuelve las unidades académicas con su respectivo código y nombre
-        public String getUnidadesAcademicas()
+        //Retorna un string con la lista de unidades académicas que aparecen en el filtro con base en los parámetros de los otros filtros.
+        public string ObtenerUnidadesAcademicas(List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-          
-            // Se construye un objeto de tipo UnidadesAcadémicas con todas las unidades académicas
-            var unidadesAcademicas = from uda in db.UnidadAcademica
-                      orderby uda.Nombre
-                      select new UnidadesAcademicas { codigo = uda.Codigo, nombre = uda.Nombre };
-            
-            return serializer.Serialize(unidadesAcademicas.ToList());
+
+            //Se crean los parámetros que deben enviarse al procedimiento
+            var ces = CrearTablaCE(carrerasEnfasis);
+            var gs = CrearTablaG(grupos);
+            var ps = CrearTablaP(profesores);
+
+            //Llamado a la función de tabla que recupera las unidades académicas según los parámetros de los filtros.
+            var formularios = fdb.ObtenerUAsFiltros(ces, gs, ps);
+
+            //Retorna la lista de formularios serializada.
+            return JsonConvert.SerializeObject(formularios.ToList());
+
         }
 
         //Retorna un string con la lista de carreras y énfasis que aparecen en el filtro con base en los parámetros de los otros filtros.
-        public String ObtenerCarrerasEnfasis(List<UnidadesAcademicas> unidadesAcademicas, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
+        public string ObtenerCarrerasEnfasis(List<UAsFiltros> unidadesAcademicas, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -134,7 +138,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Retorna un string con la lista de grupos que aparecen en el filtro con base en los parámetros de los otros filtros.
-        public String ObtenerGrupos(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<ProfesoresFiltros> profesores)
+        public string ObtenerGrupos(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -151,7 +155,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Retorna un string con la lista de profesores que aparecen en el filtro con base en los parámetros de los otros filtros.
-        public String ObtenerProfesores(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos)
+        public string ObtenerProfesores(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos)
         {
             //Se crean los parámetros que deben enviarse al procedimiento
             var uas = CrearTablaUA(unidadesAcademicas);
@@ -166,7 +170,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Retorna un string con la lista de formularios que pueden ser visualizados con base en los parámetros de los filtros.
-        public String ObtenerFormularios(List<UnidadesAcademicas> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
+        public string ObtenerFormularios(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             //Se crean los parámetros que deben enviarse al procedimiento
@@ -184,7 +188,7 @@ namespace AppIntegrador.Controllers
         }
 
         //Crea un DataTable de unidades académicas a partir de una lista
-        static DataTable CrearTablaUA(List<UnidadesAcademicas> unidadesAcademicas)
+        static DataTable CrearTablaUA(List<UAsFiltros> unidadesAcademicas)
         {
             //Inicializa la variable como nula
             DataTable dt = null;
@@ -213,7 +217,7 @@ namespace AppIntegrador.Controllers
                         {
                             if (unidadesAcademicas[i] != null)
                             {
-                                dt.Rows.Add(unidadesAcademicas[i].codigo);
+                                dt.Rows.Add(unidadesAcademicas[i].CodigoUA);
                             }
                         }
                     }

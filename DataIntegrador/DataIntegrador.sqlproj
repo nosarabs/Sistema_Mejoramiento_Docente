@@ -72,6 +72,7 @@
     <Folder Include="Filtros\FiltrosProfesor" />
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
+    <Folder Include="Filtros\FiltrosUA" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -227,6 +228,10 @@
     <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisGrupo.sql" />
     <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisProfesor.sql" />
     <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisUA.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsFiltros.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsGrupo.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsProfesor.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

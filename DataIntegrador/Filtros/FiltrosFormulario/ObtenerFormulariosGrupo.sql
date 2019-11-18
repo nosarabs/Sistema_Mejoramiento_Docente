@@ -18,7 +18,7 @@ RETURNS @formulariosGrupo TABLE
 AS
 BEGIN
 
-/*Almacena resultados de forma temporal para poder hacer las uniones.*/
+	/*Almacena resultados de forma temporal para poder hacer las uniones.*/
 	DECLARE @formulariosTemp TABLE
 	(
 		FCodigo VARCHAR(8),		/*Código del formulario.*/

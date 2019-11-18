@@ -14,7 +14,7 @@ RETURNS @profesoresGrupo TABLE
 AS
 BEGIN
 
-/*Almacena resultados de forma temporal para poder hacer las uniones.*/
+	/*Almacena resultados de forma temporal para poder hacer las uniones.*/
 	DECLARE @profesoresTemp TABLE
 	(
 		Correo		VARCHAR(50) PRIMARY KEY,	/*Correo del profesor*/

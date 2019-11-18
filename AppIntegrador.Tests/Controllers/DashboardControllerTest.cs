@@ -101,7 +101,7 @@ namespace AppIntegrador.Tests.Controllers
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
             //Se crean los parámetros del controlador
-            var unidadesAcademicas = new List<UnidadesAcademicas> { new UnidadesAcademicas { codigo = "01" } };
+            var unidadesAcademicas = new List<UAsFiltros> { new UAsFiltros { CodigoUA = "01" } };
             var carrerasEnfasis = new List<CarrerasEnfasisFiltros> { new CarrerasEnfasisFiltros { CodCarrera = "01", CodEnfasis = "01" } };
             var grupos = new List<GruposFiltros> { new GruposFiltros { SiglaCurso = "CI0128", NumGrupo = 1, Semestre = 2, Anno = 2019 } };
             var profesores = new List<ProfesoresFiltros> { new ProfesoresFiltros { Correo = "ismael@mail.com" } };

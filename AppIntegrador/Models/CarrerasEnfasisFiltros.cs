@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AppIntegrador.Models
 {
-    public class CarrerasEnfasisFiltros
+    public partial class CarrerasEnfasisFiltros
     {
         public string CodCarrera { get; set; }
         public string NomCarrera { get; set; }
