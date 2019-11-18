@@ -16,10 +16,10 @@ namespace AppIntegrador.Models
     using System.Linq;
     using System.Data.Entity.SqlServer;
 
+
     public partial class DataIntegradorEntities : DbContext
     {
         private static string __hack = typeof(SqlProviderServices).ToString();
-
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
@@ -1176,16 +1176,6 @@ namespace AppIntegrador.Models
         public virtual int PopularSeccionesConPreguntas()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
-        }
-    
-        public virtual int PromedioCursos(System.Data.DataTable uas, System.Data.DataTable ces, System.Data.DataTable gs, System.Data.DataTable ps, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", promedio, cantidad);
-        }
-    
-        public virtual int PromedioProfesor(System.Data.DataTable uas, System.Data.DataTable ces, System.Data.DataTable gs, System.Data.DataTable ps, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", promedio, cantidad);
         }
     
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
