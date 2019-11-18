@@ -70,6 +70,7 @@
     <Folder Include="Filtros" />
     <Folder Include="Filtros\FiltrosFormulario" />
     <Folder Include="Filtros\FiltrosProfesor" />
+    <Folder Include="Filtros\FiltrosGrupo" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -217,6 +218,10 @@
     <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresFiltros.sql" />
     <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresGrupo.sql" />
     <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresUA.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposUA.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposProfesor.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposFiltros.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposCarreraEnfasis.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

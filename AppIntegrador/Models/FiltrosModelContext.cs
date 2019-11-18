@@ -22,6 +22,27 @@
             
         }
 
+        [DbFunction("Entities", "ObtenerGruposFiltros")]
+        public virtual IQueryable<GruposFiltros> ObtenerGruposFiltros(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroProfesores)
+        {
+            var FiltroUnidadesAcademicasParameter = FiltroUnidadesAcademicas != null ?
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured) { Value = FiltroUnidadesAcademicas } :
+                new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured);
+            FiltroUnidadesAcademicasParameter.TypeName = "dbo.FiltroUnidadesAcademicas";
+
+            var FiltroCarrerasEnfasisParameter = FiltroCarrerasEnfasis != null ?
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured) { Value = FiltroCarrerasEnfasis } :
+                new SqlParameter("@CarrerasEnfasis", SqlDbType.Structured);
+            FiltroCarrerasEnfasisParameter.TypeName = "dbo.FiltroCarrerasEnfasis";
+
+            var FiltroProfesoresParameter = FiltroProfesores != null ?
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured) { Value = FiltroProfesores } :
+                new SqlParameter("@CorreosProfesores", SqlDbType.Structured);
+            FiltroProfesoresParameter.TypeName = "dbo.FiltroProfesores";
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<GruposFiltros>("SELECT SiglaCurso, NombreCurso, NumGrupo, Semestre, Anno FROM [ObtenerGruposFiltros](@UnidadesAcademicas, @CarrerasEnfasis, @CorreosProfesores)", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroProfesoresParameter).AsQueryable();
+        }
+
         [DbFunction("Entities", "ObtenerProfesoresFiltros")]
         public virtual IQueryable<ProfesoresFiltros> ObtenerProfesoresFiltros(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos)
         {

@@ -28,15 +28,4 @@ namespace AppIntegrador.Models
         public String codigoEnfasis { get; set; }
         public String nombreEnfasis { get; set; }
     }
-
-    //Clase para representar los grupos asociados a un curso, los cuales están asociados a un período (semestre y año)
-    public class CursoGrupo
-    {
-        public String siglaCurso { get; set; }
-        public String nombreCurso { get; set; }
-        public Nullable<byte> numGrupo { get; set; }
-        public Nullable<byte> semestre { get; set; }
-        public Nullable<int> anno { get; set; }
-
-    }
 }
