@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EnlaceSeguroController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
@@ -236,6 +237,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EnfasisXCarrera_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EnlaceSeguro.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Escalar.cs">
@@ -686,6 +690,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArchivoCSV\" />
+    <Folder Include="Views\EnlaceSeguro\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

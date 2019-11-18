@@ -3,7 +3,7 @@
 	@urlReal varchar(1000),
 	@expira datetime,
     @resultadohash varchar(64) OUTPUT,
-	@estado nvarchar(255)
+	@estado nvarchar(255) OUTPUT
 AS
 BEGIN TRY
 BEGIN TRANSACTION	
