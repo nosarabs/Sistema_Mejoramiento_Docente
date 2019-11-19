@@ -1,5 +1,5 @@
 ﻿CREATE TRIGGER [EmpadronadoEnInsertar]
-	ON [dbo].[Empadronado_En]
+	ON [dbo].[Empadronado_en]
 	INSTEAD OF INSERT
 	AS
 	declare @correoEst varchar(50)
@@ -8,7 +8,7 @@
 	select @correoEst = i.CorreoEstudiante, @codCarrera = i.CodCarrera, @codEnfas = i.CodEnfasis
 	from inserted i
 	BEGIN
-		if(@correoEst not in (select CorreoEstudiante from Empadronado_En) or @codCarrera not in (select CodCarrera from Empadronado_En) or @codEnfas not in (select CodEnfasis from Empadronado_En))
+		if(@correoEst not in (select CorreoEstudiante from Empadronado_en) or @codCarrera not in (select CodCarrera from Empadronado_en) or @codEnfas not in (select CodEnfasis from Empadronado_en))
 		begin
 		insert into Empadronado_en select * from inserted
 		end
