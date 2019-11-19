@@ -17,7 +17,7 @@ BEGIN
 	FROM Opciones_seleccionadas_respuesta_con_opciones
 			 WHERE FCodigo	= @FCod 
 			 AND CSigla		= @CSigla
-			 AND GNumero	= @GRUPO
+			 AND GNumero	= @Grupo
 			 AND GAnno		= @GAnno
 			 AND GSemestre	= @GSem
 			 AND SCodigo	= @SCod
