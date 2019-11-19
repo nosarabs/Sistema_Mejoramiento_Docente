@@ -26,7 +26,7 @@
 
         //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
         $.ajax({
-            url: '/Dashboard/getUnidadesAcademicas',
+            url: '/Dashboard/ObtenerUnidadesAcademicas',
             data: {
             },
             type: 'post',
@@ -37,8 +37,8 @@
                 for (var i = 0; i < resultados.length; ++i) {
                     var option = document.createElement("option");
                     option.className = "option";
-                    option.value = resultados[i].codigo;
-                    option.text = resultados[i].nombre;
+                    option.value = resultados[i].CodigoUA;
+                    option.text = resultados[i].NombreUA;
                     seleccion.appendChild(option);                    
                 }
             }
@@ -72,7 +72,7 @@
 
         //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
         $.ajax({
-            url: '/Dashboard/getCarreraEnfasis',
+            url: '/Dashboard/ObtenerCarrerasEnfasis',
             data: {
             },
             type: 'post',
@@ -83,8 +83,8 @@
                 for (var i = 0; i < resultados.length; ++i) {
                     var option = document.createElement("option");
                     option.className = "option";
-                    option.value = resultados[i].codigoCarrera + "/" + resultados[i].codigoEnfasis;
-                    option.text = resultados[i].nombreCarrera  + " - " + resultados[i].nombreEnfasis;
+                    option.value = resultados[i].CodCarrera + "/" + resultados[i].CodEnfasis;
+                    option.text = resultados[i].NomCarrera  + " - " + resultados[i].NomEnfasis;
                     seleccion.appendChild(option);
                 }
             }
@@ -116,7 +116,7 @@
 
         //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
         $.ajax({
-            url: '/Dashboard/getCursoGrupo',
+            url: '/Dashboard/ObtenerGrupos',
             data: {
             },
             type: 'post',
@@ -127,8 +127,8 @@
                 for (var i = 0; i < resultados.length; ++i) {
                     var option = document.createElement("option");
                     option.className = "option";
-                    option.value = resultados[i].siglaCurso + "/" + resultados[i].numGrupo + "/" + resultados[i].semestre + "/" + resultados[i].anno;
-                    option.text = resultados[i].siglaCurso + " - " + resultados[i].nombreCurso + " - " + resultados[i].numGrupo + " - " + resultados[i].semestre + " - " + resultados[i].anno ;
+                    option.value = resultados[i].SiglaCurso + "/" + resultados[i].NumGrupo + "/" + resultados[i].Semestre + "/" + resultados[i].Anno;
+                    option.text = resultados[i].SiglaCurso + " - " + resultados[i].NombreCurso + " - " + resultados[i].NumGrupo + " - " + resultados[i].Semestre + " - " + resultados[i].Anno ;
                     seleccion.appendChild(option);
                 }
             }
@@ -161,7 +161,7 @@
 
         //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
         $.ajax({
-            url: '/Dashboard/getProfesores',
+            url: '/Dashboard/ObtenerProfesores',
             data: {
             },
             type: 'post',
@@ -172,16 +172,16 @@
                 for (var i = 0; i < resultados.length; ++i) {
                     var option = document.createElement("option");
                     option.className = "option";
-                    option.value = resultados[i].correo;
+                    option.value = resultados[i].Correo;
                     var nombreCompleto = "";
-                    if (resultados[i].apellido1 != null)
-                        nombreCompleto+=resultados[i].apellido1+" ";
-                    if (resultados[i].apellido2 != null)
-                        nombreCompleto+=resultados[i].apellido2+" ";  
-                    if (resultados[i].nombre1 != null)
-                        nombreCompleto+=resultados[i].nombre1+" ";
-                    if (resultados[i].nombre2 != null)
-                        nombreCompleto+=resultados[i].nombre2;
+                    if (resultados[i].Apellido1 != null)
+                        nombreCompleto+=resultados[i].Apellido1+" ";
+                    if (resultados[i].Apellido2 != null)
+                        nombreCompleto+=resultados[i].Apellido2+" ";  
+                    if (resultados[i].Nombre1 != null)
+                        nombreCompleto+=resultados[i].Nombre1+" ";
+                    if (resultados[i].Nombre2 != null)
+                        nombreCompleto+=resultados[i].Nombre2;
                     option.text = nombreCompleto; 
                     seleccion.appendChild(option);
                 }
@@ -228,8 +228,8 @@
                     var fechaInicio = resultados[i].FechaInicio;
                     var fechaFin = resultados[i].FechaFin;
 
-                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString();
-                    var stringFechaFin = new Date(fechaFin).toLocaleDateString();
+                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+                    var stringFechaFin = new Date(fechaFin).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
                     var option = document.createElement("option");
                     option.className = "option";

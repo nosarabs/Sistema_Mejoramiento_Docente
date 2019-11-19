@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\ActivaFormularioController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -213,7 +215,6 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -244,6 +245,7 @@
     <Compile Include="Models\Estudiante.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FiltrosModelContext.cs" />
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -256,6 +258,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GruposFiltros.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\LlenarCSV.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
@@ -264,21 +267,8 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -373,6 +363,7 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UAsFiltros.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -415,6 +406,8 @@
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
@@ -427,9 +420,6 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
-    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
-    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
@@ -551,6 +541,7 @@
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -561,6 +552,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
@@ -607,6 +599,10 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\Create.cshtml" />
+    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
+    <Content Include="Views\PlanDeMejora\Details.cshtml" />
+    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
     <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
@@ -618,7 +614,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
-    <Content Include="Views\Seccion\Details.cshtml" />
+    <Content Include="Views\Seccion\VistaPrevia.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
     <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
@@ -645,6 +641,7 @@
     <Content Include="Views\Home\PasswordReset.cshtml" />
     <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
+    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
     <Content Include="Views\Preguntas\Create.cshtml" />
@@ -674,6 +671,7 @@
     <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
+    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
     <Content Include="Views\TipoObjetivos\Delete.cshtml" />
     <Content Include="Views\TipoObjetivos\Details.cshtml" />
@@ -687,9 +685,13 @@
     <Content Include="Views\AccionDeMejora\_listarAcciones.cshtml" />
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Crear.cshtml" />
-    <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
-    <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
+    <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
+    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
+    <Content Include="Views\ActivaFormulario\Create.cshtml" />
+    <Content Include="Views\ActivaFormulario\Delete.cshtml" />
+    <Content Include="Views\ActivaFormulario\Details.cshtml" />
+    <Content Include="Views\ActivaFormulario\Edit.cshtml" />
+    <Content Include="Views\ActivaFormulario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

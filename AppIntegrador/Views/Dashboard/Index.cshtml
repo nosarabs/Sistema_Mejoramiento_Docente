@@ -1,6 +1,4 @@
-﻿@model AppIntegrador.Models.Dashboard
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -60,7 +58,8 @@
                         return fSeleccionado == "null" ? null : fSeleccionado.split("*");
                     }
                     //Función que actualiza el filtro de formularios.
-                    function actualizarFiltroFormularios(codigoUA, codigoCarrera, codigoEnfasis, siglaCurso, numeroGrupo, semestre, anno, correoProfesor) {
+                    function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+                        $('#panelDashboard').html("");
                         var f = document.getElementById("filtroFormularios");
                         while (f.firstChild) {
 
@@ -71,14 +70,10 @@
                         $.ajax({
                             url: '/Dashboard/ObtenerFormularios',
                             data: {
-                                codigoUA: codigoUA,
-                                codigoCarrera: codigoCarrera,
-                                codigoEnfasis: codigoEnfasis,
-                                siglaCurso: siglaCurso,
-                                numeroGrupo: numeroGrupo,
-                                semestre: semestre,
-                                anno: anno,
-                                correoProfesor: correoProfesor
+                                unidadesAcademicas: unidadesAcademicas,
+                                carrerasEnfasis: carrerasEnfasis,
+                                grupos: grupos,
+                                profesores: profesores
                             },
                             type: 'post',
                             dataType: 'json',
@@ -97,8 +92,8 @@
                                     var fechaInicio = resultados[i].FechaInicio;
                                     var fechaFin = resultados[i].FechaFin;
 
-                                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString();
-                                    var stringFechaFin = new Date(fechaFin).toLocaleDateString();
+                                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+                                    var stringFechaFin = new Date(fechaFin).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
                                     option = document.createElement("option");
                                     option.className = "option";
@@ -139,11 +134,18 @@
 
                         var correoProf = this.recuperarProfesor();
 
-                        this.actualizarFiltroFormularios(ua, codCarrera, codEnfasis, sigla, numGrupo, semestre, anno, correoProf);
+                        var unidadesAcademicas = ua == null ? null : [{ CodigoUA: ua }];
+                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ CodCarrera: codCarrera, CodEnfasis: codEnfasis }];
+                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ SiglaCurso: sigla, NumGrupo: numGrupo, Semestre: semestre, Anno: anno }];
+                        var profesores = correoProf == null ? null : [{ Correo: correoProf }];
+
+                        this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                     }
                     //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
                     function actualizarVistaParcial() {
 
+                        $('#panelDashboard').html("");
                         f = this.recuperarFormulario();
 
                         if (f != null)
@@ -171,20 +173,37 @@
                         }
 
                     }
+
+                    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+                        //var correo = "@HttpContext.Current.User.Identity.Name";
+                        var x = new GraficosDashboard();
+
+                        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+                        var profeP = profe[0];
+                        var profeN = profe[1];
+
+                        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores); 
+                        var cursoP = curso[0];
+                        var cursoN = [1];
+
+                        document.getElementById("pP").innerHTML = profeP;
+                        document.getElementById("pN").innerHTML = profeN;
+                        document.getElementById("cP").innerHTML = cursoP;
+                        document.getElementById("cN").innerHTML = cursoN;
+                    }
                 </script>
             </div>
 
             <div class="col" id="panelDashboard">
+                <p id="pP"></p>
+                <p id="pN"></p>
+
+                <p id="cP"></p>
+                <p id="cN"></p>
 
             </div>
         </div>
     </div>
 </body>
 
-<script>
-    var correo = "@HttpContext.Current.User.Identity.Name";
-    var x = new GraficosDashboard();
-    x.recuperarPromedioProfesor(correo);
-    x.recuperarPromedioCursos(correo);
-</script>
 
