@@ -137,6 +137,54 @@
                         });
                     }
 
+                    function actualizarFiltroProfesores(unidadesAcademicas, carrerasEnfasis, grupos)
+                    {
+                        $('#panelDashboard').html("");
+                        var f = document.getElementById("filtroProfesores");
+                        while (f.firstChild) {
+                            f.removeChild(f.firstChild);
+                        }
+                        //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
+                        $.ajax({
+                            url: '/Dashboard/ObtenerProfesores',
+                            data: {
+                                unidadesAcademicas: unidadesAcademicas,
+                                carrerasEnfasis: carrerasEnfasis,
+                                grupos: grupos
+                            },
+                            type: 'post',
+                            dataType: 'json',
+                            async: false,
+                            success: function (resultados)
+                            {
+                                var option = document.createElement("option");
+                                option.className = "option";
+                                option.value = "null";
+                                option.text = "Seleccione una opción...";
+                                f.appendChild(option);
+
+                                //Ciclo que crea cada option a partir de los resultados devueltos por la base de datos, para luego agregarlo al select correspondiente
+                                for (var i = 0; i < resultados.length; ++i) {
+                                    var option = document.createElement("option");
+                                    option.className = "option";
+                                    option.value = resultados[i].Correo;
+                                    var nombreCompleto = "";
+                                    if (resultados[i].Apellido1 != null)
+                                        nombreCompleto+=resultados[i].Apellido1+" ";
+                                    if (resultados[i].Apellido2 != null)
+                                        nombreCompleto+=resultados[i].Apellido2+" ";  
+                                    if (resultados[i].Nombre1 != null)
+                                        nombreCompleto+=resultados[i].Nombre1+" ";
+                                    if (resultados[i].Nombre2 != null)
+                                        nombreCompleto+=resultados[i].Nombre2;
+                                    option.text = nombreCompleto; 
+                                    f.appendChild(option);
+                                }
+
+                            }
+                        });
+                    }
+
                     //Función que actualiza el filtro de formularios.
                     function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
                         $('#panelDashboard').html("");
@@ -221,6 +269,7 @@
 
                         this.actualizarFiltroCarreraEnfasis(unidadesAcademicas, grupos, profesores);
                         this.actualizarFiltroCursoGrupo(unidadesAcademicas, carrerasEnfasis, profesores);
+                        this.actualizarFiltroProfesores(unidadesAcademicas, carrerasEnfasis, grupos);
                         this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                         
                     }
