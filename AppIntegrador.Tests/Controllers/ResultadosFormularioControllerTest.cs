@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador.Controllers;
 using System.Web.Mvc;
-
+using System.Collections.Generic;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -55,6 +55,17 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.AreEqual(result, "[]");
 
+        }
+
+        [TestMethod]
+        public void TestSeccionesFormulario()
+        {
+            // Arrange
+            ResultadosFormularioController controller = new ResultadosFormularioController();
+            //Act 
+            IEnumerable<SelectListItem> result = controller.ObtenerSeccionesDropDown("00000001");
+            // Assert
+            Assert.IsNotNull(result);
         }
 
     }

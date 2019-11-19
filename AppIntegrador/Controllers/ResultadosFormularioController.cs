@@ -47,7 +47,7 @@ namespace AppIntegrador.Controllers
             //var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             // Extrae las secciones del formulario específico, dado por el código del formulario
-            var secciones = from f in db.Formulario
+            /*var secciones = from f in db.Formulario
                             join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
                             join s in db.Seccion on fs.SCodigo equals s.Codigo
                             where f.Codigo == codigoFormulario
@@ -55,10 +55,11 @@ namespace AppIntegrador.Controllers
                             select new Secciones { codigoSeccion = fs.SCodigo, textoSeccion = s.Nombre };
 
             var listaSecciones = secciones.ToList();
-
-            return listaSecciones;
+            
+            return listaSecciones;*/
             // ESTO ES PARA CUANDO SE INTENTE LLAMAR AL MÉTODO A PARTIR DEL FILTRO
             //return serializer.Serialize(secciones.ToList());
+            return null;
         }
 
         /*  ID: COD-65: Yo como administrador quiero ver las secciones que componen un formulario
