@@ -96,7 +96,47 @@
                             }
                         });
                     }
-                
+
+                    //Función para actualizar el filtro de Grupos por cursos según el período
+                    function actualizarFiltroCursoGrupo(unidadesAcademicas, carrerasEnfasis, profesores)
+                    {
+                        $('#panelDashboard').html("");
+                        var f = document.getElementById("filtroCursoGrupo");
+                        while (f.firstChild) {
+                            f.removeChild(f.firstChild);
+                        }
+                        //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
+                        $.ajax({
+                            url: '/Dashboard/ObtenerGrupos',
+                            data: {
+                                unidadesAcademicas: unidadesAcademicas,
+                                carrerasEnfasis: carrerasEnfasis,
+                                profesores: profesores
+                            },
+                            type: 'post',
+                            dataType: 'json',
+                            async: false,
+                            success: function (resultados)
+                            {
+                                var option = document.createElement("option");
+                                option.className = "option";
+                                option.value = "null";
+                                option.text = "Seleccione una opción...";
+                                f.appendChild(option);
+
+                                //Ciclo que crea cada option a partir de los resultados devueltos por la base de datos, para luego agregarlo al select correspondiente
+                                for (var i = 0; i < resultados.length; ++i) {
+                                    var option = document.createElement("option");
+                                    option.className = "option";
+                                    option.value = resultados[i].SiglaCurso + "/" + resultados[i].NumGrupo + "/" + resultados[i].Semestre + "/" + resultados[i].Anno;
+                                    option.text = resultados[i].SiglaCurso + " - " + resultados[i].NombreCurso + " - " + resultados[i].NumGrupo + " - " + resultados[i].Semestre + " - " + resultados[i].Anno ;
+                                    f.appendChild(option);
+                                }
+
+                            }
+                        });
+                    }
+
                     //Función que actualiza el filtro de formularios.
                     function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
                         $('#panelDashboard').html("");
@@ -180,6 +220,7 @@
                         var profesores = correoProf == null ? null : [{ Correo: correoProf }];
 
                         this.actualizarFiltroCarreraEnfasis(unidadesAcademicas, grupos, profesores);
+                        this.actualizarFiltroCursoGrupo(unidadesAcademicas, carrerasEnfasis, profesores);
                         this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
                         
                     }
