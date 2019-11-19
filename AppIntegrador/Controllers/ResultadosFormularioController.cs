@@ -14,7 +14,17 @@ namespace AppIntegrador.Controllers
 {
     public class ResultadosFormularioController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public ResultadosFormularioController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public ResultadosFormularioController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: ResultadosFormulario
         public ActionResult Formulario(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, string fechaInicio, string fechaFin)
@@ -147,6 +157,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeY);
         }
 
+        // TESTED
         public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -166,6 +177,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
+        // TESTED
         public String GetTipoPregunta(String codigoPregunta)
         {
             String tipo = "";
@@ -238,6 +250,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas);
         }
 
+        // TESTED
         public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -278,6 +291,8 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(resultadoMediana.Value);
         }
 
+
+        // TESTED
         //Denisse Alfaro P. Josue Zeledon R.
         //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
         //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 

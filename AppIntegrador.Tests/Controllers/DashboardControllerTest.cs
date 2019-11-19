@@ -28,65 +28,135 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(view);
         }
 
+        //Este test tiene como propósito corroborar que los resultados del procedimientos almacenado que implementa los filtros se serializan correctamente.
         [TestMethod]
-        public void ObtenerFormulariosTest()
+        public void ObtenerFormulariosParametrosNulosTest()
         {
             //Arrange
 
             //Se crea el mock de la base de datos
             var mockDb = new Mock<DataIntegradorEntities>();
+            var mockFiltrosDb = new Mock<FiltrosEntities>();
 
             //Se instancia el controlador y se le pasa como parámetro el mock
-            DashboardController controller = new DashboardController(mockDb.Object);
-
-            //Se inicializan los parámetros que se envian al DashboardController
-            string codigoUA = null;
-            string codigoCarrera = null;
-            string codigoEnfasis = null;
-            string siglaCurso = null;
-            Nullable<byte> numeroGrupo = null;
-            Nullable<byte> semestre = null;
-            Nullable<int> anno = null;
-            string correoProfesor = null;
+            DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
             //Se crear un formulario como dummy data
-            ObtenerFormulariosFiltros_Result formulario = new ObtenerFormulariosFiltros_Result
+            var formulariosDummy = new List<FormulariosFiltros>
             {
-                FCodigo = "00000001",
-                FNombre = "Formulario de prueba",
-                CSigla = "CI0128",
-                GNumero = 1,
-                GSemestre = 2,
-                GAnno = 2,
-                FechaInicio = DateTime.Parse("09/06/2019"),
-                FechaFin = DateTime.Parse("11/06/2019")
-            };
+                new FormulariosFiltros
+                {
+                    FCodigo = "00000001",
+                    FNombre = "Formulario de prueba",
+                    CSigla = "CI0128",
+                    GNumero = 1,
+                    GSemestre = 2,
+                    GAnno = 2,
+                    FechaInicio = DateTime.Parse("09/06/2019"),
+                    FechaFin = DateTime.Parse("11/06/2019")
+                },
+                new FormulariosFiltros
+                {
+                    FCodigo = "00000002",
+                    FNombre = "Formulario de fin de curso",
+                    CSigla = "CI0128",
+                    GNumero = 1,
+                    GSemestre = 2,
+                    GAnno = 2,
+                    FechaInicio = DateTime.Parse("09/11/2019"),
+                    FechaFin = DateTime.Parse("11/11/2019")
+                }
+        };
 
             //Se hace el mock del procedimiento almacenado que utiliza el método del controlador
-            var mockedObjectResult = new Mock<IQueryable<ObtenerFormulariosFiltros_Result>>();
-            var dummyData = new List<ObtenerFormulariosFiltros_Result> { formulario };
-            mockedObjectResult.Setup(x => x.GetEnumerator()).Returns(dummyData.GetEnumerator());
-            mockDb.Setup(x => x.ObtenerFormulariosFiltros(codigoUA, codigoCarrera, codigoEnfasis, siglaCurso, numeroGrupo, semestre, anno, correoProfesor)).Returns(mockedObjectResult.Object);
+            var mockedObjectResult = new Mock<IQueryable<FormulariosFiltros>>();
+            mockedObjectResult.Setup(x => x.GetEnumerator()).Returns(formulariosDummy.GetEnumerator());
+            mockFiltrosDb.Setup(x => x.ObtenerFormulariosFiltros(null, null, null, null)).Returns(mockedObjectResult.Object);
 
             //Act
 
             //Se hace el llamado al controlador y se obtiene el JSON
-            String formulariosJson = controller.ObtenerFormularios(codigoUA, codigoCarrera, codigoEnfasis, siglaCurso, numeroGrupo, semestre, anno, correoProfesor);
+            string formulariosJson = controller.ObtenerFormularios(null, null, null, null);
 
             //Se deserializa el JSON
-            var formularios = JsonConvert.DeserializeObject<List<ObtenerFormulariosFiltros_Result>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+            var formularios = JsonConvert.DeserializeObject<List<FormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
 
             //Assert
 
             //Se comparan los miembros del formulario dummy con los del formulario retornado por el controlador
-            Assert.IsTrue(CompararFormularios(dummyData, formularios));
+            Assert.IsTrue(CompararFormularios(formulariosDummy, formularios));
         }
 
-        private bool CompararFormularios (List<ObtenerFormulariosFiltros_Result> dummyFormularios, List<ObtenerFormulariosFiltros_Result> controllerformularios)
+        //Este test tiene como propósito corroborar que los resultados del procedimientos almacenado que implementa los filtros se serializan correctamente.
+        [TestMethod]
+        public void ObtenerFormulariosParametrosNoExistentesTest()
+        {
+            //Arrange
+
+            //Se crea el mock de la base de datos
+            var mockDb = new Mock<DataIntegradorEntities>();
+            var mockFiltrosDb = new Mock<FiltrosEntities>();
+
+            //Se instancia el controlador y se le pasa como parámetro el mock
+            DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
+
+            //Se crean los parámetros del controlador
+            var unidadesAcademicas = new List<UAsFiltros> { new UAsFiltros { CodigoUA = "01" } };
+            var carrerasEnfasis = new List<CarrerasEnfasisFiltros> { new CarrerasEnfasisFiltros { CodCarrera = "01", CodEnfasis = "01" } };
+            var grupos = new List<GruposFiltros> { new GruposFiltros { SiglaCurso = "CI0128", NumGrupo = 1, Semestre = 2, Anno = 2019 } };
+            var profesores = new List<ProfesoresFiltros> { new ProfesoresFiltros { Correo = "ismael@mail.com" } };
+
+            //Se crear un formulario como dummy data
+            var formulariosDummy = new List<FormulariosFiltros>
+            {
+                new FormulariosFiltros
+                {
+                    FCodigo = "00000001",
+                    FNombre = "Formulario de prueba",
+                    CSigla = "CI0128",
+                    GNumero = 1,
+                    GSemestre = 2,
+                    GAnno = 2,
+                    FechaInicio = DateTime.Parse("09/06/2019"),
+                    FechaFin = DateTime.Parse("11/06/2019")
+                },
+                new FormulariosFiltros
+                {
+                    FCodigo = "00000002",
+                    FNombre = "Formulario de fin de curso",
+                    CSigla = "CI0128",
+                    GNumero = 1,
+                    GSemestre = 2,
+                    GAnno = 2,
+                    FechaInicio = DateTime.Parse("09/11/2019"),
+                    FechaFin = DateTime.Parse("11/11/2019")
+                }
+        };
+
+            //Se hace el mock del procedimiento almacenado que utiliza el método del controlador
+            var mockedObjectResult = new Mock<IQueryable<FormulariosFiltros>>();
+            mockedObjectResult.Setup(x => x.GetEnumerator()).Returns(formulariosDummy.GetEnumerator());
+            mockFiltrosDb.Setup(x => x.ObtenerFormulariosFiltros(null, null, null, null)).Returns(mockedObjectResult.Object);
+
+            //Act
+
+            //Se hace el llamado al controlador y se obtiene el JSON
+            string formulariosJson = controller.ObtenerFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+
+            //Se deserializa el JSON
+            var formularios = JsonConvert.DeserializeObject<List<FormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+
+            //Assert
+
+            //Se comparan los miembros del formulario dummy con los del formulario retornado por el controlador
+            Assert.IsFalse(CompararFormularios(formulariosDummy, formularios));
+        }
+
+        private bool CompararFormularios (List<FormulariosFiltros> dummyFormularios, List<FormulariosFiltros> controllerformularios)
         {
             bool resultado = dummyFormularios.Count() == controllerformularios.Count();
             int indice = 0;
-            ObtenerFormulariosFiltros_Result dummyFormulario, controllerFormulario;
+            FormulariosFiltros dummyFormulario, controllerFormulario;
 
             while (resultado && indice < dummyFormularios.Count())
             {

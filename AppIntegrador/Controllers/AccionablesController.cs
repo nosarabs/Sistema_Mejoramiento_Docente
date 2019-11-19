@@ -14,30 +14,22 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
 
+        public AccionablesController() { }
+        public AccionablesController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
+
         // GET: Accionables
         public ActionResult Index()
         {
             var accionable = db.Accionable.Include(a => a.AccionDeMejora);
-            return View(accionable.ToList());
+            return View("Índice", accionable.ToList());
         }
 
-        // GET: Accionables/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Accionable accionable = db.Accionable.Find(id);
-            if (accionable == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accionable);
-        }
-
+        // Hay que refactorizar este metodo para que no utilice Session
         // GET: Accionables/Create
-        public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora)
+        public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora, bool unitTesting = false)
         {
 
             ViewBag.IdPlan = codPlan;
@@ -46,13 +38,15 @@ namespace AppIntegrador.Controllers
             ViewBag.progreso = 0;
             ViewBag.fechaInicioAccionDeMejora = fechaInicioAccionDeMejora;
             ViewBag.fechaFinAccionDeMejora = fechaFinAccionDeMejora;
-
-            Session["codPlan"] = codPlan;
-            Session["nombreObj"] = nombObj;
-            Session["descripAcMej"] = descripAcMej;
-            Session["progreso"] = 0;
-            Session["fechaInicioAccionDeMejora"] = fechaInicioAccionDeMejora;
-            Session["fechaFinAccionDeMejora"] = fechaFinAccionDeMejora;
+            if (!unitTesting)
+            {
+                Session["codPlan"] = codPlan;
+                Session["nombreObj"] = nombObj;
+                Session["descripAcMej"] = descripAcMej;
+                Session["progreso"] = 0;
+                Session["fechaInicioAccionDeMejora"] = fechaInicioAccionDeMejora;
+                Session["fechaFinAccionDeMejora"] = fechaFinAccionDeMejora;
+            }
 
             Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
             return PartialView("_Create", accionable);
@@ -85,7 +79,7 @@ namespace AppIntegrador.Controllers
             return new EmptyResult();
 
         }
-
+        //Requiere refactorización para eliminar el .Where de aquí
         public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej, bool edit = true)
         {
             ViewBag.IdPlan = codPlan;
@@ -98,22 +92,6 @@ namespace AppIntegrador.Controllers
                 return PartialView("_listarAccionables", accionables);
             }
             return PartialView("_Tabla", accionables);
-        }
-
-        // GET: Accionables/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Accionable accionable = db.Accionable.Find(id);
-            if (accionable == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.codPlan = new SelectList(db.AccionDeMejora, "codPlan", "nombreObj", accionable.codPlan);
-            return View(accionable);
         }
 
         // POST: Accionables/Edit/5
@@ -133,32 +111,6 @@ namespace AppIntegrador.Controllers
             return View(accionable);
         }
 
-        // GET: Accionables/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Accionable accionable = db.Accionable.Find(id);
-            if (accionable == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accionable);
-        }
-
-        // POST: Accionables/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Accionable accionable = db.Accionable.Find(id);
-            db.Accionable.Remove(accionable);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         // POST: Accionables/Delete/5
         [HttpPost, ActionName("DeleteAccionable")]
         [ValidateAntiForgeryToken]
@@ -170,7 +122,6 @@ namespace AppIntegrador.Controllers
             IEnumerable<AppIntegrador.Models.Accionable> listaAccionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
             return PartialView("_Tabla", listaAccionables);
         }
-
 
         protected override void Dispose(bool disposing)
         {
