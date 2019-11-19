@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\ActivaFormularioController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
@@ -685,6 +686,12 @@
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
+    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
+    <Content Include="Views\ActivaFormulario\Create.cshtml" />
+    <Content Include="Views\ActivaFormulario\Delete.cshtml" />
+    <Content Include="Views\ActivaFormulario\Details.cshtml" />
+    <Content Include="Views\ActivaFormulario\Edit.cshtml" />
+    <Content Include="Views\ActivaFormulario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

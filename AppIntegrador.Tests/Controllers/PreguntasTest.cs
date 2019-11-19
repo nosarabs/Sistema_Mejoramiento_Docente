@@ -366,6 +366,32 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.AreEqual("Create", result.ViewName);
         }
+        
+        [TestMethod]
+        public void ProbarVistaPreviaNula()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia(null) as ViewResult;
 
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregNoExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
     }
 }

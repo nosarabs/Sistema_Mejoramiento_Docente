@@ -39,17 +39,8 @@ namespace AppIntegrador.Controllers
             return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 
-        public ActionResult LlenarFormulario(string id)
+        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB)
         {
-            if (HttpContext == null)
-            {
-                return Redirect("~/");
-            }
-            Formulario formularioDB = db.Formulario.Find(id);
-            if (formularioDB == null)
-            {
-                return RedirectToAction("Index");
-            }
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
@@ -73,8 +64,39 @@ namespace AppIntegrador.Controllers
                     respuestas.GSemestre = respuestasList.GSemestre;
                 }
             }
-
             ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas);
+            return formulario;
+        }
+
+        [HttpGet]
+        public ActionResult VistaPrevia(string id)
+        {
+            if (HttpContext == null)
+            {
+                return Redirect("~/");
+            }
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
+            {
+                return RedirectToAction("Index");
+            }
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+
+            return View(formulario);
+        }
+
+        public ActionResult LlenarFormulario(string id)
+        {
+            if (HttpContext == null)
+            {
+                return Redirect("~/");
+            }
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
+            {
+                return RedirectToAction("Index");
+            }
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
 
             return View(formulario);
         }
@@ -120,6 +142,27 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
+        [HttpPost]
+        public bool BorrarPregunta(string SCodigo, string PCodigo)
+        {
+            if (SCodigo != null && PCodigo != null)
+            {
+                try
+                {
+                    if (db.EliminarPreguntaDeSeccion(SCodigo, PCodigo) == 0)
+                    {
+                        return false;
+                    }
+                }
+                catch (System.Data.Entity.Core.EntityCommandExecutionException)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
         public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
             Respuestas_a_formulario respuestas)
         {
@@ -135,7 +178,9 @@ namespace AppIntegrador.Controllers
                         {
                             Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
                             OrdenSeccion = nuevaSeccion.Orden,
-                            OrdenPregunta = pregunta.Orden
+                            CodigoSeccion = nuevaSeccion.CodigoSeccion,
+                            OrdenPregunta = pregunta.Orden,
+                            Edit = true
                         });
                         ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }
@@ -332,64 +377,6 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
-        /*[HttpPost]
-        public ActionResult ActualizarBancoPreguntas(string input0, string input1, string input2, string input3)
-        {
-            var pregunta = db.Pregunta;
-
-            ViewBag.filtro = "Ninguno";
-            if (input0 == null && input1 == null && input2 == null && input3 == null)
-            {
-                ViewBag.filtro = "Ninguno";
-                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
-            }
-            // si se selecionó el código  
-            if (input1.Length > 0)
-            {
-                ViewBag.filtro = "Por código: " + input1;
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Codigo.Contains(input1)).ToList());
-            }
-            // si se selecionó el enunciado 
-            else if (input2.Length > 0)
-            {
-                ViewBag.filtro = "Enunciado: " + input2;
-                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Enunciado.Contains(input2)).ToList());
-            }
-            // si se seleccionó el tipo
-            else if (input3.Length > 0)
-            {
-                var aux = "";
-                switch (input3)
-                {
-                    case "U":
-                        aux = "Selección Única";
-                        break;
-                    case "M":
-                        aux = "Selección Múltiple";
-                        break;
-                    case "L":
-                        aux = "Respuesta libre";
-                        break;
-                    case "S":
-                        aux = "Sí/No/NR";
-                        break;
-                    case "E":
-                        aux = "Escalar";
-                        break;
-                    default:
-                        break;
-                }
-                ViewBag.filtro = "Tipo: " + aux;
-                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Tipo.Contains(input3)).ToList());
-            }
-            else
-            {
-                ViewBag.filtro = "Ninguno";
-                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
-            }
-        }*/
-
         [HttpPost]
         public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
         {
@@ -451,19 +438,6 @@ namespace AppIntegrador.Controllers
         public ActionResult AgregarSeccion(Seccion seccion)
         {
             return Json(new { guardadoExitoso = seccion != null && InsertSeccion(seccion) });
-        }
-
-        [HttpPost]
-        public ActionResult ActualizarBancoSecciones()
-        {
-            crearFormulario.seccion = db.Seccion;
-            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
-        }
-        [HttpPost]
-        public ActionResult ActualizarCrearSeccion()
-        {
-            crearFormulario.crearSeccionModel = new CrearSeccionModel();
-            return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearFormulario.crearSeccionModel);
         }
 
         // GET: Formularios/Edit/5
@@ -665,6 +639,7 @@ namespace AppIntegrador.Controllers
             return true;
         }
 
+
         [HttpPost]
         public ActionResult AgregarFormulario(Formulario formulario)
         {
@@ -674,7 +649,27 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
         {
-            return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            if (FCodigo != null && SCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EliminarPregunta(string SCodigo, string PCodigo)
+        {
+            if (SCodigo != null && PCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarPregunta(SCodigo, PCodigo) });
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpPost]
