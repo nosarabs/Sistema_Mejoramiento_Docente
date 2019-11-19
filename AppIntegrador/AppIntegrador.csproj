@@ -267,6 +267,7 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\ProfesoresFiltros.cs" />
     <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
@@ -399,16 +400,25 @@
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
+    <Content Include="Content\images\defaultuser.png" />
+    <Content Include="Content\images\firma.png" />
     <Content Include="Content\images\logo_ucr.png" />
+    <Content Include="Content\images\ucr_promo.png" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
+    <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -420,6 +430,9 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
@@ -540,6 +553,10 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
@@ -552,7 +569,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
@@ -692,6 +708,10 @@
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
     <Content Include="Views\ActivaFormulario\Edit.cshtml" />
     <Content Include="Views\ActivaFormulario\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\Crear.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
+    <Content Include="Views\TipoObjetivos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
