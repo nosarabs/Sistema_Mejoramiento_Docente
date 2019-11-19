@@ -470,7 +470,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Edit(string id)
         {
             crearFormulario.seccion = db.Seccion;
-            if (id == null)
+            if (id == null || id == "")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -566,7 +566,6 @@ namespace AppIntegrador.Controllers
 
             return DesplegarFormulario(form.Codigo);
         }
-
 
 
         // GET: Formularios/Delete/5
