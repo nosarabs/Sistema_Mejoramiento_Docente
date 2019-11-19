@@ -32,35 +32,11 @@ namespace AppIntegrador.Controllers
                 FechaInicio = serializer.Serialize(fechaInicio),
                 FechaFin = serializer.Serialize(fechaFin),
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
-                Secciones = ObtenerSecciones(codigoFormulario),
                 Seccioncitas = ObtenerSeccionesDropDown(codigoFormulario)
             };
             return View(modelo);
         }
 
-        /*  ID: COD-65: Yo como administrador quiero ver las secciones que componen un formulario
-            específico.
-            Tarea: Crear un método que recupere las secciones asociadas a un formulario
-        */
-        public IEnumerable<Secciones> ObtenerSecciones(String codigoFormulario)
-        {
-            //var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-            // Extrae las secciones del formulario específico, dado por el código del formulario
-            /*var secciones = from f in db.Formulario
-                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
-                            join s in db.Seccion on fs.SCodigo equals s.Codigo
-                            where f.Codigo == codigoFormulario
-                            orderby fs.Orden
-                            select new Secciones { codigoSeccion = fs.SCodigo, textoSeccion = s.Nombre };
-
-            var listaSecciones = secciones.ToList();
-            
-            return listaSecciones;*/
-            // ESTO ES PARA CUANDO SE INTENTE LLAMAR AL MÉTODO A PARTIR DEL FILTRO
-            //return serializer.Serialize(secciones.ToList());
-            return null;
-        }
 
         /*  ID: COD-65: Yo como administrador quiero ver las secciones que componen un formulario
             específico.
