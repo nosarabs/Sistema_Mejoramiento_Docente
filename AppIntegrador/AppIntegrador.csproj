@@ -415,8 +415,6 @@
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
     <Content Include="Content\images\logo_ucr.png" />
-    <Content Include="Content\Main.css" />
-    <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
