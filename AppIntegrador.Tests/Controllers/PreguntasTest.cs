@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador.Controllers;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using Moq;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -167,6 +168,34 @@ namespace AppIntegrador.Tests.Controllers
 
             ViewResult result = preguntas.GuardarPreguntaSiNo(null) as ViewResult;
 
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GuardarPreguntaSiNo()
+        {
+            string codPregunta = "TEST1234";
+            string enuncPregunta = "TEST";
+            Pregunta pregunta = new Pregunta
+            {
+                Codigo = codPregunta,
+                Tipo = "S",
+                Enunciado = enuncPregunta
+            };
+
+            Pregunta_con_opciones opciones = new Pregunta_con_opciones
+            {
+                TituloCampoObservacion = ""
+            };
+
+            pregunta.Pregunta_con_opciones = opciones;
+
+
+            PreguntasController preguntas = new PreguntasController();
+
+            var result = preguntas.GuardarPreguntaSiNo(pregunta);
+
+            preguntas.Dispose();
             Assert.IsNotNull(result);
         }
 
@@ -337,6 +366,32 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.AreEqual("Create", result.ViewName);
         }
+        
+        [TestMethod]
+        public void ProbarVistaPreviaNula()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia(null) as ViewResult;
 
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregNoExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.VistaPrevia("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
     }
 }
