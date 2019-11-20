@@ -75,7 +75,7 @@ function GuardarSeccion() {
         success: function (data) {
             if (data.guardadoExitoso) {
                 $.ajax({
-                    url: "/Formularios/ActualizarBancoSecciones",
+                    url: "/Seccion/ActualizarBancoSecciones",
                     type: "post",
                     dataType: "html",
                     success: function (result) {
@@ -85,7 +85,7 @@ function GuardarSeccion() {
                     }
                 })
                 $.ajax({
-                    url: "/Formularios/ActualizarCrearSeccion",
+                    url: "/Seccion/ActualizarCrearSeccion",
                     type: "post",
                     dataType: "html",
                     success: function (result) {

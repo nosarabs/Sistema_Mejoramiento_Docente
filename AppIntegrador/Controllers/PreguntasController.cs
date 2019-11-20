@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
             }
         }
         [HttpPost]
-        public ActionResult ActualizarBancoPreguntas(string input0, string input1, string input2, string input3)
+        public ActionResult ActualizarBancoPreguntas(string input0 = null, string input1 = null, string input2 = null, string input3 = null)
         {
             var pregunta = db.Pregunta;
 
@@ -87,20 +87,20 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null && input3 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return PartialView(pregunta.ToList());
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return PartialView(pregunta.Where(x => x.Codigo.Contains(input1)).ToList());
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Enunciado: " + input2;
-                return PartialView(pregunta.Where(x => x.Enunciado.Contains(input2)).ToList());
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Enunciado.Contains(input2)).ToList());
             }
             // si se seleccionó el tipo
             else if (input3.Length > 0)
@@ -127,12 +127,12 @@ namespace AppIntegrador.Controllers
                         break;
                 }
                 ViewBag.filtro = "Tipo: " + aux;
-                return PartialView(pregunta.Where(x => x.Tipo.Contains(input3)).ToList());
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.Where(x => x.Tipo.Contains(input3)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return PartialView(pregunta.ToList());
+                return PartialView("~/Views/PreguntaConOpcionesDeSeleccion/_IndexPartial.cshtml", pregunta.ToList());
             }
         }
 
