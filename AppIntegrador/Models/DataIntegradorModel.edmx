@@ -1958,16 +1958,6 @@
         <Function Name="PopularFormulariosConSecciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularFormulariosDePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PopularSeccionesConPreguntas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="PromedioCursos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="correo" Type="varchar" Mode="In" />
-          <Parameter Name="promedio" Type="float" Mode="InOut" />
-          <Parameter Name="cantidad" Type="int" Mode="InOut" />
-        </Function>
-        <Function Name="PromedioProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="correo" Type="varchar" Mode="In" />
-          <Parameter Name="promedio" Type="float" Mode="InOut" />
-          <Parameter Name="cantidad" Type="int" Mode="InOut" />
-        </Function>
         <Function Name="PromedioRespuestasPreguntaEscalaNumerica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
           <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
@@ -4183,16 +4173,6 @@
           <FunctionImport Name="PopularFormulariosConSecciones" />
           <FunctionImport Name="PopularFormulariosDePrueba" />
           <FunctionImport Name="PopularSeccionesConPreguntas" />
-          <FunctionImport Name="PromedioCursos">
-            <Parameter Name="correo" Mode="In" Type="String" />
-            <Parameter Name="promedio" Mode="InOut" Type="Double" />
-            <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="PromedioProfesor">
-            <Parameter Name="correo" Mode="In" Type="String" />
-            <Parameter Name="promedio" Mode="InOut" Type="Double" />
-            <Parameter Name="cantidad" Mode="InOut" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="PromedioRespuestasPreguntaEscalaNumerica">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
@@ -5010,8 +4990,6 @@
           <FunctionImportMapping FunctionImportName="PopularFormulariosConSecciones" FunctionName="DataIntegradorModel.Store.PopularFormulariosConSecciones" />
           <FunctionImportMapping FunctionImportName="PopularFormulariosDePrueba" FunctionName="DataIntegradorModel.Store.PopularFormulariosDePrueba" />
           <FunctionImportMapping FunctionImportName="PopularSeccionesConPreguntas" FunctionName="DataIntegradorModel.Store.PopularSeccionesConPreguntas" />
-          <FunctionImportMapping FunctionImportName="PromedioCursos" FunctionName="DataIntegradorModel.Store.PromedioCursos" />
-          <FunctionImportMapping FunctionImportName="PromedioProfesor" FunctionName="DataIntegradorModel.Store.PromedioProfesor" />
           <FunctionImportMapping FunctionImportName="PromedioRespuestasPreguntaEscalaNumerica" FunctionName="DataIntegradorModel.Store.PromedioRespuestasPreguntaEscalaNumerica" />
           <FunctionImportMapping FunctionImportName="SugerirConfiguracion" FunctionName="DataIntegradorModel.Store.SugerirConfiguracion" />
           <FunctionImportMapping FunctionImportName="TienePerfilEnElEnfasis" FunctionName="DataIntegradorModel.Store.TienePerfilEnElEnfasis" />

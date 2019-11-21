@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
+    <Compile Include="Controllers\ActivaFormularioController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EnlaceSeguroController.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -214,7 +216,6 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -261,6 +262,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GruposFiltros.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\LlenarCSV.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
@@ -269,7 +271,8 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerFormulariosFiltros.cs" />
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -364,6 +367,7 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UAsFiltros.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -686,6 +690,12 @@
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
+    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
+    <Content Include="Views\ActivaFormulario\Create.cshtml" />
+    <Content Include="Views\ActivaFormulario\Delete.cshtml" />
+    <Content Include="Views\ActivaFormulario\Details.cshtml" />
+    <Content Include="Views\ActivaFormulario\Edit.cshtml" />
+    <Content Include="Views\ActivaFormulario\Index.cshtml" />
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
   </ItemGroup>
   <ItemGroup>
