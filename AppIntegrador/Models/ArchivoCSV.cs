@@ -34,6 +34,7 @@ namespace AppIntegrador.Models
         public string TipoIdPersona { get; set; }
         public string NombrePersona { get; set; }
         public string ApellidoPersona { get; set; }
+        public string Borrado { get; set; }
         public string CorreoProfesor { get; set; }
         public string CorreoEstudiante { get; set; }
         public string CorreoProfesorImparte { get; set; }
@@ -41,10 +42,10 @@ namespace AppIntegrador.Models
         public string NumeroGrupoImparte { get; set; }
         public string SemestreGrupoImparte { get; set; }
         public string AnnoGrupoImparte { get; set; }
+        public string CorreoMatricula { get; set; }
         public string SiglaCursoMatricula { get; set; }
         public string NumeroGrupoMatricula { get; set; }
         public string SemestreMatricula { get; set; }
         public string AnnoMatricula { get; set; }
-        public string CorreoMatricula { get; set; }
     }
 }
