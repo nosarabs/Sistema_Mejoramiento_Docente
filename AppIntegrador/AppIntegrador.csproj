@@ -689,8 +689,6 @@
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
     <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
-    <Content Include="Views\TipoObjetivos\Delete.cshtml" />
-    <Content Include="Views\TipoObjetivos\Details.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
     <Content Include="Views\Objetivos\_DeletePartialModal.cshtml" />
