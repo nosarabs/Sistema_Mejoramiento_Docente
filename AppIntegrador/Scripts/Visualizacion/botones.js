@@ -1,105 +1,117 @@
 ﻿class Botones {
 
-    constructor() {}
+    constructor() {
+    }
 
-    crearBoton(codigoPregunta, textoPregunta) {
+    /* COD-64: Yo como administrador quiero poder visualizar la información detallada
+    de los resultados de una pregunta*/
+    crearBoton(listaPreguntas, codigoPregunta, textoPregunta, idPreg) {
 
         var boton = document.createElement("button");
-        boton.className = "collapsible";
+        boton.className = "btn-azulUCR float-right";
         boton.id = codigoPregunta;
-        boton.innerText = textoPregunta;
-        boton.addEventListener("click", function () {
+        boton.innerText = "Ver más" + codigoPregunta;
 
-            this.classList.toggle("activeCollapsible");
-            var content = this.nextElementSibling;
-
-            if (content.style.maxHeight) {
-
-                content.style.maxHeight = null;
-
-            } else {
-
-                content.style.maxHeight = content.scrollHeight + "px";
-
-            }
-
+        boton.addEventListener("click", (e) => {
+            this.rellenarModal(listaPreguntas, idPreg);
         });
 
         return boton;
-
     }
 
-    crearBotones(/*idContenedor, */listaPreguntas) {
-
+    // Método encargado de rellenar el modal de la vista con los gráficos, estadísticas
+    // y respuestas de una pregunta específica.
+    rellenarModal(listaPreguntas, idPreg) {
+        
+        var contadorPreguntasSeccion = 0;
         var insertaContenidos = new InsertaContenidos();
+
+        var codigoSeccion = listaPreguntas[idPreg].codigoSeccion;
+        var codigoPregunta = listaPreguntas[idPreg].codigoPregunta;
+        var textoPregunta = String(contadorPreguntasSeccion + 1) + ". " + listaPreguntas[idPreg].textoPregunta;
+        var tipoPregunta = listaPreguntas[idPreg].tipoPregunta;
+        //cuerpoPrincipal.appendChild(boton);
+
+        contadorPreguntasSeccion += 1;
+
+        var base;
+
+        switch (tipoPregunta) {
+
+            case "texto_abierto":
+                base = new BaseTexto(tipoPregunta);
+                insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                break;
+
+            case "escala":
+                base = new BaseConEstadisticas(tipoPregunta);
+                insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                break;
+
+            case "seleccion_unica":
+                base = new BaseDosCol(tipoPregunta);
+                insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                break;
+
+            case "seleccion_multiple":
+                base = new BaseDosCol(tipoPregunta);
+                insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                break;
+
+            case "seleccion_cerrada":
+                base = new BaseDosCol(tipoPregunta);
+                insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+                break;
+
+        }
+
+        if (tipoPregunta != "texto_abierto") {
+
+            insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        }
+
+        // Borra del modal el viejo componente e introduce el nuevo
+        var modalTemp = document.getElementById("Ejemplo");;
+
+        // Esto se usaría para dejar el modal en blanco
+        modalTemp.firstChild.remove();
+
+        // Esto se usaría para hacerle append de la respuesta de la pregunta
+        modalTemp.appendChild(base.getBase());
+        
+        //document.getElementById("Ejemplo").innerHTML = idPreg;
+        $("#ModalResultados").modal();
+    }
+
+
+    // Método encargado de crear los botones para habilitar la opción de visualizar
+    // con detalle los resultados de una pregunta
+    crearBotones(/*idContenedor, */listaPreguntas) {
 
         var cuerpoPrincipal = document.createElement("div");
         cuerpoPrincipal.className = "cuerpoPrincipal";
 
-        var contadorPreguntasSeccion = 0;
-
         for (var i = 0; i < listaPreguntas.length; ++i) {
-
+            
             // Chequea si la pregunta evaluada pertenece o no a la sección
-            //if (("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
-
-                var codigoSeccion = listaPreguntas[i].codigoSeccion;
+           // if (i == 0)//("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
+            //{
+                //var codigoSeccion = listaPreguntas[i].codigoSeccion;
                 var codigoPregunta = listaPreguntas[i].codigoPregunta;
-                var textoPregunta = String(contadorPreguntasSeccion + 1) + ". " + listaPreguntas[i].textoPregunta;
-                var tipoPregunta = listaPreguntas[i].tipoPregunta;
-                var boton = this.crearBoton(codigoPregunta, textoPregunta);
+                var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
+                var boton = this.crearBoton(listaPreguntas, codigoPregunta, textoPregunta, i);
                 cuerpoPrincipal.appendChild(boton);
 
-                contadorPreguntasSeccion += 1;
-
-                var base;
-
-                switch (tipoPregunta) {
-
-                    case "texto_abierto":
-                        base = new BaseTexto(tipoPregunta);
-                        insertaContenidos.insertarTextoAbierto(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        break;
-
-                    case "escala":
-                        base = new BaseConEstadisticas(tipoPregunta);
-                        insertaContenidos.insertarGraficoEscala(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        insertaContenidos.insertarEstadisticas(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        break;
-
-                    case "seleccion_unica":
-                        base = new BaseDosCol(tipoPregunta);
-                        insertaContenidos.insertarGraficoSeleccionUnica(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        break;
-
-                    case "seleccion_multiple":
-                        base = new BaseDosCol(tipoPregunta);
-                        insertaContenidos.insertarGraficoSeleccionMultiple(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        break;
-
-                    case "seleccion_cerrada":
-                        base = new BaseDosCol(tipoPregunta);
-                        insertaContenidos.insertarGraficoSeleccionCerrada(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                        break;
-
-                }
-
-                if (tipoPregunta != "texto_abierto") {
-
-                    insertaContenidos.insertarJustificaciones(base, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
-                }
-
-                cuerpoPrincipal.appendChild(base.getBase());
-
-                //var contenedor = document.getElementById(idContenedor);
-                document.body.appendChild(cuerpoPrincipal);
             /*}
             else {
                 contadorPreguntasSeccion = 0;
             }*/
-            
+
         }
+        document.body.appendChild(cuerpoPrincipal);
 
     }
 
 }
+

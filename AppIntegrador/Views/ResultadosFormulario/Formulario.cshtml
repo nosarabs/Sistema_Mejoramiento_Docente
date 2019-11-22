@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
         <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
-        <!--<link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />-->
+        <link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />
 
     </head>
 
@@ -33,21 +33,53 @@
             </div>
 
         </div>
+
+        <div class="row">
+
+            <button class="btn-azulUCR float-right" id="Vermas">
+                Ver más
+            </button>
+            
+
+            <div class="modal fade" id="ModalResultados" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                        </div>
+                        <div class="modal-body" id="Ejemplo">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <br /> 
 
         <script>
 
-        var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
-        var siglaCurso = @Html.Raw(Model.SiglaCurso);
-        var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
-        var semestre = @Html.Raw(Model.Semestre);
-        var ano = @Html.Raw(Model.Ano);
-        var fechaInicio =  @Html.Raw(Model.FechaInicio);
-        var fechaFin =  @Html.Raw(Model.FechaFin);
-        var listaPreguntas = @Html.Raw(Model.Preguntas);
+            $(document).ready(function(){
+                $("#Vermas").click(function(){
+                    $("#ModalResultados").modal();
+                });
+            });
 
-        var botones = new Botones();
-        botones.crearBotones(listaPreguntas);
+            var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
+            var siglaCurso = @Html.Raw(Model.SiglaCurso);
+            var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
+            var semestre = @Html.Raw(Model.Semestre);
+            var ano = @Html.Raw(Model.Ano);
+            var fechaInicio =  @Html.Raw(Model.FechaInicio);
+            var fechaFin =  @Html.Raw(Model.FechaFin);
+            var listaPreguntas = @Html.Raw(Model.Preguntas);
+
+            var botones = new Botones();
+            botones.crearBotones(listaPreguntas);
 
         </script>
 
