@@ -1,63 +1,73 @@
 ﻿agregarsecciones = function() {
-    var current = null;
+    var seccionesSeleccionadas = null;
+    // Inicializador que crea el arreglo
     function init() {
-        current = 0;
+        seccionesSeleccionadas = [];
     }
-    function add() {
-        current++;
+    // Agrega el elemento especificado por id
+    function add(id) {
+        seccionesSeleccionadas.push(id);
     }
-    function remove() {
-        current--;
+    // Remueve la primera aparición de id en el arreglo
+    // (En buena teoría solo debería existir un elemento)
+    function remove(id) {
+        seccionesSeleccionadas.filter(function (ele) {
+            return ele != id;
+        });
+    }
+    // Borra todo el arreglo
+    function removeAll() {
+        seccionesSeleccionadas = [];
+    }
+    // Verifica si el elemento está contenido en el arreglo
+    function containsElement(id) {
+        return seccionesSeleccionadas.find(function (element) {
+            return element == id;
+        });
     }
 
     return {
         init: init,
         add: add,
         remove: remove,
-        current: function () { return current; }
+        removeAll: removeAll,
+        containsElement: containsElement,
+        // Función para obtener el arreglo. Se usa para poder pasárselo al controlador
+        getArray: function () { return seccionesSeleccionadas; }
     }
 }();
 
+// Cuando se marca o desmarca un checkbox del banco,
+// se agrega o elimina el elemento del arreglo de secciones.
 function selectSeccion(element) {
     if (element.checked) {
-        element.id = "secciones[" + agregarsecciones.current() + "].Codigo";
-        agregarsecciones.add();
+        agregarsecciones.add(element.value);
     }
     else {
-        deselectSeccion(element.value);
-        agregarsecciones.remove();
+        agregarsecciones.remove(element.value);
     }
 }
 
-function deselectSeccion(codigo) {
-    var index = 0;
-    var beforeElement = true;
-    while (index < agregarsecciones.current() && beforeElement) {
-        var seccion = document.getElementById("secciones[" + index + "].Codigo");
-        if (seccion.value == codigo) {
-            seccion.setAttribute("name", "");
-            seccion.id = null;
-            beforeElement = false;
-        }
-        ++index;
-    }
-
-    while (index < agregarsecciones.current()) {
-        var newIndex = index - 1;
-        var seccion = document.getElementById("secciones[" + index + "].Codigo");
-        seccion.id = "secciones[" + newIndex + "].Codigo";
-        ++index;
-    }
-}
-
+// Función que llama al controlador para agregar las secciones selecionadas al formulario
 function addSeccionToFormulario() {
-    var index = 0;
-
-    while (index < agregarsecciones.current()) {
-        var seccion = document.getElementById("secciones[" + index + "].Codigo");
-        seccion.setAttribute("name", seccion.id);
-        var tupla = document.getElementById("sec(" + seccion.value + ")");
-        tupla.setAttribute("hidden", "hidden");
-        ++index;
-    }
+    // Obtener el nombre y el codigo del formulario
+    var codigo = document.getElementById("textCode").value
+    var nombre = document.getElementById("textName").value
+    var seccionesAsociadas = agregarsecciones.getArray();
+    // Construir el objeto que recibe la vista
+    var resultado = { codigo, nombre, seccionesAsociadas };
+    // Llamado al método del controlador
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/AsociarSeccionesAFormulario",
+        data: JSON.stringify(resultado),
+        dataType: "html",
+        traditional: true,
+        success: function (data) {
+            resultado = [];
+            // La vista es actualizada con los datos recibidos del controlador  
+            $('#seccionesActuales').html(data);
+        }
+    });
 }

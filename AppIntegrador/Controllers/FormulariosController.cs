@@ -519,7 +519,7 @@ namespace AppIntegrador.Controllers
          * 
          */
         [HttpPost]
-        public ActionResult AsociarSesionesAFormulario(SeccionesFormulario formulario)
+        public ActionResult AsociarSeccionesAFormulario(SeccionesFormulario formulario)
         {
             Formulario form = new Formulario();
             form.Codigo = formulario.codigo;

@@ -184,7 +184,7 @@ namespace AppIntegrador.Tests.Controllers
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
             // Se llama el método del controller para ver si devuelve un resultado válido
-            var result = controller.AsociarSesionesAFormulario(formularioPrueba);
+            var result = controller.AsociarSeccionesAFormulario(formularioPrueba);
 
             Assert.IsNotNull(result);
         }
