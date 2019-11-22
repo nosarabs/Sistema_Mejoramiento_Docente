@@ -1,16 +1,22 @@
 ﻿using AppIntegrador;
+using System.Data.Entity;
 using AppIntegrador.Controllers;
 using AppIntegrador.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web;
-using System.Security.Principal;
-using System.IO;
-using System.Web.Helpers;
 using System.Web.SessionState;
-using System.Reflection;
+using EntityFramework.Testing;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -55,7 +61,7 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-        public void EntrarCargarUsuariosSinPermiso()
+        public void TestEntrarCargarUsuariosSinPermiso()
         {
             
             CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
@@ -115,6 +121,91 @@ namespace AppIntegrador.Tests.Controllers
             string result = new JavaScriptSerializer().Serialize(json.Data);
             string expected = "{\"data\":[\"0000000000,Tronco Común\",\"0000000001,Ingeniería de Software\",\"0000000002,Ciencias de la Computación\",\"0000000003,Tecnologías de la Información\"]}";
             Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void TestCargarDatosDefault()
+        {
+            string correo = "admin@mail.com";
+            var persona = new Persona()
+            {
+                Correo = correo,
+                Identificacion = "123456781",
+                Apellido1 = "Admin",
+                Nombre1 = "Admin",
+                TipoIdentificacion = "Cédula"
+            };
+
+            var usuario = new Usuario()
+            {
+                Activo = true
+            };
+
+            var carreras = new List<Carrera>
+            {
+                new Carrera() { Codigo = "0000000001", Nombre = "Bachillerato en Computación" }
+            };
+
+            var enfasis = new List<Enfasis>
+            {
+                new Enfasis() { CodCarrera = "0000000001", Codigo = "0000000000", Nombre = "Tronco Común" },
+                new Enfasis() { CodCarrera = "0000000001", Codigo = "0000000001", Nombre = "Ingeniería de Software" }
+            };
+
+            var perfiles = new List<Perfil>
+            {
+                new Perfil() { Nombre = "Administrador" },
+                new Perfil() { Nombre = "Director" }
+            };
+
+            var database = new Mock<DataIntegradorEntities>();
+
+            database.Setup(m => m.Persona.Find(correo)).Returns(persona);
+            database.Setup(m => m.Usuario.Find(correo)).Returns(usuario);
+
+            database.Setup(m => m.Carrera).Returns(new Mock<DbSet<Carrera>>().SetupData(carreras, o => {
+                return carreras.Single(x => x.Codigo == (string)o.First());
+            }).Object);
+
+            database.Setup(m => m.Enfasis).Returns(new Mock<DbSet<Enfasis>>().SetupData(enfasis, o => {
+                return enfasis.Single(x => x.CodCarrera == (string)o.First() && x.Codigo == (string)o.First());
+            }).Object);
+
+            database.Setup(m => m.Perfil).Returns(new Mock<DbSet<Perfil>>().SetupData(perfiles, o => {
+                return perfiles.Single(x => x.Nombre == (string)o.First());
+            }).Object);
+
+            Init();
+            CurrentUser.setCurrentUser("admin@mail.com", "Administrador", "0000000001", "0000000000");
+
+            PermissionsController controller = new PermissionsController(database.Object);
+            JsonResult json = controller.CargarDatosDefault();
+            string result = new JavaScriptSerializer().Serialize(json.Data);
+            string expected = "{\"defaultProfile\":\"Administrador\",\"defaultMajor\":\"0000000001,Bachillerato en Computación\",\"defaultEmphasis\":\"0000000001,Ingeniería de Software\"}";
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void TestGuardarPermisosSinPermiso()
+        {
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            PermissionsController controller = new PermissionsController()
+            {
+                TempData = tempData
+            };
+            PermissionsViewHolder model = new PermissionsViewHolder();
+            RedirectToRouteResult result = controller.GuardarPermisos(model, false) as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página.");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+            CurrentUser.deleteCurrentUser("andres@mail.com");
         }
 
         [TestInitialize]
