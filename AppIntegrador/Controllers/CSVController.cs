@@ -25,8 +25,9 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult Index(HttpPostedFileBase file, int? tipoArchivo)
         {
+            System.Diagnostics.Debug.WriteLine(tipoArchivo);
             if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
                 try
                 {
