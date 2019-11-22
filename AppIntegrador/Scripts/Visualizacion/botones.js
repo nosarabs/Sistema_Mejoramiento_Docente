@@ -8,7 +8,7 @@
     crearBoton(listaPreguntas, codigoPregunta, textoPregunta, idPreg) {
 
         var boton = document.createElement("button");
-        boton.className = "btn-azulUCR float-right";
+        boton.className = "btn-azulUCR";
         boton.id = codigoPregunta;
         boton.innerText = "Ver más" + codigoPregunta;
 
@@ -85,31 +85,43 @@
     }
 
 
-    // Método encargado de crear los botones para habilitar la opción de visualizar
-    // con detalle los resultados de una pregunta
+    /* COD-66: Yo como administrador quiero visualizar las preguntas de una sección
+     * en forma de cuadrícula para facilitar la visualización de las mismas
+     * Tarea: - Incluir en cada campo de la cuadrícula un botón para mas detalles acerca de la pregunta.
+    */
+    // Método encargado de crear los flexboxes, labels y botones para cada
+    // una de las preguntas
     crearBotones(/*idContenedor, */listaPreguntas) {
 
-        var cuerpoPrincipal = document.createElement("div");
-        cuerpoPrincipal.className = "cuerpoPrincipal";
+        var cuerpoPrincipal = document.getElementById("contenedorPreguntas");
 
         for (var i = 0; i < listaPreguntas.length; ++i) {
-            
-            // Chequea si la pregunta evaluada pertenece o no a la sección
-           // if (i == 0)//("Sec " + listaPreguntas[i].codigoSeccion) == idContenedor) {
-            //{
-                //var codigoSeccion = listaPreguntas[i].codigoSeccion;
-                var codigoPregunta = listaPreguntas[i].codigoPregunta;
-                var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
-                var boton = this.crearBoton(listaPreguntas, codigoPregunta, textoPregunta, i);
-                cuerpoPrincipal.appendChild(boton);
 
-            /*}
-            else {
-                contadorPreguntasSeccion = 0;
-            }*/
+            var contenedorParcial = document.createElement("div");
+            //contenedorParcial.className += "col-md-2";
+            contenedorParcial.style.textAlign = "center";
 
+
+            var flexBonito = document.createElement("p-2");
+            flexBonito.className += "col-md-2";
+            flexBonito.className += " border";
+            flexBonito.id = "contenedor" + listaPreguntas[i].codigoPregunta;
+                
+            var codigoPregunta = listaPreguntas[i].codigoPregunta;
+            var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
+            var boton = this.crearBoton(listaPreguntas, codigoPregunta, textoPregunta, i);
+
+            // Incluir un label!!
+            var labelcito = document.createElement("p");
+            labelcito.innerHTML = textoPregunta;
+
+            // Appends
+            contenedorParcial.appendChild(labelcito);
+            contenedorParcial.appendChild(boton);
+            flexBonito.appendChild(contenedorParcial);
+            cuerpoPrincipal.appendChild(flexBonito);
         }
-        document.body.appendChild(cuerpoPrincipal);
+        //document.body.appendChild(cuerpoPrincipal);
 
     }
 

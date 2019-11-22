@@ -25,7 +25,7 @@
         <script src="~/Scripts/Visualizacion/botones.js"></script>
 
         <div class="row">
-            <div class="col-md-6 align-content-center" >
+            <div class="col-md-6 align-content-center">
                 <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
             </div>
             <div class="container col-md-6 align-content-center">
@@ -39,7 +39,7 @@
             <button class="btn-azulUCR float-right" id="Vermas">
                 Ver más
             </button>
-            
+
 
             <div class="modal fade" id="ModalResultados" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-xl" role="document">
@@ -56,10 +56,21 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <br /> 
+        
+        <div class="row">
+            
+            <!--Para flexboxes de la cuadrícula de las preguntas-->
+            <div class="d-flex bg-light justify-content-center" id="contenedorPreguntas" align-items: center>
+                <div class="col-md-2"></div>
+            </div>
+            
+        </div>
+
+
+
+        <br />
 
         <script>
 
