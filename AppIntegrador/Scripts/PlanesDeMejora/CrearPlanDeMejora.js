@@ -1,78 +1,73 @@
 ﻿$(document).ready(function () {
-    cantidadProfes.init();
+    cantidadProfes = new Counter();
+    cantidadForm = new Counter();
 });
 
-
-cantidadProfes = function () {
-    var current = null;
-    function init() {
-        current = 0;
+class Counter {
+    current = null;
+    constructor() {
+        this.current = 0;
     }
-    function add() {
-        current++;
+    add() {
+        this.current++;
     }
-    function remove() {
-        current--;
+    remove() {
+        this.current--;
     }
-
-    return {
-        init: init,
-        add: add,
-        remove: remove,
-        current: function () { return current; }
-    }
-}();
-
-function seleccionaCheckBoxProfe(element) {
-    if (element.checked) {
-        element.id = "profes[" + cantidadProfes.current() + "].correo";
-        cantidadProfes.add();
-    }
-    else {
-        deseleccionarProfe(element.value);
-        cantidadProfes.remove();
+    getCurrent() {
+        return this.current;
     }
 }
 
-function deseleccionarProfe(correo) {
+function seleccionaCheckBoxGen(element, variable, key, counter) {
+    if (element.checked) {
+        element.id = `${variable}[${counter.getCurrent()}].${key}`;
+        counter.add();
+    }
+    else {
+        deseleccionarGen(element.value, key, counter);
+        counter.remove();
+    }
+}
+
+function deseleccionarGen(variable, key, counter) {
     let index = 0;
     let found = true;
-    for (; index < cantidadProfes.current() && found; ++index) {
-        var profe = document.getElementById("profes[" + index + "].correo");
-        if (profe.value.localeCompare(correo) == 0) {
-            profe.setAttribute("name", "");
-            profe.id = null;
+    for (; index < counter.getCurrent() && found; ++index) {
+        var gen = document.getElementById(`${variable}[${index}].${key}`);
+        if (gen.value.localeCompare(key) == 0) {
+            gen.setAttribute("name", "");
+            gen.id = null;
             found = false;
         }
     }
-    for (; index < cantidadProfes.current(); ++index) {
+    for (; index < counter.getCurrent(); ++index) {
         let newIndex = index - 1;
-        let profe = document.getElementById("profes[" + index + "].correo");
-        profe.id = "profes[" + newIndex + "].correo";
+        let gen = document.getElementById(`${variable}[${index}].${key}`);
+        gen.id = `${variable}[${newIndex}].${key}`;
     }
 }
 
-function agregarProfesores() {
-    for (let index = 0; index < cantidadProfes.current(); ++index) {
-        let profe = document.getElementById("profes[" + index + "].correo");
-        profe.setAttribute("name", "ProfeSeleccionado");
+function agregarGen(variable, key, counter, url, attribute, div) {
+    console.log(counter.getCurrent());
+    for (let index = 0; index < counter.getCurrent(); ++index) {
+        let gen = document.getElementById(`${variable}[${index}].${key}`);
+        gen.setAttribute("name", `${attribute}`);
     }
     $.ajax({
         type: 'POST',
-        url: "AnadirProfes",
+        url: `${url}`,
         data: $('form').serialize(),
         dataType: 'html', //dataType - html
         success: function (result)
         {
-            console.log(result);
-            $("#divTablaProfesores").html(result);
+            $(`${div}`).html(result);
         }
     });
 }
 
-
-function modalProfes() {
-    $('#ModalProfesores').modal();
+function modalGen(modal) {
+    $(`${modal}`).modal();
 }
 
 function validarPlanDeMejora() {

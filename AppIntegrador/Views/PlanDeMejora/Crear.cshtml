@@ -68,26 +68,17 @@
                         </div>
                         <hr />
                         <h4>Profesores que se asignarán</h4>
-
                         <div id="divTablaProfesores">
                             Aún no se han escogido profesores para el plan.
                         </div>
+                        <input type="button" value="Añadir profesores" class="btn-azulUCR float-right" id="AgregarProfesoresBoton" onclick="modalGen('#ModalProfesores')" />
+                        <hr />
+                        <h4>Formularios que se asignarán</h4>
+                        <div id="divTablaFormularios">
+                            Aún no se han escogido formularios para el plan.
+                        </div>
+                        <input type="button" value="Añadir formularios" class="btn-azulUCR float-right" id="AgregarFormulariosBoton" onclick="modalGen('#ModalFormularios')" />
 
-                        @*@if (Model.Profesor.Count > 0)
-                        {
-                            <!--Aqui va una tabla-->
-                            <div id="divTablaProfesores">
-
-                            </div>
-                        }
-                        else
-                        {
-                            <div>
-                                Aun no se han escogido profesores para el plan.
-                            </div>
-                        }*@
-
-                        <input type="button" value="Añadir profesores" class="btn-azulUCR float-right" id="AgregarProfesoresBoton" onclick="modalProfes()" />
                     </div>
                     <div class="form-horizontal card-group">
                         <div class="modal fade" id="ModalProfesores" tabindex="-1" role="dialog" aria-labelledby="ModalProfesoresLabel" aria-hidden="true">
@@ -102,7 +93,24 @@
                                         <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
                                         @*<input type="submit" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled />*@
                                         @*<input type="submit" class="btn-azulUCR " data-dismiss="modal" value="Agregar profesores seleccionados" />*@
-                                        <button type="button" class="btn-azulUCR " onclick="agregarProfesores()" data-dismiss="modal">Agregar profesores seleccionados</button>
+                                        <button type="button" class="btn-azulUCR " onclick="agregarGen('profe', 'correo', cantidadProfes, 'AnadirProfes', 'ProfeSeleccionado', '#divTablaProfesores')" data-dismiss="modal">Agregar profesores seleccionados</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-horizontal card-group">
+                        <div class="modal fade" id="ModalFormularios" tabindex="-1" role="dialog" aria-labelledby="ModalFormulariosLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div id="ModalAgregarFormulariosInterno" style="width:auto">
+                                            @{Html.RenderPartial("_AnadirFormularios", Model.Formulario);}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn-azulUCR " onclick="agregarGen('form', 'codigo', cantidadForm, 'AnadirFormularios', 'FormularioSeleccionado', '#divTablaFormularios')" data-dismiss="modal">Agregar formularios seleccionados</button>
                                     </div>
                                 </div>
                             </div>

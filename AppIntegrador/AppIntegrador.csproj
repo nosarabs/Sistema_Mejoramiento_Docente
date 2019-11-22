@@ -692,6 +692,8 @@
     <Content Include="Views\PlanDeMejora\Crear.cshtml" />
     <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
     <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirFormularios.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaFormularios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

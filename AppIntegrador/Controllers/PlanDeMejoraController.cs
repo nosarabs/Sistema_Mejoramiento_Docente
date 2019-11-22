@@ -62,14 +62,16 @@ namespace AppIntegrador.Controllers
                 plan = new PlanDeMejora();
             }
             ViewBag.ProfesoresLista = db.Profesor.ToList();
+            ViewBag.FormulariosLista = db.Formulario.ToList();
             return View("Crear", plan);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado)
+        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado, List<String> FormularioSeleccionado)
         {
             Profesor profe;
+            Formulario formulario;
             if (ModelState.IsValid && plan != null)
             {
                 if(ProfeSeleccionado != null)
@@ -80,6 +82,18 @@ namespace AppIntegrador.Controllers
                         profe.PlanDeMejora.Add(plan);
                         if(!plan.Profesor.Contains(profe))
                             plan.Profesor.Add(profe);
+                    }
+                }
+                if(FormularioSeleccionado != null)
+                {
+                    foreach (var formCod in FormularioSeleccionado)
+                    {
+                        formulario = db.Formulario.Find(formCod);
+                        formulario.PlanDeMejora.Add(plan);
+                        if (!plan.Formulario.Contains(formulario))
+                        {
+                            plan.Formulario.Add(formulario);
+                        }
                     }
                 }
                 db.PlanDeMejora.Add(plan);
@@ -100,6 +114,21 @@ namespace AppIntegrador.Controllers
                 }
             }
             return PartialView("_TablaProfesores", profesores);
+        }
+
+        [HttpPost]
+        public ActionResult AnadirFormularios(List<String> FormularioSeleccionado)
+        {
+            List<Formulario> formularios = new List<Formulario>();
+            if (FormularioSeleccionado != null)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    var formulario = db.Formulario.Find(codigo);
+                    formularios.Add(formulario);
+                }
+            }
+            return PartialView("_TablaFormularios", formularios);
         }
 
         //Agregado por: Johan Córdoba
