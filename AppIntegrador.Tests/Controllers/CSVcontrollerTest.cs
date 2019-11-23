@@ -56,7 +56,7 @@ namespace AppIntegrador.Tests.Controllers
 
 
             // Act
-            ViewResult result = controller.Index(httpPostedFileBases[0]) as ViewResult;
+            ViewResult result = controller.Index(httpPostedFileBases[0],1) as ViewResult;
             // Assert
             Assert.IsNotNull(result);
         }
