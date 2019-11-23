@@ -61,7 +61,18 @@ namespace AppIntegrador.Controllers
             {
                 plan = new PlanDeMejora();
             }
+            List<String> ProfesoresNombreLista = new List<String>();
             ViewBag.ProfesoresLista = db.Profesor.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach(var profe in ViewBag.ProfesoresLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(profe.Correo, name_op);
+                ProfesoresNombreLista.Add(name_op.Value.ToString());
+            }
+
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             ViewBag.FormulariosLista = db.Formulario.ToList();
             return View("Crear", plan);
         }
@@ -105,15 +116,23 @@ namespace AppIntegrador.Controllers
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
         {
             List<Profesor> profesores = new List<Profesor>();
-            if(ProfeSeleccionado != null)
+            List<String> ProfesoresNombreLista = new List<String>();
+            ObjectParameter name_op;
+            if (ProfeSeleccionado != null)
             {
                 foreach (var correo in ProfeSeleccionado)
                 {
                     var profesor = db.Profesor.Find(correo);
                     profesores.Add(profesor);
+
+                    name_op = new ObjectParameter("NombreCompleto", "");
+                    db.GetTeacherName(correo, name_op);
+                    ProfesoresNombreLista.Add(name_op.Value.ToString());
                 }
             }
-            return PartialView("_TablaProfesores", profesores);
+            ViewBag.ProfesoresLista = profesores;
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            return PartialView("_TablaProfesores");
         }
 
         [HttpPost]

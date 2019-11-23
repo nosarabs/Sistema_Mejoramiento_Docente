@@ -14,11 +14,9 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data.Entity.SqlServer;
-
+    
     public partial class DataIntegradorEntities : DbContext
     {
-        private static string __hack = typeof(SqlProviderServices).ToString();
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
@@ -1442,6 +1440,15 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual int GetTeacherName(string correo, ObjectParameter nombreCompleto)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTeacherName", correoParameter, nombreCompleto);
         }
     }
 }

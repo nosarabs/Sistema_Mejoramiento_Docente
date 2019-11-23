@@ -70,22 +70,38 @@ function modalGen(modal) {
     $(`${modal}`).modal();
 }
 
-function validarPlanDeMejora() {
-    let fechaInicioPlan = document.getElementById('campoFechaInicioPlanMejora');
-    let fechaFinalPlan = document.getElementById('campoFechaFinPlanMejora');
-    let nombrePlan = document.getElementById('campoNombrePlanMejora');
+function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
+    let fechaInicio = document.getElementById(campoFechaInicio);
+    let fechaFinal = document.getElementById(campoFechaFin);
+    let nombre = document.getElementById(campoNombre);
+    let totalValidations = campoDescripcion == null ? 2 : 3;
 
     // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
-    let minDate = new Date(); // Todays Date
-    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
-    let validator = new Validador(50, 50, minDate, topDate, 'CrearPlanBoton');
+    let minDate = null;
+    let topDate = null; 
+    if (campoFechaInferior != null && campoFechaSuperior != null) {
+        let temp = document.getElementById(campoFechaInferior.id).value;
+        minDate = new Date(temp + 'CST');
+        temp = document.getElementById(campoFechaSuperior.id).value
+        topDate = new Date(temp + 'CST');
+    } else {
+        minDate = new Date(); // Todays Date
+        topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+    }
+
+    let validator = new Validador(50, 250, minDate, topDate, nombreBoton);
 
     //Definimos la cantidad de validaciones
-    validator.setTotalValidations(2);
+    validator.setTotalValidations(totalValidations);
 
     // Ahora haciendo las validaciones
-    validator.validateSomethingInTextInput(nombrePlan, 50);
-    validator.validateDates(fechaInicioPlan, fechaFinalPlan);
+    validator.validateSomethingInTextInput(nombre, 50);
+    validator.validateDates(fechaInicio, fechaFinal);
+
+    if (campoDescripcion != null) {
+        validator.validateSomethingInTextInput(campoDescripcion, 50);
+    }
+
 
     validator.validityOfForm();
 }

@@ -1,0 +1,92 @@
+﻿@model AppIntegrador.Models.Objetivo
+@{
+    var llamadoValidarPlan = "validarCampos('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', campoDescripcionObjetivo, campoFechaInicioPlanMejora, campoFechaFinPlanMejora, 'CrearObjetivoBoton')";
+}
+
+<div class="form-horizontal card-group">
+    <div class="modal fade" id="ModalObjetivo" tabindex="-1" role="dialog" aria-labelledby="ModalFormulariosLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <h5>@Html.DisplayNameFor(model => model.nombre)</h5>
+                            <div col-lg-10>
+                                @Html.EditorFor(model => model.nombre, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   id = "campoNombreObjetivo",
+                                   @onkeyup = llamadoValidarPlan,
+                                   @maxlength = "50",
+                                   required = "required",
+                                   placeholder = "Nombre del objetivo"
+                               }
+                           }
+)
+                                <div id="campoNombreObjetivo_subMsj" class="contador small float-right">0/50 caracteres usados </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+
+                            <h5>@Html.DisplayNameFor(model => model.descripcion)</h5>
+                            <div col-lg-10>
+                                @Html.EditorFor(model => model.descripcion, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   id = "campoDescripcionObjetivo",
+                                   @onkeyup = llamadoValidarPlan,
+                                   @maxlength = "50",
+                                   required = "required",
+                                   placeholder = "Descripción del objetivo"
+                               }
+                           }
+)
+                                <div id="campoDescripcionObjetivo_subMsj" class="contador small float-right">0/50 caracteres usados </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 offset-lg-0">
+                            <h5>@Html.DisplayNameFor(model => model.fechaInicio)</h5>
+                            <div>
+                                @Html.EditorFor(model => model.fechaInicio, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   @onkeyup = llamadoValidarPlan,
+                                   id = "campoFechaInicioObjetivo"
+                               }
+                           }
+)
+                                <div id="campoFechaInicioObjetivo_subMsj" class="contador small float-right">Inicio objetivo.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 offset-lg-0">
+                            <h5>@Html.DisplayNameFor(model => model.fechaInicio)</h5>
+                            <div>
+                                @Html.EditorFor(model => model.fechaFin, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   @onkeyup = llamadoValidarPlan,
+                                   id = "campoFechaFinObjetivo"
+                               }
+                           }
+)
+                                <div id="campoFechaFinObjetivo_subMsj" class="contador small float-right">Fin objetivo.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="CrearObjetivoBoton" disabled class="btn-azulUCR " onclick="agregarGen('form', 'codigo', cantidadForm, 'AnadirFormularios', 'FormularioSeleccionado', '#divTablaFormularios')" data-dismiss="modal">Agregar objetivo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
