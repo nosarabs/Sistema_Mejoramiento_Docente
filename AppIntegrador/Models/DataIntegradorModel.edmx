@@ -1843,6 +1843,7 @@
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="TipoId" Type="varchar" Mode="In" />
+          <Parameter Name="Borrado" Type="bit" Mode="In" />
         </Function>
         <Function Name="InsertarPertenece_a" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodCarrera" Type="varchar" Mode="In" />
@@ -4094,6 +4095,7 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido" Mode="In" Type="String" />
             <Parameter Name="TipoId" Mode="In" Type="String" />
+            <Parameter Name="Borrado" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="InsertarPertenece_a">
             <Parameter Name="CodCarrera" Mode="In" Type="String" />

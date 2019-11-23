@@ -12,40 +12,85 @@
 <div class="fullWidth">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="impText">Carga CSV</h2 class="impText">
-        </div></div>
+            <h2 class="impText">Carga CSV</h2>
+        </div>
+    </div>
 </div>
-            <div class="container mt-3">
+<div class="container mt-3">
 
-                @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
+    @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-                    <label for="file">Subir archivo CSV:</label>
-                    <div class="custom-file mb-3">
+        <label for="file">Subir archivo CSV:</label>
+        <div class="custom-file mb-3">
 
-                        <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
-                        <label class="custom-file-label" for="customFile">Elija un archivo</label>
-                    </div>
+            <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
+            <label class="custom-file-label" for="customFile">Elija un archivo</label>
+        </div>
 
-                    <br>
-                    <br>
-                    <div class="mt-3">
-                        <input type="submit" value="Subir CSV" class="btn btn-primary" />
-                    </div>
-                    <br>
-                    <br>
+        <br>
+        <br>
+            <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
+            <input type="submit" value="Subir CSV" class="btn btn-primary" />
+        <br>
+        <br>
 
-                    @ViewBag.Message
+        @ViewBag.Message
+    }
+
+
+    <script>
+        //refactorizar
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    <script type="text/javascript">
+        function Upload() {
+            var fileUpload = document.getElementById("file");
+
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var table = document.createElement("table"); //Creo la tabla dinamica
+                    table.setAttribute('class', 'table table-hover table-striped table-bordered table-sm '); //Una clase para usar bootstrap
+                    table.setAttribute('width', '500px');
+                    var rows = e.target.result.split("\n"); //Cantidad de Filas
+                    
+                    var rowHeader = table.insertRow(-1);
+                    var cellsHeader = rows[0].split(","); 
+                    if (cellsHeader.length > 1) {
+                        for (var i = 0; i < cellsHeader.length; ++i) {
+                            var headerCell = document.createElement("TH");
+                            headerCell.innerHTML = cellsHeader[i];
+                            rowHeader.appendChild(headerCell);
+                        }
+                    }
+
+                    for (var i = 1; i < rows.length; i++) {
+                        var cells = rows[i].split(",");
+                        if (cells.length > 1) {
+                            var row = table.insertRow(-1);
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                        }
+                    }
+                    var dvCSV = document.getElementById("dvCSV");
+                    dvCSV.innerHTML = "";
+                    dvCSV.appendChild(table);
                 }
+                reader.readAsText(fileUpload.files[0]);
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        }
+    </script>
 
+    <div id="dvCSV" class="container" style="overflow:auto"></div>
 
-                <script>
-                    //refactorizar
-                    $(".custom-file-input").on("change", function () {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                    });
-                </script>
-
-            </div>
+</div>
 
