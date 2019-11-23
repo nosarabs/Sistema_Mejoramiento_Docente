@@ -91,39 +91,47 @@
     */
     // Método encargado de crear los flexboxes, labels y botones para cada
     // una de las preguntas
-    crearBotones(/*idContenedor, */listaPreguntas) {
+    crearBotones(idSeccion, listaPreguntas) {
 
         var cuerpoPrincipal = document.getElementById("contenedorPreguntas");
 
+        cuerpoPrincipal.innerHTML = "";
+
         for (var i = 0; i < listaPreguntas.length; ++i) {
 
-            var contenedorParcial = document.createElement("div");
-            //contenedorParcial.className += "col-md-2";
-            contenedorParcial.style.textAlign = "center";
+            if (listaPreguntas[i].codigoSeccion == idSeccion) {
 
+                var contenedorParcial = document.createElement("div");
+                //contenedorParcial.className += "col-md-2";
+                contenedorParcial.style.textAlign = "center";
 
-            var flexBonito = document.createElement("p-2");
-            flexBonito.className += "col-md-2";
-            flexBonito.className += " border";
-            flexBonito.id = "contenedor" + listaPreguntas[i].codigoPregunta;
-                
-            var codigoPregunta = listaPreguntas[i].codigoPregunta;
-            var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
-            var boton = this.crearBoton(listaPreguntas, codigoPregunta, textoPregunta, i);
+                var flexBonito = document.createElement("p-2");
+                flexBonito.className += "col-md-4";
+                flexBonito.className += " border";
+                flexBonito.id = "contenedor" + listaPreguntas[i].codigoPregunta;
 
-            // Incluir un label!!
-            var labelcito = document.createElement("p");
-            labelcito.innerHTML = textoPregunta;
+                var codigoPregunta = listaPreguntas[i].codigoPregunta;
+                var textoPregunta = String(i + 1) + ". " + listaPreguntas[i].textoPregunta;
+                var boton = this.crearBoton(listaPreguntas, codigoPregunta, textoPregunta, i);
 
-            // Appends
-            contenedorParcial.appendChild(labelcito);
-            contenedorParcial.appendChild(boton);
-            flexBonito.appendChild(contenedorParcial);
-            cuerpoPrincipal.appendChild(flexBonito);
+                // Incluir un label!!
+                var labelcito = document.createElement("p");
+                labelcito.innerHTML = textoPregunta;
+
+                // Appends
+                contenedorParcial.appendChild(labelcito);
+                contenedorParcial.appendChild(boton);
+                flexBonito.appendChild(contenedorParcial);
+                cuerpoPrincipal.appendChild(flexBonito);
+            }
         }
-        //document.body.appendChild(cuerpoPrincipal);
 
     }
 
+}
+
+function seccion_cambiada(seccion, listaPreguntas) {
+    var botones = new Botones();
+    botones.crearBotones(seccion, listaPreguntas);
 }
 

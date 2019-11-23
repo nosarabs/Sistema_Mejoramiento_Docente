@@ -24,12 +24,38 @@
         <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
         <script src="~/Scripts/Visualizacion/botones.js"></script>
 
+        <script>
+
+
+
+            var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
+            var siglaCurso = @Html.Raw(Model.SiglaCurso);
+            var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
+            var semestre = @Html.Raw(Model.Semestre);
+            var ano = @Html.Raw(Model.Ano);
+            var fechaInicio =  @Html.Raw(Model.FechaInicio);
+            var fechaFin =  @Html.Raw(Model.FechaFin);
+            var listaPreguntas = @Html.Raw(Model.Preguntas);
+
+            //var botones = new Botones();
+            //botones.crearBotones(listaPreguntas);
+
+        </script>
+
         <div class="row">
             <div class="col-md-6 align-content-center">
                 <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
             </div>
             <div class="container col-md-6 align-content-center">
-                @Html.DropDownList("ddlDropDownList", Model.Seccioncitas, "Seleccione una opción...", new { @class = "form-control", id = "secciones", placeholder = "Seccion", data_width = "100%" })
+                @Html.DropDownList("ddlDropDownList", Model.Seccioncitas, "Seleccione una opción...", new
+                {
+                    @class = "form-control",
+                    id = "secciones",
+                    placeholder = "Seccion",
+                    data_width = "100%"
+                                ,
+                    onchange = "seccion_cambiada(this.value, listaPreguntas)"
+                })
             </div>
 
         </div>
@@ -58,41 +84,16 @@
             </div>
         </div>
 
-        
-        <div class="row">
-            
+
+        <div class="row offset-md-2">
             <!--Para flexboxes de la cuadrícula de las preguntas-->
-            <div class="d-flex bg-light justify-content-center" id="contenedorPreguntas" align-items: center>
-                <div class="col-md-2"></div>
+            <div class="d-flex flex-wrap col-md-10 bg-light justify-content-center" id="contenedorPreguntas" align-items: center>
             </div>
-            
         </div>
 
 
 
         <br />
-
-        <script>
-
-            $(document).ready(function(){
-                $("#Vermas").click(function(){
-                    $("#ModalResultados").modal();
-                });
-            });
-
-            var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
-            var siglaCurso = @Html.Raw(Model.SiglaCurso);
-            var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
-            var semestre = @Html.Raw(Model.Semestre);
-            var ano = @Html.Raw(Model.Ano);
-            var fechaInicio =  @Html.Raw(Model.FechaInicio);
-            var fechaFin =  @Html.Raw(Model.FechaFin);
-            var listaPreguntas = @Html.Raw(Model.Preguntas);
-
-            var botones = new Botones();
-            botones.crearBotones(listaPreguntas);
-
-        </script>
 
     </body>
 
