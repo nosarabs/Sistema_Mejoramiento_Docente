@@ -55,11 +55,17 @@ namespace AppIntegrador.Controllers
 
         public string ObtenerEnlaceSeguro(string urlReal, string usuario = null, DateTime? expira = null)
         {
+            // Almacenar los datos necesitados
             ObjectParameter resultadoHash = new ObjectParameter("resultadohash", typeof(string));
             ObjectParameter estado = new ObjectParameter("estado", typeof(string));
             db.AgregarEnlaceSeguro(usuario, urlReal, expira, resultadoHash, estado);
+
+            // Obtener los datos que debe recibir quien solicitó el enlace
             string urlHash = (string) resultadoHash.Value;
-            return "/EnlaceSeguro/RedireccionSegura?urlHash=" + urlHash.Split('/')[0];
+            var request = System.Web.HttpContext.Current.Request;
+            string domain = request.Url.Scheme + Uri.SchemeDelimiter + request.Url.Authority;
+
+            return domain + "/EnlaceSeguro/RedireccionSegura?urlHash=" + urlHash;
         }
     }
 }
