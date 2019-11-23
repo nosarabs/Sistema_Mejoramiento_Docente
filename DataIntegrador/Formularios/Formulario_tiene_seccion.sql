@@ -26,6 +26,6 @@ CREATE TRIGGER [dbo].[ActualizarOrdenSeccion]
 	END
 GO
 
-CREATE UNIQUE INDEX [ix_form_tiene_seccion]
-ON Formulario_tiene_seccion(FCodigo, Orden)
-INCLUDE(SCodigo);
+--CREATE UNIQUE INDEX [ix_form_tiene_seccion]
+--ON Formulario_tiene_seccion(FCodigo, Orden)
+--INCLUDE(SCodigo);
