@@ -25,17 +25,17 @@ function seleccionaCheckBoxGen(element, variable, key, counter) {
         counter.add();
     }
     else {
-        deseleccionarGen(element.value, key, counter);
+        deseleccionarGen(variable, key, counter, element.value);
         counter.remove();
     }
 }
 
-function deseleccionarGen(variable, key, counter) {
+function deseleccionarGen(variable, key, counter, value) {
     let index = 0;
     let found = true;
     for (; index < counter.getCurrent() && found; ++index) {
         var gen = document.getElementById(`${variable}[${index}].${key}`);
-        if (gen.value.localeCompare(key) == 0) {
+        if (gen.value.localeCompare(value) == 0) {
             gen.setAttribute("name", "");
             gen.id = null;
             found = false;
@@ -57,13 +57,37 @@ function agregarGen(variable, key, counter, url, attribute, div) {
     $.ajax({
         type: 'POST',
         url: `${url}`,
-        data: $('form').serialize(),
+        data: $(`[name=${attribute}]`).serialize(),
         dataType: 'html', //dataType - html
         success: function (result)
         {
             $(`${div}`).html(result);
         }
     });
+}
+
+function agregarObjetivo() {
+    $.ajax({
+        type: 'POST',
+        url: '/Objetivos/AnadirObjetivo',
+        data: $('#formObjetivos :input').serialize(),
+        dataType: 'html',
+        success: function () {
+            console.log("and i oop");
+        }
+    })
+}
+
+function enviarDatosPlan() {
+    $.ajax({
+        type: 'POST',
+        url: '/PlanDeMejora/Crear',
+        data: $('#formPlanMejora :input,[name=ProfeSeleccionado],[name=FormularioSeleccionado]').serialize(),
+        dataType: 'html',
+        success: function () {
+            console.log("and i oop");
+        }
+    })
 }
 
 function modalGen(modal) {

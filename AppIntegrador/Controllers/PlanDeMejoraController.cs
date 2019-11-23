@@ -71,7 +71,6 @@ namespace AppIntegrador.Controllers
                 db.GetTeacherName(profe.Correo, name_op);
                 ProfesoresNombreLista.Add(name_op.Value.ToString());
             }
-
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             ViewBag.FormulariosLista = db.Formulario.ToList();
             return View("Crear", plan);

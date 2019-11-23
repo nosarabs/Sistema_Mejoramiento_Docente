@@ -645,7 +645,7 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
-    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
+    <Content Include="Views\Objetivos\_TablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />

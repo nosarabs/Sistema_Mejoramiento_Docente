@@ -3,14 +3,15 @@
 @{
     ViewBag.Title = "Crear";
     var llamadoValidarPlan = "validarCampos('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton')";
+    var objetivos = (List<AppIntegrador.Models.Objetivo>)ViewBag.ObjetivosCreados;
 }
 
 <div class="container">
     @using (Html.BeginForm(null, "PlanDeMejora"))
     {
         <div>
-            @Html.AntiForgeryToken()
-            <div class="card card-body shadow">
+            <div class="card card-body shadow" id="formPlanMejora">
+                @Html.AntiForgeryToken()
                 <h3>Crear plan de mejora</h3>
                 <div id="seccionPlanMejora" class="card card-default shadow">
                     <div class="card-body grisUCR2">
@@ -94,7 +95,8 @@
             </div>
             <div class="card card-body shadow form-group float-right sticky-bottom">
                 <div>
-                    <input type="submit" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled />
+                    @*<input type="submit" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled />*@
+                    <input type="button" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled onclick="enviarDatosPlan()"/>
                     @Html.ActionLink("Cancelar", "Index", "PlanDeMejora", new { @class = "btn-blancoUCR" })
                 </div>
             </div>
