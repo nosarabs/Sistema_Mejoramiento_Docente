@@ -47,14 +47,14 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Details", tipoObjetivo);
         }
 
         // GET: TipoObjetivos/Create
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: TipoObjetivos/Create
@@ -100,7 +100,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Edit", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Edit/5
@@ -110,6 +110,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(tipoObjetivo).State = EntityState.Modified;
@@ -131,7 +132,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tipoObjetivo);
+            return View("Delete", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Delete/5

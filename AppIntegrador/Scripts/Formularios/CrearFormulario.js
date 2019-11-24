@@ -32,7 +32,31 @@ $("#ActualizarVistaFiltros").click(function () {
     });
 })
 
+function BorrarPregunta(Scod, Pcod) {
+    console.log("Trivial")
+    var SCodigo = Scod
+    var PCodigo = Pcod
+    var resultado = { SCodigo, PCodigo };
+    console.log(JSON.stringify(resultado));
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/EliminarPregunta",
+        data: JSON.stringify(resultado),
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+            console.log("ak7")
+            if (data.eliminadoExitoso) {
+                ActualizarSecciones();
+                console.log("ak6+1")
+            }
+        },
+        error: function () {
 
+        }
+    });
+}
 
 function BorrarSeccion(Scod) {
     // Arregla la vista cuando se deselecciona

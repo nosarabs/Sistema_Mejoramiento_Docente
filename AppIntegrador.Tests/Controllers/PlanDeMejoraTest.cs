@@ -6,6 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
 using System.Web;
+using Moq;
+using AppIntegrador.Models;
+using System.Data.Entity;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -32,19 +35,23 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void TestIndexName()
+        {
+            PlanDeMejoraController plan = new PlanDeMejoraController();
+            var indexResult = plan.Index("admin") as ViewResult;
+            Assert.AreEqual("Index", indexResult.ViewName);
+            plan.Dispose();
+        }
 
         [TestMethod]
         public void CreateNuevo() 
         {
             PlanDeMejoraController controlador = new PlanDeMejoraController();
-            ViewResult resultado = controlador.CreateNuevo() as ViewResult;
+            ViewResult resultado = controlador.Crear() as ViewResult;
             Assert.IsNotNull(resultado);
         }
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
         public TestContext TestContext
         {
             get
@@ -80,20 +87,37 @@ namespace AppIntegrador.Tests.Controllers
         #endregion
 
         [TestMethod]
-        public void TestIndexView()
+        public void CrearPlanDeMejoraDataMockTest()
         {
-            //HttpContext context = System.Web.HttpContext.Current;
-            
-            //// Arrange
-            //var controller = new PlanDeMejoraController();
+            DataIntegradorEntities test = new DataIntegradorEntities();
+            var db = new Mock<DataIntegradorEntities>();
+            String planNombre = "Plan de prueba";
+            DateTime inicio = new DateTime(2019,12,01);
+            DateTime Fin = new DateTime(2020, 12, 01);
 
-            //// Act
-            //ViewResult result = controller.Index("admin") as ViewResult;
+            PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin};
 
-            //// Assert
-            //Assert.IsNotNull(result);
+            db.Setup(m => m.PlanDeMejora.Add(plan));
+            db.Setup(m => m.SaveChanges());
+            var controller = new PlanDeMejoraController(db.Object);
+            var result = controller.Crear(plan, null);
+            Assert.IsNotNull(result);
+            controller.Dispose();
         }
 
+        [TestMethod]
+        public void CrearPlanDeMejoraIntegrationTest()
+        {
+            String planNombre = "Plan de prueba de integración";
+            DateTime inicio = new DateTime(2019, 12, 01);
+            DateTime Fin = new DateTime(2020, 12, 01);
+
+            PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin };
+
+            var controller = new PlanDeMejoraController();
+            var result = controller.Crear(plan, null);
+            Assert.IsNotNull(result);
+        }
 
     }
 }

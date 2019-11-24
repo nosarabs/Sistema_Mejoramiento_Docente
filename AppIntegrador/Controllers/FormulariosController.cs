@@ -39,17 +39,8 @@ namespace AppIntegrador.Controllers
             return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 
-        public ActionResult LlenarFormulario(string id)
+        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB)
         {
-            if(HttpContext == null)
-            {
-                return Redirect("~/");
-            }
-            Formulario formularioDB = db.Formulario.Find(id);
-            if (formularioDB == null)
-            {
-                return RedirectToAction("Index");
-            }
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
@@ -73,8 +64,39 @@ namespace AppIntegrador.Controllers
                     respuestas.GSemestre = respuestasList.GSemestre;
                 }
             }
-
             ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas);
+            return formulario;
+        }
+
+        [HttpGet]
+        public ActionResult VistaPrevia(string id)
+        {
+            if (HttpContext == null)
+            {
+                return Redirect("~/");
+            }
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
+            {
+                return RedirectToAction("Index");
+            }
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+
+            return View(formulario);
+        }
+
+        public ActionResult LlenarFormulario(string id)
+        {
+            if (HttpContext == null)
+            {
+                return Redirect("~/");
+            }
+            Formulario formularioDB = db.Formulario.Find(id);
+            if (formularioDB == null)
+            {
+                return RedirectToAction("Index");
+            }
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
 
             return View(formulario);
         }
@@ -120,7 +142,28 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
-        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario, 
+        [HttpPost]
+        public bool BorrarPregunta(string SCodigo, string PCodigo)
+        {
+            if (SCodigo != null && PCodigo != null)
+            {
+                try
+                {
+                    if (db.EliminarPreguntaDeSeccion(SCodigo, PCodigo) == 0)
+                    {
+                        return false;
+                    }
+                }
+                catch (System.Data.Entity.Core.EntityCommandExecutionException)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
             Respuestas_a_formulario respuestas)
         {
             if (formulario != null && seccionesDeFormulario != null)
@@ -135,7 +178,9 @@ namespace AppIntegrador.Controllers
                         {
                             Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
                             OrdenSeccion = nuevaSeccion.Orden,
-                            OrdenPregunta = pregunta.Orden
+                            CodigoSeccion = nuevaSeccion.CodigoSeccion,
+                            OrdenPregunta = pregunta.Orden,
+                            Edit = true
                         });
                         ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }
@@ -229,24 +274,6 @@ namespace AppIntegrador.Controllers
                     if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
                     {
                         pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Find(pregunta.Pregunta.Codigo);
-                        if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M")
-                        {
-                            var resultadoObtenerOpciones = db.ObtenerOpcionesDePregunta(pregunta.Pregunta.Codigo);
-                            
-                            if(resultadoObtenerOpciones != null)
-                            {
-                                pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion = new List<Opciones_de_seleccion>();
-                                foreach (var opcion in resultadoObtenerOpciones.ToList())
-                                {
-                                    pregunta.Pregunta.Pregunta_con_opciones.Pregunta_con_opciones_de_seleccion.Opciones_de_seleccion.Add
-                                        (new Opciones_de_seleccion { Codigo = pregunta.Pregunta.Codigo, Orden = opcion.Orden, Texto = opcion.Texto });
-                                }
-                            }
-                        }
-                        else if (pregunta.Pregunta.Tipo == "E")
-                        {
-                            pregunta.Pregunta.Pregunta_con_opciones.Escalar = db.Escalar.Find(pregunta.Pregunta.Codigo);
-                        }
 
                         if (respuestas != null)
                         {
@@ -277,11 +304,11 @@ namespace AppIntegrador.Controllers
                     {
                         var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
                                                                     respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
-                        
+
                         if (resultadoRespuestaGuardada != null)
                         {
                             var respuestaGuardada = resultadoRespuestaGuardada.ToList();
-                            if(respuestaGuardada.Any())
+                            if (respuestaGuardada.Any())
                             {
                                 pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
                             }
@@ -350,6 +377,22 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
+        [HttpPost]
+        public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
+        {
+            string codigoFormulario = preguntas[0].Codigo;
+            string codigoSeccion = preguntas[0].Enunciado;
+            var seccion = db.Seccion.Find(codigoSeccion);
+
+            InsertSeccionTienePregunta(seccion, preguntas);
+
+            Formulario formularioDB = db.Formulario.Find(codigoFormulario);
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(codigoFormulario);
+            return PartialView("~/Views/Formularios/SeccionConPreguntas.cshtml", formulario.Secciones);
+
+        }
+
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -397,24 +440,11 @@ namespace AppIntegrador.Controllers
             return Json(new { guardadoExitoso = seccion != null && InsertSeccion(seccion) });
         }
 
-        [HttpPost]
-        public ActionResult ActualizarBancoSecciones()
-        {
-            crearFormulario.seccion = db.Seccion;
-            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
-        }
-        [HttpPost]
-        public ActionResult ActualizarCrearSeccion()
-        {
-            crearFormulario.crearSeccionModel = new CrearSeccionModel();
-            return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearFormulario.crearSeccionModel);
-        }
-
         // GET: Formularios/Edit/5
         public ActionResult Edit(string id)
         {
             crearFormulario.seccion = db.Seccion;
-            if (id == null)
+            if (id == null || id == "")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -512,7 +542,6 @@ namespace AppIntegrador.Controllers
         }
 
 
-
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
         {
@@ -567,6 +596,18 @@ namespace AppIntegrador.Controllers
             }
             return true;
         }
+        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta> preguntas)
+        {
+            if (preguntas != null)
+            {
+                // Empieza en 1 porque el índice 0 trae el código del formulario y la sección
+                for (int index = 1; index < preguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                }
+            }
+            return true;
+        }
 
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<String> secciones)
         {
@@ -598,6 +639,7 @@ namespace AppIntegrador.Controllers
             return true;
         }
 
+
         [HttpPost]
         public ActionResult AgregarFormulario(Formulario formulario)
         {
@@ -607,7 +649,121 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult EliminarSeccion(string FCodigo, string SCodigo)
         {
-            return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            if (FCodigo != null && SCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarSeccion(FCodigo, SCodigo) });
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EliminarPregunta(string SCodigo, string PCodigo)
+        {
+            if (SCodigo != null && PCodigo != null)
+            {
+                return Json(new { eliminadoExitoso = BorrarPregunta(SCodigo, PCodigo) });
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AgregarPreguntas(List<Pregunta> preguntas)
+        {
+            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(preguntas) });
+        }
+
+        [HttpGet]
+        public ActionResult SeccionConPreguntas(string id)
+        {
+            // Armar objeto independiente del formulario
+            SeccionConPreguntas seccion = ArmarSeccion(id);
+
+            if(seccion == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Meter seccion en una lista por la naturaleza de la vista
+            List<SeccionConPreguntas> listaSeccion = new List<SeccionConPreguntas>
+            {
+                seccion
+            };
+
+            return View(listaSeccion);
+        }
+
+        public SeccionConPreguntas ArmarSeccion(string id)
+        {
+            // Sacar codigo y nombre de la BD
+            Seccion secDB = db.Seccion.Find(id);
+
+            if(secDB == null)
+            {
+                return null;
+            }
+
+            SeccionConPreguntas seccion = new SeccionConPreguntas();
+
+            // Asignar datos de la DB al objeto especial
+            seccion.CodigoSeccion = secDB.Codigo;
+            seccion.Nombre = secDB.Nombre;
+            seccion.Orden = 0;
+
+            // Sacar las preguntas y obtener opciones y/o justificaciones
+            seccion.Preguntas = ArmarPreguntas(seccion);
+            ObtenerInformacionDePreguntas(seccion.Preguntas, seccion.CodigoSeccion, null);
+
+            return seccion;
+        }
+
+        public List<PreguntaConNumeroSeccion> ArmarPreguntas(SeccionConPreguntas seccion)
+        {
+            List<PreguntaConNumeroSeccion> listaPreguntas = new List<PreguntaConNumeroSeccion>();
+
+            // Sacar preguntas con el procedimiento almacenado
+            List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.CodigoSeccion).ToList();
+
+            // Poblar la lista de preguntas segun lo obtenido del procedimiento
+            foreach (var pregunta in preguntas)
+            {
+                listaPreguntas.Add(new PreguntaConNumeroSeccion
+                {
+                    Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                    OrdenSeccion = seccion.Orden,
+                    OrdenPregunta = pregunta.Orden
+                });
+            }
+
+            return listaPreguntas;
+        }
+
+        [HttpGet]
+        public ActionResult TodasLasPreguntas(string id)
+        {
+            Pregunta pregDB = db.Pregunta.Find(id);
+            if (pregDB == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            PreguntaConNumeroSeccion pregTmp = new PreguntaConNumeroSeccion
+            {
+                Pregunta = pregDB,
+            };
+            List<PreguntaConNumeroSeccion> listaPregunta = new List<PreguntaConNumeroSeccion>();
+            listaPregunta.Add(pregTmp);
+
+            ObtenerInformacionDePreguntas(listaPregunta, null, null);
+
+            return View(listaPregunta);
         }
     }
 }
+
+

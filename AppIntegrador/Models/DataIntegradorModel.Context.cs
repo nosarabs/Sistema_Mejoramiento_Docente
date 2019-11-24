@@ -14,9 +14,12 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Data.Entity.SqlServer;
+
+
     public partial class DataIntegradorEntities : DbContext
     {
+        private static string __hack = typeof(SqlProviderServices).ToString();
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
@@ -68,7 +71,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
     
-        [DbFunction("DataIntegradorEntities", "CarrerasXPerfilXUsuario")]
+        [DbFunction("Entities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
         {
             var correoUsuarioParameter = correoUsuario != null ?
@@ -79,20 +82,20 @@ namespace AppIntegrador.Models
                 new ObjectParameter("perfil", perfil) :
                 new ObjectParameter("perfil", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<CarrerasXPerfilXUsuario_Result>("[DataIntegradorEntities].[CarrerasXPerfilXUsuario](@correoUsuario, @perfil)", correoUsuarioParameter, perfilParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<CarrerasXPerfilXUsuario_Result>("[Entities].[CarrerasXPerfilXUsuario](@correoUsuario, @perfil)", correoUsuarioParameter, perfilParameter);
         }
     
-        [DbFunction("DataIntegradorEntities", "EnfasisXCarrera")]
+        [DbFunction("Entities", "EnfasisXCarrera")]
         public virtual IQueryable<EnfasisXCarrera_Result> EnfasisXCarrera(string codCarrera)
         {
             var codCarreraParameter = codCarrera != null ?
                 new ObjectParameter("codCarrera", codCarrera) :
                 new ObjectParameter("codCarrera", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarrera_Result>("[DataIntegradorEntities].[EnfasisXCarrera](@codCarrera)", codCarreraParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarrera_Result>("[Entities].[EnfasisXCarrera](@codCarrera)", codCarreraParameter);
         }
     
-        [DbFunction("DataIntegradorEntities", "EnfasisXCarreraXPerfil")]
+        [DbFunction("Entities", "EnfasisXCarreraXPerfil")]
         public virtual IQueryable<EnfasisXCarreraXPerfil_Result> EnfasisXCarreraXPerfil(string correoUsuario, string codCarrera, string nombrePerfil)
         {
             var correoUsuarioParameter = correoUsuario != null ?
@@ -107,17 +110,55 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombrePerfil", nombrePerfil) :
                 new ObjectParameter("nombrePerfil", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarreraXPerfil_Result>("[DataIntegradorEntities].[EnfasisXCarreraXPerfil](@correoUsuario, @codCarrera, @nombrePerfil)", correoUsuarioParameter, codCarreraParameter, nombrePerfilParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarreraXPerfil_Result>("[Entities].[EnfasisXCarreraXPerfil](@correoUsuario, @codCarrera, @nombrePerfil)", correoUsuarioParameter, codCarreraParameter, nombrePerfilParameter);
         }
     
-        [DbFunction("DataIntegradorEntities", "PerfilesXUsuario")]
+        [DbFunction("Entities", "ObtenerRespuestaLibreGuardada")]
+        public virtual IQueryable<ObtenerRespuestaLibreGuardada_Result> ObtenerRespuestaLibreGuardada(string fCodigo, string correo, string cSigla, Nullable<byte> gNumero, Nullable<int> gAnno, Nullable<byte> gSemestre, string pCodigo, string sCodigo)
+        {
+            var fCodigoParameter = fCodigo != null ?
+                new ObjectParameter("FCodigo", fCodigo) :
+                new ObjectParameter("FCodigo", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var cSiglaParameter = cSigla != null ?
+                new ObjectParameter("CSigla", cSigla) :
+                new ObjectParameter("CSigla", typeof(string));
+    
+            var gNumeroParameter = gNumero.HasValue ?
+                new ObjectParameter("GNumero", gNumero) :
+                new ObjectParameter("GNumero", typeof(byte));
+    
+            var gAnnoParameter = gAnno.HasValue ?
+                new ObjectParameter("GAnno", gAnno) :
+                new ObjectParameter("GAnno", typeof(int));
+    
+            var gSemestreParameter = gSemestre.HasValue ?
+                new ObjectParameter("GSemestre", gSemestre) :
+                new ObjectParameter("GSemestre", typeof(byte));
+    
+            var pCodigoParameter = pCodigo != null ?
+                new ObjectParameter("PCodigo", pCodigo) :
+                new ObjectParameter("PCodigo", typeof(string));
+    
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerRespuestaLibreGuardada_Result>("[Entities].[ObtenerRespuestaLibreGuardada](@FCodigo, @Correo, @CSigla, @GNumero, @GAnno, @GSemestre, @PCodigo, @SCodigo)", fCodigoParameter, correoParameter, cSiglaParameter, gNumeroParameter, gAnnoParameter, gSemestreParameter, pCodigoParameter, sCodigoParameter);
+        }
+    
+        [DbFunction("Entities", "PerfilesXUsuario")]
         public virtual IQueryable<PerfilesXUsuario_Result> PerfilesXUsuario(string correoUsuario)
         {
             var correoUsuarioParameter = correoUsuario != null ?
                 new ObjectParameter("correoUsuario", correoUsuario) :
                 new ObjectParameter("correoUsuario", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PerfilesXUsuario_Result>("[DataIntegradorEntities].[PerfilesXUsuario](@correoUsuario)", correoUsuarioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PerfilesXUsuario_Result>("[Entities].[PerfilesXUsuario](@correoUsuario)", correoUsuarioParameter);
         }
     
         public virtual int AgregarFormulario(string codigo, string nombre)
@@ -361,6 +402,45 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter, ordenParameter);
         }
     
+        public virtual int BorrarAccionDeMejora(Nullable<int> codigoPlan, string nombreObj, string descripcion)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarAccionDeMejora", codigoPlanParameter, nombreObjParameter, descripcionParameter);
+        }
+    
+        public virtual int BorrarObjetivo(Nullable<int> codigoPlan, string nombreObj)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarObjetivo", codigoPlanParameter, nombreObjParameter);
+        }
+    
+        public virtual int BorrarPlan(Nullable<int> codigoPlan)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarPlan", codigoPlanParameter);
+        }
+    
         public virtual int ChangePassword(string username, string newpassword)
         {
             var usernameParameter = username != null ?
@@ -383,7 +463,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckID", identificacionParameter, result);
         }
     
-        public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, string pCod, ObjectParameter desviacion)
+        public virtual int DesviacionEstandarEscalar(string fCod, string cSigla, Nullable<byte> grupo, Nullable<int> gAnno, Nullable<byte> gSem, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string sCod, string pCod, ObjectParameter desviacion)
         {
             var fCodParameter = fCod != null ?
                 new ObjectParameter("FCod", fCod) :
@@ -405,11 +485,36 @@ namespace AppIntegrador.Models
                 new ObjectParameter("GSem", gSem) :
                 new ObjectParameter("GSem", typeof(byte));
     
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var sCodParameter = sCod != null ?
+                new ObjectParameter("SCod", sCod) :
+                new ObjectParameter("SCod", typeof(string));
+    
             var pCodParameter = pCod != null ?
                 new ObjectParameter("PCod", pCod) :
                 new ObjectParameter("PCod", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, pCodParameter, desviacion);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DesviacionEstandarEscalar", fCodParameter, cSiglaParameter, grupoParameter, gAnnoParameter, gSemParameter, fechaInicioParameter, fechaFinParameter, sCodParameter, pCodParameter, desviacion);
+        }
+    
+        public virtual int EliminarPreguntaDeSeccion(string sCodigo, string pCodigo)
+        {
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            var pCodigoParameter = pCodigo != null ?
+                new ObjectParameter("PCodigo", pCodigo) :
+                new ObjectParameter("PCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntaDeSeccion", sCodigoParameter, pCodigoParameter);
         }
     
         public virtual int EliminarRespuestasDeFormulario(string codFormulario, string correo, string csigla, Nullable<byte> gnumero, Nullable<int> ganno, Nullable<byte> gsemestre)
@@ -439,6 +544,19 @@ namespace AppIntegrador.Models
                 new ObjectParameter("gsemestre", typeof(byte));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarRespuestasDeFormulario", codFormularioParameter, correoParameter, csiglaParameter, gnumeroParameter, gannoParameter, gsemestreParameter);
+        }
+    
+        public virtual int EliminarSeccionFormulario(string fCodigo, string sCodigo)
+        {
+            var fCodigoParameter = fCodigo != null ?
+                new ObjectParameter("FCodigo", fCodigo) :
+                new ObjectParameter("FCodigo", typeof(string));
+    
+            var sCodigoParameter = sCodigo != null ?
+                new ObjectParameter("SCodigo", sCodigo) :
+                new ObjectParameter("SCodigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarSeccionFormulario", fCodigoParameter, sCodigoParameter);
         }
     
         public virtual int GuardarOpcionesSeleccionadas(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, Nullable<byte> opcionSeleccionada)
@@ -609,6 +727,245 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAPreguntaLibre", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, textoParameter);
         }
     
+        public virtual int InsertarCarreraCSV(string cod, string nombre)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("Cod", cod) :
+                new ObjectParameter("Cod", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCarreraCSV", codParameter, nombreParameter);
+        }
+    
+        public virtual int InsertarCursoCSV(string sigla, string nombre)
+        {
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("Sigla", sigla) :
+                new ObjectParameter("Sigla", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarCursoCSV", siglaParameter, nombreParameter);
+        }
+    
+        public virtual int InsertarEmpadronadoEn(string correoEstudiante, string codCarrera, string codEnfasis)
+        {
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("CorreoEstudiante", correoEstudiante) :
+                new ObjectParameter("CorreoEstudiante", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("CodEnfasis", codEnfasis) :
+                new ObjectParameter("CodEnfasis", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarEmpadronadoEn", correoEstudianteParameter, codCarreraParameter, codEnfasisParameter);
+        }
+    
+        public virtual int InsertarEnfasisCSV(string codCarrera, string codigo, string nombre)
+        {
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarEnfasisCSV", codCarreraParameter, codigoParameter, nombreParameter);
+        }
+    
+        public virtual int InsertarEstudianteCSV(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarEstudianteCSV", correoParameter);
+        }
+    
+        public virtual int InsertarFuncionarioCSV(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarFuncionarioCSV", correoParameter);
+        }
+    
+        public virtual int InsertarGrupoCSV(string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno)
+        {
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarGrupoCSV", siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter);
+        }
+    
+        public virtual int InsertarImparte(string correoProfesor, string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno)
+        {
+            var correoProfesorParameter = correoProfesor != null ?
+                new ObjectParameter("CorreoProfesor", correoProfesor) :
+                new ObjectParameter("CorreoProfesor", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarImparte", correoProfesorParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter);
+        }
+    
+        public virtual int InsertarInscrita_En(string codUnidadAc, string codCarrera)
+        {
+            var codUnidadAcParameter = codUnidadAc != null ?
+                new ObjectParameter("CodUnidadAc", codUnidadAc) :
+                new ObjectParameter("CodUnidadAc", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarInscrita_En", codUnidadAcParameter, codCarreraParameter);
+        }
+    
+        public virtual int InsertarMatriculado_en(string correo, string sigla, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("Sigla", sigla) :
+                new ObjectParameter("Sigla", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarMatriculado_en", correoParameter, siglaParameter, numGrupoParameter, semestreParameter, annoParameter);
+        }
+    
+        public virtual int InsertarPersonaCSV(string correo, string id, string nombre, string apellido, string tipoId)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var idParameter = id != null ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var tipoIdParameter = tipoId != null ?
+                new ObjectParameter("TipoId", tipoId) :
+                new ObjectParameter("TipoId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarPersonaCSV", correoParameter, idParameter, nombreParameter, apellidoParameter, tipoIdParameter);
+        }
+    
+        public virtual int InsertarPertenece_a(string codCarrera, string codEnfasis, string siglaCurso)
+        {
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("CodCarrera", codCarrera) :
+                new ObjectParameter("CodCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("CodEnfasis", codEnfasis) :
+                new ObjectParameter("CodEnfasis", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarPertenece_a", codCarreraParameter, codEnfasisParameter, siglaCursoParameter);
+        }
+    
+        public virtual int InsertarProfesorCSV(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarProfesorCSV", correoParameter);
+        }
+    
+        public virtual int InsertarTrabajaEn(string correoFuncionario, string codUnidadAcademica)
+        {
+            var correoFuncionarioParameter = correoFuncionario != null ?
+                new ObjectParameter("CorreoFuncionario", correoFuncionario) :
+                new ObjectParameter("CorreoFuncionario", typeof(string));
+    
+            var codUnidadAcademicaParameter = codUnidadAcademica != null ?
+                new ObjectParameter("CodUnidadAcademica", codUnidadAcademica) :
+                new ObjectParameter("CodUnidadAcademica", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarTrabajaEn", correoFuncionarioParameter, codUnidadAcademicaParameter);
+        }
+    
+        public virtual int InsertarUnidadCSV(string codUnidad, string nfacultad)
+        {
+            var codUnidadParameter = codUnidad != null ?
+                new ObjectParameter("CodUnidad", codUnidad) :
+                new ObjectParameter("CodUnidad", typeof(string));
+    
+            var nfacultadParameter = nfacultad != null ?
+                new ObjectParameter("Nfacultad", nfacultad) :
+                new ObjectParameter("Nfacultad", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarUnidadCSV", codUnidadParameter, nfacultadParameter);
+        }
+    
         public virtual int LoginUsuario(string pLoginName, string pPassword, ObjectParameter result)
         {
             var pLoginNameParameter = pLoginName != null ?
@@ -622,7 +979,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LoginUsuario", pLoginNameParameter, pPasswordParameter, result);
         }
     
-        public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, string codigoPregunta, ObjectParameter mediana)
+        public virtual int Mediana(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anio, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter mediana)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -644,11 +1001,23 @@ namespace AppIntegrador.Models
                 new ObjectParameter("semestre", semestre) :
                 new ObjectParameter("semestre", typeof(byte));
     
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
+    
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("codigoSeccion", codigoSeccion) :
+                new ObjectParameter("codigoSeccion", typeof(string));
+    
             var codigoPreguntaParameter = codigoPregunta != null ?
                 new ObjectParameter("codigoPregunta", codigoPregunta) :
                 new ObjectParameter("codigoPregunta", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, codigoPreguntaParameter, mediana);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Mediana", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, anioParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoSeccionParameter, codigoPreguntaParameter, mediana);
         }
     
         public virtual int ModificarCorreo(string anterior, string nuevo, ObjectParameter resultado)
@@ -673,6 +1042,43 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesDePregunta_Result>("ObtenerOpcionesDePregunta", questionCodeParameter);
         }
     
+        public virtual ObjectResult<ObtenerOpcionesSeleccionadas_Result> ObtenerOpcionesSeleccionadas(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var codSeccionParameter = codSeccion != null ?
+                new ObjectParameter("codSeccion", codSeccion) :
+                new ObjectParameter("codSeccion", typeof(string));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesSeleccionadas_Result>("ObtenerOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
+        }
+    
         public virtual ObjectResult<ObtenerPreguntasDeSeccion_Result> ObtenerPreguntasDeSeccion(string sectionCode)
         {
             var sectionCodeParameter = sectionCode != null ?
@@ -680,6 +1086,72 @@ namespace AppIntegrador.Models
                 new ObjectParameter("sectionCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerPreguntasDeSeccion_Result>("ObtenerPreguntasDeSeccion", sectionCodeParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerRespuestasAFormulario_Result> ObtenerRespuestasAFormulario(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<int> anno, Nullable<byte> semestre)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAFormulario_Result>("ObtenerRespuestasAFormulario", codFormularioParameter, correoParameter, siglaParameter, numParameter, annoParameter, semestreParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerRespuestasAPreguntaConOpciones_Result> ObtenerRespuestasAPreguntaConOpciones(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("sigla", sigla) :
+                new ObjectParameter("sigla", typeof(string));
+    
+            var numParameter = num.HasValue ?
+                new ObjectParameter("num", num) :
+                new ObjectParameter("num", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var codSeccionParameter = codSeccion != null ?
+                new ObjectParameter("codSeccion", codSeccion) :
+                new ObjectParameter("codSeccion", typeof(string));
+    
+            var codPreguntaParameter = codPregunta != null ?
+                new ObjectParameter("codPregunta", codPregunta) :
+                new ObjectParameter("codPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAPreguntaConOpciones_Result>("ObtenerRespuestasAPreguntaConOpciones", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
         }
     
         public virtual ObjectResult<ObtenerSeccionesDeFormulario_Result> ObtenerSeccionesDeFormulario(string codForm)
@@ -706,7 +1178,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
         }
     
-        public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, string codigoPregunta, ObjectParameter promedio)
+        public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -728,11 +1200,23 @@ namespace AppIntegrador.Models
                 new ObjectParameter("semestre", semestre) :
                 new ObjectParameter("semestre", typeof(byte));
     
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
+    
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("codigoSeccion", codigoSeccion) :
+                new ObjectParameter("codigoSeccion", typeof(string));
+    
             var codigoPreguntaParameter = codigoPregunta != null ?
                 new ObjectParameter("codigoPregunta", codigoPregunta) :
                 new ObjectParameter("codigoPregunta", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, codigoPreguntaParameter, promedio);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioRespuestasPreguntaEscalaNumerica", codigoFormularioParameter, siglaCursoParameter, numeroGrupoParameter, annoParameter, semestreParameter, fechaInicioParameter, fechaFinParameter, codigoSeccionParameter, codigoPreguntaParameter, promedio);
         }
     
         public virtual int SugerirConfiguracion(string correoUsuario, ObjectParameter perfilPoderoso, ObjectParameter carreraPoderosa, ObjectParameter enfasisPoderoso)
@@ -847,212 +1331,6 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
-        }
-    
-        public virtual int BorrarAccionDeMejora(Nullable<int> codigoPlan, string nombreObj, string descripcion)
-        {
-            var codigoPlanParameter = codigoPlan.HasValue ?
-                new ObjectParameter("codigoPlan", codigoPlan) :
-                new ObjectParameter("codigoPlan", typeof(int));
-    
-            var nombreObjParameter = nombreObj != null ?
-                new ObjectParameter("nombreObj", nombreObj) :
-                new ObjectParameter("nombreObj", typeof(string));
-    
-            var descripcionParameter = descripcion != null ?
-                new ObjectParameter("descripcion", descripcion) :
-                new ObjectParameter("descripcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarAccionDeMejora", codigoPlanParameter, nombreObjParameter, descripcionParameter);
-        }
-    
-        public virtual int BorrarObjetivo(Nullable<int> codigoPlan, string nombreObj)
-        {
-            var codigoPlanParameter = codigoPlan.HasValue ?
-                new ObjectParameter("codigoPlan", codigoPlan) :
-                new ObjectParameter("codigoPlan", typeof(int));
-    
-            var nombreObjParameter = nombreObj != null ?
-                new ObjectParameter("nombreObj", nombreObj) :
-                new ObjectParameter("nombreObj", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarObjetivo", codigoPlanParameter, nombreObjParameter);
-        }
-    
-        public virtual int BorrarPlan(Nullable<int> codigoPlan)
-        {
-            var codigoPlanParameter = codigoPlan.HasValue ?
-                new ObjectParameter("codigoPlan", codigoPlan) :
-                new ObjectParameter("codigoPlan", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BorrarPlan", codigoPlanParameter);
-        }
-    
-        public virtual int EliminarPreguntaDeSeccion(string sCodigo, string pCodigo)
-        {
-            var sCodigoParameter = sCodigo != null ?
-                new ObjectParameter("SCodigo", sCodigo) :
-                new ObjectParameter("SCodigo", typeof(string));
-    
-            var pCodigoParameter = pCodigo != null ?
-                new ObjectParameter("PCodigo", pCodigo) :
-                new ObjectParameter("PCodigo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntaDeSeccion", sCodigoParameter, pCodigoParameter);
-        }
-    
-        public virtual int EliminarSeccionFormulario(string fCodigo, string sCodigo)
-        {
-            var fCodigoParameter = fCodigo != null ?
-                new ObjectParameter("FCodigo", fCodigo) :
-                new ObjectParameter("FCodigo", typeof(string));
-    
-            var sCodigoParameter = sCodigo != null ?
-                new ObjectParameter("SCodigo", sCodigo) :
-                new ObjectParameter("SCodigo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarSeccionFormulario", fCodigoParameter, sCodigoParameter);
-        }
-    
-        public virtual ObjectResult<ObtenerOpcionesSeleccionadas_Result> ObtenerOpcionesSeleccionadas(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
-        {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
-    
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            var siglaParameter = sigla != null ?
-                new ObjectParameter("sigla", sigla) :
-                new ObjectParameter("sigla", typeof(string));
-    
-            var numParameter = num.HasValue ?
-                new ObjectParameter("num", num) :
-                new ObjectParameter("num", typeof(byte));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            var codSeccionParameter = codSeccion != null ?
-                new ObjectParameter("codSeccion", codSeccion) :
-                new ObjectParameter("codSeccion", typeof(string));
-    
-            var codPreguntaParameter = codPregunta != null ?
-                new ObjectParameter("codPregunta", codPregunta) :
-                new ObjectParameter("codPregunta", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerOpcionesSeleccionadas_Result>("ObtenerOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
-        }
-    
-        [DbFunction("DataIntegradorEntities", "ObtenerRespuestaLibreGuardada")]
-        public virtual IQueryable<ObtenerRespuestaLibreGuardada_Result> ObtenerRespuestaLibreGuardada(string fCodigo, string correo, string cSigla, Nullable<byte> gNumero, Nullable<int> gAnno, Nullable<byte> gSemestre, string pCodigo, string sCodigo)
-        {
-            var fCodigoParameter = fCodigo != null ?
-                new ObjectParameter("FCodigo", fCodigo) :
-                new ObjectParameter("FCodigo", typeof(string));
-    
-            var correoParameter = correo != null ?
-                new ObjectParameter("Correo", correo) :
-                new ObjectParameter("Correo", typeof(string));
-    
-            var cSiglaParameter = cSigla != null ?
-                new ObjectParameter("CSigla", cSigla) :
-                new ObjectParameter("CSigla", typeof(string));
-    
-            var gNumeroParameter = gNumero.HasValue ?
-                new ObjectParameter("GNumero", gNumero) :
-                new ObjectParameter("GNumero", typeof(byte));
-    
-            var gAnnoParameter = gAnno.HasValue ?
-                new ObjectParameter("GAnno", gAnno) :
-                new ObjectParameter("GAnno", typeof(int));
-    
-            var gSemestreParameter = gSemestre.HasValue ?
-                new ObjectParameter("GSemestre", gSemestre) :
-                new ObjectParameter("GSemestre", typeof(byte));
-    
-            var pCodigoParameter = pCodigo != null ?
-                new ObjectParameter("PCodigo", pCodigo) :
-                new ObjectParameter("PCodigo", typeof(string));
-    
-            var sCodigoParameter = sCodigo != null ?
-                new ObjectParameter("SCodigo", sCodigo) :
-                new ObjectParameter("SCodigo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerRespuestaLibreGuardada_Result>("[DataIntegradorEntities].[ObtenerRespuestaLibreGuardada](@FCodigo, @Correo, @CSigla, @GNumero, @GAnno, @GSemestre, @PCodigo, @SCodigo)", fCodigoParameter, correoParameter, cSiglaParameter, gNumeroParameter, gAnnoParameter, gSemestreParameter, pCodigoParameter, sCodigoParameter);
-        }
-    
-        public virtual ObjectResult<ObtenerRespuestasAFormulario_Result> ObtenerRespuestasAFormulario(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<int> anno, Nullable<byte> semestre)
-        {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
-    
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            var siglaParameter = sigla != null ?
-                new ObjectParameter("sigla", sigla) :
-                new ObjectParameter("sigla", typeof(string));
-    
-            var numParameter = num.HasValue ?
-                new ObjectParameter("num", num) :
-                new ObjectParameter("num", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAFormulario_Result>("ObtenerRespuestasAFormulario", codFormularioParameter, correoParameter, siglaParameter, numParameter, annoParameter, semestreParameter);
-        }
-    
-        public virtual ObjectResult<ObtenerRespuestasAPreguntaConOpciones_Result> ObtenerRespuestasAPreguntaConOpciones(string codFormulario, string correo, string sigla, Nullable<byte> num, Nullable<byte> semestre, Nullable<int> anno, string codSeccion, string codPregunta)
-        {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
-    
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            var siglaParameter = sigla != null ?
-                new ObjectParameter("sigla", sigla) :
-                new ObjectParameter("sigla", typeof(string));
-    
-            var numParameter = num.HasValue ?
-                new ObjectParameter("num", num) :
-                new ObjectParameter("num", typeof(byte));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            var codSeccionParameter = codSeccion != null ?
-                new ObjectParameter("codSeccion", codSeccion) :
-                new ObjectParameter("codSeccion", typeof(string));
-    
-            var codPreguntaParameter = codPregunta != null ?
-                new ObjectParameter("codPregunta", codPregunta) :
-                new ObjectParameter("codPregunta", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerRespuestasAPreguntaConOpciones_Result>("ObtenerRespuestasAPreguntaConOpciones", codFormularioParameter, correoParameter, siglaParameter, numParameter, semestreParameter, annoParameter, codSeccionParameter, codPreguntaParameter);
         }
     }
 }

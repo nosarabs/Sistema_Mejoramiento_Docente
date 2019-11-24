@@ -67,8 +67,8 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
-                        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
-                        por otros medios.-->
+        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+        por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -234,4 +234,3 @@
 </body>
 
 </html>
-

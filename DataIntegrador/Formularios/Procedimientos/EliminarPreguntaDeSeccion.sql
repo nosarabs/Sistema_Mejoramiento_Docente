@@ -4,6 +4,5 @@
 AS
 BEGIN
 	DELETE FROM Seccion_tiene_pregunta
-	FROM Seccion_tiene_pregunta s
-	WHERE s.SCodigo = @SCodigo AND s.PCodigo = @PCodigo
+	WHERE SCodigo = @SCodigo AND PCodigo = @PCodigo;
 END

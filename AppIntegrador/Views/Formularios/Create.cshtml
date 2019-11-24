@@ -146,10 +146,16 @@
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
     <script src="~/Scripts/Formularios/FormulariosModal.js"></script>
     <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntasModal.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
+            agregarPreguntas.init();
+            GenerarModalPreguntas();
             validarEntradasAgregarSecciones();
             var msg = '@ViewBag.Message';
             if (msg == "Fallido") {
