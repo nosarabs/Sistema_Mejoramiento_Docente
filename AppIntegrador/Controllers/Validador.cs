@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppIntegrador.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,35 +10,68 @@ namespace AppIntegrador.Controllers
     public class Validador
     {
 
-        private bool validarCorreo(String correo)
+        public bool ValidaCSVRow(ArchivoCSV fila, int tipo)
         {
-    
-            return false;
+            switch (tipo)
+            {
+                case 1: //Unidad Academica
+                    break;
+                case 2: //Carrera
+                    break;
+                case 3://Enfasis
+                    break;
+                case 4://Curso
+                    break;
+                case 5: //Grupo
+                    break;
+                case 6: //Profesor
+                    break;
+                case 7: //Estudiante
+                    break;
+                case 8: //Imparten
+                    break;
+                case 9: //Matriculados
+                    break;
+            }
+            return true;
         }
 
-        private bool validarTamano(String hilera, int tamano)
+        private bool ValidarUnidad (String codigoUnidad, string Nombre)
         {
-            if (hilera.Length <= tamano)
+            bool valido=false;
+            if(ValidarTamanoText(codigoUnidad, 10) && ValidarTamanoText(codigoUnidad, 50)){ //Si son textos validos
+                valido = true;
+            }
+            return valido;
+        }
+
+        private bool ValidarTamanoText(String hilera, int tamano)
+        {
+            if (hilera.Length <= tamano && !String.IsNullOrEmpty(hilera))
             {
                 return true;
             }
             return false;
         }
 
-        private bool validarNumero(string valor)
+        private bool ValidarNumero(string valor)
         {
-            if(int.TryParse(valor, out int integer))
+            if(int.TryParse(valor, out int integer) && !String.IsNullOrEmpty(valor))
             {
                 return true;
             }
             return false;
         }
-        private bool validarEmail(string email)
+        private bool ValidarEmail(string email)
         {
             // source: http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
             Regex rx = new Regex(
             @"^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
-            return rx.IsMatch(email);
+            if( rx.IsMatch(email) && !String.IsNullOrEmpty(email))
+            {
+                return true;
+            }
+            return false;
         }
 
     }
