@@ -7,8 +7,10 @@ namespace AppIntegrador.Models
 {
     public class FormularioAsignado
     {
-        public Periodo_activa_por Periodo { get; set; }
-        public String Nombre { get; set; }
+        public Periodo_activa_por Periodo { get; }
+        public string Nombre { get; }
+        public string NombreCurso { get;}
+        public int Estado { get; }
 
         public FormularioAsignado()
         {
@@ -25,6 +27,10 @@ namespace AppIntegrador.Models
             using (DataIntegradorEntities db = new DataIntegradorEntities())
             {
                 this.Nombre = db.Formulario.Find(this.Periodo.FCodigo).Nombre;
+
+                this.NombreCurso = db.Curso.Find(this.Periodo.CSigla).Nombre;
+
+                this.Estado = 3;
                 db.Dispose();
             }
         }

@@ -15,44 +15,57 @@
                 @for (int i = 0; i < Model.Count(); ++i)
                 {
                     var item = Model.ElementAt(i);
-
+                    
                     if (i > 0 && i % 2 == 0)
                     {
                         @:</div><br /><div class="row">
                     }
-                        <div class="col-lg-6">
-                            <div class="card card-primary shadow">
-                                <div class="card-header grisUCR3">@item.Nombre</div>
-                                <div class="card-body">
-                                    <strong>Curso: </strong><span>@item.Periodo.CSigla - *Nombre del curso*</span> <br />
-                                    <strong>Periodo: </strong><span>@item.Periodo.GSemestre - @item.Periodo.GAnno</span><br />
-                                    <strong>Fecha de inicio: </strong><span>@item.Periodo.FechaInicio</span> <br />
-                                    <strong>Fecha de finalización: </strong><span>@item.Periodo.FechaFin</span> <br />
-                                    <strong>Estado: </strong><span>(Sin llenar, empezado, finalizado)</span>
-                                    @if (i % 2 != 0)
-                                    {
-                                        @Html.ActionLink("Ver respuestas", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
-                                    }
-                                </div>
-                                @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
-                                @if (i % 2 == 0)
+                    <div class="col-lg-6">
+                        <div class="card card-primary shadow">
+                            <div class="card-header grisUCR3">@item.Nombre</div>
+                            <div class="card-body">
+                                <strong>Curso: </strong><span>@item.Periodo.CSigla - @item.NombreCurso</span> <br />
+                                <strong>Periodo: </strong><span>@item.Periodo.GSemestre - @item.Periodo.GAnno</span><br />
+                                <strong>Fecha de inicio: </strong><span>@item.Periodo.FechaInicio</span> <br />
+                                <strong>Fecha de finalización: </strong><span>@item.Periodo.FechaFin</span> <br />
+                                <strong>Estado: </strong>
+                                @if (item.Estado == 3)
                                 {
-                                    <div class="card-footer">
-                                        @*Falta agregar atributo de si está en progreso, llenado, etc*@
-                                        @if (true)
-                                        {
-                                            @Html.ActionLink("Llenar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
-                                        }
-                                        @if (true)
-                                        {
-                                            @Html.ActionLink("Continuar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
-                                        }
-                                    </div>
+                                    <span>Disponible</span>
+                                }
+                                else if (item.Estado == 1)
+                                {
+                                    <span>Finalizado</span>
+                                }
+                                else if (item.Estado == 0)
+                                {
+                                    <span>En progreso</span>
+                                }
 
+                                @if (item.Estado == 1)
+                                {
+                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
                                 }
                             </div>
+                            @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
+                            @if (item.Estado != 1)
+                            {
+                                <div class="card-footer">
+                                    @*Falta agregar atributo de si está en progreso, llenado, etc*@
+                                    @if (item.Estado == 3)
+                                    {
+                                        @Html.ActionLink("Llenar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                    }
+                                    @if (item.Estado == 0)
+                                    {
+                                        @Html.ActionLink("Continuar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                    }
+                                </div>
+
+                            }
                         </div>
-                    }
+                    </div>
+                }
             </div>
 
         </div>
