@@ -16,7 +16,7 @@ BEGIN
 	-- Null significaría que quiere todos los formularios desde el inicio de los tiempos
 	IF(@fechaInicio IS NULL)
 	BEGIN
-		SET @fechaInicio = cast('12/31/9999 23:59:59.9999' as datetime);
+		SET @fechaInicio = '12/31/9999';
 	END;
 
 	-- Null significaría que quiere todos los formularios desde una fecha de inicio
@@ -28,12 +28,11 @@ BEGIN
 
 	-- Conseguir los formularios basado los cursos matriculados, el grupo y los formularios activos
 	-- Condicionado por la fecha definida y el correo del estudiante
-	SELECT p.FCodigo, p.CSigla, p.GNumero, p.GSemestre, p.GAnno, p.FechaInicio, p.FechaFin
-	FROM Estudiante e 
+	SELECT f.Codigo, m.NumGrupo, m.SiglaCurso, m.Semestre, m.Anno, p.FechaInicio, p.FechaFin
+	FROM (Estudiante e 
 	JOIN Matriculado_en m ON m.CorreoEstudiante = e.Correo
-	JOIN Grupo g ON g.SiglaCurso = m.SiglaCurso
-	JOIN Activa_por a ON a.CSigla = g.SiglaCurso AND a.GSemestre = g.Semestre AND a.GNumero = g.NumGrupo AND a.GAnno = g.Anno
-	JOIN Periodo_activa_por p ON p.CSigla = g.SiglaCurso AND p.GSemestre = g.Semestre AND p.GNumero = g.NumGrupo AND p.GAnno = g.Anno
-	JOIN Formulario f ON a.FCodigo = f.Codigo
-	WHERE p.FechaInicio <= @fechaInicio AND  @fechaFin <= p.FechaFin AND e.Correo = @correoEstudiante
+	JOIN Activa_por a ON m.NumGrupo = a.GNumero AND m.SiglaCurso = a.CSigla AND m.Semestre = a.GSemestre AND m.Anno = a.GAnno
+	JOIN Periodo_activa_por p ON p.GNumero = a.GNumero AND p.CSigla= a.CSigla AND p.GSemestre = a.GSemestre AND p.GAnno = a.GAnno)
+	JOIN Formulario f ON f.Codigo = a.FCodigo
+	WHERE e.Correo = @correoEstudiante AND p.FechaInicio <= @fechaInicio AND p.FechaFin >= @fechaFin
 END
