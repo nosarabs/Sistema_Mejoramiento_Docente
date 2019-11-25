@@ -198,7 +198,7 @@ namespace AppIntegrador.Tests.Controllers
             {
                 TempData = tempData
             };
-            PermissionsViewHolder model = new PermissionsViewHolder();
+            PermissionsViewHolder model = new PermissionsViewHolder(CurrentUser.getUserMajorId(), CurrentUser.getUserEmphasisId());
             RedirectToRouteResult result = controller.GuardarPermisos(model, false) as RedirectToRouteResult;
             System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
             dictionary.Add("action", "../Home/Index");
