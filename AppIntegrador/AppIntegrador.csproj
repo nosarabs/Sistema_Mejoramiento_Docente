@@ -399,6 +399,7 @@
     <Compile Include="Utilities\EmailNotification.cs" />
     <Compile Include="Utilities\FormsAuth.cs" />
     <Compile Include="Utilities\IAuth.cs" />
+    <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -631,7 +632,6 @@
     <Content Include="Views\Objetivos\Index.cshtml" />
     <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />

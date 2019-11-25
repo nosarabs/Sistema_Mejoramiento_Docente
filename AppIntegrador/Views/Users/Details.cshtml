@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Details";
 }
+
+@{AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager(); }
 <!--Historia de usuario 2.9: ver detalles de un usuario. Se modificó para mostrarlos en una tabla
     para que el layout sea responsive.-->
 <div class="container">
@@ -128,7 +130,7 @@
         <!--TAM-3.6-1: Condicional que muestra el botón de editar si el usuario tiene un perfil
             con permisos de acceder a esa funcionalidad, sino entonces no lo muestra y bloquea los intentos de acceso
             por otros medios.-->
-        @{if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(@AppIntegrador.Utilities.PermissionManager.Permission.EDITAR_USUARIOS))
+        @{if (permissionManager.IsAuthorized(@AppIntegrador.Utilities.Permission.EDITAR_USUARIOS))
             {
 
                 <p>
@@ -146,7 +148,8 @@
                     @Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn btn-default" })
                 </p>
             }
-            else {
+            else
+            {
                 <p>@Html.ActionLink("Atrás", "Index", "Index", new { @class = "btn-blancoUCR" })</p>
             }
         }

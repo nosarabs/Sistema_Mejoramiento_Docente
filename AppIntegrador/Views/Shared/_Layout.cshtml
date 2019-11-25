@@ -69,7 +69,9 @@
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
         con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
         por otros medios.-->
-                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
+                    @{ 
+                        AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
+                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
                         {
                             <li>
                                 <a href="/Users/Index">Usuarios &#9660;</a>
@@ -86,6 +88,7 @@
                             <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
                                 <span style="color:gray">Usuarios &#9660;</span>
                             </li>
+                            }
                         }
                         <li>
                             <a href="">Formularios &#9660;</a>

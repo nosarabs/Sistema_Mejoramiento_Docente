@@ -19,10 +19,12 @@ namespace AppIntegrador.Controllers
         private enum TIPO_ID { CEDULA, PASAPORTE, RESIDENCIA };
 
         private DataIntegradorEntities db;
+        private readonly IPerm permissionManager;
 
         public UsersController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         public UsersController(DataIntegradorEntities db)
@@ -49,7 +51,7 @@ namespace AppIntegrador.Controllers
                 ViewBag.NotifyMessage = TempData["successMessage"].ToString();
             }
 
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.VER_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
                 return RedirectToAction("../Home/Index");
@@ -81,7 +83,7 @@ namespace AppIntegrador.Controllers
         /*Responds to User Story TAM-2.9.*/
         public ActionResult Details(string username, string domain)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.VER_DETALLES_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.VER_DETALLES_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -117,7 +119,7 @@ namespace AppIntegrador.Controllers
         /*Two functions corresponding to User Story TAM-2.2.*/
         public ActionResult Create()
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.CREAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -133,7 +135,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Persona persona)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.CREAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.CREAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -216,7 +218,7 @@ namespace AppIntegrador.Controllers
         /*Respond to User Story 2.4.*/
         public ActionResult Edit(string username, string domain)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -258,7 +260,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioPersona usuarioPersona)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
