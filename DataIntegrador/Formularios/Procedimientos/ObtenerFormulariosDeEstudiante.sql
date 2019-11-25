@@ -4,6 +4,9 @@
 -- Ejemplo de uso: 
 -- EXEC dbo.ObtenerFormulariosDeEstudiante @correoEstudiante = 'al@mail.com', @fechaInicio = NULL, @fechaFin = NULL
 
+-- Colocar NULL en la fecha de inicio traería todos los formularios iniciados o no.
+-- Colocar NULL en la fecha de fin traería todos los formularios finalizados o no.
+
 CREATE PROCEDURE [dbo].[ObtenerFormulariosDeEstudiante]
 	@correoEstudiante VARCHAR(50),
 	@fechaInicio DATE,
@@ -13,7 +16,7 @@ BEGIN
 	-- Null significaría que quiere todos los formularios desde el inicio de los tiempos
 	IF(@fechaInicio IS NULL)
 	BEGIN
-		SET @fechaInicio = GETDATE();
+		SET @fechaInicio = cast('12/31/9999 23:59:59.9999' as datetime);
 	END;
 
 	-- Null significaría que quiere todos los formularios desde una fecha de inicio
