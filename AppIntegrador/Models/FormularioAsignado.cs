@@ -30,7 +30,23 @@ namespace AppIntegrador.Models
 
                 this.NombreCurso = db.Curso.Find(this.Periodo.CSigla).Nombre;
 
-                this.Estado = 3;
+                var fecha = DateTime.Now;
+
+                if(this.Periodo.FechaFin < fecha)
+                {
+                    // Finalizado
+                    this.Estado = 1;
+                }
+                else if(this.Periodo.FechaInicio > fecha)
+                {
+                    // No disponible
+                    this.Estado = 2;
+                }
+                else
+                {
+                    // Disponible
+                    this.Estado = 3;
+                }
                 db.Dispose();
             }
         }

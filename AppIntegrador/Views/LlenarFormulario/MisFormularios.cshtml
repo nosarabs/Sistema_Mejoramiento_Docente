@@ -33,6 +33,10 @@
                                 {
                                     <span>Disponible</span>
                                 }
+                                else if (item.Estado == 2)
+                                {
+                                    <span>No está en periodo de llenado</span>
+                                }
                                 else if (item.Estado == 1)
                                 {
                                     <span>Finalizado</span>
@@ -48,7 +52,7 @@
                                 }
                             </div>
                             @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
-                            @if (item.Estado != 1)
+                            @if (item.Estado != 1 && item.Estado != 2)
                             {
                                 <div class="card-footer">
                                     @*Falta agregar atributo de si está en progreso, llenado, etc*@
