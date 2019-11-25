@@ -13,11 +13,11 @@ namespace AppIntegrador.Models
     
     public partial class ObtenerFormulariosDeEstudiante_Result
     {
-        public string FCodigo { get; set; }
-        public string CSigla { get; set; }
-        public byte GNumero { get; set; }
-        public byte GSemestre { get; set; }
-        public int GAnno { get; set; }
+        public string Codigo { get; set; }
+        public string SiglaCurso { get; set; }
+        public byte NumGrupo { get; set; }
+        public byte Semestre { get; set; }
+        public int Anno { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
     }

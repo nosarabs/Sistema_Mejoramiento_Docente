@@ -44,11 +44,11 @@ namespace AppIntegrador.Controllers
             {
                 Periodo_activa_por periodo = new Periodo_activa_por
                 {
-                    CSigla = form.CSigla,
-                    FCodigo = form.FCodigo,
-                    GAnno = form.GAnno,
-                    GNumero = form.GNumero,
-                    GSemestre = form.GSemestre,
+                    CSigla = form.SiglaCurso,
+                    FCodigo = form.Codigo,
+                    GAnno = form.Anno,
+                    GNumero = form.NumGrupo,
+                    GSemestre = form.Semestre,
                     FechaInicio = form.FechaInicio,
                     FechaFin = form.FechaFin,
                 };

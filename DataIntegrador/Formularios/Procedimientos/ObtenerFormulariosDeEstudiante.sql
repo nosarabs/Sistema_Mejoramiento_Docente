@@ -28,7 +28,7 @@ BEGIN
 
 	-- Conseguir los formularios basado los cursos matriculados, el grupo y los formularios activos
 	-- Condicionado por la fecha definida y el correo del estudiante
-	SELECT f.Codigo, m.NumGrupo, m.SiglaCurso, m.Semestre, m.Anno, p.FechaInicio, p.FechaFin
+	SELECT f.Codigo, m.SiglaCurso, m.NumGrupo, m.Semestre, m.Anno, p.FechaInicio, p.FechaFin
 	FROM (Estudiante e 
 	JOIN Matriculado_en m ON m.CorreoEstudiante = e.Correo
 	JOIN Activa_por a ON m.NumGrupo = a.GNumero AND m.SiglaCurso = a.CSigla AND m.Semestre = a.GSemestre AND m.Anno = a.GAnno
