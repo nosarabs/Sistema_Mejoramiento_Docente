@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AppIntegrador.Models.FormularioAsignado>
+
+@{
+    ViewBag.Title = "MisFormularios";
+}
+
+<div class="container">
+    <div class="card card-body shadow">
+        <h2>Mis formularios</h2>
+        <div class="card card-body shadow grisUCR2">
+            <h5>Formularios de sus cursos matriculados</h5>
+
+
+            <div class="row">
+                @for (int i = 0; i < Model.Count(); ++i)
+                {
+                    var item = Model.ElementAt(i);
+                    
+                    if (i > 0 && i % 2 == 0)
+                    {
+                        @:</div><br /><div class="row">
+                    }
+                    <div class="col-lg-6">
+                        <div class="card card-primary shadow">
+                            <div class="card-header grisUCR3">@item.Nombre</div>
+                            <div class="card-body">
+                                <strong>Curso: </strong><span>@item.Periodo.CSigla - @item.NombreCurso</span> <br />
+                                <strong>Periodo: </strong><span>@item.Periodo.GSemestre - @item.Periodo.GAnno</span><br />
+                                <strong>Fecha de inicio: </strong><span>@item.Periodo.FechaInicio</span> <br />
+                                <strong>Fecha de finalización: </strong><span>@item.Periodo.FechaFin</span> <br />
+                                <strong>Estado: </strong>
+                                @if (item.Estado == 3)
+                                {
+                                    <span>Disponible</span>
+                                }
+                                else if (item.Estado == 2)
+                                {
+                                    <span>No está en periodo de llenado</span>
+                                }
+                                else if (item.Estado == 1)
+                                {
+                                    <span>Finalizado</span>
+                                }
+                                else if (item.Estado == 0)
+                                {
+                                    <span>En progreso</span>
+                                }
+
+                                @if (item.Estado == 1)
+                                {
+                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
+                                }
+                            </div>
+                            @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
+                            @if (item.Estado != 1 && item.Estado != 2)
+                            {
+                                <div class="card-footer">
+                                    @*Falta agregar atributo de si está en progreso, llenado, etc*@
+                                    @if (item.Estado == 3)
+                                    {
+                                        @Html.ActionLink("Llenar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                    }
+                                    @if (item.Estado == 0)
+                                    {
+                                        @Html.ActionLink("Continuar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                    }
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <br />
+        <div class="card card-body shadow grisUCR2">
+            <h5>Formularios de cursos anteriores</h5>
+        </div>
+    </div>
+</div>
+
