@@ -30,6 +30,7 @@ namespace AppIntegrador.Controllers
         public UsersController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
         // GET: Users

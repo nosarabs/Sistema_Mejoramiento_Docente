@@ -87,6 +87,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void CreateChangesSaved()
         {
+            //TestSetup();
             var personas = new List<Persona>
             {
                 new Persona() { Correo = "fake1@mail.com", Identificacion = "123456781", Apellido1 = "Fake1", Nombre1 = "Fake", TipoIdentificacion = "Cédula" },
@@ -125,6 +126,32 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Create(nuevaPersona) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void CreateSinPermiso()
+        {
+            //No aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            UsersController controller = new UsersController()
+            {
+                TempData = tempData
+            };
+            
+            RedirectToRouteResult result = controller.Create(null) as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página.");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+            CurrentUser.deleteCurrentUser("andres@mail.com");
         }
 
         [TestMethod]
