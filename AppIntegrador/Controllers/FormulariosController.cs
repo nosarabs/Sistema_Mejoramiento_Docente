@@ -101,6 +101,33 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
+
+        //public ActionResult FinalizarFormulario(string id, Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
+        //{
+        //    if (respuestas == null || secciones == null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    respuestas.Fecha = DateTime.Today;
+        //    respuestas.Correo = HttpContext.User.Identity.Name;
+
+        //    // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
+        //    respuestas.CSigla = "CI0128";
+        //    respuestas.GNumero = 1;
+        //    respuestas.GAnno = 2019;
+        //    respuestas.GSemestre = 2;
+
+        //    db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
+
+        //    // Llamar a procedimiento que agrega Respuestas_a_formulario
+        //    db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha);
+
+        //    db.FinalizarFormulario()
+
+        //    return View(formulario);
+        //}
+
         public List<SeccionConPreguntas> ObtenerSeccionConPreguntas(string id)
         {
             Formulario formularioDB = db.Formulario.Find(id);
@@ -218,7 +245,7 @@ namespace AppIntegrador.Controllers
             db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
             // Llamar a procedimiento que agrega Respuestas_a_formulario
-            db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha);
+            db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha, respuestas.Finalizado);
 
             // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
             foreach (SeccionConPreguntas seccion in secciones)

@@ -209,6 +209,7 @@
     <Build Include="PromedioCursos.sql" />
     <Build Include="InsertarMatriculado_en.sql" />
     <Build Include="TriggerMatriculado_en.sql" />
+    <Build Include="Formularios\Procedimientos\FinalizarFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
