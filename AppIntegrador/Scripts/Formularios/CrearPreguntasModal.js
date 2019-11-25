@@ -2,6 +2,8 @@
 function GenerarModalPreguntas() {
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
+    GenerarCrearPreguntas();
+    $('ModalCrearPregunta').hide();
     $('ModalPartialBancoPreguntas').show();
 }
 function ImportarBancoPreguntas() {
@@ -15,6 +17,21 @@ function ImportarBancoPreguntas() {
     });
 }
 
+function MostrarCrearPregunta(){
+    $('#ModalCrearPregunta').show()
+    $('#ModalPartialBancoPreguntas').hide()
+}
+
+function GenerarCrearPreguntas() {
+    $.ajax({
+        type: "post",
+        url: "/Preguntas/CreateBase",
+        dataType: "html",
+        success: function (data) {
+            $('#ModalCrearPregunta').html(data);
+        }
+    })
+}
 
 function FiltrarBancoPreguntas() {
 
