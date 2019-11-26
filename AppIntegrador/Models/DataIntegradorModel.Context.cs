@@ -14,7 +14,9 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Data.Entity.SqlServer;
+
+
     public partial class DataIntegradorEntities : DbContext
     {
         public DataIntegradorEntities()
@@ -108,100 +110,6 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombrePerfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnfasisXCarreraXPerfil_Result>("[Entities].[EnfasisXCarreraXPerfil](@correoUsuario, @codCarrera, @nombrePerfil)", correoUsuarioParameter, codCarreraParameter, nombrePerfilParameter);
-        }
-    
-        [DbFunction("Entities", "ObtenerFormulariosCarreraEnfasis")]
-        public virtual IQueryable<ObtenerFormulariosCarreraEnfasis_Result> ObtenerFormulariosCarreraEnfasis(string codigoCarrera, string codigoEnfasis)
-        {
-            var codigoCarreraParameter = codigoCarrera != null ?
-                new ObjectParameter("codigoCarrera", codigoCarrera) :
-                new ObjectParameter("codigoCarrera", typeof(string));
-    
-            var codigoEnfasisParameter = codigoEnfasis != null ?
-                new ObjectParameter("codigoEnfasis", codigoEnfasis) :
-                new ObjectParameter("codigoEnfasis", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosCarreraEnfasis_Result>("[Entities].[ObtenerFormulariosCarreraEnfasis](@codigoCarrera, @codigoEnfasis)", codigoCarreraParameter, codigoEnfasisParameter);
-        }
-    
-        [DbFunction("Entities", "ObtenerFormulariosFiltros")]
-        public virtual IQueryable<ObtenerFormulariosFiltros_Result> ObtenerFormulariosFiltros(string codigoUA, string codigoCarrera, string codigoEnfasis, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<byte> semestre, Nullable<int> anno, string correoProfesor)
-        {
-            var codigoUAParameter = codigoUA != null ?
-                new ObjectParameter("codigoUA", codigoUA) :
-                new ObjectParameter("codigoUA", typeof(string));
-    
-            var codigoCarreraParameter = codigoCarrera != null ?
-                new ObjectParameter("codigoCarrera", codigoCarrera) :
-                new ObjectParameter("codigoCarrera", typeof(string));
-    
-            var codigoEnfasisParameter = codigoEnfasis != null ?
-                new ObjectParameter("codigoEnfasis", codigoEnfasis) :
-                new ObjectParameter("codigoEnfasis", typeof(string));
-    
-            var siglaCursoParameter = siglaCurso != null ?
-                new ObjectParameter("siglaCurso", siglaCurso) :
-                new ObjectParameter("siglaCurso", typeof(string));
-    
-            var numeroGrupoParameter = numeroGrupo.HasValue ?
-                new ObjectParameter("numeroGrupo", numeroGrupo) :
-                new ObjectParameter("numeroGrupo", typeof(byte));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            var correoProfesorParameter = correoProfesor != null ?
-                new ObjectParameter("correoProfesor", correoProfesor) :
-                new ObjectParameter("correoProfesor", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosFiltros_Result>("[Entities].[ObtenerFormulariosFiltros](@codigoUA, @codigoCarrera, @codigoEnfasis, @siglaCurso, @numeroGrupo, @semestre, @anno, @correoProfesor)", codigoUAParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numeroGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
-        }
-    
-        [DbFunction("Entities", "ObtenerFormulariosGrupo")]
-        public virtual IQueryable<ObtenerFormulariosGrupo_Result> ObtenerFormulariosGrupo(string siglaCurso, Nullable<byte> numeroGrupo, Nullable<byte> semestre, Nullable<int> anno)
-        {
-            var siglaCursoParameter = siglaCurso != null ?
-                new ObjectParameter("siglaCurso", siglaCurso) :
-                new ObjectParameter("siglaCurso", typeof(string));
-    
-            var numeroGrupoParameter = numeroGrupo.HasValue ?
-                new ObjectParameter("numeroGrupo", numeroGrupo) :
-                new ObjectParameter("numeroGrupo", typeof(byte));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosGrupo_Result>("[Entities].[ObtenerFormulariosGrupo](@siglaCurso, @numeroGrupo, @semestre, @anno)", siglaCursoParameter, numeroGrupoParameter, semestreParameter, annoParameter);
-        }
-    
-        [DbFunction("Entities", "ObtenerFormulariosProfesor")]
-        public virtual IQueryable<ObtenerFormulariosProfesor_Result> ObtenerFormulariosProfesor(string correoProfesor)
-        {
-            var correoProfesorParameter = correoProfesor != null ?
-                new ObjectParameter("correoProfesor", correoProfesor) :
-                new ObjectParameter("correoProfesor", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosProfesor_Result>("[Entities].[ObtenerFormulariosProfesor](@correoProfesor)", correoProfesorParameter);
-        }
-    
-        [DbFunction("Entities", "ObtenerFormulariosUA")]
-        public virtual IQueryable<ObtenerFormulariosUA_Result> ObtenerFormulariosUA(string codigoUA)
-        {
-            var codigoUAParameter = codigoUA != null ?
-                new ObjectParameter("codigoUA", codigoUA) :
-                new ObjectParameter("codigoUA", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosUA_Result>("[Entities].[ObtenerFormulariosUA](@codigoUA)", codigoUAParameter);
         }
     
         [DbFunction("Entities", "ObtenerRespuestaLibreGuardada")]
@@ -1267,24 +1175,6 @@ namespace AppIntegrador.Models
         public virtual int PopularSeccionesConPreguntas()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
-        }
-    
-        public virtual int PromedioCursos(string correo, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio, cantidad);
-        }
-    
-        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
         }
     
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
