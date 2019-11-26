@@ -1,41 +1,4 @@
-﻿agregarsecciones = function() {
-    var seccionesSeleccionadas = null;
-    // Inicializador que crea el arreglo
-    function init() {
-        seccionesSeleccionadas = [];
-    }
-    // Agrega el elemento especificado por id
-    function add(id) {
-        seccionesSeleccionadas.push(id);
-    }
-    // Remueve la primera aparición de id en el arreglo
-    // (En buena teoría solo debería existir un elemento)
-    function remove(id) {
-        seccionesSeleccionadas.filter(function (ele) {
-            return ele != id;
-        });
-    }
-    // Borra todo el arreglo
-    function removeAll() {
-        seccionesSeleccionadas = [];
-    }
-    // Verifica si el elemento está contenido en el arreglo
-    function containsElement(id) {
-        return seccionesSeleccionadas.find(function (element) {
-            return element == id;
-        });
-    }
-
-    return {
-        init: init,
-        add: add,
-        remove: remove,
-        removeAll: removeAll,
-        containsElement: containsElement,
-        // Función para obtener el arreglo. Se usa para poder pasárselo al controlador
-        getArray: function () { return seccionesSeleccionadas; }
-    }
-}();
+﻿agregarsecciones = almacenador();
 
 // Cuando se marca o desmarca un checkbox del banco,
 // se agrega o elimina el elemento del arreglo de secciones.
@@ -50,6 +13,7 @@ function selectSeccion(element) {
 
 // Función que llama al controlador para agregar las secciones selecionadas al formulario
 function addSeccionToFormulario() {
+    console.log(agregarsecciones);
     // Obtener el nombre y el codigo del formulario
     var codigo = document.getElementById("textCode").value
     var nombre = document.getElementById("textName").value

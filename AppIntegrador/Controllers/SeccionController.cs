@@ -190,5 +190,23 @@ namespace AppIntegrador.Controllers
             crearSeccion = new CrearSeccionModel();
             return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearSeccion);
         }
+
+        public bool AgregarPreguntasASeccion(string codSeccion, List<string> codPreguntas)
+        {
+            if (codPreguntas != null)
+            {
+                for (int index = 0; index < codPreguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(codSeccion, codPreguntas[index], index);
+                }
+            }
+            return true;
+        }
+
+        [HttpPost]
+        public ActionResult AgregarPreguntas(string codSeccion, List<string> codPreguntas)
+        {
+            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(codSeccion, codPreguntas) });
+        }
     }
 }

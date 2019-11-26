@@ -1,65 +1,34 @@
-﻿agregarPreguntas = function () {
-    var current = null;
-    function init() {
-        current = 0;
-    }
-    function add() {
-        current++;
-    }
-    function remove() {
-        current--;
-    }
-
-    return {
-        init: init,
-        add: add,
-        remove: remove,
-        current: function () { return current; }
-    }
-}();
+﻿agregarPreguntas = almacenador();
 
 function selectPregunta(element) {
     if (element.checked) {
-        element.id = "preguntas[" + agregarPreguntas.current() + "].Codigo";
-        agregarPreguntas.add();
+        agregarPreguntas.add(element.value);
     }
     else {
-        deselectPregunta(element.value);
-        agregarPreguntas.remove();
+        agregarPreguntas.remove(element.value);
     }
 }
 
-function deselectPregunta(codigo) {
-    var index = 0;
-    var beforeElement = true;
-    while (index < agregarPreguntas.current() && beforeElement) {
-        var pregunta = document.getElementById("preguntas[" + index + "].Codigo");
-        if (pregunta.value == codigo) {
-            pregunta.setAttribute("name", "");
-            pregunta.id = null;
-            beforeElement = false;
+function addPreguntaToSeccion(codSeccion) {
+    console.log(agregarPreguntas);
+    var codPreguntas = agregarPreguntas.getArray();
+    var result = {codSeccion, codPreguntas};
+
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Seccion/AgregarPreguntas",
+        data: JSON.stringify(result),
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+            console.log("todo bien")
+            if (data.insertadoExitoso) {
+                console.log("todo bien x2")
+                ActualizarSecciones();
+            }
         }
-        ++index;
-    }
-
-    while (index < agregarPreguntas.current()) {
-        var newIndex = index - 1;
-        var pregunta = document.getElementById("preguntas[" + index + "].Codigo");
-        pregunta.id = "preguntas[" + newIndex + "].Codigo";
-        ++index;
-    }
-}
-
-function addPreguntaToSeccion() {
-    var index = 0;
-
-    while (index < agregarPreguntas.current()) {
-        var seccion = document.getElementById("preguntas[" + index + "].Codigo");
-        seccion.setAttribute("name", seccion.id);
-        var tupla = document.getElementById("preg(" + seccion.value + ")");
-        tupla.setAttribute("hidden", "hidden");
-        ++index;
-    }
+    })
 }
 
 

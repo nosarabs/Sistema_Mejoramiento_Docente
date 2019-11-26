@@ -97,42 +97,4 @@ function deselectPregunta(codigo) {
     }
 }
 
-function addPreguntaToSeccion(codigoSeccion) {
-
-    var codigoFormulario = document.getElementById("textCode").value;
-    var result = [];
-    // (Workaround) Codigo trae el código del formulario, Enunciado el de la sección
-    result.push({ 'Codigo': codigoFormulario, 'Enunciado': codigoSeccion, 'Tipo': null });
-
-    var index = 0;
-    var beforeElement = true;
-    while (index < agregarPreguntas.current() && beforeElement) {
-        var pregunta = document.getElementById("preguntas[" + index + "].Codigo");
-        // Workaround para mandar las preguntas, como en la versión vieja de borrar opciones
-        result.push({ 'Codigo': pregunta.value, 'Enunciado': null, 'Tipo': null });
-        ++index;
-    }
-    console.log(result)
-
-    $.ajax({
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        url: "/Formularios/AgregarPreguntas",
-        data: JSON.stringify(result),
-        dataType: "json",
-        traditional: true,
-        success: function(data) {
-            console.log("todo bien")
-            if (data.insertadoExitoso) {
-                console.log("todo bien x2")
-                ActualizarSecciones();
-            }
-        },
-        error: function () {
-
-        },
-    })
-
-
-}
 
