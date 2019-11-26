@@ -73,6 +73,7 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
+    <Folder Include="PlanesDeMejora\Indices" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
