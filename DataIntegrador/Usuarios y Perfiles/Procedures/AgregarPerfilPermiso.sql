@@ -12,6 +12,7 @@ BEGIN
 	BEGIN
 		/*Se configura nivel de aislamiento serializable para evitar el problema de phantom
 		read en la tabla PerfilPermiso al verificar si existe el permiso asignado a un perfil.*/
+		SET IMPLICIT_TRANSACTIONS ON
 		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 		BEGIN TRY
 			BEGIN TRANSACTION
@@ -26,8 +27,12 @@ BEGIN
 				VALUES (@perfil, @idPermiso, @codCarrera, @codEnfasis)
 			END
 			COMMIT TRANSACTION
+			SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+			SET IMPLICIT_TRANSACTIONS OFF
 		END TRY
 		BEGIN CATCH
+			SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+			SET IMPLICIT_TRANSACTIONS OFF
 			ROLLBACK TRANSACTION
 		END CATCH
 	END
