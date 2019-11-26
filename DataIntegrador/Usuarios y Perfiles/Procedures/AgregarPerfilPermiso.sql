@@ -10,16 +10,26 @@ BEGIN
 	-- Se verifica si se debe asignar o desasignar el permiso
 	IF (@tienePermiso = 1)
 	BEGIN
-		-- Si no existe el permiso en el perfil se asigna
-		IF NOT EXISTS (SELECT * 
-					   FROM PerfilPermiso 
-					   WHERE Perfil = @perfil AND PermisoId = @idPermiso 
-					         AND CodCarrera = @codCarrera AND CodEnfasis = @codEnfasis
-					   )
+		/*Se configura nivel de aislamiento serializable para evitar el problema de phantom
+		read en la tabla PerfilPermiso al verificar si existe el permiso asignado a un perfil.*/
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+		BEGIN TRY
+			BEGIN TRANSACTION
+			-- Si no existe el permiso en el perfil se asigna
+			IF NOT EXISTS (SELECT * 
+						   FROM PerfilPermiso 
+						   WHERE Perfil = @perfil AND PermisoId = @idPermiso 
+								 AND CodCarrera = @codCarrera AND CodEnfasis = @codEnfasis
+						   )
 			BEGIN
 				INSERT INTO PerfilPermiso (Perfil, PermisoId, CodCarrera, CodEnfasis)
 				VALUES (@perfil, @idPermiso, @codCarrera, @codEnfasis)
 			END
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+		END CATCH
 	END
 	ELSE
 	BEGIN
