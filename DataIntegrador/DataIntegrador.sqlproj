@@ -234,6 +234,7 @@
     <Build Include="Filtros\FiltrosUA\ObtenerUAsGrupo.sql" />
     <Build Include="Filtros\FiltrosUA\ObtenerUAsProfesor.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\getPlanFull.sql" />
+    <Build Include="PlanesDeMejora\Indices\nombrePersona.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
