@@ -1736,6 +1736,7 @@
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="finalizado" Type="bit" Mode="In" />
         </Function>
         <Function Name="GuardarRespuestaAPreguntaConOpciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codFormulario" Type="varchar" Mode="In" />
@@ -3996,6 +3997,7 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="finalizado" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GuardarRespuestaAPreguntaConOpciones">
             <Parameter Name="codFormulario" Mode="In" Type="String" />

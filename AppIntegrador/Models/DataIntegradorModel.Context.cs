@@ -601,7 +601,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, opcionSeleccionadaParameter);
         }
     
-        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha)
+        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, Nullable<bool> finalizado)
         {
             var codFormularioParameter = codFormulario != null ?
                 new ObjectParameter("codFormulario", codFormulario) :
@@ -631,7 +631,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fecha", fecha) :
                 new ObjectParameter("fecha", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter);
+            var finalizadoParameter = finalizado.HasValue ?
+                new ObjectParameter("finalizado", finalizado) :
+                new ObjectParameter("finalizado", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, finalizadoParameter);
         }
     
         public virtual int GuardarRespuestaAPreguntaConOpciones(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string justificacion)
