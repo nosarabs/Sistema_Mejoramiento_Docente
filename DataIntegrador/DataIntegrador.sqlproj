@@ -236,6 +236,7 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\GetTeacherName.sql" />
     <Build Include="PlanesDeMejora\Indices\IndicePlanMejora.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesObjetivos.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionesDeMejora.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
