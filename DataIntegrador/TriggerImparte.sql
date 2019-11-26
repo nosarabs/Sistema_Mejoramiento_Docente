@@ -5,6 +5,8 @@
 	AS
 	--Pair Programing Denisse y daniel
 	set transaction isolation level serializable;
+	set implicit_transactions off;
+
 	Begin transaction transaccionImparte;
 
 		DECLARE @correo varchar(50), @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int
@@ -16,5 +18,6 @@
 				INSERT INTO Imparte SELECT * FROM inserted
 			END
 	Commit Transaction transaccionImparte;
+	set transaction isolation level read committed;
 
 END
