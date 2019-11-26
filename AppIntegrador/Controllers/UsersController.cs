@@ -74,7 +74,10 @@ namespace AppIntegrador.Controllers
                                      Usuario = u,
                                      Persona = p
                                  };
-            usuarioPersona.OrderBy(up => up.Persona.Identificacion);
+            usuarioPersona.OrderBy(up => up.Persona.Apellido1).
+                            ThenBy(up => up.Persona.Apellido2).
+                            ThenBy(up => up.Persona.Nombre1).
+                            ThenBy(up => up.Persona.Nombre2);
             return View("Index",usuarioPersona);
         }
         /*End of User Story TAM-2.1.*/
