@@ -601,7 +601,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, opcionSeleccionadaParameter);
         }
     
-        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, Nullable<bool> finalizado)
+        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha)
         {
             var codFormularioParameter = codFormulario != null ?
                 new ObjectParameter("codFormulario", codFormulario) :
@@ -631,11 +631,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fecha", fecha) :
                 new ObjectParameter("fecha", typeof(System.DateTime));
     
-            var finalizadoParameter = finalizado.HasValue ?
-                new ObjectParameter("finalizado", finalizado) :
-                new ObjectParameter("finalizado", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, finalizadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter);
         }
     
         public virtual int GuardarRespuestaAPreguntaConOpciones(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string justificacion)
@@ -1352,41 +1348,21 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
         }
     
-        public virtual int FinalizarFomulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, Nullable<bool> finalizado)
+        public virtual ObjectResult<ObtenerFormulariosDeEstudiante_Result> ObtenerFormulariosDeEstudiante(string correoEstudiante, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("correoEstudiante", correoEstudiante) :
+                new ObjectParameter("correoEstudiante", typeof(string));
     
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
     
-            var siglaCursoParameter = siglaCurso != null ?
-                new ObjectParameter("siglaCurso", siglaCurso) :
-                new ObjectParameter("siglaCurso", typeof(string));
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            var numGrupoParameter = numGrupo.HasValue ?
-                new ObjectParameter("numGrupo", numGrupo) :
-                new ObjectParameter("numGrupo", typeof(byte));
-    
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(int));
-    
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("fecha", fecha) :
-                new ObjectParameter("fecha", typeof(System.DateTime));
-    
-            var finalizadoParameter = finalizado.HasValue ?
-                new ObjectParameter("finalizado", finalizado) :
-                new ObjectParameter("finalizado", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FinalizarFomulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, finalizadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
         }
     }
 }

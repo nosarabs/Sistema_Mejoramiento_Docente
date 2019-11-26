@@ -1716,16 +1716,6 @@
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="FinalizarFomulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
-          <Parameter Name="correo" Type="varchar" Mode="In" />
-          <Parameter Name="siglaCurso" Type="varchar" Mode="In" />
-          <Parameter Name="numGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="anno" Type="int" Mode="In" />
-          <Parameter Name="semestre" Type="tinyint" Mode="In" />
-          <Parameter Name="fecha" Type="date" Mode="In" />
-          <Parameter Name="finalizado" Type="bit" Mode="In" />
-        </Function>
         <Function Name="GuardarOpcionesSeleccionadas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codFormulario" Type="varchar" Mode="In" />
           <Parameter Name="correo" Type="varchar" Mode="In" />
@@ -1746,7 +1736,6 @@
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="semestre" Type="tinyint" Mode="In" />
           <Parameter Name="fecha" Type="date" Mode="In" />
-          <Parameter Name="finalizado" Type="bit" Mode="In" />
         </Function>
         <Function Name="GuardarRespuestaAPreguntaConOpciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codFormulario" Type="varchar" Mode="In" />
@@ -1864,6 +1853,11 @@
           <Parameter Name="anterior" Type="varchar" Mode="In" />
           <Parameter Name="nuevo" Type="varchar" Mode="In" />
           <Parameter Name="resultado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="ObtenerFormulariosDeEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correoEstudiante" Type="varchar" Mode="In" />
+          <Parameter Name="fechaInicio" Type="date" Mode="In" />
+          <Parameter Name="fechaFin" Type="date" Mode="In" />
         </Function>
         <Function Name="ObtenerOpcionesDePregunta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="questionCode" Type="varchar" Mode="In" />
@@ -4002,7 +3996,6 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
             <Parameter Name="fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="finalizado" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GuardarRespuestaAPreguntaConOpciones">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
@@ -4224,15 +4217,10 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="FinalizarFomulario">
-            <Parameter Name="codFormulario" Mode="In" Type="String" />
-            <Parameter Name="correo" Mode="In" Type="String" />
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="numGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="anno" Mode="In" Type="Int32" />
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
-            <Parameter Name="fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="finalizado" Mode="In" Type="Boolean" />
+          <FunctionImport Name="ObtenerFormulariosDeEstudiante" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result)">
+            <Parameter Name="correoEstudiante" Mode="In" Type="String" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
@@ -4283,6 +4271,15 @@
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerFormulariosDeEstudiante_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4973,7 +4970,19 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
-          <FunctionImportMapping FunctionImportName="FinalizarFomulario" FunctionName="DataIntegradorModel.Store.FinalizarFomulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerFormulariosDeEstudiante" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosDeEstudiante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
