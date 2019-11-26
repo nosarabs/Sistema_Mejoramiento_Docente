@@ -142,6 +142,11 @@ namespace AppIntegrador.Controllers
             ViewBag.message = "Crear pregunta";
             return View("Create");
         }
+        public ActionResult CreateBase()
+        {
+            ViewBag.message = "Crear pregunta";
+            return PartialView("Create");
+        }
 
         public ActionResult GuardarRespuestaLibre(Pregunta pregunta)
         {
@@ -235,7 +240,6 @@ namespace AppIntegrador.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones

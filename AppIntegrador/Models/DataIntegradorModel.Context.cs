@@ -14,12 +14,9 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data.Entity.SqlServer;
-
-
+    
     public partial class DataIntegradorEntities : DbContext
     {
-        private static string __hack = typeof(SqlProviderServices).ToString();
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
@@ -1178,6 +1175,24 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
         }
     
+        public virtual int PromedioCursos(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio, cantidad);
+        }
+    
+        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
+        }
+    
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
@@ -1331,6 +1346,23 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual ObjectResult<ObtenerFormulariosDeEstudiante_Result> ObtenerFormulariosDeEstudiante(string correoEstudiante, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("correoEstudiante", correoEstudiante) :
+                new ObjectParameter("correoEstudiante", typeof(string));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
         }
     }
 }

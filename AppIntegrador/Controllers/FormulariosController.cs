@@ -64,7 +64,7 @@ namespace AppIntegrador.Controllers
                     respuestas.GSemestre = respuestasList.GSemestre;
                 }
             }
-            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas);
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas, false);
             return formulario;
         }
 
@@ -107,7 +107,7 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null);
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null, true);
 
             foreach (var seccion in formulario.Secciones)
             {
@@ -164,7 +164,7 @@ namespace AppIntegrador.Controllers
         }
 
         public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
-            Respuestas_a_formulario respuestas)
+            Respuestas_a_formulario respuestas, bool editar)
         {
             if (formulario != null && seccionesDeFormulario != null)
             {
@@ -180,7 +180,7 @@ namespace AppIntegrador.Controllers
                             OrdenSeccion = nuevaSeccion.Orden,
                             CodigoSeccion = nuevaSeccion.CodigoSeccion,
                             OrdenPregunta = pregunta.Orden,
-                            Edit = false
+                            Edit = editar
                         });
                         ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }
@@ -444,7 +444,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Edit(string id)
         {
             crearFormulario.seccion = db.Seccion;
-            if (id == null || id == "")
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -540,6 +540,7 @@ namespace AppIntegrador.Controllers
 
             return DesplegarFormulario(form.Codigo);
         }
+
 
 
         // GET: Formularios/Delete/5
