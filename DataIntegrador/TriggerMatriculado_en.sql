@@ -2,7 +2,7 @@
 	ON [dbo].[Matriculado_en]
 	INSTEAD OF INSERT
 	AS
-	--Pair Programing Denisse
+	--Pair Programing Denisse y daniel
 	set transaction isolation level serializable;
 	Begin transaction transaccionMatriculadoEn;
 
