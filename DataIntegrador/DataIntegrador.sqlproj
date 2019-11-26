@@ -74,6 +74,7 @@
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
     <Folder Include="Filtros\Indices" />
+    <Folder Include="Filtros\FiltrosFormulario\Indices" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -235,6 +236,7 @@
     <Build Include="Filtros\FiltrosUA\ObtenerUAsProfesor.sql" />
     <Build Include="Filtros\Indices\Index_CodigoPregunta_OpSelecRespConOps.sql" />
     <Build Include="Filtros\Indices\Index_Finalizado_RespForm.sql" />
+    <Build Include="Filtros\FiltrosFormulario\Indices\Index_FechaFin.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
