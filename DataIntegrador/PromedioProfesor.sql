@@ -1,16 +1,20 @@
 ﻿--Berta Sánchez Jalet
 --COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
 --Tarea técnica: Realizar consultas a la BD por medio de procedimientos almacenados.
---Cumplimiento: 10/10
+--Cumplimiento: 8/10
+
 
 CREATE PROCEDURE [dbo].[PromedioProfesor]
-	(@correo VARCHAR(50),
-	 @promedio FLOAT = -1 OUTPUT,
-	 @cantidad INT = 1 OUTPUT)
+	(	@UnidadesAcademicas FiltroUnidadesAcademicas READONLY,
+		@CarrerasEnfasis FiltroCarrerasEnfasis READONLY,
+		@Grupos FiltroGrupos READONLY,
+		@CorreosProfesores FiltroProfesores READONLY,
+		@promedio FLOAT OUTPUT,
+		@cantidad INT OUTPUT
+	)
 	 
 AS
 
-IF EXISTS (SELECT * FROM Imparte WHERE CorreoProfesor = @correo) 
 BEGIN
 
 DECLARE @min AS INT 
@@ -19,18 +23,20 @@ DECLARE @inc AS INT
 DECLARE @opcion AS TINYINT
 DECLARE @valor AS FLOAT = 0
 
+	SET @promedio = -1;
+
 	SELECT @min = E.Minimo, @max = E.Maximo, @inc = E.Incremento
 	FROM Escalar AS E 
 	WHERE E.Codigo = 'INFPROF'
-	
 
 	DECLARE @Resultados TABLE (Opcion_seleccionada TINYINT);
 		
 	INSERT INTO @Resultados
 		SELECT  O.OpcionSeleccionada 
 		FROM	Opciones_seleccionadas_respuesta_con_opciones AS O
-				JOIN Imparte AS I ON O.GNumero = I.NumGrupo
-		WHERE I.CorreoProfesor = @correo AND O.PCodigo = 'INFPROF'
+		WHERE O.PCodigo = 'INFPROF' AND EXISTS (SELECT *
+												FROM ObtenerFormulariosFiltros(@UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores)
+												WHERE FCodigo = O.FCodigo AND CSigla = O.CSigla AND GNumero = O.GNumero AND GSemestre = O.GSemestre AND GAnno = O.GAnno);
 
 	DECLARE C CURSOR FOR SELECT Opcion_seleccionada FROM @Resultados
 	OPEN C
@@ -46,7 +52,9 @@ DECLARE @valor AS FLOAT = 0
 	SELECT @cantidad = COUNT(*)
 	FROM @Resultados
 
-	SET @promedio = @valor / @cantidad;
+	IF (@cantidad != 0)
+	BEGIN
+		SET @promedio = @valor / @cantidad;
+	END
 
 END
-RETURN 0

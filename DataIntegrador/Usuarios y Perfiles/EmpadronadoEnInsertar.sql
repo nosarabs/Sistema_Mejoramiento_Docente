@@ -1,5 +1,5 @@
 ﻿CREATE TRIGGER [EmpadronadoEnInsertar]
-	ON [dbo].[Empadronado_En]
+	ON [dbo].[Empadronado_en]
 	INSTEAD OF INSERT
 	AS
 	declare @correoEst varchar(50)

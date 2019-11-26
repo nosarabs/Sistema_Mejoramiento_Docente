@@ -178,6 +178,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LlenarFormularioController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -214,7 +216,6 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,6 +250,7 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormularioAsignado.cs" />
     <Compile Include="Models\Formulario_tiene_seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -258,6 +260,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GruposFiltros.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\LlenarCSV.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
@@ -266,7 +269,12 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerFormulariosDeEstudiante_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerFormulariosFiltros.cs" />
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -361,6 +369,7 @@
     <Compile Include="Models\TipoObjetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UAsFiltros.cs" />
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -690,6 +699,7 @@
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
     <Content Include="Views\ActivaFormulario\Edit.cshtml" />
     <Content Include="Views\ActivaFormulario\Index.cshtml" />
+    <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

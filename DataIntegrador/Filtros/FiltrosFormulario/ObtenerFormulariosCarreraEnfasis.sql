@@ -2,13 +2,6 @@
 Retorna una tabla con el código de formulario, sigla del curso, número de grupo, semestre, año, fecha de inicio, fecha de finalización de todos los formularios que pertenecen a las carreras y énfasis dadas como parámetro.
 Esta información se necesita para filtrar respuestas a formulario.
 */
-
-/*Parámetro de ObtenerFormulariosCarreraEnfasis*/
-CREATE TYPE FiltroCarrerasEnfasis
-AS TABLE (CodigoCarrera VARCHAR(10), CodigoEnfasis VARCHAR(10), PRIMARY KEY (CodigoCarrera, CodigoEnfasis))
-
-GO
-
 CREATE FUNCTION ObtenerFormulariosCarreraEnfasis (@CarrerasEnfasis FiltroCarrerasEnfasis READONLY)
 RETURNS @formulariosCarreraEnfasis TABLE
 (
