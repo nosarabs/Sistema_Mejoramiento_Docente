@@ -1,5 +1,5 @@
 ﻿CREATE TRIGGER [TriggerInscritaEn] 
-	ON [dbo].[Inscrita_En]
+	ON [dbo].[Inscrita_en]
 	INSTEAD OF INSERT
 	AS
 	declare @CodUnidad varchar(10)
