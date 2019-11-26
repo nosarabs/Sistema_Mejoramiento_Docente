@@ -16,5 +16,5 @@
 				INSERT INTO Matriculado_en SELECT * FROM inserted
 			END
 	Commit Transaction transaccionMatriculadoEn;
-	set transaction isolation level read commited;
+set transaction isolation level read committed;
 END
