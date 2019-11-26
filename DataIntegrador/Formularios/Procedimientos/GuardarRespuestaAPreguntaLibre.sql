@@ -11,6 +11,9 @@
 	@texto nvarchar(250) = NULL
 AS
 BEGIN
+	-- Creaciòn de la transacciòn de la historia RIP-EDF1
+	set implicit_transactions off;	
+	set transaction isolation level repeatable read;
 	BEGIN TRY
 		BEGIN TRANSACTION
 		MERGE INTO Responde_respuesta_libre AS Target
