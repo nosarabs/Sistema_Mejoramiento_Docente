@@ -1,7 +1,5 @@
-﻿@model AppIntegrador.Models.ArchivoCSV
-
-@{
-    int @clasificador=0;
+﻿@{
+    int @clasificador = 0;
     ViewBag.Title = "Index";
 }
 
@@ -29,16 +27,10 @@
             <label class="custom-file-label" for="customFile">Elija un archivo</label>
         </div>
         <select id="tipoArchivo" name="tipoArchivo" class="form-control my-form-control">
-            <option value=1>Lista Unidad Academica</option>
-            <option value=2>Lista Carrera</option>
-            <option value=3>Lista Enfasis</option>
-            <option value=4>Lista Cursos</option>
-            <option value=5>Lista Grupo</option>
-            <option value=6>Lista Profesores </option>
-            <option value=7>Lista Estudiantes</option>
-            <option value=8>Lista Profesores imparten grupo</option>
-            <option value=9>Lista Estudiantes matriculados en grupo</option>
-
+            <option value=1>Lista de Clase</option>
+            <option value=2>Guia de Horario</option>
+            <option value=3>Lista de Estudiantes</option>
+            <option value=4>Lista de Funcionarios</option>
         </select>
 
         <br>
