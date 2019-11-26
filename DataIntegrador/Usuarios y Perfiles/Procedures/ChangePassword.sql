@@ -4,6 +4,7 @@ CREATE PROCEDURE [dbo].[ChangePassword]
 	@username VARCHAR(50),
 	@newpassword VARCHAR(64)
 AS
+--Actividad Supervisada 26/11
 SET implicit_transactions OFF
 -- Aislamiento en repeatable read para asegurarse de que el correo no se cambie durante las consultas a la tabla, pero permitiendo lecturas concurrentes.
 SET TRANSACTION isolation level repeatable READ

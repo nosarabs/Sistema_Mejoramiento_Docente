@@ -1,8 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[ModificarCorreo]
+﻿/*TAM-2.4 - Editar Usuarios*/
+CREATE PROCEDURE [dbo].[ModificarCorreo]
 	@anterior varchar(50),
 	@nuevo varchar(50),
 	@resultado bit output
 AS
+--Actividad Supervisada 26/11
 SET implicit_transactions OFF
 -- Aislamiento en repeatable read para asegurar el correcto cambio de primary key a las tuplas de interés.
 SET TRANSACTION isolation level REPEATABLE READ
