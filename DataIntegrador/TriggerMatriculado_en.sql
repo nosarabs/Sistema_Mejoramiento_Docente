@@ -6,7 +6,7 @@
 	SELECT @correo = i.CorreoEstudiante, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
 	FROM inserted i
 	BEGIN
-		IF(@correo NOT IN (SELECT CorreoEstudiante FROM Matriculado_en) or @sigla NOT IN (SELECT SiglaCurso FROM Matriculado_en) or @num NOT IN (SELECT NumGrupo FROM Matriculado_en) or @semestre NOT IN (SELECT Semestre FROM Matriculado_en) or @anno NOT IN (SELECT Anno FROM Matriculado_en))
+		IF((@correo NOT IN (SELECT CorreoEstudiante FROM Matriculado_en) or @sigla NOT IN (SELECT SiglaCurso FROM Matriculado_en) or @num NOT IN (SELECT NumGrupo FROM Matriculado_en) or @semestre NOT IN (SELECT Semestre FROM Matriculado_en) or @anno NOT IN (SELECT Anno FROM Matriculado_en)) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
 		BEGIN
 			INSERT INTO Matriculado_en SELECT * FROM inserted
 		END

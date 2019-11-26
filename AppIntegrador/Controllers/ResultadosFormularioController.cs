@@ -41,12 +41,33 @@ namespace AppIntegrador.Controllers
                 Ano = serializer.Serialize(ano),
                 FechaInicio = serializer.Serialize(fechaInicio),
                 FechaFin = serializer.Serialize(fechaFin),
-                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
+                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
+                Seccioncitas = ObtenerSeccionesDropDown(codigoFormulario)
             };
             return View(modelo);
         }
 
-        // TESTED
+
+        /*  ID: COD-65: Yo como administrador quiero ver las secciones que componen un formulario
+            específico.
+            Tarea: Crear un método que recupere las secciones asociadas a un formulario
+        */
+        public IEnumerable<SelectListItem> ObtenerSeccionesDropDown(String codigoFormulario)
+        {
+
+            var secciones = from f in db.Formulario
+                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
+                            join s in db.Seccion on fs.SCodigo equals s.Codigo
+                            where f.Codigo == codigoFormulario
+                            orderby fs.Orden
+                            select new SelectListItem { Value = fs.SCodigo, Text = s.Nombre };
+
+            var listaSecciones = secciones.ToList();
+
+            return listaSecciones;
+
+        }
+
         // GET: PreguntasFormulario
         public List<Preguntas> ObtenerPreguntas(String codigoFormulario)
         {
