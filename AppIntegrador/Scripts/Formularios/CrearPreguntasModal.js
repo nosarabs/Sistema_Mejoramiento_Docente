@@ -3,8 +3,8 @@ function GenerarModalPreguntas() {
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
     GenerarCrearPreguntas();
-    $('ModalCrearPregunta').hide();
-    $('ModalPartialBancoPreguntas').show();
+    $('#ModalCrearPregunta').hide();
+    $('#BancoDePreguntas').show();
 }
 function ImportarBancoPreguntas() {
     $.ajax({
@@ -18,8 +18,8 @@ function ImportarBancoPreguntas() {
 }
 
 function MostrarCrearPregunta(){
-    $('#ModalCrearPregunta').show()
-    $('#ModalPartialBancoPreguntas').hide()
+    $('#ModalCrearPregunta').show("fast")
+    $('#BancoDePreguntas').hide("fast")
 }
 
 function GenerarCrearPreguntas() {
