@@ -2,6 +2,7 @@
 	@codigoPlan int
 AS
 	BEGIN TRY
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE ;
 		BEGIN TRANSACTION 
 			SELECT *
 			FROM PlanDeMejora p JOIN Objetivo o			ON o.codPlan = p.codigo
@@ -15,6 +16,7 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT 'No se pudo obtener el plan de mejora completo.';
+		SELECT ERROR_MESSAGE();
 		THROW
 	END CATCH
 RETURN 0
