@@ -239,6 +239,7 @@
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

@@ -3,6 +3,12 @@
 	@nuevo varchar(50),
 	@resultado bit output
 AS
+SET implicit_transactions OFF
+-- Aislamiento en repeatable read para asegurar el correcto cambio de primary key a las tuplas de interés.
+SET TRANSACTION isolation level REPEATABLE READ
+BEGIN TRY
+BEGIN TRANSACTION
+BEGIN
 	-- Cambiar correo si no existe ya en la base
 	IF NOT EXISTS (SELECT TOP 1 Correo FROM [dbo].[Persona] WHERE Correo=@nuevo)
 	BEGIN
@@ -15,4 +21,16 @@ AS
 
 	ELSE
 		SET @resultado = 0;
+END
+COMMIT TRANSACTION
+SET implicit_transactions on
+SET TRANSACTION isolation level READ COMMITTED
 RETURN 0
+END TRY
+BEGIN CATCH
+    PRINT ERROR_MESSAGE()
+	ROLLBACK TRANSACTION
+	SET implicit_transactions on
+	SET TRANSACTION isolation level READ COMMITTED
+	RETURN 1
+END CATCH

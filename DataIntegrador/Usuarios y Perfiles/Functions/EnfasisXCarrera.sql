@@ -12,6 +12,6 @@ BEGIN
 	INSERT @returntable
 	SELECT E.Codigo
 	FROM Enfasis AS E JOIN Carrera AS C ON E.CodCarrera = C.Codigo
-	WHERE C.Codigo = @codCarrera
+	WHERE E.CodCarrera = @codCarrera
 	RETURN
 END
