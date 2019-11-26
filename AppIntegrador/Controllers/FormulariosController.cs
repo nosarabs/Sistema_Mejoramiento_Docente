@@ -180,7 +180,7 @@ namespace AppIntegrador.Controllers
                             OrdenSeccion = nuevaSeccion.Orden,
                             CodigoSeccion = nuevaSeccion.CodigoSeccion,
                             OrdenPregunta = pregunta.Orden,
-                            Edit = true
+                            Edit = false
                         });
                         ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
                     }

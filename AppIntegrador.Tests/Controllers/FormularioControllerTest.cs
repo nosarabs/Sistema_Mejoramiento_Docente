@@ -1209,7 +1209,6 @@ namespace AppIntegrador.Tests.Controllers
 
             string codFormulario = "TESTPNUL";
             string codSeccion = "SECCPNUL";
-            string codPregunta = "PREGNUL";
 
             // Se crea el formulario de prueba
             Formulario formulario = new Formulario()
@@ -1244,7 +1243,6 @@ namespace AppIntegrador.Tests.Controllers
 
             string codFormulario = "TESTPNUL";
             string codSeccion = "SECCPNUL";
-            string codPregunta = "PREGNUL";
 
             // Se crea el formulario de prueba
             Formulario formulario = new Formulario()
