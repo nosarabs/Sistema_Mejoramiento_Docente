@@ -59,7 +59,7 @@ class Validador {
         this._validDateMsj = 'Fecha Válida.';
         this._invalidDateMsj = 'Fecha Inválida, tiene que estar entre ';
         this._endMsj = '.';
-        this._remainingLettersMsj = 'Te quedan: ';
+        this._remainingLettersMsj = '';
         this._errorStartAfterEndMsj = 'No puede ser despues de la fecha de Fin.';
         this._errorEndBeforeStartMsj = 'No puede ser antes de la fecha de Inicio.';
         
@@ -197,11 +197,9 @@ class Validador {
      */
     changeMsj(domObjectId, newMesj, newStyle, addStyle) {
         document.getElementById(domObjectId).innerHTML = newMesj;
-        //if (addStyle) {
-        //    document.getElementById(domObject.id).classList.add(newStyle);
-        //} else {
-        //    document.getElementById(domObject.id).classList.remove(newStyle);
-        //}
+        if (newStyle && addStyle) {
+            document.getElementById(domObjectId).style.color = newStyle;
+        }
     }
 
     /* 
@@ -284,6 +282,7 @@ class Validador {
         let result = this._invalidDateMsj + '(' + this._minDateStr + ') ' + ' - (' + this._maxDateStr + ')';
         let elem = document.getElementById(bigElementId + this._subMsjAcro);
         elem.innerHTML = result;
+        elem.style.color = "red";
     }
 
     /*
@@ -349,18 +348,18 @@ class Validador {
      */
     countTextElements(textElement, maxCharacters) {
         let totalCharactersWritten = document.getElementById(textElement.id).value.length;
-
+        //console.log(textElement.id + this._subMsjAcro);
         var subMessageDomElement = document.getElementById(textElement.id + this._subMsjAcro);
 
 
 
         let unusedSpaces = maxCharacters - totalCharactersWritten;
 
-        console.log(unusedSpaces);
-        console.log(maxCharacters);
-        console.log(totalCharactersWritten);
+        //console.log(unusedSpaces);
+        //console.log(maxCharacters);
+        //console.log(totalCharactersWritten);
 
-        subMessageDomElement.innerHTML = this._remainingLettersMsj + unusedSpaces + '.';
+        subMessageDomElement.innerHTML = (maxCharacters - unusedSpaces) + '/'  + maxCharacters + ' caracteres usados';
         return totalCharactersWritten;
     }
 
@@ -412,7 +411,7 @@ class Validador {
                 this.getOutOfRangeMsj(dateOne.id);
             } else {
                 resultFechaInicial = true;
-                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, '-', false);
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'black', true);
             }
         }
         if (fechaDos.value) {
@@ -422,7 +421,7 @@ class Validador {
                 this.getOutOfRangeMsj(dateTwo.id);
             } else {
                 resultFechaFinal = true;
-                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, '-', false);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'black', true);
             }
         }
 
@@ -438,12 +437,12 @@ class Validador {
 
             if (fechaFinalInt >= fechaInicioInt) {
                 result = true;
-                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, '-', false);
-                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, '-', false);
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'black', true);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'black', true);
             } else {
                 result = false;
-                this.changeMsj(dateOne.id + this._subMsjAcro, this._errorStartAfterEndMsj, '-', false);
-                this.changeMsj(dateTwo.id + this._subMsjAcro, this._errorEndBeforeStartMsj, '-', false);
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._errorStartAfterEndMsj, 'red', true);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._errorEndBeforeStartMsj, 'red', true);
             }
         }
         this.addValidation(result);
