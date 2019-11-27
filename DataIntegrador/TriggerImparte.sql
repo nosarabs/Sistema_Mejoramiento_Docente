@@ -13,7 +13,7 @@
 		SELECT @correo = i.CorreoProfesor, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
 		FROM inserted i
 		BEGIN
-			IF(NOT exists (SELECT * FROM Matriculado_en where CorreoEstudiante= @correo and SiglaCurso = @sigla and Semestre =@semestre and Anno = @anno ) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
+			IF(NOT exists (SELECT * FROM Imparte where CorreoProfesor = @correo and SiglaCurso = @sigla and Semestre =@semestre and Anno = @anno ) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
 			BEGIN
 				INSERT INTO Imparte SELECT * FROM inserted
 			END
