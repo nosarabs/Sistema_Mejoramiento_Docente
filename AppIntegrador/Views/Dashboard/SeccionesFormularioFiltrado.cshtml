@@ -1,0 +1,100 @@
+﻿@*
+    HU: COD-65: Yo como administrador quiero visualizar las secciones que componen un formulario
+    específico para poder desplegar las preguntas asociadas a una sección.
+        Tarea: Crear la vista parcial donde irán las secciones del formulario.
+
+*@
+
+@model  AppIntegrador.Models.ResultadosFormulario
+@{
+    ViewBag.Title = "Secciones";
+}
+
+<script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/Visualizacion/Chart.js"></script>
+<script src="~/Scripts/Visualizacion/chroma.js"></script>
+<script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
+<script src="~/Scripts/Visualizacion/baseRespuestasPlantilla.js"></script>
+<script src="~/Scripts/Visualizacion/graficos.js"></script>
+<script src="~/Scripts/Visualizacion/estadisticas.js"></script>
+<script src="~/Scripts/Visualizacion/TextoLibre.js"></script>
+<script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
+<script src="~/Scripts/Visualizacion/botones.js"></script>
+
+<div>
+
+    <div class="col-md-12" id="seccionesContainer">
+        <!--Si el modelo viene vacío, significa que no se ha seleccionado un formulario todavía
+        o que este viene sin secciones-->
+        @if (Model.Secciones.Count() == 0)
+        {
+            <p>
+                Aún no hay secciones para desplegar
+            </p>
+        }
+        else
+        {
+            <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
+            <!--En caso de que el modelo venga lleno, se llama a las funciones en javscript para
+            visualizar las secciones referentes al formulario-->
+
+            var listaSecciones = Html.Raw(Model.Secciones);
+
+            <script>
+                var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
+                var siglaCurso = @Html.Raw(Model.SiglaCurso);
+                var numeroGrupo = @Html.Raw(Model.NumeroGrupo);
+                var semestre = @Html.Raw(Model.Semestre);
+                var ano = @Html.Raw(Model.Ano);
+                var fechaInicio =  @Html.Raw(Model.FechaInicio);
+                var fechaFin =  @Html.Raw(Model.FechaFin);
+                var listaPreguntas = @Html.Raw(Model.Preguntas);
+
+                var botones = new Botones();
+
+
+            </script>
+            for (var item = 0; item < Model.Secciones.Count(); ++item)
+            {
+                
+                // Se crean los collapsibles iniciales, para las secciones
+                <button class="collapsible" name="seccioncita"> Sec. @(item + 1). @Html.DisplayFor(modelItem => Model.Secciones.ElementAt(item).textoSeccion)</button>
+                <div class="panel" id="Sec @Model.Secciones.ElementAt(item).codigoSeccion">
+                    <script>
+                        // Dentro de cada sección, se crean los botones con sus preguntas
+                        botones.crearBotones ("Sec @Model.Secciones.ElementAt(item).codigoSeccion", listaPreguntas);
+                    </script>
+                </div>
+            }
+        }
+        <br />
+        <br />
+    </div>
+
+
+</div>
+
+
+<script>
+
+    var acc = document.getElementsByName("seccioncita");
+    var i;
+
+    for (var index = 0; index < acc.length; ++index) {
+        var panel = acc[index].nextElementSibling;
+        panel.style.display = "none";
+    }
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("activeCollapsible");
+            var panel = this.nextElementSibling;
+            if (panel.style.display == "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+
+        });
+    }
+</script>

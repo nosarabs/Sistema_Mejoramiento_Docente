@@ -17,8 +17,9 @@ namespace AppIntegrador.Controllers
 {
     public class CSVController : Controller
     {
+
+
         private DataIntegradorEntities db = new DataIntegradorEntities();
-        ArchivoCSV fila;
 
         public ActionResult Index()
         {
@@ -26,7 +27,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult Index(HttpPostedFileBase file, int? tipoArchivo)
         {
             if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
                 try
@@ -34,10 +35,13 @@ namespace AppIntegrador.Controllers
                     string path = Path.Combine(Server.MapPath("~/ArchivoCSV"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    ViewBag.Message = "Archivo subido exitosamente";
-                    if (!carga(path))
+                    if (!carga(path, tipoArchivo))
                     {
                         ViewBag.Message = "ERROR en la carga";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Archivo subido exitosamente";
                     }
                 }
                 catch (Exception ex)
@@ -51,28 +55,9 @@ namespace AppIntegrador.Controllers
 
             return View();
         }
-        private void insertarDatos(ArchivoCSV fila)
-        {
-            db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
-            db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
-            db.InsertarEnfasisCSV(fila.CodigoCarrera, fila.CodigoEnfasis, fila.NombreEnfasis);
-            db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
-            db.InsertarGrupoCSV(fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
-            db.InsertarPersonaCSV(fila.CorreoProfesor, fila.IdProfesor, fila.NombreProfesor, fila.ApellidoProfesor, fila.IdProfesor);
-            db.InsertarFuncionarioCSV(fila.CorreoProfesor);
-            db.InsertarProfesorCSV(fila.CorreoProfesor);
-            db.InsertarPersonaCSV(fila.CorreoEstudiante, fila.IdEstudiante, fila.NombreEstudiante, fila.ApellidoEstudiante, fila.TipoIdEstudiante);
-            db.InsertarEstudianteCSV(fila.CorreoEstudiante);
-            db.InsertarImparte(fila.CorreoProfesor, fila.SiglaCurso, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
-            db.InsertarInscrita_En(fila.CodigoUnidad, fila.CodigoCarrera);
-            db.InsertarEmpadronadoEn(fila.CorreoEstudiante, fila.CodigoCarrera, fila.CodigoEnfasis);
-            db.InsertarTrabajaEn(fila.CorreoProfesor, fila.CodigoUnidad);
-            db.InsertarPertenece_a(fila.CodigoCarrera, fila.CodigoEnfasis, fila.SiglaCurso);
-        }
-       public bool carga(string path)
-        {
-            bool datosValidos = true;
 
+        public bool carga(string path, int? tipoArchivo)
+        {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
                 SeparatorChar = ',', //Indica qué es lo que separa cada valor en el archivo
@@ -80,305 +65,108 @@ namespace AppIntegrador.Controllers
                 IgnoreUnknownColumns = true // Linea para evitar errores o algunos datos no desead0s
             };
             CsvContext cc = new CsvContext();
+
+            switch(tipoArchivo)
+            {
+                case 1:
+                    cargarListaClase(path, inputFileDescription, cc);
+                    break;
+                case 2:
+                    cargarGuia(path, inputFileDescription, cc);
+                    break;
+                case 3:
+                    cargarListaEstudiante(path, inputFileDescription, cc);
+                    break;
+                case 4:
+                    cargarListaFuncionario(path, inputFileDescription, cc);
+                    break;
+                default:
+                    return false;
+                    break;
+            }          
+            return true;
+        }
+
+        private void cargarListaClase(string path, CsvFileDescription inputFileDescription, CsvContext cc)
+        {
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
-            IEnumerable<ArchivoCSV> datos = cc.Read<ArchivoCSV>(path, inputFileDescription); //TODO: De momento el path está fijo
-            List<ArchivoCSV> lista = datos.ToList();
+            IEnumerable<ListaClase> datos = cc.Read<ListaClase>(path, inputFileDescription);
+            List<ListaClase> lista = datos.ToList();
 
-            var archivoValido = true;
-
-            fila = lista[0];
-            if (validarEntradas(fila)) // si la primera linea esta con blancos no se pueden ingresar
+            //Se valida cada fila de CSV
+            foreach (ListaClase f in lista)
             {
-                //Se valida cada fila de CSV
-                foreach (ArchivoCSV f in lista)
-                {
-                    //cargaFila(f);
-                    if (!validarEntradas(fila))
-                    {
-                        archivoValido = false;
-                    }
-                }
-                if (archivoValido) // si todas las filas son correctas inserta
-                {
-                    foreach (ArchivoCSV f in lista)
-                    {
-                        cargaFila(f);
-                        insertarDatos(fila); //inserta fila
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private bool validarEntradas(ArchivoCSV archivo)
-        {
-            bool numerosValidos = validaNumeros(archivo); //Validar que los datos numéricos son correctos
-            bool longitudesValidas = validaLongitudes(archivo); //Validar que las longitudes de los caracteres son correctas
-
-            if (numerosValidos && longitudesValidas) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
+                insertarListaClase(f);
             }
         }
 
-        private bool validaNumeros(ArchivoCSV archivo)
+        private void insertarListaClase(ListaClase fila)
         {
-            /*NumGrupo*/
-            /*Compara que el valor ingresado sea un numero positivo*/
-            if (!String.IsNullOrEmpty(archivo.NumeroGrupo) && !int.TryParse(archivo.NumeroGrupo, out int numGrupo) && numGrupo > 0)  //NumGrupo
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NumGrupo");
-                return false;
-            }
-            /*Compara que el valor ingresado sea un numero positivo*/
-            if (!String.IsNullOrEmpty(archivo.Anno) && !int.TryParse(archivo.Anno, out int anno) && anno < 0)  //anno
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("anno");
-                return false;
-            }
-            /*Compara que el valor ingresado sea un numero positivo menor o igual a 3*/
-            if (!String.IsNullOrEmpty(archivo.Semestre) && !int.TryParse(archivo.Semestre, out int semestre) && semestre < 0 && semestre > 3)  //semestre
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("semestre");
-                return false;
-            }
-            return true;
+            db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
+            db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
+            db.InsertarEnfasisCSV(fila.CodigoCarreraEnfasis, fila.CodigoEnfasis, fila.NombreEnfasis);
         }
 
-        private bool validaLongitudes(ArchivoCSV archivo)
+        private void cargarGuia(string path, CsvFileDescription inputFileDescription, CsvContext cc)
         {
-            /*Unidad academica*/
-            if (!String.IsNullOrEmpty(archivo.CodigoUnidad) && archivo.CodigoUnidad.Length > 10) //CodigoUnidad
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoUnidad");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreFacultad) && archivo.NombreFacultad.Length > 50) //nombreFacultad
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("nombreFacultad");
-                return false;
-            }
-            /*Carrera*/
-            if (!String.IsNullOrEmpty(archivo.CodigoCarrera) && archivo.CodigoCarrera.Length > 10) //CodigoCarrera
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoCarrera");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreCarrera) && archivo.NombreCarrera.Length > 50) //NombreCarrera
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreCarrera");
-                return false;
-            }
-            /*Enfasis*/
-            if (!String.IsNullOrEmpty(archivo.CodigoEnfasis) && archivo.CodigoEnfasis.Length > 10) //CodigoEnfasis
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CodigoEnfasis");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreEnfasis) && archivo.NombreEnfasis.Length > 50) //NombreEnfasis
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreEnfasis");
-                return false;
-            }
-            /*Curso*/
-            if (!String.IsNullOrEmpty(archivo.SiglaCurso) && archivo.SiglaCurso.Length > 10) //Sigla Curso
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("Sigla Curso");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreCurso) && archivo.NombreCurso.Length > 50) //NombreCurso
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("NombreCurso");
-                return false;
-            }
-            /*Profesor*/
-            if (!String.IsNullOrEmpty(archivo.CorreoProfesor) && archivo.CorreoProfesor.Length > 50) //CorreoDocente
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CorreoDocente");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.IdProfesor) && archivo.IdProfesor.Length > 30) //Id Profesor
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("Id Profesor");
+            //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
+            IEnumerable<GuiaHorario> datos = cc.Read<GuiaHorario>(path, inputFileDescription);
+            List<GuiaHorario> lista = datos.ToList();
 
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreProfesor) && archivo.NombreProfesor.Length > 15) //Nombre Profe
+            //Se valida cada fila de CSV
+            foreach (GuiaHorario f in lista)
             {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("Nombre Profe");
-
-                return false;
+                insertarGuia(f);
             }
-            if (!String.IsNullOrEmpty(archivo.ApellidoProfesor) && archivo.ApellidoProfesor.Length > 15) //apellidoProfa
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("apellido Profe");
-
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.TipoIdProfesor) && archivo.TipoIdProfesor.Length > 15) //TipoIdProfesor
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("TipoIdProfesor");
-
-                return false;
-            }
-            /*Estudiante*/
-            if (!String.IsNullOrEmpty(archivo.CorreoEstudiante) && archivo.CorreoEstudiante.Length > 50) //CorreoEstudiantes
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("CorreoEstudiantes");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.IdEstudiante) && archivo.IdEstudiante.Length > 30) //Id Estudiante
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("IdEstudiante");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.NombreEstudiante) && archivo.NombreEstudiante.Length > 15) //Nombre Estudiante
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("Nombre Estudiante");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.ApellidoEstudiante) && archivo.ApellidoEstudiante.Length > 15) //apellido estudiante
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("apellido Estudiante");
-                return false;
-            }
-            if (!String.IsNullOrEmpty(archivo.TipoIdEstudiante) && archivo.TipoIdEstudiante.Length > 30) //TipoIdEstudiante
-            {
-                /*Imprimir donde fallo*/
-                System.Diagnostics.Debug.WriteLine("TipoIdEstudiante");
-                return false;
-            }
-            return true;
         }
 
-        //COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
-        //Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
-        private void cargaFila(ArchivoCSV filaActual)
+        private void insertarGuia(GuiaHorario fila)
         {
-            /*Unidad academica*/
-            if (!string.IsNullOrEmpty(filaActual.CodigoUnidad)) //CodigoUnidad
-            {
+            db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
+            db.InsertarGrupoCSV(fila.SiglaCursoGrupo, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
+            db.InsertarImparte(fila.CorreoProfesorImparte, fila.SiglaCursoImparte, Convert.ToByte(fila.NumeroGrupoImparte), Convert.ToByte(fila.SemestreGrupoImparte), Convert.ToInt32(fila.AnnoGrupoImparte));
+            db.InsertarMatriculado_en(fila.CorreoMatricula, fila.SiglaCursoMatricula, Convert.ToByte(fila.NumeroGrupoMatricula), Convert.ToByte(fila.SemestreMatricula), Convert.ToInt32(fila.AnnoMatricula));
+        }
 
-                fila.CodigoUnidad = filaActual.CodigoUnidad;
+        private void cargarListaEstudiante(string path, CsvFileDescription inputFileDescription, CsvContext cc)
+        {
+            //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
+            IEnumerable<ListaEstudiante> datos = cc.Read<ListaEstudiante>(path, inputFileDescription);
+            List<ListaEstudiante> lista = datos.ToList();
 
-            }
-            if (!string.IsNullOrEmpty(filaActual.NombreFacultad)) //nombreFacultad
-            {
-                fila.NombreFacultad = filaActual.NombreFacultad;
-            }
+ 
 
-            /*Carrera*/
-            if (!string.IsNullOrEmpty(filaActual.CodigoCarrera)) //CodigoCarrera
+            //Se valida cada fila de CSV
+            foreach (ListaEstudiante f in lista)
             {
-                fila.CodigoCarrera = filaActual.CodigoCarrera;
+                insertarListaEstudiante(f);
             }
-            if (!string.IsNullOrEmpty(filaActual.NombreCarrera)) //NombreCarrera
-            {
-                fila.NombreCarrera = filaActual.NombreCarrera;
-            }
+        }
 
-            /*Enfasis*/
-            if (!string.IsNullOrEmpty(filaActual.CodigoEnfasis)) //CodigoEnfasis
-            {
-                fila.CodigoEnfasis = filaActual.CodigoEnfasis;
-            }
-            if (!string.IsNullOrEmpty(filaActual.NombreEnfasis)) //NombreEnfasis
-            {
-                fila.NombreEnfasis = filaActual.NombreEnfasis;
-            }
+        private void insertarListaEstudiante(ListaEstudiante fila)
+        {
+            db.InsertarPersonaCSV(fila.CorreoPersona, fila.IdPersona, fila.NombrePersona, fila.ApellidoPersona, fila.TipoIdPersona, Convert.ToBoolean(fila.Borrado));
+            db.InsertarEstudianteCSV(fila.CorreoEstudiante);
+        }
 
-            /*Curso*/
-            if (!string.IsNullOrEmpty(filaActual.SiglaCurso)) //Sigla Curso
-            {
-                fila.SiglaCurso = filaActual.SiglaCurso;
-            }
-            if (!string.IsNullOrEmpty(filaActual.NombreCurso)) //NombreCurso
-            {
-                fila.NombreCurso = filaActual.NombreCurso;
-            }
+        private void cargarListaFuncionario(string path, CsvFileDescription inputFileDescription, CsvContext cc)
+        {
+            //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
+            IEnumerable<ListaFuncionario> datos = cc.Read<ListaFuncionario>(path, inputFileDescription);
+            List<ListaFuncionario> lista = datos.ToList();
 
-            /*NumGrupo*/
-            if (!string.IsNullOrEmpty(filaActual.NumeroGrupo))  //NumGrupo
+            //Se valida cada fila de CSV
+            foreach (ListaFuncionario f in lista)
             {
-                fila.NumeroGrupo = filaActual.NumeroGrupo;
+                insertarListaFuncionario(f);
             }
-            if (!string.IsNullOrEmpty(filaActual.Anno))  //anno
-            {
-                fila.Anno = filaActual.Anno;
-            }
-            if (!string.IsNullOrEmpty(filaActual.Semestre))  //semestre
-            {
-                fila.Semestre = filaActual.Semestre;
-            }
+        }
 
-            /*Profesor*/
-            if (!string.IsNullOrEmpty(filaActual.CorreoProfesor)) //CorreoDocente
-            {
-                fila.CorreoProfesor = filaActual.CorreoProfesor;
-            }
-            if (!string.IsNullOrEmpty(filaActual.IdProfesor)) //Id Profesor
-            {
-                fila.IdProfesor = filaActual.IdProfesor;
-            }
-            if (!string.IsNullOrEmpty(filaActual.NombreProfesor)) //Nombre Profe
-            {
-                fila.NombreProfesor = filaActual.NombreProfesor;
-            }
-            if (!string.IsNullOrEmpty(filaActual.ApellidoProfesor)) //apellidoProfa
-            {
-                fila.ApellidoProfesor = filaActual.ApellidoProfesor;
-            }
-            if (!string.IsNullOrEmpty(filaActual.TipoIdProfesor)) //TipoIdProfesor
-            {
-                fila.TipoIdProfesor = filaActual.TipoIdProfesor;
-            }
-
-            /*Estudiante*/
-            if (!string.IsNullOrEmpty(filaActual.CorreoEstudiante)) //CorreoEstudiantes
-            {
-                fila.CorreoEstudiante = filaActual.CorreoEstudiante;
-            }
-            if (!string.IsNullOrEmpty(filaActual.IdEstudiante)) //Id Estudiante
-            {
-                fila.IdEstudiante = filaActual.IdEstudiante;
-            }
-            if (!string.IsNullOrEmpty(filaActual.NombreEstudiante)) //Nombre Estudiante
-            {
-                fila.NombreEstudiante = filaActual.NombreEstudiante;
-            }
-            if (!string.IsNullOrEmpty(filaActual.ApellidoEstudiante)) //apellido estudiante
-            {
-                fila.ApellidoEstudiante = filaActual.ApellidoEstudiante;
-            }
-            if (!string.IsNullOrEmpty(filaActual.TipoIdEstudiante)) //TipoIdEstudiante
-            {
-                fila.TipoIdEstudiante = filaActual.TipoIdEstudiante;
-            }
+        private void insertarListaFuncionario(ListaFuncionario fila)
+        {
+            db.InsertarPersonaCSV(fila.CorreoPersona, fila.IdPersona, fila.NombrePersona, fila.ApellidoPersona, fila.TipoIdPersona, Convert.ToBoolean(fila.Borrado));
+            db.InsertarFuncionarioCSV(fila.CorreoProfesor); //TODO: Que pasa si no es profesor?
+            db.InsertarProfesorCSV(fila.CorreoProfesor);
         }
 
     }

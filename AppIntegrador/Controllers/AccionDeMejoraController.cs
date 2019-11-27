@@ -18,7 +18,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Index()
         {
             var objetivo = db.AccionDeMejora.Include(o => o.PlantillaAccionDeMejora).Include(o => o.Objetivo);
-            return View(objetivo.ToList());
+            return View("Index", objetivo.ToList());
         }
 
         // GET: AccionDeMejora/Details/5

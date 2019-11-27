@@ -34,9 +34,23 @@ DECLARE @valor AS FLOAT = 0
 	INSERT INTO @Resultados
 		SELECT  O.OpcionSeleccionada 
 		FROM	Opciones_seleccionadas_respuesta_con_opciones AS O
-		WHERE O.PCodigo = 'INFPROF' AND EXISTS (SELECT *
-												FROM ObtenerFormulariosFiltros(@UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores)
-												WHERE FCodigo = O.FCodigo AND CSigla = O.CSigla AND GNumero = O.GNumero AND GSemestre = O.GSemestre AND GAnno = O.GAnno);
+				JOIN Respuestas_a_formulario AS R ON 
+				O.FCodigo = R.FCodigo AND
+				O.Correo = R.Correo AND
+				O.CSigla = R.CSigla AND
+				O.GNumero = R.GNumero AND
+				O.GAnno = R.GAnno AND
+				O.GSemestre = R.GSemestre AND
+				O.Fecha = R.Fecha
+		WHERE	O.PCodigo = 'INFPROF' AND 
+				R.Finalizado = 1 AND
+				EXISTS (SELECT *
+						FROM ObtenerFormulariosFiltros(@UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores)
+						WHERE	FCodigo = O.FCodigo AND 
+								CSigla = O.CSigla AND 
+								GNumero = O.GNumero AND 
+								GSemestre = O.GSemestre AND 
+								GAnno = O.GAnno);
 
 	DECLARE C CURSOR FOR SELECT Opcion_seleccionada FROM @Resultados
 	OPEN C
