@@ -41,9 +41,31 @@ namespace AppIntegrador.Controllers
                 Ano = serializer.Serialize(ano),
                 FechaInicio = serializer.Serialize(fechaInicio),
                 FechaFin = serializer.Serialize(fechaFin),
-                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario))
+                Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
+                Seccioncitas = ObtenerSeccionesDropDown(codigoFormulario)
             };
             return View(modelo);
+        }
+
+
+        /*  ID: COD-65: Yo como administrador quiero ver las secciones que componen un formulario
+            específico.
+            Tarea: Crear un método que recupere las secciones asociadas a un formulario
+        */
+        public IEnumerable<SelectListItem> ObtenerSeccionesDropDown(String codigoFormulario)
+        {
+
+            var secciones = from f in db.Formulario
+                            join fs in db.Formulario_tiene_seccion on f.Codigo equals fs.FCodigo
+                            join s in db.Seccion on fs.SCodigo equals s.Codigo
+                            where f.Codigo == codigoFormulario
+                            orderby fs.Orden
+                            select new SelectListItem { Value = fs.SCodigo, Text = s.Nombre };
+
+            var listaSecciones = secciones.ToList();
+
+            return listaSecciones;
+
         }
 
         // GET: PreguntasFormulario
@@ -135,6 +157,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(ejeY);
         }
 
+        // TESTED
         public String ObtenerRespuestasTextoAbierto(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -154,6 +177,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas.ToList());
         }
 
+        // TESTED
         public String GetTipoPregunta(String codigoPregunta)
         {
             String tipo = "";
@@ -226,6 +250,7 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(respuestas);
         }
 
+        // TESTED
         public String getJustificacionPregunta(String codigoFormulario, String siglaCurso, Byte numeroGrupo, Byte semestre, Int32 ano, System.DateTime fechaInicio, System.DateTime fechaFin, String codigoSeccion, String codigoPregunta)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -266,6 +291,8 @@ namespace AppIntegrador.Controllers
             return serializer.Serialize(resultadoMediana.Value);
         }
 
+
+        // TESTED
         //Denisse Alfaro P. Josue Zeledon R.
         //COD-4: Visualizar el promedio para las respuestas de las preguntas de escala numérica. 
         //Tarea técnica: Al seleccionar una pregunta de escala numerica en la vista, invocar al controlador para que este llame a la funcion de la base de datos. 

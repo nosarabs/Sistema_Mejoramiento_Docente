@@ -10,7 +10,6 @@ using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]
@@ -316,6 +315,17 @@ namespace AppIntegrador.Tests.Controllers
 
             return tipoScript;
 
+        }
+
+        [TestMethod]
+        public void TestSeccionesFormulario()
+        {
+            // Arrange
+            ResultadosFormularioController controller = new ResultadosFormularioController();
+            //Act 
+            IEnumerable<SelectListItem> result = controller.ObtenerSeccionesDropDown("00000001");
+            // Assert
+            Assert.IsNotNull(result);
         }
 
     }

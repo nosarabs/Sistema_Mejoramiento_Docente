@@ -199,6 +199,33 @@ canvas{
     border-radius: 3px;
 }
 
+#promedios {
+    height: 30%;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 1% !important;
+}
+
+#promedios .col{
+    height: 100%;
+    margin:0 !important;
+    padding:0 !important;
+}
+
+#cuadricula {
+    height: 70%;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 1% !important;
+    padding-bottom: 1.5% !important;
+}
+
+#cuadricula .col {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .multiselect-container > li > a > label.checkbox {
     padding: 2%;
     background-color: none;

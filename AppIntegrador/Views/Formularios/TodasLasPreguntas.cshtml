@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<AppIntegrador.Models.PreguntaConNumeroSeccion>
 
-@{ 
+@{
     Layout = null;
 }
 
@@ -17,6 +17,10 @@
     <div>
         @(pregunta.OrdenPregunta + 1).
         @Html.DisplayFor(model => pregunta.Pregunta.Enunciado)
+        @if (pregunta.Edit)
+        {
+            <button type="button" [disabled]="true" class="remove-button btn btn-danger" style="margin-left: 3%" id="borrarPreg" onclick="BorrarPregunta('@pregunta.CodigoSeccion', '@pregunta.Pregunta.Codigo')">X</button>
+        }
         @if (pregunta.Pregunta.Tipo == "S")
         {
             { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
