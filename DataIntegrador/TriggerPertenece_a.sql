@@ -8,7 +8,7 @@
 	select @CodCarrera = i.CodCarrera, @SiglaCurso = i.SiglaCurso, @codEnf = i.CodEnfasis
 	from inserted i
 	BEGIN
-		if((@CodCarrera not in (select CodCarrera from Pertenece_a) or @SiglaCurso not in (select SiglaCurso from Pertenece_a) or @codEnf not in(select CodEnfasis from Pertenece_a)) and (@codEnf not like '' and @CodCarrera not like '' and @SiglaCurso not like ''))
+		if(not exists (select * from Pertenece_a where CodCarrera= @CodCarrera and @SiglaCurso = SiglaCurso and  CodEnfasis = @codEnf) and (@codEnf not like '' and @CodCarrera not like '' and @SiglaCurso not like ''))
 		begin
 			insert into Pertenece_a select * from inserted
 		end

@@ -8,7 +8,7 @@
 	select @CodUnidad = i.CodUnidadAc, @CodCarrera = i.CodCarrera
 	from inserted i
 	BEGIN
-		if((@CodUnidad not in (select CodUnidadAc from Inscrita_en) or @CodCarrera not in (select CodCarrera from Inscrita_en)) and @CodUnidad not like '' and @CodCarrera not like '')
+		if(not exists (select * from Inscrita_en where CodUnidadAc= @CodUnidad and CodCarrera =@CodCarrera) and @CodUnidad not like '' and @CodCarrera not like '')
 		begin
 			insert into Inscrita_en select * from inserted
 		end

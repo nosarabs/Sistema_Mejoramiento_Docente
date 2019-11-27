@@ -6,7 +6,7 @@
 	SELECT @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
 	FROM inserted i
 	BEGIN
-		IF((@sigla NOT IN (SELECT SiglaCurso FROM Grupo) or @num NOT IN (SELECT NumGrupo FROM Grupo) or @semestre NOT IN (SELECT Semestre FROM Grupo) or @anno NOT IN (SELECT Anno FROM Grupo)) and @sigla not like '' and @num not like '' and @semestre not like '' and @anno not like '')
+		IF(NOT EXISTS (SELECT * FROM Grupo WHERE SiglaCurso = @sigla and NumGrupo = @num and Semestre =@semestre and Anno =@anno) and @sigla not like '' and @num not like '' and @semestre not like '' and @anno not like '')
 		BEGIN
 			INSERT INTO Grupo SELECT * FROM inserted
 		END
