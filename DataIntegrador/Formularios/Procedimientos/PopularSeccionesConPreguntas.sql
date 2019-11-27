@@ -15,6 +15,10 @@ BEGIN
 				@nombre = 'Sobre el profesor';
 
 			EXEC dbo.AgregarSeccion 
+				@codigo = 'SUPRUEBA',
+				@nombre = 'Seccion con preguntas de Seleccion Unica';
+			
+			EXEC dbo.AgregarSeccion 
 				@codigo = 'PERSONAL',
 				@nombre = 'Sobre usted como estudiante del curso';
 
@@ -32,6 +36,7 @@ BEGIN
 				WHEN NOT MATCHED BY TARGET THEN
 				INSERT (SCodigo, PCodigo, Orden)
 				VALUES (SCodigo, PCodigo, Orden);
+				
 				COMMIT TRANSACTION popularSecciones;
 			END TRY
 	BEGIN CATCH
