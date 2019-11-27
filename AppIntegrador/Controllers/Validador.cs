@@ -9,7 +9,6 @@ namespace AppIntegrador.Controllers
 {
     public class Validador
     {
-
         private bool ValidarUnidad (String codigoUnidad, string Nombre)
         {
             bool valido=false;

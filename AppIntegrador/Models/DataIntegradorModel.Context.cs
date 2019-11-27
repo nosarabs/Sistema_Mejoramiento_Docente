@@ -18,7 +18,6 @@ namespace AppIntegrador.Models
 
     public partial class DataIntegradorEntities : DbContext
     {
-        private static string __hack = typeof(SqlProviderServices).ToString();
         public DataIntegradorEntities()
             : base("name=DataIntegradorEntities")
         {
@@ -69,6 +68,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<EnlaceSeguro> EnlaceSeguro { get; set; }
     
         [DbFunction("Entities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
@@ -1334,6 +1334,32 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual int AgregarEnlaceSeguro(string usuarioAsociado, string urlReal, Nullable<System.DateTime> expira, ObjectParameter resultadohash, ObjectParameter estado)
+        {
+            var usuarioAsociadoParameter = usuarioAsociado != null ?
+                new ObjectParameter("usuarioAsociado", usuarioAsociado) :
+                new ObjectParameter("usuarioAsociado", typeof(string));
+    
+            var urlRealParameter = urlReal != null ?
+                new ObjectParameter("urlReal", urlReal) :
+                new ObjectParameter("urlReal", typeof(string));
+    
+            var expiraParameter = expira.HasValue ?
+                new ObjectParameter("expira", expira) :
+                new ObjectParameter("expira", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarEnlaceSeguro", usuarioAsociadoParameter, urlRealParameter, expiraParameter, resultadohash, estado);
+        }
+    
+        public virtual int GetTeacherName(string correo, ObjectParameter nombreCompleto)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTeacherName", correoParameter, nombreCompleto);
         }
     }
 }

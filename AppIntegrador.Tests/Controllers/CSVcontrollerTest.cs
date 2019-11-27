@@ -74,17 +74,5 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsTrue(result);
         }
 
-        [TestMethod]
-        public void TestSQL()
-        {
-            // Arrange
-            //Creo el controlador y su contexto
-            CSVController controller = new CSVController();
-            var file = "Select * from Database";
-            // Act
-            var result = controller.prueba(file);
-            // Assert
-            Assert.IsTrue(result);
-        }
     }
 }
