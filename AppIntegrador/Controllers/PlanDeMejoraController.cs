@@ -29,13 +29,25 @@ namespace AppIntegrador.Controllers
 
         // GET: PlanDeMejora
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(List<PlanDeMejora> planes = null)
         {
+            if(planes == null)
+            {
+                planes = db.PlanDeMejora.ToList();
+            }
+
             HttpContext context = System.Web.HttpContext.Current;
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
-            return View("Index", db.PlanDeMejora.ToList());
+            
+            return View("Index", planes);
+        }
+
+        public ActionResult Buscar(String nombrePlan)
+        {
+            var planes = db.PlanDeMejora.Where(x => x.nombre.Contains(nombrePlan)).ToList();
+            return Index(planes);
         }
 
         /*
