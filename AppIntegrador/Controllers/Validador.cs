@@ -1,4 +1,4 @@
-﻿/*using AppIntegrador.Models;
+﻿using AppIntegrador.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,32 +9,6 @@ namespace AppIntegrador.Controllers
 {
     public class Validador
     {
-
-        public bool ValidaCSVRow(ArchivoCSV fila, int tipo)
-        {
-            switch (tipo)
-            {
-                case 1: //Unidad Academica
-                    break;
-                case 2: //Carrera
-                    break;
-                case 3://Enfasis
-                    break;
-                case 4://Curso
-                    break;
-                case 5: //Grupo
-                    break;
-                case 6: //Profesor
-                    break;
-                case 7: //Estudiante
-                    break;
-                case 8: //Imparten
-                    break;
-                case 9: //Matriculados
-                    break;
-            }
-            return true;
-        }
 
         private bool ValidarUnidad (String codigoUnidad, string Nombre)
         {
@@ -74,5 +48,51 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
+        public bool checkForSQLInjection(string userInput) // Basado en el codigo encontrado en http://aspdotnetmyblog.blogspot.com/2013/10/how-to-check-string-against-sql.html
+        {
+            bool isSQLInjection = false;
+            string[] sqlCheckList = { //palabras reservadas SQL injection
+                "--",
+                ";--",
+                ";",
+                "/*",
+                "*/",
+                "@@",
+                "@",
+                "char",
+                "nchar",
+                "varchar",
+                "nvarchar",
+                "alter",
+                "begin",
+                "cast",
+                "create",
+                "cursor",
+                "declare",
+                "delete",
+                "drop",
+                "end",
+                "exec",
+                "execute",
+                "fetch",
+                "insert",
+                "kill",
+                "select",
+                "sys",
+                "sysobjects",
+                "syscolumns",
+                "table",
+                "update"
+                };
+            string CheckString = userInput.Replace("'", "''");
+            for (int i = 0; i <= sqlCheckList.Length - 1; i++)
+            {
+                if ((CheckString.IndexOf(sqlCheckList[i],
+                    StringComparison.OrdinalIgnoreCase) >= 0))
+                { isSQLInjection = true; }
+            }
+            return isSQLInjection;
+        }
     }
-}*/
+
+}
