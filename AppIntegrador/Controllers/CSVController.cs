@@ -29,7 +29,6 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file, int? tipoArchivo)
         {
-            System.Diagnostics.Debug.WriteLine(tipoArchivo);
             if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
                 try
                 {
@@ -134,6 +133,8 @@ namespace AppIntegrador.Controllers
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
             IEnumerable<ListaEstudiante> datos = cc.Read<ListaEstudiante>(path, inputFileDescription);
             List<ListaEstudiante> lista = datos.ToList();
+
+ 
 
             //Se valida cada fila de CSV
             foreach (ListaEstudiante f in lista)
