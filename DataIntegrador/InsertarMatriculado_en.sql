@@ -9,7 +9,6 @@ AS
 BEGIN
 
 	INSERT INTO Matriculado_en(CorreoEstudiante, SiglaCurso, NumGrupo, Semestre, Anno)
-
 	VALUES (@Correo, @Sigla, @NumGrupo, @Semestre, @Anno)
 
 END

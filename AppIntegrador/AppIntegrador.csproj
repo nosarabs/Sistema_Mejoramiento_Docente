@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ActivaFormularioController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EnlaceSeguroController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
@@ -239,6 +240,9 @@
     <Compile Include="Models\EnfasisXCarrera_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnlaceSeguro.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Escalar.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -260,7 +264,6 @@
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
-    <Compile Include="Models\LlenarCSV.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
@@ -413,9 +416,6 @@
     <Content Include="Content\images\defaultuser.png" />
     <Content Include="Content\images\firma.png" />
     <Content Include="Content\images\logo_ucr.png" />
-    <Content Include="Content\images\ucr_promo.png" />
-    <Content Include="Content\Main.css" />
-    <Content Include="Content\Main.min.css" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
     <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
@@ -553,10 +553,7 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="ArchivoCSV\archivo.csv" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
@@ -715,10 +712,11 @@
     <Content Include="Views\PlanDeMejora\_ModalAnadirFormularios.cshtml" />
     <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
+    <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
+    <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ArchivoCSV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

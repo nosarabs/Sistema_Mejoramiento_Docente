@@ -74,5 +74,59 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        //Este test se encarga de verificar que se valida la longitud del codigo de unidad academica
+        public void TestValidaUnidad()
+        {
+            CSVController controller = new CSVController();
+            ArchivoCSV prueba_malo = new ArchivoCSV();
+            prueba_malo.CodigoUnidad = "999999999999999999999999999";
+            var result = controller.validarEntradas(prueba_malo);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        //Este test se encarga de verificar que se valida que el valor de un grupo es numerico
+        public void TestGrupoNumero()
+        {
+            CSVController controller = new CSVController();
+            ArchivoCSV prueba_malo = new ArchivoCSV();
+            prueba_malo.NumeroGrupo = "Texto";
+            var result = controller.validarEntradas(prueba_malo);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        //Este test se encarga de verificar que se valida que el valor de un grupo es positivo
+        public void TestGrupoPositivo()
+        {
+            CSVController controller = new CSVController();
+            ArchivoCSV prueba_malo = new ArchivoCSV();
+            prueba_malo.NumeroGrupo = "-10";
+            var result = controller.validarEntradas(prueba_malo);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        //Este test se encarga de verificar que se valida que el valor de un semestre no es mayor a 3
+        public void TestSemestreMayor()
+        {
+            CSVController controller = new CSVController();
+            ArchivoCSV prueba_malo = new ArchivoCSV();
+            prueba_malo.Semestre = "100";
+            var result = controller.validarEntradas(prueba_malo);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        //Este test se encarga de verificar que se valida que el valor la sigla de un curso no es mayor a 50 caracteres
+        public void TestValidaSigla()
+        {
+            CSVController controller = new CSVController();
+            ArchivoCSV prueba_malo = new ArchivoCSV();
+            prueba_malo.SiglaCurso = "123456371939573719563751637218362463628818191919343CI1111111";
+            var result = controller.validarEntradas(prueba_malo);
+            Assert.IsFalse(result);
+        }
     }
 }

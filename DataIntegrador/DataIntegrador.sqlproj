@@ -73,6 +73,8 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
+    <Folder Include="FiltrosFormulario" />
+    <Folder Include="Usuarios y Perfiles\Indices" />
     <Folder Include="PlanesDeMejora\Indices" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +241,10 @@
     <Build Include="PlanesDeMejora\Indices\IndicePlanMejora.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesObjetivos.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionesDeMejora.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
+    <Build Include="EnlaceSeguro.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
