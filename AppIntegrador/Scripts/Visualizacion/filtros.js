@@ -165,6 +165,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroUA";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
         
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoUA() };
@@ -179,12 +180,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
+        //var defaultOption = document.createElement("option");
+        //defaultOption.className = "option";
+        //defaultOption.value = "null";
+        //defaultOption.text = "Seleccione una opción...";
 
-        filtro.appendChild(defaultOption);
+        //filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarUAs(listaCE, listaP, listaG);
 

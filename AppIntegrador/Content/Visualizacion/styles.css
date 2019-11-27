@@ -199,6 +199,7 @@ canvas{
     border-radius: 3px;
 }
 
+/*Estilo para la sección donde se despliegan los promedios de profesor y cursos*/
 #promedios {
     height: 30%;
     margin: 0 !important;
@@ -206,12 +207,14 @@ canvas{
     margin-bottom: 1% !important;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de promedios*/
 #promedios .col{
     height: 100%;
     margin:0 !important;
     padding:0 !important;
 }
 
+/*Estilo para la sección donde se despliega la cuadrícula con resultados de un formulario*/
 #cuadricula {
     height: 70%;
     margin: 0 !important;
@@ -220,6 +223,7 @@ canvas{
     padding-bottom: 1.5% !important;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de cuadrícula*/
 #cuadricula .col {
     height: 100%;
     margin: 0 !important;

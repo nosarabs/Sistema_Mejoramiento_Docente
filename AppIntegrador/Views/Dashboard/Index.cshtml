@@ -1,22 +1,28 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
+@Scripts.Render("~/Scripts/Visualizacion//multiselect.min.js")
 @Scripts.Render("~/Scripts/jquery-3.4.1.js")
 @Scripts.Render("~/Scripts/bootstrap.min.js")
-@Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
 @Scripts.Render("~/Scripts/Visualizacion/filtros.js")
 @Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
+@Styles.Render("~/Content/Visualizacion/multiselect.css")
 @Styles.Render("~/Content/Visualizacion/styles.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
-@Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+
 
 <head>
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
+
+    @*<link href="~/Content/Visualizacion/multiselect.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/Visualizacion/multiselect.min.js"></script>*@
+
+
 </head>
 
 <body>
     <h3>Dashboard</h3>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-3" id="panelFiltros">
@@ -45,6 +51,10 @@
     var filtros = new Filtros();
     filtros.crearFiltros();
 
+</script>
+
+<script>
+    document.multiselect('#filtroUA');
 </script>
 
 <script>
@@ -168,5 +178,6 @@
 
     }
 </script>
+
 
 

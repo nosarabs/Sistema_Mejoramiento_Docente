@@ -407,6 +407,7 @@
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\Visualizacion\multiselect.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
@@ -575,6 +576,8 @@
     <Content Include="Scripts\Visualizacion\graficos.js" />
     <Content Include="Scripts\Visualizacion\graficosDashboard.js" />
     <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
+    <Content Include="Scripts\Visualizacion\multiselect.core.js" />
+    <Content Include="Scripts\Visualizacion\multiselect.min.js" />
     <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
