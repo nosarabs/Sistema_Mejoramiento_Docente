@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Index()
         {
             var accionable = db.Accionable.Include(a => a.AccionDeMejora);
-            return View("Índice", accionable.ToList());
+            return View("Index", accionable.ToList());
         }
 
         // Hay que refactorizar este metodo para que no utilice Session

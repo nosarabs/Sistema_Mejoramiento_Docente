@@ -7,8 +7,9 @@
 	fechaInicio date,
 	fechaFin date,
 	progreso int,
-
-	constraint DateOrderAcci check(fechaFin >= fechaInicio),
+	peso int,
+	pesoPorcentaje int,
+    constraint DateOrderAcci check(fechaFin >= fechaInicio),
 	constraint PK_Accionable primary key(codPlan, nombreObj, descripAcMej, descripcion),
 	constraint FK_Accionable_AccionDeMejora foreign key(codPlan, nombreObj, descripAcMej)
 		references AccionDeMejora(codPlan, nombreObj, descripcion) on delete cascade
