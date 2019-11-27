@@ -58,7 +58,7 @@
                     Nombre
                 </th>
                 <th>
-                    Operaciones
+                    Acciones
                 </th>
             </tr>
 
@@ -72,7 +72,9 @@
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
                     <td>
-                        @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo })
+                        @Html.ActionLink("Llenar", "LlenarFormulario", new { id = item.Codigo }) |
+                        @Html.ActionLink("Vista previa", "VistaPrevia", new { id = item.Codigo })
+
                     </td>
                 </tr>
             }

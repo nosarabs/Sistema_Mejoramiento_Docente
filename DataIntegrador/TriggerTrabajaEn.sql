@@ -4,12 +4,18 @@
 	AS
 	declare @Correo varchar(50)
 	declare @CodUnidad varchar(10)
-
-	select @Correo = i.CorreoFuncionario, @CodUnidad = i.CodUnidadAcademica
-	from inserted i
-	BEGIN
-		if(@CodUnidad not in (select CodUnidadAcademica from Trabaja_en) or @Correo not in (select CorreoFuncionario from Trabaja_en))
-		begin
-			insert into Trabaja_en select * from inserted
-		end
-	END
+	DECLARE cursor_TrabajaEn CURSOR
+	FOR SELECT CorreoFuncionario, CodUnidadAcademica
+	FROM inserted;
+	OPEN cursor_TrabajaEn;
+	FETCH NEXT FROM cursor_TrabajaEn INTO @Correo, @CodUnidad
+	WHILE @@FETCH_STATUS = 0
+		BEGIN
+			if(not exists (select * from Trabaja_en where CodUnidadAcademica=@CodUnidad and CorreoFuncionario = @Correo) and (@CodUnidad not like '' and @Correo not like ''))
+			begin
+				insert into Trabaja_en select * from inserted
+			end
+			FETCH NEXT FROM cursor_TrabajaEn INTO @Correo, @CodUnidad
+		END
+	CLOSE cursor_TrabajaEn
+	DEALLOCATE cursor_TrabajaEn
