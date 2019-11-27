@@ -73,6 +73,11 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
+    <Folder Include="FiltrosFormulario" />
+    <Folder Include="Usuarios y Perfiles\Indices" />
+    <Folder Include="PlanesDeMejora\Indices" />
+    <Folder Include="Filtros\Indices" />
+    <Folder Include="Filtros\FiltrosFormulario\Indices" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -232,6 +237,19 @@
     <Build Include="Filtros\FiltrosUA\ObtenerUAsFiltros.sql" />
     <Build Include="Filtros\FiltrosUA\ObtenerUAsGrupo.sql" />
     <Build Include="Filtros\FiltrosUA\ObtenerUAsProfesor.sql" />
+    <Build Include="Filtros\Indices\Index_CodigoPregunta_OpSelecRespConOps.sql" />
+    <Build Include="Filtros\Indices\Index_Finalizado_RespForm.sql" />
+    <Build Include="Filtros\FiltrosFormulario\Indices\Index_FechaFin.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\getPlanFull.sql" />
+    <Build Include="PlanesDeMejora\Indices\nombrePersona.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\GetTeacherName.sql" />
+    <Build Include="PlanesDeMejora\Indices\IndicePlanMejora.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesObjetivos.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionesDeMejora.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
+    <Build Include="EnlaceSeguro.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

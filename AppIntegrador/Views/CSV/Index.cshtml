@@ -1,6 +1,5 @@
-﻿@model AppIntegrador.Models.ArchivoCSV
-
-@{
+﻿@{
+    int @clasificador = 0;
     ViewBag.Title = "Index";
 }
 
@@ -27,11 +26,17 @@
             <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
             <label class="custom-file-label" for="customFile">Elija un archivo</label>
         </div>
+        <select id="tipoArchivo" name="tipoArchivo" class="form-control my-form-control">
+            <option value=1>Lista de Clase</option>
+            <option value=2>Guia de Horario</option>
+            <option value=3>Lista de Estudiantes</option>
+            <option value=4>Lista de Funcionarios</option>
+        </select>
 
         <br>
         <br>
-            <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
-            <input type="submit" value="Subir CSV" class="btn btn-primary" />
+        <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
+        <input type="submit" value="Subir CSV" class="btn btn-primary" />
         <br>
         <br>
 
@@ -58,9 +63,9 @@
                     table.setAttribute('class', 'table table-hover table-striped table-bordered table-sm '); //Una clase para usar bootstrap
                     table.setAttribute('width', '500px');
                     var rows = e.target.result.split("\n"); //Cantidad de Filas
-                    
+
                     var rowHeader = table.insertRow(-1);
-                    var cellsHeader = rows[0].split(","); 
+                    var cellsHeader = rows[0].split(",");
                     if (cellsHeader.length > 1) {
                         for (var i = 0; i < cellsHeader.length; ++i) {
                             var headerCell = document.createElement("TH");

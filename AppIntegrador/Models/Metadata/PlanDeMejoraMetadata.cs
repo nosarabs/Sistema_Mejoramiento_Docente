@@ -13,6 +13,7 @@ namespace AppIntegrador.Models.Metadata
 
     public class PlanDeMejoraMetadata
     {
+        [Key]
         [Display(Name = "Código")]
         [Required(ErrorMessage = "Este campo es necesario")]
         [Range(0, int.MaxValue, ErrorMessage = "Este valor debe ser un número entero no negativo")]

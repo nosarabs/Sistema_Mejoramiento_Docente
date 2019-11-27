@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ActivaFormularioController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EnlaceSeguroController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
@@ -187,6 +188,8 @@
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
+    <Compile Include="Controllers\Validador.cs" />
+    <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -239,6 +242,9 @@
     <Compile Include="Models\EnfasisXCarrera_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnlaceSeguro.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Escalar.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -259,6 +265,10 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GuiaHorario.cs" />
+    <Compile Include="Models\ListaClase.cs" />
+    <Compile Include="Models\ListaEstudiante.cs" />
+    <Compile Include="Models\ListaFuncionario.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
@@ -266,6 +276,7 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\ProfesoresFiltros.cs" />
     <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
@@ -398,14 +409,22 @@
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
+    <Content Include="Content\images\defaultuser.png" />
+    <Content Include="Content\images\firma.png" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
+    <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -417,6 +436,9 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
@@ -550,7 +572,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
@@ -637,7 +658,7 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
-    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
+    <Content Include="Views\Objetivos\_TablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
@@ -671,8 +692,6 @@
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
     <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
-    <Content Include="Views\TipoObjetivos\Delete.cshtml" />
-    <Content Include="Views\TipoObjetivos\Details.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
     <Content Include="Views\Objetivos\_DeletePartialModal.cshtml" />
@@ -690,7 +709,17 @@
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
     <Content Include="Views\ActivaFormulario\Edit.cshtml" />
     <Content Include="Views\ActivaFormulario\Index.cshtml" />
+    <Content Include="Views\PlanDeMejora\Crear.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirFormularios.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaFormularios.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalAnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalAnadirFormularios.cshtml" />
+    <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
+    <Content Include="Views\TipoObjetivos\Index.cshtml" />
     <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
+    <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
