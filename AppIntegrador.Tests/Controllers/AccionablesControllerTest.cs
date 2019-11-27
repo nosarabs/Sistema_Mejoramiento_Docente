@@ -46,7 +46,7 @@ namespace AppIntegrador.Tests.Controllers
 
 
             var controller = new AccionablesController();
-            var resultado = controller.Create(0, "nombObj", "descrAcMej", "FechaInicio", "FechaFin", true);
+            var resultado = controller.Create(0, "nombObj", "descrAcMej", "FechaInicio", "FechaFin", 1, true);
             Assert.IsNotNull(resultado);
         }
 

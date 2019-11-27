@@ -40,5 +40,12 @@ namespace AppIntegrador.Models.Metadata
         [Display(Name = "Progreso")]
         [Range(0, 100, ErrorMessage = "El progreso es un número entre 0 y 100")]
         public Nullable<int> progreso { get; set; }
+
+        [Display(Name = "Peso")]
+        public Nullable<int> peso { get; set; }
+
+        [Display(Name = "Porcentaje de peso")]
+        [Range(0, 100, ErrorMessage = "El porcentaje es un número entre 0 y 100")]
+        public Nullable<int> pesoPorcentaje { get; set; }
     }
 }

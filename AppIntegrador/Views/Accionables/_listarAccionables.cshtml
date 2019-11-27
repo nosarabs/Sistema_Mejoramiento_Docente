@@ -37,20 +37,20 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.progreso)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaFin)
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.progreso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaFin)
+                </td>
+            </tr>
             }
         </tbody>
     </table>
