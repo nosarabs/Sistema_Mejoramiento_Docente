@@ -22,10 +22,10 @@
 					INSERT INTO Matriculado_en SELECT * FROM inserted
 				END
 				FETCH NEXT FROM cursor_Matriculado_en INTO @correo, @sigla, @num, @semestre, @anno
+			END
 		CLOSE cursor_Matriculado_en
 		DEALLOCATE cursor_Matriculado_en
 
 	Commit Transaction transaccionMatriculadoEn;
 	--Volver al nivel de aislamiento por default
 	set transaction isolation level read committed;
-END
