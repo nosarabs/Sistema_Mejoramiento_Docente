@@ -100,6 +100,8 @@
         <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.SeAsignaA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3.75" PointY="29.125" />
+        <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

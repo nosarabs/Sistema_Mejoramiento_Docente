@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -8,10 +7,8 @@ using AppIntegrador.Models;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Objects;
-using System.Web.Security;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
-using System.Globalization;
 using Security.Authentication;
 
 namespace AppIntegrador.Controllers
@@ -109,7 +106,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Usuario objUser)
+        public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
             ViewBag.EnableBS4NoNavBar = true;
@@ -138,6 +135,10 @@ namespace AppIntegrador.Controllers
                         if (ConfigureSession(objUser.Username))
                         {
                             auth.SetAuthCookie(objUser.Username, false);
+                            if (returnUrl != null)
+                            {
+                                return Redirect(returnUrl);
+                            }
                             return RedirectToAction("Index");
                         }
                         /*Sino, no puede entrar al sistema sin perfiles asociados.*/

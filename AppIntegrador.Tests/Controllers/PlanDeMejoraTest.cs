@@ -100,7 +100,7 @@ namespace AppIntegrador.Tests.Controllers
             db.Setup(m => m.PlanDeMejora.Add(plan));
             db.Setup(m => m.SaveChanges());
             var controller = new PlanDeMejoraController(db.Object);
-            var result = controller.Crear(plan, null);
+            var result = controller.Crear(plan);
             Assert.IsNotNull(result);
             controller.Dispose();
         }
@@ -115,7 +115,7 @@ namespace AppIntegrador.Tests.Controllers
             PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin };
 
             var controller = new PlanDeMejoraController();
-            var result = controller.Crear(plan, null);
+            var result = controller.Crear(plan);
             Assert.IsNotNull(result);
         }
 

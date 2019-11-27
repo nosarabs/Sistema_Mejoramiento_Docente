@@ -1,96 +1,131 @@
 ﻿$(document).ready(function () {
-    cantidadProfes.init();
+    cantidadProfes = new Counter();
+    cantidadForm = new Counter();
 });
 
-
-cantidadProfes = function () {
-    var current = null;
-    function init() {
-        current = 0;
+class Counter {
+    current = null;
+    constructor() {
+        this.current = 0;
     }
-    function add() {
-        current++;
+    add() {
+        this.current++;
     }
-    function remove() {
-        current--;
+    remove() {
+        this.current--;
     }
-
-    return {
-        init: init,
-        add: add,
-        remove: remove,
-        current: function () { return current; }
-    }
-}();
-
-function seleccionaCheckBoxProfe(element) {
-    if (element.checked) {
-        element.id = "profes[" + cantidadProfes.current() + "].correo";
-        cantidadProfes.add();
-    }
-    else {
-        deseleccionarProfe(element.value);
-        cantidadProfes.remove();
+    getCurrent() {
+        return this.current;
     }
 }
 
-function deseleccionarProfe(correo) {
+function seleccionaCheckBoxGen(element, variable, key, counter) {
+    if (element.checked) {
+        element.id = `${variable}[${counter.getCurrent()}].${key}`;
+        counter.add();
+    }
+    else {
+        deseleccionarGen(variable, key, counter, element.value);
+        counter.remove();
+    }
+}
+
+function deseleccionarGen(variable, key, counter, value) {
     let index = 0;
     let found = true;
-    for (; index < cantidadProfes.current() && found; ++index) {
-        var profe = document.getElementById("profes[" + index + "].correo");
-        if (profe.value.localeCompare(correo) == 0) {
-            profe.setAttribute("name", "");
-            profe.id = null;
+    for (; index < counter.getCurrent() && found; ++index) {
+        var gen = document.getElementById(`${variable}[${index}].${key}`);
+        if (gen.value.localeCompare(value) == 0) {
+            gen.setAttribute("name", "");
+            gen.id = null;
             found = false;
         }
     }
-    for (; index < cantidadProfes.current(); ++index) {
+    for (; index < counter.getCurrent(); ++index) {
         let newIndex = index - 1;
-        let profe = document.getElementById("profes[" + index + "].correo");
-        profe.id = "profes[" + newIndex + "].correo";
+        let gen = document.getElementById(`${variable}[${index}].${key}`);
+        gen.id = `${variable}[${newIndex}].${key}`;
     }
 }
 
-function agregarProfesores() {
-    for (let index = 0; index < cantidadProfes.current(); ++index) {
-        let profe = document.getElementById("profes[" + index + "].correo");
-        profe.setAttribute("name", "ProfeSeleccionado");
+function agregarGen(variable, key, counter, url, attribute, div) {
+    console.log(counter.getCurrent());
+    for (let index = 0; index < counter.getCurrent(); ++index) {
+        let gen = document.getElementById(`${variable}[${index}].${key}`);
+        gen.setAttribute("name", `${attribute}`);
     }
     $.ajax({
         type: 'POST',
-        url: "AnadirProfes",
-        data: $('form').serialize(),
+        url: `${url}`,
+        data: $(`[name=${attribute}]`).serialize(),
         dataType: 'html', //dataType - html
         success: function (result)
         {
-            console.log(result);
-            $("#divTablaProfesores").html(result);
+            $(`${div}`).html(result);
         }
     });
 }
 
-
-function modalProfes() {
-    $('#ModalProfesores').modal();
+function agregarObjetivo() {
+    $.ajax({
+        type: 'POST',
+        url: '/Objetivos/AnadirObjetivo',
+        data: $('#formObjetivos :input').serialize(),
+        dataType: 'html',
+        success: function () {
+            console.log("and i oop");
+        }
+    })
 }
 
-function validarPlanDeMejora() {
-    let fechaInicioPlan = document.getElementById('campoFechaInicioPlanMejora');
-    let fechaFinalPlan = document.getElementById('campoFechaFinPlanMejora');
-    let nombrePlan = document.getElementById('campoNombrePlanMejora');
+function enviarDatosPlan() {
+    $.ajax({
+        type: 'POST',
+        url: '/PlanDeMejora/Crear',
+        data: $('#formPlanMejora :input,[name=ProfeSeleccionado],[name=FormularioSeleccionado]').serialize(),
+        dataType: 'html',
+        success: function () {
+            console.log("and i oop");
+        }
+    })
+}
+
+function modalGen(modal) {
+    $(`${modal}`).modal();
+}
+
+function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
+    let fechaInicio = document.getElementById(campoFechaInicio);
+    let fechaFinal = document.getElementById(campoFechaFin);
+    let nombre = document.getElementById(campoNombre);
+    let totalValidations = campoDescripcion == null ? 2 : 3;
 
     // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
-    let minDate = new Date(); // Todays Date
-    let topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
-    let validator = new Validador(50, 50, minDate, topDate, 'CrearPlanBoton');
+    let minDate = null;
+    let topDate = null; 
+    if (campoFechaInferior != null && campoFechaSuperior != null) {
+        let temp = document.getElementById(campoFechaInferior.id).value;
+        minDate = new Date(temp + 'CST');
+        temp = document.getElementById(campoFechaSuperior.id).value
+        topDate = new Date(temp + 'CST');
+    } else {
+        minDate = new Date(); // Todays Date
+        topDate = new Date(minDate.getFullYear() + 10, minDate.getMonth(), minDate.getDate()); //10 years from now
+    }
+
+    let validator = new Validador(50, 250, minDate, topDate, nombreBoton);
 
     //Definimos la cantidad de validaciones
-    validator.setTotalValidations(2);
+    validator.setTotalValidations(totalValidations);
 
     // Ahora haciendo las validaciones
-    validator.validateSomethingInTextInput(nombrePlan, 50);
-    validator.validateDates(fechaInicioPlan, fechaFinalPlan);
+    validator.validateSomethingInTextInput(nombre, 50);
+    validator.validateDates(fechaInicio, fechaFinal);
+
+    if (campoDescripcion != null) {
+        validator.validateSomethingInTextInput(campoDescripcion, 50);
+    }
+
 
     validator.validityOfForm();
 }

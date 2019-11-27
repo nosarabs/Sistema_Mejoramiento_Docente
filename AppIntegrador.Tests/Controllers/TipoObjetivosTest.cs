@@ -36,50 +36,6 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-        public void DetailsNotNullTest()
-        {
-            String nombre = "Curso";
-            var controller = new TipoObjetivosController();
-            var result = controller.Details(nombre) as ViewResult;
-            Assert.IsNotNull(result);
-            controller.Dispose();
-        }
-
-        [TestMethod]
-        public void DetailsNameTest()
-        {
-            String nombre = "Curso";
-            TipoObjetivosController controller = new TipoObjetivosController();
-            var result = controller.Details(nombre) as ViewResult;
-            Assert.AreEqual(result.ViewName, "Detalles");
-            controller.Dispose();
-        }
-
-        [TestMethod]
-        public void DetailsNotFoundTest()
-        {
-            String nombre = "noexiste";
-            TipoObjetivosController controller = new TipoObjetivosController();
-            var result = controller.Details(nombre) as HttpNotFoundResult;
-            Assert.AreEqual(result.StatusCode, 404);
-            controller.Dispose();
-        }
-
-        [TestMethod]
-        public void DetailsDataMockTest()
-        {
-            var mockdb = new Mock<DataIntegradorEntities>();
-            String nombre = "Curso";
-            TipoObjetivo to = new TipoObjetivo() { nombre = nombre };
-            mockdb.Setup(m => m.TipoObjetivo.Find(nombre)).Returns(to);
-
-            var controller = new TipoObjetivosController(mockdb.Object);
-            var result = controller.Details(nombre) as ViewResult;
-            Assert.AreEqual(result.Model, to);
-            controller.Dispose();
-        }
-
-        [TestMethod]
         public void CreateNotNullTest()
         {
             var controller = new TipoObjetivosController();

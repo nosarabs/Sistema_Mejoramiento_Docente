@@ -35,26 +35,11 @@ namespace AppIntegrador.Controllers
             return View("Index", db.TipoObjetivo.ToList());
         }
 
-        // GET: TipoObjetivos/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TipoObjetivo tipoObjetivo = db.TipoObjetivo.Find(id);
-            if (tipoObjetivo == null)
-            {
-                return HttpNotFound();
-            }
-            return View("Details", tipoObjetivo);
-        }
-
         // GET: TipoObjetivos/Create
         [HttpGet]
         public ActionResult Create()
         {
-            return View("Create");
+            return View("Crear");
         }
 
         // POST: TipoObjetivos/Create
@@ -100,7 +85,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View("Edit", tipoObjetivo);
+            return View("Editar", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Edit/5
@@ -132,7 +117,7 @@ namespace AppIntegrador.Controllers
             {
                 return HttpNotFound();
             }
-            return View("Delete", tipoObjetivo);
+            return View("Eliminar", tipoObjetivo);
         }
 
         // POST: TipoObjetivos/Delete/5

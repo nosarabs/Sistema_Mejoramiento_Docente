@@ -6,7 +6,7 @@
 	SELECT @codigo = i.Codigo
 	FROM inserted i
 	BEGIN
-		IF(@codigo NOT IN (SELECT Codigo FROM Carrera))
+		IF(@codigo NOT IN (SELECT Codigo FROM Carrera) and @codigo not like '')
 		BEGIN
 			INSERT INTO Carrera SELECT * FROM inserted
 		END

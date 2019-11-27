@@ -8,7 +8,7 @@
 	select @Correo = i.CorreoFuncionario, @CodUnidad = i.CodUnidadAcademica
 	from inserted i
 	BEGIN
-		if(@CodUnidad not in (select CodUnidadAcademica from Trabaja_en) or @Correo not in (select CorreoFuncionario from Trabaja_en))
+		if((@CodUnidad not in (select CodUnidadAcademica from Trabaja_en) or @Correo not in (select CorreoFuncionario from Trabaja_en)) and (@CodUnidad not like '' and @Correo not like ''))
 		begin
 			insert into Trabaja_en select * from inserted
 		end

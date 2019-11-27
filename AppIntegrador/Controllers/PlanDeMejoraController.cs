@@ -29,13 +29,25 @@ namespace AppIntegrador.Controllers
 
         // GET: PlanDeMejora
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(List<PlanDeMejora> planes = null)
         {
+            if(planes == null)
+            {
+                planes = db.PlanDeMejora.ToList();
+            }
+
             HttpContext context = System.Web.HttpContext.Current;
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
-            return View("Index", db.PlanDeMejora.ToList());
+            
+            return View("Index", planes);
+        }
+
+        public ActionResult Buscar(String nombrePlan)
+        {
+            var planes = db.PlanDeMejora.Where(x => x.nombre.Contains(nombrePlan)).ToList();
+            return Index(planes);
         }
 
         /*
@@ -61,15 +73,27 @@ namespace AppIntegrador.Controllers
             {
                 plan = new PlanDeMejora();
             }
+            List<String> ProfesoresNombreLista = new List<String>();
             ViewBag.ProfesoresLista = db.Profesor.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach(var profe in ViewBag.ProfesoresLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(profe.Correo, name_op);
+                ProfesoresNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            ViewBag.FormulariosLista = db.Formulario.ToList();
             return View("Crear", plan);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado)
+        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null)
         {
             Profesor profe;
+            Formulario formulario;
             if (ModelState.IsValid && plan != null)
             {
                 if(ProfeSeleccionado != null)
@@ -82,6 +106,18 @@ namespace AppIntegrador.Controllers
                             plan.Profesor.Add(profe);
                     }
                 }
+                if(FormularioSeleccionado != null)
+                {
+                    foreach (var formCod in FormularioSeleccionado)
+                    {
+                        formulario = db.Formulario.Find(formCod);
+                        formulario.PlanDeMejora.Add(plan);
+                        if (!plan.Formulario.Contains(formulario))
+                        {
+                            plan.Formulario.Add(formulario);
+                        }
+                    }
+                }
                 db.PlanDeMejora.Add(plan);
                 db.SaveChanges();
             }
@@ -91,15 +127,38 @@ namespace AppIntegrador.Controllers
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
         {
             List<Profesor> profesores = new List<Profesor>();
-            if(ProfeSeleccionado != null)
+            List<String> ProfesoresNombreLista = new List<String>();
+            ObjectParameter name_op;
+            if (ProfeSeleccionado != null)
             {
                 foreach (var correo in ProfeSeleccionado)
                 {
                     var profesor = db.Profesor.Find(correo);
                     profesores.Add(profesor);
+
+                    name_op = new ObjectParameter("NombreCompleto", "");
+                    db.GetTeacherName(correo, name_op);
+                    ProfesoresNombreLista.Add(name_op.Value.ToString());
                 }
             }
-            return PartialView("_TablaProfesores", profesores);
+            ViewBag.ProfesoresLista = profesores;
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            return PartialView("_TablaProfesores");
+        }
+
+        [HttpPost]
+        public ActionResult AnadirFormularios(List<String> FormularioSeleccionado)
+        {
+            List<Formulario> formularios = new List<Formulario>();
+            if (FormularioSeleccionado != null)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    var formulario = db.Formulario.Find(codigo);
+                    formularios.Add(formulario);
+                }
+            }
+            return PartialView("_TablaFormularios", formularios);
         }
 
         //Agregado por: Johan Córdoba
