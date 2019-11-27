@@ -430,6 +430,7 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\PlanesDeMejora\ClasesPlanesMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\Validator.js" />

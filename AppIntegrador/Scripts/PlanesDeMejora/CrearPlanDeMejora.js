@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿import * as clases from 'ClasesPlanesMejora';
+
+$(document).ready(function () {
     cantidadProfes = new Counter();
     cantidadForm = new Counter();
 });
