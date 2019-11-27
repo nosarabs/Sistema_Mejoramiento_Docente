@@ -41,5 +41,12 @@ namespace AppIntegrador.Models.Metadata
         public string NombreCompleto { get; set; }
         [Display(Name = "Perfil asignado")]
         public bool HasProfileInEmph { get; set; }
+
+        private static void MyContext()
+        {
+            var type = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
+            if (type == null)
+                throw new Exception("Do not remove, ensures static reference to System.Data.Entity.SqlServer");
+        }
     }
 }
