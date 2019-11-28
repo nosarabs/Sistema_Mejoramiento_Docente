@@ -270,9 +270,6 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlanMejora.cs" />
-    <Compile Include="Models\ProfesoresFiltros.cs" />
-    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -315,15 +312,13 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
-    <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\PlanDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\PlantillaAccionDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -345,6 +340,11 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
+    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
+    <Compile Include="Models\PermissionsViewHolder.cs" />
+    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\ProfilePermissionViewHolder.cs" />
     <Compile Include="Models\Responde_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -430,7 +430,6 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\PlanesDeMejora\ClasesPlanesMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\Validator.js" />
@@ -538,13 +537,6 @@
     <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
     <Content Include="compilerconfig.json" />
     <Content Include="Content\Main.scss" />
-    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataIntegradorModel.edmx.diagram">
-      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -555,6 +547,13 @@
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="ArchivoCSV\archivo.csv" />
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
