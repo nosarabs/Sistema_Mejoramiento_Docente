@@ -22,37 +22,43 @@
 </head>
 
 <body>
-    <div class="card card-body shadow">
-        <h3>Asignación de formulario</h3>
-        <div class="card-body grisUCR2">
+    <div class="container">
+        <div class="card card-body shadow">
+            <h3>Asignación de formulario</h3>
+            <div class="card-body grisUCR2">
+                @using (Html.BeginForm(FormMethod.Get))
+                {
 
-            <div class="row">
-                <div class="form-group col-lg-6" id="panelFiltros">
-                </div>
-                <div class="form-group col-lg-offset-5">
-                    <form class="form-inline">
-                        <div class="form-group ">
-                            <label for="inputPassword2" class="sr-only">Password</label>
-                            <input type="text" class="form-control" id="inputPassword1" placeholder="Fecha inicio">
+                    <div class="row">
+                        <div class="form-group col-lg-6" id="panelFiltros">
                         </div>
-                        <div class="form-group">
-                            <label for="inputPassword2" class="sr-only">Password</label>
-                            <input type="text" class="form-control" id="inputPassword2" placeholder="Fecha Fin">
+                        <div class="form-group col-lg-offset-5">
+                            <form class="form-inline">
+                                <div class="form-group ">
+                                    <label for="inputPassword2" class="sr-only">Password</label>
+                                    <input type="date" data-date-inline-picker="true" class="form-control" id="inputPassword1" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword2" class="sr-only">Password</label>
+                                    <input type="date" data-date-inline-picker="true" class="form-control" id="inputPassword2" />
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div> 
-             </div>
+                    </div>
 
 
-            <div class="form-group float-right">
-                <div>
-                    @*Mensaje final de creación de sección*@
-                    <input type="submit" value="Asignar formulario" class="btn-azulUCR" />
-                    @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
-                </div>
+                    <div class="form-group float-right">
+                        <div>
+                            @*Mensaje final de creación de sección*@
+                            <input type="submit" value="Asignar formulario" class="btn-azulUCR" />
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
+
 
 
 </body>
