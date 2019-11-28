@@ -28,17 +28,27 @@
                     <div class="col">
                         <small id="pP"></small>
                         <small id="pN"></small>
+                        <canvas class="graficosPromedio" id="gP" width="200" height="200"></canvas>
+                    </div>
+                    <div class="col">
                         <small id="cP"></small>
                         <small id="cN"></small>
+                        <canvas class="graficosPromedio" id="gC" width="200" height="200"></canvas>
                     </div>
                 </div>
                 <div class="row" id="cuadricula">
-                    <div class="col" id="panelDashboard"></div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<style>
+    canvas.graficosPromedio {
+        width: 100%;
+        height: auto;
+    }
+</style>
 
 <script>
 
@@ -159,14 +169,21 @@
 
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
-        var cursoN = [1];
+        var cursoN = curso[1];
 
         $('#pP').text("Promedio profe: " + profeP);
         $('#pN').text("Cantidad: " + profeN);
         $('#cP').text("Promedio curso: " + cursoP);
         $('#cN').text("Cantidad: " + cursoN);
 
+        var canvasP = document.getElementById('gP').getContext('2d');
+        var canvasC = document.getElementById('gC').getContext('2d');
+
+        x.generarGrafico(canvasP);
+        x.generarGrafico(canvasC);
+
     }
+
 </script>
 
 
