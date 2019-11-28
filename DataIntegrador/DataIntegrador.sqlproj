@@ -240,6 +240,9 @@
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
     <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\GruposXPerfiXlUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\ProfesoresXUsuarioXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
