@@ -34,6 +34,12 @@ class Counter {
 }
 
 function seleccionaCheckBoxGen(element, variable, key, counter) {
+    console.log(element);
+    console.log(variable);
+    console.log(key);
+    console.log(counter);
+
+
     if (element.checked) {
         element.id = `${variable}[${counter.getCurrent()}].${key}`;
         counter.add();
