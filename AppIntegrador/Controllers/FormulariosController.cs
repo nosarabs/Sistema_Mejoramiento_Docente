@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data.Entity.Core.Objects;
 using System.Threading.Tasks;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -397,6 +398,11 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
+            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
             crearFormulario.Formulario = new Formulario();
