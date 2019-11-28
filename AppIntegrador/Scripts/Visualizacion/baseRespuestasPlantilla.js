@@ -33,9 +33,8 @@ class BaseDosCol extends BaseRespuesta{
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
-        var tituloJustificacion = document.createElement("h3");
-        tituloJustificacion.innerText = "Justificación de los resultados";
-        this.rightCol.appendChild(tituloJustificacion);    
+        this.tituloJustificacion = document.createElement("h3");
+        this.rightCol.appendChild(this.tituloJustificacion);    
 
         this.rightCol.appendChild(this.justificacion);
         this.rowCanvas.appendChild(this.canvas);
@@ -49,6 +48,10 @@ class BaseDosCol extends BaseRespuesta{
 
         return this.canvas;
 
+    }
+
+    getElementoTituloJustificacion() {
+        return this.tituloJustificacion;
     }
 
     getElementoJustificacion() {
