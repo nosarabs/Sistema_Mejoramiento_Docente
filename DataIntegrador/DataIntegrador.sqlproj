@@ -247,7 +247,8 @@
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
-    <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM2.sql" />
+    <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
+    <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
