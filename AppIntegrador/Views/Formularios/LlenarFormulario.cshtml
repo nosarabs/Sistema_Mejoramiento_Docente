@@ -22,9 +22,9 @@
             <div>
 
                 <button type="submit" class="btn-azulUCR" onclick="FinalizarFomulario()">Finalizar formulario</button>
-                <button type="submit" class="btn-azulUCR">Guardar Respuestas</button>
+                <button type="submit" class="btn-blancoUCR">Guardar Respuestas</button>
 
-                @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn-blancoUCR" })
+                @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller")
             </div>
         </div>
 
@@ -36,13 +36,8 @@
 
     <script>
         function FinalizarFomulario() {
-            var numFormualrio = document.getElementById("respuestas.Finalizado").value
-            console.log(numFormualrio)
-
-            document.getElementById("respuestas.Finalizado").value = 1
-
-            var numFormualrio = document.getElementById("respuestas.Finalizado").value
-            console.log(numFormualrio)
+            var finalizado = true;
+            document.getElementById("respuestas.Finalizado").value = finalizado;
         }
 
     </script>

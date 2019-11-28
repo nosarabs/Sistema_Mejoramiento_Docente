@@ -241,6 +241,7 @@ namespace AppIntegrador.Controllers
             respuestas.GNumero = 1;
             respuestas.GAnno = 2019;
             respuestas.GSemestre = 2;
+            bool x = respuestas.Finalizado;
 
             db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
