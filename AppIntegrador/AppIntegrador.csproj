@@ -216,22 +216,17 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataIntegradorModel.Context.cs" />
-    <Compile Include="Models\DataIntegradorModel.Context1.cs">
+    <Compile Include="Models\DataIntegradorModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataIntegradorModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataIntegradorModel.cs" />
-    <Compile Include="Models\DataIntegradorModel.Designer.cs">
-      <DependentUpon>DataIntegradorModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataIntegradorModel1.cs">
+    <Compile Include="Models\DataIntegradorModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataIntegradorModel1.Designer.cs">
+    <Compile Include="Models\DataIntegradorModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
@@ -264,9 +259,6 @@
     <Compile Include="Models\Funcionario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\getPlanFull_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -278,45 +270,6 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerCarrerasEnfasisFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerCarrerasEnfasisGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerCarrerasEnfasisProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerCarrerasEnfasisUA_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerGruposCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerGruposFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerGruposProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerGruposUA_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -324,18 +277,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerProfesoresCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerProfesoresFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerProfesoresGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerProfesoresUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerRespuestaLibreGuardada_Result.cs">
@@ -348,18 +289,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsProfesor_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -493,13 +422,14 @@
     <Content Include="Content\Plugins\animate.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel.Context1.cs</LastGenOutput>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\DataIntegradorModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel1.cs</LastGenOutput>
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+      <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\PlanesDeMejora\ClasesPlanesMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\Validator.js" />
@@ -619,7 +549,7 @@
     <Content Include="ArchivoCSV\archivo.csv" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel1.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\DataIntegradorModel.edmx.diagram">
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>

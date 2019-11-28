@@ -1,9 +1,21 @@
-﻿import * as clases from 'ClasesPlanesMejora';
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     cantidadProfes = new Counter();
     cantidadForm = new Counter();
+    objetivos = [];
+    accMejora = [];
+    accionables = [];
 });
+
+var currentPlan = null;
+
+function getPlan() {
+    let campoNombre = document.getElementById("campoNombrePlanMejora");
+    let campoFechaInicio = document.getElementById("campoFechaInicioPlanMejora");
+    let campoFechaFin = document.getElementById("campoFechaFinPlanMejora");
+
+    currentPlan = new PlanMejora(campoNombre.value, campoFechaInicio.value, campoFechaFin.value);
+
+}
 
 class Counter {
     current = null;
@@ -81,15 +93,24 @@ function agregarObjetivo() {
 }
 
 function enviarDatosPlan() {
+    getPlan();
+    console.log(JSON.stringify(currentPlan));
     $.ajax({
         type: 'POST',
         url: '/PlanDeMejora/Crear',
-        data: $('#formPlanMejora :input,[name=ProfeSeleccionado],[name=FormularioSeleccionado]').serialize(),
-        dataType: 'html',
+        data: JSON.stringify(currentPlan),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'application/json',
         success: function () {
             console.log("and i oop");
+            window.location.href = '/PlanDeMejora/Index';
         }
-    })
+    });
+    //$.ajax({
+    //    type: 'GET',
+    //    url: '/PlanDeMejora/Index'
+    //})
 }
 
 function modalGen(modal) {
@@ -130,4 +151,44 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
 
 
     validator.validityOfForm();
+}
+
+
+class PlanMejora {
+    nombre = null;
+    fechaInicio = null;
+    fechaFin = null;
+
+    constructor(nombre, fechaInicio, fechaFin) {
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+}
+
+class Objetivo extends PlanMejora {
+    tipo = null;
+    descripcion = null;
+
+    constructor(nombre, tipo, descripcion, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+    }
+}
+
+class AccionDeMejora extends PlanMejora {
+    descripcion = null;
+    constructor(nombre, descripcion, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
+        this.descripcion = descripcion;
+    }
+}
+
+class Accionable extends AccionDeMejora {
+    descripcionAcc = null;
+    constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin) {
+        super(nombre, descripcion, fechaInicio, fechaFin);
+        this.descripcionAcc = descripcionAcc;
+    }
 }
