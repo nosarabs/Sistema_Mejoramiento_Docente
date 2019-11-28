@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db;
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         public PlanDeMejoraController()
         {
