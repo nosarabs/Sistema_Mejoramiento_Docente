@@ -67,6 +67,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<EnlaceSeguro> EnlaceSeguro { get; set; }
     
         [DbFunction("Entities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
@@ -234,7 +235,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", codigoParameter, nombreParameter, fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion)
+        public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion, ObjectParameter numeroError)
         {
             var codParameter = cod != null ?
                 new ObjectParameter("cod", cod) :
@@ -252,10 +253,10 @@ namespace AppIntegrador.Models
                 new ObjectParameter("justificacion", justificacion) :
                 new ObjectParameter("justificacion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaConOpcion", codParameter, typeParameter, enunciadoParameter, justificacionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaConOpcion", codParameter, typeParameter, enunciadoParameter, justificacionParameter, numeroError);
         }
     
-        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo)
+        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo, ObjectParameter numeroError)
         {
             var codParameter = cod != null ?
                 new ObjectParameter("cod", cod) :
@@ -285,7 +286,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("maximo", maximo) :
                 new ObjectParameter("maximo", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter, numeroError);
         }
     
         public virtual int AgregarPreguntaRespuestaLibre(string cod, string type, string enunciado)
@@ -890,7 +891,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarMatriculado_en", correoParameter, siglaParameter, numGrupoParameter, semestreParameter, annoParameter);
         }
     
-        public virtual int InsertarPersonaCSV(string correo, string id, string nombre, string apellido, string tipoId)
+        public virtual int InsertarPersonaCSV(string correo, string id, string nombre, string apellido, string tipoId, Nullable<bool> borrado)
         {
             var correoParameter = correo != null ?
                 new ObjectParameter("Correo", correo) :
@@ -912,7 +913,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("TipoId", tipoId) :
                 new ObjectParameter("TipoId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarPersonaCSV", correoParameter, idParameter, nombreParameter, apellidoParameter, tipoIdParameter);
+            var borradoParameter = borrado.HasValue ?
+                new ObjectParameter("Borrado", borrado) :
+                new ObjectParameter("Borrado", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertarPersonaCSV", correoParameter, idParameter, nombreParameter, apellidoParameter, tipoIdParameter, borradoParameter);
         }
     
         public virtual int InsertarPertenece_a(string codCarrera, string codEnfasis, string siglaCurso)
@@ -1169,32 +1174,14 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosConSecciones");
         }
     
-        public virtual int PopularFormulariosDePrueba()
+        public virtual int PopularFormulariosDePrueba(ObjectParameter numeroError)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosDePrueba");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosDePrueba", numeroError);
         }
     
-        public virtual int PopularSeccionesConPreguntas()
+        public virtual int PopularSeccionesConPreguntas(ObjectParameter numeroError)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
-        }
-    
-        public virtual int PromedioCursos(string correo, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", correoParameter, promedio, cantidad);
-        }
-    
-        public virtual int PromedioProfesor(string correo, ObjectParameter promedio, ObjectParameter cantidad)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", correoParameter, promedio, cantidad);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas", numeroError);
         }
     
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
@@ -1350,6 +1337,187 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual int AgregarEnlaceSeguro(string usuarioAsociado, string urlReal, Nullable<System.DateTime> expira, ObjectParameter resultadohash, ObjectParameter estado)
+        {
+            var usuarioAsociadoParameter = usuarioAsociado != null ?
+                new ObjectParameter("usuarioAsociado", usuarioAsociado) :
+                new ObjectParameter("usuarioAsociado", typeof(string));
+    
+            var urlRealParameter = urlReal != null ?
+                new ObjectParameter("urlReal", urlReal) :
+                new ObjectParameter("urlReal", typeof(string));
+    
+            var expiraParameter = expira.HasValue ?
+                new ObjectParameter("expira", expira) :
+                new ObjectParameter("expira", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarEnlaceSeguro", usuarioAsociadoParameter, urlRealParameter, expiraParameter, resultadohash, estado);
+        }
+    
+        public virtual int GetTeacherName(string correo, ObjectParameter nombreCompleto)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTeacherName", correoParameter, nombreCompleto);
+        }
+    
+        public virtual int AgregarMultiplesAccionesDeMejora()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarMultiplesAccionesDeMejora");
+        }
+    
+        public virtual int AgregarMultiplesObjetivos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarMultiplesObjetivos");
+        }
+    
+        public virtual ObjectResult<getPlanFull_Result> getPlanFull(Nullable<int> codigoPlan)
+        {
+            var codigoPlanParameter = codigoPlan.HasValue ?
+                new ObjectParameter("codigoPlan", codigoPlan) :
+                new ObjectParameter("codigoPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPlanFull_Result>("getPlanFull", codigoPlanParameter);
+        }
+    
+        [DbFunction("Entities", "ObtenerCarrerasEnfasisFiltros")]
+        public virtual IQueryable<ObtenerCarrerasEnfasisFiltros_Result> ObtenerCarrerasEnfasisFiltros()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerCarrerasEnfasisFiltros_Result>("[Entities].[ObtenerCarrerasEnfasisFiltros]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerCarrerasEnfasisGrupo")]
+        public virtual IQueryable<ObtenerCarrerasEnfasisGrupo_Result> ObtenerCarrerasEnfasisGrupo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerCarrerasEnfasisGrupo_Result>("[Entities].[ObtenerCarrerasEnfasisGrupo]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerCarrerasEnfasisProfesor")]
+        public virtual IQueryable<ObtenerCarrerasEnfasisProfesor_Result> ObtenerCarrerasEnfasisProfesor()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerCarrerasEnfasisProfesor_Result>("[Entities].[ObtenerCarrerasEnfasisProfesor]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerCarrerasEnfasisUA")]
+        public virtual IQueryable<ObtenerCarrerasEnfasisUA_Result> ObtenerCarrerasEnfasisUA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerCarrerasEnfasisUA_Result>("[Entities].[ObtenerCarrerasEnfasisUA]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerFormulariosCarreraEnfasis")]
+        public virtual IQueryable<ObtenerFormulariosCarreraEnfasis_Result> ObtenerFormulariosCarreraEnfasis()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosCarreraEnfasis_Result>("[Entities].[ObtenerFormulariosCarreraEnfasis]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerFormulariosFiltros")]
+        public virtual IQueryable<ObtenerFormulariosFiltros_Result> ObtenerFormulariosFiltros()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosFiltros_Result>("[Entities].[ObtenerFormulariosFiltros]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerFormulariosGrupo")]
+        public virtual IQueryable<ObtenerFormulariosGrupo_Result> ObtenerFormulariosGrupo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosGrupo_Result>("[Entities].[ObtenerFormulariosGrupo]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerFormulariosProfesor")]
+        public virtual IQueryable<ObtenerFormulariosProfesor_Result> ObtenerFormulariosProfesor()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosProfesor_Result>("[Entities].[ObtenerFormulariosProfesor]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerFormulariosUA")]
+        public virtual IQueryable<ObtenerFormulariosUA_Result> ObtenerFormulariosUA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerFormulariosUA_Result>("[Entities].[ObtenerFormulariosUA]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerGruposCarreraEnfasis")]
+        public virtual IQueryable<ObtenerGruposCarreraEnfasis_Result> ObtenerGruposCarreraEnfasis()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposCarreraEnfasis_Result>("[Entities].[ObtenerGruposCarreraEnfasis]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerGruposFiltros")]
+        public virtual IQueryable<ObtenerGruposFiltros_Result> ObtenerGruposFiltros()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposFiltros_Result>("[Entities].[ObtenerGruposFiltros]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerGruposProfesor")]
+        public virtual IQueryable<ObtenerGruposProfesor_Result> ObtenerGruposProfesor()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposProfesor_Result>("[Entities].[ObtenerGruposProfesor]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerGruposUA")]
+        public virtual IQueryable<ObtenerGruposUA_Result> ObtenerGruposUA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposUA_Result>("[Entities].[ObtenerGruposUA]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerProfesoresCarreraEnfasis")]
+        public virtual IQueryable<ObtenerProfesoresCarreraEnfasis_Result> ObtenerProfesoresCarreraEnfasis()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerProfesoresCarreraEnfasis_Result>("[Entities].[ObtenerProfesoresCarreraEnfasis]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerProfesoresFiltros")]
+        public virtual IQueryable<ObtenerProfesoresFiltros_Result> ObtenerProfesoresFiltros()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerProfesoresFiltros_Result>("[Entities].[ObtenerProfesoresFiltros]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerProfesoresGrupo")]
+        public virtual IQueryable<ObtenerProfesoresGrupo_Result> ObtenerProfesoresGrupo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerProfesoresGrupo_Result>("[Entities].[ObtenerProfesoresGrupo]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerProfesoresUA")]
+        public virtual IQueryable<ObtenerProfesoresUA_Result> ObtenerProfesoresUA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerProfesoresUA_Result>("[Entities].[ObtenerProfesoresUA]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerUAsCarreraEnfasis")]
+        public virtual IQueryable<ObtenerUAsCarreraEnfasis_Result> ObtenerUAsCarreraEnfasis()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerUAsCarreraEnfasis_Result>("[Entities].[ObtenerUAsCarreraEnfasis]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerUAsFiltros")]
+        public virtual IQueryable<ObtenerUAsFiltros_Result> ObtenerUAsFiltros()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerUAsFiltros_Result>("[Entities].[ObtenerUAsFiltros]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerUAsGrupo")]
+        public virtual IQueryable<ObtenerUAsGrupo_Result> ObtenerUAsGrupo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerUAsGrupo_Result>("[Entities].[ObtenerUAsGrupo]()");
+        }
+    
+        [DbFunction("Entities", "ObtenerUAsProfesor")]
+        public virtual IQueryable<ObtenerUAsProfesor_Result> ObtenerUAsProfesor()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerUAsProfesor_Result>("[Entities].[ObtenerUAsProfesor]()");
+        }
+    
+        public virtual int PromedioCursos(ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", promedio, cantidad);
+        }
+    
+        public virtual int PromedioProfesor(ObjectParameter promedio, ObjectParameter cantidad)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", promedio, cantidad);
         }
     
         public virtual ObjectResult<ObtenerFormulariosDeEstudiante_Result> ObtenerFormulariosDeEstudiante(string correoEstudiante, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)

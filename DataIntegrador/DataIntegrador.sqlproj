@@ -67,7 +67,17 @@
     <Folder Include="PlanesDeMejora" />
     <Folder Include="PlanesDeMejora\FuncionesProcedimientos" />
     <Folder Include="Usuarios y Perfiles\Functions" />
+    <Folder Include="Filtros" />
+    <Folder Include="Filtros\FiltrosFormulario" />
+    <Folder Include="Filtros\FiltrosProfesor" />
+    <Folder Include="Filtros\FiltrosGrupo" />
+    <Folder Include="Filtros\FiltrosCarreraEnfasis" />
+    <Folder Include="Filtros\FiltrosUA" />
     <Folder Include="FiltrosFormulario" />
+    <Folder Include="Usuarios y Perfiles\Indices" />
+    <Folder Include="PlanesDeMejora\Indices" />
+    <Folder Include="Filtros\Indices" />
+    <Folder Include="Filtros\FiltrosFormulario\Indices" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -173,11 +183,6 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarObjetivo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\BorrarPlan.sql" />
     <Build Include="PlanesDeMejora\SeAsignaA.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosUA.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
-    <Build Include="FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
     <Build Include="InsertarUnidadCSV.sql" />
     <Build Include="InsertarCarreraCSV.sql" />
     <Build Include="InsertarEnfasisCSV.sql" />
@@ -209,7 +214,42 @@
     <Build Include="PromedioCursos.sql" />
     <Build Include="InsertarMatriculado_en.sql" />
     <Build Include="TriggerMatriculado_en.sql" />
-    <Build Include="Formularios\Procedimientos\FinalizarFormulario.sql" />
+    <Build Include="Index_persona.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosFiltros.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosGrupo.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosProfesor.sql" />
+    <Build Include="Filtros\FiltrosFormulario\ObtenerFormulariosUA.sql" />
+    <Build Include="Filtros\Tipos_filtros.sql" />
+    <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresFiltros.sql" />
+    <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresGrupo.sql" />
+    <Build Include="Filtros\FiltrosProfesor\ObtenerProfesoresUA.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposUA.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposProfesor.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposFiltros.sql" />
+    <Build Include="Filtros\FiltrosGrupo\ObtenerGruposCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisFiltros.sql" />
+    <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisGrupo.sql" />
+    <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisProfesor.sql" />
+    <Build Include="Filtros\FiltrosCarreraEnfasis\ObtenerCarrerasEnfasisUA.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsCarreraEnfasis.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsFiltros.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsGrupo.sql" />
+    <Build Include="Filtros\FiltrosUA\ObtenerUAsProfesor.sql" />
+    <Build Include="Filtros\Indices\Index_CodigoPregunta_OpSelecRespConOps.sql" />
+    <Build Include="Filtros\Indices\Index_Finalizado_RespForm.sql" />
+    <Build Include="Filtros\FiltrosFormulario\Indices\Index_FechaFin.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\getPlanFull.sql" />
+    <Build Include="PlanesDeMejora\Indices\nombrePersona.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\GetTeacherName.sql" />
+    <Build Include="PlanesDeMejora\Indices\IndicePlanMejora.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesObjetivos.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionesDeMejora.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
+    <Build Include="EnlaceSeguro.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
   </ItemGroup>
   <ItemGroup>

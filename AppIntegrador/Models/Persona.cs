@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public Persona()
         {
             this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
+            this.EnlaceSeguro = new HashSet<EnlaceSeguro>();
         }
     
         public string Correo { get; set; }
@@ -35,5 +36,7 @@ namespace AppIntegrador.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
         public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EnlaceSeguro> EnlaceSeguro { get; set; }
     }
 }

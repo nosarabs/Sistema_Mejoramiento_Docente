@@ -1,6 +1,4 @@
-﻿@model AppIntegrador.Models.Dashboard
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -23,171 +21,152 @@
         <div class="row">
             <div class="col-3" id="panelFiltros">
                 <h4>Filtros</h4>
-                <script>
-                    var filtros = new Filtros();
-                    filtros.crearFiltros();
-                </script>
-
-                <script>
-                    //Función que retorna el código de Unidad Académica seleccionada
-                    function recuperarUnidadAcademicaSeleccionada() {
-                        var ua = document.getElementById("filtroUA");
-                        var uaSeleccionada = ua.options[ua.selectedIndex].value;
-                        return uaSeleccionada == "null" ? null : uaSeleccionada;
-                    }
-                    //Función que retorna el código de carrera y el código énfasis
-                    function recuperarCarreraEnfasis() {
-                        var ce = document.getElementById("filtroCarreraEnfasis");
-                        var ceSeleccionada = ce.options[ce.selectedIndex].value;
-                        return ceSeleccionada == "null" ? null : ceSeleccionada.split("/");
-                    }
-                    //Función que retorna la Sigla del curso, Número de Grupo, Semestre, Año
-                    function recuperarCursoGrupo() {
-                        var cg = document.getElementById("filtroCursoGrupo");
-                        var cgSeleccionada = cg.options[cg.selectedIndex].value;
-                        return cgSeleccionada == "null" ? null : cgSeleccionada.split("/");
-                    }
-                    //Función que retorna el correo del profesor
-                    function recuperarProfesor() {
-                        var p = document.getElementById("filtroProfesores");
-                        var pSeleccionada = p.options[p.selectedIndex].value;
-                        return pSeleccionada == "null" ? null : pSeleccionada;
-                    }
-                    //Función que actualiza el componente de formularios según los filtros.
-                    function recuperarFormulario() {
-                        var f = document.getElementById("filtroFormularios");
-                        var fSeleccionado = f.options[f.selectedIndex].value;
-                        return fSeleccionado == "null" ? null : fSeleccionado.split("*");
-                    }
-                    //Función que actualiza el filtro de formularios.
-                    function actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
-                        $('#panelDashboard').html("");
-                        var f = document.getElementById("filtroFormularios");
-                        while (f.firstChild) {
-
-                            f.removeChild(f.firstChild);
-
-                        }
-                        //Se llama al método del controlador que obtiene los nombres y los códigos de la unidades académicas guardadas en la BD
-                        $.ajax({
-                            url: '/Dashboard/ObtenerFormularios',
-                            data: {
-                                unidadesAcademicas: unidadesAcademicas,
-                                carrerasEnfasis: carrerasEnfasis,
-                                grupos: grupos,
-                                profesores: profesores
-                            },
-                            type: 'post',
-                            dataType: 'json',
-                            async: false,
-                            success: function (resultados) {
-
-                                //Ciclo que crea cada option para luego agregarlo al select
-                                var option = document.createElement("option");
-                                option.className = "option";
-                                option.value = "null";
-                                option.text = "Seleccione una opción...";
-                                f.appendChild(option);
-
-                                for (var i = 0; i < resultados.length; ++i) {
-
-                                    var fechaInicio = resultados[i].FechaInicio;
-                                    var fechaFin = resultados[i].FechaFin;
-
-                                    var stringFechaInicio = new Date(fechaInicio).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
-                                    var stringFechaFin = new Date(fechaFin).toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
-
-                                    option = document.createElement("option");
-                                    option.className = "option";
-                                    option.value = resultados[i].FCodigo + "*" + resultados[i].FNombre + "*" + resultados[i].CSigla + "*" + resultados[i].GNumero + "*" + resultados[i].GSemestre + "*" + resultados[i].GAnno + "*" + stringFechaInicio + "*" + stringFechaFin;
-                                    option.text = resultados[i].FCodigo + " - " + resultados[i].FNombre + " - " + resultados[i].CSigla + " - " + resultados[i].GNumero + " - " + resultados[i].GSemestre + " - " + resultados[i].GAnno + " - " + stringFechaInicio + " - " + stringFechaFin;
-                                    f.appendChild(option);
-
-                                }
-
-                            }
-                        });
-                    }
-                    //Método que permite recuperar todas las opciones seleccionadas
-                    function recuperarFiltros() {
-                        var ua = this.recuperarUnidadAcademicaSeleccionada();
-                        var ce = this.recuperarCarreraEnfasis();
-
-                        var codEnfasis = null;
-                        var codCarrera = null;
-
-                        if (ce != null) {
-                            codCarrera = ce[0];
-                            codEnfasis = ce[1];
-                        }
-
-                        var sigla = null;
-                        var numGrupo = null;
-                        var semestre = null;
-                        var anno = null;
-
-                        var cg = this.recuperarCursoGrupo();
-                        if (cg != null) {
-                            sigla = cg[0];
-                            numGrupo = cg[1];
-                            semestre = cg[2];
-                            anno = cg[3];
-                        }
-
-                        var correoProf = this.recuperarProfesor();
-
-                        var unidadesAcademicas = ua == null ? null : [{ codigo: ua }];
-                        var carrerasEnfasis = (codCarrera == null || codEnfasis == null) ? null : [{ codigoCarrera: codCarrera, codigoEnfasis: codEnfasis }];
-                        var grupos = (sigla == null || numGrupo == null || semestre == null || anno == null) ? null : [{ siglaCurso: sigla, numGrupo: numGrupo, semestre: semestre, anno: anno }];
-                        var profesores = correoProf == null ? null : [{ correo: correoProf }];
-
-                        this.actualizarFiltroFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
-                    }
-                    //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
-                    function actualizarVistaParcial() {
-
-                        $('#panelDashboard').html("");
-                        f = this.recuperarFormulario();
-
-                        if (f != null)
-                        {
-
-                            var codigoFormulario = f[0];
-                            var siglaCurso = f[2];
-                            var numeroGrupo = f[3];
-                            var semestre = f[4];
-                            var anno = f[5];
-                            var fechaInicio = f[6];
-                            var fechaFin = f[7];
-
-                            //Aquí se recarga la vista parcial con los parámetros del formulario.
-                            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
-                            link = link.replace('codigoFormularioValor', codigoFormulario);
-                            link = link.replace('siglaCursoValor', siglaCurso);
-                            link = link.replace('numeroGrupoValor', numeroGrupo);
-                            link = link.replace('semestreValor', semestre);
-                            link = link.replace('annoValor', anno);
-                            link = link.replace('fechaInicioValor', fechaInicio);
-                            link = link.replace('fechaFinValor', fechaFin);
-                            $('#panelDashboard').html(link);
-
-                        }
-
-                    }
-                </script>
             </div>
 
-            <div class="col" id="panelDashboard">
-
+            <div class="col">
+                <div class="row" id="promedios">
+                    <div class="col">
+                        <small id="pP"></small>
+                        <small id="pN"></small>
+                        <small id="cP"></small>
+                        <small id="cN"></small>
+                    </div>
+                </div>
+                <div class="row" id="cuadricula">
+                    <div class="col" id="panelDashboard"></div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 <script>
-    var correo = "@HttpContext.Current.User.Identity.Name";
-    var x = new GraficosDashboard();
-    x.recuperarPromedioProfesor(correo);
-    x.recuperarPromedioCursos(correo);
+
+    var filtros = new Filtros();
+    filtros.crearFiltros();
+
 </script>
+
+<script>
+
+    //Actualiza los filtros por debajo del de unidades académicas
+    function actualizarDebajoUA() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+
+        filtros.llenarFiltroCE(unidadesAcademicas, null, null);
+        filtros.llenarFiltroG(unidadesAcademicas, null, null);
+        filtros.llenarFiltroP(unidadesAcademicas, null, null);
+        filtros.llenarFiltroF(unidadesAcademicas, null, null, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, null, null, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de carreras y énfasis
+    function actualizarDebajoCE() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+
+        filtros.llenarFiltroG(unidadesAcademicas, carrerasEnfasis, null);
+        filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, null);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis, null, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, null, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de grupos
+    function actualizarDebajoG() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+        var grupos = filtros.recuperarGrupos();
+
+        filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, grupos);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de profesores
+    function actualizarDebajoP() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+        var grupos = filtros.recuperarGrupos();
+        var profesores = filtros.recuperarProfesores();
+
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+
+    }
+
+    //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
+    function actualizarVistaParcial() {
+
+        $('#panelDashboard').html("");
+        var f = filtros.recuperarFormulario();
+
+        if (f != null)
+        {
+
+            var codigoFormulario = f[0];
+            var siglaCurso = f[2];
+            var numeroGrupo = f[3];
+            var semestre = f[4];
+            var anno = f[5];
+            var fechaInicio = f[6];
+            var fechaFin = f[7];
+
+            //Aquí se recarga la vista parcial con los parámetros del formulario.
+            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
+            link = link.replace('codigoFormularioValor', codigoFormulario);
+            link = link.replace('siglaCursoValor', siglaCurso);
+            link = link.replace('numeroGrupoValor', numeroGrupo);
+            link = link.replace('semestreValor', semestre);
+            link = link.replace('annoValor', anno);
+            link = link.replace('fechaInicioValor', fechaInicio);
+            link = link.replace('fechaFinValor', fechaFin);
+            $('#panelDashboard').html(link);
+
+        }
+
+    }
+
+    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+
+        var x = new GraficosDashboard();
+
+        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+        var profeP = profe[0];
+        var profeN = profe[1];
+
+        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+        var cursoP = curso[0];
+        var cursoN = [1];
+
+        $('#pP').text("Promedio profe: " + profeP);
+        $('#pN').text("Cantidad: " + profeN);
+        $('#cP').text("Promedio curso: " + cursoP);
+        $('#cN').text("Cantidad: " + cursoN);
+
+    }
+</script>
+
 

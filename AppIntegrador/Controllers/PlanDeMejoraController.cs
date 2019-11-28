@@ -15,7 +15,17 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public PlanDeMejoraController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public PlanDeMejoraController(DataIntegradorEntities mdb)
+        {
+            this.db = mdb;
+        }
 
         // GET: PlanDeMejora
         [HttpGet]
@@ -36,62 +46,107 @@ namespace AppIntegrador.Controllers
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = nombre;
-            return View(db.PlanDeMejora.ToList());
+            return View("Index", db.PlanDeMejora.ToList());
         }
 
         /*
-            Modificado por: Johan Córdoba
+            Modificado por: Johan Córdoba, Christian Asch
             Historia a la que pertenece: MOS-1.2 "agregar, modificar, borrar y consultar los objetivos de un plan de mejora"
             Para no tener que crear la vista parcial dento de la carpeta de planes de mejora cambié el controlador.
             Ahora este redirige a la vista de objetivos y la que está en planes de mejora "_objetivosPlan" ya no es necesaria
         */
-        public ActionResult Create()
+        public ActionResult Crear(PlanDeMejora plan = null)
         {
-            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
-            return View("_crearPlanDeMejora", plan);
+            if(plan == null)
+            {
+                plan = new PlanDeMejora();
+            }
+            List<String> ProfesoresNombreLista = new List<String>();
+            ViewBag.ProfesoresLista = db.Profesor.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach(var profe in ViewBag.ProfesoresLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(profe.Correo, name_op);
+                ProfesoresNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            ViewBag.FormulariosLista = db.Formulario.ToList();
+            return View("Crear", plan);
         }
 
-
-        //Añadido por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //Retorna la nueva vista de creación de planes de mejora adaptada a las solicitudes del PO.
-        public ActionResult CreateNuevo()
-        {
-            AppIntegrador.Models.Metadata.PlanDeMejoraMetadata plan = new AppIntegrador.Models.Metadata.PlanDeMejoraMetadata();
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-            return View("CrearPlanDeMejora", plan);
-        }
-
-        //Modificado por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //crea un plan de mejora este método solo es llamado internamente por lo que retorna un void
-        //pero esto puede cambiarse para que retorne true o false y validad la creación
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void Create([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
+        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null)
         {
-            if (ModelState.IsValid)
+            Profesor profe;
+            Formulario formulario;
+            if (ModelState.IsValid && plan != null)
             {
-                try
+                if(ProfeSeleccionado != null)
                 {
-                    db.PlanDeMejora.Add(planDeMejora);
-                    db.SaveChanges();
-                    //return RedirectToAction("Index");
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (var errors in ex.EntityValidationErrors)
+                    foreach(var correo in ProfeSeleccionado)
                     {
-                        foreach (var validationError in errors.ValidationErrors)
+                        profe = db.Profesor.Find(correo);
+                        profe.PlanDeMejora.Add(plan);
+                        if(!plan.Profesor.Contains(profe))
+                            plan.Profesor.Add(profe);
+                    }
+                }
+                if(FormularioSeleccionado != null)
+                {
+                    foreach (var formCod in FormularioSeleccionado)
+                    {
+                        formulario = db.Formulario.Find(formCod);
+                        formulario.PlanDeMejora.Add(plan);
+                        if (!plan.Formulario.Contains(formulario))
                         {
-                            // get the error message 
-                            string errorMessage = validationError.ErrorMessage;
+                            plan.Formulario.Add(formulario);
                         }
                     }
                 }
+                db.PlanDeMejora.Add(plan);
+                db.SaveChanges();
             }
+            return EditarPlanDeMejora(plan.codigo);
+        }
+        [HttpPost]
+        public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
+        {
+            List<Profesor> profesores = new List<Profesor>();
+            List<String> ProfesoresNombreLista = new List<String>();
+            ObjectParameter name_op;
+            if (ProfeSeleccionado != null)
+            {
+                foreach (var correo in ProfeSeleccionado)
+                {
+                    var profesor = db.Profesor.Find(correo);
+                    profesores.Add(profesor);
 
-            //return View(planDeMejora);
+                    name_op = new ObjectParameter("NombreCompleto", "");
+                    db.GetTeacherName(correo, name_op);
+                    ProfesoresNombreLista.Add(name_op.Value.ToString());
+                }
+            }
+            ViewBag.ProfesoresLista = profesores;
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            return PartialView("_TablaProfesores");
+        }
+
+        [HttpPost]
+        public ActionResult AnadirFormularios(List<String> FormularioSeleccionado)
+        {
+            List<Formulario> formularios = new List<Formulario>();
+            if (FormularioSeleccionado != null)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    var formulario = db.Formulario.Find(codigo);
+                    formularios.Add(formulario);
+                }
+            }
+            return PartialView("_TablaFormularios", formularios);
         }
 
         //Agregado por: Johan Córdoba
@@ -103,7 +158,6 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             ViewBag.Editar = true;
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             return View("EditarPlanDeMejora2", planDeMejora);
         }
 
@@ -123,32 +177,6 @@ namespace AppIntegrador.Controllers
             ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
             ViewBag.IdPlan = planDeMejora.codigo;
             return View("EditarPlanDeMejora2", planDeMejora);
-        }
-
-        // GET: PlanDeMejora/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            if (planDeMejora == null)
-            {
-                return HttpNotFound();
-            }
-            return View(planDeMejora);
-        }
-
-        // POST: PlanDeMejora/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
-            db.PlanDeMejora.Remove(planDeMejora);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -183,54 +211,12 @@ namespace AppIntegrador.Controllers
             _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
         }
 
-        //Modificado por: Johan Córdoba
-        //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
-        //crea un plan de mejora con un id que se determina automáticamente
-        //retorna el view que permite editar un plan de mejora completo para añadir objetivos, acciones y accionables
-        public ActionResult CrearPlanDeMejora(string nombre, DateTime fechaInicio, DateTime fechaFin, List<String> Profesor)
-        {
-            int id = -1;
-            var planTemp = new PlanDeMejora();
-            if (nombre != null && fechaInicio != null && fechaFin != null)
-            {
-                if (DateTime.Compare(fechaInicio, fechaFin) < 0)
-                {
-
-                    var plans = this.db.PlanDeMejora.ToList();
-                    var codigoTemporal = plans.Count == 0 ? -1 : plans.Last().codigo;
-                    planTemp.codigo = codigoTemporal + 1;
-                    id = planTemp.codigo;
-                    planTemp.nombre = nombre;
-                    planTemp.fechaInicio = fechaInicio;
-                    planTemp.fechaFin = fechaFin;
-
-                    if(Profesor != null)
-                    {
-                        foreach(String correo in Profesor)
-                        {
-                            var prof = db.Profesor.Find(correo);
-                            planTemp.Profesor.Add(prof);
-                        }
-                        EnviarCorreoSobreCreacionPlan(planTemp);
-                    }
-                    this.Create(planTemp);
-
-                    ViewBag.IdPlan = id;
-                    ViewBag.editar = false;
-                    ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-                    return View("EditarPlanDeMejora2", planTemp);
-                }
-            }
-            //return RedirectToAction("Index");
-            ViewBag.IdPlan = id;
-            ViewBag.profesores = new SelectList(db.Profesor, "correo", "correo");
-            return View("EditarPlanDeMejora2", planTemp);
-        }
-
         // Method that deletes one "PlanDeMejora"
         public ActionResult BorrarPlan(int codigoPlan)
         {
-            this.DeleteConfirmed(codigoPlan);
+            PlanDeMejora planDeMejora = db.PlanDeMejora.Find(codigoPlan);
+            db.PlanDeMejora.Remove(planDeMejora);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -245,7 +231,6 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             return PartialView("_crearObjetivo", objetivo);
         }
-
 
         //Modificado por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
@@ -281,9 +266,6 @@ namespace AppIntegrador.Controllers
             //return RedirectToAction("Index", "PlanDeMejora");
             return new EmptyResult();
         }
-
-
-
 
         //Añadido por: Johan Córdoba
         //Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"

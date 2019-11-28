@@ -19,6 +19,7 @@ namespace AppIntegrador.Models
         public String FechaInicio { get; set; }
         public String FechaFin { get; set; }
         public String Preguntas { get; set; }
+        public IEnumerable<SelectListItem> Seccioncitas { get; set; }
     }
 
     public class Preguntas
@@ -28,4 +29,5 @@ namespace AppIntegrador.Models
         public String textoPregunta { get; set; }
         public String tipoPregunta { get; set; }
     }
+
 }

@@ -21,10 +21,10 @@ namespace AppIntegrador.Tests.Controllers
 
 
 
-       // COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
-       // Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
+        // COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
+        // Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
 
-       // Cuando se cree el modulo de cargar archivos CSV se debe modificar el tests
+        // Cuando se cree el modulo de cargar archivos CSV se debe modificar el tests
         [TestMethod]
         public void TestMethod1()
         {
@@ -35,7 +35,7 @@ namespace AppIntegrador.Tests.Controllers
             var serverMock = new Mock<HttpServerUtilityBase>();
             //Mock el path original
             serverMock.Setup(x => x.MapPath("./ArchivoCSV")).Returns(Path.GetFullPath("../../ArchivoCSVtest"));
-            
+
             //Mockeamos el objeto HTTPContext.Server con el servidor ya mockeado:
             httpContextMock.Setup(x => x.Server).Returns(serverMock.Object);
 
@@ -56,7 +56,7 @@ namespace AppIntegrador.Tests.Controllers
 
 
             // Act
-            ViewResult result = controller.Index(httpPostedFileBases[0]) as ViewResult;
+            ViewResult result = controller.Index(httpPostedFileBases[0], 1) as ViewResult;
             // Assert
             Assert.IsNotNull(result);
         }
@@ -69,7 +69,7 @@ namespace AppIntegrador.Tests.Controllers
             CSVController controller = new CSVController();
             var file = @"../../ArchivoCSVtest/prueba.csv";
             // Act
-            var result = controller.carga(file);
+            var result = controller.carga(file, 1);
             // Assert
             Assert.IsTrue(result);
         }
