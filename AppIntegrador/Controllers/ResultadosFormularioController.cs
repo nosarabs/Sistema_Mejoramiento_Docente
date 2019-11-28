@@ -139,7 +139,13 @@ namespace AppIntegrador.Controllers
             for (int index = minimo; index <= maximo; index += incremento)
             {
                 
-                var contadorRespuestas = (from f in db.Opciones_seleccionadas_respuesta_con_opciones
+                var contadorRespuestas = (from r in db.Respuestas_a_formulario 
+                                          join f in db.Opciones_seleccionadas_respuesta_con_opciones on
+                                          new
+                                          { FCodigo = r.FCodigo, Correo = r.Correo, CSigla = r.CSigla, GNumero = r.GNumero, GAnno = r.GAnno, GSemestre = r.GSemestre, Fecha = r.Fecha }
+                                          equals
+                                          new
+                                          { FCodigo = f.FCodigo, Correo = f.Correo, CSigla = f.CSigla, GNumero = f.GNumero, GAnno = f.GAnno, GSemestre = f.GSemestre, Fecha = f.Fecha }
                                           where f.OpcionSeleccionada == numOpcion
                                           && f.FCodigo == codigoFormulario
                                           && f.CSigla == siglaCurso
@@ -150,6 +156,7 @@ namespace AppIntegrador.Controllers
                                           && f.PCodigo == codigoPregunta
                                           && f.Fecha >= fechaInicio
                                           && f.Fecha <= fechaFin
+                                          && r.Finalizado
                                           select f.OpcionSeleccionada).Count();
                 ejeY.Add(contadorRespuestas);
                 ++numOpcion;
@@ -162,7 +169,13 @@ namespace AppIntegrador.Controllers
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
-            var respuestas = from rrl in db.Responde_respuesta_libre
+            var respuestas = from r in db.Respuestas_a_formulario
+                             join rrl in db.Responde_respuesta_libre on
+                            new
+                            { FCodigo = r.FCodigo, Correo = r.Correo, CSigla = r.CSigla, GNumero = r.GNumero, GAnno = r.GAnno, GSemestre = r.GSemestre, Fecha = r.Fecha }
+                            equals
+                            new
+                            { FCodigo = rrl.FCodigo, Correo = rrl.Correo, CSigla = rrl.CSigla, GNumero = rrl.GNumero, GAnno = rrl.GAnno, GSemestre = rrl.GSemestre, Fecha = rrl.Fecha }
                              where rrl.FCodigo == codigoFormulario
                              && rrl.CSigla == siglaCurso
                              && rrl.GNumero == numeroGrupo
@@ -172,6 +185,7 @@ namespace AppIntegrador.Controllers
                              && rrl.PCodigo == codigoPregunta
                              && rrl.Fecha >= fechaInicio
                              && rrl.Fecha <= fechaFin
+                             && r.Finalizado
                              select new SelectListItem { Value = rrl.Observacion };
 
             return serializer.Serialize(respuestas.ToList());
@@ -182,7 +196,7 @@ namespace AppIntegrador.Controllers
         {
             String tipo = "";
 
-            List<Pregunta> preguntas = db.Pregunta.Where(x => x.Codigo.Equals(codigoPregunta)).ToList();
+            List<Pregunta> preguntas = db.Pregunta.Where(x => x.Codigo == codigoPregunta).ToList();
 
             if(preguntas != null)
             {
@@ -218,7 +232,7 @@ namespace AppIntegrador.Controllers
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             var opciones = from ods in db.Opciones_de_seleccion
-                           where ods.Codigo.Equals(codigoPregunta)
+                           where ods.Codigo == codigoPregunta
                            orderby ods.Orden
                            select ods.Texto;
             return serializer.Serialize(opciones);
@@ -233,7 +247,13 @@ namespace AppIntegrador.Controllers
             for (int i = 0; i < numOpciones; ++i)
             {
                 respuestas.Add(
-                    (from osrco in db.Opciones_seleccionadas_respuesta_con_opciones
+                    (from r in db.Respuestas_a_formulario
+                     join osrco in db.Opciones_seleccionadas_respuesta_con_opciones on
+                    new
+                    { FCodigo = r.FCodigo, Correo = r.Correo, CSigla = r.CSigla, GNumero = r.GNumero, GAnno = r.GAnno, GSemestre = r.GSemestre, Fecha = r.Fecha }
+                    equals
+                    new
+                    { FCodigo = osrco.FCodigo, Correo = osrco.Correo, CSigla = osrco.CSigla, GNumero = osrco.GNumero, GAnno = osrco.GAnno, GSemestre = osrco.GSemestre, Fecha = osrco.Fecha }
                      where osrco.OpcionSeleccionada == i
                         && osrco.FCodigo == codigoFormulario
                         && osrco.CSigla == siglaCurso
@@ -244,6 +264,7 @@ namespace AppIntegrador.Controllers
                         && osrco.PCodigo == codigoPregunta
                         && osrco.Fecha >= fechaInicio
                         && osrco.Fecha <= fechaFin
+                        && r.Finalizado
                      select osrco).Count());
             }
                                           
@@ -256,7 +277,13 @@ namespace AppIntegrador.Controllers
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<int> justificaciones = new List<int>();
 
-            var respuestas =    from rrco in db.Responde_respuesta_con_opciones
+            var respuestas =    from r in db.Respuestas_a_formulario
+                                join rrco in db.Responde_respuesta_con_opciones on
+                                new
+                                { FCodigo = r.FCodigo, Correo = r.Correo, CSigla = r.CSigla, GNumero = r.GNumero, GAnno = r.GAnno, GSemestre = r.GSemestre, Fecha = r.Fecha }
+                                equals
+                                new
+                                { FCodigo = rrco.FCodigo, Correo = rrco.Correo, CSigla = rrco.CSigla, GNumero = rrco.GNumero, GAnno = rrco.GAnno, GSemestre = rrco.GSemestre, Fecha = rrco.Fecha }
                                 where rrco.FCodigo == codigoFormulario
                                 && rrco.CSigla == siglaCurso
                                 && rrco.GNumero == numeroGrupo
@@ -266,6 +293,7 @@ namespace AppIntegrador.Controllers
                                 && rrco.PCodigo == codigoPregunta
                                 && rrco.Fecha >= fechaInicio
                                 && rrco.Fecha <= fechaFin
+                                && r.Finalizado
                                 select new SelectListItem { Value = rrco.Justificacion };
 
             return serializer.Serialize(respuestas.ToList());

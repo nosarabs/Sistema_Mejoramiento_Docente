@@ -73,7 +73,6 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
-    <Folder Include="FiltrosFormulario" />
     <Folder Include="Usuarios y Perfiles\Indices" />
     <Folder Include="PlanesDeMejora\Indices" />
     <Folder Include="Filtros\Indices" />
