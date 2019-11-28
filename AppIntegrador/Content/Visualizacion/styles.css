@@ -72,9 +72,10 @@ canvas{
 
     canvas.graficosPromedio {
         height: 100% !important;
-        width: 80% !important;
+        width: auto !important;
         margin: 0 auto !important;
         display: block;
+       
     }
 
 /*Cuadro para las justificaciones*/
@@ -211,12 +212,13 @@ canvas{
     margin: 0 !important;
     padding: 0 !important;
     margin-bottom: 1% !important;
+    text-align:center;
 }
 
 #promedios .col{
     height: 100%;
     margin:0 !important;
-    padding:0 !important;
+    padding:20px !important;
 }
 
 #cuadricula {

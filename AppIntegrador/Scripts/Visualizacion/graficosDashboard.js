@@ -63,12 +63,15 @@ class GraficosDashboard {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [
                     {
-                        label: "Cantidad de estudiantes",
                         backgroundColor: colors,
                         hoverBackgroundColor: colors,
                         borderColor: "black",
                         borderWidth: 0,
                         data: [12, 19, 3, 5, 2, 3]
+                    },
+                    {
+                        data: [15, 21, 6, 8, 5, 17],
+                        type:'line'
                     }
                 ]
             },
