@@ -52,8 +52,8 @@ class GraficosDashboard {
     }
 
     generarGrafico(canvas) {
-        return 
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+
+        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(6);
         //chroma.js: https://gka.github.io/chroma.js/
 
         new Chart(canvas, {
@@ -101,7 +101,6 @@ class GraficosDashboard {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-                            stepSize: 1,
                             fontColor: "#747474",
                             fontSize: 16,
                         }

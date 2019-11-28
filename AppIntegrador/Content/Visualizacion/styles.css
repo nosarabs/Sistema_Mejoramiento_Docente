@@ -70,6 +70,13 @@ canvas{
     min-width: inherit;
 }
 
+    canvas.graficosPromedio {
+        height: 100% !important;
+        width: 80% !important;
+        margin: 0 auto !important;
+        display: block;
+    }
+
 /*Cuadro para las justificaciones*/
 .myBox {
     position: relative;
