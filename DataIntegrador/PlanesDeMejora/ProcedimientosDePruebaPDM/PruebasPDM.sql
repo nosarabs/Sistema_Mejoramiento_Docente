@@ -5,8 +5,8 @@ BEGIN
 	/*ingresando los planes de mejora para las pruebas*/
 	MERGE INTO PlanDeMejora AS Target
 	USING (VALUES
-		('Plan prueba para la profesora Alexandra', '2019-12-24', '2019-12-30', 0),
-		('Plan prueba para el profesor Cristian', '2019-12-01', '2019-12-10', 0)
+		('Plan prueba para la profesora Alexandra', '2019-12-5', '2019-12-25', 0),
+		('Plan prueba para el profesor Cristian', '2019-12-01', '2019-12-28', 0)
 	)
 	AS SOURCE ([nombre], [fechaInicio], [fechaFin], [borrado])
 	ON	Target.nombre		= Source.nombre			and
@@ -44,30 +44,55 @@ BEGIN
 	/* Creacion de un objetivo para el plan de */
 	MERGE INTO Objetivo AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra'),
-		(2, 'Objetivo de plan de mejora - Cristian')
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Descripcion objetivo Alexandra', '2019-12-5', '2019-12-20', 'Infraestructura', 0),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Descripcion objetivo Cristian', '2019-12-2', '2019-12-27', 'Curso', 0)
 	)
-	AS SOURCE ([codPlan], [nombre])
-	ON Target.codPlan = Source.codPlan and Target.nombre = Source.nombre
+	AS SOURCE ([codPlan], [nombre], [descripcion], [fechaInicio], [fechaFin], [nombTipoObj], [borrado])
+	ON Target.codPlan = Source.codPlan 
+		and Target.nombre = Source.nombre
+		and Target.descripcion = Source.descripcion
+		and Target.fechaInicio = Source.fechaInicio
+		and Target.fechaFin = Source.fechaFin
+		and Target.nombTipoObj = Source.nombTipoObj
+		and Target.borrado = Source.borrado
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (codPlan, nombre)
-	VALUES (codPlan, nombre);
+	INSERT (codPlan, nombre, descripcion, fechaInicio, fechaFin, nombTipoObj, borrado)
+	VALUES (codPlan, nombre, descripcion, fechaInicio, fechaFin, nombTipoObj, borrado);
 
 	/*Creando acciones de mejora para los objetivos*/
 	MERGE INTO AccionDeMejora AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra'),
-		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian')
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', '2019-12-10', '2019-12-15', 0),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', '2019-12-5', '2019-12-20', 0)
 	)
-	AS SOURCE ([codPlan], [nombreObj], [descripcion])
+	AS SOURCE ([codPlan], [nombreObj], [descripcion], [fechaInicio], [fechaFin], [borrado])
 	ON	Target.codPlan		= Source.codPlan	and 
 		Target.nombreObj	= Source.nombreObj	and 
-		Target.descripcion	= Source.descripcion
+		Target.descripcion	= Source.descripcion and
+		Target.fechaInicio  = Source.fechaInicio and
+		Target.fechaFin		= Source.fechaFin and
+		Target.borrado		= Source.borrado
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (codPlan, nombreObj, descripcion)
-	VALUES (codPlan, nombreObj, descripcion);
+	INSERT (codPlan, nombreObj, descripcion, fechaInicio, fechaFin, borrado)
+	VALUES (codPlan, nombreObj, descripcion, fechaInicio, fechaFin, borrado);
 
-	/* Creando las relaciones entre las divisiones de una plan de mejora*/
+	/* Creando los accionables resepctivos*/
+	MERGE INTO Accionable AS Target
+	USING (VALUES
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 25),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 50)
+	)
+	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [progreso])
+	ON	Target.codPlan			= Source.codPlan		and 
+		Target.nombreObj		= Source.nombreObj		and 
+		Target.descripAcMej		= Source.descripAcMej	and
+		Target.descripcion		= Source.descripcion	and
+		Target.fechaInicio		= Source.fechaInicio	and
+		Target.fechaFin			= Source.fechaFin		and
+		Target.progreso			= Source.progreso
+	WHEN NOT MATCHED BY TARGET THEN
+	INSERT (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso)
+	VALUES (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso);
 
 
 	/**********************************************************************************/
