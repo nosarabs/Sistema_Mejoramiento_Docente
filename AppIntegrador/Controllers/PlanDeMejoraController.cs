@@ -89,7 +89,10 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
+                                    List<String> ProfeSeleccionado = null, 
+                                    List<String> FormularioSeleccionado = null,
+                                    List<Objetivo> MisObjetivos = null)
         {
             PlanDeMejora planAgregado = null;
             Profesor profe;

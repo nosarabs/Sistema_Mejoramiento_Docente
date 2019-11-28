@@ -88,21 +88,25 @@ function agregarGen(variable, key, counter, url, attribute, div, array) {
 }
 
 function agregarObjetivo() {
-    $.ajax({
-        type: 'POST',
-        url: '/Objetivos/AnadirObjetivo',
-        data: $('#formObjetivos :input').serialize(),
-        dataType: 'html',
-        success: function () {
-            console.log("and i oop");
-        }
-    })
+    let campoNombre = document.getElementById("campoNombreObjetivo");
+    let campoDescripcion = document.getElementById("campoDescripcionObjetivo");
+    let campoFechaInicio = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFin = document.getElementById("campoFechaFinObjetivo");
+
+    objetivos.push(new Objetivo(campoNombre.value, null, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
+    campoNombre.value = "";
+    campoDescripcion.value = "";
+    campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
+    campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
 }
 
 function enviarDatosPlan() {
     getPlan();
     currentPlan.setCorreosProfes(correosProfes);
     currentPlan.setCodigosFormularios(codigosFormularios);
+    currentPlan.setObjetivos(objetivos);
+    console.log(JSON.stringify(currentPlan));
+
     $.ajax({
         type: 'POST',
         url: '/PlanDeMejora/Crear',
@@ -119,6 +123,16 @@ function enviarDatosPlan() {
 
 function modalGen(modal) {
     $(`${modal}`).modal();
+}
+
+function manejarFechasPlan(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
+    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton);
+    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
+    let campoFechaInicioPlan = document.getElementById("campoFechaInicioPlanMejora");
+    let campoFechaFinPlan = document.getElementById("campoFechaFinPlanMejora");
+    campoFechaInicioObj.value = campoFechaInicioPlan.value;
+    campoFechaFinObj.value = campoFechaFinPlan.value;
 }
 
 function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
@@ -157,17 +171,25 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     validator.validityOfForm();
 }
 
-class PlanMejora {
+class Base {
     nombre = null;
     fechaInicio = null;
     fechaFin = null;
-    ProfeSeleccionado = null;
-    FormularioSeleccionado = null;
-
     constructor(nombre, fechaInicio, fechaFin) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+}
+
+class PlanMejora extends Base {
+
+    ProfeSeleccionado = null;
+    FormularioSeleccionado = null;
+    MisObjetivos = null;
+
+    constructor(nombre, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
     }
 
     setCorreosProfes(correosProfes) {
@@ -177,9 +199,13 @@ class PlanMejora {
     setCodigosFormularios(codigosFormularios) {
         this.FormularioSeleccionado = codigosFormularios;
     }
+
+    setObjetivos(objetivos) {
+        this.MisObjetivos = objetivos;
+    }
 }
 
-class Objetivo extends PlanMejora {
+class Objetivo extends Base {
     tipo = null;
     descripcion = null;
 
@@ -190,7 +216,7 @@ class Objetivo extends PlanMejora {
     }
 }
 
-class AccionDeMejora extends PlanMejora {
+class AccionDeMejora extends Base {
     descripcion = null;
     constructor(nombre, descripcion, fechaInicio, fechaFin) {
         super(nombre, fechaInicio, fechaFin);
@@ -205,29 +231,3 @@ class Accionable extends AccionDeMejora {
         this.descripcionAcc = descripcionAcc;
     }
 }
-
-//class valoresArreglos {
-//    elementos = null;
-
-//    constructor() {
-//        elementos = [];
-//    }
-
-//    limpiar() {
-//        elementos.splice(0, elementos.length);
-//    }
-
-//    agregarElemento(elemento) {
-//        elementos.push(elemento);
-//    }
-
-//    cantidad() {
-//        return elementos.length;
-//    }
-
-//    imprimir() {
-//        elementos.forEach(element => {
-//            console.log(element);
-//        });
-//    }
-//}
