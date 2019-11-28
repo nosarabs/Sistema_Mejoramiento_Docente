@@ -76,6 +76,7 @@
     <Folder Include="FiltrosFormulario" />
     <Folder Include="Usuarios y Perfiles\Indices" />
     <Folder Include="PlanesDeMejora\Indices" />
+    <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -245,6 +246,8 @@
     <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
+    <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
+    <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM2.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
