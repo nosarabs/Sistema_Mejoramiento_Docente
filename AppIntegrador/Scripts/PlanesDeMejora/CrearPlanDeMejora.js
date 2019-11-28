@@ -4,9 +4,10 @@
     objetivos = [];
     accMejora = [];
     accionables = [];
+    correosProfes = [];
+    codigosFormularios = [];
+    currentPlan = null;
 });
-
-var currentPlan = null;
 
 function getPlan() {
     let campoNombre = document.getElementById("campoNombrePlanMejora");
@@ -14,7 +15,6 @@ function getPlan() {
     let campoFechaFin = document.getElementById("campoFechaFinPlanMejora");
 
     currentPlan = new PlanMejora(campoNombre.value, campoFechaInicio.value, campoFechaFin.value);
-
 }
 
 class Counter {
@@ -62,12 +62,19 @@ function deseleccionarGen(variable, key, counter, value) {
     }
 }
 
-function agregarGen(variable, key, counter, url, attribute, div) {
+function agregarGen(variable, key, counter, url, attribute, div, array) {
     console.log(counter.getCurrent());
+    array.splice(0, array.length);
     for (let index = 0; index < counter.getCurrent(); ++index) {
         let gen = document.getElementById(`${variable}[${index}].${key}`);
         gen.setAttribute("name", `${attribute}`);
+        array.push(gen.value);
     }
+
+    array.forEach(element => {
+        console.log(element);
+    })
+
     $.ajax({
         type: 'POST',
         url: `${url}`,
@@ -94,7 +101,8 @@ function agregarObjetivo() {
 
 function enviarDatosPlan() {
     getPlan();
-    console.log(JSON.stringify(currentPlan));
+    currentPlan.setCorreosProfes(correosProfes);
+    currentPlan.setCodigosFormularios(codigosFormularios);
     $.ajax({
         type: 'POST',
         url: '/PlanDeMejora/Crear',
@@ -107,10 +115,6 @@ function enviarDatosPlan() {
             window.location.href = '/PlanDeMejora/Index';
         }
     });
-    //$.ajax({
-    //    type: 'GET',
-    //    url: '/PlanDeMejora/Index'
-    //})
 }
 
 function modalGen(modal) {
@@ -153,16 +157,25 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     validator.validityOfForm();
 }
 
-
 class PlanMejora {
     nombre = null;
     fechaInicio = null;
     fechaFin = null;
+    ProfeSeleccionado = null;
+    FormularioSeleccionado = null;
 
     constructor(nombre, fechaInicio, fechaFin) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    setCorreosProfes(correosProfes) {
+        this.ProfeSeleccionado = correosProfes;
+    }
+
+    setCodigosFormularios(codigosFormularios) {
+        this.FormularioSeleccionado = codigosFormularios;
     }
 }
 
@@ -192,3 +205,29 @@ class Accionable extends AccionDeMejora {
         this.descripcionAcc = descripcionAcc;
     }
 }
+
+//class valoresArreglos {
+//    elementos = null;
+
+//    constructor() {
+//        elementos = [];
+//    }
+
+//    limpiar() {
+//        elementos.splice(0, elementos.length);
+//    }
+
+//    agregarElemento(elemento) {
+//        elementos.push(elemento);
+//    }
+
+//    cantidad() {
+//        return elementos.length;
+//    }
+
+//    imprimir() {
+//        elementos.forEach(element => {
+//            console.log(element);
+//        });
+//    }
+//}

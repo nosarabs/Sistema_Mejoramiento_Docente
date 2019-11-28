@@ -96,8 +96,9 @@ namespace AppIntegrador.Controllers
             Formulario formulario;
             if (ModelState.IsValid && plan != null)
             {
-                var result = db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin);
-                planAgregado = db.PlanDeMejora.Find(result);
+                var cod = new ObjectParameter("codigo", 0);
+                db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin, cod);
+                planAgregado = db.PlanDeMejora.Find(cod.Value);
                 if (ProfeSeleccionado != null)
                 {
                     foreach (var correo in ProfeSeleccionado)
