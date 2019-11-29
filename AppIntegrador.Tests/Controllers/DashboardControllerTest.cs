@@ -42,9 +42,9 @@ namespace AppIntegrador.Tests.Controllers
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
             //Se crear un formulario como dummy data
-            var formulariosDummy = new List<ObtenerFormulariosFiltros>
+            var formulariosDummy = new List<FormulariosFiltros>
             {
-                new ObtenerFormulariosFiltros
+                new FormulariosFiltros
                 {
                     FCodigo = "00000001",
                     FNombre = "Formulario de prueba",
@@ -55,7 +55,7 @@ namespace AppIntegrador.Tests.Controllers
                     FechaInicio = DateTime.Parse("09/06/2019"),
                     FechaFin = DateTime.Parse("11/06/2019")
                 },
-                new ObtenerFormulariosFiltros
+                new FormulariosFiltros
                 {
                     FCodigo = "00000002",
                     FNombre = "Formulario de fin de curso",
@@ -69,7 +69,7 @@ namespace AppIntegrador.Tests.Controllers
         };
 
             //Se hace el mock del procedimiento almacenado que utiliza el método del controlador
-            var mockedObjectResult = new Mock<IQueryable<ObtenerFormulariosFiltros>>();
+            var mockedObjectResult = new Mock<IQueryable<FormulariosFiltros>>();
             mockedObjectResult.Setup(x => x.GetEnumerator()).Returns(formulariosDummy.GetEnumerator());
             mockFiltrosDb.Setup(x => x.ObtenerFormulariosFiltros(null, null, null, null)).Returns(mockedObjectResult.Object);
 
@@ -79,7 +79,7 @@ namespace AppIntegrador.Tests.Controllers
             string formulariosJson = controller.ObtenerFormularios(null, null, null, null);
 
             //Se deserializa el JSON
-            var formularios = JsonConvert.DeserializeObject<List<ObtenerFormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+            var formularios = JsonConvert.DeserializeObject<List<FormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
 
             //Assert
 
@@ -101,15 +101,15 @@ namespace AppIntegrador.Tests.Controllers
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
             //Se crean los parámetros del controlador
-            var unidadesAcademicas = new List<UnidadesAcademicas> { new UnidadesAcademicas { codigo = "01" } };
-            var carrerasEnfasis = new List<CarrerasEnfasis> { new CarrerasEnfasis { codigoCarrera = "01", codigoEnfasis = "01" } };
-            var grupos = new List<CursoGrupo> { new CursoGrupo { siglaCurso = "CI0128", numGrupo = 1, semestre = 2, anno = 2019 } };
-            var profesores = new List<Profesores> { new Profesores { correo = "ismael@mail.com" } };
+            var unidadesAcademicas = new List<UAsFiltros> { new UAsFiltros { CodigoUA = "01" } };
+            var carrerasEnfasis = new List<CarrerasEnfasisFiltros> { new CarrerasEnfasisFiltros { CodCarrera = "01", CodEnfasis = "01" } };
+            var grupos = new List<GruposFiltros> { new GruposFiltros { SiglaCurso = "CI0128", NumGrupo = 1, Semestre = 2, Anno = 2019 } };
+            var profesores = new List<ProfesoresFiltros> { new ProfesoresFiltros { Correo = "ismael@mail.com" } };
 
             //Se crear un formulario como dummy data
-            var formulariosDummy = new List<ObtenerFormulariosFiltros>
+            var formulariosDummy = new List<FormulariosFiltros>
             {
-                new ObtenerFormulariosFiltros
+                new FormulariosFiltros
                 {
                     FCodigo = "00000001",
                     FNombre = "Formulario de prueba",
@@ -120,7 +120,7 @@ namespace AppIntegrador.Tests.Controllers
                     FechaInicio = DateTime.Parse("09/06/2019"),
                     FechaFin = DateTime.Parse("11/06/2019")
                 },
-                new ObtenerFormulariosFiltros
+                new FormulariosFiltros
                 {
                     FCodigo = "00000002",
                     FNombre = "Formulario de fin de curso",
@@ -134,7 +134,7 @@ namespace AppIntegrador.Tests.Controllers
         };
 
             //Se hace el mock del procedimiento almacenado que utiliza el método del controlador
-            var mockedObjectResult = new Mock<IQueryable<ObtenerFormulariosFiltros>>();
+            var mockedObjectResult = new Mock<IQueryable<FormulariosFiltros>>();
             mockedObjectResult.Setup(x => x.GetEnumerator()).Returns(formulariosDummy.GetEnumerator());
             mockFiltrosDb.Setup(x => x.ObtenerFormulariosFiltros(null, null, null, null)).Returns(mockedObjectResult.Object);
 
@@ -144,7 +144,7 @@ namespace AppIntegrador.Tests.Controllers
             string formulariosJson = controller.ObtenerFormularios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
 
             //Se deserializa el JSON
-            var formularios = JsonConvert.DeserializeObject<List<ObtenerFormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
+            var formularios = JsonConvert.DeserializeObject<List<FormulariosFiltros>>(formulariosJson, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
 
             //Assert
 
@@ -152,11 +152,11 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsFalse(CompararFormularios(formulariosDummy, formularios));
         }
 
-        private bool CompararFormularios (List<ObtenerFormulariosFiltros> dummyFormularios, List<ObtenerFormulariosFiltros> controllerformularios)
+        private bool CompararFormularios (List<FormulariosFiltros> dummyFormularios, List<FormulariosFiltros> controllerformularios)
         {
             bool resultado = dummyFormularios.Count() == controllerformularios.Count();
             int indice = 0;
-            ObtenerFormulariosFiltros dummyFormulario, controllerFormulario;
+            FormulariosFiltros dummyFormulario, controllerFormulario;
 
             while (resultado && indice < dummyFormularios.Count())
             {

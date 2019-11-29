@@ -67,8 +67,8 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
-        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
-        por otros medios.-->
+                        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+                        por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -88,14 +88,20 @@
                             </li>
                         }
                         <li>
+
                             <a href="">Formularios &#9660;</a>
                             <ul>
                                 <li>
                                     <a href="">Formulario &#9658;</a>
                                     <ul>
-                                        <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_FORMULARIO))
+                                        {
+
+                                            <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        }
                                         <li><a href="/Formularios/Index">Ver Formulario</a></li>
                                         <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+
                                     </ul>
                                 </li>
                                 <li>
@@ -107,54 +113,49 @@
                                 <li>
                                     <a href="">Preguntas &#9658;</a>
                                     <ul>
-                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_PREGUNTA))
+                                        {
+                                            <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                        }
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="">Planes de mejora &#9660;</a>
-                            <ul>
-                                <li>
-                                    <a href="">Mis planes &#9658;</a>
-                                    <ul>
-                                        <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
-                                        <li><a href="/PlanDeMejora/CreateNuevo">Crear plan</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="">Bancos &#9658;</a>
-                                    <ul>
-                                        <li><a href="#">Objetivos</a></li>
-                                        <li><a href="#">Acciones de Mejora</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">Visualización &#9660;</a>
-                            <ul>
-                                <li><a href="/Dashboard/Index">Dashboard</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">Carga de Datos &#9660;</a>
-                            <ul>
-                                <li><a href="/CSV/Index">Carga de archivo CSV</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/Home/About">Acerca de</a></li>
-                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
-                    </ul>
+                            <li>
+                                <a href="">Planes de mejora &#9660;</a>
+                                <ul>
+                                    <li>
+                                        <a href="">Mis planes &#9658;</a>
+                                        <ul>
+                                            <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
+                                            <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">Visualización &#9660;</a>
+                                <ul>
+                                    <li><a href="/Dashboard/Index">Dashboard</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">Carga de Datos &#9660;</a>
+                                <ul>
+                                    <li><a href="/CSV/Index">Carga de archivo CSV</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/Home/About">Acerca de</a></li>
+                            <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
+                        </ul>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <br />
-    }
+            <br />
+        }
 
     <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()

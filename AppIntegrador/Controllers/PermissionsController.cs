@@ -16,7 +16,17 @@ namespace AppIntegrador.Controllers
     /*TAM-3.1, 3.2, 3.4, 3.5, 3.6, 3.7, 4.1: Controlador que implementa la funcionalidad de la página de administración de permisos y perfiles. */
     public class PermissionsController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        public PermissionsController()
+        {
+            db = new DataIntegradorEntities();
+        }
+
+        public PermissionsController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         public ActionResult Index()
         {

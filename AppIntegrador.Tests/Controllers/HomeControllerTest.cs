@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AppIntegrador;
 using AppIntegrador.Controllers;
 using AppIntegrador.Models;
-using System.Threading.Tasks;
-using System.Web.Security;
 using Security.Authentication;
 using Moq;
 using System.Web;

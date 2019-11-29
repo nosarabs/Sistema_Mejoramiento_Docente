@@ -6,7 +6,7 @@
 	SELECT @sigla = i.Sigla
 	FROM inserted i
 	BEGIN
-		IF(@sigla NOT IN (SELECT Sigla FROM Curso))
+		IF(@sigla NOT IN (SELECT Sigla FROM Curso) and @sigla not like '')
 		BEGIN
 			INSERT INTO Curso SELECT * FROM inserted
 		END
