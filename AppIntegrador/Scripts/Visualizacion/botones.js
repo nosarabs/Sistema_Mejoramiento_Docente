@@ -10,7 +10,7 @@
         var boton = document.createElement("button");
         boton.className = "btn-azulUCR";
         boton.id = codigoPregunta;
-        boton.innerText = "Ver más" + codigoPregunta;
+        boton.innerText = "Ver más";
 
         boton.addEventListener("click", (e) => {
             this.rellenarModal(listaPreguntas, idPreg);
@@ -72,7 +72,11 @@
         }
 
         // Borra del modal el viejo componente e introduce el nuevo
-        var modalTemp = document.getElementById("Ejemplo");;
+        var modalEncabezado = document.getElementById("Encabezado");
+        var modalTemp = document.getElementById("Ejemplo");
+
+        // Agrega el título de la pregunta como encabezado al modal
+        modalEncabezado.innerText = textoPregunta;
 
         // Esto se usaría para dejar el modal en blanco
         modalTemp.firstChild.remove();

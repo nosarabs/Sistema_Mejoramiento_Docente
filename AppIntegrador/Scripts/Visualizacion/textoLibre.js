@@ -21,6 +21,27 @@
 
     }
 
+    recuperarTituloJustificacion(codigoPregunta) {
+
+        var titulo = "";
+
+        $.ajax({
+            url: '/ResultadosFormulario/getTituloJustificacion',
+            data: {
+                codigoPregunta: codigoPregunta
+            },
+            type: 'post',
+            dataType: 'html',
+            async: false,
+            success: function (resultados) {
+                titulo = resultados;
+            }
+        });
+
+        return titulo;
+
+    }
+
     recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
         var justificaciones = [];
@@ -85,11 +106,13 @@
 
     generarJustificaciones(caja, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
+        var titulo = this.recuperarTituloJustificacion(codigoPregunta);
         var respuestas = this.recuperarJustificaciones(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
 
         if (respuestas.length > 0) {
 
-            this.crearLista(caja, respuestas);
+            caja.getElementoTituloJustificacion().innerText = titulo;
+            this.crearLista(caja.getElementoJustificacion(), respuestas);
 
         }
 
