@@ -1,17 +1,23 @@
-﻿CREATE TRIGGER [Trigger1]
+﻿CREATE TRIGGER [TriggerImparte]
 	ON [dbo].[Imparte]
 	INSTEAD OF INSERT
+
 	AS
-	declare @CorreoProfe varchar(50)
-	declare @SiglaCurso varchar(10)
-	declare @Numgrupo tinyint
-	declare @semestre tinyint
-	declare @anno int
-	select @CorreoProfe = i.CorreoProfesor, @SiglaCurso = i.SiglaCurso, @Numgrupo = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
-	from inserted i
-	BEGIN
-		if(@CorreoProfe not in (select CorreoProfesor from Imparte) or @SiglaCurso not in (select SiglaCurso from Imparte) or @Numgrupo not in(select NumGrupo from Imparte) or @semestre not in (select Semestre from Imparte) or @anno not in (select Anno from Imparte))
-		begin
-			insert into Imparte select * from inserted
-		end
-	END
+	--Pair Programing Denisse y daniel
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+
+	Begin transaction transaccionImparte;
+
+		DECLARE @correo varchar(50), @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int
+		SELECT @correo = i.CorreoProfesor, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
+		FROM inserted i
+		BEGIN
+			IF(NOT exists (SELECT * FROM Matriculado_en where CorreoEstudiante= @correo and SiglaCurso = @sigla and Semestre =@semestre and Anno = @anno ) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
+			BEGIN
+				INSERT INTO Imparte SELECT * FROM inserted
+			END
+	Commit Transaction transaccionImparte;
+set transaction isolation level read committed;
+
+END

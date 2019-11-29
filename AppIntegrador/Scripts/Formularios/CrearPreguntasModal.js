@@ -1,4 +1,6 @@
-﻿
+﻿//Hola
+//Esta es una prueba
+//De comentario de varias líneas
 function GenerarModalPreguntas() {
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
@@ -24,7 +26,7 @@ function MostrarCrearPregunta(){
 
 function GenerarCrearPreguntas() {
     $.ajax({
-        type: "post",
+        type: "get",
         url: "/Preguntas/CreateBase",
         dataType: "html",
         success: function (data) {

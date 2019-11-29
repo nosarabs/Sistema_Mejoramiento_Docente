@@ -1,15 +1,10 @@
-﻿using AppIntegrador;
-using AppIntegrador.Controllers;
+﻿using AppIntegrador.Controllers;
 using AppIntegrador.Models;
-using System;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Security.Principal;
 using System.IO;
-using System.Web.Helpers;
-using Security.Authentication;
 using Moq;
 using System.Web.SessionState;
 using System.Reflection;

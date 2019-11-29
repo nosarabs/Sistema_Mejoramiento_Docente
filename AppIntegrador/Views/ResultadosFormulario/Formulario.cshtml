@@ -9,7 +9,6 @@
         <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
         <!--<link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />-->
 
-
     </head>
 
     <body>
@@ -24,6 +23,17 @@
         <script src="~/Scripts/Visualizacion/TextoLibre.js"></script>
         <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
         <script src="~/Scripts/Visualizacion/botones.js"></script>
+
+        <div class="row">
+            <div class="col-md-6 align-content-center" >
+                <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
+            </div>
+            <div class="container col-md-6 align-content-center">
+                @Html.DropDownList("ddlDropDownList", Model.Seccioncitas, "Seleccione una opción...", new { @class = "form-control", id = "secciones", placeholder = "Seccion", data_width = "100%" })
+            </div>
+
+        </div>
+        <br /> 
 
         <script>
 

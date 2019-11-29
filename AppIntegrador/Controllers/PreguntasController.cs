@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -182,8 +183,9 @@ namespace AppIntegrador.Controllers
             {
                 try
                 {
+                    ObjectParameter returnValue = new ObjectParameter("NumeroError", typeof(int));
                     // se trata de guardar la pregunta de con opciones de si/no/nr
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "S", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, "S", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, returnValue) == 0)
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
@@ -211,8 +213,9 @@ namespace AppIntegrador.Controllers
                 {
                     try
                     {
+                        ObjectParameter returnValue = new ObjectParameter("NumeroError", typeof(int));
                         // se trata de guardar la pregunta de con opciones de
-                        if (db.AgregarPreguntaEscalar(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, 1, min, max) == 0)
+                        if (db.AgregarPreguntaEscalar(pregunta.Codigo, "E", pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, 1, min, max, returnValue) == 0)
                         {
                             // si se presentó un problema, se devuelve el codigo de error
                             ModelState.AddModelError("Codigo", "Código ya en uso.");
@@ -281,7 +284,8 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    ObjectParameter returnValue = new ObjectParameter("NumeroError", typeof(int));
+                    if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion,returnValue) == 0)
                     {
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);
