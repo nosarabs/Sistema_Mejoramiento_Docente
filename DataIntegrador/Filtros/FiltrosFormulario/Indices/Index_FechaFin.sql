@@ -1,2 +1,2 @@
 ﻿/*Indexa el atributo FechaFin de la tabla Periodo_activa_por con el fin de agilizar la recuperación de formularios cuyo periodo de llenado ha finalizado.*/
-CREATE INDEX Index_FechaFin ON Periodo_activa_por (FechaFin);
+CREATE INDEX Index_FechaFin ON Formulario_activo (FechaFin);

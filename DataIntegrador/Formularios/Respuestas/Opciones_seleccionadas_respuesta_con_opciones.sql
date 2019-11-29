@@ -10,10 +10,12 @@
 	Fecha DATE NOT NULL,
 	PCodigo VARCHAR(8) NOT NULL,
 	SCodigo VARCHAR(8) NOT NULL,
-
+	FechaInicio DATE NOT NULL,
+	FechaFin DATE NOT NULL,
 	OpcionSeleccionada TINYINT NOT NULL,
 
-	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo, OpcionSeleccionada),
-	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo) 
-		REFERENCES Responde_respuesta_con_opciones(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo) on delete cascade,
+	CONSTRAINT OpcionesSeleccionadasFechaInvalida CHECK(FechaInicio<=FechaFin),
+	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, FechaInicio, FechaFin, PCodigo, SCodigo, OpcionSeleccionada),
+	CONSTRAINT fkOpcionesSeleccionadas FOREIGN KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, PCodigo, SCodigo, FechaInicio, FechaFin) 
+		REFERENCES Responde_respuesta_con_opciones(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, PCodigo, SCodigo, FechaInicio, FechaFin) on delete cascade,
 )

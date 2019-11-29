@@ -6,11 +6,13 @@
 	GNumero TINYINT NOT NULL,
 	GAnno INT NOT NULL,
 	GSemestre TINYINT NOT NULL,
+	FechaInicio DATE NOT NULL,
+	FechaFin DATE NOT NULL,
 	Fecha DATE NOT NULL,
 	Finalizado BIT NOT NULL DEFAULT 0
 
-	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha),
-	CONSTRAINT fkRespuestasFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo) on delete cascade,
+	CONSTRAINT RespuestasAFormFechaInvalida CHECK(FechaInicio<=FechaFin),
+	PRIMARY KEY(FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, FechaInicio, FechaFin),
 	CONSTRAINT fkRespuestasUsuario FOREIGN KEY(Correo) REFERENCES Persona(Correo) on delete cascade,
-	CONSTRAINT fkRespuestasGrupo FOREIGN KEY(CSigla, GNumero, GSemestre, GAnno) REFERENCES Grupo(SiglaCurso, NumGrupo, Semestre, Anno) on delete cascade,
+	CONSTRAINT fkRespuestasFormFormularioActivo FOREIGN KEY(FCodigo, CSigla, GNumero, GAnno, GSemestre, FechaInicio, FechaFin) REFERENCES Formulario_activo(FCodigo, CSigla, GNumero, GAnno, GSemestre, FechaInicio, FechaFin) on delete cascade,
 )
