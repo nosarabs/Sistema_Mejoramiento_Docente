@@ -104,7 +104,21 @@ function agregarObjetivo() {
     campoDescripcion.value = "";
     campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
     campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
+
+    $.ajax({
+        type: 'POST',
+        url: '/Objetivos/AnadirObjetivos',
+        data: JSON.stringify(objetivos),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'json',
+        success: function (result) {
+            console.log(result.message);
+            $('#divTablaObjetivos').html(result.message);
+        }
+    });
 }
+
 
 function enviarDatosPlan() {
     getPlan();

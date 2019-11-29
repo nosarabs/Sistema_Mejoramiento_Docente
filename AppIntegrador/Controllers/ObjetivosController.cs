@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.IO;
 
 namespace AppIntegrador.Controllers
 {
@@ -53,6 +54,29 @@ namespace AppIntegrador.Controllers
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
             return View("_crearObjetivo");
+        }
+
+        protected string RenderViewToString(PartialViewResult partialView)
+        {
+            using (var sw = new StringWriter())
+            {
+                partialView.View = ViewEngines.Engines
+                  .FindPartialView(ControllerContext, partialView.ViewName).View;
+
+                var vc = new ViewContext(
+                  ControllerContext, partialView.View, partialView.ViewData, partialView.TempData, sw);
+                partialView.View.Render(vc, sw);
+
+                var partialViewString = sw.GetStringBuilder().ToString();
+
+                return partialViewString;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AnadirObjetivos(List<Objetivo> objetivos)
+        {
+            return Json(new { error = true, message = RenderViewToString(PartialView("_TablaObjetivos", objetivos)) });
         }
 
         // POST: Objetivos/Create
