@@ -1,4 +1,6 @@
-﻿
+﻿//Hola
+//Esta es una prueba
+//De comentario de varias líneas
 function GenerarModalPreguntas() {
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
