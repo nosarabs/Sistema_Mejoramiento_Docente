@@ -61,6 +61,7 @@ namespace AppIntegrador.Tests.Controllers
         // public void MyTestCleanup() { }
         //
         #endregion
+
         // Historia RIP-CBX
         [TestMethod]
         public void PreguntasGeneralNoNulo()
@@ -129,6 +130,16 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void IndexNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Index(null, null, null, null) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void ActualizarPreguntasNoNulo()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -138,7 +149,17 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-      
+        [TestMethod]
+        public void IndexNoNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Index("00000001", "00000001", "00000001", "00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+
         [TestMethod]
         public void CrearBaseNoNulo()
         {
