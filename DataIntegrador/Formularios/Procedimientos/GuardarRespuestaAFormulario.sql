@@ -6,7 +6,9 @@
 	@anno int,
 	@semestre tinyint,
 	@fecha date,
-	@finalizado bit
+	@finalizado bit,
+	@fechaInicio DATE,
+	@fechaFin DATE
 
 AS
 BEGIN
@@ -14,13 +16,14 @@ BEGIN
 	-- Es necesario que se ejecute este procedimiento antes de poder agregar una respuesta a cualquier pregunta, ya que esas dependen de esta.
 	MERGE INTO Respuestas_a_formulario AS Target
 	USING (VALUES
-		(@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha, @finalizado)
+		(@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha, @finalizado, @fechaInicio, @fechaFin)
 	)
-	AS SOURCE ([FCodigo], [Correo],[CSigla],[GNumero],[GAnno],[GSemestre],[Fecha], [Finalizado])
+	AS SOURCE ([FCodigo], [Correo],[CSigla],[GNumero],[GAnno],[GSemestre],[Fecha], [Finalizado], [FechaInicio], [FechaFin])
 	ON Target.FCodigo = Source.FCodigo and Target.Correo = Source.Correo and Target.CSigla = Source.CSigla 
 		and Target.GNumero = Source.GNumero and Target.GAnno = Source.GAnno 
 		and Target.GSemestre = Source.GSemestre and Target.Fecha = Source.Fecha
+		and Target.FechaInicio = Source.FechaInicio and Target.FechaFin = Source.FechaFin
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, Finalizado)
-	VALUES (@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha, @finalizado);
+	INSERT (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, Finalizado, FechaInicio, FechaFin)
+	VALUES (@codFormulario, @correo, @siglaCurso, @numGrupo, @anno, @semestre, @fecha, @finalizado, @fechaInicio, @fechaFin);
 END
