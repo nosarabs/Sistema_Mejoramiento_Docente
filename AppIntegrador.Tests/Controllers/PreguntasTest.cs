@@ -138,27 +138,7 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void BancoNula()
-        {
-            PreguntasController preguntas = new PreguntasController();
-
-            ViewResult result = preguntas.Banco(null, null, null, null) as ViewResult;
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void BancoNoNulo()
-        {
-            PreguntasController preguntas = new PreguntasController();
-
-            PartialViewResult result = preguntas.Banco("00000001", "00000001", "00000001", "00000001") as PartialViewResult;
-
-            Assert.IsNull(result);
-        }
-
-
+      
         [TestMethod]
         public void CrearBaseNoNulo()
         {

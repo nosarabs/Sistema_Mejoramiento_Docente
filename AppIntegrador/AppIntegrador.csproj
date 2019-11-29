@@ -795,6 +795,7 @@
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

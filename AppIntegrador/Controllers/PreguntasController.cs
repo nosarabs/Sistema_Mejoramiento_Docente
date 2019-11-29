@@ -22,8 +22,7 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
-        [HttpGet]
-        public ActionResult Banco(string input0, string input1, string input2, string input3)
+        public ActionResult Index(string input0, string input1, string input2, string input3)
         {
             var pregunta = db.Pregunta;
 
