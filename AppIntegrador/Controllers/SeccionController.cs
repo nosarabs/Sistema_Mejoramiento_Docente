@@ -14,9 +14,18 @@ namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db = null;
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
+        public SeccionController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public SeccionController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
