@@ -1,7 +1,21 @@
 ﻿$(document).ready(function () {
     cantidadProfes = new Counter();
     cantidadForm = new Counter();
+    objetivos = [];
+    accMejora = [];
+    accionables = [];
+    correosProfes = [];
+    codigosFormularios = [];
+    currentPlan = null;
 });
+
+function getPlan() {
+    let campoNombre = document.getElementById("campoNombrePlanMejora");
+    let campoFechaInicio = document.getElementById("campoFechaInicioPlanMejora");
+    let campoFechaFin = document.getElementById("campoFechaFinPlanMejora");
+
+    currentPlan = new PlanMejora(campoNombre.value, campoFechaInicio.value, campoFechaFin.value);
+}
 
 class Counter {
     current = null;
@@ -20,6 +34,12 @@ class Counter {
 }
 
 function seleccionaCheckBoxGen(element, variable, key, counter) {
+    console.log(element);
+    console.log(variable);
+    console.log(key);
+    console.log(counter);
+
+
     if (element.checked) {
         element.id = `${variable}[${counter.getCurrent()}].${key}`;
         counter.add();
@@ -48,12 +68,19 @@ function deseleccionarGen(variable, key, counter, value) {
     }
 }
 
-function agregarGen(variable, key, counter, url, attribute, div) {
+function agregarGen(variable, key, counter, url, attribute, div, array) {
     console.log(counter.getCurrent());
+    array.splice(0, array.length);
     for (let index = 0; index < counter.getCurrent(); ++index) {
         let gen = document.getElementById(`${variable}[${index}].${key}`);
         gen.setAttribute("name", `${attribute}`);
+        array.push(gen.value);
     }
+
+    array.forEach(element => {
+        console.log(element);
+    })
+
     $.ajax({
         type: 'POST',
         url: `${url}`,
@@ -67,31 +94,51 @@ function agregarGen(variable, key, counter, url, attribute, div) {
 }
 
 function agregarObjetivo() {
-    $.ajax({
-        type: 'POST',
-        url: '/Objetivos/AnadirObjetivo',
-        data: $('#formObjetivos :input').serialize(),
-        dataType: 'html',
-        success: function () {
-            console.log("and i oop");
-        }
-    })
+    let campoNombre = document.getElementById("campoNombreObjetivo");
+    let campoDescripcion = document.getElementById("campoDescripcionObjetivo");
+    let campoFechaInicio = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFin = document.getElementById("campoFechaFinObjetivo");
+
+    objetivos.push(new Objetivo(campoNombre.value, null, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
+    campoNombre.value = "";
+    campoDescripcion.value = "";
+    campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
+    campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
 }
 
 function enviarDatosPlan() {
+    getPlan();
+    currentPlan.setCorreosProfes(correosProfes);
+    currentPlan.setCodigosFormularios(codigosFormularios);
+    currentPlan.setObjetivos(objetivos);
+    console.log(JSON.stringify(currentPlan));
+
     $.ajax({
         type: 'POST',
         url: '/PlanDeMejora/Crear',
-        data: $('#formPlanMejora :input,[name=ProfeSeleccionado],[name=FormularioSeleccionado]').serialize(),
-        dataType: 'html',
+        data: JSON.stringify(currentPlan),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'application/json',
         success: function () {
             console.log("and i oop");
+            window.location.href = '/PlanDeMejora/Index';
         }
-    })
+    });
 }
 
 function modalGen(modal) {
     $(`${modal}`).modal();
+}
+
+function manejarFechasPlan(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
+    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton);
+    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
+    let campoFechaInicioPlan = document.getElementById("campoFechaInicioPlanMejora");
+    let campoFechaFinPlan = document.getElementById("campoFechaFinPlanMejora");
+    campoFechaInicioObj.value = campoFechaInicioPlan.value;
+    campoFechaFinObj.value = campoFechaFinPlan.value;
 }
 
 function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
@@ -128,4 +175,65 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
 
 
     validator.validityOfForm();
+}
+
+class Base {
+    nombre = null;
+    fechaInicio = null;
+    fechaFin = null;
+    constructor(nombre, fechaInicio, fechaFin) {
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+}
+
+class PlanMejora extends Base {
+
+    ProfeSeleccionado = null;
+    FormularioSeleccionado = null;
+    MisObjetivos = null;
+
+    constructor(nombre, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
+    }
+
+    setCorreosProfes(correosProfes) {
+        this.ProfeSeleccionado = correosProfes;
+    }
+
+    setCodigosFormularios(codigosFormularios) {
+        this.FormularioSeleccionado = codigosFormularios;
+    }
+
+    setObjetivos(objetivos) {
+        this.MisObjetivos = objetivos;
+    }
+}
+
+class Objetivo extends Base {
+    tipo = null;
+    descripcion = null;
+
+    constructor(nombre, tipo, descripcion, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+    }
+}
+
+class AccionDeMejora extends Base {
+    descripcion = null;
+    constructor(nombre, descripcion, fechaInicio, fechaFin) {
+        super(nombre, fechaInicio, fechaFin);
+        this.descripcion = descripcion;
+    }
+}
+
+class Accionable extends AccionDeMejora {
+    descripcionAcc = null;
+    constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin) {
+        super(nombre, descripcion, fechaInicio, fechaFin);
+        this.descripcionAcc = descripcionAcc;
+    }
 }
