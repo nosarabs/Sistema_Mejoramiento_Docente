@@ -188,6 +188,8 @@
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
+    <Compile Include="Controllers\Validador.cs" />
+    <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,6 +265,10 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GuiaHorario.cs" />
+    <Compile Include="Models\ListaClase.cs" />
+    <Compile Include="Models\ListaEstudiante.cs" />
+    <Compile Include="Models\ListaFuncionario.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />

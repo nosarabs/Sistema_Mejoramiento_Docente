@@ -3,7 +3,7 @@
     constructor(tipo) {
 
         this.base = document.createElement("div");
-        this.base.className = "row content";
+        this.base.className = "row";
         this.base.id = tipo;
 
     }
