@@ -393,12 +393,9 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
-    <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\PlanDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -423,6 +420,9 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
+    <Compile Include="Models\PermissionsViewHolder.cs" />
+    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\ProfilePermissionViewHolder.cs" />
     <Compile Include="Models\Responde_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -617,13 +617,6 @@
     <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
     <Content Include="compilerconfig.json" />
     <Content Include="Content\Main.scss" />
-    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataIntegradorModel.edmx.diagram">
-      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -634,6 +627,13 @@
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
     <Content Include="ArchivoCSV\archivo.csv" />
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
@@ -692,10 +692,6 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Details.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
     <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
@@ -734,7 +730,6 @@
     <Content Include="Views\Home\PasswordReset.cshtml" />
     <Content Include="Views\Objetivos\_TablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
     <Content Include="Views\Preguntas\Create.cshtml" />
@@ -764,7 +759,6 @@
     <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
-    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />

@@ -118,10 +118,13 @@
             var colDesviacion = colMediana.nextElementSibling;
 
             var mediaTitulo = document.createElement("h5");
+            mediaTitulo.className = "tituloEstadisticas";
             mediaTitulo.innerText = "Promedio";
             var medianaTitulo = document.createElement("h5");
+            medianaTitulo.className = "tituloEstadisticas";
             medianaTitulo.innerText = "Mediana";
             var desviacionTitulo = document.createElement("h5");
+            desviacionTitulo.className = "tituloEstadisticas";
             desviacionTitulo.innerText = "Desviación Estándar";
 
             var mediaDiv = document.createElement("div");

@@ -619,6 +619,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Grupo__SiglaCurs__2BFE89A6">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Sigla" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Imparte__2DE6D218">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -678,6 +692,40 @@
             </Principal>
             <Dependent Role="Inscrita_en">
               <PropertyRef Name="CodUnidadAc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matricula__Corre__30C33EC3">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Matriculado_en" Type="Self.Matriculado_en" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="Matriculado_en">
+              <PropertyRef Name="CorreoEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matriculado_en__31B762FC">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Matriculado_en" Type="Self.Matriculado_en" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="NumGrupo" />
+              <PropertyRef Name="Semestre" />
+              <PropertyRef Name="Anno" />
+            </Principal>
+            <Dependent Role="Matriculado_en">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="NumGrupo" />
+              <PropertyRef Name="Semestre" />
+              <PropertyRef Name="Anno" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1611,10 +1659,10 @@
           <Parameter Name="tienePermiso" Type="bit" Mode="In" />
         </Function>
         <Function Name="AgregarPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigo" Type="int" Mode="In" />
           <Parameter Name="nombre" Type="varchar" Mode="In" />
           <Parameter Name="fechaInicio" Type="date" Mode="In" />
           <Parameter Name="fechaFin" Type="date" Mode="In" />
+          <Parameter Name="codigo" Type="int" Mode="InOut" />
         </Function>
         <Function Name="AgregarPreguntaConOpcion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="varchar" Mode="In" />
@@ -2382,6 +2430,9 @@
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <AssociationSet Name="FK__Grupo__SiglaCurs__2BFE89A6" Association="Self.FK__Grupo__SiglaCurs__2BFE89A6">
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
           <AssociationSet Name="FK__Imparte__2DE6D218" Association="Self.FK__Imparte__2DE6D218">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Imparte" EntitySet="Imparte" />
@@ -2397,6 +2448,14 @@
           <AssociationSet Name="FK__Inscrita___CodUn__2EDAF651" Association="Self.FK__Inscrita___CodUn__2EDAF651">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matricula__Corre__30C33EC3" Association="Self.FK__Matricula__Corre__30C33EC3">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Matriculado_en" EntitySet="Matriculado_en" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matriculado_en__31B762FC" Association="Self.FK__Matriculado_en__31B762FC">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Matriculado_en" EntitySet="Matriculado_en" />
           </AssociationSet>
           <AssociationSet Name="FK__PerfilPer__Perfi__395884C4" Association="Self.FK__PerfilPer__Perfi__395884C4">
             <End Role="Perfil" EntitySet="Perfil" />
@@ -4195,10 +4254,10 @@
             <Parameter Name="tienePermiso" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="AgregarPlan">
-            <Parameter Name="codigo" Mode="In" Type="Int32" />
             <Parameter Name="nombre" Mode="In" Type="String" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="codigo" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AgregarPreguntaConOpcion">
             <Parameter Name="cod" Mode="In" Type="String" />
