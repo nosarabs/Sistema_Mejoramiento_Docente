@@ -5,17 +5,18 @@ BEGIN
 	/*ingresando los planes de mejora para las pruebas*/
 	MERGE INTO PlanDeMejora AS Target
 	USING (VALUES
-		('Plan prueba para la profesora Alexandra', '2019-12-5', '2019-12-25', 0),
-		('Plan prueba para el profesor Cristian', '2019-12-01', '2019-12-28', 0)
+		(1, 'Plan prueba para la profesora Alexandra', '2019-12-5', '2019-12-25', 0),
+		(2, 'Plan prueba para el profesor Cristian', '2019-12-01', '2019-12-28', 0)
 	)
-	AS SOURCE ([nombre], [fechaInicio], [fechaFin], [borrado])
-	ON	Target.nombre		= Source.nombre			and
+	AS SOURCE ([codigo], [nombre], [fechaInicio], [fechaFin], [borrado])
+	ON	Target.codigo		= Source.codigo			and
+		Target.nombre		= Source.nombre			and
 		Target.fechaInicio	= Source.fechaInicio	and
 		Target.fechaFin		= Source.fechaFin		and
 		Target.borrado		= Source.borrado
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (nombre, fechaInicio, fechaFin, borrado)
-	VALUES (nombre, fechaInicio, fechaFin, borrado);
+	INSERT (codigo, nombre, fechaInicio, fechaFin, borrado)
+	VALUES (codigo, nombre, fechaInicio, fechaFin, borrado);
 
 	/*Definiendo los creadores de los planes de prueba*/
 	MERGE INTO CreadoPor AS Target
