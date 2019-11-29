@@ -79,6 +79,7 @@ namespace AppIntegrador.Controllers
                 return View(pregunta.ToList());
             }
         }
+
         [HttpPost]
         public ActionResult ActualizarBancoPreguntas(string input0 = null, string input1 = null, string input2 = null, string input3 = null)
         {
@@ -143,6 +144,7 @@ namespace AppIntegrador.Controllers
             ViewBag.message = "Crear pregunta";
             return View("Create");
         }
+
         public ActionResult CreateBase()
         {
             ViewBag.message = "Crear pregunta";
