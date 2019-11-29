@@ -15,10 +15,10 @@ namespace AppIntegrador.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DataIntegradorEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public DataIntegradorEntities()
-            : base("name=DataIntegradorEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -214,8 +214,12 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPerfilPermiso", perfilParameter, idPermisoParameter, codCarreraParameter, codEnfasisParameter, tienePermisoParameter);
         }
     
-        public virtual int AgregarPlan(string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, ObjectParameter codigo)
+        public virtual int AgregarPlan(Nullable<int> codigo, string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(int));
+    
             var nombreParameter = nombre != null ?
                 new ObjectParameter("nombre", nombre) :
                 new ObjectParameter("nombre", typeof(string));
@@ -228,10 +232,10 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", nombreParameter, fechaInicioParameter, fechaFinParameter, codigo);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", codigoParameter, nombreParameter, fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion, ObjectParameter numeroError)
+        public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion)
         {
             var codParameter = cod != null ?
                 new ObjectParameter("cod", cod) :
@@ -249,10 +253,10 @@ namespace AppIntegrador.Models
                 new ObjectParameter("justificacion", justificacion) :
                 new ObjectParameter("justificacion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaConOpcion", codParameter, typeParameter, enunciadoParameter, justificacionParameter, numeroError);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaConOpcion", codParameter, typeParameter, enunciadoParameter, justificacionParameter);
         }
     
-        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo, ObjectParameter numeroError)
+        public virtual int AgregarPreguntaEscalar(string cod, string type, string enunciado, string justificacion, Nullable<int> incremento, Nullable<int> minimo, Nullable<int> maximo)
         {
             var codParameter = cod != null ?
                 new ObjectParameter("cod", cod) :
@@ -282,7 +286,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("maximo", maximo) :
                 new ObjectParameter("maximo", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter, numeroError);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPreguntaEscalar", codParameter, typeParameter, enunciadoParameter, justificacionParameter, incrementoParameter, minimoParameter, maximoParameter);
         }
     
         public virtual int AgregarPreguntaRespuestaLibre(string cod, string type, string enunciado)
@@ -598,7 +602,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarOpcionesSeleccionadas", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, codPreguntaParameter, codseccionParameter, opcionSeleccionadaParameter);
         }
     
-        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, Nullable<bool> finalizado)
+        public virtual int GuardarRespuestaAFormulario(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha)
         {
             var codFormularioParameter = codFormulario != null ?
                 new ObjectParameter("codFormulario", codFormulario) :
@@ -628,11 +632,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fecha", fecha) :
                 new ObjectParameter("fecha", typeof(System.DateTime));
     
-            var finalizadoParameter = finalizado.HasValue ?
-                new ObjectParameter("finalizado", finalizado) :
-                new ObjectParameter("finalizado", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter, finalizadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GuardarRespuestaAFormulario", codFormularioParameter, correoParameter, siglaCursoParameter, numGrupoParameter, annoParameter, semestreParameter, fechaParameter);
         }
     
         public virtual int GuardarRespuestaAPreguntaConOpciones(string codFormulario, string correo, string siglaCurso, Nullable<byte> numGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fecha, string codPregunta, string codseccion, string justificacion)
@@ -1170,14 +1170,14 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosConSecciones");
         }
     
-        public virtual int PopularFormulariosDePrueba(ObjectParameter numeroError)
+        public virtual int PopularFormulariosDePrueba()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosDePrueba", numeroError);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularFormulariosDePrueba");
         }
     
-        public virtual int PopularSeccionesConPreguntas(ObjectParameter numeroError)
+        public virtual int PopularSeccionesConPreguntas()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas", numeroError);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas");
         }
     
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
@@ -1516,21 +1516,9 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", promedio, cantidad);
         }
     
-        public virtual ObjectResult<ObtenerFormulariosDeEstudiante_Result> ObtenerFormulariosDeEstudiante(string correoEstudiante, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        public virtual int PruebasPDM()
         {
-            var correoEstudianteParameter = correoEstudiante != null ?
-                new ObjectParameter("correoEstudiante", correoEstudiante) :
-                new ObjectParameter("correoEstudiante", typeof(string));
-    
-            var fechaInicioParameter = fechaInicio.HasValue ?
-                new ObjectParameter("fechaInicio", fechaInicio) :
-                new ObjectParameter("fechaInicio", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("fechaFin", fechaFin) :
-                new ObjectParameter("fechaFin", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PruebasPDM");
         }
     }
 }
