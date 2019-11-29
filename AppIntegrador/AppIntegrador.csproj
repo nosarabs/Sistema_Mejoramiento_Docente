@@ -508,6 +508,7 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Formularios\almacenador.js" />
     <Content Include="Scripts\Formularios\filtrosAsignacion.js" />
     <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />

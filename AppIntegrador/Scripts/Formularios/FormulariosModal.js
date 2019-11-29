@@ -1,45 +1,4 @@
-﻿/** Metodo encargado de guardar
- * las secciones agregadas a un formulario
- * llamando a un metodo del controlador,
- * y después refresca la vista para mostrar las 
- * secciones ya asociadas
- **/
-$('#ExampleModal').on('hide.bs.modal', function () {
-
-    var seccionesAsociadas = []
-    var index = 0;
-    var beforeElement = true;
-
-    while (index < agregarsecciones.current() && beforeElement) {
-        var secc = document.getElementById("secciones[" + index + "].Codigo")
-        seccionesAsociadas.push(secc.value);
-        ++index;
-    }
-    // Obtener el nombre y el codigo del formulario
-    var codigo = document.getElementById("textCode").value
-    var nombre = document.getElementById("textName").value
-    // Construir el objeto que recibe la vista
-    var resultado = { codigo, nombre, seccionesAsociadas };
-    // Llamado al método del controlador
-    $.ajax({
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        url: "/Formularios/AsociarSesionesAFormulario",
-        data: JSON.stringify(resultado),
-        dataType: "html",
-        traditional: true,
-        success: function (data) {
-            resultado = [];
-            // La vista es actualizada con los datos recibidos del controlador  
-            $('#seccionesActuales').html(data);
-        },
-        error: function () {
-
-        }
-    });
-});
-
-function CrearModal() {
+﻿function CrearModal() {
     $('#ExampleModal').modal();
     $('#BancoDeSecciones').show();
     $('#ModalCrearSeccion').hide();

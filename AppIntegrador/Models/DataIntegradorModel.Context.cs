@@ -362,23 +362,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuarioPerfil", usuarioParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, tienePerfilParameter);
         }
     
-        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta, Nullable<int> orden)
-        {
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("CodigoSeccion", codigoSeccion) :
-                new ObjectParameter("CodigoSeccion", typeof(string));
-    
-            var codigoPreguntaParameter = codigoPregunta != null ?
-                new ObjectParameter("CodigoPregunta", codigoPregunta) :
-                new ObjectParameter("CodigoPregunta", typeof(string));
-    
-            var ordenParameter = orden.HasValue ?
-                new ObjectParameter("Orden", orden) :
-                new ObjectParameter("Orden", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter, ordenParameter);
-        }
-    
         public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion, Nullable<int> orden)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
@@ -1531,6 +1514,19 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta)
+        {
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("CodigoSeccion", codigoSeccion) :
+                new ObjectParameter("CodigoSeccion", typeof(string));
+    
+            var codigoPreguntaParameter = codigoPregunta != null ?
+                new ObjectParameter("CodigoPregunta", codigoPregunta) :
+                new ObjectParameter("CodigoPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter);
         }
     }
 }
