@@ -29,11 +29,12 @@ class BaseDosCol extends BaseRespuesta{
         this.rowCanvas.className = "row";
         this.canvas = document.createElement("canvas");
         this.canvas.setAttribute("width", "250vw"); //Ancho canvas
-        this.canvas.setAttribute("height", "150vh"); //Largo canvas
+        this.canvas.setAttribute("height", "175vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
-        this.tituloJustificacion = document.createElement("h3");
+        this.tituloJustificacion = document.createElement("h4");
+        this.tituloJustificacion.className = "tituloJustificacion";
         this.rightCol.appendChild(this.tituloJustificacion);    
 
         this.rightCol.appendChild(this.justificacion);
@@ -99,11 +100,7 @@ class BaseTexto extends BaseRespuesta {
         super(tipo);
         this.textoAbierto = document.createElement("div");
         this.textoAbierto.className = "myBox textoAbierto";
-
-        var tituloJustificacion = document.createElement("h3");
-        tituloJustificacion.innerText = "Respuestas";
-
-        this.base.appendChild(tituloJustificacion);    
+   
         this.base.appendChild(this.textoAbierto);
 
 

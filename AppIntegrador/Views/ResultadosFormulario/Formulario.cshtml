@@ -43,9 +43,6 @@
         </script>
 
         <div class="row">
-            <div class="col-md-6 align-content-center">
-                <strong> Formulario: </strong> @Html.DisplayFor(model => model.CodigoFormulario); <br />
-            </div>
             <div class="container col-md-6 align-content-center">
                 @Html.DropDownList("ddlDropDownList", Model.Seccioncitas, "Seleccione una opción...", new
                 {
@@ -61,17 +58,11 @@
         </div>
 
         <div class="row">
-
-            <button class="btn-azulUCR float-right" id="Vermas">
-                Ver más
-            </button>
-
-
             <div class="modal fade" id="ModalResultados" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-xl" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="padding-left: 50px !important; padding-right: 50px !important">
                         <div class="modal-header">
-
+                            <h3 class="enunciadoPregunta" id="Encabezado" style="width: 100%; margin: auto; padding: 5px; font-size: 22px !important"></h3>
                         </div>
                         <div class="modal-body" id="Ejemplo">
 
