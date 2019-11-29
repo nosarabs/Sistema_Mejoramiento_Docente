@@ -10,7 +10,6 @@ function selectPregunta(element) {
 }
 
 function addPreguntaToSeccion(codSeccion) {
-    console.log(agregarPreguntas);
     var codPreguntas = agregarPreguntas.getArray();
     var result = {codSeccion, codPreguntas};
 

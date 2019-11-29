@@ -158,7 +158,7 @@ namespace AppIntegrador.Controllers
             {
                 for (int index = 0; index < preguntas.Count; ++index)
                 {
-                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo);
                 }
             }
             return true;
@@ -197,7 +197,7 @@ namespace AppIntegrador.Controllers
             {
                 for (int index = 0; index < codPreguntas.Count; ++index)
                 {
-                    db.AsociarPreguntaConSeccion(codSeccion, codPreguntas[index], index);
+                    db.AsociarPreguntaConSeccion(codSeccion, codPreguntas[index]);
                 }
             }
             return true;

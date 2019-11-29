@@ -411,22 +411,6 @@ namespace AppIntegrador.Controllers
             return View("Create", crearFormulario);
         }
 
-        [HttpPost]
-        public ActionResult AgregarPreguntasASeccion(List<Pregunta> preguntas)
-        {
-            string codigoFormulario = preguntas[0].Codigo;
-            string codigoSeccion = preguntas[0].Enunciado;
-            var seccion = db.Seccion.Find(codigoSeccion);
-
-            InsertSeccionTienePregunta(seccion, preguntas);
-
-            Formulario formularioDB = db.Formulario.Find(codigoFormulario);
-            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
-            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(codigoFormulario);
-            return PartialView("~/Views/Formularios/SeccionConPreguntas.cshtml", formulario.Secciones);
-
-        }
-
         // POST: Formularios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -631,19 +615,7 @@ namespace AppIntegrador.Controllers
             }
             return true;
         }
-        private bool InsertSeccionTienePregunta(Seccion seccion, List<Pregunta> preguntas)
-        {
-            if (preguntas != null)
-            {
-                // Empieza en 1 porque el índice 0 trae el código del formulario y la sección
-                for (int index = 1; index < preguntas.Count; ++index)
-                {
-                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
-                }
-            }
-            return true;
-        }
-
+        
         private bool InsertFormularioTieneSeccion(Formulario formulario, List<String> secciones)
         {
             if (formulario == null || secciones == null)
@@ -705,12 +677,6 @@ namespace AppIntegrador.Controllers
             {
                 return null;
             }
-        }
-
-        [HttpPost]
-        public ActionResult AgregarPreguntas(List<Pregunta> preguntas)
-        {
-            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(preguntas) });
         }
 
         [HttpGet]
