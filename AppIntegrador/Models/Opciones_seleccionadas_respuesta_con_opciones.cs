@@ -23,6 +23,8 @@ namespace AppIntegrador.Models
         public System.DateTime Fecha { get; set; }
         public string PCodigo { get; set; }
         public string SCodigo { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
         public byte OpcionSeleccionada { get; set; }
     
         public virtual Responde_respuesta_con_opciones Responde_respuesta_con_opciones { get; set; }

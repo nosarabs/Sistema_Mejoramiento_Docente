@@ -19,6 +19,8 @@ namespace AppIntegrador.Models
         public byte GNumero { get; set; }
         public int GAnno { get; set; }
         public byte GSemestre { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
         public System.DateTime Fecha { get; set; }
         public bool Finalizado { get; set; }
     }
