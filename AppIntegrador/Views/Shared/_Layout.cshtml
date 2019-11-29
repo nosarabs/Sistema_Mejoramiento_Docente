@@ -67,8 +67,8 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
-    con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
-    por otros medios.-->
+                        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+                        por otros medios.-->
                         @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
                         {
                             <li>
@@ -90,43 +90,43 @@
                         <li>
                             @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_FORMULARIO))
                             {
-                                <li>
-                                     <a href="">Formularios &#9660;</a>
-                                     <ul>
-                                         <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                         <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                         <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
-                                         <li><a href="/AsignacionFormularios/Index">Asignación de Formulario</a></li>
-                                     </ul>
-                                </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a href="">Formularios &#9660;</a>
+                            <li>
+                                <a href="">Formularios &#9660;</a>
+                                <ul>
+                                    <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                    <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                    <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+                                    <li><a href="/AsignacionFormularios/Index">Asignación de Formulario</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="">Formularios &#9660;</a>
 
-                                    <ul>
-                                        <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                        <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
-                                    </ul>
-                                </li>
-                            }
+                                <ul>
+                                    <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                    <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+                                </ul>
+                            </li>
+                        }
                             @*<ul>
-                                <li>
-                                    <a href="">Sección &#9658;</a>
-                                    <ul>
-                                        <li><a href="/Seccion/Index">Ver Sección</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="">Preguntas &#9658;</a>
-                                    <ul>
-                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
-                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            </li>*@
+                                    <li>
+                                        <a href="">Sección &#9658;</a>
+                                        <ul>
+                                            <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="">Preguntas &#9658;</a>
+                                        <ul>
+                                            <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                            <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                </li>*@
                             <li>
                                 <a href="">Planes de mejora &#9660;</a>
                                 <ul>
@@ -173,7 +173,9 @@
     else
     {
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
         @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")

@@ -24,7 +24,7 @@ function MostrarCrearPregunta(){
 
 function GenerarCrearPreguntas() {
     $.ajax({
-        type: "post",
+        type: "get",
         url: "/Preguntas/CreateBase",
         dataType: "html",
         success: function (data) {

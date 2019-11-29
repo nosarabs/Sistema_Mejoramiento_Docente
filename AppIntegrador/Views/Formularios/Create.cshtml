@@ -1,5 +1,8 @@
 ﻿@model AppIntegrador.Models.CrearFormularioModel
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
 @{
     ViewBag.Title = "Create";
 }
@@ -141,6 +144,8 @@
     @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/jqueryval/")*@
 
+
+
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/agregarsecciones.js"></script>
     <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
@@ -148,6 +153,19 @@
     <script src="~/Scripts/Formularios/CrearFormulario.js"></script>
     <script src="~/Scripts/Formularios/CrearPreguntasModal.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/Scripts/creacionpregunta.js"></script>
+    <script src="~/Scripts/Formularios/DesactivarBotonCrear.js"></script>
+    <script src="~/Scripts/Formularios/CargarPreguntas.js"></script>
+    <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            deshabilitarCamposBasicos(true)
+            validarEntradas();
+        })
+    </script>
 
 
 
