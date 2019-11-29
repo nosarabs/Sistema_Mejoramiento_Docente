@@ -132,9 +132,10 @@
         container.appendChild(categoria);
 
         //Se agrega el select que contendrá los elementos (opciones)
-        var seleccion = document.createElement("select");
+        var seleccion = document.createElement('select');
         seleccion.id = "filtroUA";
         seleccion.className = "select";
+        seleccion.name = "filtroUA"
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoUA() };
@@ -183,6 +184,8 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCarreraEnfasis";
         seleccion.className = "select";
+        seleccion.name = "filtroCarreraEnfasis"
+
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoCE() };
@@ -232,6 +235,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCursoGrupo";
         seleccion.className = "select";
+        seleccion.name = "filtroCursoGrupo"
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoG() };
@@ -282,6 +286,8 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroProfesores";
         seleccion.className = "select";
+        seleccion.name = "filtroProfesores"
+
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoP() };

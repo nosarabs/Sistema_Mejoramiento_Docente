@@ -88,45 +88,39 @@
                             </li>
                         }
                         <li>
-                            @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_FORMULARIO))
-                            {
-                            <li>
-                                <a href="">Formularios &#9660;</a>
-                                <ul>
-                                    <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                    <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                    <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
-                                    <li><a href="/AsignacionFormularios/Index">Asignación de Formulario</a></li>
-                                </ul>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="">Formularios &#9660;</a>
 
-                                <ul>
-                                    <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                    <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
-                                </ul>
-                            </li>
-                        }
-                            @*<ul>
-                                    <li>
-                                        <a href="">Sección &#9658;</a>
-                                        <ul>
-                                            <li><a href="/Seccion/Index">Ver Sección</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="">Preguntas &#9658;</a>
-                                        <ul>
+                            <a href="">Formularios &#9660;</a>
+                            <ul>
+                                <li>
+                                    <a href="">Formulario &#9658;</a>
+                                    <ul>
+                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_FORMULARIO))
+                                        {
+
+                                            <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        }
+                                        <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                        <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Sección &#9658;</a>
+                                    <ul>
+                                        <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="">Preguntas &#9658;</a>
+                                    <ul>
+                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_PREGUNTA))
+                                        {
                                             <li><a href="/Preguntas/Create">Crear pregunta</a></li>
-                                            <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                </li>*@
+                                        }
+                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                             <li>
                                 <a href="">Planes de mejora &#9660;</a>
                                 <ul>
