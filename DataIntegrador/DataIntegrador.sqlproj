@@ -73,9 +73,9 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
-    <Folder Include="FiltrosFormulario" />
     <Folder Include="Usuarios y Perfiles\Indices" />
     <Folder Include="PlanesDeMejora\Indices" />
+    <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
   </ItemGroup>
@@ -250,6 +250,11 @@
     <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
+    <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
+    <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
+    <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

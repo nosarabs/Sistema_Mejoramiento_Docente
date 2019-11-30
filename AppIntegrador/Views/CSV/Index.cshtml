@@ -1,5 +1,4 @@
 ﻿@{
-    int @clasificador = 0;
     ViewBag.Title = "Index";
 }
 
@@ -11,7 +10,7 @@
 <div class="fullWidth">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="impText">Carga CSV</h2>
+            <h2 class="impText">Carga de estudiantes</h2>
         </div>
     </div>
 </div>
@@ -19,19 +18,12 @@
 
     @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-
-        <label for="file">Subir archivo CSV:</label>
+        <label for="file">Subir lista de estudiantes:</label>
         <div class="custom-file mb-3">
 
             <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
             <label class="custom-file-label" for="customFile">Elija un archivo</label>
         </div>
-        <select id="tipoArchivo" name="tipoArchivo" class="form-control my-form-control">
-            <option value=1>Lista de Clase</option>
-            <option value=2>Guia de Horario</option>
-            <option value=3>Lista de Estudiantes</option>
-            <option value=4>Lista de Funcionarios</option>
-        </select>
 
         <br>
         <br>
@@ -90,7 +82,7 @@
                 }
                 reader.readAsText(fileUpload.files[0]);
             } else {
-                alert("This browser does not support HTML5.");
+                alert("Su navegador no soporta HTML5");
             }
         }
     </script>

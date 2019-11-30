@@ -1,7 +1,7 @@
 ﻿@model AppIntegrador.Models.Pregunta
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
+@*@Scripts.Render("~/bundles/jquery")*@
+@*@Scripts.Render("~/bundles/jqueryval")*@
 
 <div class="container">
     <div class="card card-default shadow">
@@ -19,7 +19,7 @@
                     <div class="card card-default shadow">
                         <div class="card-body grisUCR2">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-5">
                                     @*<div>
                 <button name="@Html.NameFor(m => m.Tipo)" value="-" id="@Html.NameFor(m => m.Tipo)" class="btn btn-secondary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="texto-btn">Escoger tipo</span>
@@ -34,7 +34,7 @@
                 </ul>
             </div>*@
 
-                                    <select id="Tipo" name="Tipo" class="form-control">
+                                    <select id="Tipo" name="Tipo" class="form-control" onchange="SeleccionarTipoCrearPregunta(this)">
                                         <option value="-">Escoger tipo</option>
                                         <option value="U">Opción única</option>
                                         <option value="M">Opción múltiple</option>
@@ -43,7 +43,7 @@
                                         <option value="S">Sí / No / No responde</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     @Html.EditorFor(model => model.Codigo, new
                                     {
                                         htmlAttributes = new
@@ -94,8 +94,8 @@
                     </div>
                 </div>
                 <br />
-                <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-10">
+                <div class="form-group float-right">
+                    <div class="col-lg-offset-2 col-lg-10 ">
                         <input type="submit" value="Crear" class="btn-azulUCR" id="Create" />
                         @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
                     </div>
@@ -106,9 +106,6 @@
 </div>
 
 @section Scripts{
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/creacionpregunta.js"></script>
     <script src="~/Scripts/Formularios/ContadorCaracteres.js"></script>
     <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>

@@ -24,8 +24,8 @@ CREATE TRIGGER [dbo].[ActualizarOrdenSeccion]
 		SET Orden = Orden - 1
 		WHERE Orden > @orden;
 	END
-GO
+/*GO
 
 CREATE UNIQUE INDEX [ix_form_tiene_seccion]
 ON Formulario_tiene_seccion(FCodigo, Orden)
-INCLUDE(SCodigo);
+INCLUDE(SCodigo);*/
