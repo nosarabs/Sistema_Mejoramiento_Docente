@@ -6,6 +6,8 @@
 @Scripts.Render("~/Scripts/bootstrap.min.js")
 @Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
 @Scripts.Render("~/Scripts/Visualizacion/filtros.js")
+@Scripts.Render("~/Scripts/Visualizacion/Chart.js")
+@Scripts.Render("~/Scripts/Visualizacion/chroma.js")
 @Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
 @Styles.Render("~/Content/Visualizacion/styles.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
@@ -28,8 +30,12 @@
                     <div class="col">
                         <small id="pP"></small>
                         <small id="pN"></small>
+                        <canvas class="graficosPromedio" id="gP"></canvas>
+                    </div>
+                    <div class="col">
                         <small id="cP"></small>
                         <small id="cN"></small>
+                        <canvas class="graficosPromedio" id="gC"></canvas>
                     </div>
                 </div>
                 <div class="row" id="cuadricula">
@@ -43,7 +49,10 @@
 <script>
 
     var filtros = new Filtros();
-    filtros.crearFiltros();
+    $(document).ready(function () {
+        filtros.crearFiltros();
+        actualizarPromedios(null, null, null, null);
+    });
 
 </script>
 
@@ -159,14 +168,21 @@
 
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
-        var cursoN = [1];
+        var cursoN = curso[1];
 
-        $('#pP').text("Promedio profe: " + profeP);
+        $('#pP').text("Promedio Profesor: " + profeP);
         $('#pN').text("Cantidad: " + profeN);
-        $('#cP').text("Promedio curso: " + cursoP);
+        $('#cP').text("Promedio Curso: " + cursoP);
         $('#cN').text("Cantidad: " + cursoN);
 
+        var canvasP = document.getElementById('gP').getContext('2d');
+        var canvasC = document.getElementById('gC').getContext('2d');
+
+        x.generarGrafico(canvasP);
+        x.generarGrafico(canvasC);
+
     }
+
 </script>
 
 
