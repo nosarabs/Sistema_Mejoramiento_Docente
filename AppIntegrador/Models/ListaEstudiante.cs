@@ -32,6 +32,8 @@ namespace AppIntegrador.Models
         public string Borrado { get; set; }
         [Required]
         public string CorreoEstudiante { get; set; }
-        //Datos de a que enfasis y carrera pertenece el estudiante
+        public string CorreoEstudianteEmpadronado { get; set; }
+        public string CodigoCarreraEmpadronado { get; set; }
+        public string CodigoEnfasisEmpadronado { get; set; }
     }
 }

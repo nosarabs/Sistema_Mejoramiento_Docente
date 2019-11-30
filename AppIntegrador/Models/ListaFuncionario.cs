@@ -19,7 +19,9 @@ namespace AppIntegrador.Models
         public string NombrePersona { get; set; }
         public string ApellidoPersona { get; set; }
         public string Borrado { get; set; }
+        public string CorreoFuncionario { get; set; }
         public string CorreoProfesor { get; set; }
-        //Datos de unidad academica donde labora
+        public string CorreoFuncionarioTrabaja { get; set; }
+        public string CodigoUnidadTrabaja { get; set; }
     }
 }

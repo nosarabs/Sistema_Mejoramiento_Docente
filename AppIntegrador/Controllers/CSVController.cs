@@ -189,6 +189,7 @@ namespace AppIntegrador.Controllers
             db.InsertarUnidadCSV(fila.CodigoUnidad, fila.NombreFacultad);
             db.InsertarCarreraCSV(fila.CodigoCarrera, fila.NombreCarrera);
             db.InsertarEnfasisCSV(fila.CodigoCarreraEnfasis, fila.CodigoEnfasis, fila.NombreEnfasis);
+            db.InsertarInscrita_En(fila.CodigoUnidadCarrera, fila.CodigoCarreraUnidad);
         }
 
         private bool cargarGuia(string path)
@@ -218,6 +219,7 @@ namespace AppIntegrador.Controllers
             db.InsertarGrupoCSV(fila.SiglaCursoGrupo, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
             db.InsertarImparte(fila.CorreoProfesorImparte, fila.SiglaCursoImparte, Convert.ToByte(fila.NumeroGrupoImparte), Convert.ToByte(fila.SemestreGrupoImparte), Convert.ToInt32(fila.AnnoGrupoImparte));
             db.InsertarMatriculado_en(fila.CorreoMatricula, fila.SiglaCursoMatricula, Convert.ToByte(fila.NumeroGrupoMatricula), Convert.ToByte(fila.SemestreMatricula), Convert.ToInt32(fila.AnnoMatricula));
+            db.InsertarPertenece_a(fila.CodigoCarreraCurso, fila.CodigoEnfasisCurso, fila.SiglaCursoCarrera);
         }
 
         private bool cargarListaEstudiante(string path)
@@ -232,9 +234,6 @@ namespace AppIntegrador.Controllers
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
             IEnumerable<ListaEstudiante> datos = cc.Read<ListaEstudiante>(path, inputFileDescription);
             List<ListaEstudiante> lista = datos.ToList();
-
- 
-
             //Se valida cada fila de CSV
             foreach (ListaEstudiante f in lista)
             {
@@ -247,6 +246,7 @@ namespace AppIntegrador.Controllers
         {
             db.InsertarPersonaCSV(fila.CorreoPersona, fila.IdPersona, fila.NombrePersona, fila.ApellidoPersona, fila.TipoIdPersona, Convert.ToBoolean(fila.Borrado));
             db.InsertarEstudianteCSV(fila.CorreoEstudiante);
+            db.InsertarEmpadronadoEn(fila.CorreoEstudianteEmpadronado, fila.CodigoCarreraEmpadronado, fila.CodigoEnfasisEmpadronado);
         }
 
         private bool cargarListaFuncionario(string path)
@@ -273,8 +273,9 @@ namespace AppIntegrador.Controllers
         private void insertarListaFuncionario(ListaFuncionario fila)
         {
             db.InsertarPersonaCSV(fila.CorreoPersona, fila.IdPersona, fila.NombrePersona, fila.ApellidoPersona, fila.TipoIdPersona, Convert.ToBoolean(fila.Borrado));
-            db.InsertarFuncionarioCSV(fila.CorreoProfesor); //TODO: Que pasa si no es profesor?
+            db.InsertarFuncionarioCSV(fila.CorreoFuncionario); //TODO: Que pasa si no es profesor?
             db.InsertarProfesorCSV(fila.CorreoProfesor);
+            db.InsertarTrabajaEn(fila.CorreoFuncionarioTrabaja, fila.CodigoUnidadTrabaja); 
         }
 
     }
