@@ -40,7 +40,7 @@ namespace AppIntegrador.Models
 
         public int PerfilesSeleccionados { get; set; }
 
-        public PermissionsViewHolder(string codCarrera, string codEnfasis)
+        public PermissionsViewHolder()
         {
             List<Perfil> perfiles = db.Perfil.ToList();
             this.Perfiles = new List<PerfilCodigo>();

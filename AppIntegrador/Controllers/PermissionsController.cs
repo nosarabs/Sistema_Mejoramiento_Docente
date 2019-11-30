@@ -39,7 +39,7 @@ namespace AppIntegrador.Controllers
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("Index", "Home");
             }
-            PermissionsViewHolder model = new PermissionsViewHolder(CurrentUser.getUserMajorId(), CurrentUser.getUserEmphasisId());
+            PermissionsViewHolder model = new PermissionsViewHolder();
 
             return View(model);
         }
@@ -132,7 +132,7 @@ namespace AppIntegrador.Controllers
                 TempData["alertmessage"] = "Algo salió mal. Intente de nuevo.";
                 return Json(new { persons = "", permissions = "" });
             }
-            PermissionsViewHolder model = new PermissionsViewHolder(majorCode, emphCode);
+            PermissionsViewHolder model = new PermissionsViewHolder();
             // Obtener nombre de Perfil y Énfasis
 
             // Actualizar los checkboxes con la selección de énfasis.
