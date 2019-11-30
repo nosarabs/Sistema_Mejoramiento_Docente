@@ -214,6 +214,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCarreraEnfasis";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoCE() };
@@ -228,12 +229,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
+        //var defaultOption = document.createElement("option");
+        //defaultOption.className = "option";
+        //defaultOption.value = "null";
+        //defaultOption.text = "Seleccione una opción...";
 
-        filtro.appendChild(defaultOption);
+        //filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarCEs(listaUA, listaG, listaP);
 
@@ -263,6 +264,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCursoGrupo";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoG() };
@@ -278,12 +280,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
+        //var defaultOption = document.createElement("option");
+        //defaultOption.className = "option";
+        //defaultOption.value = "null";
+        //defaultOption.text = "Seleccione una opción...";
 
-        filtro.appendChild(defaultOption);
+        //filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarGs(listaUA, listaCE, listaP);
 
@@ -313,6 +315,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroProfesores";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoP() };
@@ -327,12 +330,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
+        //var defaultOption = document.createElement("option");
+        //defaultOption.className = "option";
+        //defaultOption.value = "null";
+        //defaultOption.text = "Seleccione una opción...";
 
-        filtro.appendChild(defaultOption);
+        //filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarPs(listaUA, listaCE, listaG);
 
@@ -371,6 +374,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroFormularios";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarVistaParcial() };
@@ -385,12 +389,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
+        //var defaultOption = document.createElement("option");
+        //defaultOption.className = "option";
+        //defaultOption.value = "null";
+        //defaultOption.text = "Seleccione una opción...";
 
-        filtro.appendChild(defaultOption);
+        //filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarFs(listaUA, listaCE, listaG, listaP);
 

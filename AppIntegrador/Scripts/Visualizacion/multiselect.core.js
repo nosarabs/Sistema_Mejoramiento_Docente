@@ -89,7 +89,7 @@ Multiselect.prototype = {
 			checkBox.dataset.multiselectElement = JSON.stringify(e);
 		});
 
-		var selectAll = this._createItem('span', -1, 'Select all');
+		var selectAll = this._createItem('span', -1, 'Seleccionar todos');
 		var result = m_helper.div({
 			id : this._getItemListIdentifier(),
 			class : 'multiselect-list'
@@ -337,7 +337,7 @@ Multiselect.prototype = {
 		}
 		
 		if (activeItems.length == document.getElementById(context._getItemListIdentifier()).querySelectorAll('ul li').length) {
-			val = 'All selected';
+			val = 'Todos seleccionados';
 		}
 		document.getElementById(context._getInputFieldIdentifier()).value = val ? val : '';		
 	},
