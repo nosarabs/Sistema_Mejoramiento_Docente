@@ -262,9 +262,13 @@ namespace AppIntegrador.Controllers
             IEnumerable<ListaFuncionario> datos = cc.Read<ListaFuncionario>(path, inputFileDescription);
             List<ListaFuncionario> lista = datos.ToList();
 
+
+            ValidadorListaDeEstudiantes val = new ValidadorListaDeEstudiantes();
+
             //Se valida cada fila de CSV
             foreach (ListaFuncionario f in lista)
             {
+                System.Diagnostics.Debug.WriteLine(f.CorreoPersona +" = " + val.Validar(f));
                 insertarListaFuncionario(f);
             }
             return true;
