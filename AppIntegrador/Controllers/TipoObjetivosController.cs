@@ -35,21 +35,6 @@ namespace AppIntegrador.Controllers
             return View("Index", db.TipoObjetivo.ToList());
         }
 
-        // GET: TipoObjetivos/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TipoObjetivo tipoObjetivo = db.TipoObjetivo.Find(id);
-            if (tipoObjetivo == null)
-            {
-                return HttpNotFound();
-            }
-            return View("Detalles", tipoObjetivo);
-        }
-
         // GET: TipoObjetivos/Create
         [HttpGet]
         public ActionResult Create()
@@ -110,6 +95,7 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(tipoObjetivo).State = EntityState.Modified;

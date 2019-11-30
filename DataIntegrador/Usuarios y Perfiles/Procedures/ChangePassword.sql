@@ -13,7 +13,7 @@ begin TRANSACTION
 begin
 	DECLARE @salt VARCHAR(64)
 
-	SELECT @salt=salt
+	SELECT @salt=Salt
 	FROM Usuario
 	WHERE Username=@username
 

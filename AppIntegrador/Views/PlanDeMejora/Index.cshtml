@@ -14,8 +14,23 @@
 }
 
 <div class="fullWidth">
-
     <div class="card card-default">
+        <div class="card-body">
+            <b>
+                Búsqueda
+            </b>
+
+            <form action="Buscar">
+                <input class="form-control" type="text" name="nombrePlan" placeholder="Buscar..." id="nombre-option" maxlength="50" />
+
+                <input type="submit"
+                       name="submit"
+                       value="Filtrar"
+                       class="btn btn-outline-light text-dark bg-white border-secondary" />
+
+            </form>
+
+        </div>
         <div class="card-body">
             @*
             Modificado por: Johan Córdoba
@@ -31,7 +46,7 @@
                 </div>
                 <div class="col-md-2">
                         
-                    @Html.ActionLink("Nuevo Plan de Mejora", "CreateNuevo", "PlanDeMejora", null, new { @class = "btn-azulUCR col-md-12" })
+                    @Html.ActionLink("Nuevo Plan de Mejora", "Crear", "PlanDeMejora", null, new { @class = "btn-azulUCR col-md-12" })
                 </div>
 
             </div>

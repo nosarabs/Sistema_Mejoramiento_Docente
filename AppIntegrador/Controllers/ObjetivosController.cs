@@ -22,14 +22,6 @@ namespace AppIntegrador.Controllers
             return View(objetivo.ToList());
         }
 
-        //// Para el caso de pruebas
-        //public ActionResult Index()
-        //{
-        //    var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
-        //    return View(objetivo.ToList());
-        //}
-
-
         public ActionResult accionesObjetivo(string id, string nomb)
         {
             var idPlan = -1;
