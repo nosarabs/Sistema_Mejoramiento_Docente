@@ -78,6 +78,7 @@
     <Folder Include="PlanesDeMejora\Indices" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
+    <Folder Include="Formularios\Asignar" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -251,6 +252,7 @@
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
+    <Build Include="Formularios\Asignar\AsignarFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
