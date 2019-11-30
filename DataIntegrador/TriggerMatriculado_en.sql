@@ -10,9 +10,14 @@
 	set implicit_transactions off;
 	Begin transaction transaccionMatriculadoEn;
 
-		DECLARE cursor_Matriculado_en CURSOR
-		FOR SELECT CorreoEstudiante, SiglaCurso, NumGrupo, Semestre, Anno
-		FROM inserted;
+	DECLARE cursor_Matriculado_en CURSOR
+	FOR SELECT CorreoEstudiante, SiglaCurso, NumGrupo, Semestre, Anno
+	FROM inserted;
+	-- Obtener los énfasis a los que pertenece el grupo
+	DECLARE cursorEnfasisMatriculado_en CURSOR FOR
+	SELECT CodCarrera, CodEnfasis
+	FROM Pertenece_a
+	WHERE SiglaCurso = @sigla
 		OPEN cursor_Matriculado_en;
 		FETCH NEXT FROM cursor_Matriculado_en INTO @correo, @sigla, @num, @semestre, @anno
 		WHILE @@FETCH_STATUS = 0
@@ -26,22 +31,9 @@
 		CLOSE cursor_Matriculado_en
 		DEALLOCATE cursor_Matriculado_en
 
-	Commit Transaction transaccionMatriculadoEn;
-	--Volver al nivel de aislamiento por default
-	set transaction isolation level read committed;
-
-	SELECT @correo = i.CorreoEstudiante, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
-	FROM inserted i
-	-- Obtener los énfasis a los que pertenece el grupo
-	DECLARE cursorEnfasis CURSOR FOR
-		SELECT CodCarrera, CodEnfasis
-		FROM Pertenece_a
-		WHERE SiglaCurso = @sigla
-	BEGIN
-
 		-- Dar perfil de estudiante en los énfasis, si no los tiene
-		OPEN cursorEnfasis
-		FETCH NEXT FROM cursorEnfasis into @codCarrera, @codEnfasis;
+		OPEN cursorEnfasisMatriculado_en
+		FETCH NEXT FROM cursorEnfasisMatriculado_en into @codCarrera, @codEnfasis;
 		WHILE @@FETCH_STATUS=0
 		BEGIN
 			-- Asegurarse de que tienen un énfasis asociado
@@ -58,8 +50,11 @@
 					VALUES (@correo, 'Estudiante', @codCarrera, @codEnfasis)
 				END
 			END
-			FETCH NEXT FROM cursorEnfasis into @codCarrera, @codEnfasis;
+			FETCH NEXT FROM cursorEnfasisMatriculado_en into @codCarrera, @codEnfasis;
 		END
-		CLOSE cursorEnfasis
-		DEALLOCATE cursorEnfasis
-END
+		CLOSE cursorEnfasisMatriculado_en
+		DEALLOCATE cursorEnfasisMatriculado_en
+
+	Commit Transaction transaccionMatriculadoEn;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;
