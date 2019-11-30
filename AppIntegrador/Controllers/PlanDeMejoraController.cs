@@ -15,7 +15,7 @@ namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
-        private DataIntegradorEntities db;
+        private DataIntegradorEntities db = new DataIntegradorEntities();
 
         public PlanDeMejoraController()
         {
@@ -29,13 +29,25 @@ namespace AppIntegrador.Controllers
 
         // GET: PlanDeMejora
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(List<PlanDeMejora> planes = null)
         {
+            if (planes == null || planes.Count == 0)
+            {
+                planes = db.PlanDeMejora.ToList();
+            }
+
             HttpContext context = System.Web.HttpContext.Current;
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = context.User.Identity.Name;
-            return View("Index", db.PlanDeMejora.ToList());
+
+            return View("Index", planes);
+        }
+
+        public ActionResult Buscar(String nombrePlan)
+        {
+            var planes = db.PlanDeMejora.Where(x => x.nombre.Contains(nombrePlan)).ToList();
+            return Index(planes);
         }
 
         /*
@@ -57,7 +69,7 @@ namespace AppIntegrador.Controllers
         */
         public ActionResult Crear(PlanDeMejora plan = null)
         {
-            if(plan == null)
+            if (plan == null)
             {
                 plan = new PlanDeMejora();
             }
@@ -65,7 +77,7 @@ namespace AppIntegrador.Controllers
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             String name = "NombreCompleto";
             ObjectParameter name_op;
-            foreach(var profe in ViewBag.ProfesoresLista)
+            foreach (var profe in ViewBag.ProfesoresLista)
             {
                 name_op = new ObjectParameter(name, "");
                 db.GetTeacherName(profe.Correo, name_op);
@@ -77,40 +89,47 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Crear([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
+                                    List<String> ProfeSeleccionado = null, 
+                                    List<String> FormularioSeleccionado = null,
+                                    List<Objetivo> MisObjetivos = null)
         {
+            PlanDeMejora planAgregado = null;
             Profesor profe;
             Formulario formulario;
             if (ModelState.IsValid && plan != null)
             {
-                if(ProfeSeleccionado != null)
+                var cod = new ObjectParameter("codigo", 0);
+                db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin, cod);
+                planAgregado = db.PlanDeMejora.Find(cod.Value);
+                if (ProfeSeleccionado != null)
                 {
-                    foreach(var correo in ProfeSeleccionado)
+                    foreach (var correo in ProfeSeleccionado)
                     {
                         profe = db.Profesor.Find(correo);
-                        profe.PlanDeMejora.Add(plan);
-                        if(!plan.Profesor.Contains(profe))
-                            plan.Profesor.Add(profe);
+                        profe.PlanDeMejora.Add(planAgregado);
+                        if (!planAgregado.Profesor.Contains(profe))
+                            planAgregado.Profesor.Add(profe);
                     }
                 }
-                if(FormularioSeleccionado != null)
+                if (FormularioSeleccionado != null)
                 {
                     foreach (var formCod in FormularioSeleccionado)
                     {
                         formulario = db.Formulario.Find(formCod);
-                        formulario.PlanDeMejora.Add(plan);
-                        if (!plan.Formulario.Contains(formulario))
+                        formulario.PlanDeMejora.Add(planAgregado);
+                        if (!planAgregado.Formulario.Contains(formulario))
                         {
-                            plan.Formulario.Add(formulario);
+                            planAgregado.Formulario.Add(formulario);
                         }
                     }
                 }
-                db.PlanDeMejora.Add(plan);
                 db.SaveChanges();
             }
-            return EditarPlanDeMejora(plan.codigo);
+            return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
+
+
         [HttpPost]
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
         {

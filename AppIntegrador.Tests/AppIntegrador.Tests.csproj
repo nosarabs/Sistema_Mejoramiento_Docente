@@ -144,6 +144,7 @@
     <Compile Include="Controllers\FormularioControllerTest.cs" />
     <Compile Include="Controllers\PermissionsControllerTest.cs" />
     <Compile Include="Controllers\DashboardControllerTest.cs" />
+    <Compile Include="Controllers\TestSetup.cs" />
     <Compile Include="Controllers\TipoObjetivosTest.cs" />
     <Compile Include="Controllers\EnlaceSeguroControllerTest.cs" />
     <Compile Include="Controllers\UsersControllerTest.cs" />
