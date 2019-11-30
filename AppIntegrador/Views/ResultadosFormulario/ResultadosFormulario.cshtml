@@ -1,32 +1,16 @@
 ﻿@model AppIntegrador.Models.ResultadosFormulario
 
 @{
-    ViewBag.Title = "Formulario";
+    ViewBag.Title = "ResultadosFormulario";
 }
 
     <head>
         <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
-        <link href="~/Content/Visualizacion/styles.css" rel="stylesheet" />
-        <link href="~/Content/Visualizacion/bootstrap.min.css" rel="stylesheet" />
-
     </head>
 
     <body>
 
-        <script src="~/Scripts/Visualizacion/jquery-3.4.1.min.js"></script>
-        <script src="~/Scripts/Visualizacion/Chart.js"></script>
-        <script src="~/Scripts/Visualizacion/chroma.js"></script>
-        <script src="~/Scripts/Visualizacion/chartjs-plugin-datalabels.js"></script>
-        <script src="~/Scripts/Visualizacion/baseRespuestasPlantilla.js"></script>
-        <script src="~/Scripts/Visualizacion/graficos.js"></script>
-        <script src="~/Scripts/Visualizacion/estadisticas.js"></script>
-        <script src="~/Scripts/Visualizacion/TextoLibre.js"></script>
-        <script src="~/Scripts/Visualizacion/insertaContenidos.js"></script>
-        <script src="~/Scripts/Visualizacion/botones.js"></script>
-
         <script>
-
-
 
             var codigoFormulario = @Html.Raw(Model.CodigoFormulario);
             var siglaCurso = @Html.Raw(Model.SiglaCurso);
@@ -36,9 +20,6 @@
             var fechaInicio =  @Html.Raw(Model.FechaInicio);
             var fechaFin =  @Html.Raw(Model.FechaFin);
             var listaPreguntas = @Html.Raw(Model.Preguntas);
-
-            //var botones = new Botones();
-            //botones.crearBotones(listaPreguntas);
 
         </script>
 
@@ -83,12 +64,8 @@
 
 
         <div class="row offset-md-2">
-            <!--Para flexboxes de la cuadrícula de las preguntas-->
-            <div class="d-flex flex-wrap col-md-10 bg-light justify-content-center" id="contenedorPreguntas" align-items: center>
-            </div>
+            <div class="d-flex flex-wrap col-md-10 bg-light justify-content-center" id="contenedorPreguntas" align-items: center></div>
         </div>
-
-
 
         <br />
 
