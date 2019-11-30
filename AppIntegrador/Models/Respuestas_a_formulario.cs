@@ -28,12 +28,11 @@ namespace AppIntegrador.Models
         public byte GNumero { get; set; }
         public int GAnno { get; set; }
         public byte GSemestre { get; set; }
-        public System.DateTime FechaInicio { get; set; }
-        public System.DateTime FechaFin { get; set; }
         public System.DateTime Fecha { get; set; }
         public bool Finalizado { get; set; }
     
-        public virtual Formulario_activo Formulario_activo { get; set; }
+        public virtual Formulario Formulario { get; set; }
+        public virtual Grupo Grupo { get; set; }
         public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }

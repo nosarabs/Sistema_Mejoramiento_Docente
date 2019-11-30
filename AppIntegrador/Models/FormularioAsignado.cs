@@ -7,37 +7,37 @@ namespace AppIntegrador.Models
 {
     public class FormularioAsignado
     {
-        public Formulario_activo Formulario { get; }
+        public Periodo_activa_por Periodo { get; }
         public string Nombre { get; }
         public string NombreCurso { get;}
         public int Estado { get; }
 
         public FormularioAsignado()
         {
-            this.Formulario = null;
+            this.Periodo = null;
             this.Nombre = "Formulario inválido";
         }
 
-        public FormularioAsignado(Formulario_activo Formulario)
+        public FormularioAsignado(Periodo_activa_por periodo)
         {
             // Guardar objeto de periodo
-            this.Formulario = Formulario;
+            this.Periodo = periodo;
 
             // Basado en el objeto, guardar nombre del formulario
             using (DataIntegradorEntities db = new DataIntegradorEntities())
             {
-                this.Nombre = db.Formulario.Find(this.Formulario.FCodigo).Nombre;
+                this.Nombre = db.Formulario.Find(this.Periodo.FCodigo).Nombre;
 
-                this.NombreCurso = db.Curso.Find(this.Formulario.CSigla).Nombre;
+                this.NombreCurso = db.Curso.Find(this.Periodo.CSigla).Nombre;
 
                 var fecha = DateTime.Now;
 
-                if(this.Formulario.FechaFin < fecha)
+                if(this.Periodo.FechaFin < fecha)
                 {
                     // Finalizado
                     this.Estado = 1;
                 }
-                else if(this.Formulario.FechaInicio > fecha)
+                else if(this.Periodo.FechaInicio > fecha)
                 {
                     // No disponible
                     this.Estado = 2;

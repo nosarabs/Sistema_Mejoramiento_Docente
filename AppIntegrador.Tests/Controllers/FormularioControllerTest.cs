@@ -13,7 +13,6 @@ using System.Web;
 using System.Web.Routing;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
-using System.Globalization;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -1016,16 +1015,14 @@ namespace AppIntegrador.Tests.Controllers
                 GNumero = 1,
                 GAnno = 2019,
                 GSemestre = 2,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FCodigo = codFormulario
+                FCodigo = codFormulario,
             };
 
             // Se prepara el retorno del procedimiento almacenado en el mock
             var mockedObtenerRespuestas = SetupMockProcedure<ObtenerRespuestasAFormulario_Result>
                 (new List<ObtenerRespuestasAFormulario_Result> { respuestas });
             mockDb.Setup(x => x.ObtenerRespuestasAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, respuestas.FechaInicio, respuestas.FechaFin)).Returns(mockedObtenerRespuestas.Object);
+                respuestas.GAnno, respuestas.GSemestre)).Returns(mockedObtenerRespuestas.Object);
 
             ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
             {
@@ -1069,7 +1066,7 @@ namespace AppIntegrador.Tests.Controllers
             var mockedRespuestaPreguntaConOpciones = SetupMockProcedure<ObtenerRespuestasAPreguntaConOpciones_Result>(new List<ObtenerRespuestasAPreguntaConOpciones_Result> { obtenerRespuestasAPreguntaConOpciones });
             mockDb.Setup(x => x.ObtenerRespuestasAPreguntaConOpciones(obtenerRespuestasAPreguntaConOpciones.FCodigo, obtenerRespuestasAPreguntaConOpciones.Correo,
                 obtenerRespuestasAPreguntaConOpciones.CSigla, obtenerRespuestasAPreguntaConOpciones.GNumero, obtenerRespuestasAPreguntaConOpciones.GSemestre, obtenerRespuestasAPreguntaConOpciones.GAnno,
-                obtenerRespuestasAPreguntaConOpciones.SCodigo, obtenerRespuestasAPreguntaConOpciones.PCodigo, obtenerRespuestasAPreguntaConOpciones.FechaInicio, obtenerRespuestasAPreguntaConOpciones.FechaFin)).Returns(mockedRespuestaPreguntaConOpciones.Object);
+                obtenerRespuestasAPreguntaConOpciones.SCodigo, obtenerRespuestasAPreguntaConOpciones.PCodigo)).Returns(mockedRespuestaPreguntaConOpciones.Object);
 
             ObtenerOpcionesSeleccionadas_Result obtenerOpciones = new ObtenerOpcionesSeleccionadas_Result
             {
@@ -1081,14 +1078,12 @@ namespace AppIntegrador.Tests.Controllers
                 GSemestre = respuestas.GSemestre,
                 SCodigo = codSeccion,
                 PCodigo = codPregunta,
-                FechaInicio = respuestas.FechaInicio,
-                FechaFin = respuestas.FechaFin,
                 OpcionSeleccionada = 0
             };
             var mockedObtenerOpciones = SetupMockProcedure<ObtenerOpcionesSeleccionadas_Result>(new List<ObtenerOpcionesSeleccionadas_Result> { obtenerOpciones });
             mockDb.Setup(x => x.ObtenerOpcionesSeleccionadas(obtenerOpciones.FCodigo, obtenerOpciones.Correo, 
                 obtenerOpciones.CSigla, obtenerOpciones.GNumero, obtenerOpciones.GSemestre, obtenerOpciones.GAnno, 
-                obtenerOpciones.SCodigo, obtenerOpciones.PCodigo, obtenerOpciones.FechaInicio, obtenerOpciones.FechaFin)).Returns(mockedObtenerOpciones.Object);
+                obtenerOpciones.SCodigo, obtenerOpciones.PCodigo)).Returns(mockedObtenerOpciones.Object);
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
@@ -1128,15 +1123,13 @@ namespace AppIntegrador.Tests.Controllers
                 GAnno = 2019,
                 GSemestre = 2,
                 FCodigo = codFormulario,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
             };
 
             // Se prepara el retorno del procedimiento almacenado en el mock
             var mockedObtenerRespuestas = SetupMockProcedure<ObtenerRespuestasAFormulario_Result>
                 (new List<ObtenerRespuestasAFormulario_Result> { respuestas });
             mockDb.Setup(x => x.ObtenerRespuestasAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, respuestas.FechaInicio, respuestas.FechaFin)).Returns(mockedObtenerRespuestas.Object);
+                respuestas.GAnno, respuestas.GSemestre)).Returns(mockedObtenerRespuestas.Object);
 
             ObtenerPreguntasDeSeccion_Result pregunta = new ObtenerPreguntasDeSeccion_Result
             {
@@ -1175,14 +1168,12 @@ namespace AppIntegrador.Tests.Controllers
                 GSemestre = respuestas.GSemestre,
                 SCodigo = codSeccion,
                 PCodigo = codPregunta,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 Justificacion = "Porque sí."
             };
             var mockedRespuestaPreguntaConOpciones = SetupMockProcedure<ObtenerRespuestasAPreguntaConOpciones_Result>(new List<ObtenerRespuestasAPreguntaConOpciones_Result> { obtenerRespuestasAPreguntaConOpciones });
             mockDb.Setup(x => x.ObtenerRespuestasAPreguntaConOpciones(obtenerRespuestasAPreguntaConOpciones.FCodigo, obtenerRespuestasAPreguntaConOpciones.Correo,
                 obtenerRespuestasAPreguntaConOpciones.CSigla, obtenerRespuestasAPreguntaConOpciones.GNumero, obtenerRespuestasAPreguntaConOpciones.GSemestre, obtenerRespuestasAPreguntaConOpciones.GAnno,
-                obtenerRespuestasAPreguntaConOpciones.SCodigo, obtenerRespuestasAPreguntaConOpciones.PCodigo, obtenerRespuestasAPreguntaConOpciones.FechaInicio, obtenerRespuestasAPreguntaConOpciones.FechaFin)).Returns(mockedRespuestaPreguntaConOpciones.Object);
+                obtenerRespuestasAPreguntaConOpciones.SCodigo, obtenerRespuestasAPreguntaConOpciones.PCodigo)).Returns(mockedRespuestaPreguntaConOpciones.Object);
 
             ObtenerOpcionesSeleccionadas_Result obtenerOpciones = new ObtenerOpcionesSeleccionadas_Result
             {
@@ -1194,14 +1185,12 @@ namespace AppIntegrador.Tests.Controllers
                 GSemestre = respuestas.GSemestre,
                 SCodigo = codSeccion,
                 PCodigo = codPregunta,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 OpcionSeleccionada = 0
             };
             var mockedObtenerOpciones = SetupMockProcedure<ObtenerOpcionesSeleccionadas_Result>(new List<ObtenerOpcionesSeleccionadas_Result> { obtenerOpciones });
             mockDb.Setup(x => x.ObtenerOpcionesSeleccionadas(obtenerOpciones.FCodigo, obtenerOpciones.Correo,
                 obtenerOpciones.CSigla, obtenerOpciones.GNumero, obtenerOpciones.GSemestre, obtenerOpciones.GAnno,
-                obtenerOpciones.SCodigo, obtenerOpciones.PCodigo, obtenerOpciones.FechaInicio, obtenerOpciones.FechaFin)).Returns(mockedObtenerOpciones.Object);
+                obtenerOpciones.SCodigo, obtenerOpciones.PCodigo)).Returns(mockedObtenerOpciones.Object);
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
@@ -1917,8 +1906,6 @@ namespace AppIntegrador.Tests.Controllers
                 GNumero = 1,
                 GAnno = 2019,
                 GSemestre = 2,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 FCodigo = codFormulario,
             };
 
@@ -1926,7 +1913,7 @@ namespace AppIntegrador.Tests.Controllers
             var mockedObtenerRespuestas = SetupMockProcedure<ObtenerRespuestasAFormulario_Result>
                 (new List<ObtenerRespuestasAFormulario_Result> { respuestas });
             mockDb.Setup(x => x.ObtenerRespuestasAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, respuestas.FechaInicio, respuestas.FechaFin)).Returns(mockedObtenerRespuestas.Object);
+                respuestas.GAnno, respuestas.GSemestre)).Returns(mockedObtenerRespuestas.Object);
 
             var respuestaLibreList = new List<ObtenerRespuestaLibreGuardada_Result>
             {
@@ -1939,13 +1926,11 @@ namespace AppIntegrador.Tests.Controllers
                     GAnno = respuestas.GAnno,
                     GSemestre = respuestas.GSemestre,
                     SCodigo = codSeccion,
-                    FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                    FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
                     PCodigo = codPregunta
                 }
             };
             mockDb.Setup(x => x.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion, respuestas.FechaInicio, respuestas.FechaFin)).Returns(respuestaLibreList.AsQueryable());
+                respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion)).Returns(respuestaLibreList.AsQueryable());
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
@@ -2003,8 +1988,6 @@ namespace AppIntegrador.Tests.Controllers
                 GNumero = 1,
                 GAnno = 2019,
                 GSemestre = 2,
-                FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 FCodigo = codFormulario,
             };
 
@@ -2012,7 +1995,7 @@ namespace AppIntegrador.Tests.Controllers
             var mockedObtenerRespuestas = SetupMockProcedure<ObtenerRespuestasAFormulario_Result>
                 (new List<ObtenerRespuestasAFormulario_Result> { respuestas });
             mockDb.Setup(x => x.ObtenerRespuestasAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, respuestas.FechaInicio, respuestas.FechaFin)).Returns(mockedObtenerRespuestas.Object);
+                respuestas.GAnno, respuestas.GSemestre)).Returns(mockedObtenerRespuestas.Object);
 
             var respuestaLibreList = new List<ObtenerRespuestaLibreGuardada_Result>
             {
@@ -2029,7 +2012,7 @@ namespace AppIntegrador.Tests.Controllers
                 }
             };
             mockDb.Setup(x => x.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
-                respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion, respuestas.FechaInicio, respuestas.FechaFin)).Returns(respuestaLibreList.AsQueryable());
+                respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion)).Returns(respuestaLibreList.AsQueryable());
 
             FormulariosController controller = new FormulariosController(mockDb.Object);
 

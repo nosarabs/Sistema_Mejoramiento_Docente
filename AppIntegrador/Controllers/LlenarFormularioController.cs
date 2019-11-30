@@ -19,19 +19,19 @@ namespace AppIntegrador.Controllers
         // GET: LlenarFormulario
         public ActionResult MisFormularios()
         {
-            //List<Periodo_activa_por> periodos = ObtenerFormulariosDisponibles();
+            List<Periodo_activa_por> periodos = ObtenerFormulariosDisponibles();
 
             List<FormularioAsignado> formularios = new List<FormularioAsignado>();
 
-            //foreach(var periodo in periodos)
-            //{
-            //    FormularioAsignado formulario = new FormularioAsignado(periodo);
-            //    formularios.Add(formulario);
-            //}
+            foreach(var periodo in periodos)
+            {
+                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                formularios.Add(formulario);
+            }
 
             return View(formularios);
         }
-        /*
+
         private List<Periodo_activa_por> ObtenerFormulariosDisponibles()
         {
             List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
@@ -58,6 +58,5 @@ namespace AppIntegrador.Controllers
 
             return formularios;
         }
-        */
     }
 }

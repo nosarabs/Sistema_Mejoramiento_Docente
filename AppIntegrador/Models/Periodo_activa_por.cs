@@ -12,14 +12,8 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Formulario_activo
+    public partial class Periodo_activa_por
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Formulario_activo()
-        {
-            this.Respuestas_a_formulario = new HashSet<Respuestas_a_formulario>();
-        }
-    
         public string FCodigo { get; set; }
         public string CSigla { get; set; }
         public byte GNumero { get; set; }
@@ -28,9 +22,6 @@ namespace AppIntegrador.Models
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFin { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
-        public virtual Grupo Grupo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
+        public virtual Activa_por Activa_por { get; set; }
     }
 }

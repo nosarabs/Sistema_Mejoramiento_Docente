@@ -13,7 +13,6 @@ using System.Configuration;
 using System.Data.Entity.Core.Objects;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
-using System.Globalization;
 
 namespace AppIntegrador.Controllers
 {
@@ -46,8 +45,7 @@ namespace AppIntegrador.Controllers
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2, 
-                DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture), DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture));
+            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
 
             Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
 
@@ -65,8 +63,6 @@ namespace AppIntegrador.Controllers
                     respuestas.GAnno = respuestasList.GAnno;
                     respuestas.GNumero = respuestasList.GNumero;
                     respuestas.GSemestre = respuestasList.GSemestre;
-                    respuestas.FechaInicio = respuestasList.FechaInicio;
-                    respuestas.FechaFin = respuestasList.FechaFin;
                 }
             }
             ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas, false);
@@ -246,15 +242,12 @@ namespace AppIntegrador.Controllers
             respuestas.GNumero = 1;
             respuestas.GAnno = 2019;
             respuestas.GSemestre = 2;
-            respuestas.FechaInicio = DateTime.ParseExact("2019-06-09", "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            respuestas.FechaFin = DateTime.ParseExact("2019-06-12", "yyyy-MM-dd", CultureInfo.InvariantCulture);
             bool x = respuestas.Finalizado;
 
-             
-            db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.FechaInicio, respuestas.FechaFin);
+            db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
             // Llamar a procedimiento que agrega Respuestas_a_formulario
-            db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha, respuestas.Finalizado, respuestas.FechaInicio, respuestas.FechaFin);
+            db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha, respuestas.Finalizado);
 
             // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
             foreach (SeccionConPreguntas seccion in secciones)
@@ -279,15 +272,13 @@ namespace AppIntegrador.Controllers
                 if (pregunta.Pregunta.Tipo == "L")
                 {
                     db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
-                                                            respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion,
-                                                            respuestas.FechaInicio, respuestas.FechaFin);
+                                                            respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
                 }
                 else
                 {
                     // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
                     db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion,
-                                                        respuestas.FechaInicio, respuestas.FechaFin);
+                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
 
                     // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
                     // En todos los demás casos solo se ejecuta una vez.
@@ -296,8 +287,7 @@ namespace AppIntegrador.Controllers
                         foreach (var opcion in pregunta.Opciones)
                         {
                             db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, (byte)opcion,
-                                                            respuestas.FechaInicio, respuestas.FechaFin);
+                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, (byte)opcion);
                         }
                     }
                 }
@@ -317,7 +307,7 @@ namespace AppIntegrador.Controllers
                         if (respuestas != null)
                         {
                             var resultadoRespuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
-                                                                                     codSeccion, pregunta.Pregunta.Codigo, respuestas.FechaInicio, respuestas.FechaFin);
+                                                                                     codSeccion, pregunta.Pregunta.Codigo);
                             if (resultadoRespuestaGuardada != null)
                             {
                                 var respuestaGuardada = resultadoRespuestaGuardada.ToList();
@@ -326,7 +316,7 @@ namespace AppIntegrador.Controllers
                                     pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
 
                                     var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
-                                                                                         codSeccion, pregunta.Pregunta.Codigo, respuestas.FechaInicio, respuestas.FechaFin);
+                                                                                         codSeccion, pregunta.Pregunta.Codigo);
                                     pregunta.Opciones = new List<int>();
                                     if (opcionesGuardadas != null)
                                     {
@@ -342,7 +332,7 @@ namespace AppIntegrador.Controllers
                     else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
                     {
                         var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
-                                                                    respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo, respuestas.FechaInicio, respuestas.FechaFin);
+                                                                    respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
 
                         if (resultadoRespuestaGuardada != null)
                         {

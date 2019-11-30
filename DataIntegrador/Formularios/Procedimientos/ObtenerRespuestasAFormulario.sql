@@ -6,12 +6,9 @@ CREATE PROCEDURE [dbo].[ObtenerRespuestasAFormulario]
 	@sigla VARCHAR(10),
 	@num TINYINT,
 	@anno INT,
-	@semestre TINYINT,
-	@fechaInicio DATE,
-	@fechaFin DATE
+	@semestre TINYINT
 AS
 BEGIN
 	SELECT * FROM Respuestas_a_formulario
-	WHERE FCodigo = @codFormulario AND Correo = @correo AND CSigla = @sigla AND GNumero = @num AND GAnno = @anno AND GSemestre = @semestre 
-	AND FechaInicio = @fechaInicio AND FechaFin = @fechaFin;
+	WHERE FCodigo = @codFormulario AND Correo = @correo AND CSigla = @sigla AND GNumero = @num AND GAnno = @anno AND GSemestre = @semestre;
 END
