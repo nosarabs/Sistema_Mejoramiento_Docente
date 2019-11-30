@@ -40,6 +40,8 @@ namespace AppIntegrador.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de CorreoEst vacío")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string CorreoEstudiante { get; set; }
-        //Datos de a que enfasis y carrera pertenece el estudiante
+        public string CorreoEstudianteEmpadronado { get; set; }
+        public string CodigoCarreraEmpadronado { get; set; }
+        public string CodigoEnfasisEmpadronado { get; set; }
     }
 }
