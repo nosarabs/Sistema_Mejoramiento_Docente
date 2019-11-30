@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model AppIntegrador.Models.Funcionario
+
+@{
+    ViewBag.Title = "Funcionarios";
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,7 +12,7 @@
 <div class="fullWidth">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="impText">Carga de estudiantes</h2>
+            <h2 class="impText">Carga de funcionarios</h2>
         </div>
     </div>
 </div>
@@ -18,7 +20,8 @@
 
     @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <label for="file">Subir lista de estudiantes:</label>
+
+        <label for="file">Subir lista de funcionarios:</label>
         <div class="custom-file mb-3">
 
             <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
@@ -90,4 +93,5 @@
     <div id="dvCSV" class="container" style="overflow:auto"></div>
 
 </div>
+
 

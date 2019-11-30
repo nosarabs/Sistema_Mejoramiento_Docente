@@ -26,6 +26,21 @@ namespace AppIntegrador.Controllers
             return View(); 
         }
 
+        public ActionResult Clase()
+        {
+            return View();
+        }
+
+        public ActionResult GuiaHorarios()
+        {
+            return View();
+        }
+
+        public ActionResult Funcionarios()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file, int? tipoArchivo)
         {

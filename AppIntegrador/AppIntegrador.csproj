@@ -213,7 +213,6 @@
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
-    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -790,6 +789,9 @@
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
+    <Content Include="Views\CSV\Clase.cshtml" />
+    <Content Include="Views\CSV\GuiaHorarios.cshtml" />
+    <Content Include="Views\CSV\Funcionarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

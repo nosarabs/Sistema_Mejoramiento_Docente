@@ -38,7 +38,9 @@ namespace AppIntegrador.Utilities
             EDITAR_ACCIONES_MEJORA,
             BORRAR_ACCIONES_MEJORA,
 
-            VER_RESPUESTAS_FORMULARIO = 401
+            VER_RESPUESTAS_FORMULARIO = 401,
+
+            CARGA_DATOS = 501
 
         };
 
