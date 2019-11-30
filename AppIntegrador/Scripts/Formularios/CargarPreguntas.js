@@ -1,15 +1,17 @@
 ﻿// Deshabilita los campos de código, enunciado y el botón de crear si se marca la "opción" de "Seleccionar opción"
-$("#Tipo").on("change", function () {
-    if (this.value === '-') {
+function SeleccionarTipoCrearPregunta(tipo) {
+    if (tipo.value === '-') {
         deshabilitarCamposBasicos(true)
         $('#Create').prop('disabled', true);
     }
     else {
         deshabilitarCamposBasicos(false)
     }
+    console.log (tipo.value)
 
-    cargarVista(this.value)
-})
+    cargarVista(tipo.value)
+}
+
 
 // Habilita/deshabilita los campos de código, enunciado y el botón de crear
 function deshabilitarCamposBasicos(booleano) {
@@ -33,7 +35,7 @@ function cargarVista(valor) {
     if (valor === 'U' || valor === 'M') {
         $.ajax({
             // url completa: Views/Pregunta/PreguntasConOpciones
-            url: 'PreguntaConOpciones',
+            url: '/Preguntas/PreguntaConOpciones',
             success: function (data) {
                 $(data).appendTo('#contenedor-preguntas')
                 preguntaConOpcionesInit()
@@ -45,7 +47,7 @@ function cargarVista(valor) {
     else if (valor === 'S') {
         $.ajax({
             // url completa: Views/Pregunta/PreguntaSiNo
-            url: 'PreguntaSiNo',
+            url: '/Preguntas/PreguntaSiNo',
             success: function (data) {
                 $(data).appendTo('#contenedor-preguntas')
                 SiNoInit()
@@ -57,7 +59,7 @@ function cargarVista(valor) {
     else if (valor === 'L') {
         $.ajax({
             // url completa: Views/Pregunta/RespuestaLibre
-            url: 'RespuestaLibre',
+            url: '/Preguntas/RespuestaLibre',
             success: function (data) {
                 $(data).appendTo('#contenedor-preguntas')
             }
@@ -68,7 +70,7 @@ function cargarVista(valor) {
     else if (valor === 'E') {
         $.ajax({
             // url completa: Views/Pregunta/RespuestaLibre
-            url: 'PreguntaEscalar',
+            url: '/Preguntas/PreguntaEscalar',
             success: function (data) {
                 $(data).appendTo('#contenedor-preguntas')
                 EscalarInit()
@@ -92,7 +94,7 @@ function preguntaConOpcionesInit() {
     // Esconder campo de justificación por defecto
     $('#justificationField').css('display', 'none');
     // Método de sortable
-    $("#sortable").disableSelection();
+    //$("#sortable").disableSelection();
     // Agregar una opción por defecto
     $("#agregar-opcion").trigger('click');
     // Desactivar el botón de crear por defecto
@@ -112,7 +114,7 @@ function preguntaConOpcionesInit() {
 $(document).on("click", "#agregar-opcion", function () {
     var i = fixIndexes();
     $.ajax({
-        url: 'OpcionesDeSeleccion',
+        url: '/Preguntas/OpcionesDeSeleccion',
         // Este es el parámetro que se le pasa, la i de la izquierda es el nombre
         // del parámetro que recibe el constructor. La i de la derecha es el valor
         // que se manda desde la vista como parámetro (la i viene de fixIndexes())
