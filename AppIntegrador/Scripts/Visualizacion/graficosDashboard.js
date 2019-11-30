@@ -53,100 +53,83 @@ class GraficosDashboard {
 
     generarGrafico(canvas) {
 
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(6);
-        //chroma.js: https://gka.github.io/chroma.js/
+        Chart.pluginService.register({
+            beforeDraw: function (chart) {
+                if (chart.config.options.elements.center) {
+                    //Get ctx from string
+                    var ctx = chart.chart.ctx;
 
-        new Chart(canvas, {
+                    //Get options from the center object in options
+                    var centerConfig = chart.config.options.elements.center;
+                    var fontStyle = centerConfig.fontStyle || 'Arial';
+                    var txt = centerConfig.text;
+                    var color = centerConfig.color || '#000';
+                    var sidePadding = centerConfig.sidePadding || 20;
+                    var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                    //Start with a base font of 30px
+                    ctx.font = "60px " + fontStyle;
 
-            type: "bar",
+                    //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                    var stringWidth = ctx.measureText(txt).width;
+                    var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                    // Find out how much the font can grow in width.
+                    var widthRatio = elementWidth / stringWidth;
+                    var newFontSize = Math.floor(30 * widthRatio);
+                    var elementHeight = (chart.innerRadius * 2);
+
+                    // Pick a new font size so it will not be larger than the height of label.
+                    var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+                    //Set font settings to draw it correctly.
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                    var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                    ctx.font = fontSizeToUse + "px " + fontStyle;
+                    ctx.fillStyle = color;
+
+                    //Draw text in center
+                    ctx.fillText(txt, centerX, centerY);
+                }
+            }
+        });
+
+
+        var config = {
+            type: 'doughnut',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [
-                    {
-                        backgroundColor: colors,
-                        hoverBackgroundColor: colors,
-                        borderColor: "black",
-                        borderWidth: 0,
-                        data: [12, 19, 3, 5, 2, 3]
-                    },
-                    {
-                        data: [15, 21, 6, 8, 5, 17],
-                        type:'line'
-                    }
-                ]
+                labels: [
+                    "0-50",
+                    "51-70",
+                    "71-100"
+                ],
+                datasets: [{
+                    data: [30, 60, 100],
+                    backgroundColor: [
+                        "#ffe06a",
+                        "#8ed8f8",
+                        "#b9d989"
+
+                    ],
+                    hoverBackgroundColor: [
+                        "#ffe06a",
+                        "#8ed8f8",
+                        "#b9d989"
+                    ]
+                }]
             },
             options: {
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 30,
-                        bottom: 0
-                    }
-                },
-                legend: {
-                    display: false,
-                    labels: {
-                        fontColor: "black",
-                        fontSize: 16,
-                    }
-                },
-                title: {
-                    display: false,
-                },
-                tooltips: {
-                    enabled: false
-                },
-                responsive: true,
-                maintainAspectRatio: true,
-                devicePixelRatio: 2,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            fontColor: "#747474",
-                            fontSize: 16,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            fontColor: "#747474",
-                            fontSize: 16,
-                        }
-                    }]
-                },
-                plugins: {
-                    datalabels: {
-                        display: function (context) {
-                            return context.dataset.data[context.dataIndex] !== 0;
-                        },
-                        color: "#747474",
-                        textStrokeColor: "black",
-                        textStrokeWidth: 0,
-                        anchor: "end",
-                        align: "start",
-                        clamp: true,
-                        offset: -30,
-                        textAlign: "center",
-                        font: {
-                            size: "16",
-                            weight: "normal"
-                        },
-                        formatter: function (value, ctx) {
-                            var sum = 0;
-                            var data = ctx.chart.data.datasets[0].data;
-                            for (var i = 0; i < data.length; ++i) {
-                                sum += data[i];
-                            }
-                            var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
-                            return percentage;
-                        }
+                elements: {
+                    center: {
+                        text: '90',
+                        color: '#b9d989', // Default is #000000
+                        fontStyle: 'Arial', // Default is Arial
+                        sidePadding: 20 // Defualt is 20 (as a percentage)
                     }
                 }
             }
-
-        });
-
+        };
+        var myChart = new Chart(canvas, config);
     }
-
 }
