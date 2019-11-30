@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.IO;
 
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
+
 namespace AppIntegrador.Controllers
 {
     public class ObjetivosController : Controller
@@ -56,27 +58,11 @@ namespace AppIntegrador.Controllers
             return View("_crearObjetivo");
         }
 
-        protected string RenderViewToString(PartialViewResult partialView)
-        {
-            using (var sw = new StringWriter())
-            {
-                partialView.View = ViewEngines.Engines
-                  .FindPartialView(ControllerContext, partialView.ViewName).View;
-
-                var vc = new ViewContext(
-                  ControllerContext, partialView.View, partialView.ViewData, partialView.TempData, sw);
-                partialView.View.Render(vc, sw);
-
-                var partialViewString = sw.GetStringBuilder().ToString();
-
-                return partialViewString;
-            }
-        }
-
         [HttpPost]
         public ActionResult AnadirObjetivos(List<Objetivo> objetivos)
         {
-            return Json(new { error = true, message = RenderViewToString(PartialView("_TablaObjetivos", objetivos)) });
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaObjetivos", objetivos), this.ControllerContext);
+            return Json(new { error = true, message = result });
         }
 
         // POST: Objetivos/Create

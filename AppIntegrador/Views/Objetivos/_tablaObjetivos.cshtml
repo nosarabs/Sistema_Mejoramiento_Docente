@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "_TablaObjetivos";
+    int position = 0;
 }
 
 @if (Model.Count() == 0)
@@ -40,7 +41,7 @@ else
             {
                 <tr>
                     <td>
-                        <input type="radio" name="objetivos" value="@objetivo.nombre" onclick="seleccionaObjetivo(this)"/>
+                        <input type="radio" name="objetivos" value=@(position++) onclick="seleccionaObjetivo(this)"/>
                     </td>
                     <td>
                         @objetivo.nombre
@@ -60,6 +61,7 @@ else
                         <input type="button" value="Borrar objetivo" class="btn btn-danger float-right" id="BorrarObjetivoBotonTabla" onclick="#" />
                     </td>
                 </tr>
+                
             }
         </thead>
     </table>

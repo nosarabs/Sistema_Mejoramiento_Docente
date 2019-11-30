@@ -92,7 +92,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
                                     List<String> ProfeSeleccionado = null, 
                                     List<String> FormularioSeleccionado = null,
-                                    List<Objetivo> MisObjetivos = null)
+                                    List<Objetivo> Objetivo = null)
         {
             PlanDeMejora planAgregado = null;
             Profesor profe;

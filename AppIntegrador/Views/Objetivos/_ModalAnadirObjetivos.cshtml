@@ -1,6 +1,7 @@
 ﻿@model AppIntegrador.Models.Objetivo
 @{
     var llamadoValidarPlan = "validarCampos('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', campoDescripcionObjetivo, 'campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'CrearObjetivoBoton')";
+    var llamadoValidarPlanFechas = "manejarFechasObjetivo('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', campoDescripcionObjetivo, 'campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'CrearObjetivoBoton')";
 }
 
 <div class="form-horizontal card-group">
@@ -61,7 +62,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onchange = llamadoValidarPlan,
+                                   @onchange = llamadoValidarPlanFechas,
                                    id = "campoFechaInicioObjetivo"
                                }
                            }
@@ -77,7 +78,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onchange = llamadoValidarPlan,
+                                   @onchange = llamadoValidarPlanFechas,
                                    id = "campoFechaFinObjetivo"
                                }
                            }
