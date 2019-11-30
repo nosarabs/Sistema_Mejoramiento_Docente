@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
     <Compile Include="Controllers\Validador.cs" />
+    <Compile Include="Controllers\ValidadorGuia.cs" />
     <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

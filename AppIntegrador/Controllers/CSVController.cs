@@ -205,6 +205,8 @@ namespace AppIntegrador.Controllers
             IEnumerable<GuiaHorario> datos = cc.Read<GuiaHorario>(path, inputFileDescription);
             List<GuiaHorario> lista = datos.ToList();
 
+
+            ValidadorGuia guia = new ValidadorGuia();
             //Se valida cada fila de CSV
             foreach (GuiaHorario f in lista)
             {
