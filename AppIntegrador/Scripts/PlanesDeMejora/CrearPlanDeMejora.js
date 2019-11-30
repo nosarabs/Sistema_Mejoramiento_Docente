@@ -7,6 +7,9 @@
     correosProfes = [];
     codigosFormularios = [];
     currentPlan = null;
+    currentObjectiveName = null;
+    currentObjectiveDateTop = null;
+    currentObjectiveDateBot = null;
 });
 
 function getPlan() {
@@ -113,12 +116,19 @@ function agregarObjetivo() {
         contentType: "application/json; charset=utf-8",
         accept: 'json',
         success: function (result) {
-            console.log(result.message);
             $('#divTablaObjetivos').html(result.message);
         }
     });
 }
 
+function seleccionaObjetivo(element) {
+    currentObjectiveName = element.value;
+    console.log(`${currentObjectiveName}`);
+}
+
+function agregarAccionMejora() {
+
+}
 
 function enviarDatosPlan() {
     getPlan();
@@ -159,15 +169,19 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     let fechaInicio = document.getElementById(campoFechaInicio);
     let fechaFinal = document.getElementById(campoFechaFin);
     let nombre = document.getElementById(campoNombre);
-    let totalValidations = campoDescripcion == null ? 2 : 3;
+    let totalValidations = 3;
+    if (campoNombre == null || campoDescripcion == null) {
+        totalValidations = 2;
+    }
+
 
     // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
     let minDate = null;
-    let topDate = null; 
+    let topDate = null;
     if (campoFechaInferior != null && campoFechaSuperior != null) {
-        let temp = document.getElementById(campoFechaInferior.id).value;
+        let temp = document.getElementById(campoFechaInferior).value;
         minDate = new Date(temp + 'CST');
-        temp = document.getElementById(campoFechaSuperior.id).value
+        temp = document.getElementById(campoFechaSuperior).value
         topDate = new Date(temp + 'CST');
     } else {
         minDate = new Date(); // Todays Date
@@ -180,7 +194,9 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     validator.setTotalValidations(totalValidations);
 
     // Ahora haciendo las validaciones
-    validator.validateSomethingInTextInput(nombre, 50);
+    if (campoNombre != null) {
+        validator.validateSomethingInTextInput(nombre, 50);
+    }
     validator.validateDates(fechaInicio, fechaFinal);
 
     if (campoDescripcion != null) {

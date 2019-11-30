@@ -714,6 +714,8 @@
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
     <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalAnadirAccionMejora.cshtml" />
+    <Content Include="Views\Accionables\_ModalAnadirAccionable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

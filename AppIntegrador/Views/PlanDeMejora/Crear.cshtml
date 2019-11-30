@@ -95,11 +95,31 @@
                         <input type="button" value="Crear objetivo" class="btn-azulUCR float-right" id="AgregarObjetivoBoton" onclick="modalGen('#ModalObjetivo')" />
                     </div>
                 </div>
+                <br />
+                <div id="seccionAccionesMejora" class="card card-default shadow">
+                    <div class="card-body grisUCR2">
+                        <h4>Acciones de Mejora</h4>
+                        <div id="divTablaAccionesDeMejora">
+                            Aún no se han agregado acciones de mejora para este objetivo.
+                        </div>
+                        <input type="button" value="Crear accion de mejora" class="btn-azulUCR float-right" id="AgregarAccionMejoraBoton" onclick="modalGen('#ModalAccionMejora')" />
+                    </div>
+                </div>
+                <br />
+                <div id="seccionAccionables" class="card card-default shadow">
+                    <div class="card-body grisUCR2">
+                        <h4>Accionables</h4>
+                        <div id="divTablaAccionables">
+                            Aún no se han agregado accionables para esta acción de mejora.
+                        </div>
+                        <input type="button" value="Crear accionable" class="btn-azulUCR float-right" id="AgregarAccionableBoton" onclick="modalGen('#ModalAccionable')" />
+                    </div>
+                </div>
             </div>
             <div class="card card-body shadow form-group float-right sticky-bottom">
                 <div>
                     @*<input type="submit" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled />*@
-                    <input type="button" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled onclick="enviarDatosPlan()"/>
+                    <input type="button" value="Crear Plan" class="btn-azulUCR" id="CrearPlanBoton" disabled onclick="enviarDatosPlan()" />
                     @Html.ActionLink("Cancelar", "Index", "PlanDeMejora", new { @class = "btn-blancoUCR" })
                 </div>
             </div>
@@ -110,6 +130,8 @@
 @{Html.RenderPartial("_ModalAnadirProfesores", Model);}
 @{Html.RenderPartial("_ModalAnadirFormularios", Model);}
 @{Html.RenderPartial("~/Views/Objetivos/_ModalAnadirObjetivos.cshtml", new AppIntegrador.Models.Objetivo());}
+@{Html.RenderPartial("~/Views/AccionDeMejora/_ModalAnadirAccionMejora.cshtml", new AppIntegrador.Models.AccionDeMejora());}
+@{Html.RenderPartial("~/Views/Accionables/_ModalAnadirAccionable.cshtml", new AppIntegrador.Models.Accionable());}
 
 @section Scripts{
     @Scripts.Render("~/Scripts/PlanesDeMejora/CrearPlanDeMejora.js")
