@@ -1,5 +1,4 @@
-﻿@model AppIntegrador.Models.Funcionario
-
+﻿
 @{
     ViewBag.Title = "Funcionarios";
 }
@@ -18,7 +17,7 @@
 </div>
 <div class="container mt-3">
 
-    @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Funcionarios", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
 
         <label for="file">Subir lista de funcionarios:</label>

@@ -39,9 +39,6 @@ namespace AppIntegrador.Utilities
             BORRAR_ACCIONES_MEJORA,
 
             VER_RESPUESTAS_FORMULARIO = 401,
-
-            CARGA_DATOS = 501
-
         };
 
         /// <summary>Este método revisa si el usuario tiene el permiso asignado en el énfasis de la carrera.</summary>

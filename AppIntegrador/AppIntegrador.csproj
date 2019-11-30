@@ -625,7 +625,7 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
-    <Content Include="ArchivoCSV\archivo.csv" />
+    <Content Include="Estudiantes\archivo.csv" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
@@ -795,6 +795,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Funcionarios\" />
+    <Folder Include="Guias Horario\" />
+    <Folder Include="Listas de Clase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
