@@ -40,7 +40,10 @@ namespace AppIntegrador.Models
 
         public static int getUserLoginFailures()
         {
-            return (int)HttpContext.Current.Session["LoginFailures"];
+            if ((int?)HttpContext.Current.Session["LoginFailures"] != null)
+                return (int)HttpContext.Current.Session["LoginFailures"];
+            else
+                return 0;
         }
 
 
