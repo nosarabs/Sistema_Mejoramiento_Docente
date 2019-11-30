@@ -57,7 +57,7 @@ class Validador {
         this._subMsjAcro = "_subMsj";
 
         this._validDateMsj = 'Fecha Válida.';
-        this._invalidDateMsj = 'Inválida, rango aceptado ';
+        this._invalidDateMsj = 'Inválida, rango aceptado: ' + "<br/>";
         this._endMsj = '.';
         this._remainingLettersMsj = '';
         this._errorStartAfterEndMsj = 'No puede ser despues de la fecha de Fin.';
@@ -411,7 +411,7 @@ class Validador {
                 this.getOutOfRangeMsj(dateOne.id);
             } else {
                 resultFechaInicial = true;
-                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'black', true);
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'green', true);
             }
         }
         if (fechaDos.value) {
@@ -421,7 +421,7 @@ class Validador {
                 this.getOutOfRangeMsj(dateTwo.id);
             } else {
                 resultFechaFinal = true;
-                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'black', true);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'green', true);
             }
         }
 
@@ -437,8 +437,8 @@ class Validador {
 
             if (fechaFinalInt >= fechaInicioInt) {
                 result = true;
-                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'black', true);
-                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'black', true);
+                this.changeMsj(dateOne.id + this._subMsjAcro, this._validDateMsj, 'green', true);
+                this.changeMsj(dateTwo.id + this._subMsjAcro, this._validDateMsj, 'green', true);
             } else {
                 result = false;
                 this.changeMsj(dateOne.id + this._subMsjAcro, this._errorStartAfterEndMsj, 'red', true);
