@@ -3,9 +3,10 @@
 @{
     ViewBag.Title = "Crear";
     var llamadoValidarPlan = "validarCampos('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton')";
+    var llamadoValidarPlanFechas = "manejarFechasPlan('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton')";
+
     var objetivos = (List<AppIntegrador.Models.Objetivo>)ViewBag.ObjetivosCreados;
 }
-
 <div class="container">
     @using (Html.BeginForm(null, "PlanDeMejora"))
     {
@@ -20,18 +21,17 @@
                                 <h5>@Html.DisplayNameFor(model => model.nombre)</h5>
                                 <div col-lg-10>
                                     @Html.EditorFor(model => model.nombre, new
-                               {
-                                   htmlAttributes = new
-                                   {
-                                       @class = "form-control",
-                                       id = "campoNombrePlanMejora",
-                                       @onkeyup = llamadoValidarPlan,
-                                       @maxlength = "50",
-                                       required = "required",
-                                       placeholder = "Nombre del plan"
-                                   }
-                               }
-)
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                           @class = "form-control",
+                                           id = "campoNombrePlanMejora",
+                                           @onkeyup = llamadoValidarPlan,
+                                           @maxlength = "50",
+                                           required = "required",
+                                           placeholder = "Nombre del plan"
+                                       }
+                                    })
                                     <div id="campoNombrePlanMejora_subMsj" class="contador small float-right">0/50 caracteres usados </div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                    {
                                        @class = "form-control",
                                        id = "campoFechaInicioPlanMejora",
-                                       @onchange = llamadoValidarPlan
+                                       @onchange = llamadoValidarPlanFechas
                                    }
                                }
 )
@@ -60,7 +60,7 @@
                                    {
                                        @class = "form-control",
                                        id = "campoFechaFinPlanMejora",
-                                       @onchange = llamadoValidarPlan
+                                       @onchange = llamadoValidarPlanFechas
                                    }
                                }
 )
@@ -68,6 +68,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <br />
                         <hr />
                         <h4>Profesores que se asignarán</h4>
                         <div id="divTablaProfesores">
@@ -75,6 +77,7 @@
                         </div>
                         <input type="button" value="Añadir profesores" class="btn-azulUCR float-right" id="AgregarProfesoresBoton" onclick="modalGen('#ModalProfesores')" />
                         <hr>
+
                         <h4>Formularios que se asignarán</h4>
                         <div id="divTablaFormularios">
                             Aún no se han escogido formularios para el plan.

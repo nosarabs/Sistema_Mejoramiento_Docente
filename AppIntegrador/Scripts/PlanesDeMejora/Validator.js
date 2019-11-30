@@ -57,7 +57,7 @@ class Validador {
         this._subMsjAcro = "_subMsj";
 
         this._validDateMsj = 'Fecha Válida.';
-        this._invalidDateMsj = 'Fecha Inválida, tiene que estar entre ';
+        this._invalidDateMsj = 'Inválida, rango aceptado ';
         this._endMsj = '.';
         this._remainingLettersMsj = '';
         this._errorStartAfterEndMsj = 'No puede ser despues de la fecha de Fin.';
