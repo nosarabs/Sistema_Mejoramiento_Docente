@@ -191,6 +191,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
+    <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
+    <Compile Include="Helpers\SiteSettings.cs" />
+    <Compile Include="Helpers\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Accionable.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

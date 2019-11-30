@@ -1,4 +1,5 @@
-﻿﻿@model AppIntegrador.Models.Usuario
+﻿@using AppIntegrador.Helpers
+﻿@model AppIntegrador.Models.Usuario
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
@@ -40,6 +41,13 @@
                         <p class="text-danger">@Html.ValidationMessageFor(m => m.Password)</p>
                         <!-- End of UserStory  -->
                     </div>
+                    if (AppIntegrador.Models.CurrentUser.getUserLoginFailures() >= 3)
+                    {
+                        <div class="row d-flex justify-content-center mx-1 pb-3">
+                            @Html.GoogleCaptcha()
+                            @Html.InvalidGoogleCaptchaLabel("Seleccione la casilla \"No soy un robot\"")
+                        </div>
+                    }
                     <!-- UserStory 1.5 - link to new page -->
                     <div class="form-row justify-content-between mx-1 pb-3">
                         <button type="submit" class="btn-blancoUCR">Ingresar</button>
