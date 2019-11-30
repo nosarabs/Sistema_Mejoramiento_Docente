@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppIntegrador", "AppIntegra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppIntegrador.Tests", "..\AppIntegrador.Tests\AppIntegrador.Tests.csproj", "{09FCB1AF-70D4-4706-9101-D1940B6F90F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppIntegradorUITests", "..\AppIntegradorUITests\AppIntegradorUITests.csproj", "{3FC6E072-0658-4809-BF15-926F3A6026CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{09FCB1AF-70D4-4706-9101-D1940B6F90F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09FCB1AF-70D4-4706-9101-D1940B6F90F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09FCB1AF-70D4-4706-9101-D1940B6F90F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC6E072-0658-4809-BF15-926F3A6026CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC6E072-0658-4809-BF15-926F3A6026CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC6E072-0658-4809-BF15-926F3A6026CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC6E072-0658-4809-BF15-926F3A6026CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
