@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="afd9ec12c82b45d599be27246c08bee2" Name="Diagram1">
+      <Diagram DiagramId="afd9ec12c82b45d599be27246c08bee2" Name="Diagram1" ZoomLevel="56">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="12.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="10.5" PointY="4.25" IsExpanded="true" />
@@ -102,6 +102,8 @@
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3.75" PointY="29.125" />
         <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
+        <AssociationConnector Association="DataIntegradorModel.AccionVsPregunta" />
+        <AssociationConnector Association="DataIntegradorModel.ObjVsSeccion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

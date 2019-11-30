@@ -214,12 +214,8 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPerfilPermiso", perfilParameter, idPermisoParameter, codCarreraParameter, codEnfasisParameter, tienePermisoParameter);
         }
     
-        public virtual int AgregarPlan(Nullable<int> codigo, string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        public virtual int AgregarPlan(string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, ObjectParameter codigo)
         {
-            var codigoParameter = codigo.HasValue ?
-                new ObjectParameter("codigo", codigo) :
-                new ObjectParameter("codigo", typeof(int));
-    
             var nombreParameter = nombre != null ?
                 new ObjectParameter("nombre", nombre) :
                 new ObjectParameter("nombre", typeof(string));
@@ -232,7 +228,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", codigoParameter, nombreParameter, fechaInicioParameter, fechaFinParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", nombreParameter, fechaInicioParameter, fechaFinParameter, codigo);
         }
     
         public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion, ObjectParameter numeroError)
@@ -364,23 +360,6 @@ namespace AppIntegrador.Models
                 new ObjectParameter("tienePerfil", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuarioPerfil", usuarioParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, tienePerfilParameter);
-        }
-    
-        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta, Nullable<int> orden)
-        {
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("CodigoSeccion", codigoSeccion) :
-                new ObjectParameter("CodigoSeccion", typeof(string));
-    
-            var codigoPreguntaParameter = codigoPregunta != null ?
-                new ObjectParameter("CodigoPregunta", codigoPregunta) :
-                new ObjectParameter("CodigoPregunta", typeof(string));
-    
-            var ordenParameter = orden.HasValue ?
-                new ObjectParameter("Orden", orden) :
-                new ObjectParameter("Orden", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter, ordenParameter);
         }
     
         public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion, Nullable<int> orden)
@@ -1535,6 +1514,19 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta)
+        {
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("CodigoSeccion", codigoSeccion) :
+                new ObjectParameter("CodigoSeccion", typeof(string));
+    
+            var codigoPreguntaParameter = codigoPregunta != null ?
+                new ObjectParameter("CodigoPregunta", codigoPregunta) :
+                new ObjectParameter("CodigoPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter);
         }
     }
 }

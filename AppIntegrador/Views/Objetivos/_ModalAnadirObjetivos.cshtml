@@ -6,11 +6,15 @@
 <div class="form-horizontal card-group">
     <div class="modal fade" id="ModalObjetivo" tabindex="-1" role="dialog" aria-labelledby="ModalFormulariosLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
+            
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregando Objetivo al Plan de Mejora</h5>
+                </div>
                 <div class="modal-body">
                     <div class="row" id="formObjetivos">
                         @Html.AntiForgeryToken()
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-12">
                             <h5>@Html.DisplayNameFor(model => model.nombre)</h5>
                             <div col-lg-10>
                                 @Html.EditorFor(model => model.nombre, new
@@ -29,7 +33,7 @@
                                 <div id="campoNombreObjetivo_subMsj" class="contador small float-right">0/50 caracteres usados </div>
                             </div>
                         </div>
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-12">
 
                             <h5>@Html.DisplayNameFor(model => model.descripcion)</h5>
                             <div col-lg-10>
@@ -49,7 +53,7 @@
                                 <div id="campoDescripcionObjetivo_subMsj" class="contador small float-right">0/250 caracteres usados </div>
                             </div>
                         </div>
-                        <div class="form-group col-lg-3 offset-lg-0">
+                        <div class="form-group col-lg-6 offset-lg-0">
                             <h5>@Html.DisplayNameFor(model => model.fechaInicio)</h5>
                             <div>
                                 @Html.EditorFor(model => model.fechaInicio, new
@@ -57,7 +61,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onkeyup = llamadoValidarPlan,
+                                   @onchange = llamadoValidarPlan,
                                    id = "campoFechaInicioObjetivo"
                                }
                            }
@@ -65,7 +69,7 @@
                                 <div id="campoFechaInicioObjetivo_subMsj" class="contador small float-right">Inicio objetivo.</div>
                             </div>
                         </div>
-                        <div class="form-group col-lg-3 offset-lg-0">
+                        <div class="form-group col-lg-6 offset-lg-0">
                             <h5>@Html.DisplayNameFor(model => model.fechaInicio)</h5>
                             <div>
                                 @Html.EditorFor(model => model.fechaFin, new
@@ -73,7 +77,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onkeyup = llamadoValidarPlan,
+                                   @onchange = llamadoValidarPlan,
                                    id = "campoFechaFinObjetivo"
                                }
                            }
@@ -85,7 +89,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
-                    <button type="button" id="CrearObjetivoBoton" disabled class="btn-azulUCR " onclick="agregarObjetivo()" data-dismiss="modal">Agregar objetivo</button>
+                    <button 
+                            type="button" 
+                            id="CrearObjetivoBoton" 
+                            disabled 
+                            class="btn-azulUCR " 
+                            onclick="agregarObjetivo()" 
+                            data-dismiss="modal">
+                                Agregar objetivo
+                    </button>
                 </div>
             </div>
         </div>
