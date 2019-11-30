@@ -213,7 +213,6 @@
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
-    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -626,7 +625,7 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
-    <Content Include="ArchivoCSV\archivo.csv" />
+    <Content Include="Estudiantes\archivo.csv" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
@@ -790,9 +789,15 @@
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
+    <Content Include="Views\CSV\Clase.cshtml" />
+    <Content Include="Views\CSV\GuiaHorarios.cshtml" />
+    <Content Include="Views\CSV\Funcionarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Funcionarios\" />
+    <Folder Include="Guias Horario\" />
+    <Folder Include="Listas de Clase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
