@@ -97,7 +97,7 @@
                                 <li>
                                     <a href="">Formulario &#9658;</a>
                                     <ul>
-                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_FORMULARIO))
+                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
                                         {
 
                                             <li><a href="/Formularios/Create">Crear Formulario</a></li>
@@ -116,7 +116,7 @@
                                 <li>
                                     <a href="">Preguntas &#9658;</a>
                                     <ul>
-                                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.CREAR_PREGUNTA))
+                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
                                         {
                                             <li><a href="/Preguntas/Create">Crear pregunta</a></li>
                                         }

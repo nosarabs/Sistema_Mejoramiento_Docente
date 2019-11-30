@@ -125,7 +125,13 @@ namespace AppIntegrador.Tests.Controllers
 
             var result = controller.Create(nuevaPersona) as RedirectToRouteResult;
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            string expected = "";
+            if (CurrentUser.getUsername() == "admin@mail.com")
+                expected = "Index";
+            else
+                expected = "../Home/Index";
+
+            Assert.AreEqual(expected, result.RouteValues["action"]);
         }
 
         [TestMethod]
@@ -542,5 +548,6 @@ namespace AppIntegrador.Tests.Controllers
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
         }
+
     }
 }

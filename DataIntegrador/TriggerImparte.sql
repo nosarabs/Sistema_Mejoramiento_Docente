@@ -9,7 +9,7 @@
 
 	Begin transaction transaccionImparte;
 
-		DECLARE @correo varchar(50), @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int
+		DECLARE @correo varchar(50), @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int, @codEnfasis varchar(10), @codCarrera varchar(10)
 		SELECT @correo = i.CorreoProfesor, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
 		FROM inserted i
 		BEGIN
@@ -20,7 +20,6 @@
 	Commit Transaction transaccionImparte;
 set transaction isolation level read committed;
 
-	DECLARE @correo varchar(50), @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int, @codEnfasis varchar(10), @codCarrera varchar(10)
 	SELECT @correo = i.CorreoProfesor, @sigla = i.SiglaCurso, @num = i.NumGrupo, @semestre = i.Semestre, @anno = i.Anno
 	FROM inserted i
 	-- Obtener los énfasis a los que pertenece el grupo
@@ -29,7 +28,6 @@ set transaction isolation level read committed;
 		FROM Pertenece_a
 		WHERE SiglaCurso = @sigla
 
-	BEGIN
 		
 		-- Dar perfil de profesor en los énfasis, si no los tiene
 		OPEN cursorEnfasis
