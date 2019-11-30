@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using AppIntegrador.Models;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 
 namespace AppIntegrador.Controllers
 {
@@ -89,14 +90,28 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null)
+        public ActionResult Crear(
+            [Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
+            List<String> ProfeSeleccionado = null, 
+            List<String> FormularioSeleccionado = null
+        )
         {
-            PlanDeMejora planAgregado = null;
+            PlanDeMejora planAgregado = new PlanDeMejora();
             Profesor profe;
             Formulario formulario;
+
+            // Objeto de ayuda business intelligence planes de mejora
+            PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
+            planesHelper.setCodigoAPlanDeMejora(this.db, plan);
+
+            // Set de los formularios asociados al plan de mejora
+            // var asocFormularios = planesHelper.getTablaAsociacionPlanFormularios(this.db, plan, FormularioSeleccionado);
+
             if (ModelState.IsValid && plan != null)
             {
+                // Llamada a procedimiento en la base de datos
                 var result = db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin);
+                
                 planAgregado = db.PlanDeMejora.Find(result);
                 if (ProfeSeleccionado != null)
                 {

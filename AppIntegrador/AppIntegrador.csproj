@@ -267,6 +267,9 @@
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\AccionPregunta.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\ObjetivoSeccion.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\PlanFormulario.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

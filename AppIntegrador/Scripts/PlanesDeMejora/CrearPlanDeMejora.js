@@ -6,6 +6,15 @@
     accionables = [];
 });
 
+
+function printData() {
+    console.log("cantidadProfes = " + cantidadProfes);
+    console.log("  cantidadForm = " + cantidadForm);
+    console.log("     objetivos = " + objetivos);
+    console.log("     accMejora = " + accMejora);
+    console.log("   accionables = " + accionables);
+}
+
 var currentPlan = null;
 
 function getPlan() {
@@ -34,10 +43,10 @@ class Counter {
 }
 
 function seleccionaCheckBoxGen(element, variable, key, counter) {
-    console.log(element);
+    /*console.log(element);
     console.log(variable);
     console.log(key);
-    console.log(counter);
+    console.log(counter);*/
 
 
     if (element.checked) {
@@ -69,7 +78,7 @@ function deseleccionarGen(variable, key, counter, value) {
 }
 
 function agregarGen(variable, key, counter, url, attribute, div) {
-    console.log(counter.getCurrent());
+    //console.log(counter.getCurrent());
     for (let index = 0; index < counter.getCurrent(); ++index) {
         let gen = document.getElementById(`${variable}[${index}].${key}`);
         gen.setAttribute("name", `${attribute}`);
@@ -118,6 +127,35 @@ function enviarDatosPlan() {
     //    url: '/PlanDeMejora/Index'
     //})
 }
+
+/*
+ * Funcion encargada de tomar los profesores a los que se les queire asignar un Plan de Mejora
+ */
+function getProfesoresOfPlan() {
+    var table = document.getElementById("TablaMostrarProfesores");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            console.log(col);
+        }
+    }
+}
+
+/*
+ * Funcion encargada de tomar los formularios a los que se les quiere asiganar a un Plan de Mejora
+ */
+function getFormulariosOfPlan() {
+    var table = document.getElementById("TablaMostrarFormularios");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            console.log(col);
+        }
+    }
+}
+
 
 function modalGen(modal) {
     $(`${modal}`).modal();
