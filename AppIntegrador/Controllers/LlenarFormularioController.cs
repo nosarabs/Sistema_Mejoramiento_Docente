@@ -22,7 +22,7 @@ namespace AppIntegrador.Controllers
         const string InicioSegundoSemestre = "01/08/";
         const string FinSegundoSemestre = "31/12/";
 
-        int SemestreActual;
+        byte SemestreActual;
 
         readonly DateTime FechaActual;
 
@@ -53,7 +53,7 @@ namespace AppIntegrador.Controllers
             SemestreActual = ObtenerSemestreActual();
         }
 
-        public int ObtenerSemestreActual()
+        public byte ObtenerSemestreActual()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)
@@ -75,17 +75,51 @@ namespace AppIntegrador.Controllers
         // GET: LlenarFormulario
         public ActionResult MisFormularios()
         {
-            List<Periodo_activa_por> periodosSemestre = ObtenerFormulariosDisponibles(ObtenerFechaInicioSemestre(), null);
+            MisFormulariosModel modelo = new MisFormulariosModel();
 
-            List<FormularioAsignado> formularios = new List<FormularioAsignado>();
+            List<Periodo_activa_por> periodosSemestre = ObtenerFormulariosSemestre();
+            List<Periodo_activa_por> periodosPasados = ObtenerFormulariosDisponibles(ObtenerFechaInicioSemestre(), null);
 
-            foreach(var periodo in periodosSemestre)
+            foreach (var periodo in periodosSemestre)
             {
                 FormularioAsignado formulario = new FormularioAsignado(periodo);
-                formularios.Add(formulario);
+                modelo.FormulariosSemestre.Add(formulario);
             }
 
-            return View(formularios);
+            foreach (var periodo in periodosPasados)
+            {
+                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                modelo.FormulariosPasados.Add(formulario);
+            }
+
+            return View(modelo);
+        }
+
+        private List<Periodo_activa_por> ObtenerFormulariosSemestre()
+        {
+            List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
+
+            String correo = HttpContext.User.Identity.Name;
+
+            var formsDB = db.ObtenerFormulariosPorSemestre(correo, DateTime.Now.Year, SemestreActual);
+
+            foreach (var form in formsDB)
+            {
+                Periodo_activa_por periodo = new Periodo_activa_por
+                {
+                    CSigla = form.SiglaCurso,
+                    FCodigo = form.Codigo,
+                    GAnno = form.Anno,
+                    GNumero = form.NumGrupo,
+                    GSemestre = form.Semestre,
+                    FechaInicio = form.FechaInicio,
+                    FechaFin = form.FechaFin,
+                };
+
+                formularios.Add(periodo);
+            }
+
+            return formularios;
         }
 
         private List<Periodo_activa_por> ObtenerFormulariosDisponibles(DateTime? inicio, DateTime? fin)
