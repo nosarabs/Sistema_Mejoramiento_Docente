@@ -2,7 +2,7 @@
 
 CREATE TABLE [dbo].[PlanDeMejora]
 (
-	codigo int identity(1,1) not null,
+	codigo int not null,
 	nombre varchar(50),
 	fechaInicio date,
 	fechaFin date,

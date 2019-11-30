@@ -16,7 +16,8 @@ BEGIN
 	SELECT @mediana =
 		CAST (PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY o.OpcionSeleccionada)
 			OVER (PARTITION BY o.FCodigo) AS FLOAT)
-	FROM Opciones_seleccionadas_respuesta_con_opciones o
+	FROM Respuestas_a_formulario AS r JOIN Opciones_seleccionadas_respuesta_con_opciones o
+	ON r.FCodigo = o.FCodigo AND r.Correo = o.Correo AND r.CSigla = o.CSigla AND r.GNumero = o.GNumero AND r.GAnno = o.GAnno AND r.GSemestre = o.GSemestre AND r.Fecha = o.Fecha
 	WHERE o.FCodigo = @codigoFormulario and
 		  o.CSigla = @siglaCurso and
 		  o.GNumero = @numeroGrupo and
@@ -25,7 +26,8 @@ BEGIN
 		  o.SCodigo = @codigoSeccion and
 		  o.PCodigo = @codigoPregunta and
 		  o.Fecha >= @fechaInicio and
-		  o.Fecha <= @fechaFin
+		  o.Fecha <= @fechaFin and
+		  r.Finalizado = 1
 	ORDER BY o.FCodigo
 END
 RETURN 0

@@ -27,13 +27,18 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" id="pr(@totalFormularios)" class="SectionCheckbox" value="@formulario.Codigo" onclick="seleccionaCheckBoxGen(this, 'form', 'codigo', cantidadForm)" />
+                    <input type="checkbox" 
+                           id="pr(@totalFormularios)" 
+                           class="SectionCheckbox" 
+                           value="@formulario.Codigo" 
+                           onclick="seleccionaCheckBoxGen(this, 'form', 'codigo', cantidadForm)" />
                 </td>
+                    
+                <td>
                     @formulario.Nombre
-                <td>
                 </td>
                 <td>
-                    @formulario.Codigo
+                    @formulario.Codigo 
                 </td>
             </tr>
             totalFormularios += 1;

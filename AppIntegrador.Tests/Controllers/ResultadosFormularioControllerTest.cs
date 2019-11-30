@@ -243,6 +243,16 @@ namespace AppIntegrador.Tests.Controllers
             ResultadosFormularioController controller = new ResultadosFormularioController(mockDb.Object);
 
             //Se crea una lista de respuestas como dummy data
+
+            var respuestasFormularioDummy = new List<Respuestas_a_formulario>
+            {
+                new Respuestas_a_formulario() { FCodigo = "01", Correo = "admin1@mail.com", CSigla = "CI0128", GNumero = 1, GSemestre = 2, GAnno = 2019, Fecha = DateTime.Parse("01/11/2019"), Finalizado = true },
+                new Respuestas_a_formulario() { FCodigo = "01", Correo = "admin2@mail.com", CSigla = "CI0128", GNumero = 1, GSemestre = 2, GAnno = 2019, Fecha = DateTime.Parse("01/11/2019"), Finalizado = true },
+                new Respuestas_a_formulario() { FCodigo = "01", Correo = "admin3@mail.com", CSigla = "CI0128", GNumero = 1, GSemestre = 2, GAnno = 2019, Fecha = DateTime.Parse("01/11/2019"), Finalizado = true },
+                new Respuestas_a_formulario() { FCodigo = "01", Correo = "admin4@mail.com", CSigla = "CI0128", GNumero = 1, GSemestre = 2, GAnno = 2019, Fecha = DateTime.Parse("01/11/2019"), Finalizado = true },
+                new Respuestas_a_formulario() { FCodigo = "01", Correo = "admin5@mail.com", CSigla = "CI0128", GNumero = 1, GSemestre = 2, GAnno = 2019, Fecha = DateTime.Parse("01/11/2019"), Finalizado = true }
+            }.AsQueryable();
+
             var respuestasDummy = new List<Responde_respuesta_libre>
             {
                 
@@ -255,10 +265,13 @@ namespace AppIntegrador.Tests.Controllers
             }.AsQueryable();
 
             //Se hace mock del modelo de la tabla
+            var mockDbSetRespuestasFormulario = new Mock<DbSet<Respuestas_a_formulario>>();
             var mockDbSet = new Mock<DbSet<Responde_respuesta_libre>>();
+            this.SetProperties(ref mockDbSetRespuestasFormulario, ref respuestasFormularioDummy);
             this.SetProperties(ref mockDbSet, ref respuestasDummy);
 
             //Se hace setup del mock de la base de datos
+            mockDb.Setup(x => x.Respuestas_a_formulario).Returns(mockDbSetRespuestasFormulario.Object);
             mockDb.Setup(x => x.Responde_respuesta_libre).Returns(mockDbSet.Object);
 
             //Act

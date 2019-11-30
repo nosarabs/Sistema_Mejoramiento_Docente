@@ -14,9 +14,18 @@ namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db = null;
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
+        public SeccionController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public SeccionController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
@@ -158,7 +167,7 @@ namespace AppIntegrador.Controllers
             {
                 for (int index = 0; index < preguntas.Count; ++index)
                 {
-                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo);
                 }
             }
             return true;
@@ -189,6 +198,24 @@ namespace AppIntegrador.Controllers
         {
             crearSeccion = new CrearSeccionModel();
             return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearSeccion);
+        }
+
+        public bool AgregarPreguntasASeccion(string codSeccion, List<string> codPreguntas)
+        {
+            if (codPreguntas != null)
+            {
+                for (int index = 0; index < codPreguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(codSeccion, codPreguntas[index]);
+                }
+            }
+            return true;
+        }
+
+        [HttpPost]
+        public ActionResult AgregarPreguntas(string codSeccion, List<string> codPreguntas)
+        {
+            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(codSeccion, codPreguntas) });
         }
     }
 }
