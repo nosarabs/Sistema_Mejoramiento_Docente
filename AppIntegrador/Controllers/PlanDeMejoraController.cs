@@ -90,11 +90,10 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(
-            [Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
-            List<String> ProfeSeleccionado = null, 
-            List<String> FormularioSeleccionado = null
-        )
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
+                                    List<String> ProfeSeleccionado = null, 
+                                    List<String> FormularioSeleccionado = null,
+                                    List<Objetivo> Objetivo = null)
         {
             PlanDeMejora planAgregado = new PlanDeMejora();
             Profesor profe;
@@ -109,10 +108,9 @@ namespace AppIntegrador.Controllers
 
             if (ModelState.IsValid && plan != null)
             {
-                // Llamada a procedimiento en la base de datos
-                var result = db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin);
-                
-                planAgregado = db.PlanDeMejora.Find(result);
+                var cod = new ObjectParameter("codigo", 0);
+                db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin, cod);
+                planAgregado = db.PlanDeMejora.Find(cod.Value);
                 if (ProfeSeleccionado != null)
                 {
                     foreach (var correo in ProfeSeleccionado)

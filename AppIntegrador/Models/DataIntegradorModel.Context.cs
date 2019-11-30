@@ -214,7 +214,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPerfilPermiso", perfilParameter, idPermisoParameter, codCarreraParameter, codEnfasisParameter, tienePermisoParameter);
         }
     
-        public virtual int AgregarPlan(string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        public virtual int AgregarPlan(string nombre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, ObjectParameter codigo)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("nombre", nombre) :
@@ -228,7 +228,7 @@ namespace AppIntegrador.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", nombreParameter, fechaInicioParameter, fechaFinParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlan", nombreParameter, fechaInicioParameter, fechaFinParameter, codigo);
         }
     
         public virtual int AgregarPreguntaConOpcion(string cod, string type, string enunciado, string justificacion)
