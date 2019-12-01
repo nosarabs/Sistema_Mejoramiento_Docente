@@ -48,7 +48,7 @@
 
                                 @if (item.Estado == 1)
                                 {
-                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
+                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
                                 }
                             </div>
                             @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
@@ -58,11 +58,11 @@
                                     @*Falta agregar atributo de si está en progreso, llenado, etc*@
                                     @if (item.Estado == 3)
                                     {
-                                        @Html.ActionLink("Llenar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                        @Html.ActionLink("Llenar", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
                                     }
                                     @if (item.Estado == 0)
                                     {
-                                        @Html.ActionLink("Continuar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                        @Html.ActionLink("Continuar", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
                                     }
                                 </div>
 
