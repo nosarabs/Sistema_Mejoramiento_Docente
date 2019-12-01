@@ -23,15 +23,12 @@
     // y respuestas de una pregunta específica.
     rellenarModal(listaPreguntas, idPreg) {
         
-        var contadorPreguntasSeccion = 0;
         var insertaContenidos = new InsertaContenidos();
 
         var codigoSeccion = listaPreguntas[idPreg].codigoSeccion;
         var codigoPregunta = listaPreguntas[idPreg].codigoPregunta;
-        var textoPregunta = String(contadorPreguntasSeccion + 1) + ". " + listaPreguntas[idPreg].textoPregunta;
+        var textoPregunta = String(idPreg + 1) + ". " + listaPreguntas[idPreg].textoPregunta;
         var tipoPregunta = listaPreguntas[idPreg].tipoPregunta;
-
-        contadorPreguntasSeccion += 1;
 
         var base;
 
@@ -94,7 +91,12 @@
         switch (tipoPregunta) {
 
             case "texto_abierto":
-
+                var img = document.getElementById("icono_ta");
+                var ctx = canvas.getContext("2d");
+                var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                var x = (canvas.width / 2) - (img.width / 2) * scale;
+                var y = (canvas.height / 2) - (img.height / 2) * scale;
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
                 break;
 
             case "escala":

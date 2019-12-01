@@ -29,7 +29,7 @@
                     padding: {
                         left: 0,
                         right: 0,
-                        top: 30,
+                        top: 50,
                         bottom: 0
                     }
                 },
@@ -82,12 +82,13 @@
                         anchor: "end",
                         align: "start",
                         clamp: true,
-                        offset: -30,
+                        offset: -50,
                         textAlign: "center",
                         font: {
                             size: "16",
                             weight: "normal"
                         },
+                        rotation: -45,
                         formatter: function (value, ctx) {
                             var sum = 0;
                             var data = ctx.chart.data.datasets[0].data;
@@ -248,7 +249,7 @@
                                 sum += data[i];
                             }
                             var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
-                            return percentage + "\n\n" + value;
+                            return percentage;
                         }
                     }
                 }
