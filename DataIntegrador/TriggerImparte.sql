@@ -17,6 +17,7 @@
 			BEGIN
 				INSERT INTO Imparte SELECT * FROM inserted
 			END
+
 	Commit Transaction transaccionImparte;
 set transaction isolation level read committed;
 

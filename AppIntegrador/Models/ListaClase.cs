@@ -16,11 +16,11 @@ namespace AppIntegrador.Models
         public string CodigoUnidad { get; set; }
         public string NombreFacultad { get; set; }
         public string CodigoUnidadCarrera { get; set; }
+        public string CodigoCarreraUnidad { get; set; }
         public string CodigoCarrera { get; set; }
         public string NombreCarrera { get; set; }
         public string CodigoCarreraEnfasis { get; set; }
         public string CodigoEnfasis { get; set; }
         public string NombreEnfasis { get; set; }
-        //Datos sobre que carrera es de que unidad
     }
 }
