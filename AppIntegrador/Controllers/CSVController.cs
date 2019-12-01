@@ -11,7 +11,7 @@ using System.Net;
 using System.IO;
 using AppIntegrador.Models;
 using System.Text.RegularExpressions;
-
+using System.Diagnostics;
 
 namespace AppIntegrador.Controllers
 {
@@ -136,7 +136,8 @@ namespace AppIntegrador.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    ViewBag.Message = "Fallido";
+                    ViewBag.Campo = ex.Message.ToString();
                 }
             }
             else

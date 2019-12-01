@@ -3,6 +3,9 @@
 	@CodUnidadAcademica VARCHAR(10)
 AS
 begin
-	insert into Trabaja_en (CodUnidadAcademica, CorreoFuncionario)
-	values (@CodUnidadAcademica, @CorreoFuncionario)
+	IF(@CorreoFuncionario IN (SELECT Correo FROM Funcionario) AND @CodUnidadAcademica IN (SELECT Codigo FROM UnidadAcademica))
+	BEGIN
+		insert into Trabaja_en (CodUnidadAcademica, CorreoFuncionario)
+		values (@CodUnidadAcademica, @CorreoFuncionario)
+	END
 end
