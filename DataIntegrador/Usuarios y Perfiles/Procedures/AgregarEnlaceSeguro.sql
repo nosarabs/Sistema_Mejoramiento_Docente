@@ -2,6 +2,7 @@
 	@usuarioAsociado  VARCHAR(50), 
 	@urlReal varchar(1000),
 	@expira datetime,
+	@usos int,
     @resultadohash varchar(64) OUTPUT,
 	@estado nvarchar(255) OUTPUT
 AS
@@ -13,39 +14,39 @@ BEGIN
     SET NOCOUNT ON	
 	DECLARE @salt UNIQUEIDENTIFIER=NEWID()
 	SET @resultadohash = CONVERT (VARCHAR(64), HASHBYTES('SHA2_256', @urlReal+CAST(@salt AS VARCHAR(36))), 2)
-	--No se provee usuario ni fecha de expiración (se usa el default).
-	IF @usuarioAsociado IS NULL AND @expira IS NULL
+	--No se provee usos ni fecha de expiración (se usa el default).
+	IF @usos = 0 AND @expira IS NULL
 	
 	BEGIN
-		INSERT INTO EnlaceSeguro ([Hash], UrlReal)
-		values (@resultadohash, @urlReal)
+		INSERT INTO EnlaceSeguro ([Hash], UrlReal, UsuarioAsociado)
+		values (@resultadohash, @urlReal, @usuarioAsociado)
 		SET @estado = 1
 	END
 	ELSE
 		BEGIN
-		--Solo se provee usuario.
-		IF  @usuarioAsociado IS NOT NULL AND @expira IS NULL
+		--Solo se provee usos.
+		IF  @usos != 0 AND @expira IS NULL
 			BEGIN
-				INSERT INTO EnlaceSeguro ([Hash],UsuarioAsociado, UrlReal)
-				values (@resultadohash, @usuarioAsociado, @urlReal)
+				INSERT INTO EnlaceSeguro ([Hash],Usos, UrlReal, UsuarioAsociado)
+				values (@resultadohash, @usos, @urlReal, @usuarioAsociado)
 				SET @estado = 1
 			End
 		ELSE
 			BEGIN
 			--Solo se provee fecha de expiración.
-			IF @usuarioAsociado IS NULL AND @expira IS NOT NULL
+			IF @usos = 0 AND @expira IS NOT NULL
 				BEGIN
-					INSERT INTO EnlaceSeguro ([Hash],UrlReal,Expira)
-					values (@resultadohash, @urlReal, @expira)
+					INSERT INTO EnlaceSeguro ([Hash],UrlReal,Expira, UsuarioAsociado)
+					values (@resultadohash, @urlReal, @expira, @usuarioAsociado)
 					SET @estado = 1
 				End
 			ELSE
 				BEGIN
 				--Se proveen todos los parámetros opcionales.
-				IF @usuarioAsociado IS NOT NULL AND @expira IS NOT NULL
+				IF @usos != 0 AND @expira IS NOT NULL
 					BEGIN
-						INSERT INTO EnlaceSeguro ([Hash],UsuarioAsociado,UrlReal,Expira)
-						values (@resultadohash,@usuarioAsociado, @urlReal, @expira)
+						INSERT INTO EnlaceSeguro ([Hash],Usos,UrlReal,Expira, UsuarioAsociado)
+						values (@resultadohash,@usos, @urlReal, @expira, @usuarioAsociado)
 						SET @estado = 1
 					END
 				END
