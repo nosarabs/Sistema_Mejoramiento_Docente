@@ -703,16 +703,16 @@
     <Content Include="Views\Formularios\Details.cshtml" />
     <Content Include="Views\Formularios\Edit.cshtml" />
     <Content Include="Views\Formularios\Index.cshtml" />
-    <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
+    <Content Include="Views\LlenarFormulario\LlenarFormulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
     <Content Include="Views\Seccion\VistaPrevia.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
-    <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
-    <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaConOpciones.cshtml" />
+    <Content Include="Views\Seccion\SeccionConPreguntas.cshtml" />
+    <Content Include="Views\ResponderPreguntas\TodasLasPreguntas.cshtml" />
     <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
     <Content Include="Views\Objetivos\Create.cshtml" />
@@ -739,13 +739,13 @@
     <Content Include="Views\Preguntas\Create.cshtml" />
     <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Preguntas\OpcionesDeSeleccion.cshtml" />
-    <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaSiNoNr.cshtml" />
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
     <Content Include="Views\Preguntas\Estilos.cshtml" />
-    <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
-    <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
-    <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
+    <Content Include="Views\ResponderPreguntas\RespuestaLibre.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaEscalar.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaSeleccionMultiple.cshtml" />
     <Content Include="Views\Seccion\_CreateSeccionPartial.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
@@ -775,7 +775,7 @@
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
-    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
+    <Content Include="Views\LlenarFormulario\VistaPrevia.cshtml" />
     <Content Include="Views\ActivaFormulario\Create.cshtml" />
     <Content Include="Views\ActivaFormulario\Delete.cshtml" />
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
@@ -797,6 +797,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\NewFolder1\" />
+    <Folder Include="Views\VistaPreviaFormularios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

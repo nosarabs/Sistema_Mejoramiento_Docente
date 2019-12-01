@@ -393,5 +393,23 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.IsNull(result);
         }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregFormNoExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.TodasLasPreguntas("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaPregFormExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            var result = controller.TodasLasPreguntas("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
     }
 }
