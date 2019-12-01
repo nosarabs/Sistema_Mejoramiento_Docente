@@ -21,10 +21,12 @@ namespace AppIntegrador.Controllers
 
         private DataIntegradorEntities db;
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
+        private readonly IPerm permissionManager;
 
         public FormulariosController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         public FormulariosController(DataIntegradorEntities db)
@@ -398,7 +400,7 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
