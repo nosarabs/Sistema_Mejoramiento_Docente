@@ -37,7 +37,11 @@ namespace AppIntegrador.Utilities
         BORRAR_ACCIONES_MEJORA,
 
         /*Visualización*/
-        VER_RESPUESTAS_FORMULARIO = 401
+        VER_RESPUESTAS_FORMULARIOS_PROPIOS = 401,
+        VER_RESPUESTAS_FORMULARIOS_ENFASIS,
+
+        /*Carga de datos*/
+        CARGAR_DATOS_DESDE_CSV = 501
 
     };
 
