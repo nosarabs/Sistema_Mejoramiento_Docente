@@ -271,6 +271,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GuiaHorario.cs" />
     <Compile Include="Models\ListaClase.cs" />
     <Compile Include="Models\ListaEstudiante.cs" />
@@ -292,6 +295,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerCarrerasEnfasisUA_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerEstudiantesAsociadosAFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
@@ -423,6 +429,9 @@
     <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\PersonProfileViewHolder.cs" />
+    <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProfilePermissionViewHolder.cs" />
     <Compile Include="Models\Responde_respuesta_con_opciones.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -446,6 +455,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
+    <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

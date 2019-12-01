@@ -1532,5 +1532,83 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
         }
+    
+        public virtual int AgregarPlanCompleto()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlanCompleto");
+        }
+    
+        public virtual int EstaEnCarreraYEnfasis(string correoUsuario, string codCarrera, string codEnfasis, ObjectParameter resultado)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("codEnfasis", codEnfasis) :
+                new ObjectParameter("codEnfasis", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EstaEnCarreraYEnfasis", correoUsuarioParameter, codCarreraParameter, codEnfasisParameter, resultado);
+        }
+    
+        [DbFunction("Entities", "GruposXPerfilXUsuario")]
+        public virtual IQueryable<GruposXPerfilXUsuario_Result> GruposXPerfilXUsuario(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GruposXPerfilXUsuario_Result>("[Entities].[GruposXPerfilXUsuario](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEstudiantesAsociadosAFormulario_Result>("ObtenerEstudiantesAsociadosAFormulario", codFormularioParameter);
+        }
+    
+        [DbFunction("Entities", "ProfesoresXUsuarioXPerfil")]
+        public virtual IQueryable<ProfesoresXUsuarioXPerfil_Result> ProfesoresXUsuarioXPerfil(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProfesoresXUsuarioXPerfil_Result>("[Entities].[ProfesoresXUsuarioXPerfil](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
+    
+        public virtual int PruebasPDM()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PruebasPDM");
+        }
+    
+        [DbFunction("Entities", "UAXPerfilXUsuario")]
+        public virtual IQueryable<UAXPerfilXUsuario_Result> UAXPerfilXUsuario(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UAXPerfilXUsuario_Result>("[Entities].[UAXPerfilXUsuario](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
     }
 }

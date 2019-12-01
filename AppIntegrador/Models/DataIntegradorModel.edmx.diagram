@@ -104,7 +104,7 @@
         <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
         <AssociationConnector Association="DataIntegradorModel.AccionVsPregunta" />
         <AssociationConnector Association="DataIntegradorModel.ObjVsSeccion" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
