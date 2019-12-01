@@ -78,6 +78,7 @@
     <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
+    <Folder Include="PlanesDeMejora\TableTypes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -253,7 +254,8 @@
     <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
     <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
     <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
-    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanComplete.sql" />
+    <Build Include="PlanesDeMejora\TableTypes\TableTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

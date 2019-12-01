@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
-using AppIntegrador.Models;
 using AppIntegrador.Controllers.PlanesDeMejoraBI;
+using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
 {
@@ -90,54 +92,27 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
-                                    List<String> ProfeSeleccionado = null, 
-                                    List<String> FormularioSeleccionado = null,
-                                    List<Objetivo> Objetivo = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null)
         {
             PlanDeMejora planAgregado = new PlanDeMejora();
-            Profesor profe;
-            Formulario formulario;
 
             // Objeto de ayuda business intelligence planes de mejora
             PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
+
+            // Asignacion del codigo al nuevo plan de mejora
             planesHelper.setCodigoAPlanDeMejora(this.db, plan);
 
-            // Set de los formularios asociados al plan de mejora
-            // var asocFormularios = planesHelper.getTablaAsociacionPlanFormularios(this.db, plan, FormularioSeleccionado);
+            // Creacion de las tablas -----
+            var tablaPDM = planesHelper.getPlanTable(plan);
+            var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
 
-            if (ModelState.IsValid && plan != null)
-            {
-                var cod = new ObjectParameter("codigo", 0);
-                db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin, cod);
-                planAgregado = db.PlanDeMejora.Find(cod.Value);
-                if (ProfeSeleccionado != null)
-                {
-                    foreach (var correo in ProfeSeleccionado)
-                    {
-                        profe = db.Profesor.Find(correo);
-                        profe.PlanDeMejora.Add(planAgregado);
-                        if (!planAgregado.Profesor.Contains(profe))
-                            planAgregado.Profesor.Add(profe);
-                    }
-                }
-                if (FormularioSeleccionado != null)
-                {
-                    foreach (var formCod in FormularioSeleccionado)
-                    {
-                        formulario = db.Formulario.Find(formCod);
-                        formulario.PlanDeMejora.Add(planAgregado);
-                        if (!planAgregado.Formulario.Contains(formulario))
-                        {
-                            planAgregado.Formulario.Add(formulario);
-                        }
-                    }
-                }
-                db.SaveChanges();
-            }
+            // Enviando las tablas ----
+            planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
 
+        
 
         [HttpPost]
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)

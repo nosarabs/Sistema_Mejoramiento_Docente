@@ -2,8 +2,11 @@
 using AppIntegrador.Models.Metadata.RelacionesPlanesFormularios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
+using AppIntegrador.Models;
+using System.Data.SqlClient;
 
 namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 {
@@ -23,38 +26,96 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         {
             // Primero analizamos tomamos la totalidad de los planes de mejora
             var totalPlanes = db.PlanDeMejora.ToList();
-            // Buscando el código del último plan agregado
-            var codigoDePlanAnterior = totalPlanes.Count == 0 ? 0 : totalPlanes.Last().codigo;
-            // Aumentamos el codigo del plan de 1 en 1
-            plan.codigo = codigoDePlanAnterior + 1;
+            var ultimoCodigo = -1;
+
+            foreach (var item in totalPlanes) {
+                ultimoCodigo = item.codigo;
+            }
+            plan.codigo = ultimoCodigo + 1;
+            
             // Este metodo tambien deja el borrado en 0 ya que es un plan que se esta creando
             plan.borrado = false;
         }
 
         /*
-         * EFE:
-         *      Creacion de la tabla de asociacion entre el plan de mejora y el/los formularios
+         * EFE: 
+         *      Metodo encargado de enviar tablas al procedimito almacenado
          * REQ:
-         *           plan: instancia del plan de mejora que se quiere crear
-         *    formularios: lista de objetivos del plan de mejora
+         *      tempTable: tabla con los datos 
          * MOD:
-         *      ---------
+         *      Estado de la base de datos
          */
-        public List<PlanFormulario> getTablaAsociacionPlanFormularios(PlanDeMejora plan, List<Formulario> formularios) 
+        public void enviarTablasAlmacenamiento(DataTable tempTable, string tableParamName, DataTable tablaAsocPlanFormularios, string AsocPlanFormualriosName)
         {
-            //Primero de crea una lista vacia de las asociaciones
-            List<PlanFormulario> asociacion = new List<PlanFormulario>();
-            foreach (var item in formularios) 
-            {
-                var temp = new PlanFormulario();
+            SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("AgregarPlanComplete", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-                temp.codPlan = plan.codigo;
-                temp.codFormulario = item.Codigo;
+            //Pass table Valued parameter to Store Procedure
+            SqlParameter sqlParam = cmd.Parameters.AddWithValue(tableParamName, tempTable);
+            sqlParam = cmd.Parameters.AddWithValue(AsocPlanFormualriosName, tablaAsocPlanFormularios);
 
-                asociacion.Add(temp);
-            }
-            return asociacion;
+            sqlParam.SqlDbType = SqlDbType.Structured;
+
+            cmd.ExecuteNonQuery();
+            connection.Close();
         }
+
+        /**
+         * EFE:
+         *      Metodo que se encarga de crear una tabla con los datos del plane de mejora que ingresamos
+         * REQ:
+         *      plan: plan de mejora que se coloca dentro de la lista
+         * MOD:
+         *      ----
+         */
+        // Funcion que se encarga de devolver la info del plan como una tabla
+        public DataTable getPlanTable(PlanDeMejora plan)
+        {
+            DataTable dt = new DataTable();
+
+            // Creando las columnas
+            dt.Columns.Add("codigo");
+            dt.Columns.Add("nombre");
+            dt.Columns.Add("fechaInicio");
+            dt.Columns.Add("fechaFin");
+            dt.Columns.Add("borrado");
+
+            //Agregando las filas
+            dt.Rows.Add(plan.codigo, plan.nombre, plan.fechaInicio, plan.fechaFin, plan.borrado);
+
+            return dt;
+        }
+
+        /**
+         * EFE:
+         *      Metodo que se encarga de crear una tabla con los datos de la asocioacion del plan con los formularios
+         * REQ:
+         *             plan: plan de mejora que se coloca dentro de la lista
+         *      formularios: lista de codigo de los formuarios
+         * MOD:
+         *      ----
+         */
+        // Funcion que se encarga de devolver la info del plan como una tabla
+        public DataTable getTablaAsociacionPlanFormularios(PlanDeMejora plan, List<string> formularios) 
+        {
+            DataTable dt = new DataTable();
+
+            // Creando las columnas
+            dt.Columns.Add("codigoPlan");
+            dt.Columns.Add("codigoForm");
+
+            //Agregando las filas
+            foreach (var item in formularios) {
+                dt.Rows.Add(plan.codigo, item);
+            }
+            
+            return dt;
+        }
+
+
+
 
         /*
          * EFE:
@@ -65,7 +126,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      ---------
          */
-        public List<ObjetivoSeccion> getTablaAsociacionObjetivoSeccion(Objetivo objetivo, List<Seccion> secciones)
+        /*public List<ObjetivoSeccion> getTablaAsociacionObjetivoSeccion(Objetivo objetivo, List<Seccion> secciones)
         {
             //Primero de crea una lista vacia de las asociaciones
             List<ObjetivoSeccion> asociacion = new List<ObjetivoSeccion>();
@@ -80,7 +141,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 asociacion.Add(temp);
             }
             return asociacion;
-        }
+        }*/
 
         /*
          * EFE:
@@ -91,7 +152,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      ---------
          */
-        public List<AccionPregunta> getTablaAsociacionObjetivoSeccion(AccionDeMejora accion, List<Pregunta> preguntas)
+        /*public List<AccionPregunta> getTablaAsociacionObjetivoSeccion(AccionDeMejora accion, List<Pregunta> preguntas)
         {
             //Primero de crea una lista vacia de las asociaciones
             List<AccionPregunta> asociacion = new List<AccionPregunta>();
@@ -107,26 +168,6 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 asociacion.Add(temp);
             }
             return asociacion;
-        }
-
-
-        /*
-         EFE:
-                Se encarga de buscar en la base de datos los formualrios y hacer una lista de las instancias de los mismos.
-         REQ:
-                         db: Instancia de la base de datos
-                formularios: Lista de string de los identificadores de los formularios
-         MOD:
-                --------
-         */
-        public List<Formulario> getFormulariosFromDB(List<string> formularios)
-        {
-            List<Formulario> resultado = new List<Formulario>();
-            foreach (var item in formularios)
-            { 
-                
-            }
-            return resultado;
-        }
+        }*/
     }
 }
