@@ -210,6 +210,7 @@ namespace AppIntegrador.Controllers
             //Se valida cada fila de CSV
             foreach (GuiaHorario f in lista)
             {
+                System.Diagnostics.Debug.WriteLine(guia.Validar(f));
                 insertarGuia(f);
             }
             return true;
@@ -236,9 +237,14 @@ namespace AppIntegrador.Controllers
             //Este IEnumerable tiene cada modelo que fue llenado con los datos del CSV
             IEnumerable<ListaEstudiante> datos = cc.Read<ListaEstudiante>(path, inputFileDescription);
             List<ListaEstudiante> lista = datos.ToList();
+
+            ValidadorListaDeEstudiantes listaEst = new ValidadorListaDeEstudiantes();
+
             //Se valida cada fila de CSV
             foreach (ListaEstudiante f in lista)
             {
+
+                System.Diagnostics.Debug.WriteLine(f.CorreoPersona + "=" + listaEst.Validar(f));
                 insertarListaEstudiante(f);
             }
             return true;
@@ -265,7 +271,7 @@ namespace AppIntegrador.Controllers
             List<ListaFuncionario> lista = datos.ToList();
 
 
-            ValidadorListaDeEstudiantes val = new ValidadorListaDeEstudiantes();
+            ValidadorListaFuncionarios val = new ValidadorListaFuncionarios();
 
             //Se valida cada fila de CSV
             foreach (ListaFuncionario f in lista)

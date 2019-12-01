@@ -6,10 +6,9 @@ using System.Web;
 
 namespace AppIntegrador.Controllers
 {
-    public class ValidadorListaDeEstudiantes : Validador
+    public class ValidadorListaFuncionarios : Validador
     {
-
-        public bool Validar(ListaEstudiante lista)
+        public bool Validar(ListaFuncionario lista)
         {
             System.Diagnostics.Debug.WriteLine("validor");
 
@@ -19,18 +18,25 @@ namespace AppIntegrador.Controllers
 
                 return false; //email invalidao
             }
-            //Correo Estudiante
-            if (!ValidarEmail(lista.CorreoEstudiante) || checkForSQLInjection(lista.CorreoEstudiante))
+            //Correo Profe
+            if (!ValidarEmail(lista.CorreoProfesor) || checkForSQLInjection(lista.CorreoProfesor))
             {
                 System.Diagnostics.Debug.WriteLine("emailP");
                 return false; //email invalidao
             }
-            //Correo estudiante empadronado
-            if (!ValidarEmail(lista.CorreoEstudianteEmpadronado) || checkForSQLInjection(lista.CorreoEstudianteEmpadronado))
+            /*
+            //Correo funcionario
+            if (!ValidarEmail(lista.CorreoFuncionario) || checkForSQLInjection(lista.CorreoFuncionario))
             {
                 System.Diagnostics.Debug.WriteLine("emailP");
                 return false; //email invalidao
             }
+            //Correo funcionario Trabaja
+            if (!ValidarEmail(lista.CorreoFuncionarioTrabaja) || checkForSQLInjection(lista.CorreoFuncionarioTrabaja))
+            {
+                System.Diagnostics.Debug.WriteLine("emailP");
+                return false; //email invalidao
+            }*/
             //Id
             if (!ValidarTamanoText(lista.IdPersona, 30) || checkForSQLInjection(lista.IdPersona))
             {
@@ -65,22 +71,8 @@ namespace AppIntegrador.Controllers
 
                 return false;
             }
-            //Codigo Enfasis
-            if (!ValidarTamanoText(lista.CodigoEnfasisEmpadronado, 15) || checkForSQLInjection(lista.CodigoEnfasisEmpadronado))
-            {
-                System.Diagnostics.Debug.WriteLine("apellido");
 
-                return false;
-            }
-            //Codigo Carrera
-            if (!ValidarTamanoText(lista.CodigoCarreraEmpadronado, 15) || checkForSQLInjection(lista.CodigoCarreraEmpadronado))
-            {
-                System.Diagnostics.Debug.WriteLine("apellido");
-
-                return false;
-            }
             return true;
         }
-
     }
 }
