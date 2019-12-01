@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using AppIntegrador.Models;
 
 
@@ -34,27 +35,67 @@ namespace AppIntegrador.Controllers
             }
 
             ViewBag.Nombre = formularioDB.Nombre;
+            ViewBag.Codigo = formularioDB.Codigo;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Asignar(List<UAsFiltros> unidadesAcademicas, string seleccionUA, List<CarrerasEnfasisFiltros> carrerasEnfasis, string seleccionCarrera, List<GruposFiltros> grupos, string seleccionGrupo, List<ProfesoresFiltros> profesores, string seleccionProfesor)
+        public ActionResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado)
         {
-            // RIP-AF3
-            // Como es la asignacion por curso, se asume que viene null los demas 
-            // para que acá sean implementados
+            string codigoCarrera = null;
+            string codigoEnfasis = null;
+            string siglaCursoGrupo = null;
+            Nullable<byte> numeroGrupo = null;
+            Nullable<byte> semestreGrupo = null;
+            Nullable<int> anno = null;
 
-            // llamado al procedimiento almacenado 
+            DateTime fechaInicio = Convert.ToDateTime("10/11/2019");
+            DateTime fechaFin = Convert.ToDateTime("10/11/2469");
 
-            //List<UAsFiltros> tempUA;
+            if (correoProfesorSeleccionado == "null")
+                correoProfesorSeleccionado = null;
 
-            //for(int index = 0; index < unidadesAcademicas.Count; ++index)
-            //{
-            //    if (unidadesAcademicas[index].Equals())
-            //}
+            if (codigoCarreraEnfasisSeleccionada != "null")
+            {
+                string[] codigosSeparados = codigoCarreraEnfasisSeleccionada.Split('/');
+                codigoCarrera = codigosSeparados[0];
+                codigoEnfasis = codigosSeparados[1];
+            }
 
-            //dashboard.ObtenerGrupos()
-            return View("Index");
+            if (grupoSeleccionado != "null")
+            {
+                string[] grupoLlaves = grupoSeleccionado.Split('/');
+                siglaCursoGrupo = grupoLlaves[0];
+                numeroGrupo = byte.Parse(grupoLlaves[1]);
+                semestreGrupo = byte.Parse(grupoLlaves[2]);
+                anno = int.Parse(grupoLlaves[3]);
+            }
+
+            var grupos = db.ObtenerGruposAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo , semestreGrupo, anno, correoProfesorSeleccionado);
+
+            var gruposAsociadosLista = grupos.ToList();
+
+            for (int index = 0; index < gruposAsociadosLista.Count; ++index)
+            {
+                var grupoActual = gruposAsociadosLista[index];
+                db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
+            }
+
+                // RIP-AF3
+                // Como es la asignacion por curso, se asume que viene null los demas 
+                // para que acá sean implementados
+
+                // llamado al procedimiento almacenado 
+                // db.ObtenerGruposAsociados();
+                //List<UAsFiltros> tempUA;
+
+                //for(int index = 0; index < unidadesAcademicas.Count; ++index)
+                //{
+                //    if (unidadesAcademicas[index].Equals())
+                //}
+
+                //dashboard.ObtenerGrupos()
+                return View("Index");
         }
     }
 }

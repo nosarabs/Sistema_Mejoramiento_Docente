@@ -1658,6 +1658,15 @@
           <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
           <Parameter Name="tienePerfil" Type="bit" Mode="In" />
         </Function>
+        <Function Name="AsignarFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FormularioCodigo" Type="varchar" Mode="In" />
+          <Parameter Name="CursoSigla" Type="varchar" Mode="In" />
+          <Parameter Name="GrupoNumero" Type="tinyint" Mode="In" />
+          <Parameter Name="GrupoAnno" Type="int" Mode="In" />
+          <Parameter Name="GrupoSemestre" Type="tinyint" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
         <Function Name="AsociarPreguntaConSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoSeccion" Type="varchar" Mode="In" />
           <Parameter Name="CodigoPregunta" Type="varchar" Mode="In" />
@@ -2030,6 +2039,26 @@
                 <Property Name="GAnno" Type="int" Nullable="false" />
                 <Property Name="FechaInicio" Type="date" Nullable="false" />
                 <Property Name="FechaFin" Type="date" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="ObtenerGruposAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUnidadAcademica" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="Semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="Anno" Type="int" Mode="In" />
+          <Parameter Name="CorreoProfesor" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="SiglaCurso" Type="varchar" MaxLength="10" Nullable="false" />
+                <Property Name="NumGrupo" Type="tinyint" Nullable="false" />
+                <Property Name="Semestre" Type="tinyint" Nullable="false" />
+                <Property Name="Anno" Type="int" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -4601,6 +4630,25 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="AsignarFormulario">
+            <Parameter Name="FormularioCodigo" Mode="In" Type="String" />
+            <Parameter Name="CursoSigla" Mode="In" Type="String" />
+            <Parameter Name="GrupoNumero" Mode="In" Type="Byte" />
+            <Parameter Name="GrupoAnno" Mode="In" Type="Int32" />
+            <Parameter Name="GrupoSemestre" Mode="In" Type="Byte" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerGruposAsociados" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposAsociados_Result)">
+            <Parameter Name="CodigoUnidadAcademica" Mode="In" Type="String" />
+            <Parameter Name="CodigoCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodigoEnfasis" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerOpcionesDePregunta_Result">
           <Property Type="String" Name="Texto" Nullable="false" MaxLength="50" />
@@ -4865,6 +4913,12 @@
           <Property Type="Int32" Name="Anno" Nullable="false" />
           <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
           <Property Type="DateTime" Name="FechaFin" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerGruposAsociados_Result">
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5855,6 +5909,17 @@
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AsignarFormulario" FunctionName="DataIntegradorModel.Store.AsignarFormulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerGruposAsociados" FunctionName="DataIntegradorModel.Store.ObtenerGruposAsociados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerGruposAsociados_Result">
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

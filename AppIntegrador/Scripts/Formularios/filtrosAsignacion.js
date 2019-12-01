@@ -32,41 +32,27 @@
 
     asignarConFiltros(listaUA, listaCE, listaP) {
 
-        var listaG = null;
-        var CE = this.recuperarCEs(listaCE, listaP, listaG);
-        var UA = this.recuperarUAs(listaCE, listaP, listaG);
-        var G = this.recuperarGs(listaUA, listaCE, listaP);
-        var P = this.recuperarPs(listaCE, listaP, listaG);
+        var codigoFormularioGet = '00000420';
 
         var CESeleccionadas = document.getElementById("filtroCarreraEnfasis");
-        var CEValor = CESeleccionadas.options[CESeleccionadas.selectedIndex].text;
+        var CEValor = CESeleccionadas.options[CESeleccionadas.selectedIndex].value;
 
         var UASeleccionadas = document.getElementById("filtroUA");
-        var UAValor = UASeleccionadas.options[UASeleccionadas.selectedIndex].text;
-        console.log(UAValor);
-
+        var UAValor = UASeleccionadas.options[UASeleccionadas.selectedIndex].value;
+        console.log(UAValor)
         var GSeleccionada = document.getElementById("filtroCursoGrupo");
-        var GValor = GSeleccionada.options[GSeleccionada.selectedIndex].text;
+        var GValor = GSeleccionada.options[GSeleccionada.selectedIndex].value;
 
         var PSeleccionado = document.getElementById("filtroProfesores");
-        var PValor = PSeleccionado.options[PSeleccionado.selectedIndex].text;
-
-        var resultado = { CESeleccionadas, UASeleccionadas, GSeleccionada, PSeleccionado };
-
-        console.log(CE);
-        console.log(UA);
-        console.log(P);
+        var PValor = PSeleccionado.options[PSeleccionado.selectedIndex].value;
         $.ajax({
             url: '/AsignacionFormularios/Asignar',
             data: {
-                unidadesAcademicas: UA,
-                seleccionAU: UAValor,
-                carrerasEnfasis: CE,
-                seleccionCarrera: CEValor,
-                grupos: G,
-                seleccionGrupo: GValor,
-                profesores: P,
-                seleccionProfesor: PValor
+                codigoFormulario: codigoFormularioGet,
+                codigoUASeleccionada: UAValor, //este 
+                codigoCarreraEnfasisSeleccionada: CEValor, //este
+                grupoSeleccionado: GValor, // este
+                correoProfesorSeleccionado: PValor //este
             },
             type: 'post',
             dataType: 'json',

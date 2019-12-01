@@ -1545,5 +1545,76 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosPorSemestre_Result>("ObtenerFormulariosPorSemestre", correoEstudianteParameter, annoParameter, semestreParameter);
         }
+    
+        public virtual int AsignarFormulario(string formularioCodigo, string cursoSigla, Nullable<byte> grupoNumero, Nullable<int> grupoAnno, Nullable<byte> grupoSemestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var formularioCodigoParameter = formularioCodigo != null ?
+                new ObjectParameter("FormularioCodigo", formularioCodigo) :
+                new ObjectParameter("FormularioCodigo", typeof(string));
+    
+            var cursoSiglaParameter = cursoSigla != null ?
+                new ObjectParameter("CursoSigla", cursoSigla) :
+                new ObjectParameter("CursoSigla", typeof(string));
+    
+            var grupoNumeroParameter = grupoNumero.HasValue ?
+                new ObjectParameter("GrupoNumero", grupoNumero) :
+                new ObjectParameter("GrupoNumero", typeof(byte));
+    
+            var grupoAnnoParameter = grupoAnno.HasValue ?
+                new ObjectParameter("GrupoAnno", grupoAnno) :
+                new ObjectParameter("GrupoAnno", typeof(int));
+    
+            var grupoSemestreParameter = grupoSemestre.HasValue ?
+                new ObjectParameter("GrupoSemestre", grupoSemestre) :
+                new ObjectParameter("GrupoSemestre", typeof(byte));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsignarFormulario", formularioCodigoParameter, cursoSiglaParameter, grupoNumeroParameter, grupoAnnoParameter, grupoSemestreParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        [DbFunction("Entities", "ObtenerGruposAsociados")]
+        public virtual IQueryable<ObtenerGruposAsociados_Result> ObtenerGruposAsociados(string codigoUnidadAcademica, string codigoCarrera, string codigoEnfasis, string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno, string correoProfesor)
+        {
+            var codigoUnidadAcademicaParameter = codigoUnidadAcademica != null ?
+                new ObjectParameter("CodigoUnidadAcademica", codigoUnidadAcademica) :
+                new ObjectParameter("CodigoUnidadAcademica", typeof(string));
+    
+            var codigoCarreraParameter = codigoCarrera != null ?
+                new ObjectParameter("CodigoCarrera", codigoCarrera) :
+                new ObjectParameter("CodigoCarrera", typeof(string));
+    
+            var codigoEnfasisParameter = codigoEnfasis != null ?
+                new ObjectParameter("CodigoEnfasis", codigoEnfasis) :
+                new ObjectParameter("CodigoEnfasis", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            var correoProfesorParameter = correoProfesor != null ?
+                new ObjectParameter("CorreoProfesor", correoProfesor) :
+                new ObjectParameter("CorreoProfesor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposAsociados_Result>("[Entities].[ObtenerGruposAsociados](@CodigoUnidadAcademica, @CodigoCarrera, @CodigoEnfasis, @SiglaCurso, @NumGrupo, @Semestre, @Anno, @CorreoProfesor)", codigoUnidadAcademicaParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
+        }
     }
 }
