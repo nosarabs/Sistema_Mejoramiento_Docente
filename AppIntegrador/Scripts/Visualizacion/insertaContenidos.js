@@ -97,7 +97,7 @@
 
     insertarJustificaciones(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var resultado = this.textoLibre.generarJustificaciones(baseDosCol.getElementoJustificacion(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.textoLibre.generarJustificaciones(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
 
         if (resultado <= 0) {
 

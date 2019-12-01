@@ -44,23 +44,29 @@
                     display: false,
                 },
                 tooltips: {
-                    enabled: false
+                    enabled: true
                 },
                 responsive: true,
                 maintainAspectRatio: true,
                 devicePixelRatio: 2,
                 scales: {
                     yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Cantidad de estudiantes",
+                            fontSize: 16,
+                            fontColor: "#545454",
+                        },
                         ticks: {
                             beginAtZero: true,
                             stepSize: 1,
-                            fontColor: "#747474",
+                            fontColor: "#636363",
                             fontSize: 16,
                         }
                     }],
                     xAxes: [{
                         ticks: {
-                            fontColor: "#747474",
+                            fontColor: "#545454",
                             fontSize: 16,
                         }
                     }]
@@ -70,7 +76,7 @@
                         display: function (context) {
                             return context.dataset.data[context.dataIndex] !== 0;
                         },
-                        color: "#747474",
+                        color: "#636363",
                         textStrokeColor: "black",
                         textStrokeWidth: 0,
                         anchor: "end",
@@ -125,7 +131,7 @@
                 legend: {
                     display: true,
                     labels: {
-                        fontColor: "#747474",
+                        fontColor: "#545454",
                         fontSize: 16,
                     }
                 },
@@ -133,7 +139,7 @@
                     display: false,
                 },
                 tooltips: {
-                    enabled: false
+                    enabled: true
                 },
                 responsive: true,
                 maintainAspectRatio: true,
