@@ -20,7 +20,6 @@ namespace AppIntegrador.Models
             this.Responde_respuesta_libre = new HashSet<Responde_respuesta_libre>();
             this.Responde_respuesta_con_opciones = new HashSet<Responde_respuesta_con_opciones>();
             this.Seccion_tiene_pregunta = new HashSet<Seccion_tiene_pregunta>();
-            this.AccionDeMejora = new HashSet<AccionDeMejora>();
         }
     
         public string Codigo { get; set; }
@@ -35,7 +34,5 @@ namespace AppIntegrador.Models
         public virtual ICollection<Responde_respuesta_con_opciones> Responde_respuesta_con_opciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seccion_tiene_pregunta> Seccion_tiene_pregunta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccionDeMejora> AccionDeMejora { get; set; }
     }
 }

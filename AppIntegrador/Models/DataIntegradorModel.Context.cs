@@ -1528,5 +1528,22 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter);
         }
+    
+        public virtual ObjectResult<ObtenerFormulariosPorSemestre_Result> ObtenerFormulariosPorSemestre(string correoEstudiante, Nullable<int> anno, Nullable<byte> semestre)
+        {
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("correoEstudiante", correoEstudiante) :
+                new ObjectParameter("correoEstudiante", typeof(string));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosPorSemestre_Result>("ObtenerFormulariosPorSemestre", correoEstudianteParameter, annoParameter, semestreParameter);
+        }
     }
 }

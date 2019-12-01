@@ -279,6 +279,7 @@
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
+    <Compile Include="Models\MisFormulariosModel.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -304,6 +305,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosPorSemestre_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">

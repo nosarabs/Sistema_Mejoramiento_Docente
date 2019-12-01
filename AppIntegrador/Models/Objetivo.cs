@@ -18,7 +18,6 @@ namespace AppIntegrador.Models
         public Objetivo()
         {
             this.AccionDeMejora = new HashSet<AccionDeMejora>();
-            this.Seccion = new HashSet<Seccion>();
         }
     
         public int codPlan { get; set; }
@@ -35,7 +34,5 @@ namespace AppIntegrador.Models
         public virtual PlanDeMejora PlanDeMejora { get; set; }
         public virtual PlantillaObjetivo PlantillaObjetivo { get; set; }
         public virtual TipoObjetivo TipoObjetivo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seccion> Seccion { get; set; }
     }
 }
