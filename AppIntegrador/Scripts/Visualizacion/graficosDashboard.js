@@ -9,6 +9,10 @@ class GraficosDashboard {
     recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
         var promedio;
         var cantidad;
+        var nMalo;
+        var nRegular;
+        var nBueno;
+
         $.ajax({
             url: '/Dashboard/ObtenerPromedioProfesor',
             data: {
@@ -23,15 +27,23 @@ class GraficosDashboard {
             success: function (resultados) {
                 promedio = resultados.promedio;
                 cantidad = resultados.cantidad;
+
+                nMalo = resultados.nMalo;
+                nRegular = resultados.nRegular;
+                nBueno = resultados.nBueno;
             }
 
         });
-        return [promedio, cantidad]
+        return [promedio, cantidad, nMalo, nRegular, nBueno]
     }
 
     recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
         var promedio;
         var cantidad;
+        var nMalo;
+        var nRegular;
+        var nBueno;
+
         $.ajax({
             url: '/Dashboard/ObtenerPromedioCursos',
             data: {
@@ -46,12 +58,16 @@ class GraficosDashboard {
             success: function (resultados) {
                 promedio = resultados.promedio;
                 cantidad = resultados.cantidad;
+
+                nMalo = resultados.nMalo;
+                nRegular = resultados.nRegular;
+                nBueno = resultados.nBueno;
             }
         });
-        return [promedio, cantidad]
+        return [promedio, cantidad, nMalo, nRegular, nBueno]
     }
 
-    generarGrafico(canvas) {
+    generarGrafico(canvas, p, nM, nR, nB) {
 
         Chart.pluginService.register({
             beforeDraw: function (chart) {
@@ -95,6 +111,15 @@ class GraficosDashboard {
             }
         });
 
+        var colorP;
+   
+        if (p >= 70) {
+           colorP = "#b9d989";
+        } else if (p >= 50) {
+            colorP = "#8ed8f8";
+        } else {
+            colorP = "#ffe06a";
+        }
 
         var config = {
             type: 'doughnut',
@@ -105,7 +130,7 @@ class GraficosDashboard {
                     "71-100"
                 ],
                 datasets: [{
-                    data: [30, 60, 100],
+                    data: [nM, nR, nB],
                     backgroundColor: [
                         "#ffe06a",
                         "#8ed8f8",
@@ -120,10 +145,15 @@ class GraficosDashboard {
                 }]
             },
             options: {
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                },
                 elements: {
                     center: {
-                        text: '90',
-                        color: '#b9d989', // Default is #000000
+                        text: Math.ceil(p),
+                        color: colorP, // Default is #000000
                         fontStyle: 'Arial', // Default is Arial
                         sidePadding: 20 // Defualt is 20 (as a percentage)
                     }

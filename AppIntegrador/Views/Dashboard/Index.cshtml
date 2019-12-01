@@ -35,14 +35,13 @@
             <div class="col">
                 <div class="row" id="promedios">
                     <div class="col">
+                        Calificación Promedio de Profesor
                         <canvas class="graficosPromedio" id="gP"></canvas>
-                        <small id="pP"></small>
                         <small id="pN"></small>
                     </div>
-
                     <div class="col">
+                        Calificación Promedio de Cursos
                         <canvas class="graficosPromedio" id="gC"></canvas>
-                        <small id="cP"></small>
                         <small id="cN"></small>
                     </div>
                 </div>
@@ -182,21 +181,28 @@
         var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var profeP = profe[0];
         var profeN = profe[1];
+        var nMaloP = profe[2];
+        var nRegularP = profe[3];
+        var nBuenoP = profe[4];
 
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
         var cursoN = curso[1];
+        var nMaloC = curso[2];
+        var nRegularC = curso[3];
+        var nBuenoC = curso[4];
 
         $('#pP').text("Promedio Profesor: " + profeP);
-        $('#pN').text("Cantidad: " + profeN);
+        $('#pN').text("Calificaciones Totales: " + profeN);
         $('#cP').text("Promedio Curso: " + cursoP);
-        $('#cN').text("Cantidad: " + cursoN);
+        $('#cN').text("Calificaciones Totales: " + cursoN);
+
 
         var canvasP = document.getElementById('gP').getContext('2d');
         var canvasC = document.getElementById('gC').getContext('2d');
 
-        x.generarGrafico(canvasP);
-        x.generarGrafico(canvasC);
+        x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
+        x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
 
     }
 
