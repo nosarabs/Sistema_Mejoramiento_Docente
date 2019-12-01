@@ -145,6 +145,11 @@ class GraficosDashboard {
                 }]
             },
             options: {
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                },
                 elements: {
                     center: {
                         text: Math.ceil(p),
