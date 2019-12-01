@@ -31,12 +31,20 @@
                         <canvas class="graficosPromedio" id="gP"></canvas>
                         <small id="pP"></small>
                         <small id="pN"></small>
+
+                        <small id="nMaloP"></small>
+                        <small id="nRegularP"></small>
+                        <small id="nBuenoP"></small>
                     </div>
 
                     <div class="col">
                         <canvas class="graficosPromedio" id="gC"></canvas>
                         <small id="cP"></small>
                         <small id="cN"></small>
+
+                        <small id="nMaloC"></small>
+                        <small id="nRegularC"></small>
+                        <small id="nBuenoC"></small>
                     </div>
                 </div>
                 <div class="row" id="cuadricula">
@@ -166,21 +174,35 @@
         var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var profeP = profe[0];
         var profeN = profe[1];
+        var nMaloP = profe[2];
+        var nRegularP = profe[3];
+        var nBuenoP = profe[4];
 
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
         var cursoN = curso[1];
+        var nMaloC = curso[2];
+        var nRegularC = curso[3];
+        var nBuenoC = curso[4];
 
         $('#pP').text("Promedio Profesor: " + profeP);
         $('#pN').text("Cantidad: " + profeN);
         $('#cP').text("Promedio Curso: " + cursoP);
         $('#cN').text("Cantidad: " + cursoN);
 
+        $('#nMaloP').text("N Malo: " + nMaloP);
+        $('#nRegularP').text("N Regular: " + nRegularP);
+        $('#nBuenoP').text("N Bueno: " + nBuenoP);
+
+        $('#nMaloC').text("N Malo: " + nMaloC);
+        $('#nRegularC').text("N Regular: " + nRegularC);
+        $('#nBuenoC').text("N Bueno: " + nBuenoC);
+
         var canvasP = document.getElementById('gP').getContext('2d');
         var canvasC = document.getElementById('gC').getContext('2d');
 
-        x.generarGrafico(canvasP);
-        x.generarGrafico(canvasC);
+        x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
+        x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
 
     }
 
