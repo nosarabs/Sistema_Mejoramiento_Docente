@@ -118,11 +118,13 @@ namespace AppIntegrador.Controllers
             }
 
             columna++;
-            if (!ValidarEmail(guia.CorreoProfesorImparte) || checkForSQLInjection(guia.CorreoProfesorImparte))
-            {
-                mensajeError = "El campo correo profesor en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
+                if (!ValidarEmail(guia.CorreoProfesorImparte) || checkForSQLInjection(guia.CorreoProfesorImparte))
+                {
+                    mensajeError = "El campo correo profesor en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                    return Tuple.Create(false, mensajeError); //email invalidao
+                }
+
+
 
             //Sigla Curso Matricula
             columna++;
