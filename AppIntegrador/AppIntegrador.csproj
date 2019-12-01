@@ -566,6 +566,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Visualizacion\baseRespuestasPlantilla.js" />
     <Content Include="Scripts\Visualizacion\bootstrap-multiselect.js" />
+    <Content Include="Scripts\Visualizacion\bootstrap.min.js" />
     <Content Include="Scripts\Visualizacion\botones.js" />
     <Content Include="Scripts\Visualizacion\Chart.js" />
     <Content Include="Scripts\Visualizacion\chartjs-plugin-datalabels.js" />
@@ -573,11 +574,11 @@
     <Content Include="Scripts\CSVuploader.js" />
     <Content Include="Scripts\Visualizacion\estadisticas.js" />
     <Content Include="Scripts\Visualizacion\filtros.js" />
+    <Content Include="Scripts\Visualizacion\font-awesome.js" />
     <Content Include="Scripts\Visualizacion\graficos.js" />
     <Content Include="Scripts\Visualizacion\graficosDashboard.js" />
     <Content Include="Scripts\Visualizacion\insertaContenidos.js" />
-    <Content Include="Scripts\Visualizacion\multiselect.core.js" />
-    <Content Include="Scripts\Visualizacion\multiselect.min.js" />
+    <Content Include="Scripts\Visualizacion\popper.min.js" />
     <Content Include="Scripts\Visualizacion\textoLibre.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

@@ -252,3 +252,52 @@ canvas{
     border-radius: 5px 5px 5px 5px;
     font-size: small ;
 }
+
+/*Estilo para los multiselect*/
+/*Con este le puede cambiar el tamaño a todo el componente.*/
+div.btn-group {
+    width: 100% !important;
+    font-size: small;
+}
+
+button.multiselect.dropdown-toggle.btn-default {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    width: 100%;
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: white;
+    /*padding: 2% !important;*/
+    white-space: nowrap;
+    max-width: 200%;
+    min-width: 150%;
+    overflow: scroll;
+}
+
+    ul.multiselect-container.dropdown-menu.show {
+        overflow: scroll hidden;
+        white-space: nowrap;
+        max-width: 200%;
+        min-width: 150%;
+        padding: 5%;
+        padding-left: 2% !important;
+        padding-right: 5% !important;
+    }
+    
+
+label.checkbox {
+    width: inherit;
+    /*padding-right: 1% !important;*/
+    font-size: small;
+}
+
+label.checkbox:hover {
+    background-color: #DCDCDC;
+}
+
+span.multiselect-selected-text {
+    font-size: small;
+    max-width: 95%;
+    display: inline-flex;
+    overflow: hidden;
+}

@@ -1,27 +1,96 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-@Scripts.Render("~/Scripts/Visualizacion//multiselect.min.js")
+
+
 @Scripts.Render("~/Scripts/jquery-3.4.1.js")
+@Scripts.Render("~/Scripts/Visualizacion/popper.min.js")
 @Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
+@Scripts.Render("~/Scripts/Visualizacion/font-awesome.js")
 @Scripts.Render("~/Scripts/Visualizacion/filtros.js")
 @Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
-@Styles.Render("~/Content/Visualizacion/multiselect.css")
-@Styles.Render("~/Content/Visualizacion/styles.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
-
+@Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+@Styles.Render("~/Content/Visualizacion/styles.css")
 
 <head>
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
-
-    @*<link href="~/Content/Visualizacion/multiselect.css" rel="stylesheet" />*@
-    @*<script src="~/Scripts/Visualizacion/multiselect.min.js"></script>*@
-
-
 </head>
 
 <body>
     <h3>Dashboard</h3>
+    
+    <script type="text/javascript">
+        var alturaMax = 200;
+        function cambiarIcono() {
+            //Cambia el ícono dañado por uno de font-awesome
+            var icons = document.getElementsByClassName("glyphicon glyphicon-remove-circle");
+            for (var index = 0; index < icons.length; ++index) {
+                icons[index].className = "fas fa-times";
+            }
+        }
+
+        $(document).ready(function () {
+            $('#example-getting-started').multiselect({
+				enableFiltering: true,
+				enableCaseInsensitiveFiltering: true,
+				numberDisplayed: 1,
+				includeSelectAllOption: true,
+                maxHeight: alturaMax,
+			});
+
+            $('#filtroUA').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                includeSelectAllOption: true,
+                maxHeight: alturaMax,
+                //onChange: function (option, checked) {
+                //    alert('Se hizo click en una opción');
+                //},
+                //onSelectAll: function (option, checked) {
+                //    alert('Se hizo click en la opción seleccionar todo');
+                //},
+                //onDeselectAll: function (option, checked) {
+                //    alert('Se hizo click en la opción deseleccionar todo');
+                //}
+            });
+            $('#filtroCarreraEnfasis').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                includeSelectAllOption: true,
+                maxHeight: alturaMax,
+            });
+            $('#filtroCursoGrupo').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                includeSelectAllOption: true,
+                maxHeight: alturaMax,
+            });
+
+            $('#filtroProfesores').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                includeSelectAllOption: true,
+                maxHeight: alturaMax,
+            });
+
+            $('#filtroFormularios').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                numberDisplayed: 1,
+                includeSelectAllOption: true,
+                maxHeight: alturaMax,
+            });
+
+            cambiarIcono();
+
+        });
+    </script>
 
     <div class="container-fluid">
         <div class="row">
@@ -50,15 +119,6 @@
 
     var filtros = new Filtros();
     filtros.crearFiltros();
-   
-</script>
-
-<script>
-    document.multiselect('#filtroUA');
-    document.multiselect('#filtroCarreraEnfasis');
-    document.multiselect('#filtroCursoGrupo');
-    document.multiselect('#filtroProfesores');
-    document.multiselect('#filtroFormularios');
 
 </script>
 
