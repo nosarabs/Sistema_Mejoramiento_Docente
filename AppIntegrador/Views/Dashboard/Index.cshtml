@@ -33,70 +33,6 @@
 <body>
     <h3>Dashboard</h3>
 
-    <script type="text/javascript">
-        var alturaMax = 200;
-        function cambiarIcono() {
-            //Cambia el ícono dañado por uno de font-awesome
-            var icons = document.getElementsByClassName("glyphicon glyphicon-remove-circle");
-            for (var index = 0; index < icons.length; ++index) {
-                icons[index].className = "fas fa-times";
-            }
-        }
-
-        $(document).ready(function ()
-        {
-            $('#filtroUA').multiselect({
-                enableFiltering: true,
-                enableCaseInsensitiveFiltering: true,
-                numberDisplayed: 1,
-                includeSelectAllOption: true,
-                maxHeight: alturaMax,
-                //onChange: function (option, checked) {
-                //    alert('Se hizo click en una opción');
-                //},
-                //onSelectAll: function (option, checked) {
-                //    alert('Se hizo click en la opción seleccionar todo');
-                //},
-                //onDeselectAll: function (option, checked) {
-                //    alert('Se hizo click en la opción deseleccionar todo');
-                //}
-            });
-            $('#filtroCarreraEnfasis').multiselect({
-                enableFiltering: true,
-                enableCaseInsensitiveFiltering: true,
-                numberDisplayed: 1,
-                includeSelectAllOption: true,
-                maxHeight: alturaMax,
-            });
-            $('#filtroCursoGrupo').multiselect({
-                enableFiltering: true,
-                enableCaseInsensitiveFiltering: true,
-                numberDisplayed: 1,
-                includeSelectAllOption: true,
-                maxHeight: alturaMax,
-            });
-
-            $('#filtroProfesores').multiselect({
-                enableFiltering: true,
-                enableCaseInsensitiveFiltering: true,
-                numberDisplayed: 1,
-                includeSelectAllOption: true,
-                maxHeight: alturaMax,
-            });
-
-            $('#filtroFormularios').multiselect({
-                enableFiltering: true,
-                enableCaseInsensitiveFiltering: true,
-                numberDisplayed: 1,
-                includeSelectAllOption: true,
-                maxHeight: alturaMax,
-            });
-
-            cambiarIcono();
-
-        });
-    </script>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-3" id="panelFiltros">
@@ -132,6 +68,70 @@
         actualizarPromedios(null, null, null, null);
     });
 
+</script>
+
+<script type="text/javascript">
+    var alturaMax = 200;
+    function cambiarIcono() {
+        //Cambia el ícono dañado por uno de font-awesome
+        var icons = document.getElementsByClassName("glyphicon glyphicon-remove-circle");
+        for (var index = 0; index < icons.length; ++index) {
+            icons[index].className = "fas fa-times";
+        }
+    }
+
+    $(document).ready(function () {
+        $('#filtroUA').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            numberDisplayed: 1,
+            includeSelectAllOption: true,
+            maxHeight: alturaMax,
+            //onChange: function (option, checked) {
+            //    alert('Se hizo click en una opción');
+            //},
+            //onSelectAll: function (option, checked) {
+            //    alert('Se hizo click en la opción seleccionar todo');
+            //},
+            //onDeselectAll: function (option, checked) {
+            //    alert('Se hizo click en la opción deseleccionar todo');
+            //}
+        });
+        $('#filtroCarreraEnfasis').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            numberDisplayed: 1,
+            includeSelectAllOption: true,
+            maxHeight: alturaMax,
+        });
+
+        $('#filtroProfesores').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            numberDisplayed: 1,
+            includeSelectAllOption: true,
+            maxHeight: alturaMax,
+        });
+
+        $('#filtroCursoGrupo').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            numberDisplayed: 1,
+            includeSelectAllOption: true,
+            maxHeight: alturaMax,
+        });
+
+        $('#filtroFormularios').multiselect({
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            numberDisplayed: 1,
+            includeSelectAllOption: true,
+            maxHeight: alturaMax,
+        });
+
+        cambiarIcono();
+
+    });
 </script>
 
 <script>

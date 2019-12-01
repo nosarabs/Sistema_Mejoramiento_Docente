@@ -477,7 +477,7 @@
         }
 
         var pObjs = []
-        if (uaSelec != "null")  //Se crea un arreglo de objetos con el 
+        if (pSeleccionada != "null")  //Se crea un arreglo de objetos con el 
         {                       //código de las Unidades Académicas seleccionadas
             for (var i = 0; i < pSeleccionada.length; i++) {
                 pObjs.push({ Correo: pSeleccionada[i] });

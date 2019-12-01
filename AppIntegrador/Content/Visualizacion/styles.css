@@ -167,9 +167,8 @@ div.row.estadisticas {
     clear: both;
 }
 
-.row h3 
+.row h3, h3 
 {
-    padding:3%;
     text-align: center;
     width: 100%;
 }
