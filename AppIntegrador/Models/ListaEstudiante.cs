@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppIntegrador.Models
 {
@@ -20,6 +21,8 @@ namespace AppIntegrador.Models
         public string ApellidoPersona { get; set; }
         public string Borrado { get; set; }
         public string CorreoEstudiante { get; set; }
-        //Datos de a que enfasis y carrera pertenece el estudiante
+        public string CorreoEstudianteEmpadronado { get; set; }
+        public string CodigoCarreraEmpadronado { get; set; }
+        public string CodigoEnfasisEmpadronado { get; set; }
     }
 }

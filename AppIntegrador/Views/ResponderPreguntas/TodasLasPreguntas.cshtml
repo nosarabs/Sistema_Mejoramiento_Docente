@@ -45,7 +45,7 @@
         @if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
         {
             string justificacionname = "secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta + "].RespuestaLibreOJustificacion";
-            if (pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
+            if (pregunta.Pregunta.Pregunta_con_opciones != null && pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
             {
                 <div class="card-body grisUCR2">
                     <div style="margin: -0.5%">
