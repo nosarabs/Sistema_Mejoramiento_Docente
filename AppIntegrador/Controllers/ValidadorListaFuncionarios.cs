@@ -8,9 +8,9 @@ namespace AppIntegrador.Controllers
 {
     public class ValidadorListaFuncionarios : Validador
     {
-        public Tuple<bool, string> Validar(ListaFuncionario lista)
+        public Tuple<bool, string> Validar(ListaFuncionario lista, int filaActual)
         {
-            int fila = 1;
+            int fila = filaActual;
             int columna = 0;
             string mensajeError = "";
             //Correo Persona
@@ -93,7 +93,6 @@ namespace AppIntegrador.Controllers
                 return Tuple.Create(false, mensajeError);
             }
 
-            fila++;
             return Tuple.Create(true, "");
         }
     }

@@ -198,12 +198,14 @@ namespace AppIntegrador.Controllers
 
             ValidadorListaClase val = new ValidadorListaClase();
             bool error;
+            int filaActual = 0;
             foreach (ListaClase f in lista)
             {
-                error = val.Validar(f).Item1;
+                ++filaActual;
+                error = val.Validar(f,filaActual).Item1;
                 if (!error)
                 {
-                    return Tuple.Create(false, val.Validar(f).Item2);
+                    return Tuple.Create(false, val.Validar(f,filaActual).Item2);
                 }
             }
 
@@ -239,12 +241,14 @@ namespace AppIntegrador.Controllers
 
             ValidadorGuia val = new ValidadorGuia();
             bool error;
+            int filaActual=0;
             foreach (GuiaHorario f in lista)
             {
-                error = val.Validar(f).Item1;
+                ++filaActual;
+                error = val.Validar(f,filaActual).Item1;
                 if (!error)
                 {
-                    return Tuple.Create(false, val.Validar(f).Item2);
+                    return Tuple.Create(false, val.Validar(f, filaActual).Item2);
                 }
             }
 
@@ -280,12 +284,14 @@ namespace AppIntegrador.Controllers
 
             ValidadorListaDeEstudiantes val = new ValidadorListaDeEstudiantes();
             bool error;
+            int filaActual = 0;
             foreach (ListaEstudiante f in lista)
             {
-                error = val.Validar(f).Item1;
+                ++filaActual;
+                error = val.Validar(f,filaActual).Item1;
                 if (!error)
                 {
-                    return Tuple.Create(false, val.Validar(f).Item2);
+                    return Tuple.Create(false, val.Validar(f,filaActual).Item2);
                 }
             }
 
@@ -320,12 +326,14 @@ namespace AppIntegrador.Controllers
             //Se valida cada fila de CSV
             ValidadorListaFuncionarios val = new ValidadorListaFuncionarios();
             bool error;
+            int filaActual = 0;
             foreach (ListaFuncionario f in lista)
             {
-                error = val.Validar(f).Item1;
+                ++filaActual;
+                error = val.Validar(f,filaActual).Item1;
                 if (!error)
                 {
-                    return Tuple.Create(false, val.Validar(f).Item2);
+                    return Tuple.Create(false, val.Validar(f,filaActual).Item2);
                 }
             }
 

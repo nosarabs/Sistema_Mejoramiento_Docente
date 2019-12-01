@@ -9,9 +9,9 @@ namespace AppIntegrador.Controllers
     public class ValidadorListaClase : Validador
     {
 
-        public Tuple<bool, string> Validar(ListaClase lista)
+        public Tuple<bool, string> Validar(ListaClase lista, int filaActual)
         {
-            int fila = 1;
+            int fila = filaActual;
             int columna = 0;
             string mensajeError = "";
 
@@ -74,7 +74,6 @@ namespace AppIntegrador.Controllers
             }
             //Nombre Enfasis
 
-            fila++;
             return Tuple.Create(true, "");
         }
 
