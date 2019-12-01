@@ -9,16 +9,7 @@ namespace AppIntegrador.Controllers
 {
     public class Validador
     {
-        private bool ValidarUnidad (String codigoUnidad, string Nombre)
-        {
-            bool valido=false;
-            if(ValidarTamanoText(codigoUnidad, 10) && ValidarTamanoText(codigoUnidad, 50)){ //Si son textos validos
-                valido = true;
-            }
-            return valido;
-        }
-
-        private bool ValidarTamanoText(String hilera, int tamano)
+        protected bool ValidarTamanoText(String hilera, int tamano)
         {
             if (hilera.Length <= tamano && !String.IsNullOrEmpty(hilera))
             {
@@ -27,7 +18,7 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
-        private bool ValidarNumero(string valor)
+        protected bool ValidarNumero(string valor)
         {
             if(int.TryParse(valor, out int integer) && !String.IsNullOrEmpty(valor))
             {
@@ -35,7 +26,13 @@ namespace AppIntegrador.Controllers
             }
             return false;
         }
-        private bool ValidarEmail(string email)
+
+        protected bool ValidaBool(string valor)
+        {
+            return false;
+        }
+        
+        protected bool ValidarEmail(string email)
         {
             // source: http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
             Regex rx = new Regex(
@@ -44,52 +41,53 @@ namespace AppIntegrador.Controllers
             {
                 return true;
             }
+            System.Diagnostics.Debug.WriteLine("email1");
+
             return false;
         }
 
-        public bool checkForSQLInjection(string userInput) // Basado en el codigo encontrado en http://aspdotnetmyblog.blogspot.com/2013/10/how-to-check-string-against-sql.html
+        protected bool checkForSQLInjection(string userInput) // Basado en el codigo encontrado en http://aspdotnetmyblog.blogspot.com/2013/10/how-to-check-string-against-sql.html
         {
             bool isSQLInjection = false;
             string[] sqlCheckList = { //palabras reservadas SQL injection
-                "--",
-                ";--",
-                ";",
-                "/*",
-                "*/",
-                "@@",
-                "@",
-                "char",
-                "nchar",
-                "varchar",
-                "nvarchar",
-                "alter",
-                "begin",
-                "cast",
-                "create",
-                "cursor",
-                "declare",
-                "delete",
-                "drop",
-                "end",
-                "exec",
-                "execute",
-                "fetch",
-                "insert",
-                "kill",
-                "select",
-                "sys",
-                "sysobjects",
-                "syscolumns",
-                "table",
-                "update"
-                };
-            string CheckString = userInput.Replace("'", "''");
-            for (int i = 0; i <= sqlCheckList.Length - 1; i++)
-            {
-                if ((CheckString.IndexOf(sqlCheckList[i],
-                    StringComparison.OrdinalIgnoreCase) >= 0))
-                { isSQLInjection = true; }
-            }
+                      "--",
+                      ";--",
+                      ";",
+                      "/*",
+                      "*/",
+                      "@@",
+                      "char ",
+                      "nchar ",
+                      "varchar ",
+                      "nvarchar ",
+                      "alter ",
+                      "begin ",
+                      "cast ",
+                      "create ",
+                      "cursor ",
+                      "declare ",
+                      "delete ",
+                      "drop ",
+                      "end ",
+                      "exec ",
+                      "execute ",
+                      "fetch ",
+                      "insert ",
+                      "kill ",
+                      "select ",
+                      "sys ",
+                      "sysobjects ",
+                      "syscolumns ",
+                      "table ",
+                      "update "
+                      };
+                  string CheckString = userInput.Replace("'", "''");
+                  for (int i = 0; i <= sqlCheckList.Length - 1; i++)
+                  {
+                      if ((CheckString.IndexOf(sqlCheckList[i],
+                          StringComparison.OrdinalIgnoreCase) >= 0))
+                      { isSQLInjection = true; }
+                  }
             return isSQLInjection;
         }
     }

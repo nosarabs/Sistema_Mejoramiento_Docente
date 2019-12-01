@@ -44,7 +44,8 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
+            if (file != null && file.ContentLength > 0)
+            {//Archivo no es nulo o vacío
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Estudiantes"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
@@ -52,17 +53,18 @@ namespace AppIntegrador.Controllers
                     file.SaveAs(path);
                     if (!cargarListaEstudiante(path))
                     {
-                        ViewBag.Message = "ERROR en la carga"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
                     }
                     else
                     {
-                        ViewBag.Message = "Archivo subido exitosamente";
+                        ViewBag.Message = "Exitoso";
                     }
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                 }
+            }
             else
             {
                 ViewBag.Message = "Por favor especifique un archivo";
@@ -83,11 +85,11 @@ namespace AppIntegrador.Controllers
                     file.SaveAs(path);
                     if (!cargarListaClase(path))
                     {
-                        ViewBag.Message = "ERROR en la carga"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
                     }
                     else
                     {
-                        ViewBag.Message = "Archivo subido exitosamente";
+                        ViewBag.Message = "Exitoso";
                     }
                 }
                 catch (Exception ex)
@@ -106,7 +108,8 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Funcionarios(HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
+            if (file != null && file.ContentLength > 0)
+            {//Archivo no es nulo o vacío
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Funcionarios"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
@@ -114,17 +117,18 @@ namespace AppIntegrador.Controllers
                     file.SaveAs(path);
                     if (!cargarListaFuncionario(path))
                     {
-                        ViewBag.Message = "ERROR en la carga"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
                     }
                     else
                     {
-                        ViewBag.Message = "Archivo subido exitosamente";
+                        ViewBag.Message = "Exitoso";
                     }
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                 }
+            }
             else
             {
                 ViewBag.Message = "Por favor especifique un archivo";
@@ -136,7 +140,8 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuiaHorarios(HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0) //Archivo no es nulo o vacío
+            if (file != null && file.ContentLength > 0)
+            {//Archivo no es nulo o vacío
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Guias Horario"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
@@ -144,17 +149,18 @@ namespace AppIntegrador.Controllers
                     file.SaveAs(path);
                     if (!cargarGuia(path))
                     {
-                        ViewBag.Message = "ERROR en la carga"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
                     }
                     else
                     {
-                        ViewBag.Message = "Archivo subido exitosamente";
+                        ViewBag.Message = "Exitoso";
                     }
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR:" + ex.Message.ToString();
                 }
+            }
             else
             {
                 ViewBag.Message = "Por favor especifique un archivo";
@@ -205,6 +211,8 @@ namespace AppIntegrador.Controllers
             IEnumerable<GuiaHorario> datos = cc.Read<GuiaHorario>(path, inputFileDescription);
             List<GuiaHorario> lista = datos.ToList();
 
+
+            ValidadorGuia guia = new ValidadorGuia();
             //Se valida cada fila de CSV
             foreach (GuiaHorario f in lista)
             {
@@ -262,9 +270,13 @@ namespace AppIntegrador.Controllers
             IEnumerable<ListaFuncionario> datos = cc.Read<ListaFuncionario>(path, inputFileDescription);
             List<ListaFuncionario> lista = datos.ToList();
 
+
+            ValidadorListaDeEstudiantes val = new ValidadorListaDeEstudiantes();
+
             //Se valida cada fila de CSV
             foreach (ListaFuncionario f in lista)
             {
+                System.Diagnostics.Debug.WriteLine(f.CorreoPersona +" = " + val.Validar(f));
                 insertarListaFuncionario(f);
             }
             return true;
