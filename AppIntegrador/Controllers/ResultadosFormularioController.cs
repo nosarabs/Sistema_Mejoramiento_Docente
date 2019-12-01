@@ -44,7 +44,9 @@ namespace AppIntegrador.Controllers
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
                 Seccioncitas = ObtenerSeccionesDropDown(codigoFormulario)
             };
-            return View(modelo);
+
+            return PartialView("ResultadosFormulario", modelo);
+
         }
 
 
