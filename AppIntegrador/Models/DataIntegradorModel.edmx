@@ -4741,7 +4741,7 @@
             <Parameter Name="codseccion" Mode="In" Type="String" />
             <Parameter Name="justificacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GuardarRespuestaAPreguntaLibre" ReturnType="Collection(Int32)">
+          <FunctionImport Name="GuardarRespuestaAPreguntaLibre">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="siglaCurso" Mode="In" Type="String" />

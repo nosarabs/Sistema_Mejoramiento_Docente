@@ -219,13 +219,13 @@ namespace AppIntegrador.Controllers
 
             foreach (var periodo in periodosSemestre)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
                 modelo.FormulariosSemestre.Add(formulario);
             }
 
             foreach (var periodo in periodosPasados)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
                 modelo.FormulariosPasados.Add(formulario);
             }
 
