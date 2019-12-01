@@ -169,7 +169,7 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        private bool cargarListaClase(string path)
+        public bool cargarListaClase(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -198,7 +198,7 @@ namespace AppIntegrador.Controllers
             db.InsertarInscrita_En(fila.CodigoUnidadCarrera, fila.CodigoCarreraUnidad);
         }
 
-        private bool cargarGuia(string path)
+        public bool cargarGuia(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -230,7 +230,7 @@ namespace AppIntegrador.Controllers
             db.InsertarPertenece_a(fila.CodigoCarreraCurso, fila.CodigoEnfasisCurso, fila.SiglaCursoCarrera);
         }
 
-        private bool cargarListaEstudiante(string path)
+        public bool cargarListaEstudiante(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -257,7 +257,7 @@ namespace AppIntegrador.Controllers
             db.InsertarEmpadronadoEn(fila.CorreoEstudianteEmpadronado, fila.CodigoCarreraEmpadronado, fila.CodigoEnfasisEmpadronado);
         }
 
-        private bool cargarListaFuncionario(string path)
+        public bool cargarListaFuncionario(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
