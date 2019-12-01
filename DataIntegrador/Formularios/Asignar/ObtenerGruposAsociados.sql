@@ -109,12 +109,11 @@ IF  (@CodigoUnidadAcademica IS NULL AND @CodigoCarrera IS NOT NULL AND @CodigoEn
 							 JOIN Grupo ON Grupo.SiglaCurso = Curso.Sigla
 							 JOIN Imparte ON  Imparte.NumGrupo = Grupo.NumGrupo AND Imparte.Semestre = Grupo.Semestre AND Grupo.Anno = Imparte.Anno AND Imparte.SiglaCurso = Grupo.SiglaCurso
 							 JOIN Profesor ON Profesor.Correo = Imparte.CorreoProfesor
-		WHERE Grupo.Anno = @Anno AND Grupo.SiglaCurso = @SiglaCurso AND Grupo.Semestre = @Semestre AND Carrera.Codigo = @CodigoCarrera
-		AND Enfasis.Codigo = @CodigoEnfasis AND Profesor.Correo = @CorreoProfesor
+		WHERE Carrera.Codigo = @CodigoCarrera	AND Enfasis.Codigo = @CodigoEnfasis AND Profesor.Correo = @CorreoProfesor
 		RETURN
 	END
 -- Todos los que vengan con un grupo
-IF ( @SiglaCurso IS NULL AND @NumGrupo IS NULL AND	@Semestre IS NULL AND @Anno IS NULL )
+IF ( @SiglaCurso IS NOT NULL AND @NumGrupo IS NOT NULL AND	@Semestre IS NOT NULL AND @Anno IS NOT NULL )
 	BEGIN
 		INSERT INTO @Grupos
 		SELECT Grupo.SiglaCurso, Grupo.NumGrupo, Grupo.Semestre, Grupo.Anno

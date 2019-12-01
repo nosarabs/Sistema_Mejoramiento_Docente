@@ -54,6 +54,8 @@ namespace AppIntegrador.Controllers
 
             if (correoProfesorSeleccionado == "null")
                 correoProfesorSeleccionado = null;
+            if (codigoUASeleccionada == "null")
+                codigoUASeleccionada = null;
 
             if (codigoCarreraEnfasisSeleccionada != "null")
             {
