@@ -112,10 +112,10 @@ class GraficosDashboard {
         });
 
         var colorP;
-
-        if (p >= 71) {
+   
+        if (p >= 70) {
            colorP = "#b9d989";
-        } else if (p >= 51) {
+        } else if (p >= 50) {
             colorP = "#8ed8f8";
         } else {
             colorP = "#ffe06a";
@@ -147,7 +147,7 @@ class GraficosDashboard {
             options: {
                 elements: {
                     center: {
-                        text: p,
+                        text: Math.ceil(p),
                         color: colorP, // Default is #000000
                         fontStyle: 'Arial', // Default is Arial
                         sidePadding: 20 // Defualt is 20 (as a percentage)
