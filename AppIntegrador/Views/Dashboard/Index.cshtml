@@ -8,10 +8,17 @@
 @Scripts.Render("~/Scripts/Visualizacion/filtros.js")
 @Scripts.Render("~/Scripts/Visualizacion/Chart.js")
 @Scripts.Render("~/Scripts/Visualizacion/chroma.js")
+@Scripts.Render("~/Scripts/Visualizacion/chartjs-plugin-datalabels.js")
+@Scripts.Render("~/Scripts/Visualizacion/baseRespuestasPlantilla.js")
+@Scripts.Render("~/Scripts/Visualizacion/graficos.js")
+@Scripts.Render("~/Scripts/Visualizacion/estadisticas.js")
+@Scripts.Render("~/Scripts/Visualizacion/TextoLibre.js")
+@Scripts.Render("~/Scripts/Visualizacion/insertaContenidos.js")
+@Scripts.Render("~/Scripts/Visualizacion/botones.js")
 @Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
-@Styles.Render("~/Content/Visualizacion/styles.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+@Styles.Render("~/Content/Visualizacion/styles.css")
 
 <head>
     <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
@@ -28,14 +35,14 @@
             <div class="col">
                 <div class="row" id="promedios">
                     <div class="col">
-                        <small id="pP"></small>
-                        <small id="pN"></small>
+                        Calificación Promedio de Profesor
                         <canvas class="graficosPromedio" id="gP"></canvas>
+                        <small id="pN"></small>
                     </div>
                     <div class="col">
-                        <small id="cP"></small>
-                        <small id="cN"></small>
+                        Calificación Promedio de Cursos
                         <canvas class="graficosPromedio" id="gC"></canvas>
+                        <small id="cN"></small>
                     </div>
                 </div>
                 <div class="row" id="cuadricula">
@@ -100,12 +107,12 @@
         var grupos = filtros.recuperarGrupos();
 
         filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, grupos);
-        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, null);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis, grupos, null);
 
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
-        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, null);
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, null);
 
     }
 
@@ -117,12 +124,12 @@
         var grupos = filtros.recuperarGrupos();
         var profesores = filtros.recuperarProfesores();
 
-        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
 
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
-        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
 
     }
 
@@ -132,27 +139,36 @@
         $('#panelDashboard').html("");
         var f = filtros.recuperarFormulario();
 
-        if (f != null)
-        {
+        if (f != null) {
 
             var codigoFormulario = f[0];
             var siglaCurso = f[2];
             var numeroGrupo = f[3];
             var semestre = f[4];
-            var anno = f[5];
+            var ano = f[5];
             var fechaInicio = f[6];
             var fechaFin = f[7];
 
             //Aquí se recarga la vista parcial con los parámetros del formulario.
-            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
-            link = link.replace('codigoFormularioValor', codigoFormulario);
-            link = link.replace('siglaCursoValor', siglaCurso);
-            link = link.replace('numeroGrupoValor', numeroGrupo);
-            link = link.replace('semestreValor', semestre);
-            link = link.replace('annoValor', anno);
-            link = link.replace('fechaInicioValor', fechaInicio);
-            link = link.replace('fechaFinValor', fechaFin);
-            $('#panelDashboard').html(link);
+            $.ajax({
+                url: "/ResultadosFormulario/Formulario",
+                type: "post",
+                data: {
+
+                    codigoFormulario: codigoFormulario,
+                    siglaCurso: siglaCurso,
+                    numeroGrupo: numeroGrupo,
+                    semestre: semestre,
+                    ano: ano,
+                    fechaInicio: fechaInicio,
+                    fechaFin: fechaFin
+
+                },
+                dataType: "html",
+                success: function (result) {
+                    $('#panelDashboard').html(result);
+                }
+            })
 
         }
 
@@ -165,21 +181,28 @@
         var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var profeP = profe[0];
         var profeN = profe[1];
+        var nMaloP = profe[2];
+        var nRegularP = profe[3];
+        var nBuenoP = profe[4];
 
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
         var cursoN = curso[1];
+        var nMaloC = curso[2];
+        var nRegularC = curso[3];
+        var nBuenoC = curso[4];
 
         $('#pP').text("Promedio Profesor: " + profeP);
-        $('#pN').text("Cantidad: " + profeN);
+        $('#pN').text("Calificaciones Totales: " + profeN);
         $('#cP').text("Promedio Curso: " + cursoP);
-        $('#cN').text("Cantidad: " + cursoN);
+        $('#cN').text("Calificaciones Totales: " + cursoN);
+
 
         var canvasP = document.getElementById('gP').getContext('2d');
         var canvasC = document.getElementById('gC').getContext('2d');
 
-        x.generarGrafico(canvasP);
-        x.generarGrafico(canvasC);
+        x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
+        x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
 
     }
 
