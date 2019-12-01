@@ -113,9 +113,9 @@ class GraficosDashboard {
 
         var colorP;
    
-        if (p >= 70) {
+        if (p >= 7) {
            colorP = "#b9d989";
-        } else if (p >= 50) {
+        } else if (p >= 5) {
             colorP = "#8ed8f8";
         } else {
             colorP = "#ffe06a";
@@ -125,9 +125,9 @@ class GraficosDashboard {
             type: 'doughnut',
             data: {
                 labels: [
-                    "0-50",
-                    "51-70",
-                    "71-100"
+                    "0-5",
+                    "5-7",
+                    "7-10"
                 ],
                 datasets: [{
                     data: [nM, nR, nB],
@@ -145,6 +145,11 @@ class GraficosDashboard {
                 }]
             },
             options: {
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                },
                 elements: {
                     center: {
                         text: Math.ceil(p),

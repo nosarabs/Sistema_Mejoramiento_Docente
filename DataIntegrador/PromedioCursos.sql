@@ -79,17 +79,17 @@ DECLARE @valor AS FLOAT = 0
 		SELECT @nMalo = COUNT(*)
 		FROM @Resultados
 		WHERE (0 <= Opcion_seleccionada AND
-					Opcion_seleccionada <= 50)
+					Opcion_seleccionada <= 5)
 
 		SELECT @nRegular = COUNT(*)
 		FROM @Resultados
-		WHERE (51 <= Opcion_seleccionada AND
-					Opcion_seleccionada <= 70)
+		WHERE (5 < Opcion_seleccionada AND
+					Opcion_seleccionada <= 7)
 
 		SELECT @nBueno = COUNT(*)
 		FROM @Resultados
-		WHERE (71 <= Opcion_seleccionada AND
-					Opcion_seleccionada <= 100)
+		WHERE (7 < Opcion_seleccionada AND
+					Opcion_seleccionada <= 10)
 	END
 
 END
