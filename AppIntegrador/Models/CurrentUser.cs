@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Security.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,30 +17,33 @@ namespace AppIntegrador.Models
         public static string getUsername()
         {
             updateCurrentUser();
-            return (string) HttpContext.Current.Session["Username"];
+            return (string)HttpContext.Current.Session["Username"];
         }
 
         public static string getUserProfile()
         {
             updateCurrentUser();
-            return (string) HttpContext.Current.Session["Profile"];
+            return (string)HttpContext.Current.Session["Profile"];
         }
 
         public static string getUserMajorId()
         {
             updateCurrentUser();
-            return (string) HttpContext.Current.Session["MajorId"];
+            return (string)HttpContext.Current.Session["MajorId"];
         }
 
         public static string getUserEmphasisId()
         {
             updateCurrentUser();
-            return (string) HttpContext.Current.Session["EmphasisId"];
+            return (string)HttpContext.Current.Session["EmphasisId"];
         }
 
         public static int getUserLoginFailures()
-        {          
-            return (int)HttpContext.Current.Session["LoginFailures"];
+        {
+            if ((int?)HttpContext.Current.Session["LoginFailures"] != null)
+                return (int)HttpContext.Current.Session["LoginFailures"];
+            else
+                return 0;
         }
 
 
@@ -104,7 +108,7 @@ namespace AppIntegrador.Models
                 db.SaveChanges();
             }
             else
-            { 
+            {
                 deleteCurrentUser(newUser.CorreoUsuario);
                 db.UsuarioActual.Add(newUser);
                 try
@@ -122,11 +126,20 @@ namespace AppIntegrador.Models
             HttpContext.Current.Session["LoginFailures"] = 0;
         }
 
+        public static void clearSession()
+        {
+            HttpContext.Current.Session["Username"] = "";
+            HttpContext.Current.Session["Profile"] = "";
+            HttpContext.Current.Session["MajorId"] = "";
+            HttpContext.Current.Session["EmphasisId"] = "";
+            HttpContext.Current.Session["LoginFailures"] = 0;
+        }
+
         public static void deleteCurrentUser(string username)
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
             UsuarioActual newUser = new UsuarioActual();
-            newUser.CorreoUsuario = (username != null? username : (string)HttpContext.Current.Session["Username"]);
+            newUser.CorreoUsuario = (username != null ? username : (string)HttpContext.Current.Session["Username"]);
             if (username == null)
             {
                 Console.WriteLine("Error al borrar el usuario.");
@@ -152,16 +165,28 @@ namespace AppIntegrador.Models
             {
                 Console.WriteLine(e.Message);
             }
+            //clearSession();
+        }
+
+        public static void deleteAllUsers()
+        {
+            DataIntegradorEntities db = new DataIntegradorEntities();
+            //Borra todos los usuarios en la tabla.
+            db.UsuarioActual.RemoveRange(db.UsuarioActual.ToList());
+            db.SaveChanges();
         }
 
         //Método para actualizar desde base de datos los datos del usuario actual, en caso de que se borren
         //automáticamente. 
         private static void updateCurrentUser()
         {
-            if ((string)HttpContext.Current.Session["Username"] == null || System.Web.HttpContext.Current.User.Identity.Name != (string)HttpContext.Current.Session["Username"]) {
+            string sessionUsername = (string)HttpContext.Current.Session["Username"];
+            string contextUsername = HttpContext.Current.User.Identity.Name;
+            if (sessionUsername == null || contextUsername != sessionUsername) {
                 DataIntegradorEntities db = new DataIntegradorEntities();
                 string name = System.Web.HttpContext.Current.User.Identity.Name;
                 UsuarioActual user = db.UsuarioActual.Find(name);
+                /*Si el usuario actual aún se encuentra en la base de datos, se vuelve a cargar en la sesión*/
                 if (user != null)
                 {
                     HttpContext.Current.Session["Username"] = user.CorreoUsuario;
@@ -169,6 +194,12 @@ namespace AppIntegrador.Models
                     HttpContext.Current.Session["MajorId"] = user.CodCarrera;
                     HttpContext.Current.Session["EmphasisId"] = user.CodEnfasis;
                 }
+                /*else /*Sino, se hace logout y se redirige a la pantalla de login.*/
+                /*{
+                    IAuth auth = new FormsAuth();
+                    auth.SignOut();
+                    clearSession();
+                }*/
             }
         }
     }

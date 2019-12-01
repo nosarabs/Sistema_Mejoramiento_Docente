@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public string UsuarioAsociado { get; set; }
         public string UrlReal { get; set; }
         public Nullable<System.DateTime> Expira { get; set; }
+        public int Usos { get; set; }
     
         public virtual Persona Persona { get; set; }
     }

@@ -30,35 +30,43 @@ namespace AppIntegrador.Controllers
                 // Podría mejorarse para asegurarse de que la hora esté sincronizada con la base de datos
                 DateTime momentoActual = DateTime.Now;
                 DateTime expira = (DateTime)enlaceSeguro.Expira;
+                int usos = enlaceSeguro.Usos;
                 int fechaValida = DateTime.Compare(momentoActual, expira);
                 // Enlace válido
                 if (fechaValida < 0)
                 {
-                    // Revisar usuario válido
-                    if (enlaceSeguro.UsuarioAsociado != null)
-                    {
-                        if (CurrentUser.getUsername() == enlaceSeguro.UsuarioAsociado)
+                    // no se utiliza "> 0" ya que se desea que -1 haga que el enlace no tenga limite de uso 
+                    if (usos != 0) {
+                        // Revisar usuario válido
+                        if (enlaceSeguro.UsuarioAsociado != null)
                         {
+                            if (CurrentUser.getUsername() == enlaceSeguro.UsuarioAsociado)
+                            {
+                                //se envia a borrar el enlace, esto decrementa su valor de "usos" disponibles.
+                                db.EnlaceSeguro.Remove(enlaceSeguro);
+                                return Redirect(enlaceSeguro.UrlReal);
+                            }
+                        }
+                        // Enlace no relacionado a un solo usuario
+                        else
+                        {
+                            //se envia a borrar el enlace, esto decrementa su valor de "usos" disponibles.
+                            db.EnlaceSeguro.Remove(enlaceSeguro);
                             return Redirect(enlaceSeguro.UrlReal);
                         }
                     }
-                    else
-                    {
-                        // Enlace no relacionado a un solo usuario
-                        return Redirect(enlaceSeguro.UrlReal);
-                    }
-                }
+                }   
             }
             TempData["alertmessage"] = "Enlace no válido.";
             return RedirectToAction("Index", "Home");
         }
 
-        public string ObtenerEnlaceSeguro(string urlReal, string usuario = null, DateTime? expira = null)
+        public string ObtenerEnlaceSeguro(string urlReal, string usuario = null, DateTime? expira = null, int usos = 0)
         {
             // Almacenar los datos necesitados
             ObjectParameter resultadoHash = new ObjectParameter("resultadohash", typeof(string));
             ObjectParameter estado = new ObjectParameter("estado", typeof(string));
-            db.AgregarEnlaceSeguro(usuario, urlReal, expira, resultadoHash, estado);
+            db.AgregarEnlaceSeguro(usuario, urlReal, expira, usos, resultadoHash, estado);
 
             // Obtener los datos que debe recibir quien solicitó el enlace
             string urlHash = (string) resultadoHash.Value;

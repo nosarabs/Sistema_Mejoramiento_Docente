@@ -78,6 +78,7 @@
     <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
+    <Folder Include="Formularios\Asignar" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -251,10 +252,17 @@
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
+    <Build Include="Formularios\Asignar\AsignarFormulario.sql" />
     <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
     <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
     <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\GruposXPerfiXlUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\ProfesoresXUsuarioXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
     <Build Include="ObtenerGruposAsociados.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosPorSemestre.sql" />
   </ItemGroup>
@@ -263,5 +271,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Usuarios y Perfiles\Indices\IndicePersona.sql" />
   </ItemGroup>
 </Project>

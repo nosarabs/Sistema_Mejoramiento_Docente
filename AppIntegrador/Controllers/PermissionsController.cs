@@ -18,9 +18,12 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
 
+        private readonly IPerm permissionManager;
+
         public PermissionsController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         public PermissionsController(DataIntegradorEntities db)
@@ -31,7 +34,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Index()
         {
             /*Solo se puede acceder a este método si el usuario tiene un perfil con los permisos apropiados.*/
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("Index", "Home");
@@ -76,7 +79,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -194,9 +197,7 @@ namespace AppIntegrador.Controllers
                     }
                 }
             }
-            JsonResult result = Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
-            string resultString = new JavaScriptSerializer().Serialize(result.Data);
-            return result;
+            return Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
         }
         /*Fin TAM-3.2*/
 

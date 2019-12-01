@@ -4,7 +4,7 @@
     ViewBag.Title = "Llenar formulario";
 }
 <div class="container">
-    @using (Html.BeginForm("GuardarRespuestas", "Formularios", FormMethod.Post))
+    @using (Html.BeginForm("GuardarRespuestas", "LlenarFormulario", FormMethod.Post))
     {
         @Html.Hidden("respuestas.FCodigo", null, new { @id = "respuestas.FCodigo", @Value = Model.Formulario.Codigo })
         @Html.Hidden("respuestas.Finalizado", null, new { @id = "respuestas.Finalizado", @Value = 0 })
@@ -15,7 +15,7 @@
         <br />
 
         <div id="section-container">
-            @{ Html.RenderPartial("SeccionConPreguntas", Model.Secciones); }
+            @{ Html.RenderPartial("../Seccion/SeccionConPreguntas", Model.Secciones); }
         </div>
 
         <div class="card card-body shadow form-group float-right sticky-bottom">
@@ -24,7 +24,7 @@
                 <button type="submit" class="btn-azulUCR" onclick="FinalizarFomulario()">Finalizar formulario</button>
                 <button type="submit" class="btn-blancoUCR">Guardar Respuestas</button>
 
-                @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller")
+                @Html.ActionLink("Cancelar", "LlenarFormulario", "LlenarFormulario")
             </div>
         </div>
 

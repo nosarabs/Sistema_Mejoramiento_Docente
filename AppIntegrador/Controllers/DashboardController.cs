@@ -35,6 +35,10 @@ namespace AppIntegrador.Controllers
         {
             public float promedio;
             public int cantidad;
+            public int nMalo;
+            public int nRegular;
+            public int nBueno;
+
         }
 
         // GET: Dashboard
@@ -58,12 +62,21 @@ namespace AppIntegrador.Controllers
             var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
             resultCantidad.Direction = ParameterDirection.Output;
 
+            var nMalo = new SqlParameter("@nMalo", SqlDbType.Int);
+            nMalo.Direction = ParameterDirection.Output;
+
+            var nRegular = new SqlParameter("@nRegular", SqlDbType.Int);
+            nRegular.Direction = ParameterDirection.Output;
+
+            var nBueno = new SqlParameter("@nBueno", SqlDbType.Int);
+            nBueno.Direction = ParameterDirection.Output;
+
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
-            fdb.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad);
+            fdb.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
 
             Resultado p;
 
@@ -71,11 +84,19 @@ namespace AppIntegrador.Controllers
             {
                 p.promedio = Convert.ToSingle(resultPromedio.Value);
                 p.cantidad = Convert.ToInt32(resultCantidad.Value);
+
+                p.nMalo = Convert.ToInt32(nMalo.Value);
+                p.nRegular = Convert.ToInt32(nRegular.Value);
+                p.nBueno = Convert.ToInt32(nBueno.Value);
+
             }
             else
             {
                 p.cantidad = 0;
                 p.promedio = 0;
+                p.nMalo = 0;
+                p.nRegular = 0;
+                p.nBueno = 0;
             }
 
 
@@ -97,12 +118,21 @@ namespace AppIntegrador.Controllers
             var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
             resultCantidad.Direction = ParameterDirection.Output;
 
+            var nMalo = new SqlParameter("@nMalo", SqlDbType.Int);
+            nMalo.Direction = ParameterDirection.Output;
+
+            var nRegular = new SqlParameter("@nRegular", SqlDbType.Int);
+            nRegular.Direction = ParameterDirection.Output;
+
+            var nBueno = new SqlParameter("@nBueno", SqlDbType.Int);
+            nBueno.Direction = ParameterDirection.Output;
+
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
-            fdb.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad);
+            fdb.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
 
             Resultado c;
 
@@ -110,11 +140,19 @@ namespace AppIntegrador.Controllers
             {
                 c.promedio = Convert.ToSingle(resultPromedio.Value);
                 c.cantidad = Convert.ToInt32(resultCantidad.Value);
+
+                c.nMalo = Convert.ToInt32(nMalo.Value);
+                c.nRegular = Convert.ToInt32(nRegular.Value);
+                c.nBueno = Convert.ToInt32(nBueno.Value);
             }
             else
             {
                 c.cantidad = 0;
                 c.promedio = 0;
+
+                c.nMalo = 0;
+                c.nRegular = 0;
+                c.nBueno = 0;
             }
 
             return serializer.Serialize(c);
