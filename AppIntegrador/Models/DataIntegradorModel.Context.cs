@@ -362,23 +362,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarUsuarioPerfil", usuarioParameter, perfilParameter, codCarreraParameter, codEnfasisParameter, tienePerfilParameter);
         }
     
-        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta, Nullable<int> orden)
-        {
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("CodigoSeccion", codigoSeccion) :
-                new ObjectParameter("CodigoSeccion", typeof(string));
-    
-            var codigoPreguntaParameter = codigoPregunta != null ?
-                new ObjectParameter("CodigoPregunta", codigoPregunta) :
-                new ObjectParameter("CodigoPregunta", typeof(string));
-    
-            var ordenParameter = orden.HasValue ?
-                new ObjectParameter("Orden", orden) :
-                new ObjectParameter("Orden", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter, ordenParameter);
-        }
-    
         public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion, Nullable<int> orden)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
@@ -1533,82 +1516,34 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosDeEstudiante_Result>("ObtenerFormulariosDeEstudiante", correoEstudianteParameter, fechaInicioParameter, fechaFinParameter);
         }
     
-        public virtual int AgregarPlanCompleto()
+        public virtual int AsociarPreguntaConSeccion(string codigoSeccion, string codigoPregunta)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlanCompleto");
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("CodigoSeccion", codigoSeccion) :
+                new ObjectParameter("CodigoSeccion", typeof(string));
+    
+            var codigoPreguntaParameter = codigoPregunta != null ?
+                new ObjectParameter("CodigoPregunta", codigoPregunta) :
+                new ObjectParameter("CodigoPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter);
         }
     
-        public virtual int EstaEnCarreraYEnfasis(string correoUsuario, string codCarrera, string codEnfasis, ObjectParameter resultado)
+        public virtual ObjectResult<ObtenerFormulariosPorSemestre_Result> ObtenerFormulariosPorSemestre(string correoEstudiante, Nullable<int> anno, Nullable<byte> semestre)
         {
-            var correoUsuarioParameter = correoUsuario != null ?
-                new ObjectParameter("correoUsuario", correoUsuario) :
-                new ObjectParameter("correoUsuario", typeof(string));
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("correoEstudiante", correoEstudiante) :
+                new ObjectParameter("correoEstudiante", typeof(string));
     
-            var codCarreraParameter = codCarrera != null ?
-                new ObjectParameter("codCarrera", codCarrera) :
-                new ObjectParameter("codCarrera", typeof(string));
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
     
-            var codEnfasisParameter = codEnfasis != null ?
-                new ObjectParameter("codEnfasis", codEnfasis) :
-                new ObjectParameter("codEnfasis", typeof(string));
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EstaEnCarreraYEnfasis", correoUsuarioParameter, codCarreraParameter, codEnfasisParameter, resultado);
-        }
-    
-        [DbFunction("Entities", "GruposXPerfilXUsuario")]
-        public virtual IQueryable<GruposXPerfilXUsuario_Result> GruposXPerfilXUsuario(string usuarioActual, string perfilActual)
-        {
-            var usuarioActualParameter = usuarioActual != null ?
-                new ObjectParameter("usuarioActual", usuarioActual) :
-                new ObjectParameter("usuarioActual", typeof(string));
-    
-            var perfilActualParameter = perfilActual != null ?
-                new ObjectParameter("perfilActual", perfilActual) :
-                new ObjectParameter("perfilActual", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GruposXPerfilXUsuario_Result>("[Entities].[GruposXPerfilXUsuario](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
-        }
-    
-        public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)
-        {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEstudiantesAsociadosAFormulario_Result>("ObtenerEstudiantesAsociadosAFormulario", codFormularioParameter);
-        }
-    
-        [DbFunction("Entities", "ProfesoresXUsuarioXPerfil")]
-        public virtual IQueryable<ProfesoresXUsuarioXPerfil_Result> ProfesoresXUsuarioXPerfil(string usuarioActual, string perfilActual)
-        {
-            var usuarioActualParameter = usuarioActual != null ?
-                new ObjectParameter("usuarioActual", usuarioActual) :
-                new ObjectParameter("usuarioActual", typeof(string));
-    
-            var perfilActualParameter = perfilActual != null ?
-                new ObjectParameter("perfilActual", perfilActual) :
-                new ObjectParameter("perfilActual", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProfesoresXUsuarioXPerfil_Result>("[Entities].[ProfesoresXUsuarioXPerfil](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
-        }
-    
-        public virtual int PruebasPDM()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PruebasPDM");
-        }
-    
-        [DbFunction("Entities", "UAXPerfilXUsuario")]
-        public virtual IQueryable<UAXPerfilXUsuario_Result> UAXPerfilXUsuario(string usuarioActual, string perfilActual)
-        {
-            var usuarioActualParameter = usuarioActual != null ?
-                new ObjectParameter("usuarioActual", usuarioActual) :
-                new ObjectParameter("usuarioActual", typeof(string));
-    
-            var perfilActualParameter = perfilActual != null ?
-                new ObjectParameter("perfilActual", perfilActual) :
-                new ObjectParameter("perfilActual", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UAXPerfilXUsuario_Result>("[Entities].[UAXPerfilXUsuario](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosPorSemestre_Result>("ObtenerFormulariosPorSemestre", correoEstudianteParameter, annoParameter, semestreParameter);
         }
     }
 }
