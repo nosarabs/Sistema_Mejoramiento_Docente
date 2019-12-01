@@ -2,7 +2,7 @@
 -- en un periodo definido por parámetros.
 
 -- Ejemplo de uso: 
--- EXEC dbo.ObtenerFormulariosDeEstudiante @correoEstudiante = 'al@mail.com', @fechaInicio = NULL, @fechaFin = NULL
+-- EXEC dbo.ObtenerFormulariosDeEstudiante @correoEstudiante = 'paco@mail.com', @fechaInicio = NULL, @fechaFin = NULL
 
 -- Colocar NULL en la fecha de inicio traería todos los formularios iniciados o no.
 -- Colocar NULL en la fecha de fin traería todos los formularios finalizados o no.
