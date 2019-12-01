@@ -13,6 +13,8 @@ namespace AppIntegrador.Models
 
     public static class CurrentUser
     {
+        /*Max number of failed login attempts before temporarily locking the account.*/
+        private const int MAX_FAILED_ATTEMPTS = 3;
 
         public static string getUsername()
         {
@@ -36,6 +38,11 @@ namespace AppIntegrador.Models
         {
             updateCurrentUser();
             return (string)HttpContext.Current.Session["EmphasisId"];
+        }
+
+        public static int getMaxUserLoginFailures()
+        {
+            return MAX_FAILED_ATTEMPTS;
         }
 
         public static int getUserLoginFailures()
