@@ -21,7 +21,19 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
+        [AllowAnonymous]
+        public ActionResult RedireccionSeguraAnonymous(string urlHash)
+        {
+            return Redirigir(urlHash, true);
+        }
+
         public ActionResult RedireccionSegura(string urlHash)
+        {
+            return Redirigir(urlHash);
+        }
+
+        [AllowAnonymous]
+        private ActionResult Redirigir(string urlHash, bool anonimo = false)
         {
             // Busca tupla en la base de datos
             EnlaceSeguro enlaceSeguro = db.EnlaceSeguro.SingleOrDefault(u => u.Hash == urlHash);
@@ -38,7 +50,7 @@ namespace AppIntegrador.Controllers
                     // no se utiliza "> 0" ya que se desea que -1 haga que el enlace no tenga limite de uso 
                     if (usos != 0) {
                         // Revisar usuario válido
-                        if (enlaceSeguro.UsuarioAsociado != null)
+                        if (!anonimo && enlaceSeguro.UsuarioAsociado != null)
                         {
                             if (CurrentUser.getUsername() == enlaceSeguro.UsuarioAsociado)
                             {
@@ -47,7 +59,7 @@ namespace AppIntegrador.Controllers
                                 return Redirect(enlaceSeguro.UrlReal);
                             }
                         }
-                        // Enlace no relacionado a un solo usuario
+                        // Enlace no relacionado a un solo usuario o anónimos permitidos
                         else
                         {
                             //se envia a borrar el enlace, esto decrementa su valor de "usos" disponibles.
@@ -63,6 +75,16 @@ namespace AppIntegrador.Controllers
 
         public string ObtenerEnlaceSeguro(string urlReal, string usuario = null, DateTime? expira = null, int usos = 0)
         {
+            return GenerarEnlaceSeguro(urlReal, usuario, expira, usos);
+        }
+
+        public string ObtenerEnlaceSeguroAnonimo(string urlReal, DateTime? expira = null, int usos = 0)
+        {
+            return GenerarEnlaceSeguro(urlReal, null, expira, usos, true);
+        }
+
+        private string GenerarEnlaceSeguro(string urlReal, string usuario = null, DateTime? expira = null, int usos = 0, bool anonimo = false)
+        {
             // Almacenar los datos necesitados
             ObjectParameter resultadoHash = new ObjectParameter("resultadohash", typeof(string));
             ObjectParameter estado = new ObjectParameter("estado", typeof(string));
@@ -73,7 +95,14 @@ namespace AppIntegrador.Controllers
             var request = System.Web.HttpContext.Current.Request;
             string domain = request.Url.Scheme + Uri.SchemeDelimiter + request.Url.Authority;
 
-            return domain + "/EnlaceSeguro/RedireccionSegura?urlHash=" + urlHash;
+            if (anonimo)
+            {
+                return domain + "/EnlaceSeguro/RedireccionSeguraAnonymous?urlHash=" + urlHash;
+            }
+            else
+            {
+                return domain + "/EnlaceSeguro/RedireccionSegura?urlHash=" + urlHash;
+            }
         }
     }
 }
