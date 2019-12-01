@@ -79,6 +79,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Clase(HttpPostedFileBase file)
         {
+            bool error;
             if (file != null && file.ContentLength > 0)
             { //Archivo no es nulo o vacío
                 try
@@ -86,9 +87,12 @@ namespace AppIntegrador.Controllers
                     string path = Path.Combine(Server.MapPath("~/Listas de Clase"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    if (!cargarListaClase(path))
+                    error = cargarListaClase(path).Item1;
+                    if (!error)
                     {
                         ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Campo = cargarListaClase(path).Item2;
+
                     }
                     else
                     {
@@ -178,7 +182,7 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        public bool cargarListaClase(string path)
+        public Tuple<bool, string> cargarListaClase(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -191,12 +195,23 @@ namespace AppIntegrador.Controllers
             IEnumerable<ListaClase> datos = cc.Read<ListaClase>(path, inputFileDescription);
             List<ListaClase> lista = datos.ToList();
 
+            ValidadorListaClase val = new ValidadorListaClase();
+            bool error;
+            foreach (ListaClase f in lista)
+            {
+                error = val.Validar(f).Item1;
+                if (!error)
+                {
+                    return Tuple.Create(false, val.Validar(f).Item2);
+                }
+            }
+
             //Se valida cada fila de CSV
             foreach (ListaClase f in lista)
             {
                 insertarListaClase(f);
             }
-            return true;
+            return Tuple.Create(true, "");
         }
 
         private void insertarListaClase(ListaClase fila)
