@@ -44,6 +44,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Index(HttpPostedFileBase file)
         {
+            bool error;
             if (file != null && file.ContentLength > 0)
             {//Archivo no es nulo o vacío
                 try
@@ -51,9 +52,11 @@ namespace AppIntegrador.Controllers
                     string path = Path.Combine(Server.MapPath("~/Estudiantes"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    if (!cargarListaEstudiante(path))
+                    error = cargarListaEstudiante(path).Item1;
+                    if (!error)
                     {
-                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido";
+                        ViewBag.Campo = cargarListaEstudiante(path).Item2;
                     }
                     else
                     {
@@ -108,6 +111,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Funcionarios(HttpPostedFileBase file)
         {
+            bool error;
             if (file != null && file.ContentLength > 0)
             {//Archivo no es nulo o vacío
                 try
@@ -115,9 +119,11 @@ namespace AppIntegrador.Controllers
                     string path = Path.Combine(Server.MapPath("~/Funcionarios"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    if (!cargarListaFuncionario(path))
+                    error = cargarListaFuncionario(path).Item1;
+                    if (!error)
                     {
-                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido";
+                        ViewBag.Campo = cargarListaFuncionario(path).Item2;
                     }
                     else
                     {
@@ -140,6 +146,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuiaHorarios(HttpPostedFileBase file)
         {
+            bool error;
             if (file != null && file.ContentLength > 0)
             {//Archivo no es nulo o vacío
                 try
@@ -147,9 +154,11 @@ namespace AppIntegrador.Controllers
                     string path = Path.Combine(Server.MapPath("~/Guias Horario"), //Server mapPath contiene el path del proyecto + la carpeta ArchivoCSV que es donde va el archivo
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    if (!cargarGuia(path))
+                    error = cargarGuia(path).Item1;
+                    if (!error)
                     {
-                        ViewBag.Message = "Fallido"; //TO-DO: Debe cambiarse por llamados a validaciones
+                        ViewBag.Message = "Fallido";
+                        ViewBag.Campo = cargarGuia(path).Item2;
                     }
                     else
                     {
@@ -198,7 +207,7 @@ namespace AppIntegrador.Controllers
             db.InsertarInscrita_En(fila.CodigoUnidadCarrera, fila.CodigoCarreraUnidad);
         }
 
-        public bool cargarGuia(string path)
+        public Tuple<bool, string> cargarGuia(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -212,14 +221,23 @@ namespace AppIntegrador.Controllers
             List<GuiaHorario> lista = datos.ToList();
 
 
-            ValidadorGuia guia = new ValidadorGuia();
+            ValidadorGuia val = new ValidadorGuia();
+            bool error;
+            foreach (GuiaHorario f in lista)
+            {
+                error = val.Validar(f).Item1;
+                if (!error)
+                {
+                    return Tuple.Create(false, val.Validar(f).Item2);
+                }
+            }
+
             //Se valida cada fila de CSV
             foreach (GuiaHorario f in lista)
             {
-                System.Diagnostics.Debug.WriteLine(guia.Validar(f));
                 insertarGuia(f);
             }
-            return true;
+            return Tuple.Create(true, "");
         }
 
         private void insertarGuia(GuiaHorario fila)
@@ -231,7 +249,7 @@ namespace AppIntegrador.Controllers
             db.InsertarPertenece_a(fila.CodigoCarreraCurso, fila.CodigoEnfasisCurso, fila.SiglaCursoCarrera);
         }
 
-        public bool cargarListaEstudiante(string path)
+        public Tuple<bool, string> cargarListaEstudiante(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -244,16 +262,23 @@ namespace AppIntegrador.Controllers
             IEnumerable<ListaEstudiante> datos = cc.Read<ListaEstudiante>(path, inputFileDescription);
             List<ListaEstudiante> lista = datos.ToList();
 
-            ValidadorListaDeEstudiantes listaEst = new ValidadorListaDeEstudiantes();
+            ValidadorListaDeEstudiantes val = new ValidadorListaDeEstudiantes();
+            bool error;
+            foreach (ListaEstudiante f in lista)
+            {
+                error = val.Validar(f).Item1;
+                if (!error)
+                {
+                    return Tuple.Create(false, val.Validar(f).Item2);
+                }
+            }
 
             //Se valida cada fila de CSV
             foreach (ListaEstudiante f in lista)
             {
-
-                System.Diagnostics.Debug.WriteLine(f.CorreoPersona + "=" + listaEst.Validar(f));
                 insertarListaEstudiante(f);
             }
-            return true;
+            return Tuple.Create(true, "");
         }
 
         private void insertarListaEstudiante(ListaEstudiante fila)
@@ -263,7 +288,7 @@ namespace AppIntegrador.Controllers
             db.InsertarEmpadronadoEn(fila.CorreoEstudianteEmpadronado, fila.CodigoCarreraEmpadronado, fila.CodigoEnfasisEmpadronado);
         }
 
-        public bool cargarListaFuncionario(string path)
+        public Tuple<bool, string> cargarListaFuncionario(string path)
         {
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
@@ -276,16 +301,23 @@ namespace AppIntegrador.Controllers
             IEnumerable<ListaFuncionario> datos = cc.Read<ListaFuncionario>(path, inputFileDescription);
             List<ListaFuncionario> lista = datos.ToList();
 
-
-            ValidadorListaFuncionarios val = new ValidadorListaFuncionarios();
-
             //Se valida cada fila de CSV
+            ValidadorListaFuncionarios val = new ValidadorListaFuncionarios();
+            bool error;
             foreach (ListaFuncionario f in lista)
             {
-                System.Diagnostics.Debug.WriteLine(f.CorreoPersona +" = " + val.Validar(f));
+                error = val.Validar(f).Item1;
+                if (!error)
+                {
+                    return Tuple.Create(false, val.Validar(f).Item2);
+                }
+            }
+
+            foreach (ListaFuncionario f in lista)
+            {
                 insertarListaFuncionario(f);
             }
-            return true;
+            return Tuple.Create(true, "");
         }
 
         private void insertarListaFuncionario(ListaFuncionario fila)

@@ -8,71 +8,86 @@ namespace AppIntegrador.Controllers
 {
     public class ValidadorListaFuncionarios : Validador
     {
-        public bool Validar(ListaFuncionario lista)
+        public Tuple<bool, string> Validar(ListaFuncionario lista)
         {
-            System.Diagnostics.Debug.WriteLine("validor");
-
+            int fila = 1;
+            int columna = 0;
+            string mensajeError = "";
             //Correo Persona
+            columna++;
             if (!ValidarEmail(lista.CorreoPersona) || checkForSQLInjection(lista.CorreoPersona))
             {
+                mensajeError = "El campo correo en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError); //email invalidao
+            }
 
-                return false; //email invalidao
-            }
-            //Correo Profe
-            if (!ValidarEmail(lista.CorreoProfesor) || checkForSQLInjection(lista.CorreoProfesor))
-            {
-                System.Diagnostics.Debug.WriteLine("emailP");
-                return false; //email invalidao
-            }
-            /*
-            //Correo funcionario
-            if (!ValidarEmail(lista.CorreoFuncionario) || checkForSQLInjection(lista.CorreoFuncionario))
-            {
-                System.Diagnostics.Debug.WriteLine("emailP");
-                return false; //email invalidao
-            }
-            //Correo funcionario Trabaja
-            if (!ValidarEmail(lista.CorreoFuncionarioTrabaja) || checkForSQLInjection(lista.CorreoFuncionarioTrabaja))
-            {
-                System.Diagnostics.Debug.WriteLine("emailP");
-                return false; //email invalidao
-            }*/
             //Id
+            columna++;
             if (!ValidarTamanoText(lista.IdPersona, 30) || checkForSQLInjection(lista.IdPersona))
             {
-                System.Diagnostics.Debug.WriteLine("id");
-                return false;
+                mensajeError = "El campo id persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
             }
+
             //Tipo Id
+            columna++;
             if (!ValidarTamanoText(lista.TipoIdPersona, 30) || checkForSQLInjection(lista.TipoIdPersona))
             {
-                System.Diagnostics.Debug.WriteLine("tipo");
-
-                return false;
+                mensajeError = "El campo tipo de id persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
             }
+
             //Nombre
+            columna++;
             if (!ValidarTamanoText(lista.NombrePersona, 15) || checkForSQLInjection(lista.NombrePersona))
             {
-                System.Diagnostics.Debug.WriteLine("nombre");
-
-                return false;
+                mensajeError = "El campo nombre persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
             }
+
             //Apellido
+            columna++;
             if (!ValidarTamanoText(lista.ApellidoPersona, 15) || checkForSQLInjection(lista.ApellidoPersona))
             {
-                System.Diagnostics.Debug.WriteLine("apellido");
-
-                return false;
+                mensajeError = "El campo apellido persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
             }
+
             //borrado
+            columna++;
             if (checkForSQLInjection(lista.Borrado) || ValidaBool(lista.Borrado))
             {
-                System.Diagnostics.Debug.WriteLine("borrado");
-
-                return false;
+                mensajeError = "El campo borrado en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
             }
 
-            return true;
+            //Correo funcionario
+            columna++;
+            if (!ValidarEmail(lista.CorreoFuncionario) || checkForSQLInjection(lista.CorreoFuncionario))
+            {
+                mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
+            }
+
+            //Correo Profe
+            columna++;
+            if (!ValidarEmail(lista.CorreoProfesor) || checkForSQLInjection(lista.CorreoProfesor))
+            {
+                mensajeError = "El campo correo profesor en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
+            }
+
+            //Correo funcionario Trabaja
+            columna++;
+            if (!ValidarEmail(lista.CorreoFuncionarioTrabaja) || checkForSQLInjection(lista.CorreoFuncionarioTrabaja))
+            {
+                mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
+            }
+            
+            //FALTA VALIDAR EL CODIGO UNIDAD ACADEMICA DONDE TRABAJA
+            fila++;
+            return Tuple.Create(true, "");
         }
     }
 }
