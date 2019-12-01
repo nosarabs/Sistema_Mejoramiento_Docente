@@ -95,12 +95,26 @@
     <script>
         $(document).ready(function () {
             var msg = '@ViewBag.Message';
+            var campo = '@ViewBag.Campo'
             if (msg == "Exitoso") {
                 const el = document.createElement('div')
                 swal({
                     title: "¡Archivo cargado exitosamente!",
                     type: "success",
                     icon: 'success',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
+                });
+            }
+            else if (msg == "Fallido"){
+                const el = document.createElement('div')
+                swal({
+                    title: "¡Ha ocurrido un error!",
+                    type: "error",
+                    text: campo,
+                    icon: 'error',
 
                     timer: 100000,
                     showConfirmButton: true

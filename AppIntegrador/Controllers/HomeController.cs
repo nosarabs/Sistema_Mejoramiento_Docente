@@ -105,9 +105,10 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        /* TAM 16.1 Servicio de captcha*/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateGoogleCaptcha]
+        [ValidateGoogleCaptcha] 
         public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
@@ -133,6 +134,9 @@ namespace AppIntegrador.Controllers
                     // Credenciales correctos
                     if (result == 0)
                     {
+                        /* Remueve el contador de intentos fallidos cuando el usuario logro entrar al sistema */
+                        System.Web.HttpContext.Current.Application.Remove(objUser.Username);
+
                         /*Si la sesión puede ser configurada, es decir, el usuario tiene perfiles asociados, puede entrar.*/
                         if (ConfigureSession(objUser.Username))
                         {
@@ -175,7 +179,8 @@ namespace AppIntegrador.Controllers
         }
 
         /*User story TAM-1.3 Brute-force attack prevention.*/
-        private async Task<ActionResult> WrongPassword(Usuario objUser)
+        /* TAM 16.1 Servicio de captcha*/
+        private ActionResult WrongPassword(Usuario objUser)
         {
             int failedAttempts = 0;
             ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
@@ -201,39 +206,6 @@ namespace AppIntegrador.Controllers
                 CurrentUser.setLoginFailures(failedAttempts);
             }      
 
-            return null;
-        }
-
-        private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser)
-        {
-            /*Removes the failed attempts count from the system for this user.*/
-            System.Web.HttpContext.Current.Application.Remove(objUser.Username);
-
-            /*To lock the user, first fetch it from the database.*/
-            using (var context = new DataIntegradorEntities())
-            {
-                var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
-                if (user != null)
-                {
-                    /*Sets the active/inactive bit to 0.*/
-                    user.Activo = false;
-                    db.SaveChanges();
-                }
-            }
-
-            /*Waits for the blocking time specified in the constant.*/
-            await Task.Delay(LOGIN_TIMEOUT).ConfigureAwait(false);
-
-            /*Then reactivates the user.*/
-            using (var context = new DataIntegradorEntities())
-            {
-                var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
-                if (user != null)
-                {
-                    user.Activo = true;
-                    db.SaveChanges();
-                }
-            }
             return null;
         }
 

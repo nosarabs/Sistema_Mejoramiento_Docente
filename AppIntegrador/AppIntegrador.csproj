@@ -193,6 +193,7 @@
     <Compile Include="Controllers\Validador.cs" />
     <Compile Include="Controllers\ValidadorGuia.cs" />
     <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
+    <Compile Include="Controllers\ValidadorListaFuncionarios.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -275,6 +276,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GruposXPerfilXUsuario1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -286,6 +290,7 @@
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
+    <Compile Include="Models\MisFormulariosModel.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -311,6 +316,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosPorSemestre_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
@@ -430,6 +438,9 @@
     <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\PersonProfileViewHolder.cs" />
+    <Compile Include="Models\ProfesoresXUsuarioXPerfil1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -456,6 +467,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
+    <Compile Include="Models\UAXPerfilXUsuario1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -512,6 +526,7 @@
     <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
     <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\Visualizacion\texto_abierto_icono.png" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
@@ -713,16 +728,16 @@
     <Content Include="Views\Formularios\Details.cshtml" />
     <Content Include="Views\Formularios\Edit.cshtml" />
     <Content Include="Views\Formularios\Index.cshtml" />
-    <Content Include="Views\Formularios\LlenarFormulario.cshtml" />
+    <Content Include="Views\LlenarFormulario\LlenarFormulario.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Seccion\Create.cshtml" />
     <Content Include="Views\Seccion\Delete.cshtml" />
     <Content Include="Views\Seccion\VistaPrevia.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Formularios\PreguntaConOpciones.cshtml" />
-    <Content Include="Views\Formularios\SeccionConPreguntas.cshtml" />
-    <Content Include="Views\Formularios\TodasLasPreguntas.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaConOpciones.cshtml" />
+    <Content Include="Views\Seccion\SeccionConPreguntas.cshtml" />
+    <Content Include="Views\ResponderPreguntas\TodasLasPreguntas.cshtml" />
     <Content Include="Views\Seccion\_SeccionPartial.cshtml" />
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\_IndexPartial.cshtml" />
     <Content Include="Views\Objetivos\Create.cshtml" />
@@ -748,13 +763,13 @@
     <Content Include="Views\Preguntas\Create.cshtml" />
     <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
     <Content Include="Views\Preguntas\OpcionesDeSeleccion.cshtml" />
-    <Content Include="Views\Formularios\PreguntaSiNoNr.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaSiNoNr.cshtml" />
     <Content Include="Views\Preguntas\PreguntaSiNo.cshtml" />
     <Content Include="Views\Preguntas\RespuestaLibre.cshtml" />
     <Content Include="Views\Preguntas\Estilos.cshtml" />
-    <Content Include="Views\Formularios\RespuestaLibre.cshtml" />
-    <Content Include="Views\Formularios\PreguntaEscalar.cshtml" />
-    <Content Include="Views\Formularios\PreguntaSeleccionMultiple.cshtml" />
+    <Content Include="Views\ResponderPreguntas\RespuestaLibre.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaEscalar.cshtml" />
+    <Content Include="Views\ResponderPreguntas\PreguntaSeleccionMultiple.cshtml" />
     <Content Include="Views\Seccion\_CreateSeccionPartial.cshtml" />
     <Content Include="Views\Permissions\Index.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
@@ -784,7 +799,7 @@
     <Content Include="Views\Accionables\_listarAccionables.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\Preguntas\VistaPrevia.cshtml" />
-    <Content Include="Views\Formularios\VistaPrevia.cshtml" />
+    <Content Include="Views\LlenarFormulario\VistaPrevia.cshtml" />
     <Content Include="Views\ActivaFormulario\Create.cshtml" />
     <Content Include="Views\ActivaFormulario\Delete.cshtml" />
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
@@ -799,19 +814,20 @@
     <Content Include="Views\PlanDeMejora\_ModalAnadirFormularios.cshtml" />
     <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
-    <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
     <Content Include="Views\CSV\Clase.cshtml" />
     <Content Include="Views\CSV\GuiaHorarios.cshtml" />
     <Content Include="Views\CSV\Funcionarios.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Funcionarios\" />
     <Folder Include="Guias Horario\" />
     <Folder Include="Listas de Clase\" />
+    <Folder Include="Views\VistaPreviaFormularios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

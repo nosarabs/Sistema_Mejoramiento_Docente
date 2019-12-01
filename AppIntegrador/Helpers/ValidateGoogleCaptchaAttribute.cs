@@ -14,7 +14,7 @@ namespace AppIntegrador.Helpers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (CurrentUser.getUserLoginFailures() >= 3)
+            if (CurrentUser.getUserLoginFailures() >= CurrentUser.getMaxUserLoginFailures())
             {
                 const string urlToPost = "https://www.google.com/recaptcha/api/siteverify";
                 const string secretKey = SiteSettings.GoogleRecaptchaSecretKey;

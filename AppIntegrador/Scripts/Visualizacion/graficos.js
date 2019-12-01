@@ -5,7 +5,7 @@
     generarGraficoBarras(canvas, datos) {
 
         var dataLength = datos.DATA.length;
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        var colors = chroma.scale(["#ffe06a", "#b9d989", "#8ed8f8", "#005da4", "#fdb912"]).colors(dataLength);
         //chroma.js: https://gka.github.io/chroma.js/
 
         new Chart(canvas, {
@@ -29,7 +29,7 @@
                     padding: {
                         left: 0,
                         right: 0,
-                        top: 30,
+                        top: 50,
                         bottom: 0
                     }
                 },
@@ -82,12 +82,13 @@
                         anchor: "end",
                         align: "start",
                         clamp: true,
-                        offset: -30,
+                        offset: -50,
                         textAlign: "center",
                         font: {
                             size: "16",
                             weight: "normal"
                         },
+                        rotation: -45,
                         formatter: function (value, ctx) {
                             var sum = 0;
                             var data = ctx.chart.data.datasets[0].data;
@@ -108,7 +109,7 @@
     generarGraficoBarrasPequeno(canvas, datos) {
 
         var dataLength = datos.DATA.length;
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        var colors = chroma.scale(["#ffe06a", "#b9d989", "#8ed8f8", "#005da4", "#fdb912"]).colors(dataLength);
         //chroma.js: https://gka.github.io/chroma.js/
 
         new Chart(canvas, {
@@ -188,7 +189,7 @@
     generarGraficoPie(canvas, datos) {
 
         var dataLength = datos.DATA.length;
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        var colors = chroma.scale(["#ffe06a", "#b9d989", "#8ed8f8", "#005da4", "#fdb912"]).colors(dataLength);
         //chroma.js: https://gka.github.io/chroma.js/
 
         new Chart(canvas, {
@@ -248,7 +249,7 @@
                                 sum += data[i];
                             }
                             var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
-                            return percentage + "\n\n" + value;
+                            return percentage;
                         }
                     }
                 }
@@ -261,7 +262,7 @@
     generarGraficoPiePequeno(canvas, datos) {
 
         var dataLength = datos.DATA.length;
-        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        var colors = chroma.scale(["#ffe06a", "#b9d989", "#8ed8f8", "#005da4", "#fdb912"]).colors(dataLength);
         //chroma.js: https://gka.github.io/chroma.js/
 
         new Chart(canvas, {
