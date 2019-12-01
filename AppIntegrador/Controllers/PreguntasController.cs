@@ -392,10 +392,9 @@ namespace AppIntegrador.Controllers
                 {
                     if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
                     {
-                        pregunta.Pregunta = db.Pregunta.Find(pregunta.Pregunta.Codigo);
-
                         if (respuestas != null)
                         {
+                            pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Find(pregunta.Pregunta.Codigo);
                             var resultadoRespuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
                                                                                      codSeccion, pregunta.Pregunta.Codigo);
                             if (resultadoRespuestaGuardada != null)

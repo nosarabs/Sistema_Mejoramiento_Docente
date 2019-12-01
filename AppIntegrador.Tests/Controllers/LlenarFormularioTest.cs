@@ -24,7 +24,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             var mockDb = new Mock<DataIntegradorEntities>();
             string codFormulario = "CI0128G2";
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
             var result = controller.LlenarFormulario(codFormulario);
@@ -38,7 +38,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             TestSetup testSetup = new TestSetup();
             var mockDb = new Mock<DataIntegradorEntities>();
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
             var result = controller.LlenarFormulario(null);
@@ -64,7 +64,7 @@ namespace AppIntegrador.Tests.Controllers
             };
             mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
             var result = controller.LlenarFormulario(codFormulario);
@@ -81,7 +81,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             TestSetup testSetup = new TestSetup();
 
-            LlenarFormulariosController controller = new LlenarFormulariosController();
+            LlenarFormularioController controller = new LlenarFormularioController();
             testSetup.SetupHttpContext(controller);
             ActionResult result = controller.GuardarRespuestas(null, null);
             Assert.IsNotNull(result);
@@ -115,7 +115,7 @@ namespace AppIntegrador.Tests.Controllers
                 (new List<ObtenerSeccionesDeFormulario_Result> { seccion });
             mockDb.Setup(x => x.ObtenerSeccionesDeFormulario(codFormulario)).Returns(mockedObtenerSecciones.Object);
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             var result = controller.LlenarFormulario(codFormulario);
 
@@ -174,7 +174,7 @@ namespace AppIntegrador.Tests.Controllers
             };
             mockDb.Setup(x => x.Escalar.Find(codPregunta)).Returns(escalar);
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -283,7 +283,7 @@ namespace AppIntegrador.Tests.Controllers
                 obtenerOpciones.CSigla, obtenerOpciones.GNumero, obtenerOpciones.GSemestre, obtenerOpciones.GAnno,
                 obtenerOpciones.SCodigo, obtenerOpciones.PCodigo)).Returns(mockedObtenerOpciones.Object);
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -318,7 +318,7 @@ namespace AppIntegrador.Tests.Controllers
                 Orden = 0
             };
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -384,7 +384,7 @@ namespace AppIntegrador.Tests.Controllers
             });
             mockDb.Setup(x => x.ObtenerOpcionesDePregunta(codPregunta)).Returns(mockedOpciones.Object);
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -467,7 +467,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDb.Setup(x => x.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero,
                 respuestas.GAnno, respuestas.GSemestre, codPregunta, codSeccion)).Returns(respuestaLibreList.AsQueryable());
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -552,7 +552,7 @@ namespace AppIntegrador.Tests.Controllers
                 RespuestaLibreOJustificacion = "Para que cubra más del coverage"
             };
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
             // Si no se cae en esta linea, significa que el guardar funciona correctamente
@@ -617,7 +617,7 @@ namespace AppIntegrador.Tests.Controllers
                 RespuestaLibreOJustificacion = "Para que cubra más del coverage"
             };
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             testSetup.SetupHttpContext(controller);
 
@@ -747,7 +747,7 @@ namespace AppIntegrador.Tests.Controllers
 
             List<SeccionConPreguntas> secciones = new List<SeccionConPreguntas>() { seccionP, seccionP2 };
 
-            LlenarFormulariosController controller = new LlenarFormulariosController(mockDb.Object);
+            LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
             testSetup.SetupHttpContext(controller);
             // Si no se cae en esta linea, significa que el guardar funciona correctamente
             controller.GuardarRespuestas(respuestas, secciones);

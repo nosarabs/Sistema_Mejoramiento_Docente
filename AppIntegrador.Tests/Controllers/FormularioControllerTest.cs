@@ -460,18 +460,14 @@ namespace AppIntegrador.Tests.Controllers
                 Orden = 0
             };
 
-            // Se crea un objeto de prueba de tipo SeccionesFormulario
-            FormulariosController.SeccionesFormulario formularioPrueba = new FormulariosController.SeccionesFormulario();
-            formularioPrueba.codigo = codFormulario;
-            formularioPrueba.nombre = nombreFormulario;
-            formularioPrueba.seccionesAsociadas = new List<String>();
-            formularioPrueba.seccionesAsociadas.Add(codSeccion);
+            List<string> seccionesAsociadas = new List<string>();
+            seccionesAsociadas.Add(codSeccion);
 
             // Instancia del controller para accesar a los métodos que se probarán de FormulariosController
             FormulariosController controller = new FormulariosController(mockDb.Object);
 
             // Se llama el método del controller para ver si devuelve un resultado válido
-            var result = controller.AsociarSeccionesAFormulario(formularioPrueba);
+            var result = controller.AsociarSeccionesAFormulario(codFormulario, nombreFormulario, seccionesAsociadas);
 
             Assert.IsNotNull(result);
         }
