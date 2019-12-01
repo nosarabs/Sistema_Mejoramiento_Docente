@@ -692,7 +692,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
-    <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
+    <Content Include="Views\ResultadosFormulario\ResultadosFormulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />
     <Content Include="Views\Formularios\Details.cshtml" />
