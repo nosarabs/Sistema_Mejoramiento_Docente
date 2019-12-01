@@ -255,6 +255,7 @@
     <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
     <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerEstudiantesAsociadosAFormulario_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
