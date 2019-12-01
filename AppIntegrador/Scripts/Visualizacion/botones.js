@@ -30,7 +30,6 @@
         var codigoPregunta = listaPreguntas[idPreg].codigoPregunta;
         var textoPregunta = String(contadorPreguntasSeccion + 1) + ". " + listaPreguntas[idPreg].textoPregunta;
         var tipoPregunta = listaPreguntas[idPreg].tipoPregunta;
-        //cuerpoPrincipal.appendChild(boton);
 
         contadorPreguntasSeccion += 1;
 
@@ -106,12 +105,12 @@
             if (listaPreguntas[i].codigoSeccion == idSeccion) {
 
                 var contenedorParcial = document.createElement("div");
-                //contenedorParcial.className += "col-md-2";
                 contenedorParcial.style.textAlign = "center";
 
                 var flexBonito = document.createElement("p-2");
                 flexBonito.className += "col-md-4";
                 flexBonito.className += " border";
+                flexBonito.className += " flexPregunta";
                 flexBonito.id = "contenedor" + listaPreguntas[i].codigoPregunta;
 
                 var codigoPregunta = listaPreguntas[i].codigoPregunta;
@@ -120,7 +119,8 @@
 
                 // Incluir un label!!
                 var labelcito = document.createElement("p");
-                labelcito.innerHTML = textoPregunta;
+                labelcito.className = "labelcito";
+                labelcito.innerText = textoPregunta;
 
                 // Appends
                 contenedorParcial.appendChild(labelcito);

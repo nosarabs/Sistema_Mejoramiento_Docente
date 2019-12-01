@@ -23,6 +23,7 @@
         var columna = document.createElement("div");
         columna.className = "col";
         var mensaje = document.createElement("h3");
+        mensaje.className = "mensajeError";
         mensaje.innerText = "No se encontraron respuestas para esta pregunta.";
 
         columna.appendChild(mensaje);

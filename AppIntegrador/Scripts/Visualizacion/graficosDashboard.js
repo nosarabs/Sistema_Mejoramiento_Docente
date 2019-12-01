@@ -115,34 +115,6 @@ class GraficosDashboard {
                         }
                     }]
                 },
-                plugins: {
-                    datalabels: {
-                        display: function (context) {
-                            return context.dataset.data[context.dataIndex] !== 0;
-                        },
-                        color: "#747474",
-                        textStrokeColor: "black",
-                        textStrokeWidth: 0,
-                        anchor: "end",
-                        align: "start",
-                        clamp: true,
-                        offset: -30,
-                        textAlign: "center",
-                        font: {
-                            size: "16",
-                            weight: "normal"
-                        },
-                        formatter: function (value, ctx) {
-                            var sum = 0;
-                            var data = ctx.chart.data.datasets[0].data;
-                            for (var i = 0; i < data.length; ++i) {
-                                sum += data[i];
-                            }
-                            var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
-                            return percentage;
-                        }
-                    }
-                }
             }
 
         });

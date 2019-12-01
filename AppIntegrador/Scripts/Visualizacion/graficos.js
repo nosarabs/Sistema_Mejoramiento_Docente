@@ -94,7 +94,7 @@
                             for (var i = 0; i < data.length; ++i) {
                                 sum += data[i];
                             }
-                            var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
+                            var percentage = ((value * 100 / sum).toFixed(1) + "%").replace(".", ",");
                             return percentage;
                         }
                     }
