@@ -271,28 +271,30 @@ ul.multiselect-container.dropdown-menu {
     white-space: nowrap;
     max-width: 200%;
     min-width: 150%;
-    overflow: scroll;
+    overflow: auto !important;
 }
 
-    ul.multiselect-container.dropdown-menu.show {
-        overflow: scroll hidden;
-        white-space: nowrap;
-        max-width: 200%;
-        min-width: 150%;
-        padding: 5%;
-        padding-left: 2% !important;
-        padding-right: 5% !important;
-    }
-    
+ul.multiselect-container.dropdown-menu.show {
+    white-space: nowrap;
+    overflow: auto !important;
+    max-width: 200%;
+    min-width: 150%;
+    padding: 5%;
+    padding-left: 2% !important;
+    padding-right: 5% !important;
+}
+
 
 label.checkbox {
-    width: inherit;
     /*padding-right: 1% !important;*/
     font-size: small;
+    width: 100%;
 }
 
 label.checkbox:hover {
     background-color: #DCDCDC;
+    width: max-content;
+    min-width: 100%;
 }
 
 span.multiselect-selected-text {

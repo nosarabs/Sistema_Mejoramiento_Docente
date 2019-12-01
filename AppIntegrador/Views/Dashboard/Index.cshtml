@@ -4,9 +4,10 @@
 
 
 @Scripts.Render("~/Scripts/jquery-3.4.1.js")
-@Scripts.Render("~/Scripts/Visualizacion/popper.min.js")
 @Scripts.Render("~/Scripts/bootstrap.min.js")
 @Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
+@Scripts.Render("~/Scripts/Visualizacion/popper.min.js")
+
 @Scripts.Render("~/Scripts/Visualizacion/font-awesome.js")
 @Scripts.Render("~/Scripts/Visualizacion/filtros.js")
 @Scripts.Render("~/Scripts/Visualizacion/graficosDashboard.js")
@@ -20,7 +21,7 @@
 
 <body>
     <h3>Dashboard</h3>
-    
+
     <script type="text/javascript">
         var alturaMax = 200;
         function cambiarIcono() {
@@ -31,15 +32,8 @@
             }
         }
 
-        $(document).ready(function () {
-            $('#example-getting-started').multiselect({
-				enableFiltering: true,
-				enableCaseInsensitiveFiltering: true,
-				numberDisplayed: 1,
-				includeSelectAllOption: true,
-                maxHeight: alturaMax,
-			});
-
+        $(document).ready(function ()
+        {
             $('#filtroUA').multiselect({
                 enableFiltering: true,
                 enableCaseInsensitiveFiltering: true,
@@ -126,9 +120,8 @@
 
     //Actualiza los filtros por debajo del de unidades académicas
     function actualizarDebajoUA() {
-
         var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
-
+        //alert(unidadesAcademicas.length);
         filtros.llenarFiltroCE(unidadesAcademicas, null, null);
         filtros.llenarFiltroG(unidadesAcademicas, null, null);
         filtros.llenarFiltroP(unidadesAcademicas, null, null);
@@ -137,6 +130,13 @@
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
+        //Se actualizan las opciones de los multiselects
+        $('#filtroCarreraEnfasis').multiselect('rebuild');
+        $('#filtroCursoGrupo').multiselect('rebuild');
+        $('#filtroProfesores').multiselect('rebuild');
+        $('#filtroFormularios').multiselect('rebuild');
+
+        //Actulización de los promedios, basado en el filtro actual
         this.actualizarPromedios(unidadesAcademicas, null, null, null);
 
     }
@@ -146,7 +146,7 @@
 
         var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
         var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
-
+        
         filtros.llenarFiltroG(unidadesAcademicas, carrerasEnfasis, null);
         filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, null);
         filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis, null, null);
@@ -154,6 +154,12 @@
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
+        //Se actualizan las opciones de los multiselects
+        $('#filtroCursoGrupo').multiselect('rebuild');
+        $('#filtroProfesores').multiselect('rebuild');
+        $('#filtroFormularios').multiselect('rebuild');
+
+        //Actulización de los promedios, basado en el filtro actual
         this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, null, null);
 
     }
@@ -171,6 +177,11 @@
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
+        //Se actualizan las opciones de los multiselects
+        $('#filtroProfesores').multiselect('rebuild');
+        $('#filtroFormularios').multiselect('rebuild');
+
+        //Actulización de los promedios, basado en el filtro actual
         this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, null);
 
     }
@@ -188,6 +199,10 @@
         //Limpia el panel de la vista parcial
         $('#panelDashboard').html("");
 
+        //Se actualizan las opciones de los multiselects
+        $('#filtroFormularios').multiselect('rebuild');
+
+        //Actulización de los promedios, basado en el filtro actual
         this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
 
     }
