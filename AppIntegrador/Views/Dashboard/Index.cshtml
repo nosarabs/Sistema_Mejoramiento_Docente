@@ -28,23 +28,14 @@
             <div class="col">
                 <div class="row" id="promedios">
                     <div class="col">
+                        Calificación Promedio de Profesor
                         <canvas class="graficosPromedio" id="gP"></canvas>
-                        <small id="pP"></small>
                         <small id="pN"></small>
-
-                        <small id="nMaloP"></small>
-                        <small id="nRegularP"></small>
-                        <small id="nBuenoP"></small>
                     </div>
-
                     <div class="col">
+                        Calificación Promedio de Cursos
                         <canvas class="graficosPromedio" id="gC"></canvas>
-                        <small id="cP"></small>
                         <small id="cN"></small>
-
-                        <small id="nMaloC"></small>
-                        <small id="nRegularC"></small>
-                        <small id="nBuenoC"></small>
                     </div>
                 </div>
                 <div class="row" id="cuadricula">
@@ -186,17 +177,10 @@
         var nBuenoC = curso[4];
 
         $('#pP').text("Promedio Profesor: " + profeP);
-        $('#pN').text("Cantidad: " + profeN);
+        $('#pN').text("Calificaciones Totales: " + profeN);
         $('#cP').text("Promedio Curso: " + cursoP);
-        $('#cN').text("Cantidad: " + cursoN);
+        $('#cN').text("Calificaciones Totales: " + cursoN);
 
-        $('#nMaloP').text("N Malo: " + nMaloP);
-        $('#nRegularP').text("N Regular: " + nRegularP);
-        $('#nBuenoP').text("N Bueno: " + nBuenoP);
-
-        $('#nMaloC').text("N Malo: " + nMaloC);
-        $('#nRegularC').text("N Regular: " + nRegularC);
-        $('#nBuenoC').text("N Bueno: " + nBuenoC);
 
         var canvasP = document.getElementById('gP').getContext('2d');
         var canvasC = document.getElementById('gC').getContext('2d');

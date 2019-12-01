@@ -111,6 +111,15 @@ class GraficosDashboard {
             }
         });
 
+        var colorP;
+
+        if (p >= 71) {
+           colorP = "#b9d989";
+        } else if (p >= 51) {
+            colorP = "#8ed8f8";
+        } else {
+            colorP = "#ffe06a";
+        }
 
         var config = {
             type: 'doughnut',
@@ -139,7 +148,7 @@ class GraficosDashboard {
                 elements: {
                     center: {
                         text: p,
-                        color: '#b9d989', // Default is #000000
+                        color: colorP, // Default is #000000
                         fontStyle: 'Arial', // Default is Arial
                         sidePadding: 20 // Defualt is 20 (as a percentage)
                     }

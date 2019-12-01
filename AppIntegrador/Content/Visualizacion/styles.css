@@ -231,7 +231,8 @@ canvas{
 #promedios .col{
     height: 100%;
     margin:0 !important;
-    padding:20px !important;
+    padding:40px !important;
+    padding-top: 0 !important;
 }
 
 #cuadricula {
