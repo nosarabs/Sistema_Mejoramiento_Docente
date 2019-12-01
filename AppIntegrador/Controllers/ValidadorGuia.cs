@@ -8,9 +8,10 @@ namespace AppIntegrador.Controllers
 {
     public class ValidadorGuia : Validador
     {
-        public Tuple<bool, string> Validar(GuiaHorario guia)
+
+        public Tuple<bool, string> Validar(GuiaHorario guia, int filaActual)
         {
-            int fila = 1;
+            int fila = filaActual;
             int columna = 0;
             string mensajeError = "";
             //Codigo Carrera
@@ -165,7 +166,6 @@ namespace AppIntegrador.Controllers
                 mensajeError = "El campo correo estudiante en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError); //email invalidao
             }            
-            fila++;
             return Tuple.Create(true, "");
         }
     }
