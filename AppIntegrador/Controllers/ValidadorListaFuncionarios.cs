@@ -84,8 +84,15 @@ namespace AppIntegrador.Controllers
                 mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError);
             }
-            
-            //FALTA VALIDAR EL CODIGO UNIDAD ACADEMICA DONDE TRABAJA
+
+            //CODIGO UNIDAD ACADEMICA
+            columna++;
+            if (!ValidarTamanoText(lista.CodigoUnidadTrabaja, 15) || checkForSQLInjection(lista.CodigoUnidadTrabaja))
+            {
+                mensajeError = "El campo código unidad persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
+            }
+
             fila++;
             return Tuple.Create(true, "");
         }
