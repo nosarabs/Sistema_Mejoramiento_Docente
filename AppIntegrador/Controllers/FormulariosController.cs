@@ -42,113 +42,12 @@ namespace AppIntegrador.Controllers
             return PartialView("_SeccionesActualesPartial", seccionesSeleccionadas);
         }
 
-        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB)
-        {
-            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
-            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
-
-            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
-
-            Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
-
-            if (respuestasObtenidas != null)
-            {
-                var respuestasList = respuestasObtenidas.FirstOrDefault();
-
-                if (respuestasList != null)
-                {
-                    respuestas.FCodigo = respuestasList.FCodigo;
-                    respuestas.Correo = respuestasList.Correo;
-                    respuestas.CSigla = respuestasList.CSigla;
-                    respuestas.Fecha = respuestasList.Fecha;
-                    respuestas.Finalizado = respuestas.Finalizado;
-                    respuestas.GAnno = respuestasList.GAnno;
-                    respuestas.GNumero = respuestasList.GNumero;
-                    respuestas.GSemestre = respuestasList.GSemestre;
-                }
-            }
-            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, respuestas, false);
-            return formulario;
-        }
-
-        [HttpGet]
-        public ActionResult VistaPrevia(string id)
-        {
-            if (HttpContext == null)
-            {
-                return Redirect("~/");
-            }
-            Formulario formularioDB = db.Formulario.Find(id);
-            if (formularioDB == null)
-            {
-                return RedirectToAction("Index");
-            }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
-
-            return View(formulario);
-        }
-
-        public ActionResult LlenarFormulario(string id)
-        {
-            if (HttpContext == null)
-            {
-                return Redirect("~/");
-            }
-            Formulario formularioDB = db.Formulario.Find(id);
-            if (formularioDB == null)
-            {
-                return RedirectToAction("Index");
-            }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
-
-            return View(formulario);
-        }
-
-
-        //public ActionResult FinalizarFormulario(string id, Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
-        //{
-        //    if (respuestas == null || secciones == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    respuestas.Fecha = DateTime.Today;
-        //    respuestas.Correo = HttpContext.User.Identity.Name;
-
-        //    // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
-        //    respuestas.CSigla = "CI0128";
-        //    respuestas.GNumero = 1;
-        //    respuestas.GAnno = 2019;
-        //    respuestas.GSemestre = 2;
-
-        //    db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
-
-        //    // Llamar a procedimiento que agrega Respuestas_a_formulario
-        //    db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha);
-
-        //    db.FinalizarFormulario()
-
-        //    return View(formulario);
-        //}
-
-        public List<SeccionConPreguntas> ObtenerSeccionConPreguntas(string id)
-        {
-            Formulario formularioDB = db.Formulario.Find(id);
-            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
-            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
-
-            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null, true);
-
-            foreach (var seccion in formulario.Secciones)
-            {
-                seccion.Edicion = true;
-            }
-            return formulario.Secciones;
-        }
-
         public ActionResult DesplegarFormulario(string id)
         {
-            return PartialView("SeccionConPreguntas", ObtenerSeccionConPreguntas(id));
+            SeccionController seccionController = new SeccionController();
+            var result = seccionController.ObtenerSeccionesConPreguntasEditable(id);
+            seccionController.Dispose();
+            return PartialView("../Seccion/SeccionConPreguntas", result);
         }
 
         [HttpPost]
@@ -193,162 +92,12 @@ namespace AppIntegrador.Controllers
             return false;
         }
 
-        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
-            Respuestas_a_formulario respuestas, bool editar)
-        {
-            if (formulario != null && seccionesDeFormulario != null)
-            {
-                foreach (var seccion in seccionesDeFormulario.ToList())
-                {
-                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
-                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
-                    foreach (var pregunta in preguntas)
-                    {
-                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
-                        {
-                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                            OrdenSeccion = nuevaSeccion.Orden,
-                            CodigoSeccion = nuevaSeccion.CodigoSeccion,
-                            OrdenPregunta = pregunta.Orden,
-                            Edit = editar
-                        });
-                        ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
-                    }
-                    formulario.Secciones.Add(nuevaSeccion);
-                }
-
-            }
-        }
-
         // Retorna la vista "parcial" de pregunta Respuesta libre (.cshtml)
         public ActionResult RespuestaLibre()
         {
             ViewBag.message = "RespuestaLibre";
             return View("RespuestaLibre");
         }
-
-        // Se espera que respuestas ya venga con el código del formulario.
-        [HttpPost]
-        public ActionResult GuardarRespuestas(Respuestas_a_formulario respuestas, List<SeccionConPreguntas> secciones)
-        {
-            if (respuestas == null || secciones == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            respuestas.Fecha = DateTime.Today;
-            respuestas.Correo = HttpContext.User.Identity.Name;
-
-            // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
-            respuestas.CSigla = "CI0128";
-            respuestas.GNumero = 1;
-            respuestas.GAnno = 2019;
-            respuestas.GSemestre = 2;
-            bool x = respuestas.Finalizado;
-
-            db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
-
-            // Llamar a procedimiento que agrega Respuestas_a_formulario
-            db.GuardarRespuestaAFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, respuestas.Fecha, respuestas.Finalizado);
-
-            // Luego, por cada sección guarde las respuestas de cada una de sus preguntas
-            foreach (SeccionConPreguntas seccion in secciones)
-            {
-                if (seccion.Preguntas != null)
-                {
-                    foreach (PreguntaConNumeroSeccion pregunta in seccion.Preguntas)
-                    {
-                        GuardarRespuestaAPregunta(pregunta, seccion.CodigoSeccion, respuestas);
-                    }
-                }
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        public void GuardarRespuestaAPregunta(PreguntaConNumeroSeccion pregunta, string CodigoSeccion, Respuestas_a_formulario respuestas)
-        {
-            if (pregunta != null && !string.IsNullOrEmpty(CodigoSeccion) && respuestas != null)
-            {
-
-                if (pregunta.Pregunta.Tipo == "L")
-                {
-                    db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
-                                                            respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
-                }
-                else
-                {
-                    // Se crea la tupla que indica que el formulario fue llenado. Es el intento de llenado de un formulario, se ocupa antes de agregar las opciones seleccionadas
-                    db.GuardarRespuestaAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                        respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);
-
-                    // Se recorren cada una de las opciones que fueron seleccionadas para la pregunta. En el caso de selección múltiple, serán varias.
-                    // En todos los demás casos solo se ejecuta una vez.
-                    if (pregunta.Opciones != null && pregunta.Opciones.Any())
-                    {
-                        foreach (var opcion in pregunta.Opciones)
-                        {
-                            db.GuardarOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno,
-                                                            respuestas.GSemestre, respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, (byte)opcion);
-                        }
-                    }
-                }
-            }
-        }
-
-        public void ObtenerInformacionDePreguntas(IEnumerable<PreguntaConNumeroSeccion> preguntas, string codSeccion, Respuestas_a_formulario respuestas)
-        {
-            if (preguntas != null)
-            {
-                foreach (PreguntaConNumeroSeccion pregunta in preguntas)
-                {
-                    if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
-                    {
-                        pregunta.Pregunta.Pregunta_con_opciones = db.Pregunta_con_opciones.Find(pregunta.Pregunta.Codigo);
-
-                        if (respuestas != null)
-                        {
-                            var resultadoRespuestaGuardada = db.ObtenerRespuestasAPreguntaConOpciones(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
-                                                                                     codSeccion, pregunta.Pregunta.Codigo);
-                            if (resultadoRespuestaGuardada != null)
-                            {
-                                var respuestaGuardada = resultadoRespuestaGuardada.ToList();
-                                if (respuestaGuardada.Any())
-                                {
-                                    pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Justificacion;
-
-                                    var opcionesGuardadas = db.ObtenerOpcionesSeleccionadas(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GSemestre, respuestas.GAnno,
-                                                                                         codSeccion, pregunta.Pregunta.Codigo);
-                                    pregunta.Opciones = new List<int>();
-                                    if (opcionesGuardadas != null)
-                                    {
-                                        foreach (var opcion in opcionesGuardadas.ToList())
-                                        {
-                                            pregunta.Opciones.Add(opcion.OpcionSeleccionada);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (pregunta.Pregunta.Tipo == "L" && respuestas != null)
-                    {
-                        var resultadoRespuestaGuardada = db.ObtenerRespuestaLibreGuardada(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla,
-                                                                    respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre, codSeccion, pregunta.Pregunta.Codigo);
-
-                        if (resultadoRespuestaGuardada != null)
-                        {
-                            var respuestaGuardada = resultadoRespuestaGuardada.ToList();
-                            if (respuestaGuardada.Any())
-                            {
-                                pregunta.RespuestaLibreOJustificacion = respuestaGuardada.FirstOrDefault().Observacion;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
 
         // GET: Formularios
         public ActionResult Index(string input0, string input1, string input2)
@@ -424,7 +173,9 @@ namespace AppIntegrador.Controllers
             crearFormulario.Formulario = formulario;
             if (formulario != null)
             {
-                crearFormulario.seccionesConPreguntas = ObtenerSeccionConPreguntas(formulario.Codigo);
+                SeccionController seccionController = new SeccionController();
+                crearFormulario.seccionesConPreguntas = seccionController.ObtenerSeccionesConPreguntasEditable(formulario.Codigo);
+                seccionController.Dispose();
             }
             ViewBag.Version = "Creacion";
             if (formularioCreado == 1)
@@ -526,28 +277,21 @@ namespace AppIntegrador.Controllers
             return View(formulario);
         }
 
-
-        public class SeccionesFormulario
-        {
-            public string codigo { get; set; }
-            public string nombre { get; set; }
-            public List<String> seccionesAsociadas { get; set; }
-        }
         /**
          * Este método valida si ya el formulario fue creado, de no ser así
          * lo crea y le asocia las secciones recibidas por parámetros
          * 
          */
         [HttpPost]
-        public ActionResult AsociarSeccionesAFormulario(SeccionesFormulario formulario)
+        public ActionResult AsociarSeccionesAFormulario(string codigo, string nombre, List<string> seccionesAsociadas)
         {
             Formulario form = new Formulario();
-            form.Codigo = formulario.codigo;
-            form.Nombre = formulario.nombre;
+            form.Codigo = codigo;
+            form.Nombre = nombre;
 
-            if (ModelState.IsValid && formulario != null && formulario.codigo != null && formulario.nombre != null && formulario.codigo.Length > 0 && formulario.nombre.Length > 0)
+            if (ModelState.IsValid && codigo != null && nombre != null && codigo.Length > 0 && nombre.Length > 0)
             {
-                if (InsertFormularioTieneSeccion(form, formulario.seccionesAsociadas))
+                if (InsertFormularioTieneSeccion(form, seccionesAsociadas))
                 {
                     ViewBag.Message = "Exitoso";
                 }
@@ -679,92 +423,6 @@ namespace AppIntegrador.Controllers
             {
                 return null;
             }
-        }
-
-        [HttpGet]
-        public ActionResult SeccionConPreguntas(string id)
-        {
-            // Armar objeto independiente del formulario
-            SeccionConPreguntas seccion = ArmarSeccion(id);
-
-            if(seccion == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            // Meter seccion en una lista por la naturaleza de la vista
-            List<SeccionConPreguntas> listaSeccion = new List<SeccionConPreguntas>
-            {
-                seccion
-            };
-
-            return View(listaSeccion);
-        }
-
-        public SeccionConPreguntas ArmarSeccion(string id)
-        {
-            // Sacar codigo y nombre de la BD
-            Seccion secDB = db.Seccion.Find(id);
-
-            if(secDB == null)
-            {
-                return null;
-            }
-
-            SeccionConPreguntas seccion = new SeccionConPreguntas();
-
-            // Asignar datos de la DB al objeto especial
-            seccion.CodigoSeccion = secDB.Codigo;
-            seccion.Nombre = secDB.Nombre;
-            seccion.Orden = 0;
-
-            // Sacar las preguntas y obtener opciones y/o justificaciones
-            seccion.Preguntas = ArmarPreguntas(seccion);
-            ObtenerInformacionDePreguntas(seccion.Preguntas, seccion.CodigoSeccion, null);
-
-            return seccion;
-        }
-
-        public List<PreguntaConNumeroSeccion> ArmarPreguntas(SeccionConPreguntas seccion)
-        {
-            List<PreguntaConNumeroSeccion> listaPreguntas = new List<PreguntaConNumeroSeccion>();
-
-            // Sacar preguntas con el procedimiento almacenado
-            List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.CodigoSeccion).ToList();
-
-            // Poblar la lista de preguntas segun lo obtenido del procedimiento
-            foreach (var pregunta in preguntas)
-            {
-                listaPreguntas.Add(new PreguntaConNumeroSeccion
-                {
-                    Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
-                    OrdenSeccion = seccion.Orden,
-                    OrdenPregunta = pregunta.Orden
-                });
-            }
-
-            return listaPreguntas;
-        }
-
-        [HttpGet]
-        public ActionResult TodasLasPreguntas(string id)
-        {
-            Pregunta pregDB = db.Pregunta.Find(id);
-            if (pregDB == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            PreguntaConNumeroSeccion pregTmp = new PreguntaConNumeroSeccion
-            {
-                Pregunta = pregDB,
-            };
-            List<PreguntaConNumeroSeccion> listaPregunta = new List<PreguntaConNumeroSeccion>();
-            listaPregunta.Add(pregTmp);
-
-            ObtenerInformacionDePreguntas(listaPregunta, null, null);
-
-            return View(listaPregunta);
         }
     }
 }
