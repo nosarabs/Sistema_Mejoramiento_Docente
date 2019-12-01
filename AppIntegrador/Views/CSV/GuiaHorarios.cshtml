@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿
+@{
+    ViewBag.Title = "GuiaHorarios";
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,15 +11,16 @@
 <div class="fullWidth">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="impText">Carga de estudiantes</h2>
+            <h2 class="impText">Carga de guias</h2>
         </div>
     </div>
 </div>
 <div class="container mt-3">
 
-    @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("GuiaHorarios", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <label for="file">Subir lista de estudiantes:</label>
+
+        <label for="file">Subir guia de horario:</label>
         <div class="custom-file mb-3">
 
             <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
@@ -90,4 +92,5 @@
     <div id="dvCSV" class="container" style="overflow:auto"></div>
 
 </div>
+
 

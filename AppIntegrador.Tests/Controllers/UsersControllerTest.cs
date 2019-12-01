@@ -214,7 +214,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -243,6 +243,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -273,7 +274,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -302,6 +303,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -332,7 +334,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -361,6 +363,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -391,7 +394,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -420,6 +423,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -474,12 +478,13 @@ namespace AppIntegrador.Tests.Controllers
             {
                 c.Value = false;
             });
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             UsersController controller = new UsersController(database.Object);
 
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
