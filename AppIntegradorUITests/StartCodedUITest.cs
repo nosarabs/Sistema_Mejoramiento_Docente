@@ -7,11 +7,13 @@ using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UITesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UITest.Extension;
-using Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard;
+//using Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard;
 
 
 namespace AppIntegradorUITests
 {
+    /*
+
     /// <summary>
     /// Summary description for CodedUITest1
     /// </summary>
@@ -90,5 +92,5 @@ namespace AppIntegradorUITests
         }
 
         private UIMap map;
-    }
+    }*/
 }
