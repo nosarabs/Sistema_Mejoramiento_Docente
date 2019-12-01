@@ -22,15 +22,23 @@ namespace AppIntegrador.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de ID vacío")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string IdPersona { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de TipoID vacío")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string TipoIdPersona { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de Nombre vacío")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string NombrePersona { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de Apellido vacío")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string ApellidoPersona { get; set; }
         [Required]
         public string Borrado { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo de CorreoEst vacío")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string CorreoEstudiante { get; set; }
         public string CorreoEstudianteEmpadronado { get; set; }
         public string CodigoCarreraEmpadronado { get; set; }
