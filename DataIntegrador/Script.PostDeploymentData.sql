@@ -74,10 +74,10 @@ MERGE INTO Periodo_activa_por AS Target
 		('00000001', 'andres@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 50),
 		('00000001', 'ismael@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 100),
 		('00000001', 'denisse@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 90),
-		('00000001', 'daniel@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 80),
+		('00000001', 'daniel@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 50),
 		('00000001', 'josue@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 70),
 		('00000001', 'berta@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 60),
-		('00000001', 'andres@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 50),  		('00000002', 'ismael@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 100),
+		('00000001', 'andres@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 40),  		('00000002', 'ismael@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 100),
 		('00000002', 'denisse@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 90),
 		('00000002', 'daniel@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 80),
 		('00000002', 'josue@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 70),
@@ -85,9 +85,9 @@ MERGE INTO Periodo_activa_por AS Target
 		('00000002', 'andres@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 50),
 		('00000002', 'ismael@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 100),
 		('00000002', 'denisse@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 90),
-		('00000002', 'daniel@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 80),
+		('00000002', 'daniel@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 65),
 		('00000002', 'josue@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 70),
-		('00000002', 'berta@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 60),
+		('00000002', 'berta@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 50),
 		('00000002', 'andres@mail.com', 'CI0127', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 50),  		('00000003', 'ismael@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 100),
 		('00000003', 'denisse@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 90),
 		('00000003', 'daniel@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 80),
@@ -96,7 +96,7 @@ MERGE INTO Periodo_activa_por AS Target
 		('00000003', 'andres@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFPROF', '00000004', 50),
 		('00000003', 'ismael@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 100),
 		('00000003', 'denisse@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 90),
-		('00000003', 'daniel@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 80),
+		('00000003', 'daniel@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 40),
 		('00000003', 'josue@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 70),
 		('00000003', 'berta@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 60),
 		('00000003', 'andres@mail.com', 'CI0126', 1, 2019, 2, '2019-06-10', 'INFCURSO', '00000004', 50) 	) 	AS SOURCE ([FCodigo], [Correo],[CSigla],[GNumero],[GAnno],[GSemestre],[Fecha],[PCodigo],[SCodigo],[OpcionSeleccionada]) 	ON Target.FCodigo = Source.FCodigo and Target.Correo = Source.Correo and Target.CSigla = Source.CSigla and Target.GNumero = Source.GNumero and 		Target.GAnno = Source.GAnno and Target.GSemestre = Source.GSemestre and Target.Fecha = Source.Fecha and Target.PCodigo = Source.PCodigo and 		Target.SCodigo = Source.SCodigo and Target.OpcionSeleccionada = Source.OpcionSeleccionada 	WHEN NOT MATCHED BY TARGET THEN 	INSERT (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo, OpcionSeleccionada) 	VALUES (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo, OpcionSeleccionada);  MERGE INTO Responde_respuesta_libre AS Target 	USING (VALUES 		('00000001', 'ismael@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Ismael para la pregunta 5'), 		('00000001', 'denisse@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Denisse para la pregunta 5'), 		('00000001', 'daniel@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Daniel para la pregunta 5'), 		('00000001', 'josue@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Josué para la pregunta 5'), 		('00000001', 'berta@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Berta para la pregunta 5'), 		('00000001', 'andres@mail.com', 'CI0128', 1, 2019, 2, '2019-06-10', '00000005', '00000003', 'Respuesta de Andrés para la pregunta 5') 	) 	AS SOURCE ([FCodigo], [Correo],[CSigla],[GNumero],[GAnno],[GSemestre],[Fecha],[PCodigo],[SCodigo],[Observacion]) 	ON Target.FCodigo = Source.FCodigo and Target.Correo = Source.Correo and Target.CSigla = Source.CSigla and Target.GNumero = Source.GNumero and 		Target.GAnno = Source.GAnno and Target.GSemestre = Source.GSemestre and Target.Fecha = Source.Fecha and Target.PCodigo = Source.PCodigo and Target.SCodigo = Source.SCodigo 	WHEN NOT MATCHED BY TARGET THEN 	INSERT (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo, Observacion) 	VALUES (FCodigo, Correo, CSigla, GNumero, GAnno, GSemestre, Fecha, PCodigo, SCodigo, Observacion);  /* Se crean los formularios de prueba para el sprint con todos los tipos de pregunta */ EXEC dbo.PopularFormulariosDePrueba;  /* ************************************************************************************************* Planes de Mejora */  MERGE INTO TipoObjetivo AS Target 	USING (VALUES 		('Profesor'), 		('Curso'), 		('Infraestructura') 	) 	AS SOURCE ([nombre]) 	ON Target.nombre = Source.nombre 	WHEN NOT MATCHED BY TARGET THEN 	INSERT (nombre) 	VALUES (nombre);   EXEC dbo.PruebasPDM 
