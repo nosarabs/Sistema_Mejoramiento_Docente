@@ -6,10 +6,9 @@ using System.Web;
 
 namespace AppIntegrador.Controllers
 {
-    public class ValidadorListaDeEstudiantes : Validador
+    public class ValidadorListaFuncionarios : Validador
     {
-
-        public Tuple<bool, string> Validar(ListaEstudiante lista)
+        public Tuple<bool, string> Validar(ListaFuncionario lista)
         {
             int fila = 1;
             int columna = 0;
@@ -62,40 +61,33 @@ namespace AppIntegrador.Controllers
                 return Tuple.Create(false, mensajeError);
             }
 
-            //Correo Estudiante
+            //Correo funcionario
             columna++;
-            if (!ValidarEmail(lista.CorreoEstudiante) || checkForSQLInjection(lista.CorreoEstudiante))
+            if (!ValidarEmail(lista.CorreoFuncionario) || checkForSQLInjection(lista.CorreoFuncionario))
             {
-                mensajeError = "El campo correo estudiante en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError);
             }
 
-            //Correo estudiante empadronado
+            //Correo Profe
             columna++;
-            if (!ValidarEmail(lista.CorreoEstudianteEmpadronado) || checkForSQLInjection(lista.CorreoEstudianteEmpadronado))
+            if (!ValidarEmail(lista.CorreoProfesor) || checkForSQLInjection(lista.CorreoProfesor))
             {
-                mensajeError = "El campo correo estudiante en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                mensajeError = "El campo correo profesor en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError);
             }
 
-            //Codigo Carrera
+            //Correo funcionario Trabaja
             columna++;
-            if (!ValidarTamanoText(lista.CodigoCarreraEmpadronado, 15) || checkForSQLInjection(lista.CodigoCarreraEmpadronado))
+            if (!ValidarEmail(lista.CorreoFuncionarioTrabaja) || checkForSQLInjection(lista.CorreoFuncionarioTrabaja))
             {
-                mensajeError = "El campo codigo de carrera en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError);
             }
-
-            //Codigo Enfasis
-            columna++;
-            if (!ValidarTamanoText(lista.CodigoEnfasisEmpadronado, 15) || checkForSQLInjection(lista.CodigoEnfasisEmpadronado))
-            {
-                mensajeError = "El campo codigo de enfasis en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError);
-            }
+            
+            //FALTA VALIDAR EL CODIGO UNIDAD ACADEMICA DONDE TRABAJA
             fila++;
             return Tuple.Create(true, "");
         }
-
     }
 }
