@@ -3,7 +3,7 @@
     constructor(tipo) {
 
         this.base = document.createElement("div");
-        this.base.className = "row content";
+        this.base.className = "row filaBase";
         this.base.id = tipo;
 
     }
@@ -22,24 +22,23 @@ class BaseDosCol extends BaseRespuesta{
 
         super(tipo);
         this.leftCol = document.createElement("div");
-        this.leftCol.className = "col";
+        this.leftCol.className = "col columnaIzquierda";
+        this.leftCol.style = "background-color: #ffffff; border: 0px;"
         this.rightCol = document.createElement("div");
-        this.rightCol.className = "col";
-        this.rowCanvas = document.createElement("div");
-        this.rowCanvas.className = "row";
+        this.rightCol.className = "col columnaDerecha";
+        this.rightCol.style = "background-color: #ffffff; border: 0px;"
         this.canvas = document.createElement("canvas");
         this.canvas.setAttribute("width", "250vw"); //Ancho canvas
-        this.canvas.setAttribute("height", "150vh"); //Largo canvas
+        this.canvas.setAttribute("height", "180vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
-        var tituloJustificacion = document.createElement("h3");
-        tituloJustificacion.innerText = "Justificación de los resultados";
-        this.rightCol.appendChild(tituloJustificacion);    
+        this.tituloJustificacion = document.createElement("h4");
+        this.tituloJustificacion.className = "tituloJustificacion";
+        this.rightCol.appendChild(this.tituloJustificacion);    
 
         this.rightCol.appendChild(this.justificacion);
-        this.rowCanvas.appendChild(this.canvas);
-        this.leftCol.appendChild(this.rowCanvas);
+        this.leftCol.appendChild(this.canvas);
         this.base.appendChild(this.leftCol);
         this.base.appendChild(this.rightCol);
 
@@ -49,6 +48,10 @@ class BaseDosCol extends BaseRespuesta{
 
         return this.canvas;
 
+    }
+
+    getElementoTituloJustificacion() {
+        return this.tituloJustificacion;
     }
 
     getElementoJustificacion() {
@@ -96,11 +99,7 @@ class BaseTexto extends BaseRespuesta {
         super(tipo);
         this.textoAbierto = document.createElement("div");
         this.textoAbierto.className = "myBox textoAbierto";
-
-        var tituloJustificacion = document.createElement("h3");
-        tituloJustificacion.innerText = "Respuestas";
-
-        this.base.appendChild(tituloJustificacion);    
+   
         this.base.appendChild(this.textoAbierto);
 
 

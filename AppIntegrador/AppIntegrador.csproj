@@ -174,10 +174,13 @@
     <Compile Include="Controllers\AccionablesController.cs" />
     <Compile Include="Controllers\AccionDeMejoraController.cs" />
     <Compile Include="Controllers\ActivaFormularioController.cs" />
+    <Compile Include="Controllers\AsignacionFormulariosController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EnlaceSeguroController.cs" />
     <Compile Include="Controllers\FormulariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LlenarFormularioController.cs" />
     <Compile Include="Controllers\ObjetivosController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
@@ -187,9 +190,18 @@
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
+    <Compile Include="Controllers\Validador.cs" />
+    <Compile Include="Controllers\ValidadorGuia.cs" />
+    <Compile Include="Controllers\ValidadorListaClase.cs" />
+    <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
+    <Compile Include="Controllers\ValidadorListaFuncionarios.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
+    <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
+    <Compile Include="Helpers\SiteSettings.cs" />
+    <Compile Include="Helpers\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Accionable.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -208,7 +220,6 @@
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
-    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -239,6 +250,9 @@
     <Compile Include="Models\EnfasisXCarrera_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnlaceSeguro.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Escalar.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -249,16 +263,27 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormularioAsignado.cs" />
     <Compile Include="Models\Formulario_tiene_seccion.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Funcionario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getPlanFull_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GuiaHorario.cs" />
+    <Compile Include="Models\ListaClase.cs" />
+    <Compile Include="Models\ListaEstudiante.cs" />
+    <Compile Include="Models\ListaFuncionario.cs" />
     <Compile Include="Models\Metadata\AccionableMetadata.cs" />
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
@@ -266,8 +291,48 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProfesoresFiltros.cs" />
-    <Compile Include="Models\FormulariosFiltros.cs" />
+    <Compile Include="Models\ObtenerCarrerasEnfasisFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerCarrerasEnfasisGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerCarrerasEnfasisProfesor_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerCarrerasEnfasisUA_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosDeEstudiante_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosProfesor_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerGruposCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerGruposFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerGruposProfesor_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerGruposUA_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -275,6 +340,18 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerProfesoresCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerProfesoresFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerProfesoresGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerProfesoresUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerRespuestaLibreGuardada_Result.cs">
@@ -287,6 +364,18 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsProfesor_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -310,15 +399,13 @@
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
-    <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\Persona.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PersonProfileViewHolder.cs" />
     <Compile Include="Models\PlanDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\PlantillaAccionDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -338,6 +425,14 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
+    <Compile Include="Models\PermissionManagerViewBuilder.cs" />
+    <Compile Include="Models\PermissionsViewHolder.cs" />
+    <Compile Include="Models\PersonProfileViewHolder.cs" />
+    <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProfilePermissionViewHolder.cs" />
@@ -363,6 +458,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
+    <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnidadAcademica.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -395,18 +493,28 @@
     <Compile Include="Utilities\EmailNotification.cs" />
     <Compile Include="Utilities\FormsAuth.cs" />
     <Compile Include="Utilities\IAuth.cs" />
+    <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Email\EmailFooterTemplate.htm" />
     <Content Include="Content\Email\EmailHeaderTemplate.htm" />
+    <Content Include="Content\images\defaultuser.png" />
+    <Content Include="Content\images\firma.png" />
     <Content Include="Content\images\logo_ucr.png" />
     <Content Include="Content\Navbar\navbar.css" />
+    <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
+    <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\Visualizacion\texto_abierto_icono.png" />
     <Content Include="Content\Visualizacion\multiselect.css" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -418,6 +526,11 @@
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
       <LastGenOutput>DataIntegradorModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Formularios\almacenador.js" />
+    <Content Include="Scripts\Formularios\filtrosAsignacion.js" />
+    <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
+    <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
     <Content Include="Content\UsuariosYPerfiles\Perfiles.css" />
@@ -522,13 +635,6 @@
     <Content Include="Content\BootstrapSccs\vendor\_rfs.scss" />
     <Content Include="compilerconfig.json" />
     <Content Include="Content\Main.scss" />
-    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataIntegradorModel.edmx.diagram">
-      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap4.3.min.js" />
     <Content Include="Scripts\creacionpregunta.js" />
     <Content Include="Scripts\Formularios\AgregarPreguntas.js" />
@@ -538,7 +644,14 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
-    <Content Include="ArchivoCSV\archivo.csv" />
+    <Content Include="Estudiantes\archivo.csv" />
+    <EntityDeploy Include="Models\DataIntegradorModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataIntegradorModel.edmx.diagram">
+      <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Formularios\CrearPreguntasModal.js" />
     <Content Include="Scripts\Formularios\FormulariosModal.js" />
@@ -551,7 +664,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\PlanDeMejora\planesDeMejora.js" />
     <Content Include="Scripts\Plugins\bootstrap-notify.js" />
     <Content Include="Scripts\Plugins\jquery.dirrty.js" />
     <Content Include="Scripts\Plugins\sweetalert2.all.js" />
@@ -601,12 +713,8 @@
     <Content Include="Views\PreguntaConOpcionesDeSeleccion\OpcionesDeSeleccion.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\PlanDeMejora\Create.cshtml" />
-    <Content Include="Views\PlanDeMejora\Delete.cshtml" />
-    <Content Include="Views\PlanDeMejora\Details.cshtml" />
-    <Content Include="Views\PlanDeMejora\Edit.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
-    <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
+    <Content Include="Views\ResultadosFormulario\ResultadosFormulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />
     <Content Include="Views\Formularios\Details.cshtml" />
@@ -631,7 +739,6 @@
     <Content Include="Views\Objetivos\Index.cshtml" />
     <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
@@ -641,9 +748,8 @@
     <Content Include="Views\AccionDeMejora\Index.cshtml" />
     <Content Include="Views\AccionDeMejora\_createAccionDeMejora.cshtml" />
     <Content Include="Views\Home\PasswordReset.cshtml" />
-    <Content Include="Views\Objetivos\_tablaObjetivos.cshtml" />
+    <Content Include="Views\Objetivos\_TablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crearPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
     <Content Include="Views\Preguntas\Create.cshtml" />
@@ -673,10 +779,7 @@
     <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
     <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
-    <Content Include="Views\PlanDeMejora\CrearPlanDeMejora.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
-    <Content Include="Views\TipoObjetivos\Delete.cshtml" />
-    <Content Include="Views\TipoObjetivos\Details.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
     <Content Include="Views\Objetivos\_DeletePartialModal.cshtml" />
@@ -694,10 +797,27 @@
     <Content Include="Views\ActivaFormulario\Details.cshtml" />
     <Content Include="Views\ActivaFormulario\Edit.cshtml" />
     <Content Include="Views\ActivaFormulario\Index.cshtml" />
-    <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
+    <Content Include="Views\PlanDeMejora\Crear.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_AnadirFormularios.cshtml" />
+    <Content Include="Views\PlanDeMejora\_TablaFormularios.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalAnadirProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalAnadirFormularios.cshtml" />
+    <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
+    <Content Include="Views\TipoObjetivos\Index.cshtml" />
+    <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
+    <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
+    <Content Include="Views\AsignacionFormularios\Index.cshtml" />
+    <Content Include="Views\CSV\Clase.cshtml" />
+    <Content Include="Views\CSV\GuiaHorarios.cshtml" />
+    <Content Include="Views\CSV\Funcionarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Funcionarios\" />
+    <Folder Include="Guias Horario\" />
+    <Folder Include="Listas de Clase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -6,9 +6,26 @@ body {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
 }
 
-h3 {
+.mensajeError {
+    color: #3d3d3d !important;
+}
+
+.enunciadoPregunta {
+    text-align: center !important;
+    color: #3d3d3d !important;
+    font-size: 22px !important;
+}
+
+.tituloJustificacion {
+    text-align: center !important;
+    color: #4a4a4a !important;
+    font-size: 18px !important;
+    margin-top: 30px !important;
+}
+
+.tituloEstadisticas {
     text-align: center;
-    color: #747474;
+    color: #4a4a4a;
 }
 
 .breadcrumb {
@@ -63,19 +80,26 @@ h3 {
 
 /*Llugar donde se dibuja el gráfico*/
 canvas{
-    margin: 50px auto;
-    height: inherit;
+    margin: auto;
+    height: 100%;
     min-height: inherit;
     width: inherit;
     min-width: inherit;
 }
 
+canvas.graficosPromedio {
+    height: 100% !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    display: block;
+       
+}
+
 /*Cuadro para las justificaciones*/
-.myBox {
+div.row.myBox, div.myBox {
     position: relative;
     vertical-align: middle;
     margin: 30px auto;
-    margin-top: 0;
     font: 18px;
     width: inherit;
     height: inherit;
@@ -83,22 +107,23 @@ canvas{
     background-color: lightgray;
     list-style-position: inside;
     position: inherit;
+    padding: 0px !important;
 }
 
 .myBox ul 
 {
     background-color: inherit;
     padding: 0px;
-    width: inherit;
+    width: 100%;
     list-style: none;
-    margin-bottom: 0;
+    margin: auto;
     max-height: 35.3vh;
 }
 
 .myBox ul li {
     background-color: white;
     height: auto;
-    color: #6b6b6b;
+    color: #595959;
     margin: 4px;
     padding: 8px;
 }
@@ -106,18 +131,21 @@ canvas{
 .textoAbierto ul {
     background-color: inherit;
     padding: 0px;
-    width: 70vw;
+    width: 50vw;
     list-style: none;
     margin-bottom: 0;
     max-height: 35.3vh;
 }
 
 
-.estadisticas {
-    background-color: #e6e6e6;
+div.row.estadisticas {
+    background-color: #f5f5f5;
     font: 15px;
     color: #747474;
     text-align: center;
+    width: 100%;
+    margin: 0px !important;
+    padding: 0px !important
 }
 
 .col{
@@ -205,13 +233,15 @@ canvas{
     margin: 0 !important;
     padding: 0 !important;
     margin-bottom: 1% !important;
+    text-align:center;
 }
 
 /*Estilo para la columna que se despliega dentro de la sección de promedios*/
 #promedios .col{
     height: 100%;
     margin:0 !important;
-    padding:0 !important;
+    padding:40px !important;
+    padding-top: 0 !important;
 }
 
 /*Estilo para la sección donde se despliega la cuadrícula con resultados de un formulario*/
@@ -227,7 +257,6 @@ canvas{
 #cuadricula .col {
     height: 100%;
     margin: 0 !important;
-    padding: 0 !important;
 }
 
 .multiselect-container > li > a > label.checkbox {
@@ -302,4 +331,41 @@ span.multiselect-selected-text {
     max-width: 95%;
     display: inline-flex;
     overflow: hidden;
-}
+}}
+
+/*Estilos para la vista parcial*/
+
+div.row.filaBase {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+div.col.columnaIzquierda {
+    height: 100% !important;
+    padding: 50px !important;
+    flex: 1 !important;
+}
+
+div.col.columnaDerecha {
+    height: 100% !important;
+    padding: 50px !important;
+    flex: 1 !important;
+}
+
+.contenerdorSecciones {
+    height: 10% !important;
+}
+
+.filaSecciones {
+    height: 10% !important;
+}
+
+.flexPregunta {
+    padding: 25px !important;
+}
+
+.labelcito {
+    font-size: 14px;
+}

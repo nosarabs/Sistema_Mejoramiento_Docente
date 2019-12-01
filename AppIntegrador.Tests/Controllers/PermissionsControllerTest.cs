@@ -1,16 +1,22 @@
 ﻿using AppIntegrador;
+using System.Data.Entity;
 using AppIntegrador.Controllers;
 using AppIntegrador.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web;
-using System.Security.Principal;
-using System.IO;
-using System.Web.Helpers;
 using System.Web.SessionState;
-using System.Reflection;
+using EntityFramework.Testing;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -21,8 +27,8 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestCargarPerfil()
         {
+            Init("admin@mail.com");
             PermissionsController controller = new PermissionsController();
-            Init();
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             JsonResult perfiles = controller.CargarPerfil();
             string test = "{\"data\":[\"Superusuario\"]}";
@@ -34,11 +40,11 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestCargarUsuariosPermisos()
         {
+            Init("admin@mail.com");
             PermissionsController controller = new PermissionsController();
-            Init();
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             JsonResult checkboxes = controller.CargarCheckboxes("8", CurrentUser.getUserProfile(), "0000000001", "0000000001");
-            string test = "{\"persons\":[{\"PersonMail\":\"bakers@mail.com\",\"Checked\":false},{\"PersonMail\":\"mosqueteros@mail.com\",\"Checked\":false},{\"PersonMail\":\"rip@mail.com\",\"Checked\":false},{\"PersonMail\":\"tamales@mail.com\",\"Checked\":false},{\"PersonMail\":\"denisse@mail.com\",\"Checked\":false},{\"PersonMail\":\"christian.asch4@gmail.com\",\"Checked\":false},{\"PersonMail\":\"kirsten@mail.com\",\"Checked\":false},{\"PersonMail\":\"daniel@mail.com\",\"Checked\":false},{\"PersonMail\":\"tina@mail.com\",\"Checked\":false},{\"PersonMail\":\"ismael@mail.com\",\"Checked\":false},{\"PersonMail\":\"andres@mail.com\",\"Checked\":false},{\"PersonMail\":\"cristian.quesadalopez@ucr.ac.cr\",\"Checked\":false},{\"PersonMail\":\"ericrios24@gmail.com\",\"Checked\":false},{\"PersonMail\":\"berta@mail.com\",\"Checked\":false},{\"PersonMail\":\"josue@mail.com\",\"Checked\":false}],\"permissions\":[{\"PermissionName\":\"Ver usuarios\",\"PermissionCode\":101,\"Checked\":true},{\"PermissionName\":\"Crear usuarios\",\"PermissionCode\":102,\"Checked\":true},{\"PermissionName\":\"Ver detalles de usuarios\",\"PermissionCode\":103,\"Checked\":true},{\"PermissionName\":\"Editar usuarios\",\"PermissionCode\":104,\"Checked\":true},{\"PermissionName\":\"Borrar usuarios\",\"PermissionCode\":105,\"Checked\":true},{\"PermissionName\":\"Crear formularios\",\"PermissionCode\":201,\"Checked\":true},{\"PermissionName\":\"Ver formularios\",\"PermissionCode\":202,\"Checked\":true},{\"PermissionName\":\"Crear secciones\",\"PermissionCode\":203,\"Checked\":true},{\"PermissionName\":\"Ver secciones\",\"PermissionCode\":204,\"Checked\":true},{\"PermissionName\":\"Crear preguntas\",\"PermissionCode\":205,\"Checked\":true},{\"PermissionName\":\"Ver preguntas\",\"PermissionCode\":206,\"Checked\":true},{\"PermissionName\":\"Ver planes de mejora\",\"PermissionCode\":301,\"Checked\":true},{\"PermissionName\":\"Crear planes de mejora\",\"PermissionCode\":302,\"Checked\":true},{\"PermissionName\":\"Editar planes de mejora\",\"PermissionCode\":303,\"Checked\":true},{\"PermissionName\":\"Borrar planes de mejora\",\"PermissionCode\":304,\"Checked\":true},{\"PermissionName\":\"Crear objetivos\",\"PermissionCode\":305,\"Checked\":true},{\"PermissionName\":\"Ver objetivos\",\"PermissionCode\":306,\"Checked\":true},{\"PermissionName\":\"Editar objetivos\",\"PermissionCode\":307,\"Checked\":true},{\"PermissionName\":\"Borrar objetivos\",\"PermissionCode\":308,\"Checked\":true},{\"PermissionName\":\"Crear acciones de mejora\",\"PermissionCode\":309,\"Checked\":true},{\"PermissionName\":\"Ver acciones de mejora\",\"PermissionCode\":310,\"Checked\":true},{\"PermissionName\":\"Editar acciones de mejora\",\"PermissionCode\":311,\"Checked\":true},{\"PermissionName\":\"Borrar acciones de mejora\",\"PermissionCode\":312,\"Checked\":true},{\"PermissionName\":\"Ver respuestas de formularios\",\"PermissionCode\":401,\"Checked\":true}]}";
+            string test = "{\"persons\":[{\"PersonMail\":\"bakers@mail.com\",\"Checked\":false},{\"PersonMail\":\"mosqueteros@mail.com\",\"Checked\":false},{\"PersonMail\":\"rip@mail.com\",\"Checked\":false},{\"PersonMail\":\"tamales@mail.com\",\"Checked\":false},{\"PersonMail\":\"denisse@mail.com\",\"Checked\":false},{\"PersonMail\":\"christian.asch4@gmail.com\",\"Checked\":false},{\"PersonMail\":\"paco@mail.com\",\"Checked\":false},{\"PersonMail\":\"kirsten@mail.com\",\"Checked\":false},{\"PersonMail\":\"daniel@mail.com\",\"Checked\":false},{\"PersonMail\":\"tina@mail.com\",\"Checked\":false},{\"PersonMail\":\"ismael@mail.com\",\"Checked\":false},{\"PersonMail\":\"marcelo.jenkins@ucr.ac.cr\",\"Checked\":false},{\"PersonMail\":\"alexandra.martinez@ucr.ac.cr\",\"Checked\":false},{\"PersonMail\":\"andres@mail.com\",\"Checked\":false},{\"PersonMail\":\"cristian.quesadalopez@ucr.ac.cr\",\"Checked\":false},{\"PersonMail\":\"lola@mail.com\",\"Checked\":false},{\"PersonMail\":\"ericrios24@gmail.com\",\"Checked\":false},{\"PersonMail\":\"berta@mail.com\",\"Checked\":false},{\"PersonMail\":\"josue@mail.com\",\"Checked\":false}],\"permissions\":[{\"PermissionName\":\"Ver usuarios\",\"PermissionCode\":101,\"Checked\":true},{\"PermissionName\":\"Crear usuarios\",\"PermissionCode\":102,\"Checked\":true},{\"PermissionName\":\"Ver detalles de usuarios\",\"PermissionCode\":103,\"Checked\":true},{\"PermissionName\":\"Editar usuarios\",\"PermissionCode\":104,\"Checked\":true},{\"PermissionName\":\"Borrar usuarios\",\"PermissionCode\":105,\"Checked\":true},{\"PermissionName\":\"Crear formularios\",\"PermissionCode\":201,\"Checked\":true},{\"PermissionName\":\"Ver formularios\",\"PermissionCode\":202,\"Checked\":true},{\"PermissionName\":\"Crear secciones\",\"PermissionCode\":203,\"Checked\":true},{\"PermissionName\":\"Ver secciones\",\"PermissionCode\":204,\"Checked\":true},{\"PermissionName\":\"Crear preguntas\",\"PermissionCode\":205,\"Checked\":true},{\"PermissionName\":\"Ver preguntas\",\"PermissionCode\":206,\"Checked\":true},{\"PermissionName\":\"Ver planes de mejora\",\"PermissionCode\":301,\"Checked\":true},{\"PermissionName\":\"Crear planes de mejora\",\"PermissionCode\":302,\"Checked\":true},{\"PermissionName\":\"Editar planes de mejora\",\"PermissionCode\":303,\"Checked\":true},{\"PermissionName\":\"Borrar planes de mejora\",\"PermissionCode\":304,\"Checked\":true},{\"PermissionName\":\"Crear objetivos\",\"PermissionCode\":305,\"Checked\":true},{\"PermissionName\":\"Ver objetivos\",\"PermissionCode\":306,\"Checked\":true},{\"PermissionName\":\"Editar objetivos\",\"PermissionCode\":307,\"Checked\":true},{\"PermissionName\":\"Borrar objetivos\",\"PermissionCode\":308,\"Checked\":true},{\"PermissionName\":\"Crear acciones de mejora\",\"PermissionCode\":309,\"Checked\":true},{\"PermissionName\":\"Ver acciones de mejora\",\"PermissionCode\":310,\"Checked\":true},{\"PermissionName\":\"Editar acciones de mejora\",\"PermissionCode\":311,\"Checked\":true},{\"PermissionName\":\"Borrar acciones de mejora\",\"PermissionCode\":312,\"Checked\":true},{\"PermissionName\":\"Ver respuestas de formularios\",\"PermissionCode\":401,\"Checked\":true}]}";
             string result = new JavaScriptSerializer().Serialize(checkboxes.Data);
 
             Assert.AreEqual(test, result);
@@ -55,20 +61,12 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-        public void EntrarCargarUsuariosSinPermiso()
+        public void TestEntrarCargarUsuariosSinPermiso()
         {
-            
+            Init("andres@mail.com");
             CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
-            var httpContext = new HttpContext(
-                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
-                new HttpResponse(new StringWriter())
-            );
-            var tempData = new TempDataDictionary();
-            //tempData["SessionVariable"] = "admin";
-            PermissionsController controller = new PermissionsController()
-            {
-                TempData = tempData
-            };
+            PermissionsController controller = new PermissionsController();
+
             RedirectToRouteResult result = controller.Index() as RedirectToRouteResult;
             System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
             dictionary.Add("action", "Index");
@@ -77,12 +75,12 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página.");
             Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
             Assert.AreEqual(result.RouteValues["controller"], expected.RouteValues["controller"]);
-            CurrentUser.deleteCurrentUser("andres@mail.com");
         }
 
         [TestMethod]
         public void TestIndexNotNull()
         {
+            Init("admin@mail.com");
             PermissionsController controller = new PermissionsController();
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Assert.IsNotNull(controller.Index());
@@ -91,6 +89,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestSeleccionarPerfilNotNull()
         {
+            Init("admin@mail.com");
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             PermissionsController controller = new PermissionsController();
             Assert.IsNotNull(controller.SeleccionarPerfil());
@@ -99,6 +98,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestGuardarSeleccion()
         {
+            Init("andres@mail.com");
             PermissionsController controller = new PermissionsController();
             CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
             controller.GuardarSeleccion("Profesor", "0000000001", "0000000001");
@@ -117,11 +117,95 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual(result, expected);
         }
 
-        [TestInitialize]
-        public void Init()
+        [TestMethod]
+        public void TestCargarDatosDefault()
+        {
+            string correo = "admin@mail.com";
+            var persona = new Persona()
+            {
+                Correo = correo,
+                Identificacion = "123456781",
+                Apellido1 = "Admin",
+                Nombre1 = "Admin",
+                TipoIdentificacion = "Cédula"
+            };
+
+            var usuario = new Usuario()
+            {
+                Activo = true
+            };
+
+            var carreras = new List<Carrera>
+            {
+                new Carrera() { Codigo = "0000000001", Nombre = "Bachillerato en Computación" }
+            };
+
+            var enfasis = new List<Enfasis>
+            {
+                new Enfasis() { CodCarrera = "0000000001", Codigo = "0000000000", Nombre = "Tronco Común" },
+                new Enfasis() { CodCarrera = "0000000001", Codigo = "0000000001", Nombre = "Ingeniería de Software" }
+            };
+
+            var perfiles = new List<Perfil>
+            {
+                new Perfil() { Nombre = "Administrador" },
+                new Perfil() { Nombre = "Director" }
+            };
+
+            var database = new Mock<DataIntegradorEntities>();
+
+            database.Setup(m => m.Persona.Find(correo)).Returns(persona);
+            database.Setup(m => m.Usuario.Find(correo)).Returns(usuario);
+
+            database.Setup(m => m.Carrera).Returns(new Mock<DbSet<Carrera>>().SetupData(carreras, o => {
+                return carreras.Single(x => x.Codigo == (string)o.First());
+            }).Object);
+
+            database.Setup(m => m.Enfasis).Returns(new Mock<DbSet<Enfasis>>().SetupData(enfasis, o => {
+                return enfasis.Single(x => x.CodCarrera == (string)o.First() && x.Codigo == (string)o.First());
+            }).Object);
+
+            database.Setup(m => m.Perfil).Returns(new Mock<DbSet<Perfil>>().SetupData(perfiles, o => {
+                return perfiles.Single(x => x.Nombre == (string)o.First());
+            }).Object);
+
+            Init("admin@mail.com");
+            CurrentUser.setCurrentUser("admin@mail.com", "Administrador", "0000000001", "0000000000");
+
+            PermissionsController controller = new PermissionsController(database.Object);
+            JsonResult json = controller.CargarDatosDefault();
+            string result = new JavaScriptSerializer().Serialize(json.Data);
+            string expected = "{\"defaultProfile\":\"Administrador\",\"defaultMajor\":\"0000000001,Bachillerato en Computación\",\"defaultEmphasis\":\"0000000001,Ingeniería de Software\"}";
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void TestGuardarPermisosSinPermiso()
+        {
+            Init("andres@mail.com");
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            PermissionsController controller = new PermissionsController()
+            {
+                TempData = tempData
+            };
+            PermissionsViewHolder model = new PermissionsViewHolder();
+            RedirectToRouteResult result = controller.GuardarPermisos(model, false) as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página.");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+        }
+
+        public void Init(string username)
         {
             //No aseguramos que admin no haya quedado logeado por otros tests.
-            CurrentUser.deleteCurrentUser("admin@mail.com");
+            CurrentUser.deleteCurrentUser(username);
 
             // We need to setup the Current HTTP Context as follows:            
 
@@ -134,7 +218,7 @@ namespace AppIntegrador.Tests.Controllers
             // Step 3: Setup the Http Context
             var httpContext = new HttpContext(httpRequest, httpResponce);
             var sessionContainer =
-                new HttpSessionStateContainer("admin@mail.com",
+                new HttpSessionStateContainer(username,
                                                new SessionStateItemCollection(),
                                                new HttpStaticObjectsCollection(),
                                                10,
@@ -152,12 +236,18 @@ namespace AppIntegrador.Tests.Controllers
                                     null)
                 .Invoke(new object[] { sessionContainer });
 
-            var fakeIdentity = new GenericIdentity("admin@mail.com");
+            var fakeIdentity = new GenericIdentity(username);
             var principal = new GenericPrincipal(fakeIdentity, null);
 
             // Step 4: Assign the Context
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            CurrentUser.deleteAllUsers();
         }
     }
 }

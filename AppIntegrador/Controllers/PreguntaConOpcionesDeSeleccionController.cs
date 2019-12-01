@@ -212,7 +212,7 @@ namespace AppIntegrador.Controllers
                 }
                 try
                 {
-                    if(db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Pregunta_con_opciones.Pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion) == 0)
+                    if(db.AgregarPreguntaConOpcion(pregunta.Codigo, "U", pregunta.Pregunta_con_opciones.Pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion, null) == 0)
                     {
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
                         return View(pregunta);

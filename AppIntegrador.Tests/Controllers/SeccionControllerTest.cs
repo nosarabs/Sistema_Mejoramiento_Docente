@@ -6,6 +6,9 @@ using System.Text;
 using System.Web.Mvc;
 using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Models;
+using Moq;
+using System.Web.Helpers;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -168,6 +171,20 @@ namespace AppIntegrador.Tests.Controllers
 
             result = seccionController.Create("", "", "E", "") as ViewResult;
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestAgregarPreguntas()
+        {
+            var mockDb = new Mock<DataIntegradorEntities>();
+            SeccionController seccionController = new SeccionController(mockDb.Object);
+
+            string codSeccion = "00000001";
+            List<string> codPreguntas = new List<string> { "00000001", "00000002" };
+
+            JsonResult result = seccionController.AgregarPreguntas(codSeccion, codPreguntas) as JsonResult;
+
+            Assert.AreEqual("{ insertadoExitoso = True }", result.Data.ToString());
         }
     }
 }

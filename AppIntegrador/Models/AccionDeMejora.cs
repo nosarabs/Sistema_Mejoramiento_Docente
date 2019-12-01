@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public AccionDeMejora()
         {
             this.Accionable = new HashSet<Accionable>();
+            this.Pregunta = new HashSet<Pregunta>();
         }
     
         public int codPlan { get; set; }
@@ -32,5 +33,7 @@ namespace AppIntegrador.Models
         public virtual ICollection<Accionable> Accionable { get; set; }
         public virtual Objetivo Objetivo { get; set; }
         public virtual PlantillaAccionDeMejora PlantillaAccionDeMejora { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pregunta> Pregunta { get; set; }
     }
 }

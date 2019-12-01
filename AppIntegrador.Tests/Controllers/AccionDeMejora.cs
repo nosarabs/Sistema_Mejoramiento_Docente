@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AppIntegrador;
 using AppIntegrador.Controllers;
 using System.Web;
+using Moq;
+using AppIntegrador.Models;
 
 
 namespace AppIntegrador.Tests.Controllers
@@ -25,10 +27,6 @@ namespace AppIntegrador.Tests.Controllers
 
         private TestContext testContextInstance;
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
         public TestContext TestContext
         {
             get
@@ -77,6 +75,23 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
 
+        }
+
+        [TestMethod]
+        public void IndexNotNull()
+        {
+            AccionDeMejoraController accion = new AccionDeMejoraController();
+            var indexResult = accion.Index();
+            Assert.IsNotNull(indexResult);
+        }
+
+        [TestMethod]
+        public void IndexName()
+        {
+            var accion = new AccionDeMejoraController();
+            var indexResult = accion.Index() as ViewResult;
+            Assert.AreEqual("Index", indexResult.ViewName);
+            accion.Dispose();
         }
     }
 }

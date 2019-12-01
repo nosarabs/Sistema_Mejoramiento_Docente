@@ -16,12 +16,25 @@ namespace AppIntegrador.Controllers
     /*TAM-3.1, 3.2, 3.4, 3.5, 3.6, 3.7, 4.1: Controlador que implementa la funcionalidad de la página de administración de permisos y perfiles. */
     public class PermissionsController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+
+        private readonly IPerm permissionManager;
+
+        public PermissionsController()
+        {
+            db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
+        }
+
+        public PermissionsController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         public ActionResult Index()
         {
             /*Solo se puede acceder a este método si el usuario tiene un perfil con los permisos apropiados.*/
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("Index", "Home");
@@ -66,7 +79,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -184,9 +197,7 @@ namespace AppIntegrador.Controllers
                     }
                 }
             }
-            JsonResult result = Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
-            string resultString = new JavaScriptSerializer().Serialize(result.Data);
-            return result;
+            return Json(new { persons = PermissionManagerViewBuilder.ListPersonProfiles(model.Personas), permissions = PermissionManagerViewBuilder.ListProfilePermissions(model.Permisos) });
         }
         /*Fin TAM-3.2*/
 

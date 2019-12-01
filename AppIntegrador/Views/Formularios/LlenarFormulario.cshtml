@@ -7,6 +7,8 @@
     @using (Html.BeginForm("GuardarRespuestas", "Formularios", FormMethod.Post))
     {
         @Html.Hidden("respuestas.FCodigo", null, new { @id = "respuestas.FCodigo", @Value = Model.Formulario.Codigo })
+        @Html.Hidden("respuestas.Finalizado", null, new { @id = "respuestas.Finalizado", @Value = 0 })
+
         <div class="card card-header shadow">
             <h2 id="encabezado" class="text-center">@Html.DisplayFor(model => model.Formulario.Nombre)</h2>
         </div>
@@ -18,9 +20,11 @@
 
         <div class="card card-body shadow form-group float-right sticky-bottom">
             <div>
-                <button type="submit" class="btn-azulUCR">Guardar Respuestas</button>
 
-                @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller", new { @class = "btn-blancoUCR" })
+                <button type="submit" class="btn-azulUCR" onclick="FinalizarFomulario()">Finalizar formulario</button>
+                <button type="submit" class="btn-blancoUCR">Guardar Respuestas</button>
+
+                @Html.ActionLink("Cancelar", "LlenarFormulario", "Controller")
             </div>
         </div>
 
@@ -28,3 +32,14 @@
 
 </div>
 
+@section scripts {
+
+    <script>
+        function FinalizarFomulario() {
+            var finalizado = true;
+            document.getElementById("respuestas.Finalizado").value = finalizado;
+        }
+
+    </script>
+
+}

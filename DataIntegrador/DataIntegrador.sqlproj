@@ -73,6 +73,9 @@
     <Folder Include="Filtros\FiltrosGrupo" />
     <Folder Include="Filtros\FiltrosCarreraEnfasis" />
     <Folder Include="Filtros\FiltrosUA" />
+    <Folder Include="Usuarios y Perfiles\Indices" />
+    <Folder Include="PlanesDeMejora\Indices" />
+    <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
   </ItemGroup>
@@ -237,11 +240,35 @@
     <Build Include="Filtros\Indices\Index_CodigoPregunta_OpSelecRespConOps.sql" />
     <Build Include="Filtros\Indices\Index_Finalizado_RespForm.sql" />
     <Build Include="Filtros\FiltrosFormulario\Indices\Index_FechaFin.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\getPlanFull.sql" />
+    <Build Include="PlanesDeMejora\Indices\nombrePersona.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\GetTeacherName.sql" />
+    <Build Include="PlanesDeMejora\Indices\IndicePlanMejora.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesObjetivos.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionesDeMejora.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Identificacion.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\Carnet.sql" />
+    <Build Include="EnlaceSeguro.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
+    <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
+    <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
+    <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\GruposXPerfiXlUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\ProfesoresXUsuarioXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Usuarios y Perfiles\Indices\IndicePersona.sql" />
   </ItemGroup>
 </Project>

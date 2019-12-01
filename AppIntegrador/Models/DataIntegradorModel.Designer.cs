@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\Denisse Alfaro\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\Models\DataIntegradorModel.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\cruzc\Source\Repos\ecci_ci0128_ii2019\AppIntegrador\Models\DataIntegradorModel.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

@@ -1,6 +1,4 @@
-﻿@model AppIntegrador.Models.ArchivoCSV
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -12,7 +10,7 @@
 <div class="fullWidth">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="impText">Carga CSV</h2>
+            <h2 class="impText">Carga de estudiantes</h2>
         </div>
     </div>
 </div>
@@ -20,8 +18,7 @@
 
     @using (Html.BeginForm("Index", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-
-        <label for="file">Subir archivo CSV:</label>
+        <label for="file">Subir lista de estudiantes:</label>
         <div class="custom-file mb-3">
 
             <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
@@ -30,12 +27,10 @@
 
         <br>
         <br>
-            <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
-            <input type="submit" value="Subir CSV" class="btn btn-primary" />
+        <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
+        <input type="submit" value="Subir CSV" class="btn btn-primary" />
         <br>
         <br>
-
-        @ViewBag.Message
     }
 
 
@@ -58,9 +53,9 @@
                     table.setAttribute('class', 'table table-hover table-striped table-bordered table-sm '); //Una clase para usar bootstrap
                     table.setAttribute('width', '500px');
                     var rows = e.target.result.split("\n"); //Cantidad de Filas
-                    
+
                     var rowHeader = table.insertRow(-1);
-                    var cellsHeader = rows[0].split(","); 
+                    var cellsHeader = rows[0].split(",");
                     if (cellsHeader.length > 1) {
                         for (var i = 0; i < cellsHeader.length; ++i) {
                             var headerCell = document.createElement("TH");
@@ -85,12 +80,48 @@
                 }
                 reader.readAsText(fileUpload.files[0]);
             } else {
-                alert("This browser does not support HTML5.");
+                alert("Su navegador no soporta HTML5");
             }
         }
     </script>
 
     <div id="dvCSV" class="container" style="overflow:auto"></div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            var msg = '@ViewBag.Message';
+            var campo = '@ViewBag.Campo'
+            if (msg == "Exitoso") {
+                const el = document.createElement('div')
+                swal({
+                    title: "¡Archivo cargado exitosamente!",
+                    type: "success",
+                    icon: 'success',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
+                });
+            }
+            else if (msg == "Fallido"){
+                const el = document.createElement('div')
+                swal({
+                    title: "¡Ha ocurrido un error!",
+                    type: "error",
+                    text: campo,
+                    icon: 'error',
+
+                    timer: 100000,
+                    showConfirmButton: true
+
+                });
+            }
+        });
+
+    </script>
 
 </div>
 
