@@ -105,6 +105,86 @@
 
     }
 
+    generarGraficoBarrasPequeno(canvas, datos) {
+
+        var dataLength = datos.DATA.length;
+        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        //chroma.js: https://gka.github.io/chroma.js/
+
+        new Chart(canvas, {
+
+            type: "bar",
+            data: {
+                labels: datos.LABELS,
+                datasets: [
+                    {
+                        label: "Cantidad de estudiantes",
+                        backgroundColor: colors,
+                        hoverBackgroundColor: colors,
+                        borderColor: "black",
+                        borderWidth: 0,
+                        data: datos.DATA
+                    }
+                ]
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 30,
+                        bottom: 0
+                    }
+                },
+                legend: {
+                    display: false,
+                    labels: {
+                        fontColor: "black",
+                        fontSize: 10,
+                    }
+                },
+                title: {
+                    display: false,
+                },
+                tooltips: {
+                    enabled: true
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                devicePixelRatio: 2,
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Cantidad de estudiantes",
+                            fontSize: 10,
+                            fontColor: "#545454",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            fontColor: "#636363",
+                            fontSize: 10,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "#545454",
+                            fontSize: 10,
+                        }
+                    }]
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                }
+            }
+
+        });
+
+    }
+
     generarGraficoPie(canvas, datos) {
 
         var dataLength = datos.DATA.length;
@@ -170,6 +250,56 @@
                             var percentage = ((value * 100 / sum).toFixed(2) + "%").replace(".", ",");
                             return percentage + "\n\n" + value;
                         }
+                    }
+                }
+            }
+
+        });
+
+    }
+
+    generarGraficoPiePequeno(canvas, datos) {
+
+        var dataLength = datos.DATA.length;
+        var colors = chroma.scale(["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]).colors(dataLength);
+        //chroma.js: https://gka.github.io/chroma.js/
+
+        new Chart(canvas, {
+
+            type: "pie",
+            data: {
+                labels: datos.LABELS,
+                datasets: [
+                    {
+                        label: "Cantidad de estudiantes",
+                        backgroundColor: colors,
+                        hoverBackgroundColor: colors,
+                        borderColor: "white",
+                        borderWidth: 1,
+                        data: datos.DATA
+                    }
+                ]
+            },
+            options: {
+                legend: {
+                    display: true,
+                    labels: {
+                        fontColor: "#545454",
+                        fontSize: 10,
+                    }
+                },
+                title: {
+                    display: false,
+                },
+                tooltips: {
+                    enabled: true
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                devicePixelRatio: 2,
+                plugins: {
+                    datalabels: {
+                        display: false
                     }
                 }
             }
@@ -308,7 +438,7 @@
 
     }
 
-    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoEscala(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, tamano) {
 
         var etiquetas = this.recuperarEtiquetasEscala(codigoPregunta);
         var valores = this.recuperarValoresEscala(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
@@ -318,7 +448,16 @@
         if (resultado > 0) {
 
             var datos = { DATA: valores, LABELS: etiquetas };
-            this.generarGraficoBarras(canvas, datos);
+
+            if (tamano) {
+
+                this.generarGraficoBarras(canvas, datos);
+
+            } else {
+
+                this.generarGraficoBarrasPequeno(canvas, datos);
+
+            }
 
         }
 
@@ -326,7 +465,7 @@
 
     }
 
-    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionUnica(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, tamano) {
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
@@ -336,7 +475,16 @@
         if (resultado > 0) {
 
             var datos = { DATA: valores, LABELS: etiquetas };
-            this.generarGraficoPie(canvas, datos);
+
+            if (tamano) {
+
+                this.generarGraficoPie(canvas, datos);
+
+            } else {
+
+                this.generarGraficoPiePequeno(canvas, datos);
+
+            }
 
         }
 
@@ -344,7 +492,7 @@
 
     }
 
-    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionMultiple(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, tamano) {
 
         var etiquetas = this.recuperarEtiquetasSeleccion(codigoPregunta);
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
@@ -364,7 +512,16 @@
             });
 
             var datos = { DATA: valoresOrdenados, LABELS: etiquetasOrdenadas };
-            this.generarGraficoBarras(canvas, datos);
+
+            if (tamano) {
+
+                this.generarGraficoBarras(canvas, datos);
+
+            } else {
+
+                this.generarGraficoBarrasPequeno(canvas, datos);
+
+            }
 
         }
 
@@ -372,7 +529,7 @@
 
     }
 
-    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
+    generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, tamano) {
 
         var etiquetas = ["No", "Sí", "No responde"];
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
@@ -382,7 +539,16 @@
         if (resultado > 0) {
 
             var datos = { DATA: valores, LABELS: etiquetas };
-            this.generarGraficoPie(canvas, datos);
+
+            if (tamano) {
+
+                this.generarGraficoPie(canvas, datos);
+
+            } else {
+
+                this.generarGraficoPiePequeno(canvas, datos);
+
+            }
 
         }
 
