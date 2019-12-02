@@ -507,6 +507,7 @@
     <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
+    <Compile Include="Utilities\ProfilePicture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

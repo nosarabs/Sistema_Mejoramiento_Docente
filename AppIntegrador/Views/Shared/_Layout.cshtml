@@ -43,7 +43,7 @@
                         <h4>Sistema de Mejoramiento Docente</h4>
                     </div>
                     <div class="col m-0 text-right">
-                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
+                        <img height="40" src="@HttpContext.Current.Session["ProfileImage"]" alt="Usuario Default">
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
