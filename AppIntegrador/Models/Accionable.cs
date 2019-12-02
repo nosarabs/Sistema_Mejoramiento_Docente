@@ -26,9 +26,12 @@ namespace AppIntegrador.Models
         public string descripcion { get; set; }
         public Nullable<System.DateTime> fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
-        public Nullable<int> progreso { get; set; }
+        public string tipo { get; set; }
     
         public virtual AccionDeMejora AccionDeMejora { get; set; }
+        public virtual AccionableEscala AccionableEscala { get; set; }
+        public virtual AccionablePorcentaje AccionablePorcentaje { get; set; }
+        public virtual AccionableSiNo AccionableSiNo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Funcionario> Funcionario { get; set; }
     }
