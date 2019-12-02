@@ -69,7 +69,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
 
             }
-            return View();
+            return View("Index");
         }
 
         public ActionResult About()
@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
             }
             ViewBag.Message = "Your application description page.";
-            return View();
+            return View("About");
         }
 
         public ActionResult Contact()
@@ -90,7 +90,7 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View("Contact");
         }
 
         public ActionResult Login()
@@ -303,7 +303,7 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.EnableBS4NoNavBar = true;
             ViewBag.Hash = enlaceSeguroHash;
-            return View();
+            return View("PasswordReset");
         }
 
         [HttpPost]
@@ -405,7 +405,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
             }
             //ViewBag.Message = "Your application description page.";
-            return View();
+            return View("CambiarContrasenna");
         }
 
         [HttpPost]
