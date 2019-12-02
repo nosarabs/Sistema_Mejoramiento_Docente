@@ -162,4 +162,46 @@ class GraficosDashboard {
         };
         var myChart = new Chart(canvas, config);
     }
+
+    generarGraficoNulo(canvas) {
+        var config = {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "0"
+                ],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: [
+                        "#ababab"
+                    ],
+                    hoverBackgroundColor: [
+                        "#ababab"
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    display:false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                },
+                elements: {
+                    center: {
+                        text: "0",
+                        color: "#ababab", // Default is #000000
+                        fontStyle: 'Arial', // Default is Arial
+                        sidePadding: 20 // Defualt is 20 (as a percentage)
+                    }
+                }
+            }
+        };
+        var myChart = new Chart(canvas, config);
+    }
 }

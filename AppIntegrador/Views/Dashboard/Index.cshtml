@@ -194,18 +194,25 @@
         var nRegularC = curso[3];
         var nBuenoC = curso[4];
 
-        $('#pP').text("Promedio Profesor: " + profeP);
-        $('#pN').text("Calificaciones Totales: " + profeN);
-        $('#cP').text("Promedio Curso: " + cursoP);
-        $('#cN').text("Calificaciones Totales: " + cursoN);
-
-
         var canvasP = document.getElementById('gP').getContext('2d');
         var canvasC = document.getElementById('gC').getContext('2d');
 
-        x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
-        x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
+        if (profeP >= 0) {
+            $('#pN').text("Calificaciones Totales: " + profeN);
+            x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
+        } else {
+            $('#pN').text("No existen calificaciones para los formularios filtrados.");
+            x.generarGraficoNulo(canvasP);
 
+        }
+
+        if (cursoP >= 0) {
+            $('#cN').text("Calificaciones Totales: " + cursoN);           
+            x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
+        } else {
+            $('#cN').text("No existen calificaciones para los formularios filtrados.");
+            x.generarGraficoNulo(canvasC);
+        }
     }
 
 </script>
