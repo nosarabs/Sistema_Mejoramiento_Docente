@@ -289,13 +289,13 @@
         if ($('#select_all_profiles').is(':checked')) {
             if (confirm('¿Está seguro de asignar todos los permisos a este perfil?')) {
                 $('.profileCheckbox').prop('checked', true);
-                saveChangesUser();
+                saveChanges();
             } else {
                 $('#select_all_profiles').prop('checked', false);
             }
         } else if (confirm('¿Está seguro de quitar todos los permisos a este perfil?')) {
             $('.profileCheckbox').prop('checked', false);
-            saveChangesUser();
+            saveChanges();
         } else {
             $('#select_all_profiles').prop('checked', true);
         }

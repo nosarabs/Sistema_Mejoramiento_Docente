@@ -80,20 +80,20 @@ BEGIN
 	/* Creando los accionables resepctivos*/
 	MERGE INTO Accionable AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 25),
-		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 50)
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 'P'),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 'S')
 	)
-	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [progreso])
+	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [tipo])
 	ON	Target.codPlan			= Source.codPlan		and 
 		Target.nombreObj		= Source.nombreObj		and 
 		Target.descripAcMej		= Source.descripAcMej	and
 		Target.descripcion		= Source.descripcion	and
 		Target.fechaInicio		= Source.fechaInicio	and
 		Target.fechaFin			= Source.fechaFin		and
-		Target.progreso			= Source.progreso
+		Target.tipo			= Source.tipo
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso)
-	VALUES (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso);
+	INSERT (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, tipo)
+	VALUES (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, tipo);
 
 
 	/**********************************************************************************/

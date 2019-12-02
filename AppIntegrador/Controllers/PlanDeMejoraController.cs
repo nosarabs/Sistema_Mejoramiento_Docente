@@ -77,6 +77,12 @@ namespace AppIntegrador.Controllers
                 plan = new PlanDeMejora();
             }
             List<String> ProfesoresNombreLista = new List<String>();
+            List<String> tiposDeObjetivo = new List<String>();
+            foreach(var tipo in db.TipoObjetivo)
+            {
+                tiposDeObjetivo.Add(tipo.nombre);
+            }
+
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             String name = "NombreCompleto";
             ObjectParameter name_op;
@@ -88,17 +94,19 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             ViewBag.FormulariosLista = db.Formulario.ToList();
+            ViewBag.tiposDeObjetivo = tiposDeObjetivo.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x
+                                  });
+            ;
             return View("Crear", plan);
         }
 
         [HttpPost]
-        public ActionResult Crear(
-            [Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
-            List<String> ProfeSeleccionado = null, 
-            List<String> FormularioSeleccionado = null, 
-            List<Objetivo> Objetivo = null
-            )
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null)
         {
+
             PlanDeMejora planAgregado = new PlanDeMejora();
 
             // Objeto de ayuda business intelligence planes de mejora
@@ -107,12 +115,55 @@ namespace AppIntegrador.Controllers
             // Asignacion del codigo al nuevo plan de mejora
             planesHelper.setCodigoAPlanDeMejora(this.db, plan);
 
+
             // Creacion de las tablas -----
             var tablaPDM = planesHelper.getPlanTable(plan);
             var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
 
             // Enviando las tablas ----
             //planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+
+
+            /* Forma forzada. SOLO PARA EMERGENCIAS */
+            /*
+            if(Objetivo != null)
+            {
+                plan.Objetivo = Objetivo;
+            }
+            if(ProfeSeleccionado != null)
+            {
+                foreach(var correo in ProfeSeleccionado)
+                {
+                    var profe = db.Profesor.Find(correo);
+                    plan.Profesor.Add(profe);
+                }
+            }
+            if(FormularioSeleccionado != null)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    var formulario = db.Formulario.Find(codigo);
+                    plan.Formulario.Add(formulario);
+                }
+            }
+
+            db.PlanDeMejora.Add(plan);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var errors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in errors.ValidationErrors)
+                    {
+                        // get the error message 
+                        string errorMessage = validationError.ErrorMessage;
+                    }
+                }
+            }
+            */
 
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
