@@ -71,14 +71,8 @@
 </script>
 
 <script type="text/javascript">
-    var alturaMax = 200;
-    function cambiarIcono() {
-        //Cambia el ícono dañado por uno de font-awesome
-        var icons = document.getElementsByClassName("glyphicon glyphicon-remove-circle");
-        for (var index = 0; index < icons.length; ++index) {
-            icons[index].className = "fas fa-times";
-        }
-    }
+    var alturaMax = 300;
+
 
     $(document).ready(function () {
         $('#filtroUA').multiselect({
@@ -87,15 +81,6 @@
             numberDisplayed: 1,
             includeSelectAllOption: true,
             maxHeight: alturaMax,
-            //onChange: function (option, checked) {
-            //    alert('Se hizo click en una opción');
-            //},
-            //onSelectAll: function (option, checked) {
-            //    alert('Se hizo click en la opción seleccionar todo');
-            //},
-            //onDeselectAll: function (option, checked) {
-            //    alert('Se hizo click en la opción deseleccionar todo');
-            //}
         });
         $('#filtroCarreraEnfasis').multiselect({
             enableFiltering: true,
@@ -128,8 +113,6 @@
             includeSelectAllOption: true,
             maxHeight: alturaMax,
         });
-
-        cambiarIcono();
 
     });
 </script>
