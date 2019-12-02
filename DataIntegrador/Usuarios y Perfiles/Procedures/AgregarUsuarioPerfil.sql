@@ -7,19 +7,36 @@ CREATE PROCEDURE [dbo].[AgregarUsuarioPerfil]
 	@tienePerfil bit
 AS
 BEGIN
+	SET IMPLICIT_TRANSACTIONS ON
+
+	-- Se configura el nivel de aislamiento para esta transaccion
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+
 	-- Se verifica si se debe asignar o desasignar el perfil
 	IF (@tienePerfil = 1)
 	BEGIN
-		-- Si no existe la asignacion del perfil al usuario entonces se asigna
-		IF NOT EXISTS (SELECT * 
-					   FROM UsuarioPerfil 
-					   WHERE Usuario = @usuario AND Perfil = @perfil 
-					         AND CodCarrera = @codCarrera AND CodEnfasis = @codEnfasis
-					   )
-			BEGIN
-				INSERT INTO UsuarioPerfil (Usuario, Perfil, CodCarrera, CodEnfasis)
-				VALUES (@usuario, @perfil, @codCarrera, @codEnfasis)
-			END
+		-- Uso de transacciones y manejo de errores para evitar el problema de phantom read
+		BEGIN TRY
+			BEGIN TRANSACTION
+				-- Si no existe la asignacion del perfil al usuario entonces se asigna
+				IF NOT EXISTS (SELECT * 
+							   FROM UsuarioPerfil 
+							   WHERE Usuario = @usuario AND Perfil = @perfil 
+									 AND CodCarrera = @codCarrera AND CodEnfasis = @codEnfasis
+							   )
+					BEGIN
+						INSERT INTO UsuarioPerfil (Usuario, Perfil, CodCarrera, CodEnfasis)
+						VALUES (@usuario, @perfil, @codCarrera, @codEnfasis)
+					END			
+			COMMIT TRANSACTION
+			SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+			SET IMPLICIT_TRANSACTIONS OFF
+		END TRY
+		BEGIN CATCH
+			SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+			SET IMPLICIT_TRANSACTIONS OFF
+			ROLLBACK TRANSACTION
+		END CATCH
 	END
 	ELSE
 	BEGIN

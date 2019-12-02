@@ -10,6 +10,7 @@ using System.Data.Entity.Core.Objects;
 using System.Threading.Tasks;
 using AppIntegrador.Utilities;
 using Security.Authentication;
+using AppIntegrador.Helpers;
 
 namespace AppIntegrador.Controllers
 {
@@ -106,6 +107,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateGoogleCaptcha]
         public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
@@ -176,48 +178,36 @@ namespace AppIntegrador.Controllers
         private async Task<ActionResult> WrongPassword(Usuario objUser)
         {
             int failedAttempts = 0;
+            ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
 
             /*If it's this user first failed login attempt, store it somewhere in the system to keep watching 
              this user's activity.*/
             if (System.Web.HttpContext.Current.Session["LoginFailures"] == null)
             {
                 /*Sets the count of failed login attempts to 1.*/
-
                 CurrentUser.setLoginFailures(1);
-                ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
             }
             else
             {
                 /*If this user has already made failed login attempts, increment the counter.*/            
                 failedAttempts = (CurrentUser.getUserLoginFailures() + 1);
 
-                /*If the counter reached the max failed attempts count, lock the account, except for the admin.*/
-                if (failedAttempts == MAX_FAILED_ATTEMPTS && objUser.Username != "admin@mail.com")
+                if (failedAttempts > MAX_FAILED_ATTEMPTS)
                 {
-                    ModelState.AddModelError("Password", "Este usuario está bloqueado temporalmente.\nIntente de nuevo" +
-                        " más tarde.");
-
-                    /*Removes the failed attempts count from the system for this user.*/
-                    System.Web.HttpContext.Current.Application.Remove(objUser.Username);
-
-                    /*Deactivates the user temporarily, asynchronously so that the system doesn't stall.*/
-                    await DeactivateUserTemporarily(objUser).ConfigureAwait(false);
-
-                    return View("Login",objUser);
+                    return View("Login", objUser);
                 }
-                else
-                {
-                    ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
-                }
-
+                            
                 /*Save the failed attempts count back to somewhere in the system.*/                
                 CurrentUser.setLoginFailures(failedAttempts);
-            }
+            }      
+
             return null;
         }
 
         private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser)
         {
+            /*Removes the failed attempts count from the system for this user.*/
+            System.Web.HttpContext.Current.Application.Remove(objUser.Username);
 
             /*To lock the user, first fetch it from the database.*/
             using (var context = new DataIntegradorEntities())

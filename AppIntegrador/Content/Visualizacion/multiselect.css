@@ -1,0 +1,141 @@
+﻿.multiselect-wrapper {
+    width: 100% !important;
+    display: inline-block;
+    white-space: nowrap;
+    border-radius: 5px 5px 5px 5px;
+    font-size: small;
+}
+
+    .multiselect-wrapper .multiselect-input {
+        width: 100%;
+        border-radius: 5px 5px 5px 5px;
+        font-size: small;
+        height: auto;
+    }
+
+    .multiselect-wrapper label {
+        display: block;
+        font-size: small;
+        color: black;
+        margin-bottom: 0;
+        /*font-weight: 600;*/
+    }
+
+    /*Estilo para los items deplegados*/
+    .multiselect-wrapper .multiselect-list {
+        z-index: 1;
+        position: absolute;
+        display: none;
+        background-color: white;
+        border: 1px solid grey;
+        width: auto;
+        border-radius: 5px 5px 5px 5px;
+        font-size: small;
+        margin-top: -2px;
+    }
+
+        .multiselect-wrapper .multiselect-list.active {
+            display: block;
+        }
+
+        .multiselect-wrapper .multiselect-list > span {
+            font-weight: bold;
+        }
+
+        .multiselect-wrapper .multiselect-list .multiselect-checkbox {
+            margin-right: 2px;
+        }
+
+        .multiselect-wrapper .multiselect-list > span,
+        .multiselect-wrapper .multiselect-list li {
+            cursor: default;
+        }
+
+    .multiselect-wrapper .multiselect-list {
+        /*padding: 5px;
+        min-width: 200px;*/
+    }
+
+    .multiselect-wrapper ul {
+        list-style: none;
+        display: block;
+        position: relative;
+        padding: 0px;
+        margin: 0px;
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+        .multiselect-wrapper ul li {
+            /*padding-right: 20px;*/
+            display: block;
+        }
+            /*Color para cuando un item está marcado*/
+            .multiselect-wrapper ul li.active {
+                /*background-color: aqua;*/
+                color: white;
+            }
+            /*Color para cuando un se posiciona el cursosr sobre ítem */
+            .multiselect-wrapper ul li:hover {
+                background-color: dodgerblue;
+                color: white;
+            }
+/**---------*/
+.multiselect-input-div {
+    height: auto;
+}
+
+    .multiselect-input-div input {
+        border: 1px solid #ababab;
+        background: #fff;
+        margin: 5px 0 6px 0;
+        padding: 5px;
+        vertical-align: middle;
+    }
+
+.multiselect-count {
+    position: relative;
+    text-align: center;
+    border-radius: 2px;
+    behavior: url(/Content/Pie/pie.htc);
+    background-color: dodgerblue;
+    display: inline-block !important;
+    padding: 2px 7px;
+    left: -45px;
+}
+
+.multiselect-dropdown-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    position: absolute;
+    line-height: 20px;
+    text-align: center;
+    display: inline-block !important;
+    margin-top: 17px;
+    margin-left: -42px;
+}
+
+.multiselect-text 
+{
+    font-size: small;
+}
+
+.multiselect-wrapper hr {
+    margin: 2%;
+    padding:0;
+}
+
+.multiselect-list.active {
+    width: 100%;
+    padding: 2%;
+    background-color: white;
+}
+
+.multiselect-input {
+    
+}
+    /*Esta hoja de estilo ha sido tomada desde https://github.com/mneofit/multiselect con modificaciones para efectos de este proyecto*/

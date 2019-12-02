@@ -17,12 +17,12 @@
                     </span>
                     @if (item.Edicion)
                     {
-                        <button type="button" [disabled]="true" class="remove-button btn btn-danger" style="margin-left: 3%" id="borrarSec" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
+                        <button type="button" [disabled]="true" class="btn btn-danger" style="margin-left: 3%" id="borrarSec" onclick="BorrarSeccion('@item.CodigoSeccion')">X</button>
                     }
                 </div>
             </div>
         <div class='card-body '>
-            @{Html.RenderPartial("TodasLasPreguntas", item.Preguntas);}
+            @{Html.RenderPartial("../ResponderPreguntas/TodasLasPreguntas", item.Preguntas);}
         </div>
 
         @if (item.Edicion)
@@ -36,14 +36,14 @@
                                 <div id="BancoDePreguntas">
                                     <div id="ModalPartialBancoPreguntas">                                    
                                     </div>
-                                    <input type="button" class="btn-azulUCR float-right CrearSeccionModal" disabled="disabled" value="Crear Pregunta" />
+                                    <input type="button" class="btn-linkUCR float-right CrearSeccionModal" onclick="MostrarCrearPregunta()"  value="Crear Pregunta" />
                                 </div>
-                                <div id="ModalCrearPregunta">                               
+                                <div id="ModalCrearPregunta">                                        
                                 </div>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn-blancoUCR"  data-dismiss="modal">Cerrar</button>
                                 <button type="button" class="btn-azulUCR " onclick="addPreguntaToSeccion('@item.CodigoSeccion')" data-dismiss="modal">Agregar preguntas seleccionadas</button>
                             </div>
                         </div>
