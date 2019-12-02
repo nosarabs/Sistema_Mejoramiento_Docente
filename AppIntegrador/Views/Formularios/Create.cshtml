@@ -87,18 +87,18 @@
                     <div class="form-group col-md-12" id="seccionesActuales">
                         @if (Model.seccionesConPreguntas != null)
                         {
-                            Html.RenderPartial("/Views/Seccion/SeccionConPreguntas.cshtml", Model.seccionesConPreguntas);
+                            Html.RenderPartial("../Seccion/SeccionConPreguntas", Model.seccionesConPreguntas);
                         }
                         else
                         {
-                            <div style="text-align:center;font-size:large;">Aún no ha añadido secciones</div>
+                            <div style="text-align:center;font-size:large;">Aún no ha agregado secciones</div>
                         }
                     </div>
 
                     <div class="form-group">
                         <div class="">
                             @*Posibilidad de agregar sección*@
-                            <input type="button" value="Añadir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo(1)" />
+                            <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo(1)" />
                         </div>
                     </div>
                     <div class="form-horizontal card-group">
@@ -170,22 +170,13 @@
     <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>
 
 
-    <script>
-
-        $(document).ready(function () {
-            deshabilitarCamposBasicos(true)
-            validarEntradas();
-        })
-    </script>
-
 
 
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
             agregarPreguntas.init();
-            GenerarModalPreguntas();
-            $('#ModalCrearPregunta').modal('hide');
+            DesactivarSeccionesAgregadas();
             //validarEntradasAgregarSecciones();
         });
 

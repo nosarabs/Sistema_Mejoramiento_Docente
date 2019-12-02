@@ -381,7 +381,7 @@ namespace AppIntegrador.Controllers
 
             for (int index = 0; index < secciones.Count; ++index)
             {
-                db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index], index);
+                db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index]);
             }
             return true;
         }

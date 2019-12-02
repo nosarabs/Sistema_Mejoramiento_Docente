@@ -25,6 +25,7 @@ function addPreguntaToSeccion(codSeccion) {
             if (data.insertadoExitoso) {
                 console.log("todo bien x2")
                 ActualizarSecciones();
+                agregarPreguntas.removeAll();
             }
         }
     })

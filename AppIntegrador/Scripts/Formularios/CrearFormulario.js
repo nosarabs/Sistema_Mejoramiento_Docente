@@ -33,11 +33,9 @@ $("#ActualizarVistaFiltros").click(function () {
 })
 
 function BorrarPregunta(Scod, Pcod) {
-    console.log("Trivial")
     var SCodigo = Scod
     var PCodigo = Pcod
     var resultado = { SCodigo, PCodigo };
-    console.log(JSON.stringify(resultado));
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -81,6 +79,7 @@ function BorrarSeccion(Scod) {
         success: function (data) {
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
+                HabilitarSeccionEnBanco(SCodigo);
             }
         },
         error: function () {
@@ -103,6 +102,7 @@ function ActualizarSecciones() {
             resultado = [];
             console.log(data);
             $('#seccionesActuales').html(data);
+            DesactivarSeccionesAgregadas();
         },
         error: function () {
 
