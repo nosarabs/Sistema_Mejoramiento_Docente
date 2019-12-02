@@ -8,16 +8,23 @@ using System.Web;
 using System.Web.UI;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class ObjetivosController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly IPerm permissionManager = new PermissionManager();
 
         // GET: Objetivos
         public ActionResult Index()
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
         }
@@ -34,6 +41,11 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Details/5
         public ActionResult Details(int? id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,6 +61,11 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Create
         public ActionResult Create(int id)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.id = id;
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
@@ -62,6 +79,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             bool error = false;
 
             if (objetivo.fechaInicio != null && objetivo.fechaFin != null) {
@@ -87,6 +109,11 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Edit/5
         public ActionResult Edit(int? plan, string title)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -108,6 +135,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codPlan,nombre,descripcion,fechaInicio,fechaFin,nombTipoObj,codPlantilla")] Objetivo objetivo)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             bool error = false;
 
             if (objetivo.fechaInicio != null && objetivo.fechaFin != null)
@@ -134,6 +166,11 @@ namespace AppIntegrador.Controllers
         // GET: Objetivos/Delete/5
         public ActionResult Delete(int? plan, string title)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (plan == null || title == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -151,6 +188,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int plan, string title)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             Objetivo objetivo = db.Objetivo.Find(plan, title);
             db.Objetivo.Remove(objetivo);
             db.SaveChanges();
