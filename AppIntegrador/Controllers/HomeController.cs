@@ -108,7 +108,7 @@ namespace AppIntegrador.Controllers
         /* TAM 16.1 Servicio de captcha*/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateGoogleCaptcha] 
+        [ValidateGoogleCaptcha(type = "Login")] 
         public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
