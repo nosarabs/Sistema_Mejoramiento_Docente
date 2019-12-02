@@ -9,11 +9,18 @@ AS
 			FROM Seccion_tiene_pregunta sp
 			WHERE sp.SCodigo = @CodigoSeccion;
 
-			INSERT INTO Seccion_tiene_pregunta(SCodigo, PCodigo, Orden)
-			VALUES (@CodigoSeccion, @CodigoPregunta, @Orden);
-		COMMIT TRANSACTION
+			MERGE INTO Seccion_tiene_pregunta AS Target
+			USING (VALUES
+				(@CodigoSeccion, @CodigoPregunta, @Orden)
+			)
+			AS Source(SCodigo, PCodigo, Orden)
+			ON Target.SCodigo = Source.SCodigo AND Target.PCodigo = Source.PCodigo
+			WHEN NOT MATCHED BY Target THEN
+			INSERT (SCodigo, PCodigo, Orden)
+			VALUES (SCodigo, PCodigo, Orden);
+		COMMIT TRANSACTION AsociarPreguntaConSeccion
 	END TRY
 	BEGIN CATCH
-		ROLLBACK TRANSACTION
+		ROLLBACK TRANSACTION AsociarPreguntaConSeccion
 	END CATCH
 RETURN 0

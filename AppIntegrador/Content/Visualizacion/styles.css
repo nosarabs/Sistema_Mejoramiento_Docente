@@ -167,9 +167,8 @@ div.row.estadisticas {
     clear: both;
 }
 
-.row h3 
+.row h3, h3 
 {
-    padding:3%;
     text-align: center;
     width: 100%;
 }
@@ -227,6 +226,7 @@ div.row.estadisticas {
     border-radius: 3px;
 }
 
+/*Estilo para la sección donde se despliegan los promedios de profesor y cursos*/
 #promedios {
     height: 30%;
     margin: 0 !important;
@@ -235,6 +235,7 @@ div.row.estadisticas {
     text-align:center;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de promedios*/
 #promedios .col{
     height: 100%;
     margin:0 !important;
@@ -242,6 +243,7 @@ div.row.estadisticas {
     padding-top: 0 !important;
 }
 
+/*Estilo para la sección donde se despliega la cuadrícula con resultados de un formulario*/
 #cuadricula {
     height: 70%;
     margin: 0 !important;
@@ -250,6 +252,7 @@ div.row.estadisticas {
     padding-bottom: 1.5% !important;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de cuadrícula*/
 #cuadricula .col {
     height: 100%;
     margin: 0 !important;
@@ -277,6 +280,57 @@ div.row.estadisticas {
     border-radius: 5px 5px 5px 5px;
     font-size: small ;
 }
+
+/*Estilo para los multiselect*/
+/*Con este le puede cambiar el tamaño a todo el componente.*/
+div.btn-group {
+    width: 100% !important;
+    font-size: small;
+}
+
+button.multiselect.dropdown-toggle.btn-default {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    width: 100%;
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: white;
+    /*padding: 2% !important;*/
+    white-space: nowrap;
+    max-width: 200%;
+    min-width: 150%;
+    overflow: auto !important;
+}
+
+ul.multiselect-container.dropdown-menu.show {
+    white-space: nowrap;
+    overflow: auto !important;
+    max-width: 200%;
+    min-width: 150%;
+    padding: 5%;
+    padding-left: 2% !important;
+    padding-right: 5% !important;
+}
+
+
+label.checkbox {
+    /*padding-right: 1% !important;*/
+    font-size: small;
+    width: 100%;
+}
+
+label.checkbox:hover {
+    background-color: #DCDCDC;
+    width: max-content;
+    min-width: 100%;
+}
+
+span.multiselect-selected-text {
+    font-size: small;
+    max-width: 95%;
+    display: inline-flex;
+    overflow: hidden;
+}}
 
 /*Estilos para la vista parcial*/
 

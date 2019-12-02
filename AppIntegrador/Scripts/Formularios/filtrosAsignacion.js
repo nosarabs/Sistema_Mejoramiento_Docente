@@ -30,6 +30,53 @@
 
     }
 
+    asignarConFiltros(listaUA, listaCE, listaP) {
+
+        var listaG = null;
+        var CE = this.recuperarCEs(listaCE, listaP, listaG);
+        var UA = this.recuperarUAs(listaCE, listaP, listaG);
+        var G = this.recuperarGs(listaUA, listaCE, listaP);
+        var P = this.recuperarPs(listaCE, listaP, listaG);
+
+        var CESeleccionadas = document.getElementById("filtroCarreraEnfasis");
+        var CEValor = CESeleccionadas.options[CESeleccionadas.selectedIndex].text;
+
+        var UASeleccionadas = document.getElementById("filtroUA");
+        var UAValor = UASeleccionadas.options[UASeleccionadas.selectedIndex].text;
+        console.log(UAValor);
+
+        var GSeleccionada = document.getElementById("filtroCursoGrupo");
+        var GValor = GSeleccionada.options[GSeleccionada.selectedIndex].text;
+
+        var PSeleccionado = document.getElementById("filtroProfesores");
+        var PValor = PSeleccionado.options[PSeleccionado.selectedIndex].text;
+
+        var resultado = { CESeleccionadas, UASeleccionadas, GSeleccionada, PSeleccionado };
+
+        console.log(CE);
+        console.log(UA);
+        console.log(P);
+        $.ajax({
+            url: '/AsignacionFormularios/Asignar',
+            data: {
+                unidadesAcademicas: UA,
+                seleccionAU: UAValor,
+                carrerasEnfasis: CE,
+                seleccionCarrera: CEValor,
+                grupos: G,
+                seleccionGrupo: GValor,
+                profesores: P,
+                seleccionProfesor: PValor
+            },
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (resultados) {
+
+            }
+        });
+    }
+
     //Método que permite recuperar las carreras y énfasis que se colocan en el filtro
     //listaUAs -> lista de unidades académicas
     //listaGs -> lista de grupos

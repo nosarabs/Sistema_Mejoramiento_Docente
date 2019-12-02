@@ -38,13 +38,22 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Asignar(string filtroUA, string filtroCarreraEnfasis, string filtroCursoGrupo, string filtroProfesores)
+        public ActionResult Asignar(List<UAsFiltros> unidadesAcademicas, string seleccionUA, List<CarrerasEnfasisFiltros> carrerasEnfasis, string seleccionCarrera, List<GruposFiltros> grupos, string seleccionGrupo, List<ProfesoresFiltros> profesores, string seleccionProfesor)
         {
             // RIP-AF3
             // Como es la asignacion por curso, se asume que viene null los demas 
             // para que acá sean implementados
-            
+
             // llamado al procedimiento almacenado 
+
+            //List<UAsFiltros> tempUA;
+
+            //for(int index = 0; index < unidadesAcademicas.Count; ++index)
+            //{
+            //    if (unidadesAcademicas[index].Equals())
+            //}
+
+            //dashboard.ObtenerGrupos()
             return View("Index");
         }
     }
