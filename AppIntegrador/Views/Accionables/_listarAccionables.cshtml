@@ -32,6 +32,12 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.peso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pesoPorcentaje)
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +56,12 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item.fechaFin)
                 </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.peso)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.pesoPorcentaje)
+                </th>
             </tr>
             }
         </tbody>

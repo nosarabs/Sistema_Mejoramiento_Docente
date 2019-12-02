@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a6f005bf9ed04910824820b95ebbcc4a" Name="Diagram1">
+      <Diagram DiagramId="a6f005bf9ed04910824820b95ebbcc4a" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="18" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="15.75" PointY="30.75" IsExpanded="true" />

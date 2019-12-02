@@ -183,9 +183,15 @@ function agregarAccionable() {
     let campoDescripcion = document.getElementById("campoDescripcionAccionable");
     let campoFechaInicio = document.getElementById("campoFechaInicioAccionable");
     let campoFechaFin = document.getElementById("campoFechaFinAccionable");
-
-    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, currentAccMej.descripcion, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
-
+    let campoPeso = document.querySelector('#peso');
+    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, currentAccMej.descripcion, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value, campoPeso.value, 0));
+    for (var i = 0; i < currentAccMej.Accionable.length; i++) {
+        console.log(currentAccMej.Accionable[i].peso);
+    }
+    calcularPesosPorc(currentAccMej);
+    for (var i = 0; i < currentAccMej.Accionable.length; i++) {
+        console.log(currentAccMej.Accionable[i].pesoPorcentaje);
+    }
     campoDescripcion.value = "";
 
     let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
@@ -196,6 +202,16 @@ function agregarAccionable() {
     mostrarTablaAccionable();
 }
 
+function calcularPesosPorc(accionMej) {
+    var pesoTotal = 0;
+    for (var i = 0; i < accionMej.Accionable.length; i++) {
+        pesoTotal += accionMej.Accionable[i].peso / 1.0;
+    }
+    console.log(pesoTotal);
+    for (var i = 0; i < accionMej.Accionable.length; i++) {
+        accionMej.Accionable[i].pesoPorcentaje = accionMej.Accionable[i].peso * 100 / pesoTotal;
+    }
+}
 
 function enviarDatosPlan() {
     getPlan();
@@ -393,8 +409,12 @@ class AccionDeMejora extends Base {
 
 class Accionable extends AccionDeMejora {
     descripcionAcc = null;
-    constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin) {
+    peso = 0;
+    pesoPorcentaje = 0
+    constructor(nombre, descripcionAcc, descripcion, fechaInicio, fechaFin, peso, pesoPorcentaje) {
         super(nombre, descripcion, fechaInicio, fechaFin);
+        this.peso = peso;
+        this.pesoPorcentaje = pesoPorcentaje;
         this.descripcionAcc = descripcionAcc;
     }
 }

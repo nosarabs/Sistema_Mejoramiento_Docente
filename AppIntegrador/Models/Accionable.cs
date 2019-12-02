@@ -27,6 +27,8 @@ namespace AppIntegrador.Models
         public Nullable<System.DateTime> fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
         public Nullable<int> progreso { get; set; }
+        public Nullable<int> peso { get; set; }
+        public Nullable<int> pesoPorcentaje { get; set; }
     
         public virtual AccionDeMejora AccionDeMejora { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

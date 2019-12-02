@@ -26,6 +26,12 @@ else
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.peso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pesoPorcentaje)
+                </th>
+                <th>
                     Opciones
                 </th>
             </tr>
@@ -33,21 +39,27 @@ else
         <thead>
             @foreach (var accionable in Model)
             {
-                <tr>
-                    <td>
-                        @accionable.descripcion
-                    </td>
-                    <td>
-                        @accionable.fechaInicio
-                    </td>
-                    <td>
-                        @accionable.fechaFin
-                    </td>
-                    <td>
-                        <input type="button" value="Editar accionable" class="btn float-right" id="EditarAccionable" onclick="#" />
-                        <input type="button" value="Borrar accionable" class="btn btn-danger float-right" id="BorrarAccionable" onclick="#" />
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @accionable.descripcion
+                </td>
+                <td>
+                    @accionable.fechaInicio
+                </td>
+                <td>
+                    @accionable.fechaFin
+                </td>
+                <td>
+                    @accionable.peso
+                </td>
+                <td>
+                    @accionable.pesoPorcentaje
+                </td>
+                <td>
+                    <input type="button" value="Editar accionable" class="btn float-right" id="EditarAccionable" onclick="#" />
+                    <input type="button" value="Borrar accionable" class="btn btn-danger float-right" id="BorrarAccionable" onclick="#" />
+                </td>
+            </tr>
 
             }
         </thead>
