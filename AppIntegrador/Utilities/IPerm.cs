@@ -19,10 +19,17 @@ namespace AppIntegrador.Utilities
         /*Formularios*/
         CREAR_FORMULARIO = 201,
         VER_FORMULARIO,
+        EDITAR_FORMULARIO,
+        BORRAR_FORMULARIO,
         CREAR_SECCION,
         VER_SECCION,
+        EDITAR_SECCION,
+        BORRAR_SECCION,
         CREAR_PREGUNTA,
         VER_PREGUNTA,
+        EDITAR_PREGUNTA,
+        BORRAR_PREGUNTA,
+        LLENAR_FORMULARIO,
 
         /*Planes de mejora y objetivos*/
         VER_PLANES_MEJORA = 301,
