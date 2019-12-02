@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-using AppIntegrador.Models;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace AppIntegrador.Controllers.PlanesDeMejoraBI
@@ -47,7 +47,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          */
         public void enviarTablasAlmacenamiento(DataTable tempTable, string tableParamName, DataTable tablaAsocPlanFormularios, string AsocPlanFormualriosName)
         {
-            SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
+            String connectionString = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand cmd = new SqlCommand("AgregarPlanComplete", connection);
             cmd.CommandType = CommandType.StoredProcedure;

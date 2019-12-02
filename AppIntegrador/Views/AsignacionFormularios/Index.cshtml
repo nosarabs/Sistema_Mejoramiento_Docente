@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Scripts.Render("~/Scripts/jquery-3.4.1.js")
+@* Datapicker *@
+
+
+@Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Visualizacion/bootstrap-multiselect.js")
+
+@Scripts.Render("~/Scripts/Formularios/filtrosAsignacion.js")
+
+
+@Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
+@Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
+
+
+
+<head>
+    <meta charset="UTF-8" , name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card card-body shadow">
+            <h3>Asignación de formulario</h3>
+            <h2 id="encabezado" class="text-center">@ViewBag.Nombre</h2>
+            <div class="card-body grisUCR2">
+                @using (Html.BeginForm("Asignar", "AsignacionFormularios", FormMethod.Post))
+                {
+
+                    <div class="row">
+                        <div class="form-group col-lg-6" id="panelFiltros">
+                        </div>
+                        @*<div class="form-group col-lg-offset-5">
+                        <form class="form-inline">
+                            <div class="form-group ">
+                                <label for="inputPassword2" class="sr-only">Password</label>
+                                <input type="date" data-date-inline-picker="true" class="form-control" id="inputPassword1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword2" class="sr-only">Password</label>
+                                <input type="date" data-date-inline-picker="true" class="form-control" id="inputPassword2" />
+                            </div>
+                        </form>
+                    </div>*@
+                    </div>
+
+
+                    <div class="form-group float-right">
+                        <div>
+                            @*Mensaje final de creación de sección*@
+                            <input type="button" value="Asignar formulario" class="btn-azulUCR" onclick="test()"/>
+                            @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+
+@* Datapicker *@
+
+
+<script>
+
+    var filtros = new FiltrosAsignacion();
+    filtros.crearFiltros();
+
+</script>
+<script>
+    /*
+No es tan complicado, solo deben importar el JS con el idioma español y despues le indican al datepicker que usaran ese idioma.
+*/
+
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap4',
+        locale: 'es-es',
+    });
+</script>
+<script>
+
+
+    function test() {
+        filtros.asignarConFiltros(null, null, null);
+
+    }
+    //Actualiza los filtros por debajo del de unidades académicas
+    function actualizarDebajoUA() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+
+        filtros.llenarFiltroCE(unidadesAcademicas, null, null);
+        filtros.llenarFiltroG(unidadesAcademicas, null, null);
+        filtros.llenarFiltroP(unidadesAcademicas, null, null);
+        filtros.llenarFiltroF(unidadesAcademicas, null, null, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, null, null, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de carreras y énfasis
+    function actualizarDebajoCE() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+
+        filtros.llenarFiltroG(unidadesAcademicas, carrerasEnfasis, null);
+        filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, null);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis, null, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis, null, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de grupos
+    function actualizarDebajoG() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+        var grupos = filtros.recuperarGrupos();
+
+        filtros.llenarFiltroP(unidadesAcademicas, carrerasEnfasis, grupos);
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, null);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, null);
+
+    }
+
+    //Actualiza los filtros por debajo del de profesores
+    function actualizarDebajoP() {
+
+        var unidadesAcademicas = filtros.recuperarUnidadesAcademicas();
+        var carrerasEnfasis = filtros.recuperarCarrerasEnfasis();
+        var grupos = filtros.recuperarGrupos();
+        var profesores = filtros.recuperarProfesores();
+
+        filtros.llenarFiltroF(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+
+        //Limpia el panel de la vista parcial
+        $('#panelDashboard').html("");
+
+        this.actualizarPromedios(unidadesAcademicas, carrerasEnfasis,grupos, profesores);
+
+    }
+
+    //Esta función obtiene los parámetros del formulario seleccionado por el usuario y actualiza la vista parcial.
+    function actualizarVistaParcial() {
+
+        $('#panelDashboard').html("");
+        var f = filtros.recuperarFormulario();
+
+        if (f != null)
+        {
+
+            var codigoFormulario = f[0];
+            var siglaCurso = f[2];
+            var numeroGrupo = f[3];
+            var semestre = f[4];
+            var anno = f[5];
+            var fechaInicio = f[6];
+            var fechaFin = f[7];
+
+            //Aquí se recarga la vista parcial con los parámetros del formulario.
+            var link = '@Html.ActionLink(linkText: "Formulario", actionName: "Formulario", controllerName: "ResultadosFormulario", routeValues: new { codigoFormulario = "codigoFormularioValor", siglaCurso = "siglaCursoValor", numeroGrupo = "numeroGrupoValor", semestre = "semestreValor", ano = "annoValor", fechaInicio = "fechaInicioValor", fechaFin = "fechaFinValor" }, htmlAttributes: null)';
+            link = link.replace('codigoFormularioValor', codigoFormulario);
+            link = link.replace('siglaCursoValor', siglaCurso);
+            link = link.replace('numeroGrupoValor', numeroGrupo);
+            link = link.replace('semestreValor', semestre);
+            link = link.replace('annoValor', anno);
+            link = link.replace('fechaInicioValor', fechaInicio);
+            link = link.replace('fechaFinValor', fechaFin);
+            $('#panelDashboard').html(link);
+
+        }
+
+    }
+
+    function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
+
+        var x = new GraficosDashboard();
+
+        var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+        var profeP = profe[0];
+        var profeN = profe[1];
+
+        var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
+        var cursoP = curso[0];
+        var cursoN = [1];
+
+        $('#pP').text("Promedio profe: " + profeP);
+        $('#pN').text("Cantidad: " + profeN);
+        $('#cP').text("Promedio curso: " + cursoP);
+        $('#cN').text("Cantidad: " + cursoN);
+
+    }
+</script>
+
+

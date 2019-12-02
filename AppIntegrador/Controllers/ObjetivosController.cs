@@ -65,6 +65,24 @@ namespace AppIntegrador.Controllers
             return Json(new { error = true, message = result });
         }
 
+        [HttpPost]
+        public ActionResult ObtenerSecciones(List<String> FormularioSeleccionado)
+        {
+            List<Formulario_tiene_seccion> parejas = new List<Formulario_tiene_seccion>();
+            if(FormularioSeleccionado != null && FormularioSeleccionado.Count > 0)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    foreach (var pareja in db.Formulario_tiene_seccion.Where(x => x.FCodigo.Equals(codigo) ) )
+                    {
+                        parejas.Add(pareja);
+                    }
+                }
+            }
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirSecciones", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
+
         // POST: Objetivos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

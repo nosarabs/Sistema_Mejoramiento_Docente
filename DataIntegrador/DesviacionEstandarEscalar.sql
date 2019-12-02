@@ -18,7 +18,7 @@ BEGIN
 	ON R.FCodigo = OSRCO.FCodigo AND R.Correo = OSRCO.Correo AND R.CSigla = OSRCO.CSigla AND R.GNumero = OSRCO.GNumero AND R.GAnno = OSRCO.GAnno AND R.GSemestre = OSRCO.GSemestre AND R.Fecha = OSRCO.Fecha
 			 WHERE OSRCO.FCodigo	= @FCod 
 			 AND OSRCO.CSigla		= @CSigla
-			 AND OSRCO.GNumero	= @GRUPO
+			 AND OSRCO.GNumero	= @Grupo
 			 AND OSRCO.GAnno		= @GAnno
 			 AND OSRCO.GSemestre	= @GSem
 			 AND OSRCO.SCodigo	= @SCod
