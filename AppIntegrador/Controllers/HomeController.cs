@@ -246,7 +246,11 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        public ActionResult PedirCorreoParaReestablecerContrasenna(string correo)
+        /* TAM 16.1 Servicio de captcha*/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateGoogleCaptcha(type = "Always")]
+        public ActionResult PasswordReset(string correo)
         {
             //var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == enlaceSeguroHash).FirstOrDefault();
             //var correo = enlaceSeguro.UsuarioAsociado;
