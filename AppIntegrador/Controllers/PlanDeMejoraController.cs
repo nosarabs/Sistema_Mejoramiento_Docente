@@ -104,7 +104,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null)
         {
 
             PlanDeMejora planAgregado = new PlanDeMejora();

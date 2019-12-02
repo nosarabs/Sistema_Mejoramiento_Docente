@@ -839,6 +839,8 @@
     <Content Include="Views\CSV\GuiaHorarios.cshtml" />
     <Content Include="Views\CSV\Funcionarios.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalAnadirPreguntas.cshtml" />
+    <Content Include="Views\AccionDeMejora\_AnadirPreguntas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
