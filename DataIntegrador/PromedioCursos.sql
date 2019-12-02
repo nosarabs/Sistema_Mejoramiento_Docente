@@ -9,7 +9,11 @@ CREATE PROCEDURE [dbo].[PromedioCursos]
 		@Grupos FiltroGrupos READONLY,
 		@CorreosProfesores FiltroProfesores READONLY,
 		@promedio FLOAT OUTPUT,
-		@cantidad INT OUTPUT
+		@cantidad INT OUTPUT,
+
+		@nMalo INT OUTPUT,
+		@nRegular INT OUTPUT,
+		@nBueno INT OUTPUT
 	)
 	 
 AS
@@ -23,6 +27,9 @@ DECLARE @opcion AS TINYINT
 DECLARE @valor AS FLOAT = 0
 
 	SET @promedio = -1;
+	SET @nMalo = -1;
+	SET @nRegular = -1;
+	SET @nBueno = -1;
 
 	SELECT @min = E.Minimo, @max = E.Maximo, @inc = E.Incremento
 	FROM Escalar AS E 
@@ -68,6 +75,21 @@ DECLARE @valor AS FLOAT = 0
 	IF (@cantidad != 0)
 	BEGIN
 		SET @promedio = @valor / @cantidad;
+
+		SELECT @nMalo = COUNT(*)
+		FROM @Resultados
+		WHERE (0 <= Opcion_seleccionada AND
+					Opcion_seleccionada <= 5)
+
+		SELECT @nRegular = COUNT(*)
+		FROM @Resultados
+		WHERE (5 < Opcion_seleccionada AND
+					Opcion_seleccionada <= 7)
+
+		SELECT @nBueno = COUNT(*)
+		FROM @Resultados
+		WHERE (7 < Opcion_seleccionada AND
+					Opcion_seleccionada <= 10)
 	END
 
 END

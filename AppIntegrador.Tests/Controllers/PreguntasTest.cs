@@ -240,7 +240,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.Create(null, null, 0, 0) as ViewResult;
+            ViewResult result = preguntas.Create() as ViewResult;
 
             Assert.IsNotNull(result);
         }
@@ -258,7 +258,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = ""
             };
 
-            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
+            ViewResult result = preguntas.Create() as ViewResult;
 
             Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Datos incompletos");
         }
@@ -276,7 +276,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = "adsadsaa",
             };
 
-            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
+            ViewResult result = preguntas.Create() as ViewResult;
 
             Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Una pregunta de selección única necesita al menos una opción");
         }
@@ -377,7 +377,7 @@ namespace AppIntegrador.Tests.Controllers
                 Enunciado = ""
             };
 
-            ViewResult result = preguntas.Create(pregunta, null, 0, 0) as ViewResult;
+            ViewResult result = preguntas.Create() as ViewResult;
 
             Assert.AreEqual("Create", result.ViewName);
         }

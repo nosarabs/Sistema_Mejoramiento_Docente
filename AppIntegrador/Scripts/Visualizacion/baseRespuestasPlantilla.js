@@ -3,7 +3,7 @@
     constructor(tipo) {
 
         this.base = document.createElement("div");
-        this.base.className = "row";
+        this.base.className = "row filaBase";
         this.base.id = tipo;
 
     }
@@ -22,14 +22,14 @@ class BaseDosCol extends BaseRespuesta{
 
         super(tipo);
         this.leftCol = document.createElement("div");
-        this.leftCol.className = "col";
+        this.leftCol.className = "col columnaIzquierda";
+        this.leftCol.style = "background-color: #ffffff; border: 0px;"
         this.rightCol = document.createElement("div");
-        this.rightCol.className = "col";
-        this.rowCanvas = document.createElement("div");
-        this.rowCanvas.className = "row";
+        this.rightCol.className = "col columnaDerecha";
+        this.rightCol.style = "background-color: #ffffff; border: 0px;"
         this.canvas = document.createElement("canvas");
         this.canvas.setAttribute("width", "250vw"); //Ancho canvas
-        this.canvas.setAttribute("height", "175vh"); //Largo canvas
+        this.canvas.setAttribute("height", "180vh"); //Largo canvas
         this.justificacion = document.createElement("div");
         this.justificacion.className = "row myBox";
 
@@ -38,8 +38,7 @@ class BaseDosCol extends BaseRespuesta{
         this.rightCol.appendChild(this.tituloJustificacion);    
 
         this.rightCol.appendChild(this.justificacion);
-        this.rowCanvas.appendChild(this.canvas);
-        this.leftCol.appendChild(this.rowCanvas);
+        this.leftCol.appendChild(this.canvas);
         this.base.appendChild(this.leftCol);
         this.base.appendChild(this.rightCol);
 

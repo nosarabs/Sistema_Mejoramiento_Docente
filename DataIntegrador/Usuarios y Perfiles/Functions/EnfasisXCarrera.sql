@@ -12,6 +12,7 @@ BEGIN
 	INSERT @returntable
 	SELECT E.Codigo
 	FROM Enfasis AS E JOIN Carrera AS C ON E.CodCarrera = C.Codigo
-	WHERE C.Codigo = @codCarrera
+	--Se utiliza E.CodCarrera en lugar de C.Codigo para aprovechar el indice creado en Enfasis.
+	WHERE E.CodCarrera = @codCarrera
 	RETURN
 END

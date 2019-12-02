@@ -257,13 +257,22 @@
     <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
     <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
+    <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\GruposXPerfiXlUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\ProfesoresXUsuarioXPerfil.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
+    <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosPorSemestre.sql" />
-    <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
+    <Build Include="Formularios\Procedimientos\ModificarFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DataIntegrador.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Usuarios y Perfiles\Indices\IndicePersona.sql" />
   </ItemGroup>
 </Project>
