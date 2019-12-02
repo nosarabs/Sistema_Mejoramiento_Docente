@@ -92,16 +92,7 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual(retorno, false);
         }*/
 
-        //NO PASA LA VALIDACION. CORREGIR
-        /* [TestMethod]
-           public void SemestreNoEsValido() //Este test aplica solo para el semestre
-           {
-               GuiaHorario guia = new GuiaHorario();
-               guia.Semestre = "5"; //Es de tipo entero, pero no es valido
-               bool retorno = ValidarNumero(guia.Semestre);
-               Assert.AreEqual(retorno, false);
-           } */
-
+     
         [TestMethod]
         public void emailInvalido() //Este test aplica para el correo del funcionario, estudiante y persona
         {
@@ -121,7 +112,6 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-
         public void emailInvalido3() //Este test aplica para el correo del funcionario, estudiante y persona
         {
             GuiaHorario guia = new GuiaHorario();
@@ -138,5 +128,53 @@ namespace AppIntegrador.Tests.Controllers
             bool retorno = ValidaBool(lista.Borrado);
             Assert.AreEqual(retorno, false);
         }
+
+        [TestMethod]
+        public void codigoValido() //Este test aplica para el codigo del enfasis, carrera, sigla curso y unidad academica
+        //ya que tienen la misma condicion de validacion
+        {
+            GuiaHorario guia = new GuiaHorario();
+            guia.CodigoCarreraCurso = "101010"; //Longitud < 10 valida
+            bool retorno = ValidarTamanoText(guia.CodigoCarreraCurso, 10);
+            Assert.AreEqual(retorno, true);
+        }
+
+        [TestMethod]
+        public void nombreValido() //Este test aplica para el nombre de los cursos, unidades, carreras y enfasis
+        //ya que tienen la misma condicion de validacion
+        {
+            GuiaHorario guia = new GuiaHorario();
+            guia.NombreCurso = "Calculo 1"; //Longitud < 50 valida
+            bool retorno = ValidarTamanoText(guia.NombreCurso, 50);
+            Assert.AreEqual(retorno, true);
+        }
+
+        [TestMethod]
+        public void semestreValido() //Este test solo aplica para semestre
+        {
+            GuiaHorario guia = new GuiaHorario();
+            guia.Semestre = "2"; //Semestre con valor numerico positivo entre 1 y 3 valido
+            bool retorno = ValidarNumero(guia.Semestre);
+            Assert.AreEqual(retorno, true);
+        }
+
+        [TestMethod]
+        public void annoValido() //Este test aplica para anno, numero de grupo, semestre
+        {
+            GuiaHorario guia = new GuiaHorario();
+            guia.Anno = "2019"; //Anno entero positivo valido
+            bool retorno = ValidarNumero(guia.Anno);
+            Assert.AreEqual(retorno, true);
+        }
+
+        [TestMethod]
+        public void correoValido() //Este test aplica para correo de estudiante y funcionario
+        {
+            GuiaHorario guia = new GuiaHorario();
+            guia.CorreoMatricula = "correo@ucr.ac.cr"; //correo valido
+            bool retorno = ValidarEmail(guia.CorreoMatricula);
+            Assert.AreEqual(retorno, true);
+        }
+
     }
 }

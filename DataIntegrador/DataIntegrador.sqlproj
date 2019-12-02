@@ -78,6 +78,8 @@
     <Folder Include="PlanesDeMejora\ProcedimientosDePruebaPDM" />
     <Folder Include="Filtros\Indices" />
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
+    <Folder Include="PlanesDeMejora\TableTypes" />
+    <Folder Include="Formularios\Asignar" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -251,10 +253,10 @@
     <Build Include="EnlaceSeguro.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\AgregarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosDeEstudiante.sql" />
+    <Build Include="Formularios\Asignar\AsignarFormulario.sql" />
     <Build Include="PlanesDeMejora\ProcedimientosDePruebaPDM\PruebasPDM.sql" />
     <Build Include="PlanesDeMejora\ObjVsSeccion.sql" />
     <Build Include="PlanesDeMejora\AccionVsPregunta.sql" />
-    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanCompleto.sql" />
     <Build Include="Usuarios y Perfiles\Procedures\EstaEnCarreraYEnfasis.sql" />
     <Build Include="Usuarios y Perfiles\Indices\EnfasisCodCarrera.sql" />
     <Build Include="Usuarios y Perfiles\Functions\GruposXPerfiXlUsuario.sql" />
@@ -262,6 +264,15 @@
     <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
     <Build Include="TriggerEmpadronadoEn.sql" />
+    <Build Include="ObtenerGruposAsociados.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerFormulariosPorSemestre.sql" />
+    <Build Include="Formularios\Procedimientos\ModificarFormulario.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanComplete.sql" />
+    <Build Include="PlanesDeMejora\TableTypes\TableTypes.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerFormulariosParaAsociar.sql" />
+    <Build Include="PlanesDeMejora\AccionableEscala.sql" />
+    <Build Include="PlanesDeMejora\AccionableSiNo.sql" />
+    <Build Include="PlanesDeMejora\AccionablePorcentaje.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "_TablaObjetivos";
+    int position = 0;
 }
 
 @if (Model.Count() == 0)
@@ -16,10 +17,19 @@ else
         <thead>
             <tr>
                 <th>
+
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TipoObjetivo)
+                    @Html.DisplayNameFor(model => model.descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
                 <th>
                     Opciones
@@ -31,14 +41,27 @@ else
             {
                 <tr>
                     <td>
-                        @objetivo.nombre;
+                        <input type="radio" name="objetivos" value=@(position++) onclick="seleccionaObjetivo(this)"/>
                     </td>
                     <td>
-                        @objetivo.TipoObjetivo;
+                        @objetivo.nombre
                     </td>
                     <td>
+                        @objetivo.descripcion
+                    </td>
+                    <td>
+                        @objetivo.fechaInicio
+                    </td>
+                    <td>
+                        @objetivo.fechaFin
+                    </td>
+                    <td>
+                        <input type="button" value="Asociar a secciones" class="btn btn-azulUCR float-left" id="AsociarSeccionObjetivoTabla" onclick="getSecciones()" />
+                        <input type="button" value="Editar objetivo" class="btn float-right" id="EditarObjetivoBotonTabla" onclick="#" />
+                        <input type="button" value="Borrar objetivo" class="btn btn-danger float-right" id="BorrarObjetivoBotonTabla" onclick="#" />
                     </td>
                 </tr>
+                
             }
         </thead>
     </table>

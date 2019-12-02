@@ -31,7 +31,7 @@ namespace AppIntegrador.Tests.Controllers
             return mockedObjectResult;
         }
 
-        public void SetupHttpContext(FormulariosController controller)
+        public void SetupHttpContext(Controller controller)
         {
             if (controller != null)
             {
