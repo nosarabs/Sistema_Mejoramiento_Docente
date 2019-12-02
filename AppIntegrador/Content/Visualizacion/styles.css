@@ -314,6 +314,11 @@ ul.multiselect-container.dropdown-menu.show {
     padding-right: 5% !important;
 }
 
+input.form-control.multiselect-search 
+{
+    font-size: small;
+}
+
 label.checkbox {
     /*padding-right: 1% !important;*/
     font-size: small;
