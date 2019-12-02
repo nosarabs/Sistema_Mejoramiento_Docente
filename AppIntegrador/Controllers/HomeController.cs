@@ -246,8 +246,10 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        public ActionResult SendPasswordRequest(string correo)
+        public ActionResult PedirCorreoParaReestablecerContrasenna(string correo)
         {
+            //var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == enlaceSeguroHash).FirstOrDefault();
+            //var correo = enlaceSeguro.UsuarioAsociado;
             var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
 
             if (user != null)
@@ -259,24 +261,33 @@ namespace AppIntegrador.Controllers
                     ViewBag.EnableBS4NoNavBar = true;
                     return View("PasswordReset");
                 }
+                EnlaceSeguroController enlaceController = new EnlaceSeguroController();
 
+                string enlaceParaReestablecer =  enlaceController.ObtenerEnlaceSeguroAnonimo(
+                    "/Home/ReestablecerContrasenna/",usuario: user.Username, reestablecerContrasenna: true);
+                //string enlaceParaTest = enlaceController.ObtenerEnlaceSeguro("/Home/Index/", usuario: user.Username, usos: -1);
 
-                /* Only for demo purposes, will be changed for a password reset link */
-                Random random = new Random();
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                var newPassword = new string(Enumerable.Repeat(chars, 16)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                //Creamos un timestamp para agregarlo al correo
+                var timestamp = DateTime.Now;
+                string fechaSalida = timestamp.ToString("dd/MM/yyyy"); //considerar añadir IFormatProvider
+                string horaSalida = timestamp.ToString("hh:mm tt");
 
-                db.ChangePassword(correo, newPassword);
-                db.SaveChanges();
-
+                //Enviamos un correo con el enlace y el timestamp
                 EmailNotification notification = new EmailNotification();
 
                 List<string> users = new List<string>();
                 users.Add(correo);
-                notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
+                notification.SendNotification(users, "Restablecimiento de contraseña",
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor \n" +
+                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. \n\n" +
+                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer,
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". " +
+                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor " +
+                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. <br><br>" +
+                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer);
 
-                TempData["successMessage"] = "Se ha enviado un correo con su nueva contraseña a la dirección indicada.";
+                TempData["successMessage"] = "Se ha enviado un correo para reestablecer su contraseña a la dirección indicada.";
                 return RedirectToAction("Login");
             }
             else
@@ -286,6 +297,71 @@ namespace AppIntegrador.Controllers
             ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
         }
+
+        public ActionResult ReestablecerContrasenna(string enlaceSeguroHash)
+        {
+            ViewBag.EnableBS4NoNavBar = true;
+            ViewBag.Hash = enlaceSeguroHash;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ReestablecerContrasenna(string receivedHash, string contrasennaNueva, string contrasennaConfirmar)
+        {
+            string receivedHashExtra = ViewBag.Hash;
+            var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == receivedHash).FirstOrDefault();
+
+            DateTime momentoActual = DateTime.Now;
+            DateTime expira = (DateTime)enlaceSeguro.Expira;
+            int usos = enlaceSeguro.Usos;
+            bool reestablecerContrasenna = enlaceSeguro.ReestablecerContrasenna;
+            int fechaValida = DateTime.Compare(momentoActual, expira);
+
+            if (usos != 0 && fechaValida < 0 && reestablecerContrasenna)
+            {
+                var correo = enlaceSeguro.UsuarioAsociado;
+                var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
+                if (contrasennaNueva != contrasennaConfirmar)
+                {
+                    ModelState.AddModelError("Password", "Las contraseña nueva y su confirmacion no son iguales.");
+                }
+                else
+                {
+                    db.ChangePassword(correo, contrasennaNueva);
+                    db.SaveChanges();
+
+                    //Enviamos un correo al usuario alertando del cambio
+                    EmailNotification notification = new EmailNotification();
+
+                    List<string> users = new List<string>();
+                    users.Add(correo);
+
+                    //Creamos un timestamp para agregarlo al correo
+                    var timestamp = DateTime.Now;
+                    string fechaSalida = timestamp.ToString("dd/MM/yyyy");
+                    string horaSalida = timestamp.ToString("hh:mm tt");
+
+                    notification.SendNotification(users,
+                        "Cambio de contraseña",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
+
+                    ViewBag.typeMessage = "success";
+                    ViewBag.NotifyTitle = "Contraseña Cambiada";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Username", "El enlace de restablecimiento de contraseña no es valido, por favor obtenga otro enlace");
+            }
+            ViewBag.EnableBS4NoNavBar = true;
+            return View();
+        }
+
 
         private bool ConfigureSession(string username)
         {

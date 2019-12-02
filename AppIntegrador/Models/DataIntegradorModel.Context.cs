@@ -327,7 +327,7 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UAXPerfilXUsuario_Result>("[DataIntegradorEntities].[UAXPerfilXUsuario](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
         }
     
-        public virtual int AgregarEnlaceSeguro(string usuarioAsociado, string urlReal, Nullable<System.DateTime> expira, Nullable<int> usos, ObjectParameter resultadohash, ObjectParameter estado)
+        public virtual int AgregarEnlaceSeguro(string usuarioAsociado, string urlReal, Nullable<System.DateTime> expira, Nullable<int> usos, Nullable<bool> reestablecerContrasenna, ObjectParameter resultadohash, ObjectParameter estado)
         {
             var usuarioAsociadoParameter = usuarioAsociado != null ?
                 new ObjectParameter("usuarioAsociado", usuarioAsociado) :
@@ -345,7 +345,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("usos", usos) :
                 new ObjectParameter("usos", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarEnlaceSeguro", usuarioAsociadoParameter, urlRealParameter, expiraParameter, usosParameter, resultadohash, estado);
+            var reestablecerContrasennaParameter = reestablecerContrasenna.HasValue ?
+                new ObjectParameter("reestablecerContrasenna", reestablecerContrasenna) :
+                new ObjectParameter("reestablecerContrasenna", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarEnlaceSeguro", usuarioAsociadoParameter, urlRealParameter, expiraParameter, usosParameter, reestablecerContrasennaParameter, resultadohash, estado);
         }
     
         public virtual int AgregarFormulario(string codigo, string nombre)
