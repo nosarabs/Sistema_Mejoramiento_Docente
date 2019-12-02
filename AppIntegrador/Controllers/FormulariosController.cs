@@ -378,6 +378,10 @@ namespace AppIntegrador.Controllers
 
         private bool InsertFormulario(Formulario formulario)
         {
+            if(formulario == null || formulario.Codigo == null || formulario.Nombre == null)
+            {
+                return false;
+            }
             try
             {
                 if (db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
@@ -423,6 +427,19 @@ namespace AppIntegrador.Controllers
             {
                 return null;
             }
+        }
+
+        [HttpPost]
+        public ActionResult ModificarFormulario(string codViejo, string codNuevo, string nombre)
+        {
+            bool modificacionExitosa = false;
+            if(codViejo != null && codNuevo != null && nombre != null)
+            {
+                ObjectParameter modificacionOutput = new ObjectParameter("modificacionexitosa", typeof(bool));
+                db.ModificarFormulario(codViejo, codNuevo, nombre, modificacionOutput);
+                modificacionExitosa = (bool)modificacionOutput.Value;
+            }
+            return Json(new { modificacionExitosa });
         }
     }
 }

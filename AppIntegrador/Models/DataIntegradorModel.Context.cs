@@ -1715,5 +1715,22 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UAXPerfilXUsuario1_Result>("[DataIntegradorEntities].[UAXPerfilXUsuario1](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
         }
+    
+        public virtual int ModificarFormulario(string codviejo, string codnuevo, string nombre, ObjectParameter modificacionexitosa)
+        {
+            var codviejoParameter = codviejo != null ?
+                new ObjectParameter("codviejo", codviejo) :
+                new ObjectParameter("codviejo", typeof(string));
+    
+            var codnuevoParameter = codnuevo != null ?
+                new ObjectParameter("codnuevo", codnuevo) :
+                new ObjectParameter("codnuevo", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
+        }
     }
 }

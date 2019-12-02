@@ -2005,6 +2005,12 @@
           <Parameter Name="nuevo" Type="varchar" Mode="In" />
           <Parameter Name="resultado" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="ModificarFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codviejo" Type="varchar" Mode="In" />
+          <Parameter Name="codnuevo" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="modificacionexitosa" Type="bit" Mode="InOut" />
+        </Function>
         <Function Name="ObtenerCarrerasEnfasisFiltros" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -5002,6 +5008,12 @@
             <Parameter Name="usuarioActual" Mode="In" Type="String" />
             <Parameter Name="perfilActual" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ModificarFormulario">
+            <Parameter Name="codviejo" Mode="In" Type="String" />
+            <Parameter Name="codnuevo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="modificacionexitosa" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -6187,6 +6199,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
