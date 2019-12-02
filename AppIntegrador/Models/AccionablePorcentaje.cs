@@ -10,10 +10,16 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class UAXPerfilXUsuario1_Result
+    public partial class AccionablePorcentaje
     {
-        public string CodigoUA { get; set; }
-        public string NombreUA { get; set; }
+        public int codPlan { get; set; }
+        public string nombreObj { get; set; }
+        public string descripAcMej { get; set; }
+        public string descripcion { get; set; }
+        public Nullable<int> avance { get; set; }
+    
+        public virtual Accionable Accionable { get; set; }
     }
 }

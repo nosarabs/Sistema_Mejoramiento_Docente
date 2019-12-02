@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
 using AppIntegrador.Utilities;
 
@@ -98,6 +101,12 @@ namespace AppIntegrador.Controllers
                 plan = new PlanDeMejora();
             }
             List<String> ProfesoresNombreLista = new List<String>();
+            List<String> tiposDeObjetivo = new List<String>();
+            foreach(var tipo in db.TipoObjetivo)
+            {
+                tiposDeObjetivo.Add(tipo.nombre);
+            }
+
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             String name = "NombreCompleto";
             ObjectParameter name_op;
@@ -109,55 +118,86 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             ViewBag.FormulariosLista = db.Formulario.ToList();
+            ViewBag.tiposDeObjetivo = tiposDeObjetivo.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x
+                                  });
+            ;
             return View("Crear", plan);
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
-                                    List<String> ProfeSeleccionado = null, 
-                                    List<String> FormularioSeleccionado = null,
-                                    List<Objetivo> MisObjetivos = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_PLANES_MEJORA))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
-            PlanDeMejora planAgregado = null;
-            Profesor profe;
-            Formulario formulario;
-            if (ModelState.IsValid && plan != null)
+
+            PlanDeMejora planAgregado = new PlanDeMejora();
+
+            // Objeto de ayuda business intelligence planes de mejora
+            PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
+
+            // Asignacion del codigo al nuevo plan de mejora
+            planesHelper.setCodigoAPlanDeMejora(this.db, plan);
+
+
+            // Creacion de las tablas -----
+            var tablaPDM = planesHelper.getPlanTable(plan);
+            var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
+
+            // Enviando las tablas ----
+            planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+
+
+            /* Forma forzada. SOLO PARA EMERGENCIAS */
+            /*
+            if(Objetivo != null)
             {
-                var cod = new ObjectParameter("codigo", 0);
-                db.AgregarPlan(plan.nombre, plan.fechaInicio, plan.fechaFin, cod);
-                planAgregado = db.PlanDeMejora.Find(cod.Value);
-                if (ProfeSeleccionado != null)
+                plan.Objetivo = Objetivo;
+            }
+            if(ProfeSeleccionado != null)
+            {
+                foreach(var correo in ProfeSeleccionado)
                 {
-                    foreach (var correo in ProfeSeleccionado)
-                    {
-                        profe = db.Profesor.Find(correo);
-                        profe.PlanDeMejora.Add(planAgregado);
-                        if (!planAgregado.Profesor.Contains(profe))
-                            planAgregado.Profesor.Add(profe);
-                    }
+                    var profe = db.Profesor.Find(correo);
+                    plan.Profesor.Add(profe);
                 }
-                if (FormularioSeleccionado != null)
+            }
+            if(FormularioSeleccionado != null)
+            {
+                foreach (var codigo in FormularioSeleccionado)
                 {
-                    foreach (var formCod in FormularioSeleccionado)
-                    {
-                        formulario = db.Formulario.Find(formCod);
-                        formulario.PlanDeMejora.Add(planAgregado);
-                        if (!planAgregado.Formulario.Contains(formulario))
-                        {
-                            planAgregado.Formulario.Add(formulario);
-                        }
-                    }
+                    var formulario = db.Formulario.Find(codigo);
+                    plan.Formulario.Add(formulario);
                 }
+            }
+
+            db.PlanDeMejora.Add(plan);
+            try
+            {
                 db.SaveChanges();
             }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var errors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in errors.ValidationErrors)
+                    {
+                        // get the error message 
+                        string errorMessage = validationError.ErrorMessage;
+                    }
+                }
+            }
+            */
+
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
 
+        
 
         [HttpPost]
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)

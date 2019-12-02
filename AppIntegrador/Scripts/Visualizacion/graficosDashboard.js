@@ -1,7 +1,16 @@
-﻿//Berta Sánchez Jalet
-//COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-//Tarea técnica: Mostrar las nota resultantes.
-//Cumplimiento: 5/10
+﻿// HH.UU.:
+// COD - 67: Desplegar la información del puntaje de un profesor y un curso específico.
+// Tarea Técnica: Mostrar las nota resultantes. 
+//
+// COD - 78: Visualizar un gráfico para la calificación de un profesor
+// y promedio de un curso, a partir de los filtros.
+// Tarea Técnica: Desplegar la cantidad de calificaciones obtenidas a partir de los filtros. 
+//
+// COD - 79: Visualizar el promedio para la calificación de un profesor
+// y promedio de un curso, a partir de los filtros.
+// Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+//
+// Cumplimiento: 10 / 10
 class GraficosDashboard {
 
     constructor() { }
@@ -154,6 +163,48 @@ class GraficosDashboard {
                     center: {
                         text: Math.ceil(p),
                         color: colorP, // Default is #000000
+                        fontStyle: 'Arial', // Default is Arial
+                        sidePadding: 20 // Defualt is 20 (as a percentage)
+                    }
+                }
+            }
+        };
+        var myChart = new Chart(canvas, config);
+    }
+
+    generarGraficoNulo(canvas) {
+        var config = {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    "0"
+                ],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: [
+                        "#ababab"
+                    ],
+                    hoverBackgroundColor: [
+                        "#ababab"
+                    ]
+                }]
+            },
+            options: {
+                legend: {
+                    display:false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                },
+                elements: {
+                    center: {
+                        text: "0",
+                        color: "#ababab", // Default is #000000
                         fontStyle: 'Arial', // Default is Arial
                         sidePadding: 20 // Defualt is 20 (as a percentage)
                     }

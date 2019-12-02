@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
 using AppIntegrador.Utilities;
 
@@ -50,6 +51,17 @@ namespace AppIntegrador.Controllers
             ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");
             ViewBag.nombreObj = new SelectList(db.Objetivo, "nombre", "nombre");
             return View("_createAccionDeMejora");
+        }
+
+        [HttpPost]
+        public ActionResult AnadirAccionesDeMejora(List<AccionDeMejora> accionesDeMejora)
+        {
+            List<AccionDeMejora> misAccionesDeMejora = accionesDeMejora;
+            if (misAccionesDeMejora == null)
+            {
+                misAccionesDeMejora = new List<AccionDeMejora>();
+            }
+            return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionMejora", misAccionesDeMejora), this.ControllerContext) });
         }
 
         // POST: AccionDeMejora/Create
