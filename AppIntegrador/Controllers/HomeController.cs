@@ -263,9 +263,10 @@ namespace AppIntegrador.Controllers
                 }
                 EnlaceSeguroController enlaceController = new EnlaceSeguroController();
 
+                //creamos un enlaceseguroanomimo de dos usos. Se ocupa que sea de dos ya que despues de utilizarlo para ser redireccionados a la pagina
+                //de reestablecer contraseña se necesita que usos no este en 0 para poder hacer el cambio de contraseña propio.
                 string enlaceParaReestablecer =  enlaceController.ObtenerEnlaceSeguroAnonimo(
-                    "/Home/ReestablecerContrasenna/",usuario: user.Username, reestablecerContrasenna: true);
-                //string enlaceParaTest = enlaceController.ObtenerEnlaceSeguro("/Home/Index/", usuario: user.Username, usos: -1);
+                    "/Home/ReestablecerContrasenna/",usuario: user.Username, reestablecerContrasenna: true, usos: 2);
 
                 //Creamos un timestamp para agregarlo al correo
                 var timestamp = DateTime.Now;
@@ -329,6 +330,9 @@ namespace AppIntegrador.Controllers
                 else
                 {
                     db.ChangePassword(correo, contrasennaNueva);
+                    //decrementamos los usos del enlace que acabamos de usar, estos se crean con dos usos en total, asi que debemos decrementarlo 
+                    //aqui tambien.
+                    db.EnlaceSeguro.Remove(enlaceSeguro);
                     db.SaveChanges();
 
                     //Enviamos un correo al usuario alertando del cambio
