@@ -788,6 +788,8 @@
     <Content Include="Views\Accionables\_ModalAnadirAccionable.cshtml" />
     <Content Include="Views\AccionDeMejora\_TablaAccionMejora.cshtml" />
     <Content Include="Views\Accionables\_TablaAccionables.cshtml" />
+    <Content Include="Views\Objetivos\_ModalAnadirSecciones.cshtml" />
+    <Content Include="Views\Objetivos\_AnadirSecciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
