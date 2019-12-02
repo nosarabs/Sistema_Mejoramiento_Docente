@@ -99,7 +99,7 @@
                         </div>
                         <div class="form-group col-lg-5 offset-lg-0">
                             <h5>@Html.DisplayNameFor(model => model.peso)</h5>
-                            @Html.DropDownListFor(model => model.peso, new SelectList(pesos,"Value","Text","0"), new
+                            @Html.DropDownListFor(model => model.peso, new SelectList(pesos, "Value", "Text", "0"), new
                            {
                                htmlAttributes = new
                                {
@@ -107,6 +107,14 @@
                                    @id = "peso"
                                }
                            })
+                        </div>
+                        <div class="form-group col-lg-4 offset-lg-0">
+                            <h5>@Html.DisplayNameFor(model => model.tipo)</h5>
+                            <select id="TipoAccionable" name="TipoAccionable" class="form-control">
+                                <option value="P">Porcentaje</option>
+                                <option value="E">Escalar</option>
+                                <option value="S">Sí / No</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

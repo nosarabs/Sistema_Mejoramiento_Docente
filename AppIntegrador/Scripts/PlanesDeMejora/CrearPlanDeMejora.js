@@ -205,8 +205,9 @@ function agregarAccionable() {
     let campoDescripcion = document.getElementById("campoDescripcionAccionable");
     let campoFechaInicio = document.getElementById("campoFechaInicioAccionable");
     let campoFechaFin = document.getElementById("campoFechaFinAccionable");
+    let campoTipo = document.getElementById("TipoAccionable");
     let campoPeso = document.querySelector('#peso');
-    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, campoDescripcion.value, currentAccMej.descripcion, campoFechaInicio.value, campoFechaFin.value, campoPeso.value, 0));
+    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, campoDescripcion.value, currentAccMej.descripcion, campoFechaInicio.value, campoFechaFin.value, campoTipo, campoPeso.value, 0));
     for (var i = 0; i < currentAccMej.Accionable.length; i++) {
         console.log(currentAccMej.Accionable[i].peso);
     }
@@ -499,14 +500,16 @@ class Accionable {
     descripAcMej = null;
     fechaInicio = null;
     fechaFin = null;
+    tipo = null;
     peso = null;
     pesoPorcentaje = null;
-    constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin, peso, pesoPorcentaje) {
+    constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin, tipo, peso, pesoPorcentaje) {
         this.nombreObj = nombre;
         this.descripAcMej = descripcion;
         this.descripcion = descripcionAcc;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.tipo = tipo;
         this.peso = peso;
         this.pesoPorcentaje = pesoPorcentaje;
     }
