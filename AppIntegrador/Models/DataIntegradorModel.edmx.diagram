@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="3" PointY="27.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Curso" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Enfasis" Width="1.5" PointX="5.25" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3" PointY="21.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Escalar" Width="1.5" PointX="22.5" PointY="29.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Estudiante" Width="1.5" PointX="3" PointY="24.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Formulario" Width="1.5" PointX="8.25" PointY="16" IsExpanded="true" />
@@ -56,7 +55,6 @@
         <AssociationConnector Association="DataIntegradorModel.FK_Grupo_sigla" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK__PerfilPermiso__4C6B5938" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK__UsuarioPerfil__69FBBC1F" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkEscalarCodigo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkEstudentAPersonaCorreo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkFormularioTieneSeccionCodigoFormulario" ManuallyRouted="false" />
@@ -104,6 +102,8 @@
         <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.SeAsignaA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3" PointY="21.25" />
+        <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

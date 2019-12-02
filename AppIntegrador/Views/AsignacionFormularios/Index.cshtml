@@ -51,7 +51,7 @@
                     <div class="form-group float-right">
                         <div>
                             @*Mensaje final de creación de sección*@
-                            <input type="submit" value="Asignar formulario" class="btn-azulUCR" />
+                            <input type="button" value="Asignar formulario" class="btn-azulUCR" onclick="test()"/>
                             @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
                         </div>
                     </div>
@@ -86,6 +86,11 @@ No es tan complicado, solo deben importar el JS con el idioma español y despues
 </script>
 <script>
 
+
+    function test() {
+        filtros.asignarConFiltros(null, null, null);
+
+    }
     //Actualiza los filtros por debajo del de unidades académicas
     function actualizarDebajoUA() {
 

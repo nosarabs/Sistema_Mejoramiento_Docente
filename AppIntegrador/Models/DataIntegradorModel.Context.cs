@@ -34,7 +34,6 @@ namespace AppIntegrador.Models
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Enfasis> Enfasis { get; set; }
-        public virtual DbSet<EnlaceSeguro> EnlaceSeguro { get; set; }
         public virtual DbSet<Escalar> Escalar { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Formulario> Formulario { get; set; }
@@ -68,6 +67,7 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<EnlaceSeguro> EnlaceSeguro { get; set; }
     
         [DbFunction("DataIntegradorEntities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
@@ -1432,14 +1432,14 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PopularSeccionesConPreguntas", numeroError);
         }
     
-        public virtual int PromedioCursos(ObjectParameter promedio, ObjectParameter cantidad)
+        public virtual int PromedioCursos(ObjectParameter promedio, ObjectParameter cantidad, ObjectParameter nMalo, ObjectParameter nRegular, ObjectParameter nBueno)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", promedio, cantidad);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioCursos", promedio, cantidad, nMalo, nRegular, nBueno);
         }
     
-        public virtual int PromedioProfesor(ObjectParameter promedio, ObjectParameter cantidad)
+        public virtual int PromedioProfesor(ObjectParameter promedio, ObjectParameter cantidad, ObjectParameter nMalo, ObjectParameter nRegular, ObjectParameter nBueno)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", promedio, cantidad);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PromedioProfesor", promedio, cantidad, nMalo, nRegular, nBueno);
         }
     
         public virtual int PromedioRespuestasPreguntaEscalaNumerica(string codigoFormulario, string siglaCurso, Nullable<byte> numeroGrupo, Nullable<int> anno, Nullable<byte> semestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin, string codigoSeccion, string codigoPregunta, ObjectParameter promedio)
@@ -1600,6 +1600,137 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual ObjectResult<ObtenerFormulariosPorSemestre_Result> ObtenerFormulariosPorSemestre(string correoEstudiante, Nullable<int> anno, Nullable<byte> semestre)
+        {
+            var correoEstudianteParameter = correoEstudiante != null ?
+                new ObjectParameter("correoEstudiante", correoEstudiante) :
+                new ObjectParameter("correoEstudiante", typeof(string));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(int));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosPorSemestre_Result>("ObtenerFormulariosPorSemestre", correoEstudianteParameter, annoParameter, semestreParameter);
+        }
+    
+        public virtual int ObtenerGruposAsociados()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerGruposAsociados");
+        }
+    
+        public virtual int AsignarFormulario(string formularioCodigo, string cursoSigla, Nullable<byte> grupoNumero, Nullable<int> grupoAnno, Nullable<byte> grupoSemestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var formularioCodigoParameter = formularioCodigo != null ?
+                new ObjectParameter("FormularioCodigo", formularioCodigo) :
+                new ObjectParameter("FormularioCodigo", typeof(string));
+    
+            var cursoSiglaParameter = cursoSigla != null ?
+                new ObjectParameter("CursoSigla", cursoSigla) :
+                new ObjectParameter("CursoSigla", typeof(string));
+    
+            var grupoNumeroParameter = grupoNumero.HasValue ?
+                new ObjectParameter("GrupoNumero", grupoNumero) :
+                new ObjectParameter("GrupoNumero", typeof(byte));
+    
+            var grupoAnnoParameter = grupoAnno.HasValue ?
+                new ObjectParameter("GrupoAnno", grupoAnno) :
+                new ObjectParameter("GrupoAnno", typeof(int));
+    
+            var grupoSemestreParameter = grupoSemestre.HasValue ?
+                new ObjectParameter("GrupoSemestre", grupoSemestre) :
+                new ObjectParameter("GrupoSemestre", typeof(byte));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsignarFormulario", formularioCodigoParameter, cursoSiglaParameter, grupoNumeroParameter, grupoAnnoParameter, grupoSemestreParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual int EstaEnCarreraYEnfasis1(string correoUsuario, string codCarrera, string codEnfasis, ObjectParameter resultado)
+        {
+            var correoUsuarioParameter = correoUsuario != null ?
+                new ObjectParameter("correoUsuario", correoUsuario) :
+                new ObjectParameter("correoUsuario", typeof(string));
+    
+            var codCarreraParameter = codCarrera != null ?
+                new ObjectParameter("codCarrera", codCarrera) :
+                new ObjectParameter("codCarrera", typeof(string));
+    
+            var codEnfasisParameter = codEnfasis != null ?
+                new ObjectParameter("codEnfasis", codEnfasis) :
+                new ObjectParameter("codEnfasis", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EstaEnCarreraYEnfasis1", correoUsuarioParameter, codCarreraParameter, codEnfasisParameter, resultado);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "GruposXPerfilXUsuario1")]
+        public virtual IQueryable<GruposXPerfilXUsuario1_Result> GruposXPerfilXUsuario1(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GruposXPerfilXUsuario1_Result>("[DataIntegradorEntities].[GruposXPerfilXUsuario1](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "ProfesoresXUsuarioXPerfil1")]
+        public virtual IQueryable<ProfesoresXUsuarioXPerfil1_Result> ProfesoresXUsuarioXPerfil1(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ProfesoresXUsuarioXPerfil1_Result>("[DataIntegradorEntities].[ProfesoresXUsuarioXPerfil1](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "UAXPerfilXUsuario1")]
+        public virtual IQueryable<UAXPerfilXUsuario1_Result> UAXPerfilXUsuario1(string usuarioActual, string perfilActual)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("usuarioActual", usuarioActual) :
+                new ObjectParameter("usuarioActual", typeof(string));
+    
+            var perfilActualParameter = perfilActual != null ?
+                new ObjectParameter("perfilActual", perfilActual) :
+                new ObjectParameter("perfilActual", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UAXPerfilXUsuario1_Result>("[DataIntegradorEntities].[UAXPerfilXUsuario1](@usuarioActual, @perfilActual)", usuarioActualParameter, perfilActualParameter);
+        }
+    
+        public virtual int ModificarFormulario(string codviejo, string codnuevo, string nombre, ObjectParameter modificacionexitosa)
+        {
+            var codviejoParameter = codviejo != null ?
+                new ObjectParameter("codviejo", codviejo) :
+                new ObjectParameter("codviejo", typeof(string));
+    
+            var codnuevoParameter = codnuevo != null ?
+                new ObjectParameter("codnuevo", codnuevo) :
+                new ObjectParameter("codnuevo", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
         }
     }
 }
