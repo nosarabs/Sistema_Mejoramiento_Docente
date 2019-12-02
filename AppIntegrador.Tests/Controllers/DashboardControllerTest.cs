@@ -88,7 +88,7 @@ namespace AppIntegrador.Tests.Controllers
             //Se instancia el controlador y se le pasa como parámetro el mock
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
-            //Se crean unidades académicas como dummy data
+            //Se crean carreras y énfasis como dummy data
             var CEsDummy = new List<CarrerasEnfasisFiltros>
             {
                 new CarrerasEnfasisFiltros
@@ -139,7 +139,7 @@ namespace AppIntegrador.Tests.Controllers
             //Se instancia el controlador y se le pasa como parámetro el mock
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
-            //Se crear un formulario como dummy data
+            //Se crean cursos y grupos como dummy data
             var gsDummy = new List<GruposFiltros>
             {
                 new GruposFiltros
@@ -192,7 +192,7 @@ namespace AppIntegrador.Tests.Controllers
             //Se instancia el controlador y se le pasa como parámetro el mock
             DashboardController controller = new DashboardController(mockDb.Object, mockFiltrosDb.Object);
 
-            //Se crean unidades académicas como dummy data
+            //Se crean profesores como dummy data
             var PsDummy = new List<ProfesoresFiltros>
             {
                 new ProfesoresFiltros
