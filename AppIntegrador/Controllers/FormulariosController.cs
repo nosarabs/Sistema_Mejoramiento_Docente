@@ -269,24 +269,6 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
         }
-
-        // POST: Formularios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Formulario formulario)
-        {
-            crearFormulario.seccion = db.Seccion;
-            if (ModelState.IsValid)
-            {
-                db.Entry(formulario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(formulario);
-        }
-
         /**
          * Este método valida si ya el formulario fue creado, de no ser así
          * lo crea y le asocia las secciones recibidas por parámetros

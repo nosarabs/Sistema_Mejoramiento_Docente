@@ -41,7 +41,7 @@
                                    @onkeyup = "contarCaracteres(this)",
                                    @title = "Código requerido",
                                    @Value = Model.Formulario.Codigo,
-                                   @onfocusout = "ValidarCodigo(0)"
+                                   @onfocusout = "ValidarCodigo()"
                                }
                            })
                                 <div class="contador small float-right">0/8 caracteres usados</div>
@@ -66,7 +66,7 @@
                                        @onkeyup = "contarCaracteres(this)",
                                        @title = "Nombre del formulario requerido",
                                        @Value = Model.Formulario.Nombre,
-                                       @onfocusout = "ValidarCodigo(0)"
+                                       @onfocusout = "ValidarCodigo()"
                                    }
                                })
 
@@ -98,7 +98,7 @@
                     <div class="form-group">
                         <div class="">
                             @*Posibilidad de agregar sección*@
-                            <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo(1)" />
+                            <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="AbrirSeccionesModal()" />
                         </div>
                     </div>
                     <div class="form-horizontal card-group">
