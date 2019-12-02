@@ -3,6 +3,13 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @codigo varchar(10), @codigoCarrera varchar(10), @nombre varchar(50), @permisoId int
+	
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionEnfasis;
+	
 	DECLARE cursor_enfasis CURSOR
 	FOR SELECT Codigo, CodCarrera, Nombre
 	FROM inserted;
@@ -57,3 +64,7 @@
 	CLOSE cursor_enfasis
 	DEALLOCATE cursor_enfasis
 	DEALLOCATE cursor_permiso_enfasis
+
+	Commit Transaction transaccionEnfasis;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;
