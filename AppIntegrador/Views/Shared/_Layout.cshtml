@@ -71,23 +71,14 @@
     por otros medios.-->
                         @{
                             AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
-                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS) ||
-                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PERMISOS_Y_PERFILES))
+                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
                             {
                                 <li>
                                     <a href="/Users/Index">Usuarios &#9660;</a>
                                     <ul>
-                                        @{ if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
-                                            {
-                                                <li><a href="/Users/Index">Administración de usuarios</a></li>
-                                            }
-                                        }
+                                        <li><a href="/Users/Index">Administración de usuarios</a></li>
 
-                                        @{ if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PERMISOS_Y_PERFILES))
-                                            {
-                                                <li><a href="/Permissions/Index">Administración de perfiles</a></li>
-                                            }
-                                        }
+                                        <li><a href="/Permissions/Index">Administración de perfiles</a></li>
 
                                     </ul>
                                 </li>
@@ -103,7 +94,7 @@
                         @{
                             if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION) ||
-                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                             {
                                 <li>
                                     <a href="">Formularios &#9660;</a>
@@ -118,6 +109,7 @@
                                                     <ul>
                                                         @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
                                                         {
+
                                                             <li><a href="/Formularios/Create">Crear Formulario</a></li>
                                                         }
                                                         @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO))
@@ -143,7 +135,7 @@
                                         </li>
                                         <li>
                                             @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA) ||
-                                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                                             {
                                                 <a href="">Preguntas &#9658;</a>
                                                 <ul>
@@ -151,7 +143,7 @@
                                                     {
                                                         <li><a href="/Preguntas/Create">Crear pregunta</a></li>
                                                     }
-                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                                                     {
                                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                                     }
