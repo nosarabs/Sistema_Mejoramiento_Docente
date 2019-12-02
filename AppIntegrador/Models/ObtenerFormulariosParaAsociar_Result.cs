@@ -11,12 +11,12 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class GruposXPerfilXUsuario1_Result
+    public partial class ObtenerFormulariosParaAsociar_Result
     {
-        public string Sigla { get; set; }
-        public string Nombre { get; set; }
-        public Nullable<byte> NumGrupo { get; set; }
-        public Nullable<byte> Semestre { get; set; }
-        public Nullable<int> Anno { get; set; }
+        public string FCodigo { get; set; }
+        public string CSigla { get; set; }
+        public byte GNumero { get; set; }
+        public int GAnno { get; set; }
+        public byte GSemestre { get; set; }
     }
 }

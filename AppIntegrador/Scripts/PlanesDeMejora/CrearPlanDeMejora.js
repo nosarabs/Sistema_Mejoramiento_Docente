@@ -1,12 +1,14 @@
 ﻿$(document).ready(function () {
     cantidadProfes = new Counter();
     cantidadForm = new Counter();
-    objetivos = [];
-    accMejora = [];
-    accionables = [];
     correosProfes = [];
     codigosFormularios = [];
-    currentPlan = null;
+    codigosSecciones = [];
+    SeccionConObjetivoDict = {};
+
+    currentPlan = new PlanMejora();
+    currentObjective = null;
+    currentAccMej = null;
 });
 
 function getPlan() {
@@ -14,7 +16,7 @@ function getPlan() {
     let campoFechaInicio = document.getElementById("campoFechaInicioPlanMejora");
     let campoFechaFin = document.getElementById("campoFechaFinPlanMejora");
 
-    currentPlan = new PlanMejora(campoNombre.value, campoFechaInicio.value, campoFechaFin.value);
+    currentPlan.setPlan(campoNombre.value, campoFechaInicio.value, campoFechaFin.value);
 }
 
 class Counter {
@@ -34,10 +36,10 @@ class Counter {
 }
 
 function seleccionaCheckBoxGen(element, variable, key, counter) {
-    console.log(element);
+    /*console.log(element);
     console.log(variable);
     console.log(key);
-    console.log(counter);
+    console.log(counter);*/
 
 
     if (element.checked) {
@@ -93,24 +95,148 @@ function agregarGen(variable, key, counter, url, attribute, div, array) {
     });
 }
 
+function agregarSeccionesSeleccionadas() {
+    SeccionConObjetivoDict[currentObjective.nombre] = [];
+    $("input:checkbox[name=checkBoxSeccionObjetivo]:checked").each(function () {
+        console.log($(this).val());
+        SeccionConObjetivoDict[currentObjective.nombre].push($(this).val());
+    });
+}
+
 function agregarObjetivo() {
     let campoNombre = document.getElementById("campoNombreObjetivo");
     let campoDescripcion = document.getElementById("campoDescripcionObjetivo");
+    let campoTipoObjetivo = document.getElementById("campoTipoObjetivo");
     let campoFechaInicio = document.getElementById("campoFechaInicioObjetivo");
     let campoFechaFin = document.getElementById("campoFechaFinObjetivo");
 
-    objetivos.push(new Objetivo(campoNombre.value, null, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
+    currentPlan.pushObjetivo(new Objetivo(campoNombre.value, campoTipoObjetivo.value, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
     campoNombre.value = "";
     campoDescripcion.value = "";
     campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
     campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
+    console.log(JSON.stringify(currentPlan.Objetivo));
+    $.ajax({
+        type: 'POST',
+        url: '/Objetivos/AnadirObjetivos',
+        data: JSON.stringify(currentPlan.Objetivo),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'json',
+        success: function (result) {
+            $('#divTablaObjetivos').html(result.message);
+        }
+    });
+}
+
+function mostrarTablaAccionMejora() {
+    let tabla = document.getElementById("seccionAccionesMejora");
+    tabla.removeAttribute("hidden");
+    $.ajax({
+        type: 'POST',
+        url: '/AccionDeMejora/AnadirAccionesDeMejora',
+        data: JSON.stringify(currentObjective.AccionDeMejora),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'json',
+        success: function (result) {
+            $('#divTablaAccionesDeMejora').html(result.message);
+        }
+    });
+}
+
+function seleccionaObjetivo(element) {
+    let val = element.value;
+    currentObjective = currentPlan.Objetivo[val];
+    console.log(`${currentObjective.nombre}: ${currentObjective.descripcion}`);
+    mostrarTablaAccionMejora();
+}
+
+function agregarAccionMejora() {
+    let campoDescripcion = document.getElementById("campoDescripcionAccionMejora");
+    let campoFechaInicio = document.getElementById("campoFechaInicioAccionMejora");
+    let campoFechaFin = document.getElementById("campoFechaFinAccionMejora");
+    currentObjective.addAccionDeMejora(new AccionDeMejora(currentObjective.nombre, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
+
+    campoDescripcion.value = "";
+
+    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
+    campoFechaInicio.value = campoFechaInicioObj.value;
+    campoFechaFin.value = campoFechaFinObj.value;
+
+    mostrarTablaAccionMejora();
+}
+
+function mostrarTablaAccionable() {
+    let tabla = document.getElementById("seccionAccionables");
+    tabla.removeAttribute("hidden");
+    $.ajax({
+        type: 'POST',
+        url: '/Accionables/AnadirAccionables',
+        data: JSON.stringify(currentAccMej.Accionable),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        accept: 'json',
+        success: function (result) {
+            $('#divTablaAccionables').html(result.message);
+        }
+    });
+}
+
+function seleccionaAccion(element) {
+    let val = element.value;
+    currentAccMej = currentObjective.AccionDeMejora[val];
+    console.log(`${currentAccMej.nombre}: ${currentAccMej.descripcion}`);
+    mostrarTablaAccionable();
+}
+
+function agregarAccionable() {
+    let campoDescripcion = document.getElementById("campoDescripcionAccionable");
+    let campoFechaInicio = document.getElementById("campoFechaInicioAccionable");
+    let campoFechaFin = document.getElementById("campoFechaFinAccionable");
+
+    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, currentAccMej.descripcion, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
+
+    campoDescripcion.value = "";
+
+    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
+    campoFechaInicio.value = campoFechaInicioObj.value;
+    campoFechaFin.value = campoFechaFinObj.value;
+
+    mostrarTablaAccionable();
+}
+
+function getSecciones() {
+    modalGen('#ModalSecciones');
+    console.log(codigosFormularios.length);
+
+    if (codigosFormularios.length > 0) {
+        let formularios = { FormularioSeleccionado: codigosFormularios };
+        console.log(JSON.stringify(formularios));
+
+        $.ajax({
+            type: 'POST',
+            url: '/Objetivos/ObtenerSecciones',
+            data: JSON.stringify(formularios),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            accept: 'application/json',
+            traditional: true,
+            success: function (result) {
+                console.log("and i oop");
+                $('#ModalAgregarSeccionesInterno').html(result.message);
+            }
+        });
+    }
 }
 
 function enviarDatosPlan() {
     getPlan();
     currentPlan.setCorreosProfes(correosProfes);
     currentPlan.setCodigosFormularios(codigosFormularios);
-    currentPlan.setObjetivos(objetivos);
+    currentPlan.setSeccionConObjetivo(SeccionConObjetivoDict);
     console.log(JSON.stringify(currentPlan));
 
     $.ajax({
@@ -127,6 +253,34 @@ function enviarDatosPlan() {
     });
 }
 
+/*
+ * Funcion encargada de tomar los profesores a los que se les queire asignar un Plan de Mejora
+ */
+function getProfesoresOfPlan() {
+    var table = document.getElementById("TablaMostrarProfesores");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            console.log(col);
+        }
+    }
+}
+
+/*
+ * Funcion encargada de tomar los formularios a los que se les quiere asiganar a un Plan de Mejora
+ */
+function getFormulariosOfPlan() {
+    var table = document.getElementById("TablaMostrarFormularios");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            console.log(col);
+        }
+    }
+}
+
 function modalGen(modal) {
     $(`${modal}`).modal();
 }
@@ -141,19 +295,33 @@ function manejarFechasPlan(campoFechaInicio, campoFechaFin, campoNombre, campoDe
     campoFechaFinObj.value = campoFechaFinPlan.value;
 }
 
+function manejarFechasObjetivo(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
+    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton);
+    let campoFechaInicioAcMej = document.getElementById("campoFechaInicioAccionMejora");
+    let campoFechaFinAcMej = document.getElementById("campoFechaFinAccionMejora");
+    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
+    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
+    campoFechaInicioAcMej.value = campoFechaInicioObj.value;
+    campoFechaFinAcMej.value = campoFechaFinObj.value;
+}
+
 function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
     let fechaInicio = document.getElementById(campoFechaInicio);
     let fechaFinal = document.getElementById(campoFechaFin);
     let nombre = document.getElementById(campoNombre);
-    let totalValidations = campoDescripcion == null ? 2 : 3;
+    let totalValidations = 3;
+    if (campoNombre == null || campoDescripcion == null) {
+        totalValidations = 2;
+    }
+
 
     // Dejando el limite superior de las fechas a 10 años en el caso de la creacion de los planes de mejora
     let minDate = null;
-    let topDate = null; 
+    let topDate = null;
     if (campoFechaInferior != null && campoFechaSuperior != null) {
-        let temp = document.getElementById(campoFechaInferior.id).value;
+        let temp = document.getElementById(campoFechaInferior).value;
         minDate = new Date(temp + 'CST');
-        temp = document.getElementById(campoFechaSuperior.id).value
+        temp = document.getElementById(campoFechaSuperior).value
         topDate = new Date(temp + 'CST');
     } else {
         minDate = new Date(); // Todays Date
@@ -166,7 +334,9 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     validator.setTotalValidations(totalValidations);
 
     // Ahora haciendo las validaciones
-    validator.validateSomethingInTextInput(nombre, 50);
+    if (campoNombre != null) {
+        validator.validateSomethingInTextInput(nombre, 50);
+    }
     validator.validateDates(fechaInicio, fechaFinal);
 
     if (campoDescripcion != null) {
@@ -192,10 +362,17 @@ class PlanMejora extends Base {
 
     ProfeSeleccionado = null;
     FormularioSeleccionado = null;
-    MisObjetivos = null;
+    Objetivo = [];
+    SeccionConObjetivo = {};
 
-    constructor(nombre, fechaInicio, fechaFin) {
-        super(nombre, fechaInicio, fechaFin);
+    constructor() {
+        super(null, null, null);
+    }
+
+    setPlan(nombre, fechaInicio, fechaFin) {
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     setCorreosProfes(correosProfes) {
@@ -206,34 +383,70 @@ class PlanMejora extends Base {
         this.FormularioSeleccionado = codigosFormularios;
     }
 
+    pushObjetivo(objetivo) {
+        this.Objetivo.push(objetivo);
+    }
+
     setObjetivos(objetivos) {
-        this.MisObjetivos = objetivos;
+        this.Objetivo = objetivos;
+    }
+
+    setSeccionConObjetivo(nuevaSeccionConObjetivo) {
+        this.SeccionConObjetivo = nuevaSeccionConObjetivo;
     }
 }
 
 class Objetivo extends Base {
-    tipo = null;
+    nombTipoObj = null;
     descripcion = null;
+    AccionDeMejora = null;
 
     constructor(nombre, tipo, descripcion, fechaInicio, fechaFin) {
         super(nombre, fechaInicio, fechaFin);
-        this.tipo = tipo;
+        this.nombTipoObj = tipo;
         this.descripcion = descripcion;
+        this.AccionDeMejora = [];
+    }
+
+    addAccionDeMejora(accionDeMejora) {
+        this.AccionDeMejora.push(accionDeMejora);
+    }
+
+    setAccionesDeMejora(accionesDeMejora) {
+        this.AccionDeMejora = accionesDeMejora;
     }
 }
 
-class AccionDeMejora extends Base {
+class AccionDeMejora {
+    nombreObj = null;
     descripcion = null;
-    constructor(nombre, descripcion, fechaInicio, fechaFin) {
-        super(nombre, fechaInicio, fechaFin);
+    Accionable = null;
+    fechaInicio = null;
+    fechaFin = null;
+    constructor(nombreObj, descripcion, fechaInicio, fechaFin) {
+        this.nombreObj = nombreObj;
         this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.Accionable = [];
+    }
+
+    addAccionable(accionable) {
+        this.Accionable.push(accionable);
     }
 }
 
-class Accionable extends AccionDeMejora {
-    descripcionAcc = null;
+class Accionable {
+    descripcion = null;
+    nombreObj = null;
+    descripAcMej = null;
+    fechaInicio = null;
+    fechaFin = null;
     constructor(nombre, descripcion, descripcionAcc, fechaInicio, fechaFin) {
-        super(nombre, descripcion, fechaInicio, fechaFin);
-        this.descripcionAcc = descripcionAcc;
+        this.nombreObj = nombre;
+        this.descripAcMej = descripcion;
+        this.descripcion = descripcionAcc;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 }

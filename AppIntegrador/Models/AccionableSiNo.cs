@@ -10,13 +10,16 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class ProfesoresXUsuarioXPerfil1_Result
+    public partial class AccionableSiNo
     {
-        public string Correo { get; set; }
-        public string Nombre1 { get; set; }
-        public string Nombre2 { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
+        public int codPlan { get; set; }
+        public string nombreObj { get; set; }
+        public string descripAcMej { get; set; }
+        public string descripcion { get; set; }
+        public string avance { get; set; }
+    
+        public virtual Accionable Accionable { get; set; }
     }
 }

@@ -185,6 +185,7 @@
     <Compile Include="Controllers\PermissionsController.cs" />
     <Compile Include="Controllers\PlanDeMejoraController.cs" />
     <Compile Include="Controllers\PlanesDeMejoraBI\PlanDeMejoraBI.cs" />
+    <Compile Include="Controllers\PlanesDeMejoraBI\PlanesDeMejoraUtil.cs" />
     <Compile Include="Controllers\PreguntaConOpcionesDeSeleccionController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
@@ -203,6 +204,15 @@
     <Compile Include="Helpers\SiteSettings.cs" />
     <Compile Include="Helpers\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Accionable.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccionableEscala.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccionablePorcentaje.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccionableSiNo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccionDeMejora.cs">
@@ -277,9 +287,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
-    <Compile Include="Models\GruposXPerfilXUsuario1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -291,6 +298,9 @@
     <Compile Include="Models\Metadata\EstudianteMetadata.cs" />
     <Compile Include="Models\Metadata\PermisoMetadata.cs" />
     <Compile Include="Models\Metadata\PersonaMetadata.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\AccionPregunta.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\ObjetivoSeccion.cs" />
+    <Compile Include="Models\Metadata\RelacionesPlanesFormularios\PlanFormulario.cs" />
     <Compile Include="Models\MisFormulariosModel.cs" />
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -317,6 +327,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerFormulariosParaAsociar_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosPorSemestre_Result.cs">
@@ -439,9 +452,6 @@
     <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\PersonProfileViewHolder.cs" />
-    <Compile Include="Models\ProfesoresXUsuarioXPerfil1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -468,9 +478,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
-    <Compile Include="Models\UAXPerfilXUsuario1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -820,6 +827,12 @@
     <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalAnadirAccionMejora.cshtml" />
+    <Content Include="Views\Accionables\_ModalAnadirAccionable.cshtml" />
+    <Content Include="Views\AccionDeMejora\_TablaAccionMejora.cshtml" />
+    <Content Include="Views\Accionables\_TablaAccionables.cshtml" />
+    <Content Include="Views\Objetivos\_ModalAnadirSecciones.cshtml" />
+    <Content Include="Views\Objetivos\_AnadirSecciones.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
     <Content Include="Views\CSV\Clase.cshtml" />
