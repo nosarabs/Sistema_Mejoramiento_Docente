@@ -26,9 +26,10 @@ namespace AppIntegrador.Models
         public string descripcion { get; set; }
         public Nullable<System.DateTime> fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
-        public Nullable<int> tipo { get; set; }
+        public string tipo { get; set; }
         public Nullable<int> peso { get; set; }
         public Nullable<int> pesoPorcentaje { get; set; }
+    
         public virtual AccionDeMejora AccionDeMejora { get; set; }
         public virtual AccionableEscala AccionableEscala { get; set; }
         public virtual AccionablePorcentaje AccionablePorcentaje { get; set; }
