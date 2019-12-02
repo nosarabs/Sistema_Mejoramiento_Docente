@@ -71,14 +71,23 @@
     por otros medios.-->
                         @{
                             AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
-                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
+                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS) ||
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PERMISOS_Y_PERFILES))
                             {
                                 <li>
                                     <a href="/Users/Index">Usuarios &#9660;</a>
                                     <ul>
-                                        <li><a href="/Users/Index">Administración de usuarios</a></li>
+                                        @{ if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
+                                            {
+                                                <li><a href="/Users/Index">Administración de usuarios</a></li>
+                                            }
+                                        }
 
-                                        <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+                                        @{ if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PERMISOS_Y_PERFILES))
+                                            {
+                                                <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+                                            }
+                                        }
 
                                     </ul>
                                 </li>
@@ -109,7 +118,6 @@
                                                     <ul>
                                                         @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
                                                         {
-
                                                             <li><a href="/Formularios/Create">Crear Formulario</a></li>
                                                         }
                                                         @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO))
