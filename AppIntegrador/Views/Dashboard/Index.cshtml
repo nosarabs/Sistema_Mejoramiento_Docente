@@ -175,18 +175,38 @@
         }
 
     }
-
+    /* 
+     * Esta función actualiza los dos gráficos que representan 
+     * el promedio de las calificaciones dadas a un profesor
+     * y a un curso con base en los formularios filtrados.
+     * 
+     * HH.UU.:
+     * COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+     * Tarea Técnica: Mostrar las nota resultantes.
+     * 
+     * COD-78: Visualizar un gráfico para la calificación de un profesor 
+     * y promedio de un curso, a partir de los filtros.
+     * Tarea Técnica: Desplegar la cantidad de calificaciones obtenidas a partir de los filtros.
+     * 
+     * COD-79: Visualizar el promedio para la calificación de un profesor 
+     * y promedio de un curso, a partir de los filtros.
+     * Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+     *
+     * Cumplimiento: 10/10
+     */
     function actualizarPromedios(unidadesAcademicas, carrerasEnfasis, grupos, profesores) {
 
+        //Clase .js con las funciones para recuperar los promedios.
         var x = new GraficosDashboard();
 
+        //Se llaman a la funciones del controlador (por medio de la clase GraficosDashboard) para recuperar los resultados
         var profe = x.recuperarPromedioProfesor(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var profeP = profe[0];
         var profeN = profe[1];
         var nMaloP = profe[2];
         var nRegularP = profe[3];
         var nBuenoP = profe[4];
-
+        
         var curso = x.recuperarPromedioCursos(unidadesAcademicas, carrerasEnfasis, grupos, profesores);
         var cursoP = curso[0];
         var cursoN = curso[1];
@@ -194,16 +214,17 @@
         var nRegularC = curso[3];
         var nBuenoC = curso[4];
 
-        var canvasP = document.getElementById('gP').getContext('2d');
+        //Se recuperan los canvas del html donde se pintarán los gráficos.
+        var canvasP = document.getElementById('gP').getContext('2d'); 
         var canvasC = document.getElementById('gC').getContext('2d');
 
+        //Se pintan diferentes gráficos dependiendo de la existencia de calificaciones en los formularios filtrados.
         if (profeP >= 0) {
             $('#pN').text("Calificaciones Totales: " + profeN);
             x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
         } else {
             $('#pN').text("No existen calificaciones para los formularios filtrados.");
             x.generarGraficoNulo(canvasP);
-
         }
 
         if (cursoP >= 0) {

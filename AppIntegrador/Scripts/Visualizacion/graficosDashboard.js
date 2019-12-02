@@ -1,7 +1,16 @@
-﻿//Berta Sánchez Jalet
-//COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-//Tarea técnica: Mostrar las nota resultantes.
-//Cumplimiento: 5/10
+﻿// HH.UU.:
+// COD - 67: Desplegar la información del puntaje de un profesor y un curso específico.
+// Tarea Técnica: Mostrar las nota resultantes. 
+//
+// COD - 78: Visualizar un gráfico para la calificación de un profesor
+// y promedio de un curso, a partir de los filtros.
+// Tarea Técnica: Desplegar la cantidad de calificaciones obtenidas a partir de los filtros. 
+//
+// COD - 79: Visualizar el promedio para la calificación de un profesor
+// y promedio de un curso, a partir de los filtros.
+// Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+//
+// Cumplimiento: 10 / 10
 class GraficosDashboard {
 
     constructor() { }

@@ -47,14 +47,23 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        //Berta Sánchez Jalet
-        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-        //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 8/10
+        // HH.UU.: 
+        // COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+        // Tarea Técnica: Calcular el promedio agregado.
+        //                Desplegar la cantidad de calificaciones para cada rango.
+        //
+        // COD-79: Visualizar el promedio para la calificación de un profesor
+        // y promedio de un curso, a partir de los filtros.
+        // Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+        //
+        // Cumplimiento: 10/10
         public String ObtenerPromedioProfesor(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            // Se crean las variables que se utilizarán como parámetros de salida
+            // en el procedimiento almacenado.
 
             var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
             resultPromedio.Direction = ParameterDirection.Output;
@@ -62,20 +71,28 @@ namespace AppIntegrador.Controllers
             var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
             resultCantidad.Direction = ParameterDirection.Output;
 
+            // Los siguientes 3 parámetros se utilizan para guardar la cantidad de calificaciones 
+            // que se encuentran en 3 rangos definidos.
+
+            // Cantidad de calificaciones entre 0-5
             var nMalo = new SqlParameter("@nMalo", SqlDbType.Int);
             nMalo.Direction = ParameterDirection.Output;
 
+            // Cantidad de calificaciones entre 6-7
             var nRegular = new SqlParameter("@nRegular", SqlDbType.Int);
             nRegular.Direction = ParameterDirection.Output;
 
+            // Cantidad de calificaciones entre 8-10
             var nBueno = new SqlParameter("@nBueno", SqlDbType.Int);
             nBueno.Direction = ParameterDirection.Output;
 
+            // Variables tabla que contienen las selecciones escogidas en los filtros.
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
+            // Llamado al procedimiento almacenado.
             fdb.PromedioProfesor(uas, ces, gs, ps, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
 
             Resultado p;
@@ -99,18 +116,27 @@ namespace AppIntegrador.Controllers
                 p.nBueno = 0;
             }
 
-
+            //Devuelve los resultados en formato json a la Vista.
             return serializer.Serialize(p);
         }
 
-        //Berta Sánchez Jalet
-        //COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
-        //Tarea técnica: Crear funciones en el Controlador.
-        //Cumplimiento: 8/10
+        // HH.UU.: 
+        // COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+        // Tarea Técnica: Calcular el promedio agregado.
+        //                Desplegar la cantidad de calificaciones para cada rango.
+        //
+        // COD-79: Visualizar el promedio para la calificación de un profesor
+        // y promedio de un curso, a partir de los filtros.
+        // Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+        //
+        // Cumplimiento: 10/10
         public String ObtenerPromedioCursos(List<UAsFiltros> unidadesAcademicas, List<CarrerasEnfasisFiltros> carrerasEnfasis, List<GruposFiltros> grupos, List<ProfesoresFiltros> profesores)
         {
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            // Se crean las variables que se utilizarán como parámetros de salida
+            // en el procedimiento almacenado.
 
             var resultPromedio = new SqlParameter("@promedio", SqlDbType.Float);
             resultPromedio.Direction = ParameterDirection.Output;
@@ -118,20 +144,28 @@ namespace AppIntegrador.Controllers
             var resultCantidad = new SqlParameter("@cantidad", SqlDbType.Int);
             resultCantidad.Direction = ParameterDirection.Output;
 
+            // Los siguientes 3 parámetros se utilizan para guardar la cantidad de calificaciones 
+            // que se encuentran en 3 rangos definidos.
+
+            // Cantidad de calificaciones entre 0-5
             var nMalo = new SqlParameter("@nMalo", SqlDbType.Int);
             nMalo.Direction = ParameterDirection.Output;
 
+            // Cantidad de calificaciones entre 6-7
             var nRegular = new SqlParameter("@nRegular", SqlDbType.Int);
             nRegular.Direction = ParameterDirection.Output;
 
+            // Cantidad de calificaciones entre 8-10
             var nBueno = new SqlParameter("@nBueno", SqlDbType.Int);
             nBueno.Direction = ParameterDirection.Output;
 
+            // Variables tabla que contienen las selecciones escogidas en los filtros.
             var uas = CrearTablaUA(unidadesAcademicas);
             var ces = CrearTablaCE(carrerasEnfasis);
             var gs = CrearTablaG(grupos);
             var ps = CrearTablaP(profesores);
 
+            // Llamado al procedimiento almacenado.
             fdb.PromedioCursos(uas, ces, gs, ps, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
 
             Resultado c;
@@ -155,6 +189,7 @@ namespace AppIntegrador.Controllers
                 c.nBueno = 0;
             }
 
+            //Devuelve los resultados en formato json a la Vista.
             return serializer.Serialize(c);
         }
 
