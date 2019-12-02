@@ -75,6 +75,7 @@ namespace AppIntegrador.Models
                                where r.FCodigo == Periodo.FCodigo && r.Correo == this.Correo
                                && r.CSigla == Periodo.CSigla && r.GNumero == Periodo.GNumero
                                && r.GAnno == Periodo.GAnno && r.GSemestre == Periodo.GSemestre
+                               && (this.Periodo.FechaInicio <= r.Fecha && r.Fecha <= this.Periodo.FechaFin)
                                select r.Finalizado;
 
                 if(estadoDB.Any())
