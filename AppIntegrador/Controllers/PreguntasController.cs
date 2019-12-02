@@ -162,19 +162,19 @@ namespace AppIntegrador.Controllers
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
+                        return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                     }
                 }
                 catch (System.Data.SqlClient.SqlException)
                 {
                     // si se presentó un problema, se devuelve el codigo de error
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                 }
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("Create");
+            return Json(new { guardadoExitoso = true, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = false, MinMax = false });
         }
 
         public ActionResult GuardarPreguntaSiNo(Pregunta pregunta)
@@ -190,19 +190,19 @@ namespace AppIntegrador.Controllers
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
+                        return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                     }
                 }
                 catch (System.Data.SqlClient.SqlException)
                 {
                     // si se presentó un problema, se devuelve el codigo de error
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                 }
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("Create");
+            return Json(new { guardadoExitoso = true, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = false, MinMax = false });
         }
 
         public ActionResult GuardarPreguntaEscalar(Pregunta pregunta, int min, int max)
@@ -220,37 +220,37 @@ namespace AppIntegrador.Controllers
                         {
                             // si se presentó un problema, se devuelve el codigo de error
                             ModelState.AddModelError("Codigo", "Código ya en uso.");
-                            return View(pregunta);
+                            return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                         }
                     }
                     catch (System.Data.SqlClient.SqlException)
                     {
                         // si se presentó un problema, se devuelve el codigo de error
                         ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
+                        return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false });
                     }
                 }
                 else
                 {
                     // si está intentando poner un rango inválido
                     ModelState.AddModelError("min", "El mínimo debe ser menor al máximo");
-                    return View(pregunta);
+                    return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = false, MinMax = true });
                 }
             }
 
             ViewBag.message = "Crear pregunta";
-            return View("Create");
+            return Json(new { guardadoExitoso = true, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = false, MinMax = false });
         }
 
 
         [HttpPost]
-        public ActionResult Create(Pregunta pregunta, List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
+        public ActionResult GuardarPregunta(Pregunta pregunta, string Justificacion,  List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
             if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
             {
                 ModelState.AddModelError("", "Datos incompletos");
-                return View("Create");
+                return Json(new { guardadoExitoso = false, DatosIncompletos = true, CodigoEnUso = false, FaltaOpciones = false, MinMax = false}) ;
             }
 
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Enunciado.Length > 0)
@@ -259,12 +259,19 @@ namespace AppIntegrador.Controllers
                 // ToDo: realizar un método para cada tipo de pregunta
                 switch (pregunta.Tipo)
                 {
-                    case "U": break;
-                    case "M": break;
+                    case "U":
+                        pregunta.Pregunta_con_opciones = new Pregunta_con_opciones();
+                        break;
+                    case "M":
+                        pregunta.Pregunta_con_opciones = new Pregunta_con_opciones();
+                        break;
                     case "L": return GuardarRespuestaLibre(pregunta);
                     case "S": return GuardarPreguntaSiNo(pregunta);
                     case "E": return GuardarPreguntaEscalar(pregunta, min, max);
                 }
+
+                pregunta.Pregunta_con_opciones.TituloCampoObservacion = Justificacion;
+
                 bool validOptions = Opciones != null;
                 if (validOptions)
                 {
@@ -281,21 +288,21 @@ namespace AppIntegrador.Controllers
                 if (!validOptions)
                 {
                     ModelState.AddModelError("", "Una pregunta de selección única necesita al menos una opción");
-                    return View(pregunta);
+                    return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = true, MinMax = false}) ;                    
                 }
                 try
                 {
                     ObjectParameter returnValue = new ObjectParameter("NumeroError", typeof(int));
                     if (db.AgregarPreguntaConOpcion(pregunta.Codigo, pregunta.Tipo, pregunta.Enunciado, pregunta.Pregunta_con_opciones.TituloCampoObservacion,returnValue) == 0)
                     {
-                        ModelState.AddModelError("Codigo", "Código ya en uso.");
-                        return View(pregunta);
+                        ModelState.AddModelError("Codigo", "Código ya en uso.");                        
+                        return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false}) ;                    
                     }
                 }
                 catch (System.Data.SqlClient.SqlException)
                 {
                     ModelState.AddModelError("Codigo", "Código ya en uso.");
-                    return View(pregunta);
+                    return Json(new { guardadoExitoso = false, DatosIncompletos = false, CodigoEnUso = true, FaltaOpciones = false, MinMax = false}) ;                                        
                 }
 
                 foreach (Opciones_de_seleccion opcion in Opciones)
@@ -305,16 +312,17 @@ namespace AppIntegrador.Controllers
 
                 ModelState.Clear();
                 ViewBag.Message = "Exitoso";
-                return View("Create");
+                return Json(new { guardadoExitoso = true, DatosIncompletos = false, CodigoEnUso = false, FaltaOpciones = false, MinMax = false}) ;            
             }
             else
             {
                 ModelState.AddModelError("", "Datos incompletos");
-                return View("Create");
+                return Json(new { guardadoExitoso = false, DatosIncompletos = true, CodigoEnUso = false, FaltaOpciones = false, MinMax = false}) ;            
             }
         }
 
         // Retorna la vista "parcial" de Respuesta libre (.cshtml)
+        [HttpPost]
         public ActionResult RespuestaLibre()
         {
             ViewBag.message = "Respuesta Libre";
@@ -322,6 +330,7 @@ namespace AppIntegrador.Controllers
         }
 
         // Retorna la vista "parcial" de Pregunta Escalar (.cshtml)
+        [HttpPost]
         public ActionResult PreguntaEscalar()
         {
             ViewBag.message = "Pregunta Escalar";
@@ -329,6 +338,7 @@ namespace AppIntegrador.Controllers
         }
 
         // Retorna la vista "parcial" de pregunta Si/No/NR (.cshtml)
+        [HttpPost]
         public ActionResult PreguntaSiNo()
         {
             ViewBag.message = "Pregunta Si/No/NR";
@@ -336,6 +346,7 @@ namespace AppIntegrador.Controllers
         }
 
         // Retorna la vista "parcial" de pregunta con opciones (.cshtml)
+        [HttpPost]
         public ActionResult PreguntaConOpciones()
         {
             ViewBag.message = "Pregunta con opciones";
@@ -343,7 +354,7 @@ namespace AppIntegrador.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult OpcionesDeSeleccion(int i, char Tipo)
         {
             if (i < 0)
