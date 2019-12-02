@@ -147,6 +147,8 @@
     <Compile Include="Controllers\TestSetup.cs" />
     <Compile Include="Controllers\TipoObjetivosTest.cs" />
     <Compile Include="Controllers\EnlaceSeguroControllerTest.cs" />
+    <Compile Include="Controllers\LlenarFormularioTest.cs" />
+    <Compile Include="Controllers\VistaPreviaFormularioTest.cs" />
     <Compile Include="Controllers\UsersControllerTest.cs" />
     <Compile Include="Controllers\ValidadorControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

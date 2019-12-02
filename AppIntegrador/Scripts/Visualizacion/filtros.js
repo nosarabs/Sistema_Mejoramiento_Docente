@@ -165,6 +165,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroUA";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
         
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoUA() };
@@ -179,13 +180,6 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
-
-        filtro.appendChild(defaultOption);
-
         var resultados = this.recuperarUAs(listaCE, listaP, listaG);
 
         //Ciclo que crea cada option para luego agregarlo al select
@@ -196,7 +190,6 @@
             option.text = resultados[i].NombreUA;
             filtro.appendChild(option);
         }
-
     }
 
     //Método que permite crear el desplegable para filtrar por los énfasis de una carrera
@@ -213,6 +206,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCarreraEnfasis";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoCE() };
@@ -227,13 +221,6 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
-
-        filtro.appendChild(defaultOption);
-
         var resultados = this.recuperarCEs(listaUA, listaG, listaP);
 
         //Ciclo que crea cada option para luego agregarlo al select
@@ -244,9 +231,7 @@
             option.value = resultados[i].CodCarrera + "/" + resultados[i].CodEnfasis;
             option.text = resultados[i].NomCarrera + " - " + resultados[i].NomEnfasis;
             filtro.appendChild(option);
-
         }
-
     }
 
     //Método que permite deslpegar el filtro para seleccionar el grupo de un curso en un período específico
@@ -262,12 +247,12 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCursoGrupo";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoG() };
 
         container.appendChild(seleccion);
-
     }
 
     //Lena el filtro de grupos con los datos que recupera del controlador según los parámetros provistos
@@ -276,13 +261,6 @@
         var filtro = document.getElementById("filtroCursoGrupo");
 
         this.vaciarFiltro(filtro);
-
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
-
-        filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarGs(listaUA, listaCE, listaP);
 
@@ -294,9 +272,7 @@
             option.value = resultados[i].SiglaCurso + "/" + resultados[i].NumGrupo + "/" + resultados[i].Semestre + "/" + resultados[i].Anno;
             option.text = resultados[i].SiglaCurso + " - " + resultados[i].NombreCurso + " - " + resultados[i].NumGrupo + " - " + resultados[i].Semestre + " - " + resultados[i].Anno;
             filtro.appendChild(option);
-
         }
-
     }
 
     //Método que permite deslpegar el filtro para seleccionar el grupo de un curso en un período específico
@@ -312,6 +288,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroProfesores";
         seleccion.className = "select";
+        seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarDebajoP() };
@@ -325,13 +302,6 @@
         var filtro = document.getElementById("filtroProfesores");
 
         this.vaciarFiltro(filtro);
-
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
-
-        filtro.appendChild(defaultOption);
 
         var resultados = this.recuperarPs(listaUA, listaCE, listaG);
 
@@ -370,6 +340,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroFormularios";
         seleccion.className = "select";
+        //seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarVistaParcial() };
@@ -384,14 +355,12 @@
 
         this.vaciarFiltro(filtro);
 
-        var defaultOption = document.createElement("option");
-        defaultOption.className = "option";
-        defaultOption.value = "null";
-        defaultOption.text = "Seleccione una opción...";
-
-        filtro.appendChild(defaultOption);
-
         var resultados = this.recuperarFs(listaUA, listaCE, listaG, listaP);
+        var option = document.createElement("option");
+        option.className = "option";
+        option.text = "None selected";
+        option.value = "null";
+        filtro.appendChild(option);
 
         //Ciclo que crea cada option para luego agregarlo al select
         for (var i = 0; i < resultados.length; ++i) {
@@ -442,38 +411,97 @@
     //Función que retorna el array de modelos de unidades académicas
     recuperarUnidadesAcademicas() {
         var ua = document.getElementById("filtroUA");
-        var uaSeleccionada = ua.options[ua.selectedIndex].value;
-        return uaSeleccionada == "null" ? null : [{ CodigoUA: uaSeleccionada }];
+        var uaSelec = [];
+        for (var i = 0; i < ua.length; i++) //Obtención de las opciones seleccionadas
+        {
+            if (ua.options[i].selected)
+                uaSelec.push(ua.options[i].value);
+        }
+        var uaObjs= []
+        if (uaSelec != "null")  //Se crea un arreglo de objetos con el 
+        {                       //código de las Unidades Académicas seleccionadas
+            for (var i = 0; i < uaSelec.length; i++)
+            {
+                uaObjs.push({ CodigoUA: uaSelec[i] });
+            }
+        }
+        //alert(uaSelec);
+        return uaSelec == "null" ? null : uaObjs;
     }
 
     //Función que retorna el array de modelos de carreras y énfasis
     recuperarCarrerasEnfasis() {
         var ce = document.getElementById("filtroCarreraEnfasis");
-        var ceSeleccionada = ce.options[ce.selectedIndex].value;
-        var split = ceSeleccionada.split("/");
-        return ceSeleccionada == "null" ? null : [{ CodCarrera: split[0], CodEnfasis: split[1] }];
+        var ceSeleccionada = [];
+        for (var i = 0; i < ce.length; i++) //Obtención de las opciones seleccionadas
+        {
+            if (ce.options[i].selected)
+                ceSeleccionada.push(ce.options[i].value);
+        }
+        var ceObjs = []
+        if (ceSeleccionada != "null")   //Se crea un arreglo de objetos con las 
+        {                               //Carreras y Énfasis seleccionados
+            for (var i = 0; i < ceSeleccionada.length; i++) {
+                var split = ceSeleccionada[i].split("/");
+                ceObjs.push({ CodCarrera: split[0], CodEnfasis: split[1] });
+            }
+        }
+        return ceSeleccionada == "null" ? null : ceObjs;
     }
 
     //Función que retorna el array de modelos de grupo
     recuperarGrupos() {
         var cg = document.getElementById("filtroCursoGrupo");
-        var cgSeleccionada = cg.options[cg.selectedIndex].value;
-        var split = cgSeleccionada.split("/");
-        return cgSeleccionada == "null" ? null : [{ SiglaCurso: split[0], NumGrupo: split[1], Semestre: split[2], Anno: split[3] }];
+        var cgSeleccionado = [];
+        for (var i = 0; i < cg.length; i++) //Obtención de las opciones seleccionadas
+        {
+            if (cg.options[i].selected)
+                cgSeleccionado.push(cg.options[i].value);
+        }
+
+        var cgObjs = []
+        if (cgSeleccionado != "null")   //Se crea un arreglo de objetos con las 
+        {                               //Carreras y Énfasis seleccionados
+            for (var i = 0; i < cgSeleccionado.length; i++)
+            {
+                var split = cgSeleccionado[i].split("/");
+                cgObjs.push({ SiglaCurso: split[0], NumGrupo: split[1], Semestre: split[2], Anno: split[3] });
+            }
+        }
+        return cgSeleccionado == "null" ? null : cgObjs;
     }
 
     //Función que retorna el array de modelos de profesor
     recuperarProfesores() {
         var p = document.getElementById("filtroProfesores");
-        var pSeleccionada = p.options[p.selectedIndex].value;
-        return pSeleccionada == "null" ? null : [{ Correo: pSeleccionada }];
+        var pSeleccionada = [];
+        for (var i = 0; i < p.length; i++) //Obtención de las opciones seleccionadas
+        {
+            if (p.options[i].selected)
+                pSeleccionada.push(p.options[i].value);
+        }
+
+        var pObjs = []
+        if (pSeleccionada != "null")  //Se crea un arreglo de objetos con el 
+        {                       //código de las Unidades Académicas seleccionadas
+            for (var i = 0; i < pSeleccionada.length; i++) {
+                pObjs.push({ Correo: pSeleccionada[i] });
+            }
+        }
+
+        return pSeleccionada == "null" ? null : pObjs ;
     }
 
     //Función que actualiza el componente de formularios según los filtros.
     recuperarFormulario() {
         var f = document.getElementById("filtroFormularios");
-        var fSeleccionado = f.options[f.selectedIndex].value;
-        return fSeleccionado == "null" ? null : fSeleccionado.split("*");
+        var fSeleccionado = [];
+        for (var i = 0; i < f.length; i++)  //Obtención de las opciones seleccionadas
+        {
+            if (f.options[i].selected)
+                fSeleccionado.push(f.options[i].value);
+        }
+        return fSeleccionado.length == "null" ? null : fSeleccionado[0].split("*");
     }
 
 }

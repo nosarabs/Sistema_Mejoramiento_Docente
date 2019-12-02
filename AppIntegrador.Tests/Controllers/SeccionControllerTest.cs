@@ -186,5 +186,32 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.AreEqual("{ insertadoExitoso = True }", result.Data.ToString());
         }
+
+        [TestMethod]
+        public void ProbarVistaPreviaSeccExiste()
+        {
+            SeccionController controller = new SeccionController();
+            var result = controller.SeccionConPreguntas("00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaSeccNoExiste()
+        {
+            SeccionController controller = new SeccionController();
+            var result = controller.SeccionConPreguntas("NOEXISTE") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarVistaPreviaNula()
+        {
+            SeccionController controller = new SeccionController();
+            var result = controller.SeccionConPreguntas(null) as ViewResult;
+
+            Assert.IsNull(result);
+        }
     }
 }

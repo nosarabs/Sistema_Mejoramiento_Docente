@@ -13,7 +13,6 @@ function selectSeccion(element) {
 
 // Función que llama al controlador para agregar las secciones selecionadas al formulario
 function addSeccionToFormulario() {
-    console.log(agregarsecciones);
     // Obtener el nombre y el codigo del formulario
     var codigo = document.getElementById("textCode").value
     var nombre = document.getElementById("textName").value

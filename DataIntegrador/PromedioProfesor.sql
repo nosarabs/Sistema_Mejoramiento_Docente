@@ -1,7 +1,20 @@
-﻿--Berta Sánchez Jalet
---COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
---Tarea técnica: Realizar consultas a la BD por medio de procedimientos almacenados.
---Cumplimiento: 8/10
+﻿/* 
+	* HH.UU.:
+	* COD-67: Desplegar la información del puntaje de un profesor y un curso específico.
+	* Tarea Técnica: Calcular el promedio agregado.
+	*				 Recuperar la cantidad de calificaciones totales.
+	*				 Recuperar la cantidad de calificaciones para cada rango.
+	* 
+	* COD-78: Visualizar un gráfico para la calificación de un profesor 
+	* y promedio de un curso, a partir de los filtros.
+	* Tarea Técnica: Desplegar la cantidad de calificaciones obtenidas a partir de los filtros.
+	* 
+	* COD-79: Visualizar el promedio para la calificación de un profesor 
+	* y promedio de un curso, a partir de los filtros.
+	* Tarea Técnica: Tomar en cuenta las escogencias de todos los filtros.
+	*
+	* Cumplimiento: 10/10
+*/
 
 
 CREATE PROCEDURE [dbo].[PromedioProfesor]
@@ -37,7 +50,15 @@ DECLARE @valor AS FLOAT = 0
 	WHERE E.Codigo = 'INFPROF'
 
 	DECLARE @Resultados TABLE (Opcion_seleccionada TINYINT);
-		
+	
+	/*
+	* Se recuperan todas las opciones escogidas 
+	* de todas las preguntas de tipo 'INFPROF'
+	* de todos los fomularios ya finalizados 
+	* que existan dentro de los formularios 
+	* recuperados por la función ObtenerFormulariosFiltros.
+	*/
+
 	INSERT INTO @Resultados
 		SELECT  O.OpcionSeleccionada 
 		FROM	Opciones_seleccionadas_respuesta_con_opciones AS O
@@ -59,6 +80,12 @@ DECLARE @valor AS FLOAT = 0
 								GSemestre = O.GSemestre AND 
 								GAnno = O.GAnno);
 
+	/*
+	* Se calcula el valor de las opciones seleccionadas 
+	* con base en el mínimo, máximo e incremento 
+	* dada una pregunta de tipo escalar.
+	*/
+
 	DECLARE C CURSOR FOR SELECT Opcion_seleccionada FROM @Resultados
 	OPEN C
 	FETCH NEXT FROM C INTO @opcion
@@ -75,18 +102,22 @@ DECLARE @valor AS FLOAT = 0
 
 	IF (@cantidad != 0)
 	BEGIN
+		/*Se calcula el promedio con base en el valor obtenido y la cantidad de calificaciones*/
 		SET @promedio = @valor / @cantidad;
 
+		/*Cantidad de calificaciones entre 0-5*/
 		SELECT @nMalo = COUNT(*)
 		FROM @Resultados
 		WHERE (0 <= Opcion_seleccionada AND
 					Opcion_seleccionada <= 5)
 
+		/*Cantidad de calificaciones entre 6-7*/
 		SELECT @nRegular = COUNT(*)
 		FROM @Resultados
 		WHERE (5 < Opcion_seleccionada AND
 					Opcion_seleccionada <= 7)
 
+		/*Cantidad de calificaciones entre 8-10*/
 		SELECT @nBueno = COUNT(*)
 		FROM @Resultados
 		WHERE (7 < Opcion_seleccionada AND
