@@ -244,13 +244,25 @@ namespace AppIntegrador.Controllers
 
 
         [HttpPost]
-        public ActionResult GuardarPregunta(Pregunta pregunta, string Justificacion,  List<Opciones_de_seleccion> Opciones, int min = 0, int max = 0)
+        public ActionResult GuardarPregunta(Pregunta pregunta, string Justificacion,  List<string> TextoOpciones, int min = 0, int max = 0)
         {
             // Se fija que la pregunta no sea nula y que tenga opciones, a menos que sea escalar o libre, que no requieren opciones
-            if (pregunta == null || (Opciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
+            if (pregunta == null || (TextoOpciones == null && pregunta.Tipo == "U" && pregunta.Tipo == "M"))
             {
                 ModelState.AddModelError("", "Datos incompletos");
                 return Json(new { guardadoExitoso = false, DatosIncompletos = true, CodigoEnUso = false, FaltaOpciones = false, MinMax = false}) ;
+            }
+            List<Opciones_de_seleccion> Opciones = new List<Opciones_de_seleccion>();
+            if(TextoOpciones != null)
+            {
+                for(int count = 0; count < TextoOpciones.Count; ++count)
+                {
+                    Opciones_de_seleccion opcion = new Opciones_de_seleccion();
+                    opcion.Codigo = pregunta.Codigo;
+                    opcion.Orden = count;
+                    opcion.Texto = TextoOpciones[count];
+                    Opciones.Add(opcion);
+                }
             }
 
             if (ModelState.IsValid && pregunta.Codigo.Length > 0 && pregunta.Enunciado.Length > 0)

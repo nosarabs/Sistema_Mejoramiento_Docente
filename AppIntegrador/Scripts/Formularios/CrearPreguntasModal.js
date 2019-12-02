@@ -29,20 +29,21 @@ function GuardarPregunta() {
     var Justificacion = document.getElementById("txtJustificationNumber").value;
 
     Pregunta = { Codigo, Enunciado, Tipo };
-    OpcionesDeSeleccion = []
+    TextoOpciones = []
 
     if (Tipo == "U" || Tipo == "M") {
 
         var ListaOpciones = document.getElementsByClassName("opcion-de-seleccion");
-        for (i = 0; i < ListaOpciones.length; i++) {
-            OpcionesDeSeleccion.push(ListaOpciones[i].value);
+        for (Orden = 0; Orden < ListaOpciones.length; Orden++) {
+            var Texto = ListaOpciones[Orden].value;
+            TextoOpciones.push(Texto);
         }
     }
     if (Tipo == "E"){
         var max = document.getElementById("max").value;
         var min = document.getElementById("min").value;
     }
-    var result = { Pregunta, Justificacion, OpcionesDeSeleccion, min, max };
+    var result = { Pregunta, Justificacion, TextoOpciones, min, max };
     $.ajax({
         contentType: "application/json; charset=utf8",
         type: "POST",
@@ -70,6 +71,7 @@ function GuardarPregunta() {
                     dataType: "html",
                     success: function (result) {
                         $('#ModalCrearPregunta').html(result);
+                        ImportarBancoPreguntas()
                         CerrarCrearPregunta();
                     }
                 })
