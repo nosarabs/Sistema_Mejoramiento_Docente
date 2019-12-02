@@ -45,7 +45,11 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      Estado de la base de datos
          */
-        public void enviarTablasAlmacenamiento(DataTable tempTable, string tableParamName, DataTable tablaAsocPlanFormularios, string AsocPlanFormualriosName)
+        public void enviarTablasAlmacenamiento(
+                DataTable tempTable, string tableParamName, 
+                DataTable tablaAsocPlanFormularios, string AsocPlanFormualriosName,
+                DataTable tablaAsocObjSecciones, string AsocObjSeccionesName,
+                DataTable tablaAsocAccionesPreguntas, string AsocAccionesPreguntasName)
         {
             SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
             connection.Open();
@@ -55,6 +59,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             //Pass table Valued parameter to Store Procedure
             SqlParameter sqlParam = cmd.Parameters.AddWithValue(tableParamName, tempTable);
             sqlParam = cmd.Parameters.AddWithValue(AsocPlanFormualriosName, tablaAsocPlanFormularios);
+            sqlParam = cmd.Parameters.AddWithValue(AsocObjSeccionesName, tablaAsocObjSecciones);
+            sqlParam = cmd.Parameters.AddWithValue(AsocAccionesPreguntasName, tablaAsocAccionesPreguntas);
 
             sqlParam.SqlDbType = SqlDbType.Structured;
 
@@ -107,15 +113,15 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             dt.Columns.Add("codigoForm");
 
             //Agregando las filas
-            foreach (var item in formularios) {
-                dt.Rows.Add(plan.codigo, item);
+            if (formularios != null)
+            {
+                foreach (var item in formularios)
+                {
+                    dt.Rows.Add(plan.codigo, item);
+                }
             }
-            
             return dt;
         }
-
-
-
 
         /*
          * EFE:
@@ -126,22 +132,25 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      ---------
          */
-        /*public List<ObjetivoSeccion> getTablaAsociacionObjetivoSeccion(Objetivo objetivo, List<Seccion> secciones)
+        public DataTable getTablaAsociacionObjetivoSeccion(string codigoPlan, List<string> secciones, string nombreObjetivo)
         {
             //Primero de crea una lista vacia de las asociaciones
-            List<ObjetivoSeccion> asociacion = new List<ObjetivoSeccion>();
-            foreach (var item in secciones)
-            {
-                var temp = new ObjetivoSeccion();
+            DataTable dt = new DataTable();
 
-                temp.codPlan = objetivo.codPlan;
-                temp.nombreObjetivo = objetivo.nombre;
-                temp.codSeccion = item.Codigo;
+            // Creando las columnas
+            dt.Columns.Add("codigoPlan");
+            dt.Columns.Add("nombreObjetivo");
+            dt.Columns.Add("codigoSeccion");
 
-                asociacion.Add(temp);
+            if (secciones != null) {
+                foreach (var item in secciones)
+                {
+                    dt.Rows.Add(codigoPlan, nombreObjetivo, item);
+                }
             }
-            return asociacion;
-        }*/
+            
+            return dt;
+        }
 
         /*
          * EFE:
@@ -152,22 +161,26 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      ---------
          */
-        /*public List<AccionPregunta> getTablaAsociacionObjetivoSeccion(AccionDeMejora accion, List<Pregunta> preguntas)
+        public DataTable getTablaAsociacionObjetivoSeccion(string codPlan, string nombreObjetivo, string descripcionAccion, List<string> preguntas)
         {
             //Primero de crea una lista vacia de las asociaciones
-            List<AccionPregunta> asociacion = new List<AccionPregunta>();
-            foreach (var item in preguntas)
+            DataTable dt = new DataTable();
+
+            // Creando las columnas
+            dt.Columns.Add("codigoPlanADM");
+            dt.Columns.Add("nombreObjetivo");
+            dt.Columns.Add("descripcion");
+            dt.Columns.Add("codPregunta");
+
+            if (preguntas != null)
             {
-                var temp = new AccionPregunta();
-                
-                temp.codPlanAccionDeMejora = accion.codPlan;
-                temp.nombreObjetivo = accion.nombreObj;
-                temp.descripcion = accion.descripcion;
-                temp.codPregunta = item.Codigo;
-                
-                asociacion.Add(temp);
+                foreach (var item in preguntas)
+                {
+                    dt.Rows.Add(codPlan, nombreObjetivo, descripcionAccion, item);
+                }
             }
-            return asociacion;
-        }*/
+
+            return dt;
+        }
     }
 }

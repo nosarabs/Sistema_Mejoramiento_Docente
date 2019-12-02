@@ -1,7 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPlanComplete]
 (
-	@tablaPlan			as dbo.PlanTabla			readonly,
-	@tablaAsocPlanForm  as dbo.AsocPlanFormulario   readonly
+	@tablaPlan					as dbo.PlanTabla			readonly,
+	@tablaAsocPlanForm			as dbo.AsocPlanFormulario   readonly,
+	@tablaAsocObjSecciones		as dbo.AsocObjetivoSeccion  readonly,
+	@tablaAsocAccionesPreguntas as dbo.AsocAccionPregunta   readonly
 )
 AS
 BEGIN
@@ -14,6 +16,12 @@ BEGIN TRY
 
 		insert into SeAsignaA
 		select * from @tablaAsocPlanForm
+
+		insert into ObjVsSeccion
+		select * from @tablaAsocObjSecciones
+
+		insert into AccionVsPregunta
+		select * from @tablaAsocAccionesPreguntas
 
 	COMMIT TRANSACTION
 END TRY
