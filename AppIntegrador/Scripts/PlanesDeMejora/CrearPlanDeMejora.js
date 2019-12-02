@@ -205,9 +205,9 @@ function agregarAccionable() {
     let campoDescripcion = document.getElementById("campoDescripcionAccionable");
     let campoFechaInicio = document.getElementById("campoFechaInicioAccionable");
     let campoFechaFin = document.getElementById("campoFechaFinAccionable");
-    let campoTipo = document.getElementById("TipoAccionable");
+    let campoTipo = document.getElementById("TipoAccionableAnadir");
     let campoPeso = document.querySelector('#peso');
-    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, campoDescripcion.value, currentAccMej.descripcion, campoFechaInicio.value, campoFechaFin.value, campoTipo, campoPeso.value, 0));
+    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, campoDescripcion.value, currentAccMej.descripcion, campoFechaInicio.value, campoFechaFin.value, campoTipo.value, campoPeso.value, 0));
     for (var i = 0; i < currentAccMej.Accionable.length; i++) {
         console.log(currentAccMej.Accionable[i].peso);
     }

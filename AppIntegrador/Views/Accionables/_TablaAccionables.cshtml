@@ -29,7 +29,10 @@ else
                     @Html.DisplayNameFor(model => model.peso)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.pesoPorcentaje)
+                    Porcentaje
+                </th>
+                <th>
+                    Tipo
                 </th>
                 <th>
                     Opciones
@@ -54,6 +57,20 @@ else
                 </td>
                 <td>
                     @accionable.pesoPorcentaje
+                </td>
+                <td>
+                    @if (accionable.tipo == "P")
+                    {
+                        <p>Porcentaje</p>
+                    }
+                    else if (accionable.tipo == "S")
+                    {
+                        <p>Si/No</p>
+                    }
+                    else if (accionable.tipo == "E")
+                    {
+                        <p>Escala</p>
+                    }
                 </td>
                 <td>
                     <input type="button" value="Editar accionable" class="btn float-right" id="EditarAccionable" onclick="#" />
