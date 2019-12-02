@@ -278,8 +278,12 @@ namespace AppIntegrador.Controllers
                         pregunta.Pregunta_con_opciones = new Pregunta_con_opciones();
                         break;
                     case "L": return GuardarRespuestaLibre(pregunta);
-                    case "S": return GuardarPreguntaSiNo(pregunta);
-                    case "E": return GuardarPreguntaEscalar(pregunta, min, max);
+                    case "S":
+                        pregunta.Pregunta_con_opciones = new Pregunta_con_opciones();
+                        return GuardarPreguntaSiNo(pregunta);
+                    case "E":
+                        pregunta.Pregunta_con_opciones = new Pregunta_con_opciones();
+                        return GuardarPreguntaEscalar(pregunta, min, max);
                 }
 
                 pregunta.Pregunta_con_opciones.TituloCampoObservacion = Justificacion;
