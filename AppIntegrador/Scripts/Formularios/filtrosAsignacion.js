@@ -66,7 +66,18 @@
                 console.log("ak773")
                 if (!data.errorcito) {
                     console.log(data.tipoError);
-
+                    if (data.tipoError == 1) {
+                        sweetAlert("Error", "Debe de seleccionar datos", "error");
+                    }
+                    if (data.tipoError == 2) {
+                        sweetAlert("Error", "Debe de seleccionar las fechas de inicio y finalización", "error");
+                    }
+                    if (data.tipoError == 3) {
+                        sweetAlert("Error", "La fecha de inicio debe de ser menor que la fecha de finalización", "error");
+                    }
+                    if (data.tipoError == 4) {
+                        sweetAlert("Error", "La asignación no se puede efectuar.", "error");
+                    }
                 } else {
                     swal({
                         title: "¡El formulario " + codigo + " fue asignado con éxito!",

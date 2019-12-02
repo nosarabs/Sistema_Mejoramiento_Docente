@@ -52,6 +52,10 @@ namespace AppIntegrador.Controllers
             Nullable<DateTime> fechaInicio = null;
             Nullable<DateTime> fechaFin = null; 
 
+            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" && fechaInicioSeleccionado == "" && fechaFinSeleccionado == "")
+            {
+                return Json(new { errorcito = false, tipoError = 1 });
+            }
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
             {
                 fechaInicio = Convert.ToDateTime(fechaInicioSeleccionado);
@@ -59,7 +63,12 @@ namespace AppIntegrador.Controllers
             }
             else
             {
-                return Json(new { errorcito = false, tipoError = 1});
+                return Json(new { errorcito = false, tipoError = 2});
+            }
+
+            if (DateTime.Compare((DateTime)fechaInicio, (DateTime)fechaFin) > 0)
+            {
+                return Json(new { errorcito = false, tipoError = 3 });
             }
 
             if (correoProfesorSeleccionado == "null")
@@ -89,7 +98,7 @@ namespace AppIntegrador.Controllers
             
             if (gruposAsociadosLista.Count < 0)
             {
-                return Json(new { data = "Existe un error con la asignación", success = false, message = "random" }, JsonRequestBehavior.AllowGet);
+                return Json(new { errorcito = false, tipoError = 4 });
             }
 
             for (int index = 0; index < gruposAsociadosLista.Count; ++index)
@@ -110,7 +119,7 @@ namespace AppIntegrador.Controllers
             //{
             //    if (unidadesAcademicas[index].Equals())
             //}
-            return Json(new { data = "", status = "success", message = "random" }, JsonRequestBehavior.AllowGet);
+            return Json(new { errorcito = true });
         }
     }
 }
