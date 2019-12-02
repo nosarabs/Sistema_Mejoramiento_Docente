@@ -4,7 +4,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Model.Creado ? "Edit" : "Create";
 }
 
 @*<form id="__AjaxAntiForgeryForm" action="#" method="post"><%= Html.AntiForgeryToken()%></form>*@
@@ -19,7 +19,7 @@
         @Html.Hidden("formulario.Codigo", null, new { @id = "codigoViejo" })
         @*RIP CF5: Creación de un tabla para organizar la información*@
         <div class="card card-body shadow">
-            <h3>Crear Formulario</h3>
+            <h3 id="titulo">@(Model.Creado ? "Editar" : "Crear") Formulario</h3>
             @*Acomodar el código y el nombre en el mismo nivel*@
             <div class="card card-default shadow">
                 <div class="card-body grisUCR2">
@@ -185,27 +185,8 @@
             agregarsecciones.init();
             agregarPreguntas.init();
             GenerarModalPreguntas();
-            validarEntradasAgregarSecciones();
-            var msg = '@ViewBag.Message';
-            if (msg == "Fallido") {
-                document.getElementById("validacion-codigo").textContent = "Código en uso";
-                $("#textCode").addClass("error");
-            }
-            else if (msg == "Exitoso") {
-                const el = document.createElement('div')
-                swal({
-                    title: "¡Formulario guardado exitosamente!",
-                    type: "success",
-                    text: "Puede ser visto en el banco de formularios",
-                    icon: 'success',
-
-                    timer: 100000,
-                    showConfirmButton: true
-
-                });
-
-
-            }
+            $('#ModalCrearPregunta').modal('hide');
+            //validarEntradasAgregarSecciones();
         });
 
     </script>

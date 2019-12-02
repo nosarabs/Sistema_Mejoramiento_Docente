@@ -142,6 +142,7 @@ function ValidarCodigo(abrirModal) {
                             CrearModal();
                         }
                         document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+                        document.getElementById("titulo").innerHTML = "Editar formulario";
                     }
                     else {
                         document.getElementById("validacion-codigo").textContent = "Código en uso";
