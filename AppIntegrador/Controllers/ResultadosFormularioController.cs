@@ -44,7 +44,9 @@ namespace AppIntegrador.Controllers
                 Preguntas = serializer.Serialize(ObtenerPreguntas(codigoFormulario)),
                 Seccioncitas = ObtenerSeccionesDropDown(codigoFormulario)
             };
-            return View(modelo);
+
+            return PartialView("ResultadosFormulario", modelo);
+
         }
 
 
@@ -273,9 +275,18 @@ namespace AppIntegrador.Controllers
 
         public string getTituloJustificacion(string codigoPregunta)
         {
-            var enunciado = (from pco in db.Pregunta_con_opciones
-                            where pco.Codigo == codigoPregunta
-                            select pco.TituloCampoObservacion).First();
+            string enunciado = "";
+            try
+            {
+                enunciado = (from pco in db.Pregunta_con_opciones
+                                 where pco.Codigo == codigoPregunta
+                                 select pco.TituloCampoObservacion).First();
+            }
+            catch(Exception e)
+            {
+                enunciado = "Justificación de la pregunta";
+            }
+            
 
             return enunciado;
         }

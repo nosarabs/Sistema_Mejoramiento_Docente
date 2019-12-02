@@ -52,8 +52,7 @@ BEGIN
 				INSERT INTO @formulariosTemp
 				SELECT	PAP.FCodigo, F.Nombre, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
 				FROM	Periodo_activa_por AS PAP JOIN Formulario AS F ON PAP.FCodigo = F.Codigo
-				WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
-						AND EXISTS	(
+				WHERE	EXISTS		(
 										SELECT *
 										FROM Imparte AS I
 										WHERE I.CorreoProfesor = @correoProfesor /*Solo de formularios activados para el profesor con el correo parámetro de cierto grupo.*/

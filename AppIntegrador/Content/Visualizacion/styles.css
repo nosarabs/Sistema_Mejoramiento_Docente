@@ -6,6 +6,10 @@ body {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
 }
 
+.mensajeError {
+    color: #3d3d3d !important;
+}
+
 .enunciadoPregunta {
     text-align: center !important;
     color: #3d3d3d !important;
@@ -76,15 +80,23 @@ body {
 
 /*Llugar donde se dibuja el gráfico*/
 canvas{
-    margin: 50px auto;
-    height: inherit;
+    margin: auto;
+    height: 100%;
     min-height: inherit;
     width: inherit;
     min-width: inherit;
 }
 
+canvas.graficosPromedio {
+    height: 100% !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    display: block;
+       
+}
+
 /*Cuadro para las justificaciones*/
-.myBox {
+div.row.myBox, div.myBox {
     position: relative;
     vertical-align: middle;
     margin: 30px auto;
@@ -95,6 +107,7 @@ canvas{
     background-color: lightgray;
     list-style-position: inside;
     position: inherit;
+    padding: 0px !important;
 }
 
 .myBox ul 
@@ -125,12 +138,14 @@ canvas{
 }
 
 
-.estadisticas {
+div.row.estadisticas {
     background-color: #f5f5f5;
     font: 15px;
     color: #747474;
     text-align: center;
     width: 100%;
+    margin: 0px !important;
+    padding: 0px !important
 }
 
 .col{
@@ -152,9 +167,8 @@ canvas{
     clear: both;
 }
 
-.row h3 
+.row h3, h3 
 {
-    padding:3%;
     text-align: center;
     width: 100%;
 }
@@ -212,19 +226,24 @@ canvas{
     border-radius: 3px;
 }
 
+/*Estilo para la sección donde se despliegan los promedios de profesor y cursos*/
 #promedios {
     height: 30%;
     margin: 0 !important;
     padding: 0 !important;
     margin-bottom: 1% !important;
+    text-align:center;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de promedios*/
 #promedios .col{
     height: 100%;
     margin:0 !important;
-    padding:0 !important;
+    padding:40px !important;
+    padding-top: 0 !important;
 }
 
+/*Estilo para la sección donde se despliega la cuadrícula con resultados de un formulario*/
 #cuadricula {
     height: 70%;
     margin: 0 !important;
@@ -233,10 +252,10 @@ canvas{
     padding-bottom: 1.5% !important;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de cuadrícula*/
 #cuadricula .col {
     height: 100%;
     margin: 0 !important;
-    padding: 0 !important;
 }
 
 .multiselect-container > li > a > label.checkbox {
@@ -260,4 +279,92 @@ canvas{
     width: inherit;
     border-radius: 5px 5px 5px 5px;
     font-size: small ;
+}
+
+/*Estilo para los multiselect*/
+/*Con este le puede cambiar el tamaño a todo el componente.*/
+div.btn-group {
+    width: 100% !important;
+    font-size: small;
+}
+
+button.multiselect.dropdown-toggle.btn-default {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    width: 100%;
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: white;
+    /*padding: 2% !important;*/
+    white-space: nowrap;
+    max-width: 200%;
+    min-width: 150%;
+    overflow: auto !important;
+}
+
+ul.multiselect-container.dropdown-menu.show {
+    white-space: nowrap;
+    overflow: auto !important;
+    max-width: 200%;
+    min-width: 150%;
+    padding: 5%;
+    padding-left: 2% !important;
+    padding-right: 5% !important;
+}
+
+
+label.checkbox {
+    /*padding-right: 1% !important;*/
+    font-size: small;
+    width: 100%;
+}
+
+label.checkbox:hover {
+    background-color: #DCDCDC;
+    width: max-content;
+    min-width: 100%;
+}
+
+span.multiselect-selected-text {
+    font-size: small;
+    max-width: 95%;
+    display: inline-flex;
+    overflow: hidden;
+}}
+
+/*Estilos para la vista parcial*/
+
+div.row.filaBase {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+div.col.columnaIzquierda {
+    height: 100% !important;
+    padding: 50px !important;
+    flex: 1 !important;
+}
+
+div.col.columnaDerecha {
+    height: 100% !important;
+    padding: 50px !important;
+    flex: 1 !important;
+}
+
+.contenerdorSecciones {
+    height: 10% !important;
+}
+
+.filaSecciones {
+    height: 10% !important;
+}
+
+.flexPregunta {
+    padding: 25px !important;
+}
+
+.labelcito {
+    font-size: 14px;
 }

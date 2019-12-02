@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using System.IO;
+
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 
 namespace AppIntegrador.Controllers
 {
@@ -20,19 +23,6 @@ namespace AppIntegrador.Controllers
         {
             var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
             return View(objetivo.ToList());
-        }
-
-        //// Para el caso de pruebas
-        //public ActionResult Index()
-        //{
-        //    var objetivo = db.Objetivo.Include(o => o.PlantillaObjetivo).Include(o => o.TipoObjetivo);
-        //    return View(objetivo.ToList());
-        //}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void AnadirObjetivo([Bind(Include = "nombre,descripcion,fechaInicio,fechaFin")] Objetivo objetivo)
-        {
-
         }
 
         public ActionResult accionesObjetivo(string id, string nomb)
@@ -66,6 +56,31 @@ namespace AppIntegrador.Controllers
             ViewBag.codPlantilla = new SelectList(db.PlantillaObjetivo, "codigo", "nombre");
             ViewBag.nombTipoObj = new SelectList(db.TipoObjetivo, "nombre", "nombre");
             return View("_crearObjetivo");
+        }
+
+        [HttpPost]
+        public ActionResult AnadirObjetivos(List<Objetivo> objetivos)
+        {
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaObjetivos", objetivos), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
+
+        [HttpPost]
+        public ActionResult ObtenerSecciones(List<String> FormularioSeleccionado)
+        {
+            List<Formulario_tiene_seccion> parejas = new List<Formulario_tiene_seccion>();
+            if(FormularioSeleccionado != null && FormularioSeleccionado.Count > 0)
+            {
+                foreach (var codigo in FormularioSeleccionado)
+                {
+                    foreach (var pareja in db.Formulario_tiene_seccion.Where(x => x.FCodigo.Equals(codigo) ) )
+                    {
+                        parejas.Add(pareja);
+                    }
+                }
+            }
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirSecciones", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
         }
 
         // POST: Objetivos/Create

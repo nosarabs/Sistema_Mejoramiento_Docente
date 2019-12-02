@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
 
 namespace AppIntegrador.Controllers
@@ -50,6 +51,16 @@ namespace AppIntegrador.Controllers
 
             Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
             return PartialView("_Create", accionable);
+        }
+        [HttpPost]
+        public ActionResult AnadirAccionables(List<Accionable> accionables)
+        {
+            List<Accionable> misAccionables = accionables;
+            if (misAccionables == null)
+            {
+                misAccionables = new List<Accionable>();
+            }
+            return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionables", misAccionables), this.ControllerContext) });
         }
 
         // POST: Accionables/Create

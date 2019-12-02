@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -58,6 +59,8 @@ namespace AppIntegrador.Models
             /*Lista todas las personas en la base de datos del sistema, ordenadas por apellidos y luego por nombres.*/
             /*El usuario admin@mail.com no se muestra para que no se pueda quitar permisos él mismo. Por defecto ya 
              tiene todos los permisos disponibles.*/
+            
+
             this.Personas = db.Persona.Where(item => !item.Borrado && item.Correo != "admin@mail.com").
                                        OrderBy(item => item.Apellido1).
                                        ThenBy(item => item.Apellido2).
@@ -65,10 +68,13 @@ namespace AppIntegrador.Models
                                        ThenBy(item => item.Nombre2).
                                        ToList();
 
+            ObjectParameter resultado = new ObjectParameter("resultado", typeof(bool));
+            List<Persona> personasEliminadas = new List<Persona>();
             foreach (Persona persona in this.Personas)
-            {
+            {             
                 persona.HasProfileInEmph = false;
             }
+
             this.ListaCarreras = GetCarreras();
             this.ListaPermisos = GetPermisos();
             this.ListaEnfasis = GetEnfasis();

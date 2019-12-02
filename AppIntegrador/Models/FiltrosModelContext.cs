@@ -133,7 +133,7 @@
         }
 
         [DbFunction("Entities", "PromedioProfesor")]
-        public virtual int PromedioProfesor(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad)
+        public virtual int PromedioProfesor(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad, SqlParameter nMalo, SqlParameter nRegular, SqlParameter nBueno)
         {
             var FiltroUnidadesAcademicasParameter = FiltroUnidadesAcademicas != null ?
                 new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured) { Value = FiltroUnidadesAcademicas } :
@@ -155,11 +155,11 @@
                 new SqlParameter("@CorreosProfesores", SqlDbType.Structured);
             FiltroProfesoresParameter.TypeName = "dbo.FiltroProfesores";
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioProfesor] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioProfesor] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT, @nMalo OUTPUT, @nRegular OUTPUT, @nBueno OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
         }
 
         [DbFunction("Entities", "PromedioCursos")]
-        public virtual int PromedioCursos(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad)
+        public virtual int PromedioCursos(DataTable FiltroUnidadesAcademicas, DataTable FiltroCarrerasEnfasis, DataTable FiltroGrupos, DataTable FiltroProfesores, SqlParameter resultPromedio, SqlParameter resultCantidad, SqlParameter nMalo, SqlParameter nRegular, SqlParameter nBueno)
         {
             var FiltroUnidadesAcademicasParameter = FiltroUnidadesAcademicas != null ?
                 new SqlParameter("@UnidadesAcademicas", SqlDbType.Structured) { Value = FiltroUnidadesAcademicas } :
@@ -181,7 +181,7 @@
                 new SqlParameter("@CorreosProfesores", SqlDbType.Structured);
             FiltroProfesoresParameter.TypeName = "dbo.FiltroProfesores";
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioCursos] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreCommand("EXEC [PromedioCursos] @UnidadesAcademicas, @CarrerasEnfasis, @Grupos, @CorreosProfesores, @promedio OUTPUT, @cantidad OUTPUT,  @nMalo OUTPUT, @nRegular OUTPUT, @nBueno OUTPUT", FiltroUnidadesAcademicasParameter, FiltroCarrerasEnfasisParameter, FiltroGruposParameter, FiltroProfesoresParameter, resultPromedio, resultCantidad, nMalo, nRegular, nBueno);
         }
     }
 }

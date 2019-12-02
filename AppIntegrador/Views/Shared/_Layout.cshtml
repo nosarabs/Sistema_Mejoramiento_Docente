@@ -40,7 +40,7 @@
                         </a>
                     </div>
                     <div class="nombreProyecto col m-0 text-center">
-                        @Html.ActionLink("Sistema de Mejoramiento Docente", "Index", "Home", new object { }, new { @class = "mainBarText" })
+                        <h4>Sistema de Mejoramiento Docente</h4>
                     </div>
                     <div class="col m-0 text-right">
                         <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
@@ -69,7 +69,9 @@
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
         con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
         por otros medios.-->
-                        @if (AppIntegrador.Utilities.PermissionManager.IsAuthorized(AppIntegrador.Utilities.PermissionManager.Permission.VER_USUARIOS))
+                    @{ 
+                        AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
+                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
                         {
                             <li>
                                 <a href="/Users/Index">Usuarios &#9660;</a>
@@ -86,15 +88,23 @@
                             <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
                                 <span style="color:gray">Usuarios &#9660;</span>
                             </li>
+                            }
                         }
                         <li>
+
                             <a href="">Formularios &#9660;</a>
                             <ul>
                                 <li>
                                     <a href="">Formulario &#9658;</a>
                                     <ul>
-                                        <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
+                                        {
+
+                                            <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                        }
                                         <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                        <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+
                                     </ul>
                                 </li>
                                 <li>
@@ -106,47 +116,57 @@
                                 <li>
                                     <a href="">Preguntas &#9658;</a>
                                     <ul>
-                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
+                                        {
+                                            <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                        }
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="">Planes de mejora &#9660;</a>
-                            <ul>
-                                <li>
-                                    <a href="">Mis planes &#9658;</a>
-                                    <ul>
-                                        <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
-                                        <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">Visualización &#9660;</a>
-                            <ul>
-                                <li><a href="/Dashboard/Index">Dashboard</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">Carga de Datos &#9660;</a>
-                            <ul>
-                                <li><a href="/CSV/Index">Carga de archivo CSV</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/Home/About">Acerca de</a></li>
-                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
-                    </ul>
+                            <li>
+                                <a href="">Planes de mejora &#9660;</a>
+                                <ul>
+                                    <li>
+                                        <a href="">Mis planes &#9658;</a>
+                                        <ul>
+                                            <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
+                                            <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">Visualización &#9660;</a>
+                                <ul>
+                                    <li><a href="/Dashboard/Index">Dashboard</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">Carga de Datos &#9660;</a>
+                                <ul>
+                                    <li>
+                                        <a href="">Archivos &#9658;</a>
+                                        <ul>
+                                            <li><a href="/CSV/Clase">Lista de Clase</a></li>
+                                            <li><a href="/CSV/Funcionarios">Lista de Funcionarios</a></li>
+                                            <li><a href="/CSV/GuiaHorarios">Guia de Horarios</a></li>
+                                            <li><a href="/CSV/Index">Lista de Estudiantes</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="/Home/About">Acerca de</a></li>
+                            <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
+                        </ul>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <br />
-    }
+            <br />
+        }
 
     <!--Se añanden metodos por medio de viewbag para determinar si debe cargar boostrap3 o 4, metodo temporal mientras se transiciona a la nueva tecnologia de BS4.3.1-->
     @RenderBody()
@@ -158,7 +178,9 @@
     else
     {
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
         @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         @Scripts.Render("~/bundles/jquery3.3.1", "~/bundles/popper1.14.7", "~/bundles/bs4.3.1")

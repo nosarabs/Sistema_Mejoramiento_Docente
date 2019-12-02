@@ -9,14 +9,24 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data.Entity.Core.Objects;
 
 namespace AppIntegrador.Controllers
 {
     public class SeccionController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db = null;
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
 
+        public SeccionController()
+        {
+            this.db = new DataIntegradorEntities();
+        }
+
+        public SeccionController(DataIntegradorEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
@@ -158,7 +168,7 @@ namespace AppIntegrador.Controllers
             {
                 for (int index = 0; index < preguntas.Count; ++index)
                 {
-                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo, index);
+                    db.AsociarPreguntaConSeccion(seccion.Codigo, preguntas[index].Codigo);
                 }
             }
             return true;
@@ -189,6 +199,112 @@ namespace AppIntegrador.Controllers
         {
             crearSeccion = new CrearSeccionModel();
             return PartialView("~/Views/Seccion/_CreateSeccionPartial.cshtml", crearSeccion);
+        }
+
+        public bool AgregarPreguntasASeccion(string codSeccion, List<string> codPreguntas)
+        {
+            if (codPreguntas != null)
+            {
+                for (int index = 0; index < codPreguntas.Count; ++index)
+                {
+                    db.AsociarPreguntaConSeccion(codSeccion, codPreguntas[index]);
+                }
+            }
+            return true;
+        }
+
+        [HttpPost]
+        public ActionResult AgregarPreguntas(string codSeccion, List<string> codPreguntas)
+        {
+            return Json(new { insertadoExitoso = AgregarPreguntasASeccion(codSeccion, codPreguntas) });
+        }
+
+        public void ObtenerSeccionesConPreguntas(LlenarFormulario formulario, ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario,
+            Respuestas_a_formulario respuestas, bool editar)
+        {
+            if (formulario != null && seccionesDeFormulario != null)
+            {
+                foreach (var seccion in seccionesDeFormulario.ToList())
+                {
+                    List<ObtenerPreguntasDeSeccion_Result> preguntas = db.ObtenerPreguntasDeSeccion(seccion.Codigo).ToList();
+                    SeccionConPreguntas nuevaSeccion = new SeccionConPreguntas { CodigoSeccion = seccion.Codigo, Nombre = seccion.Nombre, Preguntas = new List<PreguntaConNumeroSeccion>(), Orden = seccion.Orden };
+                    PreguntasController preguntasController = new PreguntasController(this.db);
+                    foreach (var pregunta in preguntas)
+                    {
+                        nuevaSeccion.Preguntas.Add(new PreguntaConNumeroSeccion
+                        {
+                            Pregunta = new Pregunta { Codigo = pregunta.Codigo, Enunciado = pregunta.Enunciado, Tipo = pregunta.Tipo },
+                            OrdenSeccion = nuevaSeccion.Orden,
+                            CodigoSeccion = nuevaSeccion.CodigoSeccion,
+                            OrdenPregunta = pregunta.Orden,
+                            Edit = editar
+                        });
+                        
+                        preguntasController.ObtenerInformacionDePreguntas(nuevaSeccion.Preguntas, nuevaSeccion.CodigoSeccion, respuestas);
+                    }
+                    formulario.Secciones.Add(nuevaSeccion);
+                }
+            }
+        }
+
+        public List<SeccionConPreguntas> ObtenerSeccionesConPreguntasEditable(string id)
+        {
+            Formulario formularioDB = db.Formulario.Find(id);
+            LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
+            ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
+
+            ObtenerSeccionesConPreguntas(formulario, seccionesDeFormulario, null, true);
+
+            foreach (var seccion in formulario.Secciones)
+            {
+                seccion.Edicion = true;
+            }
+            return formulario.Secciones;
+        }
+
+        public SeccionConPreguntas ArmarSeccion(string id)
+        {
+            // Sacar codigo y nombre de la BD
+            Seccion secDB = db.Seccion.Find(id);
+
+            if (secDB == null)
+            {
+                return null;
+            }
+
+            SeccionConPreguntas seccion = new SeccionConPreguntas();
+
+            // Asignar datos de la DB al objeto especial
+            seccion.CodigoSeccion = secDB.Codigo;
+            seccion.Nombre = secDB.Nombre;
+            seccion.Orden = 0;
+
+            // Sacar las preguntas y obtener opciones y/o justificaciones
+            PreguntasController preguntasController = new PreguntasController(this.db);
+            seccion.Preguntas = preguntasController.ArmarPreguntas(seccion);
+            preguntasController.ObtenerInformacionDePreguntas(seccion.Preguntas, seccion.CodigoSeccion, null);
+
+            return seccion;
+        }
+
+        [HttpGet]
+        public ActionResult SeccionConPreguntas(string id)
+        {
+            // Armar objeto independiente del formulario
+            SeccionConPreguntas seccion = ArmarSeccion(id);
+
+            if (seccion == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Meter seccion en una lista por la naturaleza de la vista
+            List<SeccionConPreguntas> listaSeccion = new List<SeccionConPreguntas>
+            {
+                seccion
+            };
+
+            return View(listaSeccion);
         }
     }
 }
