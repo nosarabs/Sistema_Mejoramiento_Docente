@@ -94,7 +94,7 @@
                         @{
                             if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION) ||
-                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                             {
                                 <li>
                                     <a href="">Formularios &#9660;</a>
@@ -135,7 +135,7 @@
                                         </li>
                                         <li>
                                             @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA) ||
-                                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                                             {
                                                 <a href="">Preguntas &#9658;</a>
                                                 <ul>
@@ -143,7 +143,7 @@
                                                     {
                                                         <li><a href="/Preguntas/Create">Crear pregunta</a></li>
                                                     }
-                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
                                                     {
                                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                                     }

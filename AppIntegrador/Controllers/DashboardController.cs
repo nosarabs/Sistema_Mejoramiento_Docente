@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Data.SqlClient;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -18,17 +19,20 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
         private FiltrosEntities fdb;
+        private readonly IPerm permissionManager;
 
         public DashboardController()
         {
             db = new DataIntegradorEntities();
             fdb = new FiltrosEntities();
+            permissionManager = new PermissionManager();
         }
 
         public DashboardController(DataIntegradorEntities db, FiltrosEntities fdb)
         {
             this.db = db;
             this.fdb = fdb;
+            permissionManager = new PermissionManager();
         }
 
         struct Resultado
@@ -44,6 +48,12 @@ namespace AppIntegrador.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+            if (!(permissionManager.IsAuthorized(Permission.VER_RESPUESTAS_FORMULARIOS_ENFASIS) ||
+                permissionManager.IsAuthorized(Permission.VER_RESPUESTAS_FORMULARIOS_PROPIOS)))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             return View();
         }
 
