@@ -1,4 +1,5 @@
 ﻿@model AppIntegrador.Models.MisFormulariosModel
+@using System.Globalization;
 
 @{
     ViewBag.Title = "MisFormularios";
@@ -8,6 +9,7 @@
     // 1 = formularios pasados
     // 2 = finalizado
     uint EstadoConstruccion = 0;
+    
 }
 
 <div class="container">
@@ -61,8 +63,8 @@
                             <div class="card-body">
                                 <strong>Curso: </strong><span>@item.Periodo.CSigla - @item.NombreCurso</span> <br />
                                 <strong>Periodo: </strong><span>@item.Periodo.GSemestre - @item.Periodo.GAnno</span><br />
-                                <strong>Fecha de inicio: </strong><span>@item.Periodo.FechaInicio</span> <br />
-                                <strong>Fecha de finalización: </strong><span>@item.Periodo.FechaFin</span> <br />
+                                <strong>Fecha de inicio: </strong><span> @item.FechaInicioFormateada </span> <br />
+                                <strong>Fecha de finalización: </strong><span> @item.FechaFinFormateada </span> <br />
                                 <strong>Estado: </strong>
                                 @if (item.Estado == 3)
                                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,9 @@ namespace AppIntegrador.Models
         public string Nombre { get; }
         public string NombreCurso { get;}
         public int Estado { get; }
+
+        public string FechaInicioFormateada { get;  }
+        public string FechaFinFormateada { get; }
 
         public FormularioAsignado()
         {
@@ -39,6 +43,9 @@ namespace AppIntegrador.Models
 
                 db.Dispose();
             }
+
+            this.FechaInicioFormateada = FormatearFecha(this.Periodo.FechaInicio);
+            this.FechaFinFormateada = FormatearFecha(this.Periodo.FechaFin);
         }
 
         private int ObtenerEstadoFormulario()
@@ -93,5 +100,14 @@ namespace AppIntegrador.Models
             return estado;
         }
 
+        private string FormatearFecha(DateTime fecha)
+        {
+            return fecha.Day.ToString(CultureInfo.CreateSpecificCulture("es")) + " de " +
+                fecha.ToString("MMMMMMMMMMMMM", CultureInfo.CreateSpecificCulture("es")) + " de " +
+                fecha.Year.ToString(CultureInfo.CreateSpecificCulture("es")) + ", " +
+                fecha.ToString("hh", CultureInfo.CreateSpecificCulture("es")) + ":" +
+                fecha.ToString("mm", CultureInfo.CreateSpecificCulture("es")) + " " +
+                fecha.ToString("tt", CultureInfo.InvariantCulture);
+        }
     }
 }
