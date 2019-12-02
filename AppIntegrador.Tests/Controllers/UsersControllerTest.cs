@@ -517,6 +517,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestInitialize]
         public void TestSetup()
         {
+            CurrentUser.deleteCurrentUser("admin@mail.com");
             // We need to setup the Current HTTP Context as follows:            
 
             // Step 1: Setup the HTTP Request
@@ -552,6 +553,12 @@ namespace AppIntegrador.Tests.Controllers
             // Step 4: Assign the Context
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
     }
