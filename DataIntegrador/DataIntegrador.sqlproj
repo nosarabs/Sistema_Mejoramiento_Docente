@@ -265,6 +265,7 @@
     <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerFormulariosPorSemestre.sql" />
     <Build Include="Formularios\Procedimientos\ModificarFormulario.sql" />
+    <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
