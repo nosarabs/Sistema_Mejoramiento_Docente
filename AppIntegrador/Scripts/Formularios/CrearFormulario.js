@@ -110,40 +110,85 @@ function ActualizarSecciones() {
     });
 }
 
-function ValidarCodigo() {
+function ValidarCodigo(abrirModal) {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
 
-    resultado = { Codigo, Nombre };
+    if (Codigo.length > 0 && Nombre.length > 0) {
+        document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
+        resultado = { Codigo, Nombre };
 
-    if (document.getElementById("formularioCreado").value == 0) {
-        $.ajax({
-            contentType: "application/json; charset=utf-8",
-            type: "POST",
-            url: "/Formularios/AgregarFormulario",
-            data: JSON.stringify(resultado),
-            dataType: "json",
-            traditional: true,
-            success: function (data) {
-                if (data.guardadoExitoso) {
-                    /*$(".validar-agregar-secciones").each(function () {
-                        this.disabled = "disabled";
-                        return true;
-                    })*/
-                    document.getElementById("validacion-codigo").textContent = "";
-                    $("#textCode").removeClass("error");
-                    document.getElementById("formularioCreado").setAttribute("value", "1");
+        if (document.getElementById("formularioCreado").value == 0) {
+            console.log("Validar Codigo 0 ", Codigo, " ", Nombre);
+            $.ajax({
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+                url: "/Formularios/AgregarFormulario",
+                data: JSON.stringify(resultado),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.guardadoExitoso) {
+                        /*$(".validar-agregar-secciones").each(function () {
+                            this.disabled = "disabled";
+                            return true;
+                        })*/
+                        document.getElementById("validacion-codigo").textContent = "";
+                        $("#textCode").removeClass("error");
+                        document.getElementById("formularioCreado").setAttribute("value", "1");
+                        document.getElementById("codigoViejo").setAttribute("value", Codigo);
 
+                        if (abrirModal != 0) {
+                            CrearModal();
+                        }
+                        document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+                    }
+                    else {
+                        document.getElementById("validacion-codigo").textContent = "Código en uso";
+                        $("#textCode").addClass("error");
+                        document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+                    }
+                }
+            });
+        }
+        else {
+            ModificarFormulario(abrirModal);
+        }
+    }
+}
+
+function ModificarFormulario(abrirModal) {
+    document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
+    var codViejo = document.getElementById("codigoViejo").value;
+    var codNuevo = document.getElementById("textCode").value;
+    var nombre = document.getElementById("textName").value;
+
+    console.log("ModificarFormulario ", codViejo, " ", codNuevo, " ", nombre);
+
+    resultado = { codViejo, codNuevo, nombre };
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Formularios/ModificarFormulario",
+        data: JSON.stringify(resultado),
+        dataType: "json",
+        traditional: true,
+        success: function (data) {
+            if (data.modificacionExitosa) {
+                document.getElementById("validacion-codigo").textContent = "";
+                $("#textCode").removeClass("error");
+                document.getElementById("codigoViejo").setAttribute("value", codNuevo);
+
+                if (abrirModal != 0) {
                     CrearModal();
                 }
-                else {
-                    document.getElementById("validacion-codigo").textContent = "Código en uso";
-                    $("#textCode").addClass("error");
-                }
+                document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
             }
-        });
-    }
-    else {
-        CrearModal();
-    }
+            else {
+                document.getElementById("validacion-codigo").textContent = "Código en uso";
+                $("#textCode").addClass("error");
+                document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+            }
+        }
+    });
 }

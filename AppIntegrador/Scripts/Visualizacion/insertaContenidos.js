@@ -23,6 +23,7 @@
         var columna = document.createElement("div");
         columna.className = "col";
         var mensaje = document.createElement("h3");
+        mensaje.className = "mensajeError";
         mensaje.innerText = "No se encontraron respuestas para esta pregunta.";
 
         columna.appendChild(mensaje);
@@ -32,7 +33,7 @@
 
     insertarGraficoEscala(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoEscala(baseDosCol.getCanvas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoEscala(baseDosCol.getCanvas(), codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, true);
 
         if (resultado <= 0) {
 
@@ -45,7 +46,7 @@
 
     insertarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoSeleccionUnica(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, true);
 
         if (resultado <= 0) {
 
@@ -58,7 +59,7 @@
 
     insertarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoSeleccionMultiple(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, true);
 
         if (resultado <= 0) {
 
@@ -71,7 +72,7 @@
 
     insertarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta) {
 
-        var resultado = this.graficos.generarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta);
+        var resultado = this.graficos.generarGraficoSeleccionCerrada(baseDosCol, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, true);
 
         if (resultado <= 0) {
 

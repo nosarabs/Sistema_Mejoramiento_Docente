@@ -21,7 +21,7 @@ namespace AppIntegrador.Tests.Controllers
 
 
 
-        // COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
+ /*       // COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
         // Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
 
         // Cuando se cree el modulo de cargar archivos CSV se debe modificar el tests
@@ -67,12 +67,12 @@ namespace AppIntegrador.Tests.Controllers
             // Arrange
             //Creo el controlador y su contexto
             CSVController controller = new CSVController();
-            var file = @"../../ArchivoCSVtest/prueba.csv";
+            var file = @"../../Guias Horarios/guiaPrueba.csv";
             // Act
-            var result = controller.carga(file, 1);
+            var result = controller.cargarGuia(file);
             // Assert
             Assert.IsTrue(result);
-        }
+        }*/
 
     }
 }

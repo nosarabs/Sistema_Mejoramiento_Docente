@@ -21,10 +21,12 @@ namespace AppIntegrador.Controllers
 
         private DataIntegradorEntities db;
         public CrearFormularioModel crearFormulario = new CrearFormularioModel();
+        private readonly IPerm permissionManager;
 
         public FormulariosController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         public FormulariosController(DataIntegradorEntities db)
@@ -147,7 +149,7 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
-            if (!PermissionManager.IsAuthorized(PermissionManager.Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -376,6 +378,10 @@ namespace AppIntegrador.Controllers
 
         private bool InsertFormulario(Formulario formulario)
         {
+            if(formulario == null || formulario.Codigo == null || formulario.Nombre == null)
+            {
+                return false;
+            }
             try
             {
                 if (db.AgregarFormulario(formulario.Codigo, formulario.Nombre) == 0)
@@ -421,6 +427,19 @@ namespace AppIntegrador.Controllers
             {
                 return null;
             }
+        }
+
+        [HttpPost]
+        public ActionResult ModificarFormulario(string codViejo, string codNuevo, string nombre)
+        {
+            bool modificacionExitosa = false;
+            if(codViejo != null && codNuevo != null && nombre != null)
+            {
+                ObjectParameter modificacionOutput = new ObjectParameter("modificacionexitosa", typeof(bool));
+                db.ModificarFormulario(codViejo, codNuevo, nombre, modificacionOutput);
+                modificacionExitosa = (bool)modificacionOutput.Value;
+            }
+            return Json(new { modificacionExitosa });
         }
     }
 }

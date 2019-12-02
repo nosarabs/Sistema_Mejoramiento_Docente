@@ -191,10 +191,16 @@
     <Compile Include="Controllers\ResultadosFormularioController.cs" />
     <Compile Include="Controllers\TipoObjetivosController.cs" />
     <Compile Include="Controllers\Validador.cs" />
+    <Compile Include="Controllers\ValidadorGuia.cs" />
     <Compile Include="Controllers\ValidadorListaDeEstudiantes.cs" />
+    <Compile Include="Controllers\ValidadorListaFuncionarios.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
+    <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
+    <Compile Include="Helpers\SiteSettings.cs" />
+    <Compile Include="Helpers\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Accionable.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -213,7 +219,6 @@
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
-    <Compile Include="Models\ArchivoCSV.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -271,6 +276,12 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
+    <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GruposXPerfilXUsuario1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -334,6 +345,15 @@
     <Compile Include="Models\ObtenerGruposUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerOpcionesSeleccionadas_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerProfesoresCarreraEnfasis_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -346,30 +366,6 @@
     <Compile Include="Models\ObtenerProfesoresUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObtenerUAsCarreraEnfasis_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsFiltros_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsGrupo_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerUAsProfesor_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PlanMejora.cs" />
-    <Compile Include="Models\ProfesoresFiltros.cs" />
-    <Compile Include="Models\FormulariosFiltros.cs" />
-    <Compile Include="Models\ObtenerOpcionesDePregunta_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerOpcionesSeleccionadas_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObtenerPreguntasDeSeccion_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ObtenerRespuestaLibreGuardada_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -380,6 +376,18 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerSeccionesDeFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsCarreraEnfasis_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsFiltros_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsGrupo_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerUAsProfesor_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_de_seleccion.cs">
@@ -409,6 +417,7 @@
     <Compile Include="Models\PlanDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlanMejora.cs" />
     <Compile Include="Models\PlantillaAccionDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -430,9 +439,14 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfesoresFiltros.cs" />
+    <Compile Include="Models\FormulariosFiltros.cs" />
     <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\PersonProfileViewHolder.cs" />
+    <Compile Include="Models\ProfesoresXUsuarioXPerfil1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -459,6 +473,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
+    <Compile Include="Models\UAXPerfilXUsuario1_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -494,6 +511,7 @@
     <Compile Include="Utilities\EmailNotification.cs" />
     <Compile Include="Utilities\FormsAuth.cs" />
     <Compile Include="Utilities\IAuth.cs" />
+    <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +532,7 @@
     <Content Include="Content\PlanDeMejora\mainPlanesDeMejora.css" />
     <Content Include="Content\PlanDeMejora\planesDeMejoraStructureStyles.css" />
     <Content Include="Content\Plugins\animate.css" />
+    <Content Include="Content\Visualizacion\texto_abierto_icono.png" />
     <Content Include="Models\DataIntegradorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataIntegradorModel.edmx</DependentUpon>
@@ -642,7 +661,7 @@
     <Content Include="Scripts\Formularios\ContadorCaracteres.js" />
     <Content Include="Scripts\Formularios\CrearFormulario.js" />
     <Content Include="Scripts\Formularios\CrearPreguntas.js" />
-    <Content Include="ArchivoCSV\archivo.csv" />
+    <Content Include="Estudiantes\archivo.csv" />
     <EntityDeploy Include="Models\DataIntegradorModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataIntegradorModel.Designer.cs</LastGenOutput>
@@ -709,7 +728,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\PlanDeMejora\Index.cshtml" />
-    <Content Include="Views\ResultadosFormulario\Formulario.cshtml" />
+    <Content Include="Views\ResultadosFormulario\ResultadosFormulario.cshtml" />
     <Content Include="Views\Formularios\Create.cshtml" />
     <Content Include="Views\Formularios\Delete.cshtml" />
     <Content Include="Views\Formularios\Details.cshtml" />
@@ -734,7 +753,6 @@
     <Content Include="Views\Objetivos\Index.cshtml" />
     <Content Include="Views\Objetivos\_crearObjetivo.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
@@ -802,15 +820,19 @@
     <Content Include="Views\PlanDeMejora\_ModalAnadirFormularios.cshtml" />
     <Content Include="Views\Objetivos\_ModalAnadirObjetivos.cshtml" />
     <Content Include="Views\TipoObjetivos\Index.cshtml" />
-    <Content Include="Views\Dashboard\SeccionesFormularioFiltrado.cshtml" />
     <Content Include="Views\EnlaceSeguro\RedireccionSegura.cshtml" />
     <Content Include="Views\LlenarFormulario\MisFormularios.cshtml" />
     <Content Include="Views\AsignacionFormularios\Index.cshtml" />
+    <Content Include="Views\CSV\Clase.cshtml" />
+    <Content Include="Views\CSV\GuiaHorarios.cshtml" />
+    <Content Include="Views\CSV\Funcionarios.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\NewFolder1\" />
+    <Folder Include="Funcionarios\" />
+    <Folder Include="Guias Horario\" />
+    <Folder Include="Listas de Clase\" />
     <Folder Include="Views\VistaPreviaFormularios\" />
   </ItemGroup>
   <ItemGroup>

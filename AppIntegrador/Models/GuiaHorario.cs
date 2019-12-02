@@ -15,6 +15,7 @@ namespace AppIntegrador.Models
     {
         public string CodigoCarreraCurso { get; set; }
         public string CodigoEnfasisCurso { get; set; }
+        public string SiglaCursoCarrera { get; set; }
         public string SiglaCurso { get; set; }
         public string NombreCurso { get; set; }
         public string SiglaCursoGrupo { get; set; }
@@ -31,6 +32,5 @@ namespace AppIntegrador.Models
         public string NumeroGrupoMatricula { get; set; }
         public string SemestreMatricula { get; set; }
         public string AnnoMatricula { get; set; }
-        //Datos sobre a que carrera pertenece un curso
     }
 }

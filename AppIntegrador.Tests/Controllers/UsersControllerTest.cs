@@ -87,6 +87,7 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void CreateChangesSaved()
         {
+            //TestSetup();
             var personas = new List<Persona>
             {
                 new Persona() { Correo = "fake1@mail.com", Identificacion = "123456781", Apellido1 = "Fake1", Nombre1 = "Fake", TipoIdentificacion = "Cédula" },
@@ -124,7 +125,65 @@ namespace AppIntegrador.Tests.Controllers
 
             var result = controller.Create(nuevaPersona) as RedirectToRouteResult;
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            string expected = "";
+            if (CurrentUser.getUsername() == "admin@mail.com")
+                expected = "Index";
+            else
+                expected = "../Home/Index";
+
+            Assert.AreEqual(expected, result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void CreateSinPermiso()
+        {
+            //Nos aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            UsersController controller = new UsersController()
+            {
+                TempData = tempData
+            };
+            
+            RedirectToRouteResult result = controller.Create(null) as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página.");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+            CurrentUser.deleteCurrentUser("andres@mail.com");
+        }
+
+        [TestMethod]
+        public void IndexSinPermiso()
+        {
+            //Nos aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "0000000001", "0000000001");
+            var httpContext = new HttpContext(
+                new HttpRequest("", "http://localhost:44334/Home/Login", ""),
+                new HttpResponse(new StringWriter())
+            );
+            var tempData = new TempDataDictionary();
+            UsersController controller = new UsersController()
+            {
+                TempData = tempData
+            };
+
+            RedirectToRouteResult result = controller.Index() as RedirectToRouteResult;
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+            Assert.AreEqual(controller.TempData["alertmessage"], "No tiene permisos para acceder a esta página");
+            Assert.AreEqual(result.RouteValues["action"], expected.RouteValues["action"]);
+            CurrentUser.deleteCurrentUser("andres@mail.com");
         }
 
         [TestMethod]
@@ -155,7 +214,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -184,6 +243,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -214,7 +274,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -243,6 +303,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -273,7 +334,7 @@ namespace AppIntegrador.Tests.Controllers
             mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
 
             var myMockedObjectResult = new Mock<ObjectResult<int>>();
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             Persona persona = new Persona();
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
@@ -302,10 +363,71 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
         public void EditChangesSavedWrongResidence()
+        {
+            var personas = new List<Persona>
+            {
+                new Persona() { Correo = "fake1@mail.com", Identificacion = "123456781231", Apellido1 = "Fake1", Nombre1 = "Fake", TipoIdentificacion = "Cédula" }
+            }.AsQueryable();
+
+            var mockDbSet = new Mock<DbSet<Persona>>();
+
+            mockDbSet.As<IQueryable<Persona>>().Setup(m => m.Provider).Returns(personas.Provider);
+            mockDbSet.As<IQueryable<Persona>>().Setup(m => m.Expression).Returns(personas.Expression);
+            mockDbSet.As<IQueryable<Persona>>().Setup(m => m.ElementType).Returns(personas.ElementType);
+            mockDbSet.As<IQueryable<Persona>>().Setup(m => m.GetEnumerator()).Returns(personas.GetEnumerator());
+
+            var usuarios = new List<Usuario>
+            {
+                new Usuario() { Activo = true }
+            }.AsQueryable();
+
+            var mockDbSetUsuario = new Mock<DbSet<Usuario>>();
+
+            mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.Provider).Returns(usuarios.Provider);
+            mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.Expression).Returns(usuarios.Expression);
+            mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.ElementType).Returns(usuarios.ElementType);
+            mockDbSetUsuario.As<IQueryable<Usuario>>().Setup(m => m.GetEnumerator()).Returns(usuarios.GetEnumerator());
+
+            var myMockedObjectResult = new Mock<ObjectResult<int>>();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+            Persona persona = new Persona();
+            persona.Correo = "newusertest@mail.com";
+            persona.Nombre1 = "Test";
+            persona.Apellido1 = "Nuevo";
+            persona.TipoIdentificacion = "Residencia";
+            persona.Identificacion = "1205407";
+            persona.Estudiante = new Estudiante();
+            Usuario usuario = new Usuario
+            {
+                Activo = true
+            };
+            UsuarioPersona usuarioPersona = new UsuarioPersona { Persona = persona, Usuario = usuario };
+
+            ObjectParameter parameter = new ObjectParameter("result", typeof(bool));
+
+            var database = new Mock<DataIntegradorEntities>();
+            database.Setup(m => m.Persona).Returns(mockDbSet.Object);
+            database.Setup(m => m.Usuario).Returns(mockDbSetUsuario.Object);
+            database.Setup(m => m.ModificarCorreo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ObjectParameter>())).Callback<string, string, ObjectParameter>((a, b, c) =>
+            {
+                c.Value = false;
+            });
+
+            UsersController controller = new UsersController(database.Object);
+
+            var result = controller.Edit(usuarioPersona) as ViewResult;
+
+            Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+        }
+
+        [TestMethod]
+        public void EditChangesSavedWrongCarne()
         {
             var personas = new List<Persona>
             {
@@ -337,9 +459,10 @@ namespace AppIntegrador.Tests.Controllers
             persona.Correo = "newusertest@mail.com";
             persona.Nombre1 = "Test";
             persona.Apellido1 = "Nuevo";
-            persona.TipoIdentificacion = "Residencia";
-            persona.Identificacion = "1205407";
+            persona.TipoIdentificacion = "Cédula";
+            persona.Identificacion = "120540707";
             persona.Estudiante = new Estudiante();
+            persona.Estudiante.Carne = "B1234";
             Usuario usuario = new Usuario
             {
                 Activo = true
@@ -355,12 +478,13 @@ namespace AppIntegrador.Tests.Controllers
             {
                 c.Value = false;
             });
-
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             UsersController controller = new UsersController(database.Object);
 
             var result = controller.Edit(usuarioPersona) as ViewResult;
 
             Assert.IsNotNull(result);
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
         [TestMethod]
@@ -429,5 +553,6 @@ namespace AppIntegrador.Tests.Controllers
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
         }
+
     }
 }
