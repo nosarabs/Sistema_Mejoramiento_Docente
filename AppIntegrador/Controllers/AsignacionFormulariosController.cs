@@ -39,8 +39,9 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado)
+        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado)
         {
             string codigoCarrera = null;
             string codigoEnfasis = null;
@@ -48,9 +49,18 @@ namespace AppIntegrador.Controllers
             Nullable<byte> numeroGrupo = null;
             Nullable<byte> semestreGrupo = null;
             Nullable<int> anno = null;
+            Nullable<DateTime> fechaInicio = null;
+            Nullable<DateTime> fechaFin = null; 
 
-            DateTime fechaInicio = Convert.ToDateTime("10/11/2019");
-            DateTime fechaFin = Convert.ToDateTime("10/11/2469");
+            if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
+            {
+                fechaInicio = Convert.ToDateTime(fechaInicioSeleccionado);
+                fechaFin = Convert.ToDateTime(fechaFinSeleccionado);
+            }
+            else
+            {
+                return Json(new { errorcito = false, tipoError = 1});
+            }
 
             if (correoProfesorSeleccionado == "null")
                 correoProfesorSeleccionado = null;
@@ -76,6 +86,11 @@ namespace AppIntegrador.Controllers
             var grupos = db.ObtenerGruposAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo , semestreGrupo, anno, correoProfesorSeleccionado);
 
             var gruposAsociadosLista = grupos.ToList();
+            
+            if (gruposAsociadosLista.Count < 0)
+            {
+                return Json(new { data = "Existe un error con la asignación", success = false, message = "random" }, JsonRequestBehavior.AllowGet);
+            }
 
             for (int index = 0; index < gruposAsociadosLista.Count; ++index)
             {
@@ -83,21 +98,19 @@ namespace AppIntegrador.Controllers
                 db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
             }
 
-                // RIP-AF3
-                // Como es la asignacion por curso, se asume que viene null los demas 
-                // para que acá sean implementados
+            // RIP-AF3
+            // Como es la asignacion por curso, se asume que viene null los demas 
+            // para que acá sean implementados
 
-                // llamado al procedimiento almacenado 
-                // db.ObtenerGruposAsociados();
-                //List<UAsFiltros> tempUA;
+            // llamado al procedimiento almacenado 
+            // db.ObtenerGruposAsociados();
+            //List<UAsFiltros> tempUA;
 
-                //for(int index = 0; index < unidadesAcademicas.Count; ++index)
-                //{
-                //    if (unidadesAcademicas[index].Equals())
-                //}
-
-                //dashboard.ObtenerGrupos()
-                return View("Index");
+            //for(int index = 0; index < unidadesAcademicas.Count; ++index)
+            //{
+            //    if (unidadesAcademicas[index].Equals())
+            //}
+            return Json(new { data = "", status = "success", message = "random" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

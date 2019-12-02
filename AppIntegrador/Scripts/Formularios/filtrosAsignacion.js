@@ -30,21 +30,24 @@
 
     }
 
-    asignarConFiltros(listaUA, listaCE, listaP) {
+    asignarConFiltros(listaUA, listaCE, listaP, codigo) {
 
-        var codigoFormularioGet = '00000420';
+        var codigoFormularioGet = codigo;
 
         var CESeleccionadas = document.getElementById("filtroCarreraEnfasis");
         var CEValor = CESeleccionadas.options[CESeleccionadas.selectedIndex].value;
 
         var UASeleccionadas = document.getElementById("filtroUA");
         var UAValor = UASeleccionadas.options[UASeleccionadas.selectedIndex].value;
-        console.log(UAValor)
         var GSeleccionada = document.getElementById("filtroCursoGrupo");
         var GValor = GSeleccionada.options[GSeleccionada.selectedIndex].value;
 
         var PSeleccionado = document.getElementById("filtroProfesores");
         var PValor = PSeleccionado.options[PSeleccionado.selectedIndex].value;
+
+        var fechaInicio = document.getElementById("fecha-inicio").value;
+        var fechaFin = document.getElementById("fecha-fin").value;
+        console.log(fechaInicio);
         $.ajax({
             url: '/AsignacionFormularios/Asignar',
             data: {
@@ -52,13 +55,33 @@
                 codigoUASeleccionada: UAValor, //este 
                 codigoCarreraEnfasisSeleccionada: CEValor, //este
                 grupoSeleccionado: GValor, // este
-                correoProfesorSeleccionado: PValor //este
+                correoProfesorSeleccionado: PValor, //este
+                fechaInicioSeleccionado: fechaInicio,
+                fechaFinSeleccionado: fechaFin
             },
             type: 'post',
             dataType: 'json',
             async: false,
-            success: function (resultados) {
+            success: function (data) {
+                console.log("ak773")
+                if (!data.errorcito) {
+                    console.log(data.tipoError);
 
+                } else {
+                    swal({
+                        title: "¡El formulario " + codigo + " fue asignado con éxito!",
+                        text: "Estará disponible para llenar a partir del: " + fechaInicio + " hasta " + fechaFin + ".",
+                        type: "success",
+                        showConfirmButton: true
+                    },
+                    function () {
+                        $(location).attr('href', '/Formularios/Index');
+                    });
+                }
+                console.log("ak7")
+            },
+            error: function (data)
+            {
             }
         });
     }
@@ -167,7 +190,7 @@
         //Se agrega el select que contendrá los elementos (opciones)
         var seleccion = document.createElement('select');
         seleccion.id = "filtroUA";
-        seleccion.className = "select";
+        seleccion.className = "select form-control";
         seleccion.name = "filtroUA"
 
         //Se agrega el elemento select a la vista
@@ -216,7 +239,7 @@
         //Se agrega el select que contendrá los elementos (opciones)
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCarreraEnfasis";
-        seleccion.className = "select";
+        seleccion.className = "select form-control";
         seleccion.name = "filtroCarreraEnfasis"
 
 
@@ -267,7 +290,7 @@
         //Se agrega el select que contendrá los elementos (opciones)
         var seleccion = document.createElement("select");
         seleccion.id = "filtroCursoGrupo";
-        seleccion.className = "select";
+        seleccion.className = "select form-control";
         seleccion.name = "filtroCursoGrupo"
 
         //Se agrega el elemento select a la vista
@@ -318,7 +341,7 @@
         //Se agrega el select que contendrá los elementos (opciones)
         var seleccion = document.createElement("select");
         seleccion.id = "filtroProfesores";
-        seleccion.className = "select";
+        seleccion.className = "select form-control";
         seleccion.name = "filtroProfesores"
 
 
@@ -332,7 +355,7 @@
     llenarFiltroP(listaUA, listaCE, listaG) {
 
         var filtro = document.getElementById("filtroProfesores");
-
+        
         this.vaciarFiltro(filtro);
 
         var defaultOption = document.createElement("option");
