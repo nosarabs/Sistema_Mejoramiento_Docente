@@ -1,24 +1,48 @@
-﻿@model IEnumerable<AppIntegrador.Models.FormularioAsignado>
+﻿@model AppIntegrador.Models.MisFormulariosModel
 
 @{
     ViewBag.Title = "MisFormularios";
+
+    // Estado de la construcción de la pagina
+    // 0 = formularios de semestre
+    // 1 = formularios pasados
+    // 2 = finalizado
+    uint EstadoConstruccion = 0;
 }
 
 <div class="container">
     <div class="card card-body shadow">
         <h2>Mis formularios</h2>
-        <div class="card card-body shadow grisUCR2">
-            <h5>Formularios de sus cursos matriculados</h5>
+       @while(EstadoConstruccion < 2)
+        {
+            int tamannoLista = EstadoConstruccion == 0 ?
+                Model.FormulariosSemestre.Count : Model.FormulariosPasados.Count;
 
+          @:<div class="card card-body shadow grisUCR2">
+            // Colocar las tags que abren la card de formularios del semestre
+            if (EstadoConstruccion == 0) 
+            {
+                @:<h5>Formularios de sus cursos matriculados</h5>
+            }
+            else if(EstadoConstruccion == 1)
+            {
+                @:<h5>Formularios de cursos anteriores</h5>
+            }
+            @:<div class="row">
+            if(tamannoLista == 0)
+            {
+              @:</div>
+              @:</div>
+            }
 
-            <div class="row">
-                @for (int i = 0; i < Model.Count(); ++i)
-                {
-                    var item = Model.ElementAt(i);
-                    
-                    if (i > 0 && i % 2 == 0)
-                    {
-                        @:</div><br /><div class="row">
+           for (int i = 0; i < tamannoLista; ++i)
+           {
+               var item = EstadoConstruccion == 0 ?
+                   Model.FormulariosSemestre.ElementAt(i) : Model.FormulariosPasados.ElementAt(i);
+
+               if (i > 0 && i % 2 == 0)
+               {
+                    @:</div><br /><div class="row">
                     }
                     <div class="col-lg-6">
                         <div class="card card-primary shadow">
@@ -48,7 +72,7 @@
 
                                 @if (item.Estado == 1)
                                 {
-                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
+                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-linkUCR" })
                                 }
                             </div>
                             @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
@@ -58,26 +82,32 @@
                                     @*Falta agregar atributo de si está en progreso, llenado, etc*@
                                     @if (item.Estado == 3)
                                     {
-                                        @Html.ActionLink("Llenar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                        @Html.ActionLink("Llenar", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
                                     }
                                     @if (item.Estado == 0)
                                     {
-                                        @Html.ActionLink("Continuar", "LlenarFormulario", "Formularios", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
+                                        @Html.ActionLink("Continuar", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo }, new { @class = "btn-azulUCR" })
                                     }
                                 </div>
 
                             }
                         </div>
                     </div>
-                }
-            </div>
+           }
 
-        </div>
+            ++EstadoConstruccion;
+           
+           @* Tags que cierran las cards *@
+           if(tamannoLista != 0)
+           {
+              @:</div>
+            @:</div>
 
-        <br />
-        <div class="card card-body shadow grisUCR2">
-            <h5>Formularios de cursos anteriores</h5>
-        </div>
+           }
+            @:<br />
+        } @* While *@ 
+
+    @* Ignorar los warnings de estos tags, son necesarios *@
     </div>
 </div>
 

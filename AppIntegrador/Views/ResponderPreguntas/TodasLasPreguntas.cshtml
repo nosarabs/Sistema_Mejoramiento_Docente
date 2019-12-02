@@ -23,29 +23,29 @@
         }
         @if (pregunta.Pregunta.Tipo == "S")
         {
-            { Html.RenderPartial("PreguntaSiNoNr", pregunta); }
+            { Html.RenderPartial("../ResponderPreguntas/PreguntaSiNoNr", pregunta); }
         }
         else if (pregunta.Pregunta.Tipo == "U")
         {
-            { Html.RenderPartial("PreguntaConOpciones", pregunta); }
+            { Html.RenderPartial("../ResponderPreguntas/PreguntaConOpciones", pregunta); }
         }
         else if (pregunta.Pregunta.Tipo == "L")
         {
-            { Html.RenderPartial("RespuestaLibre", pregunta); }
+            { Html.RenderPartial("../ResponderPreguntas/RespuestaLibre", pregunta); }
         }
         else if (pregunta.Pregunta.Tipo == "E")
         {
-            { Html.RenderPartial("PreguntaEscalar", pregunta); }
+            { Html.RenderPartial("../ResponderPreguntas/PreguntaEscalar", pregunta); }
         }
         else if (pregunta.Pregunta.Tipo == "M")
         {
-            { Html.RenderPartial("PreguntaSeleccionMultiple", pregunta); }
+            { Html.RenderPartial("../ResponderPreguntas/PreguntaSeleccionMultiple", pregunta); }
         }
 
         @if (pregunta.Pregunta.Tipo == "U" || pregunta.Pregunta.Tipo == "M" || pregunta.Pregunta.Tipo == "E" || pregunta.Pregunta.Tipo == "S")
         {
             string justificacionname = "secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta + "].RespuestaLibreOJustificacion";
-            if (pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
+            if (pregunta.Pregunta.Pregunta_con_opciones != null && pregunta.Pregunta.Pregunta_con_opciones.TituloCampoObservacion != null)
             {
                 <div class="card-body grisUCR2">
                     <div style="margin: -0.5%">
