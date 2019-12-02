@@ -3,8 +3,8 @@
     cantidadForm = new Counter();
     correosProfes = [];
     codigosFormularios = [];
-    codigosSecciones = [];
     SeccionConObjetivoDict = {};
+    PreguntaConAccionDict = {};
 
     currentPlan = new PlanMejora();
     currentObjective = null;
@@ -71,7 +71,7 @@ function deseleccionarGen(variable, key, counter, value) {
 }
 
 function agregarGen(variable, key, counter, url, attribute, div, array) {
-    console.log(counter.getCurrent());
+    //console.log(counter.getCurrent());
     array.splice(0, array.length);
     for (let index = 0; index < counter.getCurrent(); ++index) {
         let gen = document.getElementById(`${variable}[${index}].${key}`);
@@ -79,9 +79,9 @@ function agregarGen(variable, key, counter, url, attribute, div, array) {
         array.push(gen.value);
     }
 
-    array.forEach(element => {
-        console.log(element);
-    })
+    //array.forEach(element => {
+    //    console.log(element);
+    //})
 
     $.ajax({
         type: 'POST',
@@ -98,9 +98,19 @@ function agregarGen(variable, key, counter, url, attribute, div, array) {
 function agregarSeccionesSeleccionadas() {
     SeccionConObjetivoDict[currentObjective.nombre] = [];
     $("input:checkbox[name=checkBoxSeccionObjetivo]:checked").each(function () {
-        console.log($(this).val());
+        //console.log($(this).val());
         SeccionConObjetivoDict[currentObjective.nombre].push($(this).val());
     });
+}
+
+function agregarPreguntasSeleccionadas() {
+    PreguntaConAccionDict[currentAccMej.descripcion] = [];
+    $("input:checkbox[name=checkBoxPreguntaAccion]:checked").each(function () {
+        console.log($(this).val());
+        PreguntaConAccionDict[currentAccMej.descripcion].push($(this).val());
+    });
+    console.log("Hi!");
+    console.log(PreguntaConAccionDict[currentAccMej.descripcion]);
 }
 
 function agregarObjetivo() {
@@ -115,7 +125,7 @@ function agregarObjetivo() {
     campoDescripcion.value = "";
     campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
     campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
-    console.log(JSON.stringify(currentPlan.Objetivo));
+    //console.log(JSON.stringify(currentPlan.Objetivo));
     $.ajax({
         type: 'POST',
         url: '/Objetivos/AnadirObjetivos',
@@ -148,7 +158,7 @@ function mostrarTablaAccionMejora() {
 function seleccionaObjetivo(element) {
     let val = element.value;
     currentObjective = currentPlan.Objetivo[val];
-    console.log(`${currentObjective.nombre}: ${currentObjective.descripcion}`);
+    //console.log(`${currentObjective.nombre}: ${currentObjective.descripcion}`);
     mostrarTablaAccionMejora();
 }
 
@@ -187,7 +197,7 @@ function mostrarTablaAccionable() {
 function seleccionaAccion(element) {
     let val = element.value;
     currentAccMej = currentObjective.AccionDeMejora[val];
-    console.log(`${currentAccMej.nombre}: ${currentAccMej.descripcion}`);
+    //console.log(`${currentAccMej.nombreObj}: ${currentAccMej.descripcion}`);
     mostrarTablaAccionable();
 }
 
@@ -210,11 +220,11 @@ function agregarAccionable() {
 
 function getSecciones() {
     modalGen('#ModalSecciones');
-    console.log(codigosFormularios.length);
+    //console.log(codigosFormularios.length);
 
     if (codigosFormularios.length > 0) {
         let formularios = { FormularioSeleccionado: codigosFormularios };
-        console.log(JSON.stringify(formularios));
+        //console.log(JSON.stringify(formularios));
 
         $.ajax({
             type: 'POST',
@@ -225,8 +235,34 @@ function getSecciones() {
             accept: 'application/json',
             traditional: true,
             success: function (result) {
-                console.log("and i oop");
+                //console.log("and i oop");
                 $('#ModalAgregarSeccionesInterno').html(result.message);
+            }
+        });
+    }
+}
+
+function getPreguntas() {
+    modalGen('#ModalPreguntas');
+    let codigosSecciones = SeccionConObjetivoDict[currentObjective.nombre];
+    console.log(currentObjective.nombre);
+    console.log(SeccionConObjetivoDict);
+    console.log(SeccionConObjetivoDict[currentObjective.nombre]);
+    if (codigosSecciones.length > 0) {
+        let preguntas = { SeccionSeleccionado: codigosSecciones };
+        console.log(JSON.stringify(preguntas));
+
+        $.ajax({
+            type: 'POST',
+            url: '/AccionDeMejora/ObtenerPreguntas',
+            data: JSON.stringify(preguntas),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            accept: 'application/json',
+            traditional: true,
+            success: function (result) {
+                console.log("and i oop");
+                $('#ModalAgregarPreguntasInterno').html(result.message);
             }
         });
     }
@@ -237,6 +273,7 @@ function enviarDatosPlan() {
     currentPlan.setCorreosProfes(correosProfes);
     currentPlan.setCodigosFormularios(codigosFormularios);
     currentPlan.setSeccionConObjetivo(SeccionConObjetivoDict);
+    currentPlan.setPreguntaConAccion(PreguntaConAccionDict);
     console.log(JSON.stringify(currentPlan));
 
     $.ajax({
@@ -262,7 +299,7 @@ function getProfesoresOfPlan() {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
         for (var j = 0, col; col = row.cells[j]; j++) {
-            console.log(col);
+            //console.log(col);
         }
     }
 }
@@ -276,7 +313,7 @@ function getFormulariosOfPlan() {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
         for (var j = 0, col; col = row.cells[j]; j++) {
-            console.log(col);
+            //console.log(col);
         }
     }
 }
@@ -364,6 +401,7 @@ class PlanMejora extends Base {
     FormularioSeleccionado = null;
     Objetivo = [];
     SeccionConObjetivo = {};
+    PreguntaConAccion = {};
 
     constructor() {
         super(null, null, null);
@@ -393,6 +431,10 @@ class PlanMejora extends Base {
 
     setSeccionConObjetivo(nuevaSeccionConObjetivo) {
         this.SeccionConObjetivo = nuevaSeccionConObjetivo;
+    }
+
+    setPreguntaConAccion(nuevaPreguntaConAccion) {
+        this.PreguntaConAccion = nuevaPreguntaConAccion;
     }
 }
 
