@@ -5,6 +5,14 @@ ON [dbo].[Empadronado_en]
 	declare @Correo varchar(50)
 	declare @CodCarrera varchar(10)
 	declare @CodEnfasis varchar(10)
+
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionEmpadronadoEn;
+
 	DECLARE cursorEmpadronado CURSOR
 	FOR SELECT CorreoEstudiante, CodCarrera, CodEnfasis
 	FROM inserted;
@@ -20,3 +28,7 @@ ON [dbo].[Empadronado_en]
 		END
 	CLOSE cursor_TrabajaEn
 	DEALLOCATE cursor_TrabajaEn
+
+	Commit Transaction transaccionEmpadronadoEn;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;

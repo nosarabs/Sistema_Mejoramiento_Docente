@@ -3,6 +3,13 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @codigo varchar(10)
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionCarrera;
+
 	DECLARE cursor_carrera CURSOR
 	FOR SELECT Codigo
 	FROM inserted;
@@ -18,3 +25,7 @@
 		END
 	CLOSE cursor_carrera;
 	DEALLOCATE cursor_carrera;
+	
+	Commit Transaction transaccionCarrera;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;
