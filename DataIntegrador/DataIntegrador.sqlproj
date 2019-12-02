@@ -261,6 +261,7 @@
     <Build Include="Usuarios y Perfiles\Functions\ProfesoresXUsuarioXPerfil.sql" />
     <Build Include="Usuarios y Perfiles\Functions\UAXPerfilXUsuario.sql" />
     <Build Include="Usuarios y Perfiles\Triggers\BorrarEnlaceSeguro.sql" />
+    <Build Include="TriggerEmpadronadoEn.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
