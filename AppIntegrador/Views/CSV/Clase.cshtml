@@ -87,23 +87,38 @@
         }
     </script>
 
-    <div id="ModalCSV" class="modal" style="display: inline-block">
-        <div class="modal-content">
-            <div id="dvCSV" class="container" style="overflow:auto"></div>
+    <div class="modal" id="ModalCSV" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="enunciadoPregunta" id="Encabezado" style="width: 100%; margin: auto; padding: 20px; font-size: 22px !important">
+                        Vista Previa
+                    </h3>
+                </div>
+                <div class="modal-body container" id="Ejemplo">
+                    <div id="dvCSV" class="container" style="overflow:auto"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeModal" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
     </div>
-
 
     <script>
         //Get the modal
         var modal = document.getElementById("ModalCSV");
         //Get the button
         var vista = document.getElementById("Vista");
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var closeModal = document.getElementById("closeModal");
+
         // When the user clicks the button, open the modal
         vista.onclick = function () {
             modal.style.display = "block";
+        }
+        closeModal.onclick = function () {
+            modal.style.display = "none";
         }
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
