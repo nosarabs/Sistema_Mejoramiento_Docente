@@ -29,6 +29,9 @@ namespace AppIntegrador.Models
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Accionable> Accionable { get; set; }
+        public virtual DbSet<AccionableEscala> AccionableEscala { get; set; }
+        public virtual DbSet<AccionablePorcentaje> AccionablePorcentaje { get; set; }
+        public virtual DbSet<AccionableSiNo> AccionableSiNo { get; set; }
         public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }

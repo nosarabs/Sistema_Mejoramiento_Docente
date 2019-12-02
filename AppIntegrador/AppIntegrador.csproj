@@ -206,6 +206,15 @@
     <Compile Include="Models\Accionable.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccionableEscala.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccionablePorcentaje.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccionableSiNo.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccionDeMejora.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

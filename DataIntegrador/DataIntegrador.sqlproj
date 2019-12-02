@@ -269,6 +269,9 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarPlanComplete.sql" />
     <Build Include="PlanesDeMejora\TableTypes\TableTypes.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerFormulariosParaAsociar.sql" />
+    <Build Include="PlanesDeMejora\AccionableEscala.sql" />
+    <Build Include="PlanesDeMejora\AccionableSiNo.sql" />
+    <Build Include="PlanesDeMejora\AccionablePorcentaje.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
