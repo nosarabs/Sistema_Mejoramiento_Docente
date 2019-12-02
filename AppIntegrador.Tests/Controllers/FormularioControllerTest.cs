@@ -743,6 +743,34 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.BorrarPregunta(codSeccion, codPregunta);
 
             Assert.IsNotNull(result);
-        }    
+        }
+
+        [TestMethod]
+        public void TestModificarFormulario()
+        {
+            string codViejo = "00000001";
+            string codNuevo = "testmodf";
+            string nombre = "trivial";
+
+            var mockDb = new Mock<DataIntegradorEntities>();
+            mockDb.Setup(m => m.ModificarFormulario(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ObjectParameter>())).Callback<string, string, string, ObjectParameter>((a, b, c, d) =>
+            {
+                d.Value = true;
+            });
+
+            FormulariosController formularios = new FormulariosController(mockDb.Object);
+            var result = formularios.ModificarFormulario(codViejo, codNuevo, nombre) as JsonResult;
+
+            Assert.AreEqual("{ modificacionExitosa = True }", result.Data.ToString());
+        }
+
+        [TestMethod]
+        public void TestModificarFormularioNulo()
+        {
+            FormulariosController formularios = new FormulariosController();
+            var result = formularios.ModificarFormulario(null, null, null) as JsonResult;
+
+            Assert.AreEqual("{ modificacionExitosa = False }", result.Data.ToString());
+        }
     }
 }
