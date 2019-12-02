@@ -2059,6 +2059,9 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ObtenerEstudiantesAsociadosAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerFormulariosCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -5014,6 +5017,9 @@
             <Parameter Name="nombre" Mode="In" Type="String" />
             <Parameter Name="modificacionexitosa" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerEstudiantesAsociadosAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result)">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -5151,6 +5157,28 @@
         <ComplexType Name="UAXPerfilXUsuario1_Result">
           <Property Type="String" Name="CodigoUA" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="NombreUA" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ObtenerEstudiantesAsociadosAFormulario_Result">
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Carne" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="CorreoEstudiante" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
+          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CorreoProfesor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso1" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo1" Nullable="false" />
+          <Property Type="Byte" Name="Semestre1" Nullable="false" />
+          <Property Type="Int32" Name="Anno1" Nullable="false" />
+          <Property Type="String" Name="Correo1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6200,6 +6228,32 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerEstudiantesAsociadosAFormulario" FunctionName="DataIntegradorModel.Store.ObtenerEstudiantesAsociadosAFormulario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="CorreoEstudiante" ColumnName="CorreoEstudiante" />
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CorreoProfesor" ColumnName="CorreoProfesor" />
+                <ScalarProperty Name="SiglaCurso1" ColumnName="SiglaCurso1" />
+                <ScalarProperty Name="NumGrupo1" ColumnName="NumGrupo1" />
+                <ScalarProperty Name="Semestre1" ColumnName="Semestre1" />
+                <ScalarProperty Name="Anno1" ColumnName="Anno1" />
+                <ScalarProperty Name="Correo1" ColumnName="Correo1" />
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

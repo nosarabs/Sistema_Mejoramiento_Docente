@@ -282,9 +282,6 @@
     <Compile Include="Models\GruposXPerfilXUsuario1_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GuiaHorario.cs" />
     <Compile Include="Models\ListaClase.cs" />
     <Compile Include="Models\ListaEstudiante.cs" />
