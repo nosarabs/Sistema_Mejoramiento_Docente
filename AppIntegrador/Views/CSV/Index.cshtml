@@ -21,13 +21,13 @@
         <label for="file">Subir lista de estudiantes:</label>
         <div class="custom-file mb-3">
 
-            <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" />
+            <input type="file" name="file" class="custom-file-input" id="file" accept=".csv" onchange="Upload()" />
             <label class="custom-file-label" for="customFile">Elija un archivo</label>
         </div>
 
         <br>
         <br>
-        <input type="button" id="upload" value="Vista previa" class="btn btn-primary" onclick="Upload()" />
+        <input type="button" id="Vista" value="Vista previa" class="btn btn-primary" />
         <input type="submit" value="Subir CSV" class="btn btn-primary" />
         <br>
         <br>
@@ -85,7 +85,6 @@
         }
     </script>
 
-    <div id="dvCSV" class="container" style="overflow:auto"></div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -120,8 +119,32 @@
                 });
             }
         });
-
     </script>
 
+    <div id="ModalCSV" class="modal-xl" style="display:none" role="dialog">
+             <div class="modal-content">
+                 <div id="dvCSV" class="container" style="overflow:auto"></div>
+            </div>
+     </div>
+
+
+    <script>
+        //Get the modal
+        var modal = document.getElementById("ModalCSV");
+        //Get the button
+        var vista = document.getElementById("Vista");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks the button, open the modal
+        vista.onclick = function () {
+            modal.style.display = "block";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </div>
 
