@@ -1,6 +1,8 @@
-﻿using Security.Authentication;
+﻿using AppIntegrador.Utilities;
+using Security.Authentication;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -51,6 +53,11 @@ namespace AppIntegrador.Models
                 return (int)HttpContext.Current.Session["LoginFailures"];
             else
                 return 0;
+        }
+
+        public static string getProfileImage()
+        {
+            return (string)HttpContext.Current.Session["ProfileImage"];
         }
 
 
@@ -126,11 +133,19 @@ namespace AppIntegrador.Models
                     Console.WriteLine(e.Message);
                 }
             }
+            // Preparar imagen de perfil predeterminada
+            ProfilePicture picture = new ProfilePicture();
+            Persona persona = db.Persona.Find(username);
+            MemoryStream imagen = picture.GenerateCircle(persona.Nombre1, persona.Apellido1);
+            string base64 = Convert.ToBase64String(imagen.ToArray());
+            string imgSrc = string.Format("data:image/png;base64,{0}", base64);
+
             HttpContext.Current.Session["Username"] = username;
             HttpContext.Current.Session["Profile"] = profile;
             HttpContext.Current.Session["MajorId"] = majorId;
             HttpContext.Current.Session["EmphasisId"] = emphasisId;
             HttpContext.Current.Session["LoginFailures"] = 0;
+            HttpContext.Current.Session["ProfileImage"] = imgSrc;
         }
 
         public static void clearSession()
@@ -140,6 +155,7 @@ namespace AppIntegrador.Models
             HttpContext.Current.Session["MajorId"] = "";
             HttpContext.Current.Session["EmphasisId"] = "";
             HttpContext.Current.Session["LoginFailures"] = 0;
+            HttpContext.Current.Session["ProfileImage"] = "";
         }
 
         public static void deleteCurrentUser(string username)

@@ -43,7 +43,7 @@
                         <h4>Sistema de Mejoramiento Docente</h4>
                     </div>
                     <div class="col m-0 text-right">
-                        <img height="40" src="~/Content/images/defaultuser.png" alt="Usuario Default">
+                        <img height="40" src="@HttpContext.Current.Session["ProfileImage"]" alt="Usuario Default">
                         <div class="dropdown">
                             <!--TAM-9.2 - Se indica que existen submenus en usuario-->
                             <button class="dropbtn dropbtn_alt">
@@ -70,9 +70,9 @@
     con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
     por otros medios.-->
                         @{
-        AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
-        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
-        {
+                            AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
+                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
+                            {
                                 <li>
                                     <a href="/Users/Index">Usuarios &#9660;</a>
                                     <ul>
@@ -82,153 +82,168 @@
 
                                     </ul>
                                 </li>
-        }
-        else
-        {
+                            }
+                            else
+                            {
                                 <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
                                     <span style="color:gray">Usuarios &#9660;</span>
                                 </li>
-        }
+                            }
                         }
-                        <li>                            
-                            <a href="">Formularios &#9660;</a>
-                            <ul>
-                                <li>
-                                    @{
-                                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO) ||
-                                             permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
-                                             permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.LLENAR_FORMULARIO))
-                                        { 
-                                            <a href="">Formulario &#9658;</a>
-                                        <ul>
-                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
-                                            {
 
-                                                <li><a href="/Formularios/Create">Crear Formulario</a></li>
-                                            }
-                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO))
-                                            {
-                                                <li><a href="/Formularios/Index">Ver Formulario</a></li>
-                                            }
-                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.LLENAR_FORMULARIO))
-                                            {
-                                                <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
-                                            }
-                                        </ul>
-                                        }
-                                    }
-                                </li>
+                        @{
+                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION) ||
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                            {
                                 <li>
-                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION))
-                                    {
-                                        <a href="">Sección &#9658;</a>
-                                        <ul>
-                                            <li><a href="/Seccion/Index">Ver Sección</a></li>
-                                        </ul>
-                                    }
-                                </li>
-                                <li>
-                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA) ||
-                                         permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
-                                    {
-                                        <a href="">Preguntas &#9658;</a>
-                                        <ul>
-                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
-                                            {
-                                                <li><a href="/Preguntas/Create">Crear pregunta</a></li>
-                                            }
-                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
-                                            {
-                                                <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
-                                            }
-                                        </ul>
-                                    }
-                                </li>
-                            </ul>
-
-                            @{
-                                if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PLANES_MEJORA))
-                                {
-                                <li>
-                                    <a href="">Planes de mejora &#9660;</a>
+                                    <a href="">Formularios &#9660;</a>
                                     <ul>
                                         <li>
-                                            <a href="">Mis planes &#9658;</a>
-                                            <ul>
-                                                <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
-
-                                                @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PLANES_MEJORA))
+                                            @{
+                                                if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO) ||
+                                                     permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
+                                                     permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.LLENAR_FORMULARIO))
                                                 {
-                                                    <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
+                                                    <a href="">Formulario &#9658;</a>
+                                                    <ul>
+                                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
+                                                        {
+
+                                                            <li><a href="/Formularios/Create">Crear Formulario</a></li>
+                                                        }
+                                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO))
+                                                        {
+                                                            <li><a href="/Formularios/Index">Ver Formulario</a></li>
+                                                        }
+                                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.LLENAR_FORMULARIO))
+                                                        {
+                                                            <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
+                                                        }
+                                                    </ul>
                                                 }
-
-                                            </ul>
+                                            }
                                         </li>
-
-                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_OBJETIVOS))
-                                        {
-                                            <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
-                                        }
+                                        <li>
+                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION))
+                                            {
+                                                <a href="">Sección &#9658;</a>
+                                                <ul>
+                                                    <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                                </ul>
+                                            }
+                                        </li>
+                                        <li>
+                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA) ||
+                                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                            {
+                                                <a href="">Preguntas &#9658;</a>
+                                                <ul>
+                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
+                                                    {
+                                                        <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                                                    }
+                                                    @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTA))
+                                                    {
+                                                        <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
                                     </ul>
                                 </li>
-                                }
-                                else
-                                {
-                                    <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                        <span style="color:gray">Planes de mejora &#9660;</span>
-                                    </li>
-                                }
                             }
-
-                            @{
-                                if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_RESPUESTAS_FORMULARIOS_ENFASIS) ||
-                                    permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_RESPUESTAS_FORMULARIOS_PROPIOS))
-                                {
-                                    <li>
-                                        <a href="">Visualización &#9660;</a>
-                                        <ul>
-                                            <li><a href="/Dashboard/Index">Dashboard</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                        <span style="color:gray">Visualización &#9660;</span>
-                                    </li>
-                                }
+                            else
+                            {
+                                <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                    <span style="color:gray">Formularios &#9660;</span>
+                                </li>
                             }
+                        }
 
-                            @{
-                                if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CARGAR_DATOS_DESDE_CSV))
-                                {
-                                    <li>
-                                        <a href="">Carga de Datos &#9660;</a>
-                                        <ul>
+                                    @{
+                                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PLANES_MEJORA))
+                                        {
+                                        <li>
+                                            <a href="">Planes de mejora &#9660;</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="">Mis planes &#9658;</a>
+                                                    <ul>
+                                                        <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
+
+                                                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PLANES_MEJORA))
+                                                        {
+                                                            <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
+                                                        }
+
+                                                    </ul>
+                                                </li>
+
+                                                @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_OBJETIVOS))
+                                                {
+                                                    <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                            <span style="color:gray">Planes de mejora &#9660;</span>
+                                        </li>
+                                    }
+                                    }
+
+                                    @{
+                                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_RESPUESTAS_FORMULARIOS_ENFASIS) ||
+                                            permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_RESPUESTAS_FORMULARIOS_PROPIOS))
+                                        {
                                             <li>
-                                                <a href="">Archivos &#9658;</a>
+                                                <a href="">Visualización &#9660;</a>
                                                 <ul>
-                                                    <li><a href="/CSV/Clase">Lista de Clase</a></li>
-                                                    <li><a href="/CSV/Funcionarios">Lista de Funcionarios</a></li>
-                                                    <li><a href="/CSV/GuiaHorarios">Guia de Horarios</a></li>
-                                                    <li><a href="/CSV/Index">Lista de Estudiantes</a></li>
+                                                    <li><a href="/Dashboard/Index">Dashboard</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
-                                            
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                        <span style="color:gray">Carga de Datos &#9660;</span>
-                                    </li>
-                                }
-                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                                <span style="color:gray">Visualización &#9660;</span>
+                                            </li>
+                                        }
+                                    }
 
-                            <li><a href="/Home/About">Acerca de</a></li>
-                            <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
-                        </ul>
+                                    @{
+                                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CARGAR_DATOS_DESDE_CSV))
+                                        {
+                                            <li>
+                                                <a href="">Carga de Datos &#9660;</a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="">Archivos &#9658;</a>
+                                                        <ul>
+                                                            <li><a href="/CSV/Clase">Lista de Clase</a></li>
+                                                            <li><a href="/CSV/Funcionarios">Lista de Funcionarios</a></li>
+                                                            <li><a href="/CSV/GuiaHorarios">Guia de Horarios</a></li>
+                                                            <li><a href="/CSV/Index">Lista de Estudiantes</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                                <span style="color:gray">Carga de Datos &#9660;</span>
+                                            </li>
+                                        }
+                                    }
+
+                                    <li><a href="/Home/About">Acerca de</a></li>
+                                    <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
+                                </ul>
 
                     </div>
                 </div>
