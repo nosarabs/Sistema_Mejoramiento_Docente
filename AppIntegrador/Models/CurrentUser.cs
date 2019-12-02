@@ -125,7 +125,7 @@ namespace AppIntegrador.Models
                 }
                 catch (Exception exception)
                 {
-                    throw exception;
+                    //throw exception;
                 }
             }
             else
