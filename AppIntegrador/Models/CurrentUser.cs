@@ -118,8 +118,15 @@ namespace AppIntegrador.Models
 
             if (db.UsuarioActual.Find(username) == null)
             {
-                db.UsuarioActual.Add(newUser);
-                db.SaveChanges();
+                try
+                {
+                    db.UsuarioActual.Add(newUser);
+                    db.SaveChanges();
+                }
+                catch (Exception exception)
+                {
+                    throw exception;
+                }
             }
             else
             {
@@ -150,12 +157,18 @@ namespace AppIntegrador.Models
 
         public static void clearSession()
         {
-            HttpContext.Current.Session["Username"] = "";
-            HttpContext.Current.Session["Profile"] = "";
-            HttpContext.Current.Session["MajorId"] = "";
-            HttpContext.Current.Session["EmphasisId"] = "";
-            HttpContext.Current.Session["LoginFailures"] = 0;
-            HttpContext.Current.Session["ProfileImage"] = "";
+            try
+            {
+                HttpContext.Current.Session["Username"] = "";
+                HttpContext.Current.Session["Profile"] = "";
+                HttpContext.Current.Session["MajorId"] = "";
+                HttpContext.Current.Session["EmphasisId"] = "";
+                HttpContext.Current.Session["LoginFailures"] = 0;
+                HttpContext.Current.Session["ProfileImage"] = "";
+            } catch (NullReferenceException exception)
+            {
+                Console.WriteLine(exception.ToString());
+            }
         }
 
         public static void deleteCurrentUser(string username)
@@ -188,7 +201,7 @@ namespace AppIntegrador.Models
             {
                 Console.WriteLine(e.Message);
             }
-            //clearSession();
+            clearSession();
         }
 
         public static void deleteAllUsers()
@@ -203,8 +216,19 @@ namespace AppIntegrador.Models
         //automáticamente. 
         private static void updateCurrentUser()
         {
-            string sessionUsername = (string)HttpContext.Current.Session["Username"];
+            string sessionUsername;
+            try
+            {
+                sessionUsername = (string)HttpContext.Current.Session["Username"];
+            }
+            catch (NullReferenceException exception) 
+            {
+                Console.WriteLine(exception.ToString());
+                throw new NullReferenceException("No existe la variable Session en el contexto actual.");
+            }
+
             string contextUsername = HttpContext.Current.User.Identity.Name;
+
             if (sessionUsername == null || contextUsername != sessionUsername) {
                 DataIntegradorEntities db = new DataIntegradorEntities();
                 string name = System.Web.HttpContext.Current.User.Identity.Name;
@@ -218,11 +242,17 @@ namespace AppIntegrador.Models
                     HttpContext.Current.Session["EmphasisId"] = user.CodEnfasis;
                 }
                 /*else /*Sino, se hace logout y se redirige a la pantalla de login.*/
-                /*{
-                    IAuth auth = new FormsAuth();
-                    auth.SignOut();
-                    clearSession();
-                }*/
+                {
+                    try
+                    {
+                        IAuth auth = new FormsAuth();
+                        auth.SignOut();
+                        clearSession();
+                    } catch (NullReferenceException exception)
+                    {
+                        Console.WriteLine(exception.ToString());
+                    }
+                }
             }
         }
     }

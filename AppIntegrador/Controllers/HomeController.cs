@@ -391,7 +391,14 @@ namespace AppIntegrador.Controllers
             /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
              donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
              y no atrasar a los demás equipos.*/
-            SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            try
+            {
+                SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            } catch (Exception exception)
+            {
+                Console.WriteLine(exception.ToString());
+                return false;
+            }
             return true;
         }
 
@@ -399,7 +406,14 @@ namespace AppIntegrador.Controllers
          la interfaz de permisos con esa información.*/
         private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
         {
-            CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
+            try
+            {
+                CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
+            }
+            catch (Exception exception) 
+            {
+                throw exception;
+            }
         }
 
         public ActionResult CambiarContrasenna()
