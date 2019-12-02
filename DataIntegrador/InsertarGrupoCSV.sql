@@ -5,7 +5,11 @@
 	@Anno int
 AS
 BEGIN
-	INSERT INTO Grupo(SiglaCurso, NumGrupo, Semestre, Anno)
-	VALUES (@SiglaCurso, @NumGrupo, @Semestre, @Anno)
+	--El curso debe existir antes de insertar un grupo
+	IF(EXISTS (SELECT * FROM Grupo WHERE SiglaCurso = @SiglaCurso and NumGrupo = @NumGrupo and Semestre = @Semestre and Anno = @Anno))
+	BEGIN
+		INSERT INTO Grupo(SiglaCurso, NumGrupo, Semestre, Anno)
+		VALUES (@SiglaCurso, @NumGrupo, @Semestre, @Anno)
+	END
 END
 
