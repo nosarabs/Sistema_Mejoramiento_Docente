@@ -141,10 +141,10 @@ namespace AppIntegrador.Tests.Controllers
             var httpRequest = new HttpRequest("", "http://localhost/", "");
 
             // Step 2: Setup the HTTP Response
-            var httpResponce = new HttpResponse(new StringWriter());
+            var httpResponse = new HttpResponse(new StringWriter());
 
             // Step 3: Setup the Http Context
-            var httpContext = new HttpContext(httpRequest, httpResponce);
+            var httpContext = new HttpContext(httpRequest, httpResponse);
             var sessionContainer =
                 new HttpSessionStateContainer("admin@mail.com",
                                                new SessionStateItemCollection(),

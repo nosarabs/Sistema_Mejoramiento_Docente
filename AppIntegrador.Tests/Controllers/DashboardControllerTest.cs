@@ -8,6 +8,11 @@ using System.Web.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Security.Principal;
+using System.Web;
+using System.Reflection;
+using System.Web.SessionState;
+using System.IO;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -176,6 +181,57 @@ namespace AppIntegrador.Tests.Controllers
             }
 
             return resultado;
+        }
+
+        [TestInitialize]
+        public void Init()
+        {
+            //No aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
+            // We need to setup the Current HTTP Context as follows:            
+
+            // Step 1: Setup the HTTP Request
+            var httpRequest = new HttpRequest("", "http://localhost/", "");
+
+            // Step 2: Setup the HTTP Response
+            var httpResponse = new HttpResponse(new StringWriter());
+
+            // Step 3: Setup the Http Context
+            var httpContext = new HttpContext(httpRequest, httpResponse);
+            var sessionContainer =
+                new HttpSessionStateContainer("admin@mail.com",
+                                               new SessionStateItemCollection(),
+                                               new HttpStaticObjectsCollection(),
+                                               10,
+                                               true,
+                                               HttpCookieMode.AutoDetect,
+                                               SessionStateMode.InProc,
+                                               false);
+            httpContext.Items["AspSession"] =
+                typeof(HttpSessionState)
+                .GetConstructor(
+                                    BindingFlags.NonPublic | BindingFlags.Instance,
+                                    null,
+                                    CallingConventions.Standard,
+                                    new[] { typeof(HttpSessionStateContainer) },
+                                    null)
+                .Invoke(new object[] { sessionContainer });
+
+            var fakeIdentity = new GenericIdentity("admin@mail.com");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            // Step 4: Assign the Context
+            HttpContext.Current = httpContext;
+            HttpContext.Current.User = principal;
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //Nos aseguramos que admin quede deslogeado despues de cada test.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
     }
 }

@@ -760,10 +760,10 @@ namespace AppIntegrador.Tests.Controllers
             var httpRequest = new HttpRequest("", "http://localhost/", "");
 
             // Step 2: Setup the HTTP Response
-            var httpResponce = new HttpResponse(new StringWriter());
+            var httpResponse = new HttpResponse(new StringWriter());
 
             // Step 3: Setup the Http Context
-            var httpContext = new HttpContext(httpRequest, httpResponce);
+            var httpContext = new HttpContext(httpRequest, httpResponse);
             var sessionContainer =
                 new HttpSessionStateContainer("admin@mail.com",
                                                new SessionStateItemCollection(),
@@ -790,6 +790,13 @@ namespace AppIntegrador.Tests.Controllers
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //Nos aseguramos que admin quede deslogeado despues de cada test.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
     }
 }
