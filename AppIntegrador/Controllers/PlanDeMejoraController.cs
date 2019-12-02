@@ -92,7 +92,12 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null)
+        public ActionResult Crear(
+            [Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, 
+            List<String> ProfeSeleccionado = null, 
+            List<String> FormularioSeleccionado = null, 
+            List<Objetivo> Objetivo = null
+            )
         {
             PlanDeMejora planAgregado = new PlanDeMejora();
 
@@ -107,7 +112,7 @@ namespace AppIntegrador.Controllers
             var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
 
             // Enviando las tablas ----
-            planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+            //planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
 
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }

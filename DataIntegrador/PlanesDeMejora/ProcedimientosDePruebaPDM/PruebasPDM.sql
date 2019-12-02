@@ -168,16 +168,16 @@ BEGIN
 	VALUES (SCodigo, PCodigo, Orden);
 
 	/*Ahora haciendo las asociaciones entre el planDeMejora y Formulario*/
-	MERGE INTO SeAsignaA AS Target
+	MERGE INTO Evalua AS Target
 	USING (VALUES
 		(1, '00000420'),
 		(2, '00000421')
 	)
-	AS SOURCE ([codigoPlan],[codigoForm])
-	ON Target.CodigoPlan = Source.CodigoPlan and Target.CodigoForm = Source.CodigoForm
+	AS SOURCE ([codPlan],[codFormulario])
+	ON Target.codPlan = Source.codPlan and Target.codFormulario = Source.codFormulario
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (CodigoPlan, CodigoForm)
-	VALUES (CodigoPlan, CodigoForm);
+	INSERT (codPlan, codFormulario)
+	VALUES (codPlan, codFormulario);
 
 	/*Ahora haciendo las asociaciones entre el planDeMejora y Formulario*/
 	MERGE INTO ObjVsSeccion AS Target

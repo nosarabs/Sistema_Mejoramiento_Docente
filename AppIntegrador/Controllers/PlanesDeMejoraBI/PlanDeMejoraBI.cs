@@ -38,6 +38,23 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         }
 
         /*
+        * EFE:
+        *       Se encarga de agregar las tuplas de la segunda tabla a la primera
+        * REQ:
+        *       tableOne: tabla a la que se le agregan las tuplas
+        *       tableTwo: tabla a la que se le copian las tuplas
+        * MOD:
+        *       tableOne
+        */
+        public void copyTable(DataTable tableOne, DataTable tableTwo) 
+        {
+            foreach (var tuple in tableTwo.Rows)
+            {
+                tableOne.Rows.Add(tuple);
+            }
+        }
+
+        /*
          * EFE: 
          *      Metodo encargado de enviar tablas al procedimito almacenado
          * REQ:
@@ -47,7 +64,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          */
         public void enviarTablasAlmacenamiento(
                 DataTable tempTable, string tableParamName, 
-                DataTable tablaAsocPlanFormularios, string AsocPlanFormualriosName,
+                DataTable tablaAsocPlanFormularios, string AsocPlanFormulariosName,
                 DataTable tablaAsocObjSecciones, string AsocObjSeccionesName,
                 DataTable tablaAsocAccionesPreguntas, string AsocAccionesPreguntasName)
         {
@@ -58,7 +75,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
             //Pass table Valued parameter to Store Procedure
             SqlParameter sqlParam = cmd.Parameters.AddWithValue(tableParamName, tempTable);
-            sqlParam = cmd.Parameters.AddWithValue(AsocPlanFormualriosName, tablaAsocPlanFormularios);
+            sqlParam = cmd.Parameters.AddWithValue(AsocPlanFormulariosName, tablaAsocPlanFormularios);
             sqlParam = cmd.Parameters.AddWithValue(AsocObjSeccionesName, tablaAsocObjSecciones);
             sqlParam = cmd.Parameters.AddWithValue(AsocAccionesPreguntasName, tablaAsocAccionesPreguntas);
 
@@ -127,28 +144,49 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * EFE:
          *      Creacion de la tabla de asociacion entre el objetivo y las secciones
          * REQ:
-         *     objetivo: objetivo al que le vamos a asociar las secciones
-         *    secciones: lista de secciones que queremos asociar a un objetivo
+         * nombreObjetivos: lista de los objetivos del plan de mejora
+         *       secciones: lista de secciones que queremos asociar a los diversos ojetivos
+         *       
+         *       Ambas listas,(secciones y nombreObjetivos), deben de ser del mismo tamaño.
+         *       Para este metodo se crea la tabla de asociacion completa entre los objetivos y las secciones.
          * MOD:
          *      ---------
          */
-        public DataTable getTablaAsociacionObjetivoSeccion(string codigoPlan, List<string> secciones, string nombreObjetivo)
+        public DataTable getTablaAsociacionObjetivoSeccion(PlanDeMejora plan, List<string> nombreObjetivos, List<List<string>> secciones)
         {
             //Primero de crea una lista vacia de las asociaciones
             DataTable dt = new DataTable();
-
             // Creando las columnas
             dt.Columns.Add("codigoPlan");
             dt.Columns.Add("nombreObjetivo");
             dt.Columns.Add("codigoSeccion");
 
-            if (secciones != null) {
-                foreach (var item in secciones)
+            if (nombreObjetivos != null) 
+            {
+                int indexObjetivos = -1;
+                foreach (var nombreObjetivo in nombreObjetivos) 
                 {
-                    dt.Rows.Add(codigoPlan, nombreObjetivo, item);
+                    indexObjetivos++;
+                    if (secciones != null)
+                    {
+                        var listaSeccionesDeObjetivo = secciones[indexObjetivos];
+                        var tieneSecciones = false;
+                        foreach (var nombreSeccion in listaSeccionesDeObjetivo) 
+                        {
+                            dt.Rows.Add(plan.codigo, nombreObjetivo, nombreSeccion);
+                            tieneSecciones = true;
+                        }
+                        if (!tieneSecciones) {
+                            dt.Rows.Add(plan.codigo, nombreObjetivo, null);
+                        }
+                    }
+                    else 
+                    {
+                        // Para el caso en el que no hay una matriz de secciones
+                        dt.Rows.Add(plan.codigo, nombreObjetivo, null);
+                    }
                 }
             }
-            
             return dt;
         }
 
@@ -156,30 +194,52 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * EFE:
          *      Creacion de la tabla de asociacion entre la acción de mejora y las preguntas
          * REQ:
-         *     objetivo: objetivo al que le vamos a asociar las secciones
-         *    secciones: lista de secciones que queremos asociar a un objetivo
+         *    objetivos: lista de objetivos a los que se le asocian cada accion.
+         *     acciones: lista de acciones de mejora.
+         *    preguntas: lista de preguntas que se asocian a cada accion.
+         *    
+         *    Para este caso se hace unicamente la asociacion de las acciones y las respectivas preguntas por ununico objetivo,
+         *    
          * MOD:
          *      ---------
          */
-        public DataTable getTablaAsociacionObjetivoSeccion(string codPlan, string nombreObjetivo, string descripcionAccion, List<string> preguntas)
+        public DataTable getTablaAsociacionAccionPregunta(PlanDeMejora plan, string nombreObjetivo, List<string> descripcionAcciones, List<List<string>> codigosPreguntas)
         {
             //Primero de crea una lista vacia de las asociaciones
             DataTable dt = new DataTable();
-
             // Creando las columnas
-            dt.Columns.Add("codigoPlanADM");
+            dt.Columns.Add("codigoPlan");
             dt.Columns.Add("nombreObjetivo");
-            dt.Columns.Add("descripcion");
-            dt.Columns.Add("codPregunta");
+            dt.Columns.Add("descripcionAccion");
+            dt.Columns.Add("codigoPregunta");
 
-            if (preguntas != null)
+            if (descripcionAcciones != null)
             {
-                foreach (var item in preguntas)
+                int index = -1;
+                foreach (var descripcionAccion in descripcionAcciones)
                 {
-                    dt.Rows.Add(codPlan, nombreObjetivo, descripcionAccion, item);
+                    index++;
+                    if (codigosPreguntas != null)
+                    {
+                        var listaCodigosPreguntas = codigosPreguntas[index];
+                        var almaceno = false;
+                        foreach (var nombreSeccion in listaSeccionesDeObjetivo)
+                        {
+                            dt.Rows.Add(plan.codigo, nombreObjetivo, nombreSeccion);
+                            almaceno = true;
+                        }
+                        if (!almaceno)
+                        {
+                            dt.Rows.Add(plan.codigo, nombreObjetivo, null);
+                        }
+                    }
+                    else
+                    {
+                        // Para el caso en el que no hay una matriz de secciones
+                        dt.Rows.Add(plan.codigo, nombreObjetivo, null);
+                    }
                 }
             }
-
             return dt;
         }
     }

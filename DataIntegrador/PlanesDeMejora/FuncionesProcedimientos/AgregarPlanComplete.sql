@@ -14,7 +14,7 @@ BEGIN TRY
 		insert into PlanDeMejora
 		select * from @tablaPlan
 
-		insert into SeAsignaA
+		insert into Evalua
 		select * from @tablaAsocPlanForm
 
 		insert into ObjVsSeccion

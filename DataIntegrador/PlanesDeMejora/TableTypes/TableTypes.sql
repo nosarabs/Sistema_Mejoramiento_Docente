@@ -27,7 +27,7 @@ CREATE TYPE dbo.AsocAccionPregunta AS TABLE
 (
 	codigoPlan int,
 	nombreObjetivo varchar(50),
-	descripcionObjetivo varchar(250),
+	descripcionAccion varchar(250),
 	codigoPregunta varchar(8)
 )
 GO
