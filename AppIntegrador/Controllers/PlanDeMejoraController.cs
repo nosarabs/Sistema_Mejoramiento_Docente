@@ -106,22 +106,12 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null)
         {
-
-            PlanDeMejora planAgregado = new PlanDeMejora();
-
             // Objeto de ayuda business intelligence planes de mejora
             PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
-
             // Asignacion del codigo al nuevo plan de mejora
             planesHelper.setCodigoAPlanDeMejora(this.db, plan);
-
-
-            // Creacion de las tablas -----
-            var tablaPDM = planesHelper.getPlanTable(plan);
-            var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
-
-            // Enviando las tablas ----
-            //planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+            // Almacenamiento del plan por medio de un procedimiento almacenado
+            planesHelper.savePlan(plan);
 
 
             /* Forma forzada. SOLO PARA EMERGENCIAS */

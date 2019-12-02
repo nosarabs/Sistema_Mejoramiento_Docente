@@ -38,20 +38,39 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         }
 
         /*
-        * EFE:
-        *       Se encarga de agregar las tuplas de la segunda tabla a la primera
-        * REQ:
-        *       tableOne: tabla a la que se le agregan las tuplas
-        *       tableTwo: tabla a la que se le copian las tuplas
-        * MOD:
-        *       tableOne
-        */
-        public void copyTable(DataTable tableOne, DataTable tableTwo) 
+         * EFE: Crea todas las tablas necesarias para el procedimiento de almacenamiento de plan de mejora
+         * REQ: plan: plan de mejora con lo que se quiere crear
+         * MOD: la base de datos si el procedimiento almacenado tiene exito
+         */
+        public void savePlan(PlanDeMejora plan) 
         {
-            foreach (var tuple in tableTwo.Rows)
-            {
-                tableOne.Rows.Add(tuple);
-            }
+            // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
+            List<DataTable> planYAsocPlanFormulario = this.getPlanTableYAsocPlanFormularios(plan);
+            DataTable planTable = planYAsocPlanFormulario[0];
+            DataTable asocPlanFormTable = planYAsocPlanFormulario[1];
+
+            // Creacion de la tabla de objetivos y Asociacion de objetivos con secciones de un formulario
+            List<DataTable> objetivosYAsocObjetivosSecciones = this.getObjetivosTableYAsocObjetivosSecciones(plan);
+            DataTable objetivosTable = objetivosYAsocObjetivosSecciones[0];
+            DataTable asocObjetivosSeccionesTable = objetivosYAsocObjetivosSecciones[1];
+
+            // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
+            List<DataTable> accionesYAsocAccionesPreguntas = this.getAccionesDeMejoraTableYAsocAccionesPreguntas(plan);
+            DataTable accionesDeMejoraTable = planYAsocPlanFormulario[0];
+            DataTable asocAccionesPreguntasTable = planYAsocPlanFormulario[1];
+
+            // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
+            DataTable accionablesTable = this.getAccionablesTable(plan);
+
+            this.enviarTablasAlmacenamiento(
+                planTable,                      "tablaPlan",
+                objetivosTable,                 "tablaObjetivos",
+                accionesDeMejoraTable,          "tablaAcciones",
+                accionablesTable,               "tablaAccionables",
+                asocPlanFormTable,              "tablaAsocPlanFormularios",
+                asocObjetivosSeccionesTable,    "tablaAsocObjetivosSecciones",
+                asocAccionesPreguntasTable,     "tablaAsocAccionesPreguntas"
+            );
         }
 
         /*
@@ -63,19 +82,26 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          *      Estado de la base de datos
          */
         public void enviarTablasAlmacenamiento(
-                DataTable tempTable, string tableParamName, 
-                DataTable tablaAsocPlanFormularios, string AsocPlanFormulariosName,
-                DataTable tablaAsocObjSecciones, string AsocObjSeccionesName,
-                DataTable tablaAsocAccionesPreguntas, string AsocAccionesPreguntasName)
+                DataTable tablaPlan,        string tablaPlanName,
+                DataTable tablaObjetivos,   string tablaObjetivosName,
+                DataTable tablaAcciones,    string tableAccionesName,
+                DataTable tablaAccionables, string tablaAccionablesName,
+
+                DataTable tablaAsocPlanFormularios,     string AsocPlanFormulariosName,
+                DataTable tablaAsocObjSecciones,        string AsocObjSeccionesName,
+                DataTable tablaAsocAccionesPreguntas,   string AsocAccionesPreguntasName)
         {
-            String connectionString = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
             connection.Open();
             SqlCommand cmd = new SqlCommand("AgregarPlanComplete", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
             //Pass table Valued parameter to Store Procedure
-            SqlParameter sqlParam = cmd.Parameters.AddWithValue(tableParamName, tempTable);
+            SqlParameter sqlParam = cmd.Parameters.AddWithValue(tablaPlanName, tablaPlan);
+            sqlParam = cmd.Parameters.AddWithValue(tablaObjetivosName, tablaObjetivos);
+            sqlParam = cmd.Parameters.AddWithValue(tableAccionesName, tablaAcciones);
+            sqlParam = cmd.Parameters.AddWithValue(tablaAccionablesName, tablaAccionables);
+
             sqlParam = cmd.Parameters.AddWithValue(AsocPlanFormulariosName, tablaAsocPlanFormularios);
             sqlParam = cmd.Parameters.AddWithValue(AsocObjSeccionesName, tablaAsocObjSecciones);
             sqlParam = cmd.Parameters.AddWithValue(AsocAccionesPreguntasName, tablaAsocAccionesPreguntas);
@@ -88,16 +114,30 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
         /**
          * EFE:
-         *      Metodo que se encarga de crear una tabla con los datos del plane de mejora que ingresamos
+         *      Metodo que se encarga de crear una tabla con los datos del plan de mejora que ingresamos
+         *      Tambien crea la tabla de relacion de plan de mejora con formulario
          * REQ:
          *      plan: plan de mejora que se coloca dentro de la lista
          * MOD:
          *      ----
          */
-        // Funcion que se encarga de devolver la info del plan como una tabla
-        public DataTable getPlanTable(PlanDeMejora plan)
+        public List<DataTable> getPlanTableYAsocPlanFormularios(PlanDeMejora plan)
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+
+            // Creando las columnas
+            dt2.Columns.Add("codigoPlan");
+            dt2.Columns.Add("codigoForm");
+
+            IEnumerable<Formulario> formularios = plan.Formulario;
+            if (formularios != null) 
+            {
+                foreach (var form in formularios) 
+                {
+                    dt2.Rows.Add(plan.codigo, form.Codigo);
+                }
+            }
 
             // Creando las columnas
             dt.Columns.Add("codigo");
@@ -109,135 +149,177 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             //Agregando las filas
             dt.Rows.Add(plan.codigo, plan.nombre, plan.fechaInicio, plan.fechaFin, plan.borrado);
 
-            return dt;
+            List<DataTable> lista = new List<DataTable>();
+            lista.Add(dt);
+            lista.Add(dt2);
+            return lista;
         }
 
         /**
          * EFE:
-         *      Metodo que se encarga de crear una tabla con los datos de la asocioacion del plan con los formularios
+         *      Metodo que se encarga de crear una tabla con los datos del objetivo que ingresamos
+         *      Tambien crea una tabla de las asociaciones entre el plan y los formularios
          * REQ:
-         *             plan: plan de mejora que se coloca dentro de la lista
-         *      formularios: lista de codigo de los formuarios
+         *      plan: plan de mejora que se coloca dentro de la lista
          * MOD:
          *      ----
          */
-        // Funcion que se encarga de devolver la info del plan como una tabla
-        public DataTable getTablaAsociacionPlanFormularios(PlanDeMejora plan, List<string> formularios) 
+        public List<DataTable> getObjetivosTableYAsocObjetivosSecciones(PlanDeMejora plan)
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+
+            //Crando las columnas
+            dt2.Columns.Add("codigoPlan");
+            dt2.Columns.Add("nombreObjetivo");
+            dt2.Columns.Add("codigoSeccion");
 
             // Creando las columnas
             dt.Columns.Add("codigoPlan");
-            dt.Columns.Add("codigoForm");
+            dt.Columns.Add("nombre");
+            dt.Columns.Add("descripcion");
+            dt.Columns.Add("fechaInicio");
+            dt.Columns.Add("fechaFin");
+            dt.Columns.Add("nombreTipoObj");
+            dt.Columns.Add("codPlantilla");
+            dt.Columns.Add("borrado");
 
-            //Agregando las filas
-            if (formularios != null)
+            // Lista de los objetivos del plan
+            ICollection<Objetivo> objetivos = plan.Objetivo;
+
+            if (objetivos != null) 
             {
-                foreach (var item in formularios)
+                //Ahora se agregan las tuplas a la tabla correspondiente
+                foreach (var obj in objetivos)
                 {
-                    dt.Rows.Add(plan.codigo, item);
-                }
-            }
-            return dt;
-        }
-
-        /*
-         * EFE:
-         *      Creacion de la tabla de asociacion entre el objetivo y las secciones
-         * REQ:
-         * nombreObjetivos: lista de los objetivos del plan de mejora
-         *       secciones: lista de secciones que queremos asociar a los diversos ojetivos
-         *       
-         *       Ambas listas,(secciones y nombreObjetivos), deben de ser del mismo tamaño.
-         *       Para este metodo se crea la tabla de asociacion completa entre los objetivos y las secciones.
-         * MOD:
-         *      ---------
-         */
-        public DataTable getTablaAsociacionObjetivoSeccion(PlanDeMejora plan, List<string> nombreObjetivos, List<List<string>> secciones)
-        {
-            //Primero de crea una lista vacia de las asociaciones
-            DataTable dt = new DataTable();
-            // Creando las columnas
-            dt.Columns.Add("codigoPlan");
-            dt.Columns.Add("nombreObjetivo");
-            dt.Columns.Add("codigoSeccion");
-
-            if (nombreObjetivos != null) 
-            {
-                int indexObjetivos = -1;
-                foreach (var nombreObjetivo in nombreObjetivos) 
-                {
-                    indexObjetivos++;
-                    if (secciones != null)
+                    dt.Rows.Add(obj.codPlan, obj.nombre, obj.descripcion, obj.fechaInicio, obj.fechaFin, obj.nombTipoObj, obj.codPlantilla, obj.borrado);
+                    
+                    // Realizando la tupla de la asociacion 
+                    ICollection<Seccion> secciones = obj.Seccion;
+                    if (secciones !=  null) 
                     {
-                        var listaSeccionesDeObjetivo = secciones[indexObjetivos];
-                        var tieneSecciones = false;
-                        foreach (var nombreSeccion in listaSeccionesDeObjetivo) 
+                        foreach (var sec in secciones) 
                         {
-                            dt.Rows.Add(plan.codigo, nombreObjetivo, nombreSeccion);
-                            tieneSecciones = true;
+                            dt2.Rows.Add(plan.codigo, obj.nombre, sec.Codigo);
                         }
-                        if (!tieneSecciones) {
-                            dt.Rows.Add(plan.codigo, nombreObjetivo, null);
-                        }
-                    }
-                    else 
-                    {
-                        // Para el caso en el que no hay una matriz de secciones
-                        dt.Rows.Add(plan.codigo, nombreObjetivo, null);
                     }
                 }
             }
-            return dt;
+
+            List<DataTable> lista = new List<DataTable>();
+            lista.Add(dt);
+            lista.Add(dt2);
+            return lista;
         }
 
-        /*
+        /**
          * EFE:
-         *      Creacion de la tabla de asociacion entre la acción de mejora y las preguntas
+         *      Metodo que se encarga de crear una tabla con los datos de las acciones de mejora del plan
+         *      Tambien crea una tabla de las asociaciones de los objetivos con secciones de un formulario
          * REQ:
-         *    objetivos: lista de objetivos a los que se le asocian cada accion.
-         *     acciones: lista de acciones de mejora.
-         *    preguntas: lista de preguntas que se asocian a cada accion.
-         *    
-         *    Para este caso se hace unicamente la asociacion de las acciones y las respectivas preguntas por ununico objetivo,
-         *    
+         *      plan: plan de mejora que se coloca dentro de la lista
          * MOD:
-         *      ---------
+         *      ----
          */
-        public DataTable getTablaAsociacionAccionPregunta(PlanDeMejora plan, string nombreObjetivo, List<string> descripcionAcciones, List<List<string>> codigosPreguntas)
+        public List<DataTable> getAccionesDeMejoraTableYAsocAccionesPreguntas(PlanDeMejora plan)
         {
-            //Primero de crea una lista vacia de las asociaciones
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+
+            // Creando las columnas
+            dt2.Columns.Add("codigoPlan");
+            dt2.Columns.Add("nombreObjetivo");
+            dt2.Columns.Add("descripcionAccion");
+            dt2.Columns.Add("codigoPregunta");
+
             // Creando las columnas
             dt.Columns.Add("codigoPlan");
-            dt.Columns.Add("nombreObjetivo");
+            dt.Columns.Add("nombreObj");
+            dt.Columns.Add("descripcion");
+            dt.Columns.Add("fechaInicio");
+            dt.Columns.Add("fechaFin");
+            dt.Columns.Add("codPlantilla");
+            dt.Columns.Add("borrado");
+
+            // Lista de los objetivos del plan
+            ICollection<Objetivo> objetivos = plan.Objetivo;
+
+            if (objetivos != null)
+            {
+                //Ahora se agregan las tuplas a la tabla correspondiente
+                foreach (var obj in objetivos)
+                {
+                    ICollection<AccionDeMejora> acciones = obj.AccionDeMejora;
+                    if (acciones != null) 
+                    {
+                        foreach (var acc in acciones) 
+                        {
+                            dt.Rows.Add(acc.codPlan, acc.nombreObj, acc.descripcion, acc.fechaInicio, acc.fechaFin, acc.codPlan, acc.borrado);
+
+                            // Realizando la tupla de la asociacion 
+                            ICollection<Pregunta> preguntas = acc.Pregunta;
+                            if (preguntas != null)
+                            {
+                                foreach (var preg in preguntas)
+                                {
+                                    dt2.Rows.Add(plan.codigo, obj.nombre, acc.descripcion, preg.Codigo);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            List<DataTable> lista = new List<DataTable>();
+            lista.Add(dt);
+            lista.Add(dt2);
+            return lista;
+        }
+
+        /**
+         * EFE:
+         *      Metodo que se encarga de crear una tabla con los datos de los accionables del plan de mejora
+         *      Tambien crea la tabla de aociación de acciones de mejora con preguntas.
+         * REQ:
+         *      plan: plan de mejora que se coloca dentro de la lista
+         * MOD:
+         *      ----
+         */
+        public DataTable getAccionablesTable(PlanDeMejora plan)
+        {
+            DataTable dt = new DataTable();
+
+            // Creando las columnas
+            dt.Columns.Add("codigoPlan");
+            dt.Columns.Add("nombreObj");
             dt.Columns.Add("descripcionAccion");
-            dt.Columns.Add("codigoPregunta");
+            dt.Columns.Add("descripcion");
+            dt.Columns.Add("fechaInicio");
+            dt.Columns.Add("fechaFin");
+            dt.Columns.Add("tipo");
 
-            if (descripcionAcciones != null)
+            // Lista de los objetivos del plan
+            ICollection<Objetivo> objetivos = plan.Objetivo;
+
+            if (objetivos != null)
             {
-                int index = -1;
-                foreach (var descripcionAccion in descripcionAcciones)
+                //Ahora se agregan las tuplas a la tabla correspondiente
+                foreach (var obj in objetivos)
                 {
-                    index++;
-                    if (codigosPreguntas != null)
+                    ICollection<AccionDeMejora> acciones = obj.AccionDeMejora;
+                    if (acciones != null)
                     {
-                        var listaCodigosPreguntas = codigosPreguntas[index];
-                        var almaceno = false;
-                        foreach (var nombreSeccion in listaSeccionesDeObjetivo)
+                        foreach (var acc in acciones)
                         {
-                            dt.Rows.Add(plan.codigo, nombreObjetivo, nombreSeccion);
-                            almaceno = true;
+                            ICollection<Accionable> accionables = acc.Accionable;
+                            if (accionables != null)
+                            {
+                                foreach (var accio in accionables) 
+                                {
+                                    dt.Rows.Add(accio.codPlan, accio.nombreObj, accio.descripAcMej, accio.descripcion, accio.fechaInicio, accio.fechaFin, accio.tipo);
+                                }
+                            }
                         }
-                        if (!almaceno)
-                        {
-                            dt.Rows.Add(plan.codigo, nombreObjetivo, null);
-                        }
-                    }
-                    else
-                    {
-                        // Para el caso en el que no hay una matriz de secciones
-                        dt.Rows.Add(plan.codigo, nombreObjetivo, null);
                     }
                 }
             }

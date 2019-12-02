@@ -1,9 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPlanComplete]
 (
-	@tablaPlan					as dbo.PlanTabla			readonly,
-	@tablaAsocPlanForm			as dbo.AsocPlanFormulario   readonly,
-	@tablaAsocObjSecciones		as dbo.AsocObjetivoSeccion  readonly,
-	@tablaAsocAccionesPreguntas as dbo.AsocAccionPregunta   readonly
+	@tablaPlan					 as dbo.PlanTabla			 readonly,
+	@tablaObjetivos				 as dbo.ObjetivosTabla		 readonly,
+	@tablaAcciones				 as dbo.AccionDeMejoraTabla	 readonly,
+	@tablaAccionables			 as dbo.AccionableTabla 	 readonly,
+	@tablaAsocPlanFormularios	 as dbo.AsocPlanFormulario   readonly,
+	@tablaAsocObjetivosSecciones as dbo.AsocObjetivoSeccion  readonly,
+	@tablaAsocAccionesPreguntas  as dbo.AsocAccionPregunta   readonly
 )
 AS
 BEGIN
@@ -14,11 +17,20 @@ BEGIN TRY
 		insert into PlanDeMejora
 		select * from @tablaPlan
 
+		insert into Objetivo
+		select * from @tablaObjetivos
+
+		insert into AccionDeMejora
+		select * from @tablaAcciones
+
+		insert into Accionable
+		select * from @tablaAccionables
+
 		insert into Evalua
-		select * from @tablaAsocPlanForm
+		select * from @tablaAsocPlanFormularios
 
 		insert into ObjVsSeccion
-		select * from @tablaAsocObjSecciones
+		select * from @tablaAsocObjetivosSecciones
 
 		insert into AccionVsPregunta
 		select * from @tablaAsocAccionesPreguntas
