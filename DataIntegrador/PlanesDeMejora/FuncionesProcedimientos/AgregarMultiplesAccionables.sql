@@ -30,9 +30,6 @@ AS
 		select a.codPlan, a.nombreObj, a.descripAcMej, a.descripcion, a.fechaInicio, a.fechaFin, a.tipo, a.peso, a.pesoPorcentaje from @Acciones a
 	
 	OPEN Cursor_InsAccionable
-	
-	BEGIN TRY
-		BEGIN TRANSACTION
 
 			fetch next from Cursor_InsAccionable into @codigo, @nombre, @descripADM, @descAcc, @inicio , @fin , @tipoAcc, @peso, @pesoPorcentaje
 			while @@FETCH_STATUS=0 begin
@@ -59,13 +56,6 @@ AS
 
 				fetch next from Cursor_InsAccionable into @codigo, @nombre, @descripADM, @descAcc, @inicio , @fin , @tipoAcc, @peso, @pesoPorcentaje
 			end
-
-		COMMIT TRANSACTION
-	END TRY
-	BEGIN CATCH
-		SELECT @STATE = ERROR_NUMBER()
-		ROLLBACK TRANSACTION
-	END CATCH
 	
 	close Cursor_InsAccionable
 	deallocate Cursor_InsAccionable

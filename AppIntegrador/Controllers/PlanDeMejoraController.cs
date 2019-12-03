@@ -106,64 +106,27 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null)
         {
-
-            PlanDeMejora planAgregado = new PlanDeMejora();
-
             // Objeto de ayuda business intelligence planes de mejora
             PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
 
             // Asignacion del codigo al nuevo plan de mejora
             planesHelper.setCodigoAPlanDeMejora(this.db, plan);
 
+            //Agregando los objetivos al plan
+            plan.Objetivo = Objetivo;
 
-            // Creacion de las tablas -----
-            var tablaPDM = planesHelper.getPlanTable(plan);
-            var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
+            //Agregando las secciones a los objetivos
+            planesHelper.insertSeccionesEnObjetivos(plan.Objetivo, SeccionConObjetivo, db);
 
-            // Enviando las tablas ----
-            planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+            //Agrgando los formularios al plan de mejora
+            planesHelper.insertFormularios(plan, FormularioSeleccionado, db);
 
+            //Agregando los profesores seleccionados al plan de mejora
+            planesHelper.insertProfesores(plan, ProfeSeleccionado, db);
 
-            /* Forma forzada. SOLO PARA EMERGENCIAS */
-            /*
-            if(Objetivo != null)
-            {
-                plan.Objetivo = Objetivo;
-            }
-            if(ProfeSeleccionado != null)
-            {
-                foreach(var correo in ProfeSeleccionado)
-                {
-                    var profe = db.Profesor.Find(correo);
-                    plan.Profesor.Add(profe);
-                }
-            }
-            if(FormularioSeleccionado != null)
-            {
-                foreach (var codigo in FormularioSeleccionado)
-                {
-                    var formulario = db.Formulario.Find(codigo);
-                    plan.Formulario.Add(formulario);
-                }
-            }
-
-            db.PlanDeMejora.Add(plan);
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var errors in ex.EntityValidationErrors)
-                {
-                    foreach (var validationError in errors.ValidationErrors)
-                    {
-                        // get the error message 
-                        string errorMessage = validationError.ErrorMessage;
-                    }
-                }
-            }
-            */
+            // Almacenamiento del plan por medio de un procedimiento almacenado
+            planesHelper.savePlan(plan);
+            db.SaveChanges();
 
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
