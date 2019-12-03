@@ -53,8 +53,7 @@ BEGIN
 				INSERT INTO @formulariosTemp
 				SELECT	PAP.FCodigo, F.Nombre, PAP.CSigla, PAP.GNumero, PAP.GSemestre, PAP.GAnno, PAP.FechaInicio, PAP.FechaFin
 				FROM	Periodo_activa_por AS PAP JOIN Formulario AS F ON PAP.FCodigo = F.Codigo
-				WHERE	PAP.FechaFin < CONVERT (DATE, GETDATE()) /*Solo de formularios cuyo periodo de llenado haya finalizado.*/
-						AND EXISTS	(
+				WHERE	EXISTS		(
 										SELECT *
 										FROM UnidadAcademica AS U
 										JOIN Inscrita_en AS I ON U.Codigo = I.CodUnidadAc

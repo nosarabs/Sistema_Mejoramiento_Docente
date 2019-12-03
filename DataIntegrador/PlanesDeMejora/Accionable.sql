@@ -6,10 +6,12 @@
 	descripcion varchar(250) not null,
 	fechaInicio date,
 	fechaFin date,
-	progreso int,
+	tipo char not null,
 
 	constraint DateOrderAcci check(fechaFin >= fechaInicio),
 	constraint PK_Accionable primary key(codPlan, nombreObj, descripAcMej, descripcion),
 	constraint FK_Accionable_AccionDeMejora foreign key(codPlan, nombreObj, descripAcMej)
-		references AccionDeMejora(codPlan, nombreObj, descripcion) on delete cascade
+		references AccionDeMejora(codPlan, nombreObj, descripcion) on delete cascade,
+	-- E = escala, S = si/no, P = porcentaje
+	constraint TipoAccionable check (tipo = 'E' OR tipo = 'S' OR tipo = 'P')
 )

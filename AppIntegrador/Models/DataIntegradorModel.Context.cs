@@ -28,7 +28,6 @@ namespace AppIntegrador.Models
         }
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Accionable> Accionable { get; set; }
         public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
@@ -68,6 +67,10 @@ namespace AppIntegrador.Models
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
         public virtual DbSet<EnlaceSeguro> EnlaceSeguro { get; set; }
+        public virtual DbSet<AccionableEscala> AccionableEscala { get; set; }
+        public virtual DbSet<AccionablePorcentaje> AccionablePorcentaje { get; set; }
+        public virtual DbSet<AccionableSiNo> AccionableSiNo { get; set; }
+        public virtual DbSet<Accionable> Accionable { get; set; }
     
         [DbFunction("DataIntegradorEntities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
@@ -1711,19 +1714,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
         }
     
-        public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion)
-        {
-            var codigoFormularioParameter = codigoFormulario != null ?
-                new ObjectParameter("CodigoFormulario", codigoFormulario) :
-                new ObjectParameter("CodigoFormulario", typeof(string));
-    
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("CodigoSeccion", codigoSeccion) :
-                new ObjectParameter("CodigoSeccion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter);
-        }
-    
         public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)
         {
             var codFormularioParameter = codFormulario != null ?
@@ -1769,6 +1759,29 @@ namespace AppIntegrador.Models
                 new ObjectParameter("CorreoProfesor", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposAsociados_Result>("[DataIntegradorEntities].[ObtenerGruposAsociados](@CodigoUnidadAcademica, @CodigoCarrera, @CodigoEnfasis, @SiglaCurso, @NumGrupo, @Semestre, @Anno, @CorreoProfesor)", codigoUnidadAcademicaParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
+        }
+    
+        public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("CodigoFormulario", codigoFormulario) :
+                new ObjectParameter("CodigoFormulario", typeof(string));
+    
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("CodigoSeccion", codigoSeccion) :
+                new ObjectParameter("CodigoSeccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter);
+        }
+    
+        public virtual int AgregarPlanComplete()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarPlanComplete");
+        }
+    
+        public virtual ObjectResult<ObtenerFormulariosParaAsociar_Result> ObtenerFormulariosParaAsociar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosParaAsociar_Result>("ObtenerFormulariosParaAsociar");
         }
     }
 }
