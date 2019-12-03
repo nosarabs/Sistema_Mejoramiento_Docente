@@ -123,8 +123,6 @@ function agregarObjetivo() {
     currentPlan.pushObjetivo(new Objetivo(campoNombre.value, campoTipoObjetivo.value, campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value));
     campoNombre.value = "";
     campoDescripcion.value = "";
-    campoFechaInicio.value = document.getElementById("campoFechaInicioPlanMejora").value;
-    campoFechaFin.value = document.getElementById("campoFechaFinPlanMejora").value;
     //console.log(JSON.stringify(currentPlan.Objetivo));
     $.ajax({
         type: 'POST',
@@ -137,6 +135,13 @@ function agregarObjetivo() {
             $('#divTablaObjetivos').html(result.message);
         }
     });
+    let tabla = document.getElementById("seccionAccionables");
+    tabla.setAttribute("hidden", true);
+    tabla = document.getElementById("seccionAccionesMejora");
+    tabla.setAttribute("hidden", true);
+    let boton = document.getElementById("AsociarSeccionObjetivoTabla");
+    boton.removeAttribute("hidden");
+    boton.setAttribute("disabled", "true");
 }
 
 function mostrarTablaAccionMejora() {
@@ -158,8 +163,11 @@ function mostrarTablaAccionMejora() {
 function seleccionaObjetivo(element) {
     let val = element.value;
     currentObjective = currentPlan.Objetivo[val];
-    //console.log(`${currentObjective.nombre}: ${currentObjective.descripcion}`);
     mostrarTablaAccionMejora();
+    let tabla = document.getElementById("seccionAccionables");
+    tabla.setAttribute("hidden", true);
+    let boton = document.getElementById("AsociarSeccionObjetivoTabla");
+    boton.removeAttribute("disabled");
 }
 
 function agregarAccionMejora() {
@@ -170,12 +178,12 @@ function agregarAccionMejora() {
 
     campoDescripcion.value = "";
 
-    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
-    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
-    campoFechaInicio.value = campoFechaInicioObj.value;
-    campoFechaFin.value = campoFechaFinObj.value;
-
     mostrarTablaAccionMejora();
+    let tabla = document.getElementById("seccionAccionables");
+    tabla.setAttribute("hidden", true);
+    let boton = document.getElementById("AsociarPreguntaAccionMejoraTabla");
+    boton.removeAttribute("hidden");
+    boton.setAttribute("disabled", "true");
 }
 
 function mostrarTablaAccionable() {
@@ -199,6 +207,8 @@ function seleccionaAccion(element) {
     currentAccMej = currentObjective.AccionDeMejora[val];
     //console.log(`${currentAccMej.nombreObj}: ${currentAccMej.descripcion}`);
     mostrarTablaAccionable();
+    let boton = document.getElementById("AsociarPreguntaAccionMejoraTabla");
+    boton.removeAttribute("disabled");
 }
 
 function agregarAccionable() {
@@ -216,13 +226,9 @@ function agregarAccionable() {
     }
     campoDescripcion.value = "";
 
-    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
-    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
-    campoFechaInicio.value = campoFechaInicioObj.value;
-    campoFechaFin.value = campoFechaFinObj.value;
-
     mostrarTablaAccionable();
 }
+
 function calcularPesosPorc(accionMej) {
     var pesoTotal = 0;
     for (var i = 0; i < accionMej.Accionable.length; i++) {
@@ -233,6 +239,7 @@ function calcularPesosPorc(accionMej) {
         accionMej.Accionable[i].pesoPorcentaje = accionMej.Accionable[i].peso * 100 / pesoTotal;
     }
 }
+
 function getSecciones() {
     modalGen('#ModalSecciones');
     //console.log(codigosFormularios.length);
@@ -337,30 +344,21 @@ function modalGen(modal) {
     $(`${modal}`).modal();
 }
 
-function manejarFechasPlan(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
-    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton);
-    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
-    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
-    let campoFechaInicioPlan = document.getElementById("campoFechaInicioPlanMejora");
-    let campoFechaFinPlan = document.getElementById("campoFechaFinPlanMejora");
-    campoFechaInicioObj.value = campoFechaInicioPlan.value;
-    campoFechaFinObj.value = campoFechaFinPlan.value;
-}
-
-function manejarFechasObjetivo(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
-    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton);
-    let campoFechaInicioAcMej = document.getElementById("campoFechaInicioAccionMejora");
-    let campoFechaFinAcMej = document.getElementById("campoFechaFinAccionMejora");
-    let campoFechaInicioObj = document.getElementById("campoFechaInicioObjetivo");
-    let campoFechaFinObj = document.getElementById("campoFechaFinObjetivo");
-    campoFechaInicioAcMej.value = campoFechaInicioObj.value;
-    campoFechaFinAcMej.value = campoFechaFinObj.value;
+function manejarFechas(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaPadreInicio, campoFechaPadreFin, nombreBoton, campoFechaHijoInicio, campoFechaHijoFin) {
+    validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaPadreInicio, campoFechaPadreFin, nombreBoton);
+    let campoFechaInicioHijo = document.getElementById(campoFechaHijoInicio);
+    let campoFechaFinHijo = document.getElementById(campoFechaHijoFin);
+    let campoFechaInicioYo = document.getElementById(campoFechaInicio);
+    let campoFechaFinYo = document.getElementById(campoFechaFin);
+    campoFechaInicioHijo.value = campoFechaInicioYo.value;
+    campoFechaFinHijo.value = campoFechaFinYo.value;
 }
 
 function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescripcion, campoFechaInferior, campoFechaSuperior, nombreBoton) {
     let fechaInicio = document.getElementById(campoFechaInicio);
     let fechaFinal = document.getElementById(campoFechaFin);
     let nombre = document.getElementById(campoNombre);
+    let descripcion = document.getElementById(campoDescripcion);
     let totalValidations = 3;
     if (campoNombre == null || campoDescripcion == null) {
         totalValidations = 2;
@@ -392,7 +390,7 @@ function validarCampos(campoFechaInicio, campoFechaFin, campoNombre, campoDescri
     validator.validateDates(fechaInicio, fechaFinal);
 
     if (campoDescripcion != null) {
-        validator.validateSomethingInTextInput(campoDescripcion, 50);
+        validator.validateSomethingInTextInput(descripcion, 250);
     }
 
 

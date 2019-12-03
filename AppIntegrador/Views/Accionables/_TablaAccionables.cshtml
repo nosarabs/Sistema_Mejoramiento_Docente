@@ -31,9 +31,6 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.pesoPorcentaje)
                 </th>
-                <th>
-                    Opciones
-                </th>
             </tr>
         </thead>
         <thead>
@@ -44,20 +41,16 @@ else
                     @accionable.descripcion
                 </td>
                 <td>
-                    @accionable.fechaInicio
+                    @accionable.fechaInicio.Value.ToString("dd/MM/yyyy")
                 </td>
                 <td>
-                    @accionable.fechaFin
+                    @accionable.fechaFin.Value.ToString("dd/MM/yyyy")
                 </td>
                 <td>
                     @accionable.peso
                 </td>
                 <td>
                     @accionable.pesoPorcentaje
-                </td>
-                <td>
-                    <input type="button" value="Editar accionable" class="btn float-right" id="EditarAccionable" onclick="#" />
-                    <input type="button" value="Borrar accionable" class="btn btn-danger float-right" id="BorrarAccionable" onclick="#" />
                 </td>
             </tr>
 
