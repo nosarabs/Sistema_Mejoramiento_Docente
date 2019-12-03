@@ -57,7 +57,7 @@ namespace AppIntegrador.Controllers
          * necesarios para la asignar un formulario a uno o más grupos
          */
         [HttpPost]
-        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo)
+        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo, bool enviarCorreos)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
@@ -75,7 +75,7 @@ namespace AppIntegrador.Controllers
             Nullable<DateTime> fechaFin = null;
 
             // Sino se seleccionan datos, existe un error
-            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" || (fechaInicioSeleccionado == "" && fechaFinSeleccionado == ""))
+            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" || (String.IsNullOrEmpty(fechaInicioSeleccionado) && String.IsNullOrEmpty(fechaFinSeleccionado) ))
             {
                 return Json(new { error = false, tipoError = 1 });
             }
@@ -191,6 +191,9 @@ namespace AppIntegrador.Controllers
                 }
             }
 
+            if (enviarCorreos)
+                EnviarCorreoSobreAsignaciónCuestionario(db.Formulario.Find(codigoFormulario));
+
             return Json(new { error = true, inicio = originalInicio, fin = originalFin });
         }
 
@@ -238,7 +241,7 @@ namespace AppIntegrador.Controllers
             List<string> involucrados = new List<string>();
 
             // Se obtienen todos los estudiantes a los que les tiene que llegar el correo.
-            List<ObtenerEstudiantesAsociadosAFormulario_Result> estudiantes = db.ObtenerEstudiantesAsociadosAFormulario(formulario.Codigo).ToList();
+            var estudiantes = db.ObtenerEstudiantesAsociadosAFormulario(formulario.Codigo).ToList();
             foreach (ObtenerEstudiantesAsociadosAFormulario_Result estudiante in estudiantes)
             {
                 involucrados.Add(estudiante.Correo);
