@@ -3,6 +3,7 @@
 	@urlReal varchar(1000),
 	@expira datetime,
 	@usos int,
+	@reestablecerContrasenna bit,
     @resultadohash varchar(64) OUTPUT,
 	@estado nvarchar(255) OUTPUT
 AS
@@ -18,8 +19,8 @@ BEGIN
 	IF @usos = 0 AND @expira IS NULL
 	
 	BEGIN
-		INSERT INTO EnlaceSeguro ([Hash], UrlReal, UsuarioAsociado)
-		values (@resultadohash, @urlReal, @usuarioAsociado)
+		INSERT INTO EnlaceSeguro ([Hash], UrlReal, UsuarioAsociado, ReestablecerContrasenna)
+		values (@resultadohash, @urlReal, @usuarioAsociado, @reestablecerContrasenna)
 		SET @estado = 1
 	END
 	ELSE
@@ -27,8 +28,8 @@ BEGIN
 		--Solo se provee usos.
 		IF  @usos != 0 AND @expira IS NULL
 			BEGIN
-				INSERT INTO EnlaceSeguro ([Hash],Usos, UrlReal, UsuarioAsociado)
-				values (@resultadohash, @usos, @urlReal, @usuarioAsociado)
+				INSERT INTO EnlaceSeguro ([Hash],Usos, UrlReal, UsuarioAsociado, ReestablecerContrasenna)
+				values (@resultadohash, @usos, @urlReal, @usuarioAsociado, @reestablecerContrasenna)
 				SET @estado = 1
 			End
 		ELSE
@@ -36,8 +37,8 @@ BEGIN
 			--Solo se provee fecha de expiración.
 			IF @usos = 0 AND @expira IS NOT NULL
 				BEGIN
-					INSERT INTO EnlaceSeguro ([Hash],UrlReal,Expira, UsuarioAsociado)
-					values (@resultadohash, @urlReal, @expira, @usuarioAsociado)
+					INSERT INTO EnlaceSeguro ([Hash],UrlReal,Expira, UsuarioAsociado, ReestablecerContrasenna)
+					values (@resultadohash, @urlReal, @expira, @usuarioAsociado, @reestablecerContrasenna)
 					SET @estado = 1
 				End
 			ELSE
@@ -45,8 +46,8 @@ BEGIN
 				--Se proveen todos los parámetros opcionales.
 				IF @usos != 0 AND @expira IS NOT NULL
 					BEGIN
-						INSERT INTO EnlaceSeguro ([Hash],Usos,UrlReal,Expira, UsuarioAsociado)
-						values (@resultadohash,@usos, @urlReal, @expira, @usuarioAsociado)
+						INSERT INTO EnlaceSeguro ([Hash],Usos,UrlReal,Expira, UsuarioAsociado, ReestablecerContrasenna)
+						values (@resultadohash,@usos, @urlReal, @expira, @usuarioAsociado, @reestablecerContrasenna)
 						SET @estado = 1
 					END
 				END

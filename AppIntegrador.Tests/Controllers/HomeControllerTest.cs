@@ -10,12 +10,14 @@ using System.Web.SessionState;
 using System.Reflection;
 using System.Security.Principal;
 using System.IO;
+using System.Web.Routing;
 
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest
     {
+
         /* TAM-1.1.6 Redirección Login */
         [TestMethod]
         public void LoginView()
@@ -25,7 +27,6 @@ namespace AppIntegrador.Tests.Controllers
 
             // Act
             ViewResult result = controller.Login() as ViewResult;
-
             // Assert
             Assert.IsNotNull(result);
         }
@@ -58,9 +59,148 @@ namespace AppIntegrador.Tests.Controllers
             };
 
             var result = controller.Login(usuario) as RedirectToRouteResult;
+            //var logoutresult = controller.Logout() as RedirectToRouteResult;
+
+
+            //Assert
             Assert.AreEqual("Index", result.RouteValues["action"]);
+
         }
         /*Termina TAM-1.1.6 Redirección Login*/
+
+        //[TestMethod]
+        //public void LogoutTest()
+        //{
+        //    // arrange
+        //    var httpRequest = new HttpRequest("", "http://localhost/", "");
+        //    var stringWriter = new StringWriter();
+        //    var httpResponse = new HttpResponse(stringWriter);
+        //    var httpContext = new HttpContext(httpRequest, httpResponse);
+        //    var sessionContainer = new HttpSessionStateContainer(
+        //        "id",
+        //        new SessionStateItemCollection(),
+        //        new HttpStaticObjectsCollection(),
+        //        10,
+        //        true,
+        //        HttpCookieMode.AutoDetect,
+        //        SessionStateMode.InProc,
+        //        false);
+        //    SessionStateUtility.AddHttpSessionStateToContext(httpContext, sessionContainer);
+
+        //    var controller = new HomeController();
+        //    var requestContext = new RequestContext(new HttpContextWrapper(httpContext), new RouteData());
+        //    controller.ControllerContext = new ControllerContext(requestContext, controller);
+
+        //    // act
+        //    var result = controller.Logout() as RedirectToRouteResult;
+
+        //    //Assert
+        //    Assert.AreEqual("Index", result.RouteValues["action"]);
+        //}
+
+
+        HomeController HomeControllerAs(string userName, bool authenticated)
+        {
+
+            var mock = new Mock<ControllerContext>();
+            mock.SetupGet(p => p.HttpContext.User.Identity.Name).Returns(userName);
+            if (authenticated)
+            {
+                mock.SetupGet(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(true);
+            }
+            else 
+            {
+                mock.SetupGet(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(false);
+            }
+
+            var controller = new HomeController
+            {
+                ControllerContext = mock.Object
+            };
+            return controller;
+        }
+
+
+
+        [TestMethod]
+        public void HomeIndexResultName()
+        {
+            // Arrange
+            var controller = HomeControllerAs("admin@mail.com", true);
+            var noAuthcontroller = HomeControllerAs("admin@mail.com", false);
+            controller.TempData["alertmessage"] = "warning test";
+            controller.TempData["sweetalertmessage"] = "warning test";
+
+            // Act
+            var result = controller.Index() as ViewResult;
+            var noAuthResult = noAuthcontroller.Index() as RedirectToRouteResult;
+
+            // Assert
+            Assert.AreEqual("Index", result.ViewName);
+            Assert.AreEqual("Login", noAuthResult.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void HomeAboutResultName()
+        {
+            // Arrange
+            var controller = HomeControllerAs("admin@mail.com", true);
+            var noAuthcontroller = HomeControllerAs("admin@mail.com", false);
+
+            // Act
+            var result = controller.About() as ViewResult;
+            var noAuthResult = noAuthcontroller.Index() as RedirectToRouteResult;
+
+            // Assert
+            Assert.AreEqual("About", result.ViewName);
+            Assert.AreEqual("Login", noAuthResult.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void HomeCambiarContrasennaResultName()
+        {
+            // Arrange
+            var controller = HomeControllerAs("admin@mail.com", true);
+            var noAuthcontroller = HomeControllerAs("admin@mail.com", false);
+
+            // Act
+            var result = controller.CambiarContrasenna() as ViewResult;
+            var noAuthResult = noAuthcontroller.Index() as RedirectToRouteResult;
+
+            // Assert
+            Assert.AreEqual("CambiarContrasenna", result.ViewName);
+            Assert.AreEqual("Login", noAuthResult.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void HomeReestablecerContrasennaResultName()
+        {
+            // Arrange
+            var controller = HomeControllerAs("admin@mail.com", true);
+
+            // Act
+            var result = controller.ReestablecerContrasenna("placeholder") as ViewResult;
+
+            // Assert
+            Assert.AreEqual("ReestablecerContrasenna", result.ViewName);
+        }
+
+
+        [TestMethod]
+        public void HomeContactResultName()
+        {
+            // Arrange
+            var controller = HomeControllerAs("admin@mail.com", true);
+            var noAuthcontroller = HomeControllerAs("admin@mail.com", false);
+
+            // Act
+            var result = controller.Contact() as ViewResult;
+            var noAuthResult = noAuthcontroller.Index() as RedirectToRouteResult;
+
+            // Assert
+            Assert.AreEqual("Contact", result.ViewName);
+            Assert.AreEqual("Login", noAuthResult.RouteValues["action"]);
+        }
 
         [TestMethod]
         public void LoginAdminFail()
@@ -112,10 +252,10 @@ namespace AppIntegrador.Tests.Controllers
             //var apstate = new HttpApplicationState("test");
             //var HCresult = (int)HttpContext.Current.Application["test"];
             CurrentUser.setLoginFailures(2);
-            controller.Login(usuario);     
+            controller.Login(usuario);
             var result = controller.Login(usuario) as ViewResult;
             var testres = controller.ModelState["password"].Errors[0].ErrorMessage;
-            string expectedresult = "Este usuario está bloqueado temporalmente.\nIntente de nuevo más tarde.";
+            string expectedresult = "Usuario y/o contraseña incorrectos";
 
             using (var context = new DataIntegradorEntities())
             {
@@ -141,10 +281,10 @@ namespace AppIntegrador.Tests.Controllers
             var httpRequest = new HttpRequest("", "http://localhost/", "");
 
             // Step 2: Setup the HTTP Response
-            var httpResponce = new HttpResponse(new StringWriter());
+            var httpResponse = new HttpResponse(new StringWriter());
 
             // Step 3: Setup the Http Context
-            var httpContext = new HttpContext(httpRequest, httpResponce);
+            var httpContext = new HttpContext(httpRequest, httpResponse);
             var sessionContainer =
                 new HttpSessionStateContainer("admin@mail.com",
                                                new SessionStateItemCollection(),
@@ -170,6 +310,8 @@ namespace AppIntegrador.Tests.Controllers
             // Step 4: Assign the Context
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
+            //SessionStateUtility.AddHttpSessionStateToContext(httpContext, sessionContainer);
+
         }
 
         [TestCleanup]

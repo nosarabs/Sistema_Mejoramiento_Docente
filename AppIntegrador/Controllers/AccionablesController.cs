@@ -8,22 +8,35 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class AccionablesController : Controller
     {
-        private DataIntegradorEntities db = new DataIntegradorEntities();
+        private DataIntegradorEntities db;
+        private readonly IPerm permissionManager;
 
-        public AccionablesController() { }
+        public AccionablesController()
+        {
+            db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
+        }
+
         public AccionablesController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
         // GET: Accionables
         public ActionResult Index()
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             var accionable = db.Accionable.Include(a => a.AccionDeMejora);
             return View("Índice", accionable.ToList());
         }
@@ -32,7 +45,11 @@ namespace AppIntegrador.Controllers
         // GET: Accionables/Create
         public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora, bool unitTesting = false)
         {
-
+            if (!permissionManager.IsAuthorized(Permission.CREAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
@@ -93,6 +110,11 @@ namespace AppIntegrador.Controllers
         //Requiere refactorización para eliminar el .Where de aquí
         public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej, bool edit = true)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
@@ -112,6 +134,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripAcMej,descripcion,fechaInicio,fechaFin,progreso")] Accionable accionable)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(accionable).State = EntityState.Modified;

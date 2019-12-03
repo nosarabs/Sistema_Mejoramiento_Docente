@@ -300,15 +300,32 @@ namespace AppIntegrador.Controllers
                     {
                         if (mailChanged)
                         {
-                            /*Stored procedure to change the mail of a given person*/
-                            ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
-                            db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
-                            bool modificationResult = (bool)modResult.Value;
-
-                            /*No pudo modificarse el correo por ya estar en la base de datos*/
-                            if (modificationResult == false)
+                            /*Si el usuario al que se le está modificando el correo no está con la sesión iniciada, adelante.*/
+                            if (db.UsuarioActual.Find(originalPerson.Correo) == null)
                             {
-                                ModelState.AddModelError("Persona.Correo", "Ya existe un usuario en el sistema con este correo.");
+                                /*Stored procedure to change the mail of a given person*/
+                                ObjectParameter modResult = new ObjectParameter("resultado", typeof(bool));
+                                try
+                                {
+                                    db.ModificarCorreo(originalPerson.Correo, usuarioPersona.Persona.Correo, modResult);
+                                }
+                                catch (Exception exception)
+                                {
+                                    ModelState.AddModelError("Persona.Correo", "Ocurrió un error al modificar el correo. Intente de nuevo.");
+                                    return View(usuarioPersona);
+                                }
+                                bool modificationResult = (bool)modResult.Value;
+
+                                /*No pudo modificarse el correo por ya estar en la base de datos*/
+                                if (modificationResult == false)
+                                {
+                                    ModelState.AddModelError("Persona.Correo", "Ya existe un usuario en el sistema con este correo.");
+                                    return View(usuarioPersona);
+                                }
+                            } /*De lo contrario, no se puede modificar hasta que cierre la sesión.*/
+                            else 
+                            {
+                                ModelState.AddModelError("Persona.Correo", "No se puede modificar el correo de este usuario mientras tenga la sesión iniciada.");
                                 return View(usuarioPersona);
                             }
                         }
