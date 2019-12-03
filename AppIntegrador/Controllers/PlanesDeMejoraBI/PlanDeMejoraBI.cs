@@ -38,6 +38,81 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         }
 
         /*
+         * EFE: hace la busqueda de los formularios
+         * REQ: 
+         *      plan: al que se le asignan los formularios
+         *      listaFormularios: lista de los codigos de los formularios
+         * MOD:
+         *      plan
+         */
+        public void insertFormularios(PlanDeMejora plan, List<string> codFormularios, DataIntegradorEntities db)
+        {
+            List<Formulario> result =  new List<Formulario>();
+            if (codFormularios != null) 
+            {
+                foreach (var codigo in codFormularios)
+                {
+                    Formulario formulario = db.Formulario.Find(codigo);
+                    result.Add(formulario);
+                }
+            }
+            plan.Formulario = result;
+        }
+
+        /*
+         EFE: Inserta las secciones que se asocian a cada objetivo
+         REQ: 
+                SeccionConObjetivo: relaciones entre los objetivos y las secciones
+                         objetivos: colleccion de objetivos
+         MOD:
+            objetivos
+        */
+        public void insertSeccionesEnObjetivos(ICollection<Objetivo> objetivos, Dictionary<String, String> SeccionConObjetivo, DataIntegradorEntities db) 
+        {
+            if (objetivos != null && SeccionConObjetivo != null)
+            {
+                foreach (var obj in objetivos)
+                {
+                    foreach (var item in SeccionConObjetivo)
+                    {
+                        string objetivoName = item.Key;
+                        // PAR EVITAR EL ARREGLO AL FINAL DEL NOMBRE
+                        int size = objetivoName.Length;
+                        objetivoName = objetivoName.Substring(0, size-3);
+                        string seccionCodigo = item.Value;
+                        if (obj.nombre == objetivoName)
+                        {
+                            var seccionEncontrada = db.Seccion.Find(seccionCodigo);
+                            obj.Seccion.Add(seccionEncontrada);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+         * EFE: hace la busqueda de los profesores y los agrega al plan
+         * REQ: 
+         *      plan: al que se le asignan los formularios
+         *      listaProfesores: lista de los codigos de los formularios
+         * MOD:
+         *      plan
+         */
+        public void insertProfesores(PlanDeMejora plan, List<string> correoProfesores, DataIntegradorEntities db)
+        {
+            List<Profesor> result = new List<Profesor>();
+            if (correoProfesores != null)
+            {
+                foreach (var correo in correoProfesores)
+                {
+                    Profesor profe = db.Profesor.Find(correo);
+                    result.Add(profe);
+                }
+            }
+            plan.Profesor = result;
+        }
+
+        /*
          * EFE: Crea todas las tablas necesarias para el procedimiento de almacenamiento de plan de mejora
          * REQ: plan: plan de mejora con lo que se quiere crear
          * MOD: la base de datos si el procedimiento almacenado tiene exito
@@ -46,18 +121,18 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         {
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
             List<DataTable> planYAsocPlanFormulario = this.getPlanTableYAsocPlanFormularios(plan);
-            DataTable planTable = planYAsocPlanFormulario[0];
+            DataTable planTable         = planYAsocPlanFormulario[0];
             DataTable asocPlanFormTable = planYAsocPlanFormulario[1];
 
             // Creacion de la tabla de objetivos y Asociacion de objetivos con secciones de un formulario
             List<DataTable> objetivosYAsocObjetivosSecciones = this.getObjetivosTableYAsocObjetivosSecciones(plan);
-            DataTable objetivosTable = objetivosYAsocObjetivosSecciones[0];
-            DataTable asocObjetivosSeccionesTable = objetivosYAsocObjetivosSecciones[1];
+            DataTable objetivosTable                = objetivosYAsocObjetivosSecciones[0];
+            DataTable asocObjetivosSeccionesTable   = objetivosYAsocObjetivosSecciones[1];
 
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
             List<DataTable> accionesYAsocAccionesPreguntas = this.getAccionesDeMejoraTableYAsocAccionesPreguntas(plan);
-            DataTable accionesDeMejoraTable = planYAsocPlanFormulario[0];
-            DataTable asocAccionesPreguntasTable = planYAsocPlanFormulario[1];
+            DataTable accionesDeMejoraTable         = accionesYAsocAccionesPreguntas[0];
+            DataTable asocAccionesPreguntasTable    = accionesYAsocAccionesPreguntas[1];
 
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
             DataTable accionablesTable = this.getAccionablesTable(plan);
@@ -91,13 +166,16 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 DataTable tablaAsocObjSecciones,        string AsocObjSeccionesName,
                 DataTable tablaAsocAccionesPreguntas,   string AsocAccionesPreguntasName)
         {
+            //string cs = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
             SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
+            //SqlConnection connection = new SqlConnection(cs);
             connection.Open();
             SqlCommand cmd = new SqlCommand("AgregarPlanComplete", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
             //Pass table Valued parameter to Store Procedure
             SqlParameter sqlParam = cmd.Parameters.AddWithValue(tablaPlanName, tablaPlan);
+
             sqlParam = cmd.Parameters.AddWithValue(tablaObjetivosName, tablaObjetivos);
             sqlParam = cmd.Parameters.AddWithValue(tableAccionesName, tablaAcciones);
             sqlParam = cmd.Parameters.AddWithValue(tablaAccionablesName, tablaAccionables);
@@ -108,7 +186,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
             sqlParam.SqlDbType = SqlDbType.Structured;
 
-            cmd.ExecuteNonQuery();
+            var result = cmd.ExecuteNonQuery();
             connection.Close();
         }
 
@@ -130,6 +208,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             dt2.Columns.Add("codigoPlan");
             dt2.Columns.Add("codigoForm");
 
+            // Agregando las filas
             IEnumerable<Formulario> formularios = plan.Formulario;
             if (formularios != null) 
             {
@@ -192,7 +271,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 //Ahora se agregan las tuplas a la tabla correspondiente
                 foreach (var obj in objetivos)
                 {
-                    dt.Rows.Add(obj.codPlan, obj.nombre, obj.descripcion, obj.fechaInicio, obj.fechaFin, obj.nombTipoObj, obj.codPlantilla, obj.borrado);
+                    dt.Rows.Add(plan.codigo, obj.nombre, obj.descripcion, obj.fechaInicio, obj.fechaFin, obj.nombTipoObj, null, 0);
                     
                     // Realizando la tupla de la asociacion 
                     ICollection<Seccion> secciones = obj.Seccion;
@@ -254,7 +333,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                     {
                         foreach (var acc in acciones) 
                         {
-                            dt.Rows.Add(acc.codPlan, acc.nombreObj, acc.descripcion, acc.fechaInicio, acc.fechaFin, acc.codPlan, acc.borrado);
+                            dt.Rows.Add(plan.codigo, acc.nombreObj, acc.descripcion, acc.fechaInicio, acc.fechaFin, null, 0);
 
                             // Realizando la tupla de la asociacion 
                             ICollection<Pregunta> preguntas = acc.Pregunta;
@@ -316,7 +395,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                             {
                                 foreach (var accio in accionables) 
                                 {
-                                    dt.Rows.Add(accio.codPlan, accio.nombreObj, accio.descripAcMej, accio.descripcion, accio.fechaInicio, accio.fechaFin, accio.tipo);
+                                    dt.Rows.Add(plan.codigo, accio.nombreObj, accio.descripAcMej, accio.descripcion, accio.fechaInicio, accio.fechaFin, 'S');
                                 }
                             }
                         }
