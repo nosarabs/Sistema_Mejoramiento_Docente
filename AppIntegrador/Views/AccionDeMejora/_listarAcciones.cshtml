@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AppIntegrador.Models.AccionDeMejora>
 
 @{
-    var numAccionable = 1;
+    int position = 0;
 }
 
 @if (Model.Count() == 0)
@@ -20,15 +20,15 @@ else
             <col style="width: 57%;">
             <col class="TablasFecha">
             <col class="TablasFecha">
+            <col class="TablasOpciones">
         </colgroup>
 
         <thead class="thead-light">
             <tr>
                 <th>
-                    #
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Objetivo.descripcion)
+                    @Html.DisplayNameFor(model => model.descripcion)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.fechaInicio)
@@ -36,16 +36,18 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
-
+                <th>
+                    Opciones
+                </th>
             </tr>
         </thead>
 
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="FilaTablasPlanesDeMejora" onclick="clickAccionDeMejora(@numAccionable, @item.codPlan, `@item.nombreObj`, `@item.descripcion`)" )>
+                <tr class="FilaTablasPlanesDeMejora">
                     <td>
-                        @numAccionable
+                        <input type="radio" name="accionesDeMejora" value=@(position++) onclick="seleccionaAccionLista( @item.codPlan, `@item.nombreObj`, `@item.descripcion`)" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.descripcion)
@@ -56,21 +58,14 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.fechaFin)
                     </td>
+                    <td>
+                        <div>
+                            <input type="button" value="Preguntas asociadas" class="btn-azulUCR float-right" id="VerPreguntas" onclick="modalGen('#ModalPreguntas')" />
+                        </div>
+                    </td>
                 </tr>
-                numAccionable++;
             }
         </tbody>
     </table>
-    <div class="card card-default">
-        <div class="card-body grisUCR3">
-            <div>
-                <div id="encabezadoAccionable">
-                    <h4 style="text-align:center">Lista de Accionables</h4>
-                    <h2 style="text-align:center">Seleccione una acción de mejora</h2>
-                </div>
-                <div id="divAccionables">
-                </div>
-            </div>
-        </div>
-    </div>
+    
 }

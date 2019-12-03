@@ -344,6 +344,19 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+
+            List<String> ProfesoresNombreLista = new List<String>();
+
+            ViewBag.ProfesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(id).ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach (var profe in ViewBag.ProfesoresLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(profe, name_op);
+                ProfesoresNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             return View("DetallesPlanDeMejora", planDeMejora);
         }
     }

@@ -273,6 +273,7 @@
     <Build Include="PlanesDeMejora\AccionableSiNo.sql" />
     <Build Include="PlanesDeMejora\AccionablePorcentaje.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionables.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerCorreosDeProfesoresDelPlan.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
