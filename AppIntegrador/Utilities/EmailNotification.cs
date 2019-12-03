@@ -50,8 +50,9 @@ namespace AppIntegrador.Utilities
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                return -1;
             }
-            return -1;
+            
         }
 
         /// <summary>Este método envía una notificación de correo directa (de forma asíncrona)
