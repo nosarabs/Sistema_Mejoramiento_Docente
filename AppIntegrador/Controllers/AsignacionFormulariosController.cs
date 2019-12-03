@@ -174,12 +174,20 @@ namespace AppIntegrador.Controllers
                 FechasSolapadasInfo fecha = fechasJson.FirstOrDefault();
                 if(fecha.FechaInicioNueva != null)
                 {
-                    originalInicio = FormularioAsignado.FormatearFecha((DateTime)fecha.FechaInicioNueva);
+                    originalInicio = FormularioAsignado.FormatearFecha((DateTime)fechaInicio);
+                }
+                else
+                {
+                    originalInicio = FormularioAsignado.FormatearFecha(fecha.PeriodoOriginal.FechaInicio);
                 }
 
                 if(fecha.FechaFinNueva != null)
                 {
-                    originalFin = FormularioAsignado.FormatearFecha((DateTime)fecha.FechaFinNueva);
+                    originalFin = FormularioAsignado.FormatearFecha((DateTime)fechaFin);
+                }
+                else
+                {
+                    originalFin = FormularioAsignado.FormatearFecha(fecha.PeriodoOriginal.FechaFin);
                 }
             }
 
