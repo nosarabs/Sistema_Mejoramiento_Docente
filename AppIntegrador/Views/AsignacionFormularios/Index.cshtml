@@ -68,7 +68,26 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal-solapado">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Confirmar cambio</h4>
+                </div>
+                <div class="modal-body">
+                    Las fechas asignadas entran en conflicto. Este formulario está asignado en las siguientes fechas: <br />
+                    <strong>Fecha de inicio: </strong><div id="periodo-og-inicio"></div><br />
+                    <strong>Fecha de finalización: </strong><div id="periodo-og-fin"></div><br />
 
+                    ¿Desea modificar las fechas para tener el mayor rango de tiempo?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-azulUCR" id="solapado-si">Sí</button>
+                    <button type="button" class="btn-rojoUCR" id="solapado-no">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
@@ -80,6 +99,30 @@
 <!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+@* Código para levantar el modal cuando se solapa una fecha *@
+<script>
+    var modalConfirm = function (callback) {
+
+        $("#solapado-si").on("click", function () {
+            callback(true);
+            $("#modal-solapado").modal('hide');
+        });
+
+        $("#solapado-no").on("click", function () {
+            callback(false);
+            $("#modal-solapado").modal('hide');
+        });
+    };
+
+    modalConfirm(function (confirm) {
+        if (confirm) {
+            filtros.asignarConFiltros(null, null, null, '@ViewBag.Codigo', true);
+        } 
+    });
+
+
+</script>
 
 <script>
     $(document).ready(function () {
@@ -120,7 +163,7 @@ No es tan complicado, solo deben importar el JS con el idioma español y despues
     function test() {
         var codigo = '@ViewBag.Codigo';
         console.log(codigo);
-        filtros.asignarConFiltros(null, null, null, codigo);
+        filtros.asignarConFiltros(null, null, null, codigo, false);
 
     }
     //Actualiza los filtros por debajo del de unidades académicas
