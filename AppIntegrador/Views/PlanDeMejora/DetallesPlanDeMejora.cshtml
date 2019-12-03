@@ -125,6 +125,7 @@
 
 @{Html.RenderPartial("_ModalListaProfesores");}
 @{Html.RenderPartial("_ModalListaFormularios", Model.Formulario);}
+@{Html.RenderPartial("../Objetivos/_ModalSeccionesLista");}
 
 @section Scripts{
 
@@ -182,6 +183,21 @@
             });
         }
 
+        function verSeccionesAsocidas(plan, obj) {
+            $.ajax({
+                type: 'GET',
+                url: '/Objetivos/TablaSeccionesAsociadas',
+                data: {
+                    //parámetros para el controlador
+                    id: plan,
+                    objt: obj
+                },
+                success: function (result) {
+                    $('#ModalListaSeccionesInterno').html(result);
+                    modalGen('#ModalSeccionesLista');
+                }
+            });
+        }
 
     </script>
 

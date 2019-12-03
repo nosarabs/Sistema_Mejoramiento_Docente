@@ -88,7 +88,7 @@ else
                     </td>
                     <td>
                         <div>
-                            <input type="button" value="Secciones asociadas" class="btn-azulUCR float-right" id="VerSecciones" onclick="modalGen('#ModalSecciones')" />
+                            <input type="button" value="Secciones asociadas" class="btn-azulUCR float-right" id="VerSecciones" onclick="verSeccionesAsocidas(@obj.codPlan, `@obj.nombre`)" />
                         </div>
                     </td>
                 </tr>
@@ -98,4 +98,3 @@ else
     </table>
 }
 
-@{Html.RenderPartial("~/Views/Objetivos/_ModalAnadirSecciones.cshtml");}
