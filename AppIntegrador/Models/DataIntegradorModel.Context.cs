@@ -28,10 +28,6 @@ namespace AppIntegrador.Models
         }
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Accionable> Accionable { get; set; }
-        public virtual DbSet<AccionableEscala> AccionableEscala { get; set; }
-        public virtual DbSet<AccionablePorcentaje> AccionablePorcentaje { get; set; }
-        public virtual DbSet<AccionableSiNo> AccionableSiNo { get; set; }
         public virtual DbSet<AccionDeMejora> AccionDeMejora { get; set; }
         public virtual DbSet<Activa_por> Activa_por { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
@@ -71,6 +67,10 @@ namespace AppIntegrador.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioActual> UsuarioActual { get; set; }
         public virtual DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
+        public virtual DbSet<Accionable> Accionable { get; set; }
+        public virtual DbSet<AccionableEscala> AccionableEscala { get; set; }
+        public virtual DbSet<AccionablePorcentaje> AccionablePorcentaje { get; set; }
+        public virtual DbSet<AccionableSiNo> AccionableSiNo { get; set; }
     
         [DbFunction("Entities", "CarrerasXPerfilXUsuario")]
         public virtual IQueryable<CarrerasXPerfilXUsuario_Result> CarrerasXPerfilXUsuario(string correoUsuario, string perfil)
@@ -418,6 +418,11 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombre", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarFormulario", codigoParameter, nombreParameter);
+        }
+    
+        public virtual int AgregarMultiplesAccionables()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarMultiplesAccionables");
         }
     
         public virtual int AgregarMultiplesAccionesDeMejora()
@@ -1388,6 +1393,15 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
         }
     
+        public virtual ObjectResult<string> ObtenerCorreosDeProfesoresDelPlan(Nullable<int> idPlan)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerCorreosDeProfesoresDelPlan", idPlanParameter);
+        }
+    
         public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)
         {
             var codFormularioParameter = codFormulario != null ?
@@ -1749,6 +1763,45 @@ namespace AppIntegrador.Models
                 new ObjectParameter("permiso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
+        }
+    
+        public virtual ObjectResult<string> ObtenerFormulariosAsociados(Nullable<int> idPlan)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerFormulariosAsociados", idPlanParameter);
+        }
+    
+        public virtual ObjectResult<string> ObtenerSeccionesAsociadasAObjetivo(Nullable<int> idPlan, string nombreObj)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerSeccionesAsociadasAObjetivo", idPlanParameter, nombreObjParameter);
+        }
+    
+        public virtual ObjectResult<string> ObtenerPreguntasDeAccionDeMejora(Nullable<int> idPlan, string nombreObj, string descripcion)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeAccionDeMejora", idPlanParameter, nombreObjParameter, descripcionParameter);
         }
     }
 }

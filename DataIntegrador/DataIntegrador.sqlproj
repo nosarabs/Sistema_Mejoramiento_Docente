@@ -276,7 +276,12 @@
     <Build Include="Usuarios y Perfiles\Functions\CarrerasYEnfasisXUsuarioXPerfil.sql" />
     <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerEstudiantesAsociadosAFormulario.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionables.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerCorreosDeProfesoresDelPlan.sql" />
     <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerFormulariosAsociados.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerSeccionesAsociadasAObjetivo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerPreguntasDeAccionDeMejora.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

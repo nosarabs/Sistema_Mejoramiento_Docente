@@ -187,6 +187,26 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void EditSinPermiso()
+        {
+            //Arrange
+            TestSetup();
+            CurrentUser.setCurrentUser("andres@mail.com", "Estudiante", "00000001", "00000001");
+            UsersController controller = new UsersController();
+            System.Web.Routing.RouteValueDictionary dictionary = new System.Web.Routing.RouteValueDictionary();
+
+            //Act
+            RedirectToRouteResult routeResult = controller.Edit("admin@mail", ".com") as RedirectToRouteResult;
+            dictionary.Add("action", "../Home/Index");
+            RedirectToRouteResult expected = new RedirectToRouteResult(dictionary);
+
+            //Assert
+            Assert.AreEqual("No tiene permisos para acceder a esta página.", controller.TempData["alertmessage"]);
+            Assert.AreEqual(expected.RouteValues["action"], routeResult.RouteValues["action"]);
+            CurrentUser.deleteCurrentUser("andres@mail.com");
+        }
+
+        [TestMethod]
         public void EditChangesSaved()
         {
             var personas = new List<Persona>

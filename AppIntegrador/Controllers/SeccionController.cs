@@ -31,7 +31,8 @@ namespace AppIntegrador.Controllers
         }
 
         // GET: Seccion
-        public ActionResult Index(string input0, string input1, string input2)
+        [HttpPost]
+        public ActionResult ActualizarBancoSecciones(string input0, string input1, string input2)
         {
             if(!permissionManager.IsAuthorized(Permission.VER_SECCION))
             {
@@ -45,25 +46,25 @@ namespace AppIntegrador.Controllers
             if (input0 == null && input1 == null && input2 == null)
             {
                 ViewBag.filtro = "Ninguno";
-                return View(seccion.ToList());
+                return PartialView("_SeccionPartial", seccion.ToList());
             }
             // si se selecionó el código  
             if (input1.Length > 0)
             {
                 ViewBag.filtro = "Por código: " + input1;
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
-                return View(seccion.Where(x => x.Codigo.Contains(input1)).ToList());
+                return PartialView("_SeccionPartial", seccion.Where(x => x.Codigo.Contains(input1)).ToList());
             }
             // si se selecionó el enunciado 
             else if (input2.Length > 0)
             {
                 ViewBag.filtro = "Nombre: " + input2;
-                return View(seccion.Where(x => x.Nombre.Contains(input2)).ToList());
+                return PartialView("_SeccionPartial", seccion.Where(x => x.Nombre.Contains(input2)).ToList());
             }
             else
             {
                 ViewBag.filtro = "Ninguno";
-                return View(seccion.ToList());
+                return PartialView("_SeccionPartial", seccion.ToList());
             }
         }
 
@@ -215,11 +216,6 @@ namespace AppIntegrador.Controllers
             return View(seccion);
         }
 
-        [HttpPost]
-        public ActionResult ActualizarBancoSecciones()
-        {
-            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", db.Seccion);
-        }
         [HttpPost]
         public ActionResult ActualizarCrearSeccion()
         {

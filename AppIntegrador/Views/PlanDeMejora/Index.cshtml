@@ -96,28 +96,30 @@
 
                             @foreach (var plan in Model)
                             {
-                                <tr onclick="clickPlan(@plan.codigo)">
-                                    <td>
-                                        @Html.DisplayFor(modelItem => plan.nombre)
-                                    </td>
-                                    @*<td>
-                                        @HttpContext.Current.User.Identity.Name
-                                    </td>
-                                    <td>
-                                        @HttpContext.Current.User.Identity.Name
-                                    </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => plan.fechaInicio)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => plan.fechaFin)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Editar", "EditarPlanDeMejora", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
-                                        @Html.ActionLink("Detalles", "Detalles", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
-                                        @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
-                                    </td>
-                                </tr>
+                                if (@plan.borrado == false) 
+                                {
+                                    <tr onclick="clickPlan(@plan.codigo)">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => plan.nombre)
+                                        </td>
+                                        @*<td>
+                                            @HttpContext.Current.User.Identity.Name
+                                        </td>
+                                        <td>
+                                            @HttpContext.Current.User.Identity.Name
+                                        </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => plan.fechaInicio)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => plan.fechaFin)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Detalles", "Detalles", "PlanDeMejora", new { id = plan.codigo }, new { @class = "btn-blancoUCR" })
+                                            @Html.Partial("~/Views/PlanDeMejora/_borrarPlanDeMejora.cshtml", plan)
+                                        </td>
+                                    </tr>
+                                }
                             }
                         </tbody>
                      </table>

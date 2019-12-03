@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -199,6 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Comparador.cs" />
     <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
     <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
     <Compile Include="Helpers\SiteSettings.cs" />
@@ -851,6 +853,17 @@
     <Content Include="Views\CSV\Funcionarios.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
     <Content Include="Views\Home\ReestablecerContrasenna.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalAnadirPreguntas.cshtml" />
+    <Content Include="Views\AccionDeMejora\_AnadirPreguntas.cshtml" />
+    <Content Include="Views\Objetivos\_TablaObjetivosLista.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaFormularios.cshtml" />
+    <Content Include="Views\Objetivos\_ModalSeccionesLista.cshtml" />
+    <Content Include="Views\Objetivos\_ListaSecciones.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ListaPreguntas.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalPreguntasLista.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaProfesoresDeUnPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaFormularioDeUnPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

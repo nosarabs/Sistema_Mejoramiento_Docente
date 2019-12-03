@@ -64,6 +64,24 @@ namespace AppIntegrador.Controllers
             return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionMejora", misAccionesDeMejora), this.ControllerContext) });
         }
 
+        [HttpPost]
+        public ActionResult ObtenerPreguntas(List<String> SeccionSeleccionado)
+        {
+            List<Seccion_tiene_pregunta> parejas = new List<Seccion_tiene_pregunta>();
+            if (SeccionSeleccionado != null && SeccionSeleccionado.Count > 0)
+            {
+                foreach (var codigo in SeccionSeleccionado)
+                {
+                    foreach (var pareja in db.Seccion_tiene_pregunta.Where(x => x.SCodigo.Equals(codigo)))
+                    {
+                        parejas.Add(pareja);
+                    }
+                }
+            }
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
+
         // POST: AccionDeMejora/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -253,6 +271,20 @@ namespace AppIntegrador.Controllers
                 return PartialView("_listarAcciones", acciones);
             }
             return PartialView("_accionesDeUnObjetivo", acciones);
+        }
+
+        public string TablaPreguntasAsociadas(int id, string objt, string des)
+        {
+
+            IEnumerable<string> CodigosPreguntas = db.ObtenerPreguntasDeAccionDeMejora(id, objt, des);
+            List<AppIntegrador.Models.Pregunta> preguntas = new List<Pregunta>();
+
+            foreach (var cod in CodigosPreguntas)
+            {
+                preguntas.Add(db.Pregunta.Find(cod));
+            }
+
+            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_ListaPreguntas", preguntas), this.ControllerContext);
         }
     }
 }

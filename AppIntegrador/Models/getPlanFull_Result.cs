@@ -40,5 +40,7 @@ namespace AppIntegrador.Models
         public Nullable<System.DateTime> fechaInicio3 { get; set; }
         public Nullable<System.DateTime> fechaFin3 { get; set; }
         public string tipo { get; set; }
+        public Nullable<int> peso { get; set; }
+        public Nullable<int> pesoPorcentaje { get; set; }
     }
 }
