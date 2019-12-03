@@ -267,6 +267,12 @@ namespace AppIntegrador.Controllers
                 ModelState.AddModelError("", "Datos incompletos");
                 return Json(new { guardadoExitoso = false, DatosIncompletos = true, CodigoEnUso = false, FaltaOpciones = false, MinMax = false}) ;
             }
+
+            if (Justificacion == "")
+            {
+                Justificacion = null;
+            }
+
             List<Opciones_de_seleccion> Opciones = new List<Opciones_de_seleccion>();
             if(TextoOpciones != null)
             {

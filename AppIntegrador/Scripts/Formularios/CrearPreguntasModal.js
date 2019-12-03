@@ -1,5 +1,7 @@
-﻿
-function GenerarModalPreguntas() {
+﻿var SeccionModalActual;
+
+function GenerarModalPreguntas(codSeccion) {
+    SeccionModalActual = codSeccion;
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
     GenerarCrearPreguntas();
@@ -17,6 +19,10 @@ function ImportarBancoPreguntas() {
     });
 }
 
+function CerrarModalPreguntas() {
+    $('ModalAgregarPregunta').modal("hide");
+}
+
 function CerrarCrearPregunta() {
     $('#ModalCrearPregunta').hide("fast");
     $('#BancoDePreguntas').show("fast");
@@ -26,7 +32,10 @@ function GuardarPregunta() {
     var Codigo = document.getElementById("PreguntaCodigo").value;
     var Enunciado = document.getElementById("PreguntaEnunciado").value;
     var Tipo = document.getElementById("Tipo").value;
-    var Justificacion = document.getElementById("txtJustificationNumber").value;
+
+    if (Tipo != "L") {
+        var Justificacion = document.getElementById("txtJustificationNumber").value;
+    }
 
     Pregunta = { Codigo, Enunciado, Tipo };
     TextoOpciones = []
@@ -61,8 +70,9 @@ function GuardarPregunta() {
                 $("#agregar-opcion").addClass("error");
             }
             if (data.MinMax) {
-                document.getElementById("min").textContent = "El primer número debe ser menor al segundo";
+
                 $("#min").addClass("error");
+                $("#max").addClass("error");
             }
             if (data.guardadoExitoso) {
                 $.ajax({

@@ -98,7 +98,6 @@ function ActualizarSecciones() {
         traditional: true,
         success: function (data) {
             resultado = [];
-            console.log(data);
             $('#seccionesActuales').html(data);
             DesactivarSeccionesAgregadas();
         },
@@ -158,10 +157,15 @@ function ValidarCodigo() {
 }
 
 function AbrirSeccionesModal() {
-    while (guardandoCambios == 1) {
-        ;
+    var Codigo = document.getElementById("textCode").value;
+    var Nombre = document.getElementById("textName").value;
+
+    if (Codigo.length > 0 && Nombre.length > 0) {
+        while (guardandoCambios == 1) {
+            ;
+        }
+        CrearModal();
     }
-    CrearModal();
 }
 
 function ModificarFormulario() {

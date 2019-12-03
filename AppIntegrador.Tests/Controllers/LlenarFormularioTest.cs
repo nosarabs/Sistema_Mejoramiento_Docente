@@ -30,7 +30,7 @@ namespace AppIntegrador.Tests.Controllers
             LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
 
             // Assert
             Assert.IsNotNull(result);
@@ -44,7 +44,7 @@ namespace AppIntegrador.Tests.Controllers
             LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
-            var result = controller.LlenarFormulario(null);
+            var result = controller.LlenarFormulario(null, null, 0, 0, 0);
             testSetup.SetupHttpContext(controller);
 
             // Assert
@@ -70,7 +70,7 @@ namespace AppIntegrador.Tests.Controllers
             LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
             // Act
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
             testSetup.SetupHttpContext(controller);
 
             // Assert
@@ -120,7 +120,7 @@ namespace AppIntegrador.Tests.Controllers
 
             LlenarFormularioController controller = new LlenarFormularioController(mockDb.Object);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
 
             testSetup.SetupHttpContext(controller);
 
@@ -181,7 +181,7 @@ namespace AppIntegrador.Tests.Controllers
 
             testSetup.SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
 
             Assert.IsNotNull(result);
         }
@@ -290,7 +290,7 @@ namespace AppIntegrador.Tests.Controllers
 
             testSetup.SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
             Assert.IsNotNull(result);
         }
@@ -325,7 +325,7 @@ namespace AppIntegrador.Tests.Controllers
 
             testSetup.SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
 
             Assert.IsNotNull(result);
         }
@@ -391,7 +391,7 @@ namespace AppIntegrador.Tests.Controllers
 
             testSetup.SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, null, 0, 0, 0);
 
             Assert.IsNotNull(result);
         }
@@ -474,7 +474,7 @@ namespace AppIntegrador.Tests.Controllers
 
             testSetup.SetupHttpContext(controller);
 
-            var result = controller.LlenarFormulario(codFormulario);
+            var result = controller.LlenarFormulario(codFormulario, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
             Assert.IsNotNull(result);
         }

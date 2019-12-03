@@ -30,32 +30,37 @@
 
     }
 
+    // Metodo que recupera todos los filtros seleccionados por
+    // el usuario, con sus respectivas fechas, y le envia los
+    // datos al controlador para que se asignen
     asignarConFiltros(listaUA, listaCE, listaP, codigo) {
-
+        // Extrae el codigo del formulario
         var codigoFormularioGet = codigo;
 
+        // Extra los datos de los filtros
         var CESeleccionadas = document.getElementById("filtroCarreraEnfasis");
         var CEValor = CESeleccionadas.options[CESeleccionadas.selectedIndex].value;
 
         var UASeleccionadas = document.getElementById("filtroUA");
         var UAValor = UASeleccionadas.options[UASeleccionadas.selectedIndex].value;
+
         var GSeleccionada = document.getElementById("filtroCursoGrupo");
         var GValor = GSeleccionada.options[GSeleccionada.selectedIndex].value;
 
         var PSeleccionado = document.getElementById("filtroProfesores");
         var PValor = PSeleccionado.options[PSeleccionado.selectedIndex].value;
-
+        // Extrae la fecha de inicio y fin
         var fechaInicio = document.getElementById("fecha-inicio").value;
         var fechaFin = document.getElementById("fecha-fin").value;
-        console.log(fechaInicio);
+        // Hace el llamado al metodoo del controlador con los paramaetros respectivos
         $.ajax({
             url: '/AsignacionFormularios/Asignar',
             data: {
                 codigoFormulario: codigoFormularioGet,
-                codigoUASeleccionada: UAValor, //este 
-                codigoCarreraEnfasisSeleccionada: CEValor, //este
-                grupoSeleccionado: GValor, // este
-                correoProfesorSeleccionado: PValor, //este
+                codigoUASeleccionada: UAValor, 
+                codigoCarreraEnfasisSeleccionada: CEValor, 
+                grupoSeleccionado: GValor, 
+                correoProfesorSeleccionado: PValor, 
                 fechaInicioSeleccionado: fechaInicio,
                 fechaFinSeleccionado: fechaFin
             },
@@ -63,9 +68,9 @@
             dataType: 'json',
             async: false,
             success: function (data) {
-                console.log("ak773")
-                if (!data.errorcito) {
-                    console.log(data.tipoError);
+                // Si existen errores los maneja
+                if (!data.error) {
+
                     if (data.tipoError == 1) {
                         sweetAlert("Error", "Debe de seleccionar datos", "error");
                     }
@@ -78,7 +83,11 @@
                     if (data.tipoError == 4) {
                         sweetAlert("Error", "La asignación no se puede efectuar.", "error");
                     }
+                    if (data.tipoError == 5) {
+                        $(location).attr('href', '/Formularios/Index');
+                    }
                 } else {
+                    // Sino, mensaje de exito. Y redirecciona al index de formularios
                     swal({
                         title: "¡El formulario " + codigo + " fue asignado con éxito!",
                         text: "Estará disponible para llenar a partir del: " + fechaInicio + " hasta " + fechaFin + ".",
@@ -89,7 +98,6 @@
                         $(location).attr('href', '/Formularios/Index');
                     });
                 }
-                console.log("ak7")
             },
             error: function (data)
             {
