@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AppIntegrador.Models.Seccion>
+
+@{
+    var listaSecciones = Model.ToList();
+    var id = ViewBag.IdPlan;
+    var obj = ViewBag.Objet;
+    var idModal = id + "-" + obj + "-";
+ }
+
+@*<div class="form-horizontal card-group">
+    <div class="modal fade" id="ModalSeccionesVer" tabindex="-1" role="dialog" aria-labelledby="ModalSeccionesLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="ModalVerSeccionesInterno" style="width:auto">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+     
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@idModal">
+    Secciones asociadas
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="@idModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach(var seccion in @listaSecciones)
+                {
+                <h2>
+                    seccion.Nombre;
+                </h2>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

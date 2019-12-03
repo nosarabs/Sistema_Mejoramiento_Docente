@@ -195,6 +195,30 @@ namespace AppIntegrador.Controllers
             return PartialView("_TablaObjetivosLista", objetivos);
         }
 
+        //se usa
+        [HttpGet]
+        public string TablaSeccionesAsociadas(int id, string objt)
+        {
+            
+            IEnumerable<string> CodigosSecciones = db.ObtenerSeccionesAsociadasAObjetivo(id, objt);
+            List<AppIntegrador.Models.Seccion> Secciones = new List<Seccion>();
+
+            foreach ( var cod in CodigosSecciones)
+            {
+                Secciones.Add(db.Seccion.Find(cod));
+            }
+
+            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_SeccionesDeObjetivo", Secciones), this.ControllerContext);
+        }
+
+        public ActionResult ObtenerSecciones(int? id = null, string objt = null)
+        {
+            ViewBag.Id = id;
+            ViewBag.obj = objt;
+            var secciones = db.Seccion.ToList();
+            return PartialView("_SeccionesDeObjetivo", secciones);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

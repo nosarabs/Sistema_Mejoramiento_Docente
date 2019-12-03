@@ -320,6 +320,9 @@ namespace AppIntegrador.Controllers
                 ProfesoresNombreLista.Add(name_op.Value.ToString());
             }
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+
+            ViewBag.FormulariosLista = db.ObtenerFormulariosAsociados(id);
+
             return View("DetallesPlanDeMejora", planDeMejora);
         }
     }

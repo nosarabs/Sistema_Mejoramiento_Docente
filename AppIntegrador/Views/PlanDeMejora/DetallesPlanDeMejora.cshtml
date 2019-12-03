@@ -65,8 +65,11 @@
                         <div class="col-md-2">
                             <br />
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <input type="button" value="Ver profesores" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresVer')" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="button" value="Ver formularios" class="btn-azulUCR float-right" id="VerFormulariosBoton" onclick="modalGen('#ModalFormulariosVer')" />
                                 </div>
                             </div>
                         </div>
@@ -116,6 +119,8 @@
 </div>
 
 @{Html.RenderPartial("_ModalListaProfesores");}
+@{Html.RenderPartial("_ModalListaFormularios", Model.Formulario);}
+@{Html.RenderPartial("_ModalListaSecciones");}
 
 @section Scripts{
 
@@ -150,7 +155,7 @@
 
         function seleccionaAccionLista(plan, obj, descr) {
             var content = '<h2>Accionables de la Acción de mejora</h2>';
-                document.getElementById('encabezadoAccionable').innerHTML = content;
+            document.getElementById('encabezadoAccionable').innerHTML = content;
             actualizarAccionables(plan, obj, descr);
         };
 
@@ -173,7 +178,21 @@
             });
         }
 
-
+        function verSeccionesAsocidas(plan, obj) {
+            $.ajax({
+                type: 'GET',
+                url: '/Objetivos/ObtenerSecciones',
+                data: {
+                    //parámetros para el controlador
+                    id: plan,
+                    objt: obj
+                },
+                success: function (result) {
+                    $('#ModalVerSeccionesInterno').html(result);
+                    modalGen("#ModalFormulariosVer");
+                }
+            });
+        }
     </script>
 
 }
