@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -14,17 +15,25 @@ namespace AppIntegrador.Controllers
         private DataIntegradorEntities db;
         // Referencia al Dashboard controller
         private DashboardController dashboard = new DashboardController();
+        private readonly IPerm permissionManager;
 
         // Controlador por defecto
         public AsignacionFormulariosController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         // Metodo principal de la vista: Index
         [HttpGet]
         public ActionResult Index(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -50,6 +59,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return Json(new { error = false, tipoError = 5 });
+            }
             // Parámetros que se enviaran al procedimiento almacenado
             string codigoCarrera = null;
             string codigoEnfasis = null;
@@ -61,7 +75,7 @@ namespace AppIntegrador.Controllers
             Nullable<DateTime> fechaFin = null;
 
             // Sino se seleccionan datos, existe un error
-            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" && fechaInicioSeleccionado == "" && fechaFinSeleccionado == "")
+            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" || (fechaInicioSeleccionado == "" && fechaFinSeleccionado == ""))
             {
                 return Json(new { error = false, tipoError = 1 });
             }
@@ -96,7 +110,7 @@ namespace AppIntegrador.Controllers
             {
                 gruposAsociadosLista = grupos.ToList();
                 // Si no existen grupos asociados, pues no se pudo asignar
-                if (gruposAsociadosLista.Count < 0)
+                if (gruposAsociadosLista.Count <= 0)
                 {
                     return Json(new { error = false, tipoError = 4 });
                 }
