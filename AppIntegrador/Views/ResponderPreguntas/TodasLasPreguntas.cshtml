@@ -13,7 +13,7 @@
 
     @*Se ocupa el código de la pregunta para poder guardar las respuestas*@
     @Html.Hidden("secciones[" + pregunta.OrdenSeccion + "].Preguntas[" + pregunta.OrdenPregunta +
-                "].Pregunta.Codigo", null, new { @Value = pregunta.Pregunta.Codigo })
+                "].Pregunta.Codigo", null, new { @Value = pregunta.Pregunta.Codigo, @class = "PreguntasAgregadas(" + pregunta.CodigoSeccion + ")" })
     <div>
         @(pregunta.OrdenPregunta + 1).
         @Html.DisplayFor(model => pregunta.Pregunta.Enunciado)

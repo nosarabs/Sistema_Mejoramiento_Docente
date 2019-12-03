@@ -33,5 +33,37 @@ function addPreguntaToSeccion() {
     })
 }
 
+function DesactivarPreguntasAgregadas() {
+    var preguntas = document.getElementsByClassName("PreguntasAgregadas(" + SeccionModalActual + ")");
+    Array.prototype.forEach.call(preguntas, function (pregunta) {
+        var preguntasCheckbox = document.getElementById("pregch(" + pregunta.value + ")");
+        preguntasCheckbox.checked = true;
+        preguntasCheckbox.disabled = true;
+    });
+}
+
+function HabilitarPreguntasEnBanco(codigoPregunta) {
+    var preguntaCheckbox = document.getElementById("pregch(" + codigoPregunta + ")");
+    preguntaCheckbox.checked = false;
+    preguntaCheckbox.disabled = false;
+}
+
+function MarcarPreguntasSeleccionadas() {
+    var arr = agregarPreguntas.getArray();
+    var preguntasEliminadasDelBanco = []
+    Array.prototype.forEach.call(arr, function (codigo) {
+        var seccionCheckbox = document.getElementById("pregch(" + codigo + ")");
+        if (seccionCheckbox) {
+            seccionCheckbox.checked = true;
+        }
+        else {
+            preguntasEliminadasDelBanco.push(codigo);
+        }
+    });
+
+    Array.prototype.forEach.call(preguntasEliminadasDelBanco, function (codigo) {
+        agregarPreguntas.remove(codigo);
+    });
+}
 
 
