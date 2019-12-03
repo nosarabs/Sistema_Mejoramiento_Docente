@@ -3,6 +3,13 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @sigla varchar(10), @num tinyint, @semestre tinyint, @anno int
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionGrupo;
+
 	DECLARE cursor_grupo CURSOR
 	FOR SELECT SiglaCurso, NumGrupo, Semestre, Anno
 	FROM inserted;
@@ -18,3 +25,7 @@
 		END
 	CLOSE cursor_grupo
 	DEALLOCATE cursor_grupo
+
+	Commit Transaction transaccionGrupo;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;

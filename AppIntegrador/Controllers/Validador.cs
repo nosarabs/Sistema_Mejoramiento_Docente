@@ -11,18 +11,24 @@ namespace AppIntegrador.Controllers
     {
         protected bool ValidarTamanoText(String hilera, int tamano)
         {
-            if (hilera.Length <= tamano && !String.IsNullOrEmpty(hilera))
+            if (!String.IsNullOrEmpty(hilera))
             {
-                return true;
+                if (hilera.Length <= tamano)
+                {
+                    return true;
+                }
             }
             return false;
         }
 
         protected bool ValidarNumero(string valor)
         {
-            if(int.TryParse(valor, out int integer) && !String.IsNullOrEmpty(valor))
+            if (!String.IsNullOrEmpty(valor))
             {
-                return true;
+                if (int.TryParse(valor, out int intvalor) && intvalor > 0)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -31,18 +37,19 @@ namespace AppIntegrador.Controllers
         {
             return false;
         }
-        
+
         protected bool ValidarEmail(string email)
         {
+            if (!String.IsNullOrEmpty(email)) {
             // source: http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
             Regex rx = new Regex(
             @"^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
-            if( rx.IsMatch(email) && !String.IsNullOrEmpty(email))
+            if( rx.IsMatch(email))
             {
                 return true;
             }
             System.Diagnostics.Debug.WriteLine("email1");
-
+            }
             return false;
         }
 

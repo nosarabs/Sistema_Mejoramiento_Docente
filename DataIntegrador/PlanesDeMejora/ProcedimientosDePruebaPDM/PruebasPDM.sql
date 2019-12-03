@@ -80,20 +80,20 @@ BEGIN
 	/* Creando los accionables resepctivos*/
 	MERGE INTO Accionable AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 25),
-		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 50)
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 'P'),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 'S')
 	)
-	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [progreso])
+	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [tipo])
 	ON	Target.codPlan			= Source.codPlan		and 
 		Target.nombreObj		= Source.nombreObj		and 
 		Target.descripAcMej		= Source.descripAcMej	and
 		Target.descripcion		= Source.descripcion	and
 		Target.fechaInicio		= Source.fechaInicio	and
 		Target.fechaFin			= Source.fechaFin		and
-		Target.progreso			= Source.progreso
+		Target.tipo			= Source.tipo
 	WHEN NOT MATCHED BY TARGET THEN
-	INSERT (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso)
-	VALUES (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, progreso);
+	INSERT (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, tipo)
+	VALUES (codPlan, nombreObj, descripAcMej, descripcion, fechaInicio, fechaFin, tipo);
 
 
 	/**********************************************************************************/
@@ -113,9 +113,9 @@ BEGIN
 	/*Creando secciones*/
 	MERGE INTO Seccion AS Target
 	USING (VALUES
-		('00000004', 'Información básica - PDM'),
-		('00000005', 'Conocimientos Básicos - PDM'),
-		('00000006', 'Expectativas del Curso - PDM')
+		('00000020', 'Información básica - PDM'),
+		('00000021', 'Conocimientos Básicos - PDM'),
+		('00000022', 'Expectativas del Curso - PDM')
 	)
 	AS SOURCE ([Codigo],[Nombre])
 	ON Target.Codigo = Source.Codigo
@@ -126,9 +126,9 @@ BEGIN
 	/*Creando las preguntas*/
 	MERGE INTO Pregunta AS Target
 	USING (VALUES
-		('00000006', '¿Lleva este curso por primera vez - prueba PDM?', 'S'),
-		('00000007', '¿Lleva el curso en las mañanas - prueba PDM?', 'S'),
-		('00000008', '¿Lleva el curso en las tardes - prueba PDM?', 'S')
+		('00000020', '¿Lleva este curso por primera vez - prueba PDM?', 'S'),
+		('00000021', '¿Lleva el curso en las mañanas - prueba PDM?', 'S'),
+		('00000022', '¿Lleva el curso en las tardes - prueba PDM?', 'S')
 	)
 	AS SOURCE ([Codigo],[Enunciado], [Tipo])
 	ON Target.Codigo = Source.Codigo
@@ -139,11 +139,11 @@ BEGIN
 	/*Ahora haciendo las asociaciones entre los formularios y las secciones   */
 	MERGE INTO Formulario_tiene_seccion AS Target
 	USING (VALUES
-		('00000420', '00000004', 0),
-		('00000420', '00000005', 1),
-		('00000420', '00000006', 2),
-		('00000421', '00000004', 0),
-		('00000421', '00000005', 1)
+		('00000420', '00000020', 0),
+		('00000420', '00000021', 1),
+		('00000420', '00000022', 2),
+		('00000421', '00000020', 0),
+		('00000421', '00000021', 1)
 	)
 	AS SOURCE ([FCodigo],[SCodigo],[Orden])
 	ON Target.FCodigo = Source.FCodigo and Target.SCodigo = Source.SCodigo
@@ -154,12 +154,12 @@ BEGIN
 	/*Ahora haciendo las asociaciones entre las SECCIONES y las PREGUNTAS */
 	MERGE INTO Seccion_tiene_pregunta AS Target
 	USING (VALUES
-		('00000004', '00000006', 0),
-		('00000005', '00000006', 0),
-		('00000005', '00000007', 1),
-		('00000006', '00000006', 0),
-		('00000006', '00000007', 1),
-		('00000006', '00000008', 2)
+		('00000020', '00000020', 0),
+		('00000021', '00000020', 0),
+		('00000021', '00000021', 1),
+		('00000022', '00000020', 0),
+		('00000022', '00000021', 1),
+		('00000022', '00000022', 2)
 	)
 	AS SOURCE ([SCodigo],[PCodigo],[Orden])
 	ON Target.SCodigo = Source.SCodigo and Target.PCodigo = Source.PCodigo
@@ -182,8 +182,8 @@ BEGIN
 	/*Ahora haciendo las asociaciones entre el planDeMejora y Formulario*/
 	MERGE INTO ObjVsSeccion AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', '00000004'),
-		(2, 'Objetivo de plan de mejora - Cristian', '00000004')
+		(1, 'Objetivo de plan de mejora - Alexandra', '00000020'),
+		(2, 'Objetivo de plan de mejora - Cristian', '00000020')
 	)
 	AS SOURCE ([codPlanObj],[nombreObj],[codSeccion])
 	ON  Target.codPlanObj	= Source.codPlanObj	and
@@ -197,8 +197,8 @@ BEGIN
 	/*Ahora haciendo las asociaciones entre la accionDeMejora y las preguntas*/
 	MERGE INTO AccionVsPregunta AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', '00000006'),
-		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', '00000006')
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', '00000020'),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', '00000020')
 	)
 	AS SOURCE ([codPlanADM],[nombreObj],[descripcion],[codPregunta])
 	ON  Target.codPlanADM	= Source.codPlanADM and

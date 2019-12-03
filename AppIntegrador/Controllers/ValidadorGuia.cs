@@ -8,9 +8,10 @@ namespace AppIntegrador.Controllers
 {
     public class ValidadorGuia : Validador
     {
-        public Tuple<bool, string> Validar(GuiaHorario guia)
+
+        public Tuple<bool, string> Validar(GuiaHorario guia, int filaActual)
         {
-            int fila = 1;
+            int fila = filaActual;
             int columna = 0;
             string mensajeError = "";
             //Codigo Carrera
@@ -85,44 +86,6 @@ namespace AppIntegrador.Controllers
                 return Tuple.Create(false, mensajeError); //email invalidao
             }
 
-            //Sigla Curso Grupo Imparte
-            columna++;
-            if (!ValidarTamanoText(guia.SiglaCursoImparte, 10) || checkForSQLInjection(guia.SiglaCursoImparte))
-            {
-                mensajeError = "El campo sigla curso en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
-
-            //Num Grupo Imparte
-            columna++;
-            if (!ValidarNumero(guia.NumeroGrupoImparte) || checkForSQLInjection(guia.NumeroGrupoImparte))
-            {
-                mensajeError = "El campo numero de grupo en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
-
-            //Semestre Imparte
-            columna++;
-            if (!ValidarNumero(guia.SemestreGrupoImparte) || checkForSQLInjection(guia.SemestreGrupoImparte))
-            {
-                mensajeError = "El campo semestre en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
-
-            //Anno Imparte
-            columna++;
-            if (!ValidarNumero(guia.AnnoGrupoImparte) || checkForSQLInjection(guia.AnnoGrupoImparte))
-            {
-                mensajeError = "El campo anio en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
-
-            columna++;
-            if (!ValidarEmail(guia.CorreoProfesorImparte) || checkForSQLInjection(guia.CorreoProfesorImparte))
-            {
-                mensajeError = "El campo correo profesor en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
-                return Tuple.Create(false, mensajeError); //email invalidao
-            }
 
             //Sigla Curso Matricula
             columna++;
@@ -163,7 +126,6 @@ namespace AppIntegrador.Controllers
                 mensajeError = "El campo correo estudiante en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError); //email invalidao
             }            
-            fila++;
             return Tuple.Create(true, "");
         }
     }

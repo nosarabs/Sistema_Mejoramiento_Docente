@@ -260,11 +260,10 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestEditNull()
         {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
+            FormulariosController controller = new FormulariosController();
 
             // Se prueba que el método no se caiga con parámetros nulos
-            ActionResult result = controller.Edit("");
+            ActionResult result = controller.Edit(null);
 
             Assert.IsNotNull(result);
         }
@@ -272,69 +271,12 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestEdit()
         {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
+            string codSeccion = "00000001";
 
-            string codFormulario = "CI0128G2";
-            string nombreFormulario = "Formulario de prueba";
-            string codSeccion = "Secci01";
-
-            // Se crea un formulario para el mock de la base de datos
-            Formulario formulario = new Formulario()
-            {
-                Codigo = codFormulario,
-                Nombre = nombreFormulario
-            };
-
-            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
-
-            Seccion seccion = new Seccion()
-            {
-                Codigo = codSeccion,
-                Nombre = "Sección de prueba"
-            };
-
-            mockDb.Setup(m => m.Seccion.Find(codSeccion)).Returns(seccion);
-
-            // Agregar la sección al formulario
-            Formulario_tiene_seccion fts = new Formulario_tiene_seccion()
-            {
-                FCodigo = codFormulario,
-                SCodigo = codSeccion
-            };
-
-            mockDb.Setup(m => m.Formulario_tiene_seccion.Find(codSeccion)).Returns(fts);
-
-            var mock = new Mock<DbSet<Seccion>>();
+            FormulariosController controller = new FormulariosController();
 
             // Se prueba que el método no se caiga con un código de formulario válido
             var result = controller.Edit(codSeccion);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void TestEditWithBind()
-        {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
-
-            string codFormulario = "CI0128G2";
-            string nombreFormulario = "Formulario de prueba";
-
-            // Se crea un formulario para el mock de la base de datos
-            Formulario formulario = new Formulario()
-            {
-                Codigo = codFormulario,
-                Nombre = nombreFormulario
-            };
-
-            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
-
-            var mock = new Mock<DbSet<Seccion>>();
-
-            // Se prueba que el método no se caiga con un código de formulario válido
-            var result = controller.Edit(formulario);
 
             Assert.IsNotNull(result);
         }

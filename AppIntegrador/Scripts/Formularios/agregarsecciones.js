@@ -31,6 +31,41 @@ function addSeccionToFormulario() {
             resultado = [];
             // La vista es actualizada con los datos recibidos del controlador  
             $('#seccionesActuales').html(data);
+            agregarsecciones.removeAll();
+            DesactivarSeccionesAgregadas();
         }
+    });
+}
+
+function DesactivarSeccionesAgregadas() {
+    var secciones = document.getElementsByClassName("SeccionesAgregadasAFormulario");
+    Array.prototype.forEach.call(secciones, function (seccion) {
+        var seccionCheckbox = document.getElementById("ch(" + seccion.value + ")");
+        seccionCheckbox.checked = true;
+        seccionCheckbox.disabled = true;
+    });
+}
+
+function HabilitarSeccionEnBanco(codigoSeccion) {
+    var seccionCheckbox = document.getElementById("ch(" + codigoSeccion + ")");
+    seccionCheckbox.checked = false;
+    seccionCheckbox.disabled = false;
+}
+
+function MarcarSeccionesSeleccionadas() {
+    var arr = agregarsecciones.getArray();
+    var seccionesEliminadasDelBanco = []
+    Array.prototype.forEach.call(arr, function (codigo) {
+        var seccionCheckbox = document.getElementById("ch(" + codigo + ")");
+        if (seccionCheckbox) {
+            seccionCheckbox.checked = true;
+        }
+        else {
+            seccionesEliminadasDelBanco.push(codigo);
+        }
+    });
+
+    Array.prototype.forEach.call(seccionesEliminadasDelBanco, function (codigo) {
+        agregarsecciones.remove(codigo);
     });
 }

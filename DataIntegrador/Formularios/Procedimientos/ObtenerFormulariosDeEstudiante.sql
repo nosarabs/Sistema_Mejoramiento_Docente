@@ -13,25 +13,38 @@ CREATE PROCEDURE [dbo].[ObtenerFormulariosDeEstudiante]
 	@fechaFin DATE
 AS
 BEGIN
-	-- Null significaría que quiere todos los formularios desde el inicio de los tiempos
-	IF(@fechaInicio IS NULL)
+	IF(@correoEstudiante IS NOT NULL)
 	BEGIN
-		SET @fechaInicio = '12/31/9999';
-	END;
+		-- Verificación si las fechas sí vienen
+		IF(@fechaInicio IS NOT NULL AND @fechaFin IS NOT NULL AND @fechaInicio > @fechaFin)
+		BEGIN
+			DECLARE @fechaAux DATE;
+			SET @fechaAux = @fechaInicio
 
-	-- Null significaría que quiere todos los formularios desde una fecha de inicio
-	-- hasta la actualidad
-	IF(@fechaFin IS NULL)
-	BEGIN
-		SET @fechaFin = convert(datetime, 0);
-	END;
+			SET @fechaInicio = @fechaFin
+			SET @fechaFin = @fechaAux
+		END
 
-	-- Conseguir los formularios basado los cursos matriculados, el grupo y los formularios activos
-	-- Condicionado por la fecha definida y el correo del estudiante
-	SELECT f.Codigo, m.SiglaCurso, m.NumGrupo, m.Semestre, m.Anno, p.FechaInicio, p.FechaFin
-	FROM (Matriculado_en m 
-	JOIN Activa_por a ON m.NumGrupo = a.GNumero AND m.SiglaCurso = a.CSigla AND m.Semestre = a.GSemestre AND m.Anno = a.GAnno
-	JOIN Periodo_activa_por p ON p.GNumero = a.GNumero AND p.CSigla= a.CSigla AND p.GSemestre = a.GSemestre AND p.GAnno = a.GAnno)
-	JOIN Formulario f ON f.Codigo = a.FCodigo
-	WHERE m.CorreoEstudiante = @correoEstudiante AND p.FechaInicio <= @fechaInicio AND p.FechaFin >= @fechaFin
+		-- Null significaría que quiere todos los formularios iniciados hasta desde el fin de los tiempos
+		IF(@fechaInicio IS NULL)
+		BEGIN
+			SET @fechaInicio = '12/31/9999';
+		END;
+
+		-- Null significaría que quiere todos los formularios activos desde el inicio de los tiempos
+		IF(@fechaFin IS NULL)
+		BEGIN
+			SET @fechaFin = convert(datetime, 0);
+		END;
+		
+
+		-- Conseguir los formularios basado los cursos matriculados, el grupo y los formularios activos
+		-- Condicionado por la fecha definida y el correo del estudiante
+		SELECT DISTINCT f.Codigo, m.SiglaCurso, m.NumGrupo, m.Semestre, m.Anno, p.FechaInicio, p.FechaFin
+		FROM Matriculado_en m 
+		JOIN Activa_por a ON m.NumGrupo = a.GNumero AND m.SiglaCurso = a.CSigla AND m.Semestre = a.GSemestre AND m.Anno = a.GAnno
+		JOIN Periodo_activa_por p ON a.CSigla = p.CSigla AND a.FCodigo = p.FCodigo AND a.GAnno = p.GAnno AND a.GNumero = p.GNumero AND a.GSemestre = p.GSemestre
+		JOIN Formulario f ON f.Codigo = a.FCodigo
+		WHERE m.CorreoEstudiante = @correoEstudiante AND p.FechaInicio <= @fechaInicio AND p.FechaFin >= @fechaFin
+	END
 END

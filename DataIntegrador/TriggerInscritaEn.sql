@@ -4,6 +4,14 @@
 	AS
 	declare @CodUnidad varchar(10)
 	declare @CodCarrera varchar(10)
+
+	
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionInscritaEn;
+
 	DECLARE cursor_inscritaEn CURSOR
 	FOR SELECT CodUnidadAc, CodCarrera
 	FROM inserted;
@@ -19,3 +27,7 @@
 		END
 	CLOSE cursor_inscritaEn
 	DEALLOCATE cursor_inscritaEn
+
+	Commit Transaction transaccionInscritaEn;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;

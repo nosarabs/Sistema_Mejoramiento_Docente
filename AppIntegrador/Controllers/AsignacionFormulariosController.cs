@@ -91,7 +91,7 @@ namespace AppIntegrador.Controllers
             }
 
             var grupos = db.ObtenerGruposAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo , semestreGrupo, anno, correoProfesorSeleccionado);
-
+     
             var gruposAsociadosLista = grupos.ToList();
             
             if (gruposAsociadosLista.Count < 0)
