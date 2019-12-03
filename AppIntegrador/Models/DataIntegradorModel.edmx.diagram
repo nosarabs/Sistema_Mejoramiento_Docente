@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="02bc37e35ace44a8b21a79081c991522" Name="Diagram1">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="18" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="15.75" PointY="30.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Activa_por" Width="1.5" PointX="13.5" PointY="24" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="3" PointY="27.125" IsExpanded="true" />
@@ -45,7 +44,6 @@
         <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="3" PointY="29.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.UsuarioActual" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.UsuarioPerfil" Width="1.5" PointX="8.5" PointY="27.875" IsExpanded="true" />
-        <AssociationConnector Association="DataIntegradorModel.FK_Accionable_AccionDeMejora" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_Objetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_PlantillaAccMej" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorFormulario" ManuallyRouted="false" />
@@ -99,11 +97,19 @@
         <AssociationConnector Association="DataIntegradorModel.ObjVsSeccion" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Origina" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Pertenece_a" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.SeAsignaA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3" PointY="21.25" />
         <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionableEscala" Width="1.5" PointX="20.25" PointY="23.75" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionablePorcentaje" Width="1.5" PointX="20.25" PointY="27.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionableSiNo" Width="1.5" PointX="20.25" PointY="20" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="18" PointY="28.625" />
+        <AssociationConnector Association="DataIntegradorModel.FK_Accionable_AccionDeMejora" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionableEscala_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionableSiNo_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.Responsable_De" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

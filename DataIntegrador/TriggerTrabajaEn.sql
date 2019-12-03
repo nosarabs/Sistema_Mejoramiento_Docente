@@ -4,6 +4,13 @@
 	AS
 	declare @Correo varchar(50)
 	declare @CodUnidad varchar(10)
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionTrabajaEn;
+
 	DECLARE cursor_TrabajaEn CURSOR
 	FOR SELECT CorreoFuncionario, CodUnidadAcademica
 	FROM inserted;
@@ -19,3 +26,7 @@
 		END
 	CLOSE cursor_TrabajaEn
 	DEALLOCATE cursor_TrabajaEn
+
+	Commit Transaction transaccionTrabajaEn;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;
