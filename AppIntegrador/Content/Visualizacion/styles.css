@@ -232,7 +232,7 @@ div.row.estadisticas {
     margin: 0 !important;
     padding: 0 !important;
     margin-bottom: 1% !important;
-    text-align:center;
+    text-align: center;
 }
 
 /*Estilo para la columna que se despliega dentro de la sección de promedios*/
@@ -290,7 +290,9 @@ div.btn-group {
 
 button.multiselect.dropdown-toggle.btn-default {
     border: 1px solid rgba(0,0,0,.15) !important;
+    background-color: #f0f0f0 !important;
     width: 100%;
+    padding:0;
 }
 
 ul.multiselect-container.dropdown-menu {
@@ -307,30 +309,68 @@ ul.multiselect-container.dropdown-menu.show {
     overflow: auto !important;
     max-width: 200%;
     min-width: 150%;
-    padding: 5%;
-    padding-left: 2% !important;
+    padding: 3%;
+    padding-left: 5% !important;
     padding-right: 5% !important;
 }
 
+input.form-control.multiselect-search 
+{
+    font-size: small;
+}
 
 label.checkbox {
     /*padding-right: 1% !important;*/
     font-size: small;
-    width: 100%;
+    min-width: 100%;
 }
 
 label.checkbox:hover {
-    background-color: #DCDCDC;
+    background-color: dodgerblue;
+    width: max-content;
+    min-width: 100%;
+}
+
+label.radio {
+    padding-left: 2% !important;
+    margin: 0;
+    font-size: small;
+    min-width: 100%;
+}
+
+label.radio:hover {
+    background-color: dodgerblue;
     width: max-content;
     min-width: 100%;
 }
 
 span.multiselect-selected-text {
     font-size: small;
-    max-width: 95%;
+    max-width: 90%;
     display: inline-flex;
     overflow: hidden;
-}}
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-remove-circle:before {
+    content: "X";
+}
+
+button.btn.btn-default.multiselect-clear-filter {
+    margin: 0;
+    padding-bottom: 9%;
+}
 
 /*Estilos para la vista parcial*/
 
@@ -344,12 +384,14 @@ div.row.filaBase {
 div.col.columnaIzquierda {
     height: 100% !important;
     padding: 50px !important;
+    padding-right: 25px !important;
     flex: 1 !important;
 }
 
 div.col.columnaDerecha {
     height: 100% !important;
     padding: 50px !important;
+    padding-left: 25px !important;
     flex: 1 !important;
 }
 
@@ -367,4 +409,16 @@ div.col.columnaDerecha {
 
 .labelcito {
     font-size: 14px;
+}
+
+#secciones {
+    font-size: small;
+}
+
+#secciones.form-control {
+    font-size: small;
+}
+
+#secciones option {
+    font-size: small;
 }

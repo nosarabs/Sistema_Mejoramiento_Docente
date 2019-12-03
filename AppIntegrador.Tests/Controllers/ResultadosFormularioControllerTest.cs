@@ -118,6 +118,78 @@ namespace AppIntegrador.Tests.Controllers
 
         }
 
+        // Este test tiene como propósito verificar que el método que obtiene las opciones seleccionadas 
+        // de una pregunta de selección única válida y que se sabe, tiene respuestas, no de null
+        [TestMethod]
+        public void TestOpcionesSeleccionadasPreguntaSeleccion()
+        {
+            // Arrange
+            ResultadosFormularioController controller = new ResultadosFormularioController();
+            //Act 
+            string result = controller.ObtenerOpcionesSeleccionadasPreguntasSeleccion("00000001", "CI0128", 1, 2, 2019, DateTime.Parse("31/10/2019"), DateTime.Parse("02/11/2019"), "00000001", "00000001", 3);
+            // Assert
+            Assert.IsNotNull(result);
+
+        }
+
+
+        // Este test tiene como propósito verificar que el título de la justificacion de una pregunta que retorna el controller sea la correcta
+        [TestMethod]
+        public void TestTituloJustificacion()
+        {
+            // Se crea el mock de la base de datos
+            var mockDb = new Mock<DataIntegradorEntities>();
+
+            // Se instancia el controlador y se le pasa el mock
+            ResultadosFormularioController controller = new ResultadosFormularioController(mockDb.Object);
+
+            // Se crea una lista de titulos de justificaciones dummys
+            var TitulosDummy = new List<Pregunta_con_opciones>
+            {
+                new Pregunta_con_opciones{ Codigo = "01", TituloCampoObservacion = "Justificacion 1" },
+                new Pregunta_con_opciones{ Codigo = "02", TituloCampoObservacion = "Justificacion 2" },
+                new Pregunta_con_opciones{ Codigo = "03", TituloCampoObservacion = "Justificacion 3" }
+            }.AsQueryable();
+
+            // Se hace el mock de la tabla Pregunta_con_opciones
+            var mockPreguntasOpciones = new Mock<DbSet<Pregunta_con_opciones>>();
+
+            // Se "settean" las propiedades del mock
+            this.SetProperties(ref mockPreguntasOpciones, ref TitulosDummy);
+
+            //Se hace setup del mock de la base de datos
+            mockDb.Setup(x => x.Pregunta_con_opciones).Returns(mockPreguntasOpciones.Object);
+
+            //Se hace el llamado al controler
+
+            var listaTitulosDummy = TitulosDummy.ToList();
+            var listaTitulosController = new List<string>();
+
+            for (var i = 0; i < listaTitulosDummy.Count(); ++i)
+            {
+                listaTitulosController.Add(controller.getTituloJustificacion(listaTitulosDummy[i].Codigo));
+            }
+
+            //Se verifica si la cantidad de titulos obtenidos es la misma
+            bool resultado = listaTitulosDummy.Count() == listaTitulosController.Count();
+
+            int indice = 0;
+
+            //Mientras los titulos sean los mismos y no se acabe la lista
+            while (resultado && indice < listaTitulosDummy.Count())
+            {
+                //Compara cada titulo de cada justificación
+                resultado = (listaTitulosDummy[indice].TituloCampoObservacion).Equals(listaTitulosController[indice]);
+
+                ++indice;
+            }
+
+            //Assert
+            Assert.IsTrue(resultado);
+
+        }
+
+
         //Este test tiene como propósito verificar que el string con el tipo de pregunta que retorna el controller sea el correcto
         [TestMethod]
         public void TestGetTipoPregunta()

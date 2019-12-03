@@ -34,7 +34,7 @@ namespace AppIntegrador.Controllers
         public ActionResult Index()
         {
             /*Solo se puede acceder a este método si el usuario tiene un perfil con los permisos apropiados.*/
-            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.VER_PERMISOS_Y_PERFILES))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("Index", "Home");
@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
-            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_PERMISOS_Y_PERFILES))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -98,7 +98,7 @@ namespace AppIntegrador.Controllers
                 return new EmptyResult();
             }
 
-            if (isUser)
+            if (isUser && permissionManager.IsAuthorized(Permission.ASIGNAR_PERFILES_USUARIOS))
             {
                 //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
                 for (int i = 0; i < Personas.Count; ++i)
@@ -106,7 +106,7 @@ namespace AppIntegrador.Controllers
                     db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
                 }
             }
-            else
+            else if(permissionManager.IsAuthorized(Permission.ASIGNAR_PERMISOS_PERFILES))
             {
                 //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
                 for (int i = 0; i < Permisos.Count; ++i)

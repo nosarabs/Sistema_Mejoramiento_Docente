@@ -4,8 +4,8 @@
 	PCodigo VARCHAR(8) NOT NULL,
 	Orden INT NOT NULL,
 	PRIMARY KEY(SCodigo, PCodigo),
-	CONSTRAINT fkSeccionTienePreguntaCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
-	CONSTRAINT fkSeccionTienePreguntaCodigoPregunta FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo),
+	CONSTRAINT fkSeccionTienePreguntaCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo) ON UPDATE CASCADE,
+	CONSTRAINT fkSeccionTienePreguntaCodigoPregunta FOREIGN KEY(PCodigo) REFERENCES Pregunta(Codigo) ON UPDATE CASCADE,
 )
 
 GO

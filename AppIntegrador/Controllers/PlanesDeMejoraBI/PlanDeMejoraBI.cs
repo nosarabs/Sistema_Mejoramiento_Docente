@@ -76,7 +76,6 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                     foreach (var item in SeccionConObjetivo)
                     {
                         string objetivoName = item.Key;
-                        // PAR EVITAR EL ARREGLO AL FINAL DEL NOMBRE
                         int size = objetivoName.Length;
                         objetivoName = objetivoName.Substring(0, size-3);
                         string seccionCodigo = item.Value;
@@ -84,6 +83,39 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                         {
                             var seccionEncontrada = db.Seccion.Find(seccionCodigo);
                             obj.Seccion.Add(seccionEncontrada);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        /*
+            EFE: Inserta las preguntas que se asocian a cada accion de mejora
+            REQ: 
+                    PreguntaConAccion: relaciones entre los objetivos y las secciones
+                            objetivos: colleccion de objetivos
+                                   db: instancia de la base de datos
+            MOD:
+               las acciones de mejora de los objetivos
+       */
+        public void insertPreguntasEnAcciones(ICollection<Objetivo> objetivos, Dictionary<String, String> PreguntaConAccion, DataIntegradorEntities db)
+        {
+            foreach (var obj in objetivos) 
+            {
+                ICollection<AccionDeMejora> coleccionAccionesDeMejora = obj.AccionDeMejora;
+                foreach (var accion in coleccionAccionesDeMejora)
+                {
+                    foreach (var item in PreguntaConAccion)
+                    {
+                        var acionableAsociado = item.Key;
+                        int size = acionableAsociado.Length;
+                        acionableAsociado = acionableAsociado.Substring(0, size - 3);
+                        var preguntaAsociada = item.Value;
+                        if (accion.descripcion == acionableAsociado) 
+                        {
+                            var preguntaEncontrada = db.Pregunta.Find(preguntaAsociada);
+                            accion.Pregunta.Add(preguntaEncontrada);
                         }
                     }
                 }
@@ -137,6 +169,9 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
             DataTable accionablesTable = this.getAccionablesTable(plan);
 
+            // Creacion de la tabla de asociacion de plan de mejora con profesores
+            DataTable asocProfesPlanTable = this.getTablaProfesPlan(plan);
+
             this.enviarTablasAlmacenamiento(
                 planTable,                      "tablaPlan",
                 objetivosTable,                 "tablaObjetivos",
@@ -144,7 +179,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 accionablesTable,               "tablaAccionables",
                 asocPlanFormTable,              "tablaAsocPlanFormularios",
                 asocObjetivosSeccionesTable,    "tablaAsocObjetivosSecciones",
-                asocAccionesPreguntasTable,     "tablaAsocAccionesPreguntas"
+                asocAccionesPreguntasTable,     "tablaAsocAccionesPreguntas",
+                asocProfesPlanTable,            "tablaAsocPlanProfesores"
             );
         }
 
@@ -164,7 +200,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
                 DataTable tablaAsocPlanFormularios,     string AsocPlanFormulariosName,
                 DataTable tablaAsocObjSecciones,        string AsocObjSeccionesName,
-                DataTable tablaAsocAccionesPreguntas,   string AsocAccionesPreguntasName)
+                DataTable tablaAsocAccionesPreguntas,   string AsocAccionesPreguntasName,
+                DataTable tablaAsocPlanProfesores,      string tablaAsocPlanProfesoresName)
         {
             //string cs = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
             SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
@@ -184,10 +221,35 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             sqlParam = cmd.Parameters.AddWithValue(AsocObjSeccionesName, tablaAsocObjSecciones);
             sqlParam = cmd.Parameters.AddWithValue(AsocAccionesPreguntasName, tablaAsocAccionesPreguntas);
 
+            sqlParam = cmd.Parameters.AddWithValue(tablaAsocPlanProfesoresName, tablaAsocPlanProfesores);
+
             sqlParam.SqlDbType = SqlDbType.Structured;
 
             var result = cmd.ExecuteNonQuery();
             connection.Close();
+        }
+
+        /*
+            EFE: Se encarga de crear la tabla de asociacion de profesores con el plan de mejora
+            REQ: plan, instancia de plan de mejora con los profesores asignados dentro del mismo
+            MOD: ---
+        */
+        public DataTable getTablaProfesPlan(PlanDeMejora plan)
+        {
+            DataTable dt = new DataTable();
+
+            // Creando las columnas
+            dt.Columns.Add("codigoPlan");
+            dt.Columns.Add("correoProfe");
+
+            var listaProfes = plan.Profesor;
+
+            foreach (var prof in listaProfes)
+            {
+                dt.Rows.Add(plan.codigo, prof.Correo);
+            }
+
+            return dt;
         }
 
         /**
