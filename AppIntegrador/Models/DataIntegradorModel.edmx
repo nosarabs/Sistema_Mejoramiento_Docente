@@ -2162,6 +2162,9 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ObtenerCorreosDeProfesoresDelPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+        </Function>
         <Function Name="ObtenerFormulariosCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -5263,6 +5266,9 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerCorreosDeProfesoresDelPlan" ReturnType="Collection(String)">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -6467,6 +6473,7 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
+          <FunctionImportMapping FunctionImportName="ObtenerCorreosDeProfesoresDelPlan" FunctionName="DataIntegradorModel.Store.ObtenerCorreosDeProfesoresDelPlan" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
