@@ -26,7 +26,8 @@
 				BEGIN
 					IF((@correo NOT IN (SELECT CorreoProfesor FROM Imparte) or @sigla NOT IN (SELECT SiglaCurso FROM Imparte) or @num NOT IN (SELECT NumGrupo FROM Imparte) or @semestre NOT IN (SELECT Semestre FROM Imparte) or @anno NOT IN (SELECT Anno FROM Imparte)) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
 						BEGIN
-							INSERT INTO Imparte SELECT * FROM inserted
+							INSERT INTO Imparte (CorreoProfesor, SiglaCurso,NumGrupo,Semestre,Anno)
+							values (@correo, @sigla, @num, @semestre, @anno)
 						END
 					FETCH NEXT FROM cursorImparte into @correo, @sigla, @num, @semestre, @anno
 				END

@@ -19,7 +19,7 @@
 		BEGIN
 			IF(@sigla NOT IN (SELECT Sigla FROM Curso) and @sigla not like '')
 			BEGIN
-				INSERT INTO Curso SELECT * FROM inserted
+				INSERT INTO Curso (Sigla) values(@sigla)
 			END
 			FETCH NEXT FROM cursor_curso INTO @sigla
 		END

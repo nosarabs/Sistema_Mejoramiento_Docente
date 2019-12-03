@@ -19,7 +19,8 @@
 		BEGIN
 			IF(@codigo NOT IN (SELECT Codigo FROM UnidadAcademica) and @codigo not like '')
 			BEGIN
-				INSERT INTO UnidadAcademica SELECT * FROM inserted
+				INSERT INTO UnidadAcademica (Codigo)
+				values (@codigo)
 			END
 			FETCH NEXT FROM cursor_Unidad INTO @codigo
 		END

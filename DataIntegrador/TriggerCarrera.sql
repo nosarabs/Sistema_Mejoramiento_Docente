@@ -19,7 +19,8 @@
 		BEGIN
 			IF(@codigo NOT IN (SELECT Codigo FROM Carrera) and @codigo not like '')
 			BEGIN
-				INSERT INTO Carrera SELECT * FROM inserted
+				INSERT INTO Carrera (Codigo)
+				values (@codigo)
 			END
 			FETCH NEXT FROM cursor_carrera INTO @codigo
 		END

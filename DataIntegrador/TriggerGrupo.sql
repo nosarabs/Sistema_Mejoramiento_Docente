@@ -19,7 +19,8 @@
 		BEGIN
 			IF(NOT EXISTS (SELECT * FROM Grupo WHERE SiglaCurso = @sigla and NumGrupo = @num and Semestre = @semestre and Anno = @anno) and @sigla not like '' and @num not like '' and @semestre not like '' and @anno not like '')
 			BEGIN
-				INSERT INTO Grupo SELECT * FROM inserted
+				INSERT INTO Grupo (SiglaCurso,NumGrupo,Semestre,Anno)
+				values(@sigla, @num, @semestre, @anno)
 			END
 			FETCH NEXT FROM cursor_grupo INTO @sigla, @num, @semestre, @anno
 		END
