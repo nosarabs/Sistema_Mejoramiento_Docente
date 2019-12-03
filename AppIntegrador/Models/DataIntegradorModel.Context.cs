@@ -420,6 +420,11 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarFormulario", codigoParameter, nombreParameter);
         }
     
+        public virtual int AgregarMultiplesAccionables()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarMultiplesAccionables");
+        }
+    
         public virtual int AgregarMultiplesAccionesDeMejora()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AgregarMultiplesAccionesDeMejora");
@@ -1386,6 +1391,15 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombre", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
+        }
+    
+        public virtual ObjectResult<string> ObtenerCorreosDeProfesoresDelPlan(Nullable<int> idPlan)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerCorreosDeProfesoresDelPlan", idPlanParameter);
         }
     
         public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)

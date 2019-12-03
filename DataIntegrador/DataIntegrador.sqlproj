@@ -276,6 +276,8 @@
     <Build Include="Usuarios y Perfiles\Functions\CarrerasYEnfasisXUsuarioXPerfil.sql" />
     <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
     <Build Include="Formularios\Procedimientos\ObtenerEstudiantesAsociadosAFormulario.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionables.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerCorreosDeProfesoresDelPlan.sql" />
     <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
   </ItemGroup>
   <ItemGroup>

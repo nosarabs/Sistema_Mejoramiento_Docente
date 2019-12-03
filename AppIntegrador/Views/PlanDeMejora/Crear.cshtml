@@ -2,8 +2,7 @@
 
 @{
     ViewBag.Title = "Crear";
-    var llamadoValidarPlan = "validarCampos('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton')";
-    var llamadoValidarPlanFechas = "manejarFechasPlan('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton')";
+    var llamadoValidarPlan = "manejarFechas('campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'campoNombrePlanMejora', null, null, null, 'CrearPlanBoton', 'campoFechaInicioObjetivo', 'campoFechaFinObjetivo')";
     var objetivos = (List<AppIntegrador.Models.Objetivo>)ViewBag.ObjetivosCreados;
 }
 <div class="container">
@@ -47,7 +46,7 @@
                                    {
                                        @class = "form-control",
                                        id = "campoFechaInicioPlanMejora",
-                                       @onchange = llamadoValidarPlanFechas
+                                       @onchange = llamadoValidarPlan
                                    }
                                }
 )
@@ -63,7 +62,7 @@
                                    {
                                        @class = "form-control",
                                        id = "campoFechaFinPlanMejora",
-                                       @onchange = llamadoValidarPlanFechas
+                                       @onchange = llamadoValidarPlan
                                    }
                                }
 )
@@ -96,6 +95,7 @@
                             Aún no se han agregado objetivos.
                         </div>
                         <input type="button" value="Crear objetivo" class="btn-azulUCR float-right" id="AgregarObjetivoBoton" onclick="modalGen('#ModalObjetivo')" />
+                        <input type="button" value="Asociar a secciones" class="btn btn-azulUCR float-left" id="AsociarSeccionObjetivoTabla" onclick="getSecciones()" hidden disabled />
                     </div>
                 </div>
                 <br />
@@ -106,6 +106,7 @@
                             Aún no se han agregado acciones de mejora para este objetivo.
                         </div>
                         <input type="button" value="Crear accion de mejora" class="btn-azulUCR float-right" id="AgregarAccionMejoraBoton" onclick="modalGen('#ModalAccionMejora')" />
+                        <input type="button" value="Asociar a preguntas" class="btn btn-azulUCR float-left" id="AsociarPreguntaAccionMejoraTabla" onclick="getPreguntas()" hidden disabled />
                     </div>
                 </div>
                 <br />
@@ -134,6 +135,7 @@
 @{Html.RenderPartial("_ModalAnadirFormularios", Model);}
 @{Html.RenderPartial("~/Views/Objetivos/_ModalAnadirSecciones.cshtml");}
 @{Html.RenderPartial("~/Views/Objetivos/_ModalAnadirObjetivos.cshtml", new AppIntegrador.Models.Objetivo());}
+@{Html.RenderPartial("~/Views/AccionDeMejora/_ModalAnadirPreguntas.cshtml");}
 @{Html.RenderPartial("~/Views/AccionDeMejora/_ModalAnadirAccionMejora.cshtml", new AppIntegrador.Models.AccionDeMejora());}
 @{Html.RenderPartial("~/Views/Accionables/_ModalAnadirAccionable.cshtml", new AppIntegrador.Models.Accionable());}
 

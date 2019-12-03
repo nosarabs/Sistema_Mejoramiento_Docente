@@ -128,71 +128,43 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_PLANES_MEJORA))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
-
-            PlanDeMejora planAgregado = new PlanDeMejora();
-
             // Objeto de ayuda business intelligence planes de mejora
             PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
 
             // Asignacion del codigo al nuevo plan de mejora
             planesHelper.setCodigoAPlanDeMejora(this.db, plan);
 
+            //Agregando los objetivos al plan
+            plan.Objetivo = Objetivo;
 
-            // Creacion de las tablas -----
-            var tablaPDM = planesHelper.getPlanTable(plan);
-            var tablaAsocPlanFormularios = planesHelper.getTablaAsociacionPlanFormularios(plan, FormularioSeleccionado);
+            //Agregando las secciones a los objetivos
+            planesHelper.insertSeccionesEnObjetivos(plan.Objetivo, SeccionConObjetivo, db);
 
-            // Enviando las tablas ----
-            planesHelper.enviarTablasAlmacenamiento(tablaPDM, "tablaPlan", tablaAsocPlanFormularios, "tablaAsocPlanForm");
+            //Agregando las preguntas a las acciones
+            planesHelper.insertPreguntasEnAcciones(plan.Objetivo, PreguntaConAccion, db);
 
+            //Agrgando los formularios al plan de mejora
+            planesHelper.insertFormularios(plan, FormularioSeleccionado, db);
 
-            /* Forma forzada. SOLO PARA EMERGENCIAS */
-            /*
-            if(Objetivo != null)
-            {
-                plan.Objetivo = Objetivo;
-            }
-            if(ProfeSeleccionado != null)
-            {
-                foreach(var correo in ProfeSeleccionado)
-                {
-                    var profe = db.Profesor.Find(correo);
-                    plan.Profesor.Add(profe);
-                }
-            }
-            if(FormularioSeleccionado != null)
-            {
-                foreach (var codigo in FormularioSeleccionado)
-                {
-                    var formulario = db.Formulario.Find(codigo);
-                    plan.Formulario.Add(formulario);
-                }
-            }
+            //Agregando los profesores seleccionados al plan de mejora
+            planesHelper.insertProfesores(plan, ProfeSeleccionado, db);
 
-            db.PlanDeMejora.Add(plan);
-            try
+            // Almacenamiento del plan por medio de un procedimiento almacenado
+            planesHelper.savePlan(plan);
+            db.SaveChanges();
+
+            PlanDeMejora planTemporal = db.PlanDeMejora.Find(plan.codigo);
+            if (planTemporal != null && ProfeSeleccionado.Count > 0) 
             {
-                db.SaveChanges();
+                this.EnviarCorreoSobreCreacionPlan(planTemporal, ProfeSeleccionado);
             }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var errors in ex.EntityValidationErrors)
-                {
-                    foreach (var validationError in errors.ValidationErrors)
-                    {
-                        // get the error message 
-                        string errorMessage = validationError.ErrorMessage;
-                    }
-                }
-            }
-            */
 
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
@@ -299,13 +271,8 @@ namespace AppIntegrador.Controllers
         //Modificado por: Christian Asch
         //Historia a la que pertenece: MOS-1.4.2 "Como usuario administrativo quiero que se notifique a los involucrados sobre el inicio de un plan, objetivo o acción de mejora para que los involucrados puedan estar informados"
         //Envía un correo cada profesor que está asignado al plan avisándole que ha sido asignado.
-        private void EnviarCorreoSobreCreacionPlan(PlanDeMejora plan)
+        private void EnviarCorreoSobreCreacionPlan(PlanDeMejora plan, List<string> correos)
         {
-            List<string> involucrados = new List<string>();
-            foreach(Profesor profesor in plan.Profesor)
-            {
-                involucrados.Add(profesor.Correo);
-            }
             Utilities.EmailNotification emailNotification = new Utilities.EmailNotification();
 
             string asunto = "Creación de un nuevo plan de mejora";
@@ -316,7 +283,7 @@ namespace AppIntegrador.Controllers
             string textoAlt = "<body><p>" + texto + "</p></body>";
 
 
-            _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
+            _ = emailNotification.SendNotification(correos, asunto, texto, textoAlt);
         }
 
         // Method that deletes one "PlanDeMejora"
@@ -408,6 +375,19 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
+
+            List<String> ProfesoresNombreLista = new List<String>();
+
+            ViewBag.ProfesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(id).ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach (var profe in ViewBag.ProfesoresLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(profe, name_op);
+                ProfesoresNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
             return View("DetallesPlanDeMejora", planDeMejora);
         }
     }
