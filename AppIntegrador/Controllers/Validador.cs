@@ -25,7 +25,7 @@ namespace AppIntegrador.Controllers
         {
             if (!String.IsNullOrEmpty(valor))
             {
-                if (int.TryParse(valor, out int integer))
+                if (int.TryParse(valor, out int intvalor) && intvalor > 0)
                 {
                     return true;
                 }

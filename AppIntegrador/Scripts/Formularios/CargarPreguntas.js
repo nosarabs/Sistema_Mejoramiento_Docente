@@ -34,6 +34,7 @@ function cargarVista(valor) {
     // y cargar la vista por medio de Ajax
     if (valor === 'U' || valor === 'M') {
         $.ajax({
+            type: "post",
             // url completa: Views/Pregunta/PreguntasConOpciones
             url: '/Preguntas/PreguntaConOpciones',
             success: function (data) {
@@ -46,6 +47,7 @@ function cargarVista(valor) {
     // y cargar la vista por medio de Ajax
     else if (valor === 'S') {
         $.ajax({
+            type: "post",
             // url completa: Views/Pregunta/PreguntaSiNo
             url: '/Preguntas/PreguntaSiNo',
             success: function (data) {
@@ -58,6 +60,7 @@ function cargarVista(valor) {
     // y cargar la vista por medio de Ajax
     else if (valor === 'L') {
         $.ajax({
+            type: "post",
             // url completa: Views/Pregunta/RespuestaLibre
             url: '/Preguntas/RespuestaLibre',
             success: function (data) {
@@ -69,6 +72,7 @@ function cargarVista(valor) {
     // y cargar la vista por medio de Ajax
     else if (valor === 'E') {
         $.ajax({
+            type: "post",
             // url completa: Views/Pregunta/RespuestaLibre
             url: '/Preguntas/PreguntaEscalar',
             success: function (data) {
@@ -114,6 +118,7 @@ function preguntaConOpcionesInit() {
 $(document).on("click", "#agregar-opcion", function () {
     var i = fixIndexes();
     $.ajax({
+        type: "post",
         url: '/Preguntas/OpcionesDeSeleccion',
         // Este es el parámetro que se le pasa, la i de la izquierda es el nombre
         // del parámetro que recibe el constructor. La i de la derecha es el valor

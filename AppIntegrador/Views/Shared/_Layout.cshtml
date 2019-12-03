@@ -67,27 +67,27 @@
                     <ul class="nav">
                         <li><a href="/Home/Index">Inicio</a></li>
                         <!--TAM-3.6-1: Condicional que muestra el dropdown de administración de usuarios y perfiles si el usuario tiene un perfil
-        con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
-        por otros medios.-->
-                    @{ 
-                        AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
-                        if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
-                        {
-                            <li>
-                                <a href="/Users/Index">Usuarios &#9660;</a>
-                                <ul>
-                                    <li><a href="/Users/Index">Administración de usuarios</a></li>
+    con permisos de acceder a esa funcionalidad, sino entonces muestra el botón desabilitado y bloquea los intentos de acceso
+    por otros medios.-->
+                        @{
+                            AppIntegrador.Utilities.IPerm permissionManager = new AppIntegrador.Utilities.PermissionManager();
+                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_USUARIOS))
+                            {
+                                <li>
+                                    <a href="/Users/Index">Usuarios &#9660;</a>
+                                    <ul>
+                                        <li><a href="/Users/Index">Administración de usuarios</a></li>
 
-                                    <li><a href="/Permissions/Index">Administración de perfiles</a></li>
+                                        <li><a href="/Permissions/Index">Administración de perfiles</a></li>
 
-                                </ul>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                <span style="color:gray">Usuarios &#9660;</span>
-                            </li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                    <span style="color:gray">Usuarios &#9660;</span>
+                                </li>
                             }
                         }
                         <li>
@@ -124,25 +124,28 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <li>
-                                <a href="">Planes de mejora &#9660;</a>
-                                <ul>
-                                    <li>
-                                        <a href="">Mis planes &#9658;</a>
-                                        <ul>
-                                            <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
-                                            <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">Visualización &#9660;</a>
-                                <ul>
-                                    <li><a href="/Dashboard/Index">Dashboard</a></li>
-                                </ul>
-                            </li>
+                        <li>
+                            <a href="">Planes de mejora &#9660;</a>
+                            <ul>
+                                <li>
+                                    <a href="">Mis planes &#9658;</a>
+                                    <ul>
+                                        <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
+                                        <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/TipoObjetivos/Index">Administracion de tipos de objetivo</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Visualización &#9660;</a>
+                            <ul>
+                                <li><a href="/Dashboard/Index">Dashboard</a></li>
+                            </ul>
+                        </li>
+
+                        @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CARGAR_DATOS_DESDE_CSV))
+                        {
                             <li>
                                 <a href="">Carga de Datos &#9660;</a>
                                 <ul>
@@ -157,9 +160,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="/Home/About">Acerca de</a></li>
-                            <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
-                        </ul>
+                        }
+                        <li><a href="/Home/About">Acerca de</a></li>
+                        <li class="ml-auto align-self-center mr-4">Perfil: @AppIntegrador.Models.CurrentUser.getUserProfile()</li>
+                    </ul>
 
                     </div>
                 </div>
