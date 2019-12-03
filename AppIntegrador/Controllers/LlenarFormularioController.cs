@@ -59,8 +59,15 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
-        public ActionResult LlenarFormulario(string id)
+        public ActionResult LlenarFormulario(string id, string sigla, byte num, int anno, byte semestre)
         {
+            Grupo grupo = new Grupo
+            {
+                SiglaCurso = sigla,
+                Anno = anno,
+                NumGrupo = num,
+                Semestre = semestre
+            };
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -70,17 +77,22 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("MisFormularios");
             }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB, grupo);
+            formulario.Grupo = grupo;
 
             return View(formulario);
         }
 
-        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB)
+        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB, Grupo grupo)
         {
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+            ObjectResult<ObtenerRespuestasAFormulario_Result> respuestasObtenidas = null;
+            if (grupo != null)
+            {
+                respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+            }
 
             Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
 
@@ -117,7 +129,7 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("../Formularios/Index");
             }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB, null);
 
             return View(formulario);
         }
@@ -133,12 +145,6 @@ namespace AppIntegrador.Controllers
 
             respuestas.Fecha = DateTime.Today;
             respuestas.Correo = HttpContext.User.Identity.Name;
-
-            // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
-            respuestas.CSigla = "CI0128";
-            respuestas.GNumero = 1;
-            respuestas.GAnno = 2019;
-            respuestas.GSemestre = 2;
 
             db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
