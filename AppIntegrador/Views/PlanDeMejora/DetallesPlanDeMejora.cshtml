@@ -134,6 +134,8 @@
         function seleccionaObjetivoLista(plan, obj) {
             var content = '<h2>Acciones de mejora </h2>';
             document.getElementById('encabezadoAccion').innerHTML = content;
+            document.getElementById('encabezadoAccionable').innerHTML = "";
+            document.getElementById('divAccionables').innerHTML = "";
             actualizarAccionesDeMejora(plan, obj);
         };
 
