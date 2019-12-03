@@ -281,6 +281,7 @@
     <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerFormulariosAsociados.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerSeccionesAsociadasAObjetivo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerPreguntasDeAccionDeMejora.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

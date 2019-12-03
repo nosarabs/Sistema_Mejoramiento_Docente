@@ -126,6 +126,7 @@
 @{Html.RenderPartial("_ModalListaProfesores");}
 @{Html.RenderPartial("_ModalListaFormularios", Model.Formulario);}
 @{Html.RenderPartial("../Objetivos/_ModalSeccionesLista");}
+@{Html.RenderPartial("../AccionDeMejora/_ModalPreguntasLista");}
 
 @section Scripts{
 
@@ -195,6 +196,23 @@
                 success: function (result) {
                     $('#ModalListaSeccionesInterno').html(result);
                     modalGen('#ModalSeccionesLista');
+                }
+            });
+        }
+
+        function verPreguntasAsociadas(plan, obj, desc) {
+            $.ajax({
+                type: 'GET',
+                url: '/AccionDeMejora/TablaPreguntasAsociadas',
+                data: {
+                    //parámetros para el controlador
+                    id: plan,
+                    objt: obj,
+                    des: desc
+                },
+                success: function (result) {
+                    $('#ModalListaAccionableInterno').html(result);
+                    modalGen('#ModalPreguntaLista');
                 }
             });
         }

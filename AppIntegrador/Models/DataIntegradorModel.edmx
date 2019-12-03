@@ -2411,6 +2411,11 @@
           <Parameter Name="codSeccion" Type="varchar" Mode="In" />
           <Parameter Name="codPregunta" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPreguntasDeAccionDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+          <Parameter Name="nombreObj" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
@@ -5471,11 +5476,16 @@
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosAsociados" ReturnType="Collection(String)">
-            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+          <Parameter Name="idPlan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObtenerSeccionesAsociadasAObjetivo" ReturnType="Collection(String)">
             <Parameter Name="idPlan" Mode="In" Type="Int32" />
             <Parameter Name="nombreObj" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPreguntasDeAccionDeMejora" ReturnType="Collection(String)">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+            <Parameter Name="nombreObj" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
@@ -6754,6 +6764,7 @@
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosAsociados" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosAsociados" />
           <FunctionImportMapping FunctionImportName="ObtenerSeccionesAsociadasAObjetivo" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesAsociadasAObjetivo" />
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeAccionDeMejora" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeAccionDeMejora" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
