@@ -94,9 +94,9 @@
 
                             <a href="">Formularios &#9660;</a>
                             <ul>
-                                <li>
-                                    <a href="">Formulario &#9658;</a>
-                                    <ul>
+                                @*<li>*@
+                                    @*<a href="">Formulario &#9658;</a>*@
+                                    @*<ul>*@
                                         @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_FORMULARIO))
                                         {
 
@@ -108,9 +108,9 @@
                                         }
                                         <li><a href="/LlenarFormulario/MisFormularios">Mis Formularios</a></li>
 
-                                    </ul>
-                                </li>
-                                <li>
+                                    @*</ul>*@
+                                @*</li>*@
+                                @*<li>
                                     <a href="">Sección &#9658;</a>
                                     <ul>
                                         <li><a href="/Seccion/Index">Ver Sección</a></li>
@@ -125,7 +125,7 @@
                                         }
                                         <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
                                     </ul>
-                                </li>
+                                </li>*@
                             </ul>
                             <li>
                                 <a href="">Planes de mejora &#9660;</a>
