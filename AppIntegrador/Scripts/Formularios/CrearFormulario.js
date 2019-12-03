@@ -19,18 +19,56 @@ function enableElement(elem) {
 
 /* Historia RIP - CF5.Llama al método del controlador que genera la vista parcial filtrada y
 vuelve a llamar al diálogo modal para mostrar los resultados.*/
-$("#ActualizarVistaFiltros").click(function () {
+function ActualizarVistaFiltros() {
+    var input0 = document.getElementById("section-other-option").value;
+    var input1 = document.getElementById("section-codigo-option").value;
+    var input2 = document.getElementById("section-enunciado-option").value;
+
+    var resultado = { input0, input1, input2 };
     $.ajax({
-        url: '@Url.Action("AplicarFiltro", "Formularios")',
-        type: "post",
-        //data: AddAntiForgeryToken({ id: parseInt($(this).attr("title")) }),
-        data: $("form").serialize(), //if you need to post Model data, use this
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        url: "/Seccion/ActualizarBancoSecciones",
+        data: JSON.stringify(resultado),
+        dataType: "html",
+        traditional: true,
         success: function (result) {
-            $("#ModalSecciones").html(result);
-            $('#ExampleModal').show();
+            $("#ModalAgregarSecciones").html(result);
         }
     });
-})
+}
+
+function checkSeccion(elem) {
+    // use one of possible conditions
+    // if (elem.value == 'Other')
+    if (elem.selectedIndex == 0) {
+        document.getElementById("section-other-option").style.display = 'inline';
+
+        document.getElementById("section-codigo-option").style.display = 'none';
+        document.getElementById("section-codigo-option").value = "";
+
+        document.getElementById("section-enunciado-option").style.display = 'none';
+        document.getElementById("section-enunciado-option").value = "";
+    }
+    else if (elem.selectedIndex == 1) {
+        document.getElementById("section-other-option").style.display = 'none';
+        document.getElementById("section-other-option").value = "";
+
+        document.getElementById("section-codigo-option").style.display = 'inline';
+
+        document.getElementById("section-enunciado-option").style.display = 'none';
+        document.getElementById("section-enunciado-option").value = "";
+    }
+    else if (elem.selectedIndex == 2) {
+        document.getElementById("section-other-option").style.display = 'none';
+        document.getElementById("section-other-option").value = "";
+
+        document.getElementById("section-codigo-option").style.display = 'none';
+        document.getElementById("section-codigo-option").value = "";
+
+        document.getElementById("section-enunciado-option").style.display = 'inline';
+    }
+}
 
 function BorrarPregunta(Scod, Pcod) {
     var SCodigo = Scod

@@ -54,20 +54,20 @@
                     <form action="PreguntaConOpcionesDeSeleccionController/Index" name="opcionfiltro">
 
                         <select class="form-control my-form-control" id="mySelect"
-                                style="width: 17%; display: inline;" onChange="check(this);">
+                                style="width: 17%; display: inline;" onChange="checkSeccion(this);">
                             <option value="-">Sin filtro </option>
                             <option value="C">Código </option>
                             <option value="E">Enunciado</option>
                         </select>
 
                         @* campo de filtrado para ingresar el código *@
-                        <input class="form-control" type="text" name="input0" placeholder="" id="other-option" style="display:inline; width: 45%;" disabled="true">
-                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="codigo-option" style="display:none; width: 45%;" maxlength="8">
-                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="enunciado-option" style="display:none; width: 45%;" maxlength="250">
+                        <input class="form-control" type="text" name="input0" placeholder="" id="section-other-option" style="display:inline; width: 45%;" disabled="true">
+                        <input class="form-control" type="text" name="input1" placeholder="Buscar..." id="section-codigo-option" style="display:none; width: 45%;" maxlength="8">
+                        <input class="form-control" type="text" name="input2" placeholder="Buscar..." id="section-enunciado-option" style="display:none; width: 45%;" maxlength="250">
 
                         @* Enviar el filtrado al controlador *@
                         <input type="button"
-                                id="ActualizarVistaFiltros"
+                                onclick="ActualizarVistaFiltros()"
                                 value="Filtrar"
                                 @*data-dismiss="modal"*@
                                 class="btn btn-outline-light text-dark bg-white border-secondary" />
