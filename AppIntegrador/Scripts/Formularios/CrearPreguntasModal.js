@@ -8,9 +8,12 @@ function GenerarModalPreguntas(codSeccion) {
     $('#ModalCrearPregunta').hide();
     $('#BancoDePreguntas').show();
 }
+
+
 function ImportarBancoPreguntas() {
     $.ajax({
         type: "post",
+        traditional: true,
         url: "/Preguntas/ActualizarBancoPreguntas",
         dataType: "html",
         success: function (data) {
@@ -126,7 +129,6 @@ function FiltrarBancoPreguntas() {
         dataType: "html",
         traditional: true,
         success: function (data) {
-            resultado = [];
             $('#ModalPartialBancoPreguntas').html(data);
         },
         error: function () {
