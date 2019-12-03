@@ -105,6 +105,35 @@ namespace AppIntegrador.Controllers
             {
                 return Json(new { error = false, tipoError = 4 });
             }
+
+            foreach(var grupo in grupos)
+            {
+                List<DateTime> fechasSolapadas = VerificarFechasSolapadas(codigoFormulario,
+                    grupo.Anno,
+                    grupo.Semestre,
+                    grupo.NumGrupo,
+                    (DateTime)fechaInicio,
+                    (DateTime)fechaFin);
+
+                List<Periodo_activa_por> fechasJson = new List<Periodo_activa_por>();
+
+                // Si las fechas son diferentes, es porque alguna se solapa. Entonces el elemento en la lista es la fecha 
+                // que está guardada en la base de datos.
+                if(fechasSolapadas.ElementAt(0) != fechaInicio || fechasSolapadas.ElementAt(1) != fechaFin)
+                {
+                    fechasJson.Add(new Periodo_activa_por
+                    {
+                        FCodigo = codigoFormulario,
+                        CSigla = grupo.SiglaCurso,
+                        GAnno = grupo.Anno,
+                        GSemestre = grupo.Semestre,
+                        GNumero = grupo.NumGrupo,
+                        FechaInicio = (DateTime)fechaInicio,
+                        FechaFin = (DateTime)fechaFin
+                    });
+                }
+            }
+
             // Itera por los grupos obtenidos, asignandoles el formulario
             for (int index = 0; index < gruposAsociadosLista.Count; ++index)
             {
@@ -177,6 +206,54 @@ namespace AppIntegrador.Controllers
 
             // Se envía el correo formado a todos los estudiantes involucrados
             _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
+        }
+
+        public List<DateTime> VerificarFechasSolapadas(string FCodigo,
+                                                    int GAnno,            
+                                                    byte GSemestre,
+                                                    byte GNumero,
+                                                    DateTime fechaInicio,
+                                                    DateTime fechaFin)
+        {
+            // Verificar si se solapa la fecha de inicio del form
+            var inicioSolapada = from p in db.Periodo_activa_por
+                                 where p.FCodigo == FCodigo &&
+                                 p.GAnno == GAnno &&
+                                 p.GSemestre == GSemestre &&
+                                 p.GNumero == GNumero &&
+                                 (fechaInicio < p.FechaInicio && p.FechaInicio < fechaFin)
+                                 select p.FechaInicio;                         
+
+            // Verificar si se solapa la fecha de fin del form
+            var finSolapada = from p in db.Periodo_activa_por
+                              where p.FCodigo == FCodigo &&
+                              p.GAnno == GAnno &&
+                              p.GSemestre == GSemestre &&
+                              p.GNumero == GNumero &&
+                              (fechaInicio < p.FechaFin && p.FechaFin < fechaFin)
+                              select p.FechaInicio;
+
+            List<DateTime> fechasSolapadas = new List<DateTime>();
+
+            if(inicioSolapada.Any())
+            {
+                fechasSolapadas.Add(inicioSolapada.FirstOrDefault());
+            }
+            else
+            {
+                fechasSolapadas.Add(fechaInicio);
+            }
+
+            if(finSolapada.Any())
+            {
+                fechasSolapadas.Add(finSolapada.FirstOrDefault());
+            }
+            else
+            {
+                fechasSolapadas.Add(fechaFin);
+            }
+
+            return fechasSolapadas;
         }
     }
 }
