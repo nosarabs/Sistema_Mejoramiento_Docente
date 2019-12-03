@@ -3,6 +3,7 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @codigo varchar(10)
+	DECLARE @nombre varchar(50)
 
 	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
 	--de insercion
@@ -11,18 +12,18 @@
 	Begin transaction transaccionCarrera;
 
 	DECLARE cursor_carrera CURSOR
-	FOR SELECT Codigo
+	FOR SELECT Codigo, Nombre
 	FROM inserted;
 	OPEN cursor_carrera;
-	FETCH NEXT FROM cursor_carrera INTO @codigo
+	FETCH NEXT FROM cursor_carrera INTO @codigo, @nombre
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
 			IF(@codigo NOT IN (SELECT Codigo FROM Carrera) and @codigo not like '')
 			BEGIN
-				INSERT INTO Carrera (Codigo)
-				values (@codigo)
+				INSERT INTO Carrera (Codigo, Nombre)
+				values (@codigo, @nombre)
 			END
-			FETCH NEXT FROM cursor_carrera INTO @codigo
+			FETCH NEXT FROM cursor_carrera INTO @codigo, @nombre
 		END
 	CLOSE cursor_carrera;
 	DEALLOCATE cursor_carrera;
