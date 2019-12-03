@@ -257,11 +257,11 @@ namespace AppIntegrador.Controllers
             var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
 
             // Revisar también correo secundario
-            if (user == null)
-            {
-                Persona correoAlt = db.Persona.Where(p => p.CorreoAlt == correo).FirstOrDefault();
-                user = db.Usuario.Where(a => a.Username == correoAlt.Correo).FirstOrDefault();
-            }
+            //if (user == null)
+            //{
+            //    Persona correoAlt = db.Persona.Where(p => p.CorreoAlt == correo).FirstOrDefault();
+            //    user = db.Usuario.Where(a => a.Username == correoAlt.Correo).FirstOrDefault();
+            //}
 
             if (user != null)
             {
