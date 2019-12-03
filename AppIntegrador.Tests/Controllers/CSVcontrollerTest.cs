@@ -21,6 +21,8 @@ namespace AppIntegrador.Tests.Controllers
         // COD-70: Yo como administrador quiero almacenar los datos de un archivo CSV en el sistema
         // Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
 
+
+     /*************** Pruebas de Unidad ******************/
      
         [TestMethod]
         public void TestCargarEstudiantes()
@@ -157,22 +159,72 @@ namespace AppIntegrador.Tests.Controllers
 
 
 
+        /*************** Pruebas de Integracion ******************/
 
 
-
-        /*
         [TestMethod]
-        public void TestCarga()
+        public void TestCargaGuia()
         {
             // Arrange
             //Creo el controlador y su contexto
             CSVController controller = new CSVController();
-            var file = @"../../Guias Horarios/guiaPrueba.csv";
+            var file = @"../../ArchivoCSVtest/guiaTest.csv";
+            var fileMalo = @"../../ArchivoCSVtest/guiaTestMalo.csv";
             // Act
             var result = controller.cargarGuia(file);
+            var resultMalo = controller.cargarGuia(fileMalo);
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(result.Item1); //camino feliz
+            Assert.IsFalse(resultMalo.Item1); //camino feliz
         }
-        */
+
+
+        [TestMethod]
+        public void TestCargaEstudiantes()
+        {
+            // Arrange
+            //Creo el controlador y su contexto
+            CSVController controller = new CSVController();
+            var file = @"../../ArchivoCSVtest/listaEstudianteTest.csv";
+            var fileMalo = @"../../ArchivoCSVtest/listaEstudianteTestMalo.csv";
+            // Act
+            var result = controller.cargarListaEstudiante(file);
+            var resultMalo = controller.cargarListaEstudiante(fileMalo);
+            // Assert
+            Assert.IsTrue(result.Item1); //camino feliz
+            Assert.IsFalse(resultMalo.Item1); //camino feliz
+        }
+
+        [TestMethod]
+        public void TestCargaFuncionario()
+        {
+            // Arrange
+            //Creo el controlador y su contexto
+            CSVController controller = new CSVController();
+            var file = @"../../ArchivoCSVtest/listaFuncionarioTest.csv";
+            var fileMalo = @"../../ArchivoCSVtest/listaFuncionarioTestMalo.csv";
+            // Act
+            var result = controller.cargarListaFuncionario(file);
+            var resultMalo = controller.cargarListaFuncionario(fileMalo);
+            // Assert
+            Assert.IsTrue(result.Item1); //camino feliz
+            Assert.IsFalse(resultMalo.Item1); //camino feliz
+        }
+
+        [TestMethod]
+        public void TestCargaClases()
+        {
+            // Arrange
+            //Creo el controlador y su contexto
+            CSVController controller = new CSVController();
+            var file = @"../../ArchivoCSVtest/listaClaseTest.csv";
+            var fileMalo = @"../../ArchivoCSVtest/listaClaseTestMalo.csv";
+            // Act
+            var result = controller.cargarListaClase(file);
+            var resultMalo = controller.cargarListaClase(fileMalo);
+            // Assert
+            Assert.IsTrue(result.Item1); //camino feliz
+            Assert.IsFalse(resultMalo.Item1); //camino feliz
+        }
     }
 }
