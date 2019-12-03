@@ -22,8 +22,53 @@ namespace AppIntegrador.Tests.Controllers
         // Tarea técnica: Cargar datos en blanco con el dato anteriomente registrado
 
 
-     /*************** Pruebas de Unidad ******************/
-     
+        /*************** Pruebas de Unidad ******************/
+
+
+        [TestMethod]
+        public void TestIndex()
+        {
+            // Arrange
+            CSVController controller = new CSVController();
+            // Act
+            ViewResult result = controller.Index() as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestClase()
+        {
+            // Arrange
+            CSVController controller = new CSVController();
+            // Act
+            ViewResult result = controller.Clase() as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestFuncionarios()
+        {
+            // Arrange
+            CSVController controller = new CSVController();
+            // Act
+            ViewResult result = controller.Funcionarios() as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestGuia()
+        {
+            // Arrange
+            CSVController controller = new CSVController();
+            // Act
+            ViewResult result = controller.GuiaHorarios() as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
         [TestMethod]
         public void TestCargarEstudiantes()
         {
