@@ -10,15 +10,18 @@ namespace AppIntegrador.Controllers
 {
     public class AsignacionFormulariosController : Controller
     {
+        // Referencia a la base de datos
         private DataIntegradorEntities db;
-
+        // Referencia al Dashboard controller
         private DashboardController dashboard = new DashboardController();
 
+        // Controlador por defecto
         public AsignacionFormulariosController()
         {
             db = new DataIntegradorEntities();
         }
-        // GET: Asignacion
+
+        // Metodo principal de la vista: Index
         [HttpGet]
         public ActionResult Index(string id)
         {
@@ -26,21 +29,28 @@ namespace AppIntegrador.Controllers
             {
                 return Redirect("~/");
             }
+            // Asocia el id del formulario correspondiente
             Formulario formularioDB = db.Formulario.Find(id);
             if (formularioDB == null)
             {
                 return View();
             }
-
+            // Almacena el codigo y el nombre del formulario
             ViewBag.Nombre = formularioDB.Nombre;
             ViewBag.Codigo = formularioDB.Codigo;
             return View();
         }
 
 
+        /**
+         * RIP AF1,AF2,AF3,AF4
+         * Asignación de formularios: recibe los datos desde la vista 
+         * necesarios para la asignar un formulario a uno o más grupos
+         */
         [HttpPost]
         public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado)
         {
+            // Parámetros que se enviaran al procedimiento almacenado
             string codigoCarrera = null;
             string codigoEnfasis = null;
             string siglaCursoGrupo = null;
@@ -48,12 +58,14 @@ namespace AppIntegrador.Controllers
             Nullable<byte> semestreGrupo = null;
             Nullable<int> anno = null;
             Nullable<DateTime> fechaInicio = null;
-            Nullable<DateTime> fechaFin = null; 
+            Nullable<DateTime> fechaFin = null;
 
+            // Sino se seleccionan datos, existe un error
             if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" && fechaInicioSeleccionado == "" && fechaFinSeleccionado == "")
             {
-                return Json(new { errorcito = false, tipoError = 1 });
+                return Json(new { error = false, tipoError = 1 });
             }
+
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
             {
                 fechaInicio = Convert.ToDateTime(fechaInicioSeleccionado);
@@ -61,26 +73,71 @@ namespace AppIntegrador.Controllers
             }
             else
             {
-                return Json(new { errorcito = false, tipoError = 2});
+                return Json(new { error = false, tipoError = 2 });
             }
 
             if (DateTime.Compare((DateTime)fechaInicio, (DateTime)fechaFin) > 0)
             {
-                return Json(new { errorcito = false, tipoError = 3 });
+                return Json(new { error = false, tipoError = 3 });
             }
 
-            if (correoProfesorSeleccionado == "null")
-                correoProfesorSeleccionado = null;
-            if (codigoUASeleccionada == "null")
-                codigoUASeleccionada = null;
+            // Parsea los strings
+            DividirCarreraEnfasis(ref codigoCarreraEnfasisSeleccionada, ref codigoCarrera, ref codigoEnfasis);
+            DividirGrupo(ref grupoSeleccionado, ref siglaCursoGrupo, ref numeroGrupo, ref semestreGrupo, ref anno);
+            // Conviertes las cadenas "null" en nul
+            convertNullStringToNull(ref correoProfesorSeleccionado);
+            convertNullStringToNull(ref codigoUASeleccionada);
+
+            // Hace el llamado al procedimiento almacenado que devuelve una tabla con todos los grupos necesarios
+            var grupos = db.ObtenerGruposAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo, semestreGrupo, anno, correoProfesorSeleccionado);
+            List<ObtenerGruposAsociados_Result> gruposAsociadosLista = null;
+            // Se convierte la tabla a lista
+            try
+            {
+                gruposAsociadosLista = grupos.ToList();
+                // Si no existen grupos asociados, pues no se pudo asignar
+                if (gruposAsociadosLista.Count < 0)
+                {
+                    return Json(new { error = false, tipoError = 4 });
+                }
+            }
+            catch
+            {
+                return Json(new { error = false, tipoError = 4 });
+            }
+            // Itera por los grupos obtenidos, asignandoles el formulario
+            for (int index = 0; index < gruposAsociadosLista.Count; ++index)
+            {
+                var grupoActual = gruposAsociadosLista[index];
+                // Procedimiento que almacena en las relaciones Activa_Por, Activa_Por_Periodo
+                db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
+            }
+            return Json(new { error = true });
+        }
+
+        private bool convertNullStringToNull(ref string convertedString)
+        {
+            if (convertedString == "null")
+            {
+                convertedString = null;
+            }
+            return false;
+        }
+        private bool DividirCarreraEnfasis(ref string codigoCarreraEnfasisSeleccionada, ref string codigoCarrera, ref string codigoEnfasis)
+        {
 
             if (codigoCarreraEnfasisSeleccionada != "null")
             {
                 string[] codigosSeparados = codigoCarreraEnfasisSeleccionada.Split('/');
                 codigoCarrera = codigosSeparados[0];
                 codigoEnfasis = codigosSeparados[1];
+                return true;
             }
+            return false;
+        }
 
+        private bool DividirGrupo(ref string grupoSeleccionado, ref string siglaCursoGrupo, ref Nullable<byte> numeroGrupo, ref Nullable<byte> semestreGrupo, ref Nullable<int> anno)
+        {
             if (grupoSeleccionado != "null")
             {
                 string[] grupoLlaves = grupoSeleccionado.Split('/');
@@ -88,37 +145,11 @@ namespace AppIntegrador.Controllers
                 numeroGrupo = byte.Parse(grupoLlaves[1]);
                 semestreGrupo = byte.Parse(grupoLlaves[2]);
                 anno = int.Parse(grupoLlaves[3]);
+                return true;
             }
-
-            var grupos = db.ObtenerGruposAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo , semestreGrupo, anno, correoProfesorSeleccionado);
-     
-            var gruposAsociadosLista = grupos.ToList();
-            
-            if (gruposAsociadosLista.Count < 0)
-            {
-                return Json(new { errorcito = false, tipoError = 4 });
-            }
-
-            for (int index = 0; index < gruposAsociadosLista.Count; ++index)
-            {
-                var grupoActual = gruposAsociadosLista[index];
-                db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
-            }
-
-            // RIP-AF3
-            // Como es la asignacion por curso, se asume que viene null los demas 
-            // para que acá sean implementados
-
-            // llamado al procedimiento almacenado 
-            // db.ObtenerGruposAsociados();
-            //List<UAsFiltros> tempUA;
-
-            //for(int index = 0; index < unidadesAcademicas.Count; ++index)
-            //{
-            //    if (unidadesAcademicas[index].Equals())
-            //}
-            return Json(new { errorcito = true });
+            return false;
         }
+
 
         // Modificado por: Jostin Álvarez
         // Historia a la que pertenece: RIP-AFC "Yo como administrativo quiero enviar un correo a los estudiantes para que llenen formularios cuando se los asigno"
