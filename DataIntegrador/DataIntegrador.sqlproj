@@ -80,6 +80,7 @@
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
     <Folder Include="PlanesDeMejora\TableTypes" />
     <Folder Include="Formularios\Asignar" />
+    <Folder Include="Formularios\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -272,6 +273,7 @@
     <Build Include="PlanesDeMejora\AccionableSiNo.sql" />
     <Build Include="PlanesDeMejora\AccionablePorcentaje.sql" />
     <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
+    <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
