@@ -294,11 +294,11 @@ namespace AppIntegrador.Controllers
                 List<string> users = new List<string>();
                 users.Add(correo);
                 var notificationResult = notification.SendNotification(users, "Restablecimiento de contraseña",
-                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
                      "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor \n" +
                      "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. \n\n" +
                      "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer,
-                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". " +
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". " +
                      "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor " +
                      "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. <br><br>" +
                      "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer);
@@ -374,9 +374,9 @@ namespace AppIntegrador.Controllers
 
                     notification.SendNotification(users,
                         "Cambio de contraseña",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
                         "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
+                        "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
                         "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
 
                     ViewBag.typeMessage = "success";
