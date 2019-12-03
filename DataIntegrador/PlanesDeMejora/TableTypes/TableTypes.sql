@@ -41,7 +41,9 @@ CREATE TYPE dbo.AccionableTabla AS TABLE
 	descripcion			varchar(250),
 	fechaInicio			date,
 	fechaFin			date,
-	tipo				char(1)
+	tipo				char,
+	peso				int,
+	pesoPorcentaje		int
 )
 GO
 

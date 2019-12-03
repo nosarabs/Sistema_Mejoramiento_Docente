@@ -32,25 +32,37 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.peso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pesoPorcentaje)
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.progreso)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaFin)
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.progreso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaFin)
+                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.peso)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.pesoPorcentaje)
+                </th>
+            </tr>
             }
         </tbody>
     </table>

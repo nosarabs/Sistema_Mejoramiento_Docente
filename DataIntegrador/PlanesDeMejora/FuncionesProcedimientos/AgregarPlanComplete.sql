@@ -3,7 +3,7 @@
 	@tablaPlan					 as dbo.PlanTabla			 readonly,
 	@tablaObjetivos				 as dbo.ObjetivosTabla		 readonly,
 	@tablaAcciones				 as dbo.AccionDeMejoraTabla	 readonly,
-	@tablaAccionables			 as dbo.AccionableTabla 	 readonly,
+	@tablaAccionables			 as dbo.AccionablesTabla 	 readonly,
 	@tablaAsocPlanFormularios	 as dbo.AsocPlanFormulario   readonly,
 	@tablaAsocObjetivosSecciones as dbo.AsocObjetivoSeccion  readonly,
 	@tablaAsocAccionesPreguntas  as dbo.AsocAccionPregunta   readonly
@@ -23,9 +23,8 @@ BEGIN TRY
 		insert into AccionDeMejora
 		select * from @tablaAcciones
 
-		insert into Accionable
-		select * from @tablaAccionables
-
+		exec dbo.AgregarMultiplesAccionables @tablaAccionables
+		
 		insert into Evalua
 		select * from @tablaAsocPlanFormularios
 

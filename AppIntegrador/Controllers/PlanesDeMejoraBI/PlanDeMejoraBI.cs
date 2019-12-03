@@ -376,6 +376,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             dt.Columns.Add("fechaInicio");
             dt.Columns.Add("fechaFin");
             dt.Columns.Add("tipo");
+            dt.Columns.Add("peso");
+            dt.Columns.Add("pesoPorcentaje");
 
             // Lista de los objetivos del plan
             ICollection<Objetivo> objetivos = plan.Objetivo;
@@ -393,9 +395,23 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                             ICollection<Accionable> accionables = acc.Accionable;
                             if (accionables != null)
                             {
-                                foreach (var accio in accionables) 
+                                foreach (var accio in accionables)
                                 {
-                                    dt.Rows.Add(plan.codigo, accio.nombreObj, accio.descripAcMej, accio.descripcion, accio.fechaInicio, accio.fechaFin, 'S');
+
+                                    char tipoTemp = accio.tipo[0];
+                                    int? pesoTemp = accio.peso;
+                                    int? porTemp = accio.pesoPorcentaje;
+
+                                    dt.Rows.Add(
+                                        plan.codigo,
+                                        obj.nombre,
+                                        acc.descripcion,
+                                        accio.descripcion,
+                                        accio.fechaInicio,
+                                        accio.fechaFin,
+                                        tipoTemp,
+                                        pesoTemp,
+                                        porTemp);
                                 }
                             }
                         }
@@ -403,6 +419,11 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                 }
             }
             return dt;
+        }
+
+        private static int? GetPesoTemp(Accionable accio)
+        {
+            return accio.peso;
         }
     }
 }

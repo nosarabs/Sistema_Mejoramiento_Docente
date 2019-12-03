@@ -36,9 +36,14 @@ namespace AppIntegrador.Models.Metadata
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaFin { get; set; }
-
         [Display(Name = "Tipo")]
         [Required(ErrorMessage = "Este campo es requerido")]
         public string tipo { get; set; }
+        [Display(Name = "Peso")]
+        public Nullable<int> peso { get; set; }
+
+        [Display(Name = "Porcentaje de peso")]
+        [Range(0, 100, ErrorMessage = "El porcentaje es un número entre 0 y 100")]
+        public Nullable<int> pesoPorcentaje { get; set; }
     }
 }

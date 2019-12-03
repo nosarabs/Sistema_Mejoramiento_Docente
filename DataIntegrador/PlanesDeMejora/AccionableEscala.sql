@@ -12,6 +12,6 @@
 	constraint FK_AccionableEscala_Accionable foreign key(codPlan, nombreObj, descripAcMej, descripcion)
 		references Accionable(codPlan, nombreObj, descripAcMej, descripcion) on delete cascade on update cascade,
 	constraint ValorMin check (valorMinimo >= 0),
-	constraint ValorMax check (valorMinimo >= 1),
+	constraint ValorMax check (valorMaximo >= 1),
 	constraint ValoresMinMax check (valorMinimo < valorMaximo)
 )

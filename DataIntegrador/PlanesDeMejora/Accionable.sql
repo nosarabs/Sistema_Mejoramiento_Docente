@@ -6,8 +6,9 @@
 	descripcion varchar(250) not null,
 	fechaInicio date,
 	fechaFin date,
-	tipo char not null,
-
+	tipo CHAR not null,
+	peso int,
+	pesoPorcentaje int,
 	constraint DateOrderAcci check(fechaFin >= fechaInicio),
 	constraint PK_Accionable primary key(codPlan, nombreObj, descripAcMej, descripcion),
 	constraint FK_Accionable_AccionDeMejora foreign key(codPlan, nombreObj, descripAcMej)

@@ -25,12 +25,12 @@ namespace AppIntegrador.Controllers
         public ActionResult Index()
         {
             var accionable = db.Accionable.Include(a => a.AccionDeMejora);
-            return View("Índice", accionable.ToList());
+            return View("Index", accionable.ToList());
         }
 
         // Hay que refactorizar este metodo para que no utilice Session
         // GET: Accionables/Create
-        public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora, bool unitTesting = false)
+        public ActionResult Create(int codPlan, string nombObj, string descripAcMej, string fechaInicioAccionDeMejora, string fechaFinAccionDeMejora, int peso, bool unitTesting = false)
         {
 
             ViewBag.IdPlan = codPlan;
@@ -39,6 +39,7 @@ namespace AppIntegrador.Controllers
             ViewBag.progreso = 0;
             ViewBag.fechaInicioAccionDeMejora = fechaInicioAccionDeMejora;
             ViewBag.fechaFinAccionDeMejora = fechaFinAccionDeMejora;
+            ViewBag.peso = peso;
             if (!unitTesting)
             {
                 Session["codPlan"] = codPlan;
@@ -47,6 +48,7 @@ namespace AppIntegrador.Controllers
                 Session["progreso"] = 0;
                 Session["fechaInicioAccionDeMejora"] = fechaInicioAccionDeMejora;
                 Session["fechaFinAccionDeMejora"] = fechaFinAccionDeMejora;
+                Session["peso"] = peso;
             }
 
             Models.Metadata.AccionableMetadata accionable = new Models.Metadata.AccionableMetadata();
@@ -68,7 +70,7 @@ namespace AppIntegrador.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public EmptyResult Create([Bind(Include = "codPlan,nombreObj,descripAcMej,descripcion,fechaInicio,fechaFin,progreso")] Accionable accionable)
+        public EmptyResult Create([Bind(Include = "codPlan,nombreObj,descripAcMej,descripcion,fechaInicio,fechaFin,progreso,peso")] Accionable accionable)
         {
             bool error = false;
 
