@@ -261,7 +261,8 @@ namespace AppIntegrador.Controllers
                 /*Prevencion del bloqueo de Adminsitrador*/
                 if (correo == "admin@mail.com")
                 {
-                    ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
+                    ViewBag.typeMessage = "alert";
+                    ViewBag.NotifyMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
                     ViewBag.EnableBS4NoNavBar = true;
                     return View("PasswordReset");
                 }
@@ -297,7 +298,8 @@ namespace AppIntegrador.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "Correo no encontrado";
+                ViewBag.typeMessage = "alert";
+                ViewBag.NotifyMessage = "Correo no encontrado";
             }
             ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
@@ -307,7 +309,7 @@ namespace AppIntegrador.Controllers
         {
             ViewBag.EnableBS4NoNavBar = true;
             ViewBag.Hash = enlaceSeguroHash;
-            return View("PasswordReset");
+            return View("ReestablecerContrasenna");
         }
 
         [HttpPost]
