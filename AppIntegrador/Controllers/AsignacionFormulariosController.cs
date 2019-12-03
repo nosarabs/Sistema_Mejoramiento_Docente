@@ -10,15 +10,18 @@ namespace AppIntegrador.Controllers
 {
     public class AsignacionFormulariosController : Controller
     {
+        // Referencia a la base de datos
         private DataIntegradorEntities db;
-
+        // Referencia al Dashboard controller
         private DashboardController dashboard = new DashboardController();
 
+        // Controlador por defecto
         public AsignacionFormulariosController()
         {
             db = new DataIntegradorEntities();
         }
-        // GET: Asignacion
+
+        // Metodo principal de la vista: Index
         [HttpGet]
         public ActionResult Index(string id)
         {
@@ -26,12 +29,13 @@ namespace AppIntegrador.Controllers
             {
                 return Redirect("~/");
             }
+            // Asocia el id del formulario correspondiente
             Formulario formularioDB = db.Formulario.Find(id);
             if (formularioDB == null)
             {
                 return View();
             }
-
+            // Almacena el codigo y el nombre del formulario
             ViewBag.Nombre = formularioDB.Nombre;
             ViewBag.Codigo = formularioDB.Codigo;
             return View();
@@ -59,7 +63,7 @@ namespace AppIntegrador.Controllers
             // Sino se seleccionan datos, existe un error
             if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" && fechaInicioSeleccionado == "" && fechaFinSeleccionado == "")
             {
-                return Json(new { errorcito = false, tipoError = 1 });
+                return Json(new { error = false, tipoError = 1 });
             }
 
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
@@ -69,12 +73,12 @@ namespace AppIntegrador.Controllers
             }
             else
             {
-                return Json(new { errorcito = false, tipoError = 2 });
+                return Json(new { error = false, tipoError = 2 });
             }
 
             if (DateTime.Compare((DateTime)fechaInicio, (DateTime)fechaFin) > 0)
             {
-                return Json(new { errorcito = false, tipoError = 3 });
+                return Json(new { error = false, tipoError = 3 });
             }
 
             // Parsea los strings
@@ -94,12 +98,12 @@ namespace AppIntegrador.Controllers
                 // Si no existen grupos asociados, pues no se pudo asignar
                 if (gruposAsociadosLista.Count < 0)
                 {
-                    return Json(new { errorcito = false, tipoError = 4 });
+                    return Json(new { error = false, tipoError = 4 });
                 }
             }
             catch
             {
-                return Json(new { errorcito = false, tipoError = 4 });
+                return Json(new { error = false, tipoError = 4 });
             }
             // Itera por los grupos obtenidos, asignandoles el formulario
             for (int index = 0; index < gruposAsociadosLista.Count; ++index)
@@ -108,7 +112,7 @@ namespace AppIntegrador.Controllers
                 // Procedimiento que almacena en las relaciones Activa_Por, Activa_Por_Periodo
                 db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
             }
-            return Json(new { errorcito = true });
+            return Json(new { error = true });
         }
 
         private bool convertNullStringToNull(ref string convertedString)
