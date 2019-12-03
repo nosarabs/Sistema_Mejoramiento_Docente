@@ -161,9 +161,12 @@ namespace AppIntegrador.Controllers
             db.SaveChanges();
 
             PlanDeMejora planTemporal = db.PlanDeMejora.Find(plan.codigo);
-            if (planTemporal != null && ProfeSeleccionado.Count > 0) 
+            if (planTemporal != null && ProfeSeleccionado != null) 
             {
-                this.EnviarCorreoSobreCreacionPlan(planTemporal, ProfeSeleccionado);
+                if (ProfeSeleccionado.Count > 0) 
+                {
+                    this.EnviarCorreoSobreCreacionPlan(planTemporal, ProfeSeleccionado);
+                }
             }
 
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
