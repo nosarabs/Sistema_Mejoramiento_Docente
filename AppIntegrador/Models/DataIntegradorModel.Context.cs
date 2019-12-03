@@ -579,23 +579,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarPreguntaConSeccion", codigoSeccionParameter, codigoPreguntaParameter);
         }
     
-        public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion, Nullable<int> orden)
-        {
-            var codigoFormularioParameter = codigoFormulario != null ?
-                new ObjectParameter("codigoFormulario", codigoFormulario) :
-                new ObjectParameter("codigoFormulario", typeof(string));
-    
-            var codigoSeccionParameter = codigoSeccion != null ?
-                new ObjectParameter("codigoSeccion", codigoSeccion) :
-                new ObjectParameter("codigoSeccion", typeof(string));
-    
-            var ordenParameter = orden.HasValue ?
-                new ObjectParameter("orden", orden) :
-                new ObjectParameter("orden", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter, ordenParameter);
-        }
-    
         public virtual int BorrarAccionDeMejora(Nullable<int> codigoPlan, string nombreObj, string descripcion)
         {
             var codigoPlanParameter = codigoPlan.HasValue ?
@@ -1619,11 +1602,6 @@ namespace AppIntegrador.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerFormulariosPorSemestre_Result>("ObtenerFormulariosPorSemestre", correoEstudianteParameter, annoParameter, semestreParameter);
         }
     
-        public virtual int ObtenerGruposAsociados()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ObtenerGruposAsociados");
-        }
-    
         public virtual int AsignarFormulario(string formularioCodigo, string cursoSigla, Nullable<byte> grupoNumero, Nullable<int> grupoAnno, Nullable<byte> grupoSemestre, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
             var formularioCodigoParameter = formularioCodigo != null ?
@@ -1731,6 +1709,66 @@ namespace AppIntegrador.Models
                 new ObjectParameter("nombre", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ModificarFormulario", codviejoParameter, codnuevoParameter, nombreParameter, modificacionexitosa);
+        }
+    
+        public virtual int AsociarSeccionConFormulario(string codigoFormulario, string codigoSeccion)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("CodigoFormulario", codigoFormulario) :
+                new ObjectParameter("CodigoFormulario", typeof(string));
+    
+            var codigoSeccionParameter = codigoSeccion != null ?
+                new ObjectParameter("CodigoSeccion", codigoSeccion) :
+                new ObjectParameter("CodigoSeccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AsociarSeccionConFormulario", codigoFormularioParameter, codigoSeccionParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerEstudiantesAsociadosAFormulario_Result> ObtenerEstudiantesAsociadosAFormulario(string codFormulario)
+        {
+            var codFormularioParameter = codFormulario != null ?
+                new ObjectParameter("codFormulario", codFormulario) :
+                new ObjectParameter("codFormulario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEstudiantesAsociadosAFormulario_Result>("ObtenerEstudiantesAsociadosAFormulario", codFormularioParameter);
+        }
+    
+        [DbFunction("DataIntegradorEntities", "ObtenerGruposAsociados")]
+        public virtual IQueryable<ObtenerGruposAsociados_Result> ObtenerGruposAsociados(string codigoUnidadAcademica, string codigoCarrera, string codigoEnfasis, string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno, string correoProfesor)
+        {
+            var codigoUnidadAcademicaParameter = codigoUnidadAcademica != null ?
+                new ObjectParameter("CodigoUnidadAcademica", codigoUnidadAcademica) :
+                new ObjectParameter("CodigoUnidadAcademica", typeof(string));
+    
+            var codigoCarreraParameter = codigoCarrera != null ?
+                new ObjectParameter("CodigoCarrera", codigoCarrera) :
+                new ObjectParameter("CodigoCarrera", typeof(string));
+    
+            var codigoEnfasisParameter = codigoEnfasis != null ?
+                new ObjectParameter("CodigoEnfasis", codigoEnfasis) :
+                new ObjectParameter("CodigoEnfasis", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            var correoProfesorParameter = correoProfesor != null ?
+                new ObjectParameter("CorreoProfesor", correoProfesor) :
+                new ObjectParameter("CorreoProfesor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ObtenerGruposAsociados_Result>("[DataIntegradorEntities].[ObtenerGruposAsociados](@CodigoUnidadAcademica, @CodigoCarrera, @CodigoEnfasis, @SiglaCurso, @NumGrupo, @Semestre, @Anno, @CorreoProfesor)", codigoUnidadAcademicaParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
         }
     }
 }

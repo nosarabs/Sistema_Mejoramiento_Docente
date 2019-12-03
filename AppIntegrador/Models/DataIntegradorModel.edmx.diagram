@@ -104,7 +104,7 @@
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DataIntegradorModel.EnlaceSeguro" Width="1.5" PointX="3" PointY="21.25" />
         <AssociationConnector Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
