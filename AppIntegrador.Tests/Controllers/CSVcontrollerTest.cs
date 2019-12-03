@@ -13,6 +13,12 @@ using System.Web;
 using System.IO;
 using System.Web.Routing;
 
+using System.Reflection;
+using System.Web.SessionState;
+using System.Collections.Generic;
+using System.Security.Principal;
+
+
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]
@@ -29,6 +35,8 @@ namespace AppIntegrador.Tests.Controllers
         public void TestIndex()
         {
             // Arrange
+            Init("admin@mail.com");
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             CSVController controller = new CSVController();
             // Act
             ViewResult result = controller.Index() as ViewResult;
@@ -40,6 +48,9 @@ namespace AppIntegrador.Tests.Controllers
         public void TestClase()
         {
             // Arrange
+            Init("admin@mail.com");
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
             CSVController controller = new CSVController();
             // Act
             ViewResult result = controller.Clase() as ViewResult;
@@ -51,6 +62,8 @@ namespace AppIntegrador.Tests.Controllers
         public void TestFuncionarios()
         {
             // Arrange
+            Init("admin@mail.com");
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             CSVController controller = new CSVController();
             // Act
             ViewResult result = controller.Funcionarios() as ViewResult;
@@ -62,6 +75,8 @@ namespace AppIntegrador.Tests.Controllers
         public void TestGuia()
         {
             // Arrange
+            Init("admin@mail.com");
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
             CSVController controller = new CSVController();
             // Act
             ViewResult result = controller.GuiaHorarios() as ViewResult;
@@ -270,6 +285,48 @@ namespace AppIntegrador.Tests.Controllers
             // Assert
             Assert.IsTrue(result.Item1); //camino feliz
             Assert.IsFalse(resultMalo.Item1); //camino feliz
+        }
+
+        public void Init(string username)
+        {
+            //No aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser(username);
+
+            // We need to setup the Current HTTP Context as follows:            
+
+            // Step 1: Setup the HTTP Request
+            var httpRequest = new HttpRequest("", "http://localhost/", "");
+
+            // Step 2: Setup the HTTP Response
+            var httpResponse = new HttpResponse(new StringWriter());
+
+            // Step 3: Setup the Http Context
+            var httpContext = new HttpContext(httpRequest, httpResponse);
+            var sessionContainer =
+                new HttpSessionStateContainer(username,
+                                               new SessionStateItemCollection(),
+                                               new HttpStaticObjectsCollection(),
+                                               10,
+                                               true,
+                                               HttpCookieMode.AutoDetect,
+                                               SessionStateMode.InProc,
+                                               false);
+            httpContext.Items["AspSession"] =
+                typeof(HttpSessionState)
+                .GetConstructor(
+                                    BindingFlags.NonPublic | BindingFlags.Instance,
+                                    null,
+                                    CallingConventions.Standard,
+                                    new[] { typeof(HttpSessionStateContainer) },
+                                    null)
+                .Invoke(new object[] { sessionContainer });
+
+            var fakeIdentity = new GenericIdentity(username);
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            // Step 4: Assign the Context
+            HttpContext.Current = httpContext;
+            HttpContext.Current.User = principal;
         }
     }
 }
