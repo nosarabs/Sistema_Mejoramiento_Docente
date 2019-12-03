@@ -98,6 +98,14 @@
                         $("#modal-solapado").modal('show');
                     }
                 } else {
+                    if (data.inicio != null) {
+                        fechaInicio = data.inicio;
+                    }
+
+                    if (data.fin != null) {
+                        fechaFin = data.fin;
+                    }
+
                     // Sino, mensaje de exito. Y redirecciona al index de formularios
                     swal({
                         title: "¡El formulario " + codigo + " fue asignado con éxito!",

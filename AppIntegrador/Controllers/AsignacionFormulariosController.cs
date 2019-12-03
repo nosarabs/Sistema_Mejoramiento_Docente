@@ -150,10 +150,13 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            if(haySolapamiento && !extenderPeriodo)
+            string originalInicio = FormularioAsignado.FormatearFecha((DateTime)fechaInicio);
+            string originalFin = FormularioAsignado.FormatearFecha((DateTime)fechaFin);
+
+            if (haySolapamiento && !extenderPeriodo)
             {
-                string originalInicio = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaInicio);
-                string originalFin = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaFin);
+                originalInicio = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaInicio);
+                originalFin = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaFin);
 
                 return Json(new { error = false, tipoError = 6, inicio = originalInicio, fin = originalFin });
             }
@@ -165,7 +168,22 @@ namespace AppIntegrador.Controllers
                 // Procedimiento que almacena en las relaciones Activa_Por, Activa_Por_Periodo
                 db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
             }
-            return Json(new { error = true });
+
+            if(haySolapamiento)
+            {
+                FechasSolapadasInfo fecha = fechasJson.FirstOrDefault();
+                if(fecha.FechaInicioNueva != null)
+                {
+                    originalInicio = FormularioAsignado.FormatearFecha((DateTime)fecha.FechaInicioNueva);
+                }
+
+                if(fecha.FechaFinNueva != null)
+                {
+                    originalFin = FormularioAsignado.FormatearFecha((DateTime)fecha.FechaFinNueva);
+                }
+            }
+
+            return Json(new { error = true, inicio = originalInicio, fin = originalFin });
         }
 
         private bool convertNullStringToNull(ref string convertedString)
