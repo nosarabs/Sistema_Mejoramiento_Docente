@@ -182,7 +182,7 @@ namespace AppIntegrador.Tests.Controllers
             var result = controller.ReestablecerContrasenna("placeholder") as ViewResult;
 
             // Assert
-            Assert.AreEqual("PasswordReset", result.ViewName);
+            Assert.AreEqual("ReestablecerContrasenna", result.ViewName);
         }
 
 
