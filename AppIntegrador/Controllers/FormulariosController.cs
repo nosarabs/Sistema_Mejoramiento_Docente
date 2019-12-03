@@ -32,6 +32,7 @@ namespace AppIntegrador.Controllers
         public FormulariosController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
 
@@ -138,6 +139,12 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Details/5
         public ActionResult Details(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_DETALLES_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             crearFormulario.seccion = db.Seccion;
             if (id == null)
             {
@@ -307,6 +314,12 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Delete/5
         public ActionResult Delete(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             crearFormulario.seccion = db.Seccion;
             if (id == null)
             {

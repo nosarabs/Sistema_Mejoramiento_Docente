@@ -3,6 +3,8 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @codigo varchar(10)
+	DECLARE @nombre varchar(50)
+	DECLARE @superior varchar(10)
 
 	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
 	--de insercion
@@ -11,17 +13,18 @@
 	Begin transaction transaccionCodigoUnidad;
 
 	DECLARE cursor_Unidad CURSOR
-	FOR SELECT Codigo
+	FOR SELECT Codigo, Nombre, Superior
 	FROM inserted
 	OPEN cursor_Unidad;
-	FETCH NEXT FROM cursor_Unidad INTO @codigo
+	FETCH NEXT FROM cursor_Unidad INTO @codigo, @nombre, @superior
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
 			IF(@codigo NOT IN (SELECT Codigo FROM UnidadAcademica) and @codigo not like '')
 			BEGIN
-				INSERT INTO UnidadAcademica SELECT * FROM inserted
+				INSERT INTO UnidadAcademica (Codigo, Nombre, Superior)
+				values (@codigo, @nombre, @superior)
 			END
-			FETCH NEXT FROM cursor_Unidad INTO @codigo
+			FETCH NEXT FROM cursor_Unidad INTO @codigo, @nombre, @superior
 		END
 	CLOSE cursor_Unidad
 	DEALLOCATE cursor_Unidad

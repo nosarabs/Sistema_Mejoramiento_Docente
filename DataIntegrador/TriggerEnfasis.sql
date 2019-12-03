@@ -56,6 +56,8 @@
 						INSERT INTO UsuarioPerfil (Usuario, Perfil, CodCarrera, CodEnfasis)
 						VALUES ('admin@mail.com', 'Superusuario', @codigoCarrera, @codigo)
 					END
+				-- Dar configuración default a los perfiles en el énfasis
+				EXEC ConfigurarPerfilesDefault @codCarrera = @codigoCarrera, @codEnfasis = @codigo
 			END
 			FETCH NEXT FROM cursor_enfasis INTO @codigo, @codigoCarrera, @nombre
 		END

@@ -1,5 +1,7 @@
-﻿
-function GenerarModalPreguntas() {
+﻿var SeccionModalActual;
+
+function GenerarModalPreguntas(codSeccion) {
+    SeccionModalActual = codSeccion;
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
     GenerarCrearPreguntas();
@@ -15,6 +17,10 @@ function ImportarBancoPreguntas() {
             $('#ModalPartialBancoPreguntas').html(data);
         }
     });
+}
+
+function CerrarModalPreguntas() {
+    $('ModalAgregarPregunta').modal("hide");
 }
 
 function CerrarCrearPregunta() {
@@ -64,8 +70,9 @@ function GuardarPregunta() {
                 $("#agregar-opcion").addClass("error");
             }
             if (data.MinMax) {
-                document.getElementById("min").textContent = "El primer número debe ser menor al segundo";
+
                 $("#min").addClass("error");
+                $("#max").addClass("error");
             }
             if (data.guardadoExitoso) {
                 $.ajax({

@@ -21,7 +21,8 @@
 		BEGIN
 			if(not exists (select * from Inscrita_en where CodUnidadAc= @CodUnidad and CodCarrera =@CodCarrera) and @CodUnidad not like '' and @CodCarrera not like '')
 			begin
-				insert into Inscrita_en select * from inserted
+				insert into Inscrita_en (CodUnidadAc, CodCarrera)
+				values (@CodUnidad, @CodCarrera)
 			end
 			FETCH NEXT FROM cursor_inscritaEn INTO @CodUnidad, @CodCarrera
 		END

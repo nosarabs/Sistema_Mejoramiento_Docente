@@ -20,7 +20,8 @@
 		BEGIN
 			if(not exists (select * from Trabaja_en where CodUnidadAcademica=@CodUnidad and CorreoFuncionario = @Correo) and (@CodUnidad not like '' and @Correo not like ''))
 			begin
-				insert into Trabaja_en select * from inserted
+				insert into Trabaja_en (CorreoFuncionario,CodUnidadAcademica)
+				values (@Correo, @CodUnidad)
 			end
 			FETCH NEXT FROM cursor_TrabajaEn INTO @Correo, @CodUnidad
 		END

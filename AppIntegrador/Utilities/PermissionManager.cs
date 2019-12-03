@@ -82,7 +82,10 @@ namespace AppIntegrador.Utilities
 
         public bool IsAuthorized(Permission permission)
         {
-            return new PermissionManager().IsUserAuthorized(permission);
+            if (CurrentUser.getUserProfile() == "Superusuario")
+                return true;
+            else
+                return new PermissionManager().IsUserAuthorized(permission);
         }
     }
 
