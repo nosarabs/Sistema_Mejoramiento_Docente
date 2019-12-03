@@ -298,7 +298,8 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("../Home/Index");
             }
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(codigoPlan);
-            db.PlanDeMejora.Remove(planDeMejora);
+            //db.PlanDeMejora.Remove(planDeMejora);
+            db.BorrarPlan(codigoPlan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
