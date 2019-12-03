@@ -102,6 +102,11 @@ namespace AppIntegrador.Controllers
         // GET: Formularios
         public ActionResult Index(string input0, string input1, string input2)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             var formulario = db.Formulario;
 
             ViewBag.filtro = "Ninguno";
