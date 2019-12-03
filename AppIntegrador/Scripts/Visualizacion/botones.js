@@ -163,8 +163,8 @@
 
                 //Canvas
                 var canvas = document.createElement("canvas");
-                canvas.setAttribute("width", "200vw"); //Ancho canvas
-                canvas.setAttribute("height", "130vh"); //Largo canvas
+                canvas.setAttribute("width", "250vw"); //Ancho canvas
+                canvas.setAttribute("height", "180vh"); //Largo canvas
 
                 this.rellenarCanvas(canvas, listaPreguntas[i].codigoSeccion, listaPreguntas[i].codigoPregunta, listaPreguntas[i].tipoPregunta);
 

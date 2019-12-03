@@ -6,7 +6,7 @@
 @foreach (var item in Model)
 {
 
-    @Html.Hidden("secciones[" + item.Orden + "].CodigoSeccion", null, new { @Value = item.CodigoSeccion })
+    @Html.Hidden("SeccionesAgregadasAFormulario", null, new { @Value = item.CodigoSeccion, @class = "SeccionesAgregadasAFormulario" })
     var displayOrden = item.Orden + 1;
     <div class="card card-primary shadow">
             <div class='card-header'>

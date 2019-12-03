@@ -10,6 +10,7 @@ using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data.Entity.Core.Objects;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -17,6 +18,7 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = null;
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
+        private readonly IPerm permissionManager = new PermissionManager();
 
         public SeccionController()
         {
@@ -31,6 +33,12 @@ namespace AppIntegrador.Controllers
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
         {
+            if(!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             var seccion = db.Seccion;
 
             ViewBag.filtro = "Ninguno";
@@ -62,6 +70,12 @@ namespace AppIntegrador.Controllers
         // GET: Seccion/Create
         public ActionResult Create()
         {
+            if(!permissionManager.IsAuthorized(Permission.CREAR_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             crearSeccion.pregunta = db.Pregunta;
             return View(crearSeccion);
         }
@@ -96,6 +110,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Create(string input0, string input1, string input2, string input3)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             crearSeccion.pregunta = db.Pregunta;
             ViewBag.filtro = "Ninguno";
             if (input0 == null && input1 == null && input2 == null && input3 == null)
@@ -177,6 +197,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -290,6 +316,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult SeccionConPreguntas(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             // Armar objeto independiente del formulario
             SeccionConPreguntas seccion = ArmarSeccion(id);
 

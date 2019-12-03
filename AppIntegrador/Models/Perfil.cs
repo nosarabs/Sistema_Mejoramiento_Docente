@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public Perfil()
         {
             this.PerfilPermiso = new HashSet<PerfilPermiso>();
+            this.UsuarioActual = new HashSet<UsuarioActual>();
             this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
         }
     
@@ -25,6 +26,8 @@ namespace AppIntegrador.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PerfilPermiso> PerfilPermiso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioActual> UsuarioActual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
     }

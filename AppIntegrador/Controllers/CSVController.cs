@@ -12,32 +12,57 @@ using System.IO;
 using AppIntegrador.Models;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class CSVController : Controller
     {
 
-
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly IPerm permissionManager = new PermissionManager();
 
         public ActionResult Index()
         {
+            if (!permissionManager.IsAuthorized(Permission.CARGAR_DATOS_DESDE_CSV))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             return View(); 
         }
 
         public ActionResult Clase()
         {
+            if (!permissionManager.IsAuthorized(Permission.CARGAR_DATOS_DESDE_CSV))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             return View();
         }
 
         public ActionResult GuiaHorarios()
         {
+            if (!permissionManager.IsAuthorized(Permission.CARGAR_DATOS_DESDE_CSV))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             return View();
         }
 
         public ActionResult Funcionarios()
         {
+            if (!permissionManager.IsAuthorized(Permission.CARGAR_DATOS_DESDE_CSV))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             return View();
         }
 
@@ -264,7 +289,7 @@ namespace AppIntegrador.Controllers
         {
             db.InsertarCursoCSV(fila.SiglaCurso, fila.NombreCurso);
             db.InsertarGrupoCSV(fila.SiglaCursoGrupo, Convert.ToByte(fila.NumeroGrupo), Convert.ToByte(fila.Semestre), Convert.ToInt32(fila.Anno));
-            db.InsertarImparte(fila.CorreoProfesorImparte, fila.SiglaCursoImparte, Convert.ToByte(fila.NumeroGrupoImparte), Convert.ToByte(fila.SemestreGrupoImparte), Convert.ToInt32(fila.AnnoGrupoImparte));
+            //db.InsertarImparte(fila.CorreoProfesorImparte, fila.SiglaCursoImparte, Convert.ToByte(fila.NumeroGrupoImparte), Convert.ToByte(fila.SemestreGrupoImparte), Convert.ToInt32(fila.AnnoGrupoImparte));
             db.InsertarMatriculado_en(fila.CorreoMatricula, fila.SiglaCursoMatricula, Convert.ToByte(fila.NumeroGrupoMatricula), Convert.ToByte(fila.SemestreMatricula), Convert.ToInt32(fila.AnnoMatricula));
             db.InsertarPertenece_a(fila.CodigoCarreraCurso, fila.CodigoEnfasisCurso, fila.SiglaCursoCarrera);
         }

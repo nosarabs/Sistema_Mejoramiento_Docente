@@ -3,6 +3,13 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @sigla varchar(10)
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction transaccionCurso;
+
 	DECLARE cursor_curso CURSOR 
 	FOR SELECT Sigla
 	FROM inserted;
@@ -12,9 +19,13 @@
 		BEGIN
 			IF(@sigla NOT IN (SELECT Sigla FROM Curso) and @sigla not like '')
 			BEGIN
-				INSERT INTO Curso SELECT * FROM inserted
+				INSERT INTO Curso (Sigla) values(@sigla)
 			END
 			FETCH NEXT FROM cursor_curso INTO @sigla
 		END
 	CLOSE cursor_curso;
 	DEALLOCATE cursor_curso;
+
+	Commit Transaction transaccionCurso;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;

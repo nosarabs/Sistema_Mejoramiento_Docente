@@ -13,6 +13,9 @@ using System.Web;
 using System.Web.Routing;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
+using System.IO;
+using System.Web.SessionState;
+using System.Reflection;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -260,11 +263,10 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestEditNull()
         {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
+            FormulariosController controller = new FormulariosController();
 
             // Se prueba que el método no se caiga con parámetros nulos
-            ActionResult result = controller.Edit("");
+            ActionResult result = controller.Edit(null);
 
             Assert.IsNotNull(result);
         }
@@ -272,69 +274,12 @@ namespace AppIntegrador.Tests.Controllers
         [TestMethod]
         public void TestEdit()
         {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
+            string codSeccion = "00000001";
 
-            string codFormulario = "CI0128G2";
-            string nombreFormulario = "Formulario de prueba";
-            string codSeccion = "Secci01";
-
-            // Se crea un formulario para el mock de la base de datos
-            Formulario formulario = new Formulario()
-            {
-                Codigo = codFormulario,
-                Nombre = nombreFormulario
-            };
-
-            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
-
-            Seccion seccion = new Seccion()
-            {
-                Codigo = codSeccion,
-                Nombre = "Sección de prueba"
-            };
-
-            mockDb.Setup(m => m.Seccion.Find(codSeccion)).Returns(seccion);
-
-            // Agregar la sección al formulario
-            Formulario_tiene_seccion fts = new Formulario_tiene_seccion()
-            {
-                FCodigo = codFormulario,
-                SCodigo = codSeccion
-            };
-
-            mockDb.Setup(m => m.Formulario_tiene_seccion.Find(codSeccion)).Returns(fts);
-
-            var mock = new Mock<DbSet<Seccion>>();
+            FormulariosController controller = new FormulariosController();
 
             // Se prueba que el método no se caiga con un código de formulario válido
             var result = controller.Edit(codSeccion);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void TestEditWithBind()
-        {
-            var mockDb = new Mock<DataIntegradorEntities>();
-            FormulariosController controller = new FormulariosController(mockDb.Object);
-
-            string codFormulario = "CI0128G2";
-            string nombreFormulario = "Formulario de prueba";
-
-            // Se crea un formulario para el mock de la base de datos
-            Formulario formulario = new Formulario()
-            {
-                Codigo = codFormulario,
-                Nombre = nombreFormulario
-            };
-
-            mockDb.Setup(m => m.Formulario.Find(codFormulario)).Returns(formulario);
-
-            var mock = new Mock<DbSet<Seccion>>();
-
-            // Se prueba que el método no se caiga con un código de formulario válido
-            var result = controller.Edit(formulario);
 
             Assert.IsNotNull(result);
         }
@@ -771,6 +716,57 @@ namespace AppIntegrador.Tests.Controllers
             var result = formularios.ModificarFormulario(null, null, null) as JsonResult;
 
             Assert.AreEqual("{ modificacionExitosa = False }", result.Data.ToString());
+        }
+
+        [TestInitialize]
+        public void Init()
+        {
+            //No aseguramos que admin no haya quedado logeado por otros tests.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
+
+            // We need to setup the Current HTTP Context as follows:            
+
+            // Step 1: Setup the HTTP Request
+            var httpRequest = new HttpRequest("", "http://localhost/", "");
+
+            // Step 2: Setup the HTTP Response
+            var httpResponse = new HttpResponse(new StringWriter());
+
+            // Step 3: Setup the Http Context
+            var httpContext = new HttpContext(httpRequest, httpResponse);
+            var sessionContainer =
+                new HttpSessionStateContainer("admin@mail.com",
+                                               new SessionStateItemCollection(),
+                                               new HttpStaticObjectsCollection(),
+                                               10,
+                                               true,
+                                               HttpCookieMode.AutoDetect,
+                                               SessionStateMode.InProc,
+                                               false);
+            httpContext.Items["AspSession"] =
+                typeof(HttpSessionState)
+                .GetConstructor(
+                                    BindingFlags.NonPublic | BindingFlags.Instance,
+                                    null,
+                                    CallingConventions.Standard,
+                                    new[] { typeof(HttpSessionStateContainer) },
+                                    null)
+                .Invoke(new object[] { sessionContainer });
+
+            var fakeIdentity = new GenericIdentity("admin@mail.com");
+            var principal = new GenericPrincipal(fakeIdentity, null);
+
+            // Step 4: Assign the Context
+            HttpContext.Current = httpContext;
+            HttpContext.Current.User = principal;
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //Nos aseguramos que admin quede deslogeado despues de cada test.
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
     }
 }

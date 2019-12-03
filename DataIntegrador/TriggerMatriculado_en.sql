@@ -24,7 +24,8 @@
 			BEGIN
 				IF(NOT exists (SELECT * FROM Matriculado_en where CorreoEstudiante= @correo and SiglaCurso = @sigla and Semestre =@semestre and Anno = @anno ) and @correo not like '' and @num not like '' and @semestre not like '' and @anno not like '' and @sigla not like '')
 				BEGIN
-					INSERT INTO Matriculado_en SELECT * FROM inserted
+					INSERT INTO Matriculado_en (CorreoEstudiante, SiglaCurso, NumGrupo,Semestre,Anno)
+					values (@correo, @sigla, @num, @semestre,@anno)
 				END
 				FETCH NEXT FROM cursor_Matriculado_en INTO @correo, @sigla, @num, @semestre, @anno
 			END

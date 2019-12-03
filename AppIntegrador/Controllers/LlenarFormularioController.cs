@@ -1,4 +1,5 @@
 ﻿using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -13,9 +14,11 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
 
+        private readonly IPerm permissionManager;
+
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
-        const string FinVerano = "07/03/";
+        public const string FinVerano = "07/03/";
 
         const string InicioPrimerSemestre = "08/03/";
         const string FinPrimerSemestre = "31/07/";
@@ -23,7 +26,7 @@ namespace AppIntegrador.Controllers
         const string InicioSegundoSemestre = "01/08/";
         const string FinSegundoSemestre = "31/12/";
 
-        byte SemestreActual;
+        public readonly byte SemestreActual;
 
         readonly DateTime FechaActual;
 
@@ -39,6 +42,7 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
 
             FechaActual = DateTime.Now;
 
@@ -57,10 +61,17 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
         public ActionResult LlenarFormulario(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.LLENAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -108,6 +119,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -219,14 +236,14 @@ namespace AppIntegrador.Controllers
 
             foreach (var periodo in periodosSemestre)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
                 modelo.FormulariosSemestre.Add(formulario);
             }
 
             foreach (var periodo in periodosPasados)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
-                modelo.FormulariosPasados.Add(formulario);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
+                modelo.InsertarPasado(formulario);
             }
 
             return View(modelo);
@@ -286,7 +303,7 @@ namespace AppIntegrador.Controllers
             return formularios;
         }
 
-        private DateTime ObtenerFechaInicioSemestre()
+        public DateTime ObtenerFechaInicioSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)
@@ -305,7 +322,7 @@ namespace AppIntegrador.Controllers
             }
         }
 
-        private DateTime ObtenerFechaFinSemestre()
+        public DateTime ObtenerFechaFinSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)

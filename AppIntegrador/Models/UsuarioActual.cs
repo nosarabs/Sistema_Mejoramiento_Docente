@@ -18,5 +18,9 @@ namespace AppIntegrador.Models
         public string Perfil { get; set; }
         public string CodCarrera { get; set; }
         public string CodEnfasis { get; set; }
+    
+        public virtual Enfasis Enfasis { get; set; }
+        public virtual Perfil Perfil1 { get; set; }
+        public virtual Persona Persona { get; set; }
     }
 }

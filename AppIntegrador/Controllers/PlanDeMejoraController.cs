@@ -13,27 +13,36 @@ using System.Web.Mvc;
 using System.Web.UI;
 using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class PlanDeMejoraController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly IPerm permissionManager;
 
         public PlanDeMejoraController()
         {
             this.db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
         }
 
         public PlanDeMejoraController(DataIntegradorEntities mdb)
         {
             this.db = mdb;
+            permissionManager = new PermissionManager();
         }
 
         // GET: PlanDeMejora
         [HttpGet]
         public ActionResult Index(List<PlanDeMejora> planes = null)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             if (planes == null || planes.Count == 0)
             {
                 planes = db.PlanDeMejora.ToList();
@@ -49,6 +58,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Buscar(String nombrePlan)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             var planes = db.PlanDeMejora.Where(x => x.nombre.Contains(nombrePlan)).ToList();
             return Index(planes);
         }
@@ -58,6 +72,11 @@ namespace AppIntegrador.Controllers
         */
         public ActionResult Index(String nombre)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ObjectParameter count = new ObjectParameter("count", 999);
             ViewBag.cantidad = count.Value;
             ViewBag.nombre = nombre;
@@ -72,6 +91,11 @@ namespace AppIntegrador.Controllers
         */
         public ActionResult Crear(PlanDeMejora plan = null)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             if (plan == null)
             {
                 plan = new PlanDeMejora();
@@ -106,6 +130,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             // Objeto de ayuda business intelligence planes de mejora
             PlanDeMejoraBI planesHelper = new PlanDeMejoraBI();
 
@@ -131,6 +160,12 @@ namespace AppIntegrador.Controllers
             planesHelper.savePlan(plan);
             db.SaveChanges();
 
+            PlanDeMejora planTemporal = db.PlanDeMejora.Find(plan.codigo);
+            if (planTemporal != null && ProfeSeleccionado.Count > 0) 
+            {
+                this.EnviarCorreoSobreCreacionPlan(planTemporal, ProfeSeleccionado);
+            }
+
             return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
         }
 
@@ -139,6 +174,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult AnadirProfes(List<String> ProfeSeleccionado)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             List<Profesor> profesores = new List<Profesor>();
             List<String> ProfesoresNombreLista = new List<String>();
             ObjectParameter name_op;
@@ -162,6 +202,11 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult AnadirFormularios(List<String> FormularioSeleccionado)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             List<Formulario> formularios = new List<Formulario>();
             if (FormularioSeleccionado != null)
             {
@@ -180,6 +225,11 @@ namespace AppIntegrador.Controllers
         //retorna la vista de editar para que puedan ser añadidos los objetivos, acciones y acionables al mismo
         public ActionResult EditarPlanDeMejora(int id)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
             ViewBag.Editar = true;
@@ -194,6 +244,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditarPlanDeMejora2([Bind(Include = "codigo,nombre,fechaInicio,fechaFin")] PlanDeMejora planDeMejora)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(planDeMejora).State = EntityState.Modified;
@@ -216,13 +271,8 @@ namespace AppIntegrador.Controllers
         //Modificado por: Christian Asch
         //Historia a la que pertenece: MOS-1.4.2 "Como usuario administrativo quiero que se notifique a los involucrados sobre el inicio de un plan, objetivo o acción de mejora para que los involucrados puedan estar informados"
         //Envía un correo cada profesor que está asignado al plan avisándole que ha sido asignado.
-        private void EnviarCorreoSobreCreacionPlan(PlanDeMejora plan)
+        private void EnviarCorreoSobreCreacionPlan(PlanDeMejora plan, List<string> correos)
         {
-            List<string> involucrados = new List<string>();
-            foreach(Profesor profesor in plan.Profesor)
-            {
-                involucrados.Add(profesor.Correo);
-            }
             Utilities.EmailNotification emailNotification = new Utilities.EmailNotification();
 
             string asunto = "Creación de un nuevo plan de mejora";
@@ -233,12 +283,17 @@ namespace AppIntegrador.Controllers
             string textoAlt = "<body><p>" + texto + "</p></body>";
 
 
-            _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
+            _ = emailNotification.SendNotification(correos, asunto, texto, textoAlt);
         }
 
         // Method that deletes one "PlanDeMejora"
         public ActionResult BorrarPlan(int codigoPlan)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(codigoPlan);
             db.PlanDeMejora.Remove(planDeMejora);
             db.SaveChanges();
@@ -297,6 +352,11 @@ namespace AppIntegrador.Controllers
         //Permite actualizar la vista parcial de objetivos al crear uno nuevo
         public ActionResult RefrescarObjetivos(int Id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.IdPlan = Id;
             IEnumerable<AppIntegrador.Models.Objetivo> objetivosDePlan = db.Objetivo.Where(o => o.codPlan == Id);
             return PartialView("_objetivosDelPlan", objetivosDePlan);
@@ -308,6 +368,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Detalles(int id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
 
