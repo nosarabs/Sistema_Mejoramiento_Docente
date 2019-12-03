@@ -6,10 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="48cf068a0f3f4c30906dcf096558585b" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="DataIntegradorModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="18" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.AccionableEscala" Width="1.5" PointX="20.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.AccionablePorcentaje" Width="1.5" PointX="20.25" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataIntegradorModel.AccionableSiNo" Width="1.5" PointX="20.25" PointY="16.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.AccionDeMejora" Width="1.5" PointX="15.75" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Activa_por" Width="1.5" PointX="13.5" PointY="29.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.Carrera" Width="1.5" PointX="1.5" PointY="21.375" IsExpanded="true" />
@@ -49,10 +45,6 @@
         <EntityTypeShape EntityType="DataIntegradorModel.Usuario" Width="1.5" PointX="3" PointY="35.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.UsuarioActual" Width="1.5" PointX="10.5" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataIntegradorModel.UsuarioPerfil" Width="1.5" PointX="7.5" PointY="33" IsExpanded="true" />
-        <AssociationConnector Association="DataIntegradorModel.FK_Accionable_AccionDeMejora" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK_AccionableEscala_Accionable" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.FK_AccionableSiNo_Accionable" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_Objetivo" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.FK_AccionDeMejora_PlantillaAccMej" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.fkActivaPorFormulario" ManuallyRouted="false" />
@@ -110,9 +102,17 @@
         <AssociationConnector Association="DataIntegradorModel.ObjVsSeccion" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Origina" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Pertenece_a" ManuallyRouted="false" />
-        <AssociationConnector Association="DataIntegradorModel.Responsable_De" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.SeAsignaA" ManuallyRouted="false" />
         <AssociationConnector Association="DataIntegradorModel.Trabaja_en" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DataIntegradorModel.Accionable" Width="1.5" PointX="18" PointY="14.625" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionableEscala" Width="1.5" PointX="20.25" PointY="15.125" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionablePorcentaje" Width="1.5" PointX="20.25" PointY="12.25" />
+        <EntityTypeShape EntityType="DataIntegradorModel.AccionableSiNo" Width="1.5" PointX="20.25" PointY="18.5" />
+        <AssociationConnector Association="DataIntegradorModel.FK_Accionable_AccionDeMejora" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionableEscala_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.FK_AccionableSiNo_Accionable" />
+        <AssociationConnector Association="DataIntegradorModel.Responsable_De" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
