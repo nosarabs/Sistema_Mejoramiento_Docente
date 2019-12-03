@@ -11,9 +11,11 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class UAXPerfilXUsuario1_Result
+    public partial class CarrerasYEnfasisXUsuarioXPerfil_Result
     {
-        public string CodigoUA { get; set; }
-        public string NombreUA { get; set; }
+        public string NombreCarrera { get; set; }
+        public string CodCarrera { get; set; }
+        public string NombreEnfasis { get; set; }
+        public string CodEnfasis { get; set; }
     }
 }

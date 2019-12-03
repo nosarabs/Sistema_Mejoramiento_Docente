@@ -3,6 +3,7 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @correo varchar(50)
+	DECLARE @carne nchar(6)
 
 	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
 	--de insercion
@@ -11,17 +12,18 @@
 	Begin transaction TransaccionEstudiante;
 
 	DECLARE cursor_estudiante CURSOR
-	FOR SELECT Correo
+	FOR SELECT Correo, Carne
 	FROM inserted;
 	OPEN cursor_estudiante;
-	FETCH NEXT FROM cursor_estudiante INTO @correo
+	FETCH NEXT FROM cursor_estudiante INTO @correo, @carne
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
 			IF(@correo NOT IN (SELECT Correo FROM Estudiante) and @correo not like '')
 			BEGIN
-				INSERT INTO Estudiante SELECT * FROM inserted
+				INSERT INTO Estudiante (Correo, Carne)
+				values (@correo, @carne)
 			END
-			FETCH NEXT FROM cursor_estudiante INTO @correo
+			FETCH NEXT FROM cursor_estudiante INTO @correo, @carne
 		END
 	CLOSE cursor_estudiante
 	DEALLOCATE cursor_estudiante

@@ -21,7 +21,7 @@
 	BEGIN
 		if(not exists (select *  from Empadronado_en where CodCarrera= @codCarrera and CodEnfasis = @codEnfas and CorreoEstudiante = @correoEst) )
 		begin
-		insert into Empadronado_en select * from inserted
+		insert into Empadronado_en (CorreoEstudiante,CodCarrera,CodEnfasis) values (@correoEst, @codCarrera, @codEnfas)
 		end
 		FETCH NEXT FROM cursor_TrabajaEn INTO @correoEst, @codCarrera, @codEnfas
 	END

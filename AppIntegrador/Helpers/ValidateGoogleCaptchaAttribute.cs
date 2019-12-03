@@ -12,9 +12,24 @@ namespace AppIntegrador.Helpers
 {
     public class ValidateGoogleCaptchaAttribute : ActionFilterAttribute
     {
+        public string type { get; set; }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (CurrentUser.getUserLoginFailures() >= 3)
+            int value = 0;
+            int target = 1;
+
+            if (type == "Login")
+            {
+                value = CurrentUser.getUserLoginFailures();
+                target = CurrentUser.getMaxUserLoginFailures();
+            }
+            else if (type == "Always")
+            {
+                value = 1;
+                target = 1;
+            }
+
+            if (value >= target)
             {
                 const string urlToPost = "https://www.google.com/recaptcha/api/siteverify";
                 const string secretKey = SiteSettings.GoogleRecaptchaSecretKey;

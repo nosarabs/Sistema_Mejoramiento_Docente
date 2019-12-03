@@ -10,12 +10,15 @@ using System.Web.Mvc;
 using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class PreguntaConOpcionesDeSeleccionController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+
+        private readonly IPerm permissionManager = new PermissionManager();
 
         [HttpGet]
         public ActionResult Pregunta_con_opciones_de_seleccion()
@@ -26,6 +29,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult OpcionesDeSeleccion(int? i)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PREGUNTAS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.i = i;
             return PartialView();
         }
@@ -40,6 +48,11 @@ namespace AppIntegrador.Controllers
         //the first parameter is the option that we choose and the second parameter will use the textbox value  
         public ActionResult Index(string input0, string input1, string input2, string input3)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_PREGUNTAS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             var pregunta = db.Pregunta;
 
             ViewBag.filtro = "Ninguno";
@@ -158,6 +171,12 @@ namespace AppIntegrador.Controllers
         // GET: PreguntaConOpcionesDeSeleccion/Details/5
         public ActionResult Details(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_DETALLES_PREGUNTA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -179,6 +198,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult Create()
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_PREGUNTA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             return View();
         }
 
@@ -239,6 +263,12 @@ namespace AppIntegrador.Controllers
         // GET: PreguntaConOpcionesDeSeleccion/Edit/5
         public ActionResult Edit(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_PREGUNTA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -272,6 +302,12 @@ namespace AppIntegrador.Controllers
         // GET: PreguntaConOpcionesDeSeleccion/Delete/5
         public ActionResult Delete(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_PREGUNTA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
