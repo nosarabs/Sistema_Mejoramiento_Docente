@@ -83,6 +83,9 @@
                     if (data.tipoError == 4) {
                         sweetAlert("Error", "La asignación no se puede efectuar.", "error");
                     }
+                    if (data.tipoError == 5) {
+                        $(location).attr('href', '/Formularios/Index');
+                    }
                 } else {
                     // Sino, mensaje de exito. Y redirecciona al index de formularios
                     swal({
