@@ -27,10 +27,14 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             // Primero analizamos tomamos la totalidad de los planes de mejora
             var totalPlanes = db.PlanDeMejora.ToList();
             var ultimoCodigo = -1;
-
-            foreach (var item in totalPlanes) {
-                ultimoCodigo = item.codigo;
+            if (totalPlanes != null) 
+            {
+                foreach (var item in totalPlanes)
+                {
+                    ultimoCodigo = item.codigo;
+                }
             }
+            
             plan.codigo = ultimoCodigo + 1;
             
             // Este metodo tambien deja el borrado en 0 ya que es un plan que se esta creando
@@ -101,25 +105,33 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
        */
         public void insertPreguntasEnAcciones(ICollection<Objetivo> objetivos, Dictionary<String, String> PreguntaConAccion, DataIntegradorEntities db)
         {
-            foreach (var obj in objetivos) 
+            if (objetivos != null) 
             {
-                ICollection<AccionDeMejora> coleccionAccionesDeMejora = obj.AccionDeMejora;
-                foreach (var accion in coleccionAccionesDeMejora)
+                foreach (var obj in objetivos)
                 {
-                    foreach (var item in PreguntaConAccion)
+                    ICollection<AccionDeMejora> coleccionAccionesDeMejora = obj.AccionDeMejora;
+                    if (coleccionAccionesDeMejora != null && PreguntaConAccion != null) 
                     {
-                        var acionableAsociado = item.Key;
-                        int size = acionableAsociado.Length;
-                        acionableAsociado = acionableAsociado.Substring(0, size - 3);
-                        var preguntaAsociada = item.Value;
-                        if (accion.descripcion == acionableAsociado) 
+                        foreach (var accion in coleccionAccionesDeMejora)
                         {
-                            var preguntaEncontrada = db.Pregunta.Find(preguntaAsociada);
-                            accion.Pregunta.Add(preguntaEncontrada);
+                            foreach (var item in PreguntaConAccion)
+                            {
+                                var acionableAsociado = item.Key;
+                                int size = acionableAsociado.Length;
+                                acionableAsociado = acionableAsociado.Substring(0, size - 3);
+                                var preguntaAsociada = item.Value;
+                                if (accion.descripcion == acionableAsociado)
+                                {
+                                    var preguntaEncontrada = db.Pregunta.Find(preguntaAsociada);
+                                    accion.Pregunta.Add(preguntaEncontrada);
+                                }
+                            }
                         }
                     }
+                    
                 }
             }
+            
         }
 
         /*
@@ -244,11 +256,14 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
             var listaProfes = plan.Profesor;
 
-            foreach (var prof in listaProfes)
+            if (listaProfes != null) 
             {
-                dt.Rows.Add(plan.codigo, prof.Correo);
+                foreach (var prof in listaProfes)
+                {
+                    dt.Rows.Add(plan.codigo, prof.Correo);
+                }
             }
-
+            
             return dt;
         }
 
