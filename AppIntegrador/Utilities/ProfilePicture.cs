@@ -13,7 +13,7 @@ namespace AppIntegrador.Utilities
     public class ProfilePicture
     {
         // Posibles colores de fondo
-        private List<string> _BackgroundColours = new List<string> { "339966", "3366CC", "CC33FF", "FF5050" };
+        private List<string> _BackgroundColours = new List<string> { "3366CC" };
 
         public MemoryStream GenerateCircle(string firstName, string lastName)
         {
