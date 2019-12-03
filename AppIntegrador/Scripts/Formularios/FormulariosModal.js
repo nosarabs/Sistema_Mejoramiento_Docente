@@ -22,7 +22,6 @@ function GuardarSeccion() {
     var Nombre = document.getElementById("sectionName").value;
 
     resultado = { Codigo, Nombre };
-    console.log(JSON.stringify(resultado));
 
     $.ajax({
         contentType: "application/json; charset=utf-8",
@@ -39,8 +38,9 @@ function GuardarSeccion() {
                     dataType: "html",
                     success: function (result) {
                         $("#ModalAgregarSecciones").html(result);
-                        agregarsecciones.init()
-                        CerrarCrearSeccion();                        
+                        CerrarCrearSeccion();
+                        DesactivarSeccionesAgregadas();
+                        MarcarSeccionesSeleccionadas();
                     }
                 })
                 $.ajax({

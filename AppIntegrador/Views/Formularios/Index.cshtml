@@ -75,6 +75,7 @@
                     <td>
                         @Html.ActionLink("Llenar", "LlenarFormulario", "LlenarFormulario", new { @class = "btn-blancoUCR", id = item.Codigo }, null) |
                         @Html.ActionLink("Vista previa", "VistaPrevia", "LlenarFormulario", new { id = item.Codigo }, null) |
+                        @Html.ActionLink("Editar", "Edit", null, new { codForm = item.Codigo }, null) |
                         @Html.ActionLink("Asignar", "Index", "AsignacionFormularios", new { id = item.Codigo }, null)
 
                     </td>

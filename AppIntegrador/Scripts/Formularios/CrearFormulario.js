@@ -33,11 +33,9 @@ $("#ActualizarVistaFiltros").click(function () {
 })
 
 function BorrarPregunta(Scod, Pcod) {
-    console.log("Trivial")
     var SCodigo = Scod
     var PCodigo = Pcod
     var resultado = { SCodigo, PCodigo };
-    console.log(JSON.stringify(resultado));
     $.ajax({
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -46,10 +44,8 @@ function BorrarPregunta(Scod, Pcod) {
         dataType: "json",
         traditional: true,
         success: function (data) {
-            console.log("ak7")
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
-                console.log("ak6+1")
             }
         },
         error: function () {
@@ -81,6 +77,7 @@ function BorrarSeccion(Scod) {
         success: function (data) {
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
+                HabilitarSeccionEnBanco(SCodigo);
             }
         },
         error: function () {
@@ -103,6 +100,7 @@ function ActualizarSecciones() {
             resultado = [];
             console.log(data);
             $('#seccionesActuales').html(data);
+            DesactivarSeccionesAgregadas();
         },
         error: function () {
 
@@ -110,11 +108,14 @@ function ActualizarSecciones() {
     });
 }
 
-function ValidarCodigo(abrirModal) {
+var guardandoCambios = 0;
+
+function ValidarCodigo() {
     var Codigo = document.getElementById("textCode").value;
     var Nombre = document.getElementById("textName").value;
 
     if (Codigo.length > 0 && Nombre.length > 0) {
+        guardandoCambios = 1;
         document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
         resultado = { Codigo, Nombre };
 
@@ -138,10 +139,8 @@ function ValidarCodigo(abrirModal) {
                         document.getElementById("formularioCreado").setAttribute("value", "1");
                         document.getElementById("codigoViejo").setAttribute("value", Codigo);
 
-                        if (abrirModal != 0) {
-                            CrearModal();
-                        }
                         document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+                        document.getElementById("titulo").innerHTML = "Editar formulario";
                     }
                     else {
                         document.getElementById("validacion-codigo").textContent = "Código en uso";
@@ -152,12 +151,20 @@ function ValidarCodigo(abrirModal) {
             });
         }
         else {
-            ModificarFormulario(abrirModal);
+            ModificarFormulario();
         }
+        guardandoCambios = 0;
     }
 }
 
-function ModificarFormulario(abrirModal) {
+function AbrirSeccionesModal() {
+    while (guardandoCambios == 1) {
+        ;
+    }
+    CrearModal();
+}
+
+function ModificarFormulario() {
     document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
     var codViejo = document.getElementById("codigoViejo").value;
     var codNuevo = document.getElementById("textCode").value;
@@ -179,9 +186,6 @@ function ModificarFormulario(abrirModal) {
                 $("#textCode").removeClass("error");
                 document.getElementById("codigoViejo").setAttribute("value", codNuevo);
 
-                if (abrirModal != 0) {
-                    CrearModal();
-                }
                 document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
             }
             else {

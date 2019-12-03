@@ -39,6 +39,6 @@ namespace AppIntegrador.Models
         public string descripcion2 { get; set; }
         public Nullable<System.DateTime> fechaInicio3 { get; set; }
         public Nullable<System.DateTime> fechaFin3 { get; set; }
-        public string tipo { get; set; }
+        public Nullable<int> progreso { get; set; }
     }
 }
