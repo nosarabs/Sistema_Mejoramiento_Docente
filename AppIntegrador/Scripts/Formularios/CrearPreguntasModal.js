@@ -26,7 +26,10 @@ function GuardarPregunta() {
     var Codigo = document.getElementById("PreguntaCodigo").value;
     var Enunciado = document.getElementById("PreguntaEnunciado").value;
     var Tipo = document.getElementById("Tipo").value;
-    var Justificacion = document.getElementById("txtJustificationNumber").value;
+
+    if (Tipo != "L") {
+        var Justificacion = document.getElementById("txtJustificationNumber").value;
+    }
 
     Pregunta = { Codigo, Enunciado, Tipo };
     TextoOpciones = []
