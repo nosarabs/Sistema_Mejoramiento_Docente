@@ -118,6 +118,9 @@ namespace AppIntegrador.Controllers
             //Agregando las secciones a los objetivos
             planesHelper.insertSeccionesEnObjetivos(plan.Objetivo, SeccionConObjetivo, db);
 
+            //Agregando las preguntas a las acciones
+            planesHelper.insertPreguntasEnAcciones(plan.Objetivo, PreguntaConAccion, db);
+
             //Agrgando los formularios al plan de mejora
             planesHelper.insertFormularios(plan, FormularioSeleccionado, db);
 

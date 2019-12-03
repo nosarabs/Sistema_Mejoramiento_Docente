@@ -76,7 +76,6 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                     foreach (var item in SeccionConObjetivo)
                     {
                         string objetivoName = item.Key;
-                        // PAR EVITAR EL ARREGLO AL FINAL DEL NOMBRE
                         int size = objetivoName.Length;
                         objetivoName = objetivoName.Substring(0, size-3);
                         string seccionCodigo = item.Value;
@@ -84,6 +83,39 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                         {
                             var seccionEncontrada = db.Seccion.Find(seccionCodigo);
                             obj.Seccion.Add(seccionEncontrada);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        /*
+            EFE: Inserta las preguntas que se asocian a cada accion de mejora
+            REQ: 
+                    PreguntaConAccion: relaciones entre los objetivos y las secciones
+                            objetivos: colleccion de objetivos
+                                   db: instancia de la base de datos
+            MOD:
+               las acciones de mejora de los objetivos
+       */
+        public void insertPreguntasEnAcciones(ICollection<Objetivo> objetivos, Dictionary<String, String> PreguntaConAccion, DataIntegradorEntities db)
+        {
+            foreach (var obj in objetivos) 
+            {
+                ICollection<AccionDeMejora> coleccionAccionesDeMejora = obj.AccionDeMejora;
+                foreach (var accion in coleccionAccionesDeMejora)
+                {
+                    foreach (var item in PreguntaConAccion)
+                    {
+                        var acionableAsociado = item.Key;
+                        int size = acionableAsociado.Length;
+                        acionableAsociado = acionableAsociado.Substring(0, size - 3);
+                        var preguntaAsociada = item.Value;
+                        if (accion.descripcion == acionableAsociado) 
+                        {
+                            var preguntaEncontrada = db.Pregunta.Find(preguntaAsociada);
+                            accion.Pregunta.Add(preguntaEncontrada);
                         }
                     }
                 }
