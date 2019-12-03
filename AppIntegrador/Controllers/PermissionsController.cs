@@ -219,6 +219,7 @@ namespace AppIntegrador.Controllers
                 foreach (var codigoEnfasis in listaEnfasis)
                 {
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
+                    /*TAM-11.1: En la página de administración de perfiles y permisos solo se muestran las carreras y énfasis en los que el usuario tiene potestad en los dropdowns.*/
                     if (permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERFILES_USUARIOS) ||
                         permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERMISOS_PERFILES))
                         enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);

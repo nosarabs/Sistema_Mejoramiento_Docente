@@ -54,15 +54,12 @@ namespace AppIntegrador.Models
                 this.Perfiles.Add(new PerfilCodigo(perfil.Nombre, count++));
             }
 
-            /*this.Carreras = db.Carrera.ToList();
-            this.EnfasisView = db.Enfasis.ToList();*/
-
             List<Carrera> CarrerasUsuario = new List<Carrera>();
             List<Enfasis> EnfasisUsuario = new List<Enfasis>();
 
             using (var context = new DataIntegradorEntities())
             {
-
+                /*TAM-11.1: En la página de administración de permisos y perfiles solo se muestran las carreras y énfasis en las que el usuario tiene postestad, en los dropdowns.*/
                 var tuplas = from Dato in db.CarrerasYEnfasisXUsuarioXPerfil(CurrentUser.getUsername(), CurrentUser.getUserProfile())
                                     select Dato;
                 foreach (var tupla in tuplas) {
