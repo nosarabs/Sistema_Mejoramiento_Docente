@@ -517,16 +517,17 @@ namespace AppIntegrador.Tests.Controllers
         [TestInitialize]
         public void TestSetup()
         {
+            CurrentUser.deleteCurrentUser("admin@mail.com");
             // We need to setup the Current HTTP Context as follows:            
 
             // Step 1: Setup the HTTP Request
             var httpRequest = new HttpRequest("", "http://localhost/", "");
 
             // Step 2: Setup the HTTP Response
-            var httpResponce = new HttpResponse(new StringWriter());
+            var httpResponse = new HttpResponse(new StringWriter());
 
             // Step 3: Setup the Http Context
-            var httpContext = new HttpContext(httpRequest, httpResponce);
+            var httpContext = new HttpContext(httpRequest, httpResponse);
             var sessionContainer =
                 new HttpSessionStateContainer("admin@mail.com",
                                                new SessionStateItemCollection(),
@@ -552,6 +553,12 @@ namespace AppIntegrador.Tests.Controllers
             // Step 4: Assign the Context
             HttpContext.Current = httpContext;
             HttpContext.Current.User = principal;
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
     }

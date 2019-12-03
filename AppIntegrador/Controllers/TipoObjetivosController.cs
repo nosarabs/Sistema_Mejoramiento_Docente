@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 //MOS-8 Como Usuario administrativo	quiero poder agregar tipos de objetivos para dar opciones a la hora de crear los objetivos
 //Tarea 1: "1. Es necesario agregar un scaffold de las operaciones de CRUD de los tipos de objetivos
@@ -18,20 +19,28 @@ namespace AppIntegrador.Controllers
     public class TipoObjetivosController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly IPerm permissionManager;
 
         public TipoObjetivosController()
         {
+            permissionManager = new PermissionManager();
         }
         //Para pruebas
         public TipoObjetivosController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
 
         // GET: TipoObjetivos
         public ActionResult Index()
-        {
+{
+            if (!permissionManager.IsAuthorized(Permission.VER_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             return View("Index", db.TipoObjetivo.ToList());
         }
 
@@ -39,6 +48,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             return View("Crear");
         }
 
@@ -49,6 +63,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (ModelState.IsValid)
             {
                 db.TipoObjetivo.Add(tipoObjetivo);
@@ -61,6 +80,11 @@ namespace AppIntegrador.Controllers
         //Para pruebas
         public ActionResult Create([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo, DataIntegradorEntities db)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (ModelState.IsValid)
             {
                 db.TipoObjetivo.Add(tipoObjetivo);
@@ -76,6 +100,11 @@ namespace AppIntegrador.Controllers
         // GET: TipoObjetivos/Edit/5
         public ActionResult Edit(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -95,7 +124,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "nombre")] TipoObjetivo tipoObjetivo)
         {
-
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(tipoObjetivo).State = EntityState.Modified;
@@ -108,6 +141,11 @@ namespace AppIntegrador.Controllers
         // GET: TipoObjetivos/Delete/5
         public ActionResult Delete(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -125,6 +163,11 @@ namespace AppIntegrador.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id, bool confirmed)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_OBJETIVOS))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (confirmed)
             {
                 TipoObjetivo tipoObjetivo = db.TipoObjetivo.Find(id);

@@ -1,4 +1,5 @@
 ﻿using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -12,6 +13,8 @@ namespace AppIntegrador.Controllers
     public class LlenarFormularioController : Controller
     {
         private DataIntegradorEntities db;
+
+        private readonly IPerm permissionManager;
 
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
@@ -39,6 +42,7 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
 
             FechaActual = DateTime.Now;
 
@@ -57,10 +61,17 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
         public ActionResult LlenarFormulario(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.LLENAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -108,6 +119,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
