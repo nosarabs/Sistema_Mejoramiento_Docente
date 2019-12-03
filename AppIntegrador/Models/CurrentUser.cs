@@ -128,6 +128,7 @@ namespace AppIntegrador.Models
                     //throw exception;
                 }
             }
+            /* Codigo que no permite dos sesiones simultaneas
             else
             {
                 deleteCurrentUser(newUser.CorreoUsuario);
@@ -139,7 +140,7 @@ namespace AppIntegrador.Models
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
-            }
+            }*/
             // Preparar imagen de perfil predeterminada
             ProfilePicture picture = new ProfilePicture();
             Persona persona = db.Persona.Find(username);
