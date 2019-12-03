@@ -22,11 +22,6 @@ namespace AppIntegrador.Models
         public string NumeroGrupo { get; set; }
         public string Semestre { get; set; }
         public string Anno { get; set; }
-        public string CorreoProfesorImparte { get; set; }
-        public string SiglaCursoImparte { get; set; }
-        public string NumeroGrupoImparte { get; set; }
-        public string SemestreGrupoImparte { get; set; }
-        public string AnnoGrupoImparte { get; set; }
         public string CorreoMatricula { get; set; }
         public string SiglaCursoMatricula { get; set; }
         public string NumeroGrupoMatricula { get; set; }

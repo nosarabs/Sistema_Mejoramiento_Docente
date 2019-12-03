@@ -3,6 +3,13 @@
 	INSTEAD OF INSERT
 	AS
 	DECLARE @correo varchar(50)
+
+	--Nivel de aislamiento maximo porque no podemos permitir modificaciones o nuevas inserciones mientras revisamos las condiciones
+	--de insercion
+	set transaction isolation level serializable;
+	set implicit_transactions off;
+	Begin transaction TransaccionEstudiante;
+
 	DECLARE cursor_estudiante CURSOR
 	FOR SELECT Correo
 	FROM inserted;
@@ -18,3 +25,7 @@
 		END
 	CLOSE cursor_estudiante
 	DEALLOCATE cursor_estudiante
+
+	Commit Transaction TransaccionEstudiante;
+	--Volver al nivel de aislamiento por default
+	set transaction isolation level read committed;
