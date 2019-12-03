@@ -57,7 +57,7 @@ namespace AppIntegrador.Controllers
          * necesarios para la asignar un formulario a uno o más grupos
          */
         [HttpPost]
-        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado)
+        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
@@ -119,6 +119,48 @@ namespace AppIntegrador.Controllers
             {
                 return Json(new { error = false, tipoError = 4 });
             }
+
+            List<FechasSolapadasInfo> fechasJson = new List<FechasSolapadasInfo>();
+            bool haySolapamiento = false;
+
+            foreach(var grupo in grupos)
+            {
+                FechasSolapadasInfo fechas = VerificarFechasSolapadas(codigoFormulario,
+                    grupo.Anno,
+                    grupo.Semestre,
+                    grupo.NumGrupo,
+                    (DateTime)fechaInicio,
+                    (DateTime)fechaFin);
+
+                // Si no se solapa, el metodo devuelve null
+                if(fechas != null)
+                {
+                    fechas.PeriodoOriginal.FCodigo = codigoFormulario;
+                    fechas.PeriodoOriginal.CSigla = grupo.SiglaCurso;
+                    fechas.PeriodoOriginal.GAnno = grupo.Anno;
+                    fechas.PeriodoOriginal.GSemestre = grupo.Semestre;
+                    fechas.PeriodoOriginal.GNumero = grupo.NumGrupo;
+
+                    // Si las fechas son diferentes, es porque alguna se solapa.
+                    if(fechas.FechaInicioNueva != null || fechas.FechaFinNueva != null)
+                    {
+                        fechasJson.Add(fechas);
+                        haySolapamiento = true;
+                    }
+                }
+            }
+
+            string originalInicio = FormularioAsignado.FormatearFecha((DateTime)fechaInicio);
+            string originalFin = FormularioAsignado.FormatearFecha((DateTime)fechaFin);
+
+            if (haySolapamiento && !extenderPeriodo)
+            {
+                originalInicio = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaInicio);
+                originalFin = FormularioAsignado.FormatearFecha(fechasJson.FirstOrDefault().PeriodoOriginal.FechaFin);
+
+                return Json(new { error = false, tipoError = 6, inicio = originalInicio, fin = originalFin });
+            }
+
             // Itera por los grupos obtenidos, asignandoles el formulario
             for (int index = 0; index < gruposAsociadosLista.Count; ++index)
             {
@@ -126,7 +168,30 @@ namespace AppIntegrador.Controllers
                 // Procedimiento que almacena en las relaciones Activa_Por, Activa_Por_Periodo
                 db.AsignarFormulario(codigoFormulario, grupoActual.SiglaCurso, grupoActual.NumGrupo, grupoActual.Anno, grupoActual.Semestre, fechaInicio, fechaFin);
             }
-            return Json(new { error = true });
+
+            if(haySolapamiento)
+            {
+                FechasSolapadasInfo fecha = fechasJson.FirstOrDefault();
+                if(fecha.FechaInicioNueva != null)
+                {
+                    originalInicio = FormularioAsignado.FormatearFecha((DateTime)fechaInicio);
+                }
+                else
+                {
+                    originalInicio = FormularioAsignado.FormatearFecha(fecha.PeriodoOriginal.FechaInicio);
+                }
+
+                if(fecha.FechaFinNueva != null)
+                {
+                    originalFin = FormularioAsignado.FormatearFecha((DateTime)fechaFin);
+                }
+                else
+                {
+                    originalFin = FormularioAsignado.FormatearFecha(fecha.PeriodoOriginal.FechaFin);
+                }
+            }
+
+            return Json(new { error = true, inicio = originalInicio, fin = originalFin });
         }
 
         private bool convertNullStringToNull(ref string convertedString)
@@ -191,6 +256,85 @@ namespace AppIntegrador.Controllers
 
             // Se envía el correo formado a todos los estudiantes involucrados
             _ = emailNotification.SendNotification(involucrados, asunto, texto, textoAlt);
+        }
+
+        public FechasSolapadasInfo VerificarFechasSolapadas(string FCodigo,
+                                                    int GAnno,            
+                                                    byte GSemestre,
+                                                    byte GNumero,
+                                                    DateTime fechaInicio,
+                                                    DateTime fechaFin)
+        {
+            // Verificar si se solapa la fecha de inicio del form
+            var inicioSolapada = from p in db.Periodo_activa_por
+                                 where p.FCodigo == FCodigo &&
+                                 p.GAnno == GAnno &&
+                                 p.GSemestre == GSemestre &&
+                                 p.GNumero == GNumero &&
+                                 (fechaInicio <= p.FechaInicio && p.FechaInicio <= fechaFin)
+                                 select p.FechaInicio;                         
+
+            // Verificar si se solapa la fecha de fin del form
+            var finSolapada = from p in db.Periodo_activa_por
+                              where p.FCodigo == FCodigo &&
+                              p.GAnno == GAnno &&
+                              p.GSemestre == GSemestre &&
+                              p.GNumero == GNumero &&
+                              (fechaInicio <= p.FechaFin && p.FechaFin <= fechaFin)
+                              select p.FechaFin;
+
+
+            FechasSolapadasInfo fechas = new FechasSolapadasInfo();
+            Periodo_activa_por original = new Periodo_activa_por();
+            
+            if(!inicioSolapada.Any() && !finSolapada.Any())
+            { 
+                return null;
+            }
+
+            // Si la fecha se solapa
+            if(inicioSolapada.Any())
+            {
+                // Guardo la original
+                original.FechaInicio = inicioSolapada.FirstOrDefault();
+                // Guardo la nueva
+                fechas.FechaInicioNueva = fechaInicio;
+
+                if(!finSolapada.Any())
+                {
+                    original.FechaFin = (from p in db.Periodo_activa_por
+                                        where p.FCodigo == FCodigo &&
+                                        p.GAnno == GAnno &&
+                                        p.GSemestre == GSemestre &&
+                                        p.GNumero == GNumero &&
+                                        p.FechaInicio == original.FechaInicio
+                                        select p.FechaFin).FirstOrDefault();
+                }
+            }
+
+            // Si la fecha se solapa
+            if(finSolapada.Any())
+            {
+                // Guardo la original
+                original.FechaFin = finSolapada.FirstOrDefault();
+                // Guardo la nueva
+                fechas.FechaFinNueva = fechaFin;
+
+                if(!inicioSolapada.Any())
+                {
+                    original.FechaInicio = (from p in db.Periodo_activa_por
+                                         where p.FCodigo == FCodigo &&
+                                         p.GAnno == GAnno &&
+                                         p.GSemestre == GSemestre &&
+                                         p.GNumero == GNumero &&
+                                         p.FechaFin == original.FechaFin
+                                         select p.FechaInicio).FirstOrDefault();
+                }
+            }
+
+            fechas.PeriodoOriginal = original;
+
+            return fechas;
         }
     }
 }

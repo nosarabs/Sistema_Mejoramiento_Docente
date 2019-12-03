@@ -199,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Comparador.cs" />
     <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
     <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
     <Compile Include="Helpers\SiteSettings.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Models\Estudiante.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FechasSolapadasInfo.cs" />
     <Compile Include="Models\FiltrosModelContext.cs" />
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
