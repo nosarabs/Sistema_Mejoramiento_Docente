@@ -66,7 +66,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="button" value="Profesores asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresVer')" />
+                                    <input type="button" value="Profesores asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresDeUnPlanVer')" />
                                 </div>
                             </div>
                         </div>
@@ -123,8 +123,10 @@
     </div>
 </div>
 
-@{Html.RenderPartial("_ModalListaProfesores");}
-@{Html.RenderPartial("_ModalListaFormularios", Model.Formulario);}
+@{Html.RenderPartial("_ModalListaProfesoresDeUnPlan");}
+@{Html.RenderPartial("_ModalListaFormularioDeUnPlan");}
+@{Html.RenderPartial("../Objetivos/_ModalSeccionesLista");}
+@{Html.RenderPartial("../AccionDeMejora/_ModalPreguntasLista");}
 
 @section Scripts{
 
@@ -132,6 +134,8 @@
         function seleccionaObjetivoLista(plan, obj) {
             var content = '<h2>Acciones de mejora </h2>';
             document.getElementById('encabezadoAccion').innerHTML = content;
+            document.getElementById('encabezadoAccionable').innerHTML = "";
+            document.getElementById('divAccionables').innerHTML = "";
             actualizarAccionesDeMejora(plan, obj);
         };
 
@@ -182,6 +186,38 @@
             });
         }
 
+        function verSeccionesAsocidas(plan, obj) {
+            $.ajax({
+                type: 'GET',
+                url: '/Objetivos/TablaSeccionesAsociadas',
+                data: {
+                    //parámetros para el controlador
+                    id: plan,
+                    objt: obj
+                },
+                success: function (result) {
+                    $('#ModalListaSeccionesInterno').html(result);
+                    modalGen('#ModalSeccionesLista');
+                }
+            });
+        }
+
+        function verPreguntasAsociadas(plan, obj, desc) {
+            $.ajax({
+                type: 'GET',
+                url: '/AccionDeMejora/TablaPreguntasAsociadas',
+                data: {
+                    //parámetros para el controlador
+                    id: plan,
+                    objt: obj,
+                    des: desc
+                },
+                success: function (result) {
+                    $('#ModalListaAccionableInterno').html(result);
+                    modalGen('#ModalPreguntaLista');
+                }
+            });
+        }
 
     </script>
 

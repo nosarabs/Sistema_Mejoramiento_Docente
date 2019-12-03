@@ -64,7 +64,7 @@ namespace AppIntegrador.Controllers
             permissionManager = new PermissionManager();
         }
 
-        public ActionResult LlenarFormulario(string id, string sigla, byte num, int anno, byte semestre)
+        public ActionResult LlenarFormulario(string id, string sigla, byte? num, int? anno, byte? semestre)
         {
             if (!permissionManager.IsAuthorized(Permission.LLENAR_FORMULARIO))
             {
@@ -72,12 +72,17 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("../Home/Index");
             }
 
+            if(num == null || anno == null || semestre == null)
+            {
+                return RedirectToAction("MisFormularios");
+            }
+
             Grupo grupo = new Grupo
             {
                 SiglaCurso = sigla,
-                Anno = anno,
-                NumGrupo = num,
-                Semestre = semestre
+                Anno = (int)anno,
+                NumGrupo = (byte)num,
+                Semestre = (byte)semestre
             };
             if (HttpContext == null)
             {
@@ -188,7 +193,7 @@ namespace AppIntegrador.Controllers
             if (pregunta != null && !string.IsNullOrEmpty(CodigoSeccion) && respuestas != null)
             {
 
-                if (pregunta.Pregunta.Tipo == "L")
+                if (pregunta.Pregunta.Tipo == "L" && pregunta.RespuestaLibreOJustificacion != null)
                 {
                     db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
                                                             respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);

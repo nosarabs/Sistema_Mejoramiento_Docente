@@ -200,3 +200,7 @@ function ModificarFormulario() {
         }
     });
 }
+
+function CambiosSinGuardar() {
+    document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+}

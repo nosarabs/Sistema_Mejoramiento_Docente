@@ -1,6 +1,6 @@
-﻿@model IEnumerable<AppIntegrador.Models.Formulario>
+﻿
 @{
-    ViewBag.Title = "Listar Formularios";
+    var formularios = (List<AppIntegrador.Models.Formulario>)ViewBag.Formularios;
 }
 
 <div class="form-horizontal card-group">
@@ -11,10 +11,10 @@
                     <div id="ModalVerFormulariosInterno" style="width:auto">
                         <h4> Formularios asociados al plan </h4>
 
-                        @if (Model.Count() == 0)
+                        @if (formularios.Count() == 0)
                         {
                             <div>
-                                Aún no hay formularios.
+                                Aún no se ha relacionado el plan con formularios.
                             </div>
                         }
                         else
@@ -33,21 +33,21 @@
                                     </tr>
                                 </thead>
                                 <thead>
-                                    @foreach (var formulario in Model)
+                                    @foreach (var form in formularios)
                                     {
                                         <tr>
                                             <td>
-                                                @formulario.Nombre
+                                                @form.Nombre
                                             </td>
                                             <td>
-                                                @formulario.Codigo
+                                                @form.Codigo
                                             </td>
                                         </tr>
                                     }
                                 </thead>
                             </table>
                         }
-                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
@@ -56,3 +56,4 @@
         </div>
     </div>
 </div>
+

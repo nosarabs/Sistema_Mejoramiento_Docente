@@ -1786,5 +1786,22 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerSeccionesAsociadasAObjetivo", idPlanParameter, nombreObjParameter);
         }
+    
+        public virtual ObjectResult<string> ObtenerPreguntasDeAccionDeMejora(Nullable<int> idPlan, string nombreObj, string descripcion)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeAccionDeMejora", idPlanParameter, nombreObjParameter, descripcionParameter);
+        }
     }
 }

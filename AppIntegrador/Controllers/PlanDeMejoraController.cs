@@ -298,7 +298,8 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("../Home/Index");
             }
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(codigoPlan);
-            db.PlanDeMejora.Remove(planDeMejora);
+            //db.PlanDeMejora.Remove(planDeMejora);
+            db.BorrarPlan(codigoPlan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -374,21 +375,27 @@ namespace AppIntegrador.Controllers
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
 
-            List<String> ProfesoresNombreLista = new List<String>();
+            List<AppIntegrador.Models.Persona> profesoresNombreLista = new List<Persona>();
 
-            ViewBag.ProfesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(id).ToList();
-            String name = "NombreCompleto";
-            ObjectParameter name_op;
-            foreach (var profe in ViewBag.ProfesoresLista)
+            List<string> profesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(id).ToList();
+            
+            foreach (var profe in profesoresLista)
             {
-                name_op = new ObjectParameter(name, "");
-                db.GetTeacherName(profe, name_op);
-                ProfesoresNombreLista.Add(name_op.Value.ToString());
+                profesoresNombreLista.Add(db.Persona.Find(profe));
             }
-            ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
 
-            ViewBag.FormulariosLista = db.ObtenerFormulariosAsociados(id);
+            ViewBag.ProfesoresNombreLista = profesoresNombreLista;
 
+            List< AppIntegrador.Models.Formulario> formulariosNombreLista = new List<Formulario>();
+            List<string> formulariosLista = db.ObtenerFormulariosAsociados(id).ToList();
+
+            foreach (var form in formulariosLista)
+            {
+                formulariosNombreLista.Add(db.Formulario.Find(form));
+            }
+
+            ViewBag.Profesores = profesoresNombreLista;
+            ViewBag.Formularios = formulariosNombreLista;
             return View("DetallesPlanDeMejora", planDeMejora);
         }
     }
