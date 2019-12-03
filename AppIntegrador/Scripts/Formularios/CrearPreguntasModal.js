@@ -19,6 +19,10 @@ function ImportarBancoPreguntas() {
     });
 }
 
+function CerrarModalPreguntas() {
+    $('ModalAgregarPregunta').modal("hide");
+}
+
 function CerrarCrearPregunta() {
     $('#ModalCrearPregunta').hide("fast");
     $('#BancoDePreguntas').show("fast");
@@ -66,8 +70,9 @@ function GuardarPregunta() {
                 $("#agregar-opcion").addClass("error");
             }
             if (data.MinMax) {
-                document.getElementById("min").textContent = "El primer número debe ser menor al segundo";
+
                 $("#min").addClass("error");
+                $("#max").addClass("error");
             }
             if (data.guardadoExitoso) {
                 $.ajax({

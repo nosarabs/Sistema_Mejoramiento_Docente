@@ -25,6 +25,7 @@ function addPreguntaToSeccion() {
             console.log("todo bien")
             if (data.insertadoExitoso) {
                 console.log("todo bien x2")
+                $('#ModalAgregarPregunta').modal('hide');$('body').removeClass('modal-open');$('.modal-backdrop').remove();
                 ActualizarSecciones();
                 agregarPreguntas.removeAll();
             }

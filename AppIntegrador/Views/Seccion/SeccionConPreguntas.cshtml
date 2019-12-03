@@ -27,28 +27,6 @@
         @if (item.Edicion)
         {
 
-            <div class="form-horizontal card-group">
-                <div class="modal fade" id="ModalAgregarPregunta" tabindex="-1" role="dialog" aria-labelledby="ModalAgregarPregunta" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div id="BancoDePreguntas">
-                                    <div id="ModalPartialBancoPreguntas">
-                                    </div>
-                                    <input type="button" class="btn-linkUCR float-right CrearSeccionModal" onclick="MostrarCrearPregunta()" value="Crear Pregunta" />
-                                </div>
-                                <div id="ModalCrearPregunta">
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn-azulUCR " onclick="addPreguntaToSeccion()" data-dismiss="modal">Agregar preguntas seleccionadas</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card-footer">
                 <input type="button" value="Agregar preguntas" class="btn-azulUCR float-right" onclick="GenerarModalPreguntas('@item.CodigoSeccion')" />
             </div>
@@ -56,6 +34,28 @@
     </div>
     <br />
 }
+<div class="form-horizontal card-group">
+    <div class="modal fade" id="ModalAgregarPregunta" tabindex="-1" role="dialog" aria-labelledby="ModalAgregarPregunta" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="BancoDePreguntas">
+                        <div id="ModalPartialBancoPreguntas">
+                        </div>
+                        <input type="button" class="btn-linkUCR float-right CrearSeccionModal" onclick="MostrarCrearPregunta()" value="Crear Pregunta" />
+                    </div>
+                    <div id="ModalCrearPregunta">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn-azulUCR " onclick="addPreguntaToSeccion()" data-dismiss="modal">Agregar preguntas seleccionadas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     .full {
