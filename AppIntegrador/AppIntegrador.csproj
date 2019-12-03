@@ -861,6 +861,8 @@
     <Content Include="Views\Objetivos\_ListaSecciones.cshtml" />
     <Content Include="Views\AccionDeMejora\_ListaPreguntas.cshtml" />
     <Content Include="Views\AccionDeMejora\_ModalPreguntasLista.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaProfesoresDeUnPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaFormularioDeUnPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
