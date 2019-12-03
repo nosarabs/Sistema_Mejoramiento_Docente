@@ -31,6 +31,7 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             /*Solo se puede acceder a este método si el usuario tiene un perfil con los permisos apropiados.*/
@@ -46,6 +47,7 @@ namespace AppIntegrador.Controllers
 
         /*TAM-3.3-1, 3.7-1.*/
         /*Método que lanza a la página de selección de perfil. Todos los usuarios tienen acceso a esto.*/
+        [HttpGet]
         public ActionResult SeleccionarPerfil()
         {
             return View(new ConfigViewHolder());
@@ -142,8 +144,8 @@ namespace AppIntegrador.Controllers
             ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
             ObjectParameter tieneActivo = new ObjectParameter("tieneActivo", typeof(bool));
             // Para revisar si el usuario tiene todos esos perfiles
-            int total = 0;
-            int correct = 0;
+            int total;
+            int correct;
 
             // Revisa los checks de las personas
             foreach (Persona persona in model.Personas)
