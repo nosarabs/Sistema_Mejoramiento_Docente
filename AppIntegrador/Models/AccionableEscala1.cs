@@ -10,13 +10,18 @@
 namespace AppIntegrador.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GruposXPerfilXUsuario1_Result
+    public partial class AccionableEscala1
     {
-        public string Sigla { get; set; }
-        public string Nombre { get; set; }
-        public Nullable<byte> NumGrupo { get; set; }
-        public Nullable<byte> Semestre { get; set; }
-        public Nullable<int> Anno { get; set; }
+        public int codPlan { get; set; }
+        public string nombreObj { get; set; }
+        public string descripAcMej { get; set; }
+        public string descripcion { get; set; }
+        public int valorMinimo { get; set; }
+        public int valorMaximo { get; set; }
+        public Nullable<int> avance { get; set; }
+    
+        public virtual Accionable Accionable { get; set; }
     }
 }

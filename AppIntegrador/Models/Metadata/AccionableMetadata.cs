@@ -37,8 +37,8 @@ namespace AppIntegrador.Models.Metadata
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaFin { get; set; }
 
-        [Display(Name = "Progreso")]
-        [Range(0, 100, ErrorMessage = "El progreso es un número entre 0 y 100")]
-        public Nullable<int> progreso { get; set; }
+        [Display(Name = "Tipo")]
+        [Required(ErrorMessage = "Este campo es requerido")]
+        public string tipo { get; set; }
     }
 }

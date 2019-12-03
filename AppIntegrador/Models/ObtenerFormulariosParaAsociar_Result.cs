@@ -11,12 +11,12 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class ProfesoresXUsuarioXPerfil1_Result
+    public partial class ObtenerFormulariosParaAsociar_Result
     {
-        public string Correo { get; set; }
-        public string Nombre1 { get; set; }
-        public string Nombre2 { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
+        public string FCodigo { get; set; }
+        public string CSigla { get; set; }
+        public byte GNumero { get; set; }
+        public int GAnno { get; set; }
+        public byte GSemestre { get; set; }
     }
 }
