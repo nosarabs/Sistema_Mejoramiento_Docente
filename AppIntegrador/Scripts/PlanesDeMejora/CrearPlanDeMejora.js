@@ -294,6 +294,17 @@ function enviarDatosPlan() {
     getPlan();
     currentPlan.setCorreosProfes(correosProfes);
     currentPlan.setCodigosFormularios(codigosFormularios);
+    if (Object.keys(codigosFormularios).length == 0) {
+        currentPlan.setCodigosFormularios(null);
+    } else {
+        currentPlan.setCodigosFormularios(codigosFormularios);
+    }
+    if (Object.keys(codigosFormularios).length == 0) {
+        currentPlan.setCodigosFormularios(null);
+    } else {
+        currentPlan.setCodigosFormularios(codigosFormularios);
+    }
+
     currentPlan.setSeccionConObjetivo(SeccionConObjetivoDict);
     currentPlan.setPreguntaConAccion(PreguntaConAccionDict);
     console.log(JSON.stringify(currentPlan));
