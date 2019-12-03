@@ -3257,72 +3257,6 @@
           </Key>
           <Property Name="OperationKey" Type="Guid" Nullable="false" />
         </EntityType>
-        <EntityType Name="Accionable">
-          <Key>
-            <PropertyRef Name="codPlan" />
-            <PropertyRef Name="nombreObj" />
-            <PropertyRef Name="descripAcMej" />
-            <PropertyRef Name="descripcion" />
-          </Key>
-          <Property Name="codPlan" Type="Int32" Nullable="false" />
-          <Property Name="nombreObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripAcMej" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fechaInicio" Type="DateTime" Precision="0" />
-          <Property Name="fechaFin" Type="DateTime" Precision="0" />
-          <Property Name="tipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="peso" Type="Int32" />
-          <Property Name="pesoPorcentaje" Type="Int32" />
-          <NavigationProperty Name="AccionDeMejora" Relationship="Self.FK_Accionable_AccionDeMejora" FromRole="Accionable" ToRole="AccionDeMejora" />
-          <NavigationProperty Name="AccionableEscala" Relationship="Self.FK_AccionableEscala_Accionable" FromRole="Accionable" ToRole="AccionableEscala" />
-          <NavigationProperty Name="AccionablePorcentaje" Relationship="Self.FK_AccionablePorcentaje_Accionable" FromRole="Accionable" ToRole="AccionablePorcentaje" />
-          <NavigationProperty Name="AccionableSiNo" Relationship="Self.FK_AccionableSiNo_Accionable" FromRole="Accionable" ToRole="AccionableSiNo" />
-          <NavigationProperty Name="Funcionario" Relationship="Self.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
-        </EntityType>
-        <EntityType Name="AccionableEscala">
-          <Key>
-            <PropertyRef Name="codPlan" />
-            <PropertyRef Name="nombreObj" />
-            <PropertyRef Name="descripAcMej" />
-            <PropertyRef Name="descripcion" />
-          </Key>
-          <Property Name="codPlan" Type="Int32" Nullable="false" />
-          <Property Name="nombreObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripAcMej" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="valorMinimo" Type="Int32" Nullable="false" />
-          <Property Name="valorMaximo" Type="Int32" Nullable="false" />
-          <Property Name="avance" Type="Int32" />
-          <NavigationProperty Name="Accionable" Relationship="Self.FK_AccionableEscala_Accionable" FromRole="AccionableEscala" ToRole="Accionable" />
-        </EntityType>
-        <EntityType Name="AccionablePorcentaje">
-          <Key>
-            <PropertyRef Name="codPlan" />
-            <PropertyRef Name="nombreObj" />
-            <PropertyRef Name="descripAcMej" />
-            <PropertyRef Name="descripcion" />
-          </Key>
-          <Property Name="codPlan" Type="Int32" Nullable="false" />
-          <Property Name="nombreObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripAcMej" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="avance" Type="Int32" />
-          <NavigationProperty Name="Accionable" Relationship="Self.FK_AccionablePorcentaje_Accionable" FromRole="AccionablePorcentaje" ToRole="Accionable" />
-        </EntityType>
-        <EntityType Name="AccionableSiNo">
-          <Key>
-            <PropertyRef Name="codPlan" />
-            <PropertyRef Name="nombreObj" />
-            <PropertyRef Name="descripAcMej" />
-            <PropertyRef Name="descripcion" />
-          </Key>
-          <Property Name="codPlan" Type="Int32" Nullable="false" />
-          <Property Name="nombreObj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripAcMej" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="avance" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Accionable" Relationship="Self.FK_AccionableSiNo_Accionable" FromRole="AccionableSiNo" ToRole="Accionable" />
-        </EntityType>
         <EntityType Name="AccionDeMejora">
           <Key>
             <PropertyRef Name="codPlan" />
@@ -3336,10 +3270,10 @@
           <Property Name="fechaFin" Type="DateTime" Precision="0" />
           <Property Name="codPlantilla" Type="Int32" />
           <Property Name="borrado" Type="Boolean" />
-          <NavigationProperty Name="Accionable" Relationship="Self.FK_Accionable_AccionDeMejora" FromRole="AccionDeMejora" ToRole="Accionable" />
           <NavigationProperty Name="Objetivo" Relationship="Self.FK_AccionDeMejora_Objetivo" FromRole="AccionDeMejora" ToRole="Objetivo" />
           <NavigationProperty Name="PlantillaAccionDeMejora" Relationship="Self.FK_AccionDeMejora_PlantillaAccMej" FromRole="AccionDeMejora" ToRole="PlantillaAccionDeMejora" />
           <NavigationProperty Name="Pregunta" Relationship="Self.AccionVsPregunta" FromRole="AccionDeMejora" ToRole="Pregunta" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_Accionable_AccionDeMejora" FromRole="AccionDeMejora" ToRole="Accionable" />
         </EntityType>
         <EntityType Name="Activa_por">
           <Key>
@@ -3454,8 +3388,8 @@
           <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__489AC854" FromRole="Funcionario" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__625A9A57" FromRole="Funcionario" ToRole="Profesor" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
-          <NavigationProperty Name="Accionable" Relationship="Self.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
@@ -3850,84 +3784,6 @@
           <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__7A3223E8" FromRole="UsuarioPerfil" ToRole="Perfil" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__793DFFAF" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_Accionable_AccionDeMejora">
-          <End Role="AccionDeMejora" Type="Self.AccionDeMejora" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccionDeMejora">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripcion" />
-            </Principal>
-            <Dependent Role="Accionable">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccionableEscala_Accionable">
-          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AccionableEscala" Type="Self.AccionableEscala" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accionable">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Principal>
-            <Dependent Role="AccionableEscala">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccionablePorcentaje_Accionable">
-          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AccionablePorcentaje" Type="Self.AccionablePorcentaje" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accionable">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Principal>
-            <Dependent Role="AccionablePorcentaje">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccionableSiNo_Accionable">
-          <End Role="Accionable" Type="Self.Accionable" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AccionableSiNo" Type="Self.AccionableSiNo" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Accionable">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Principal>
-            <Dependent Role="AccionableSiNo">
-              <PropertyRef Name="codPlan" />
-              <PropertyRef Name="nombreObj" />
-              <PropertyRef Name="descripAcMej" />
-              <PropertyRef Name="descripcion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AccionDeMejora_Objetivo">
           <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -4658,10 +4514,6 @@
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
-        <Association Name="Responsable_De">
-          <End Role="Accionable" Type="Self.Accionable" Multiplicity="*" />
-          <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
-        </Association>
         <Association Name="SeAsignaA">
           <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
           <End Role="PlanDeMejora" Type="Self.PlanDeMejora" Multiplicity="*" />
@@ -4672,10 +4524,6 @@
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
-          <EntitySet Name="Accionable" EntityType="Self.Accionable" />
-          <EntitySet Name="AccionableEscala" EntityType="Self.AccionableEscala" />
-          <EntitySet Name="AccionablePorcentaje" EntityType="Self.AccionablePorcentaje" />
-          <EntitySet Name="AccionableSiNo" EntityType="Self.AccionableSiNo" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" />
           <EntitySet Name="Activa_por" EntityType="Self.Activa_por" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -4715,22 +4563,6 @@
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <EntitySet Name="UsuarioActual" EntityType="Self.UsuarioActual" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" />
-          <AssociationSet Name="FK_Accionable_AccionDeMejora" Association="Self.FK_Accionable_AccionDeMejora">
-            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
-            <End Role="Accionable" EntitySet="Accionable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccionableEscala_Accionable" Association="Self.FK_AccionableEscala_Accionable">
-            <End Role="Accionable" EntitySet="Accionable" />
-            <End Role="AccionableEscala" EntitySet="AccionableEscala" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccionablePorcentaje_Accionable" Association="Self.FK_AccionablePorcentaje_Accionable">
-            <End Role="Accionable" EntitySet="Accionable" />
-            <End Role="AccionablePorcentaje" EntitySet="AccionablePorcentaje" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccionableSiNo_Accionable" Association="Self.FK_AccionableSiNo_Accionable">
-            <End Role="Accionable" EntitySet="Accionable" />
-            <End Role="AccionableSiNo" EntitySet="AccionableSiNo" />
-          </AssociationSet>
           <AssociationSet Name="FK_AccionDeMejora_Objetivo" Association="Self.FK_AccionDeMejora_Objetivo">
             <End Role="Objetivo" EntitySet="Objetivo" />
             <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
@@ -4958,10 +4790,6 @@
           <AssociationSet Name="Pertenece_a" Association="Self.Pertenece_a">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
-          </AssociationSet>
-          <AssociationSet Name="Responsable_De" Association="Self.Responsable_De">
-            <End Role="Accionable" EntitySet="Accionable" />
-            <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
           <AssociationSet Name="SeAsignaA" Association="Self.SeAsignaA">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -5482,6 +5310,30 @@
             <Parameter Name="idPlan" Mode="In" Type="Int32" />
             <Parameter Name="nombreObj" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Accionable" EntityType="DataIntegradorModel.Accionable" />
+          <EntitySet Name="AccionableEscala" EntityType="DataIntegradorModel.AccionableEscala" />
+          <EntitySet Name="AccionablePorcentaje" EntityType="DataIntegradorModel.AccionablePorcentaje" />
+          <EntitySet Name="AccionableSiNo" EntityType="DataIntegradorModel.AccionableSiNo" />
+          <AssociationSet Name="FK_Accionable_AccionDeMejora" Association="DataIntegradorModel.FK_Accionable_AccionDeMejora">
+            <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
+            <End Role="Accionable" EntitySet="Accionable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionableEscala_Accionable" Association="DataIntegradorModel.FK_AccionableEscala_Accionable">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="AccionableEscala" EntitySet="AccionableEscala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionablePorcentaje_Accionable" Association="DataIntegradorModel.FK_AccionablePorcentaje_Accionable">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="AccionablePorcentaje" EntitySet="AccionablePorcentaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccionableSiNo_Accionable" Association="DataIntegradorModel.FK_AccionableSiNo_Accionable">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="AccionableSiNo" EntitySet="AccionableSiNo" />
+          </AssociationSet>
+          <AssociationSet Name="Responsable_De" Association="DataIntegradorModel.Responsable_De">
+            <End Role="Accionable" EntitySet="Accionable" />
+            <End Role="Funcionario" EntitySet="Funcionario" />
+          </AssociationSet>
           <FunctionImport Name="ObtenerPreguntasDeAccionDeMejora" ReturnType="Collection(String)">
             <Parameter Name="idPlan" Mode="In" Type="Int32" />
             <Parameter Name="nombreObj" Mode="In" Type="String" />
@@ -5615,6 +5467,154 @@
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Accionable">
+          <Key>
+            <PropertyRef Name="codPlan" />
+            <PropertyRef Name="nombreObj" />
+            <PropertyRef Name="descripAcMej" />
+            <PropertyRef Name="descripcion" />
+          </Key>
+          <Property Name="codPlan" Type="Int32" Nullable="false" />
+          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="fechaFin" Type="DateTime" Precision="0" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="peso" Type="Int32" />
+          <Property Name="pesoPorcentaje" Type="Int32" />
+          <NavigationProperty Name="AccionDeMejora" Relationship="DataIntegradorModel.FK_Accionable_AccionDeMejora" FromRole="Accionable" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="AccionableEscala" Relationship="DataIntegradorModel.FK_AccionableEscala_Accionable" FromRole="Accionable" ToRole="AccionableEscala" />
+          <NavigationProperty Name="AccionablePorcentaje" Relationship="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" FromRole="Accionable" ToRole="AccionablePorcentaje" />
+          <NavigationProperty Name="AccionableSiNo" Relationship="DataIntegradorModel.FK_AccionableSiNo_Accionable" FromRole="Accionable" ToRole="AccionableSiNo" />
+          <NavigationProperty Name="Funcionario" Relationship="DataIntegradorModel.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
+        </EntityType>
+        <EntityType Name="AccionableEscala">
+          <Key>
+            <PropertyRef Name="codPlan" />
+            <PropertyRef Name="nombreObj" />
+            <PropertyRef Name="descripAcMej" />
+            <PropertyRef Name="descripcion" />
+          </Key>
+          <Property Name="codPlan" Type="Int32" Nullable="false" />
+          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="valorMinimo" Type="Int32" Nullable="false" />
+          <Property Name="valorMaximo" Type="Int32" Nullable="false" />
+          <Property Name="avance" Type="Int32" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_AccionableEscala_Accionable" FromRole="AccionableEscala" ToRole="Accionable" />
+        </EntityType>
+        <EntityType Name="AccionablePorcentaje">
+          <Key>
+            <PropertyRef Name="codPlan" />
+            <PropertyRef Name="nombreObj" />
+            <PropertyRef Name="descripAcMej" />
+            <PropertyRef Name="descripcion" />
+          </Key>
+          <Property Name="codPlan" Type="Int32" Nullable="false" />
+          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="avance" Type="Int32" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" FromRole="AccionablePorcentaje" ToRole="Accionable" />
+        </EntityType>
+        <EntityType Name="AccionableSiNo">
+          <Key>
+            <PropertyRef Name="codPlan" />
+            <PropertyRef Name="nombreObj" />
+            <PropertyRef Name="descripAcMej" />
+            <PropertyRef Name="descripcion" />
+          </Key>
+          <Property Name="codPlan" Type="Int32" Nullable="false" />
+          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="avance" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_AccionableSiNo_Accionable" FromRole="AccionableSiNo" ToRole="Accionable" />
+        </EntityType>
+        <Association Name="FK_Accionable_AccionDeMejora">
+          <End Type="DataIntegradorModel.AccionDeMejora" Role="AccionDeMejora" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccionDeMejora">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripcion" />
+            </Principal>
+            <Dependent Role="Accionable">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccionableEscala_Accionable">
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DataIntegradorModel.AccionableEscala" Role="AccionableEscala" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Principal>
+            <Dependent Role="AccionableEscala">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccionablePorcentaje_Accionable">
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DataIntegradorModel.AccionablePorcentaje" Role="AccionablePorcentaje" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Principal>
+            <Dependent Role="AccionablePorcentaje">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccionableSiNo_Accionable">
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DataIntegradorModel.AccionableSiNo" Role="AccionableSiNo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accionable">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Principal>
+            <Dependent Role="AccionableSiNo">
+              <PropertyRef Name="codPlan" />
+              <PropertyRef Name="nombreObj" />
+              <PropertyRef Name="descripAcMej" />
+              <PropertyRef Name="descripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Responsable_De">
+          <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="*" />
+          <End Type="DataIntegradorModel.Funcionario" Role="Funcionario" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5625,56 +5625,6 @@
             <EntityTypeMapping TypeName="DataIntegradorModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
                 <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Accionable">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
-              <MappingFragment StoreEntitySet="Accionable">
-                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
-                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="peso" ColumnName="peso" />
-                <ScalarProperty Name="pesoPorcentaje" ColumnName="pesoPorcentaje" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AccionableEscala">
-            <EntityTypeMapping TypeName="DataIntegradorModel.AccionableEscala">
-              <MappingFragment StoreEntitySet="AccionableEscala">
-                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="valorMinimo" ColumnName="valorMinimo" />
-                <ScalarProperty Name="valorMaximo" ColumnName="valorMaximo" />
-                <ScalarProperty Name="avance" ColumnName="avance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AccionablePorcentaje">
-            <EntityTypeMapping TypeName="DataIntegradorModel.AccionablePorcentaje">
-              <MappingFragment StoreEntitySet="AccionablePorcentaje">
-                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="avance" ColumnName="avance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AccionableSiNo">
-            <EntityTypeMapping TypeName="DataIntegradorModel.AccionableSiNo">
-              <MappingFragment StoreEntitySet="AccionableSiNo">
-                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="avance" ColumnName="avance" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6169,17 +6119,6 @@
             <EndProperty Name="Enfasis">
               <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
               <ScalarProperty Name="Codigo" ColumnName="CodEnfasis" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Responsable_De" TypeName="DataIntegradorModel.Responsable_De" StoreEntitySet="Responsable_De">
-            <EndProperty Name="Accionable">
-              <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-              <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-              <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-              <ScalarProperty Name="descripcion" ColumnName="descripAcci" />
-            </EndProperty>
-            <EndProperty Name="Funcionario">
-              <ScalarProperty Name="Correo" ColumnName="corrFunc" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="SeAsignaA" TypeName="DataIntegradorModel.SeAsignaA" StoreEntitySet="SeAsignaA">
@@ -6764,6 +6703,67 @@
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosAsociados" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosAsociados" />
           <FunctionImportMapping FunctionImportName="ObtenerSeccionesAsociadasAObjetivo" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesAsociadasAObjetivo" />
+          <EntitySetMapping Name="Accionable">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
+              <MappingFragment StoreEntitySet="Accionable">
+                <ScalarProperty Name="pesoPorcentaje" ColumnName="pesoPorcentaje" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccionableEscala">
+            <EntityTypeMapping TypeName="DataIntegradorModel.AccionableEscala">
+              <MappingFragment StoreEntitySet="AccionableEscala">
+                <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="valorMaximo" ColumnName="valorMaximo" />
+                <ScalarProperty Name="valorMinimo" ColumnName="valorMinimo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccionablePorcentaje">
+            <EntityTypeMapping TypeName="DataIntegradorModel.AccionablePorcentaje">
+              <MappingFragment StoreEntitySet="AccionablePorcentaje">
+                <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccionableSiNo">
+            <EntityTypeMapping TypeName="DataIntegradorModel.AccionableSiNo">
+              <MappingFragment StoreEntitySet="AccionableSiNo">
+                <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Responsable_De" TypeName="DataIntegradorModel.Responsable_De" StoreEntitySet="Responsable_De">
+            <EndProperty Name="Funcionario">
+              <ScalarProperty Name="Correo" ColumnName="corrFunc" />
+            </EndProperty>
+            <EndProperty Name="Accionable">
+              <ScalarProperty Name="descripcion" ColumnName="descripAcci" />
+              <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+              <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+              <ScalarProperty Name="codPlan" ColumnName="codPlan" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeAccionDeMejora" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeAccionDeMejora" />
         </EntityContainerMapping>
       </Mapping>
