@@ -6,7 +6,7 @@
 	descripcion varchar(250) not null,
 	fechaInicio date,
 	fechaFin date,
-	tipo char not null,
+	tipo CHAR not null,
 	peso int,
 	pesoPorcentaje int,
 	constraint DateOrderAcci check(fechaFin >= fechaInicio),
