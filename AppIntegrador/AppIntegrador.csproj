@@ -199,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Comparador.cs" />
     <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
     <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
     <Compile Include="Helpers\SiteSettings.cs" />
@@ -226,6 +227,9 @@
     </Compile>
     <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarrerasYEnfasisXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
@@ -269,6 +273,7 @@
     <Compile Include="Models\Estudiante.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FechasSolapadasInfo.cs" />
     <Compile Include="Models\FiltrosModelContext.cs" />
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -317,6 +322,9 @@
     <Compile Include="Models\ObtenerCarrerasEnfasisUA_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerEstudiantesAsociadosAFormulario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -339,6 +347,9 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerFormulariosUA_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerGruposAsociados_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ObtenerGruposCarreraEnfasis_Result.cs">
@@ -515,6 +526,7 @@
     <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
+    <Compile Include="Utilities\ProfilePicture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -839,6 +851,7 @@
     <Content Include="Views\CSV\GuiaHorarios.cshtml" />
     <Content Include="Views\CSV\Funcionarios.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\Home\ReestablecerContrasenna.cshtml" />
     <Content Include="Views\AccionDeMejora\_ModalAnadirPreguntas.cshtml" />
     <Content Include="Views\AccionDeMejora\_AnadirPreguntas.cshtml" />
     <Content Include="Views\Objetivos\_TablaObjetivosLista.cshtml" />

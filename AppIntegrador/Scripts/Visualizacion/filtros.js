@@ -340,7 +340,7 @@
         var seleccion = document.createElement("select");
         seleccion.id = "filtroFormularios";
         seleccion.className = "select";
-        seleccion.multiple = "multiple";
+        //seleccion.multiple = "multiple";
 
         //Se agrega el elemento select a la vista
         seleccion.onchange = function () { actualizarVistaParcial() };
@@ -356,6 +356,11 @@
         this.vaciarFiltro(filtro);
 
         var resultados = this.recuperarFs(listaUA, listaCE, listaG, listaP);
+        var option = document.createElement("option");
+        option.className = "option";
+        option.text = "Ninguno seleccionado";
+        option.value = "null";
+        filtro.appendChild(option);
 
         //Ciclo que crea cada option para luego agregarlo al select
         for (var i = 0; i < resultados.length; ++i) {
@@ -496,7 +501,7 @@
             if (f.options[i].selected)
                 fSeleccionado.push(f.options[i].value);
         }
-        return fSeleccionado == "null" ? null : fSeleccionado[0].split("*");
+        return fSeleccionado.length == "null" ? null : fSeleccionado[0].split("*");
     }
 
 }

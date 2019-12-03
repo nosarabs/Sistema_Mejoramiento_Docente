@@ -4,8 +4,8 @@
 	SCodigo VARCHAR(8) NOT NULL,
 	Orden INT NOT NULL,
 	PRIMARY KEY(FCodigo, SCodigo),
-	CONSTRAINT fkFormularioTieneSeccionCodigoFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo),
-	CONSTRAINT fkFormularioTieneSeccionCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo),
+	CONSTRAINT fkFormularioTieneSeccionCodigoFormulario FOREIGN KEY(FCodigo) REFERENCES Formulario(Codigo) ON UPDATE CASCADE,
+	CONSTRAINT fkFormularioTieneSeccionCodigoSeccion FOREIGN KEY(SCodigo) REFERENCES Seccion(Codigo) ON UPDATE CASCADE,
 )
 
 GO

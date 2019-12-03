@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AppIntegrador.Helpers;
+using AppIntegrador.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace AppIntegrador.Models
     public class PermissionsViewHolder
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+
+        private readonly IPerm permissionManager = new PermissionManager();
         public List<PerfilCodigo> Perfiles { get; set; }
 
         public List<Carrera> Carreras { get; set; }
@@ -49,8 +53,33 @@ namespace AppIntegrador.Models
             {
                 this.Perfiles.Add(new PerfilCodigo(perfil.Nombre, count++));
             }
-            this.Carreras = db.Carrera.ToList();
-            this.EnfasisView = db.Enfasis.ToList();
+
+            List<Carrera> CarrerasUsuario = new List<Carrera>();
+            List<Enfasis> EnfasisUsuario = new List<Enfasis>();
+
+            using (var context = new DataIntegradorEntities())
+            {
+                /*TAM-11.1: En la página de administración de permisos y perfiles solo se muestran las carreras y énfasis en las que el usuario tiene postestad, en los dropdowns.*/
+                var tuplas = from Dato in db.CarrerasYEnfasisXUsuarioXPerfil(CurrentUser.getUsername(), CurrentUser.getUserProfile())
+                                    select Dato;
+                foreach (var tupla in tuplas) {
+                    Carrera carrera = new Carrera { Codigo = tupla.CodCarrera, Nombre = tupla.NombreCarrera };
+                    if (!CarrerasUsuario.Contains(carrera) && (
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), carrera.Codigo, Permission.ASIGNAR_PERFILES_USUARIOS) ||
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), carrera.Codigo, Permission.ASIGNAR_PERMISOS_PERFILES)))
+                        CarrerasUsuario.Add(carrera);
+
+                    Enfasis enfasis = new Enfasis { CodCarrera = tupla.CodCarrera, Codigo = tupla.CodEnfasis, Nombre = tupla.NombreEnfasis };
+                    if (!EnfasisUsuario.Contains(enfasis) && (
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), carrera.Codigo, enfasis.Codigo, Permission.ASIGNAR_PERFILES_USUARIOS) ||
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), carrera.Codigo, enfasis.Codigo, Permission.ASIGNAR_PERMISOS_PERFILES)))
+                        EnfasisUsuario.Add(enfasis);
+                }
+            }
+
+            this.Carreras = CarrerasUsuario.Distinct(new ComparadorCarreras()).ToList();
+            this.EnfasisView = EnfasisUsuario.Distinct(new ComparadorEnfasis()).ToList();
+
             this.Permisos = db.Permiso.ToList();
             foreach (Permiso permiso in this.Permisos)
             {

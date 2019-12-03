@@ -18,6 +18,7 @@ namespace AppIntegrador.Models
         public Enfasis()
         {
             this.PerfilPermiso = new HashSet<PerfilPermiso>();
+            this.UsuarioActual = new HashSet<UsuarioActual>();
             this.UsuarioPerfil = new HashSet<UsuarioPerfil>();
             this.Estudiante = new HashSet<Estudiante>();
             this.Curso = new HashSet<Curso>();
@@ -30,6 +31,8 @@ namespace AppIntegrador.Models
         public virtual Carrera Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PerfilPermiso> PerfilPermiso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioActual> UsuarioActual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioPerfil> UsuarioPerfil { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
