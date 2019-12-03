@@ -228,6 +228,9 @@
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarrerasYEnfasisXUsuarioXPerfil_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\ConfigViewHolder.cs" />
     <Compile Include="Models\Curso.cs">
