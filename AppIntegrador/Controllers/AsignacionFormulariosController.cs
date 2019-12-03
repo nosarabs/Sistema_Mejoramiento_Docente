@@ -75,7 +75,7 @@ namespace AppIntegrador.Controllers
             Nullable<DateTime> fechaFin = null;
 
             // Sino se seleccionan datos, existe un error
-            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" && fechaInicioSeleccionado == "" && fechaFinSeleccionado == "")
+            if (codigoUASeleccionada == "null" && codigoCarreraEnfasisSeleccionada == "null" && grupoSeleccionado == "null" && correoProfesorSeleccionado == "null" || (fechaInicioSeleccionado == "" && fechaFinSeleccionado == ""))
             {
                 return Json(new { error = false, tipoError = 1 });
             }
@@ -110,7 +110,7 @@ namespace AppIntegrador.Controllers
             {
                 gruposAsociadosLista = grupos.ToList();
                 // Si no existen grupos asociados, pues no se pudo asignar
-                if (gruposAsociadosLista.Count < 0)
+                if (gruposAsociadosLista.Count <= 0)
                 {
                     return Json(new { error = false, tipoError = 4 });
                 }
