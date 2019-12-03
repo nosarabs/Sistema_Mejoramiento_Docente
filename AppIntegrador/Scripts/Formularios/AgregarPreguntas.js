@@ -9,8 +9,9 @@ function selectPregunta(element) {
     }
 }
 
-function addPreguntaToSeccion(codSeccion) {
+function addPreguntaToSeccion() {
     var codPreguntas = agregarPreguntas.getArray();
+    var codSeccion = SeccionModalActual;
     var result = {codSeccion, codPreguntas};
 
     $.ajax({

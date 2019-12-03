@@ -1,5 +1,7 @@
-﻿
-function GenerarModalPreguntas() {
+﻿var SeccionModalActual;
+
+function GenerarModalPreguntas(codSeccion) {
+    SeccionModalActual = codSeccion;
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
     GenerarCrearPreguntas();
