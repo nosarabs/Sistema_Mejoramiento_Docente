@@ -214,7 +214,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         {
             //string cs = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
             //SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
-            SqlConnection connection = new SqlConnection("data source=(localdb)\ProjectsV13;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
+            SqlConnection connection = new SqlConnection("data source=(localdb)\\ProjectsV13;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
             //SqlConnection connection = new SqlConnection(cs);
             connection.Open();
             SqlCommand cmd = new SqlCommand("AgregarPlanComplete", connection);
