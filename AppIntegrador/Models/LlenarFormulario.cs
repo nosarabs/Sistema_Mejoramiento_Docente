@@ -9,5 +9,6 @@ namespace AppIntegrador.Models
     {
         public Formulario Formulario { get; set; }
         public List<SeccionConPreguntas> Secciones { get; set; }
+        public Grupo Grupo { get; set; }
     }
 }

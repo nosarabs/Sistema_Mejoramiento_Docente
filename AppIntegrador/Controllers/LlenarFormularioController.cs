@@ -1,4 +1,5 @@
 ﻿using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -13,9 +14,11 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
 
+        private readonly IPerm permissionManager;
+
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
-        const string FinVerano = "07/03/";
+        public const string FinVerano = "07/03/";
 
         const string InicioPrimerSemestre = "08/03/";
         const string FinPrimerSemestre = "31/07/";
@@ -23,7 +26,7 @@ namespace AppIntegrador.Controllers
         const string InicioSegundoSemestre = "01/08/";
         const string FinSegundoSemestre = "31/12/";
 
-        byte SemestreActual;
+        public readonly byte SemestreActual;
 
         readonly DateTime FechaActual;
 
@@ -39,6 +42,7 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
 
             FechaActual = DateTime.Now;
 
@@ -57,10 +61,24 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
-        public ActionResult LlenarFormulario(string id)
+        public ActionResult LlenarFormulario(string id, string sigla, byte num, int anno, byte semestre)
         {
+            if (!permissionManager.IsAuthorized(Permission.LLENAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
+            Grupo grupo = new Grupo
+            {
+                SiglaCurso = sigla,
+                Anno = anno,
+                NumGrupo = num,
+                Semestre = semestre
+            };
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -70,17 +88,22 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("MisFormularios");
             }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB, grupo);
+            formulario.Grupo = grupo;
 
             return View(formulario);
         }
 
-        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB)
+        public LlenarFormulario CrearFormulario(string id, Formulario formularioDB, Grupo grupo)
         {
             LlenarFormulario formulario = new LlenarFormulario { Formulario = formularioDB, Secciones = new List<SeccionConPreguntas>() };
             ObjectResult<ObtenerSeccionesDeFormulario_Result> seccionesDeFormulario = db.ObtenerSeccionesDeFormulario(id);
 
-            var respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+            ObjectResult<ObtenerRespuestasAFormulario_Result> respuestasObtenidas = null;
+            if (grupo != null)
+            {
+                respuestasObtenidas = db.ObtenerRespuestasAFormulario(formularioDB.Codigo, HttpContext.User.Identity.Name, "CI0128", 1, 2019, 2);
+            }
 
             Respuestas_a_formulario respuestas = new Respuestas_a_formulario();
 
@@ -108,6 +131,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -117,7 +146,7 @@ namespace AppIntegrador.Controllers
             {
                 return RedirectToAction("../Formularios/Index");
             }
-            LlenarFormulario formulario = CrearFormulario(id, formularioDB);
+            LlenarFormulario formulario = CrearFormulario(id, formularioDB, null);
 
             return View(formulario);
         }
@@ -133,12 +162,6 @@ namespace AppIntegrador.Controllers
 
             respuestas.Fecha = DateTime.Today;
             respuestas.Correo = HttpContext.User.Identity.Name;
-
-            // La parte de grupo por ahora va hardcodeada, porque por ahora es la implementación de llenar el formulario nada más
-            respuestas.CSigla = "CI0128";
-            respuestas.GNumero = 1;
-            respuestas.GAnno = 2019;
-            respuestas.GSemestre = 2;
 
             db.EliminarRespuestasDeFormulario(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre);
 
@@ -219,14 +242,14 @@ namespace AppIntegrador.Controllers
 
             foreach (var periodo in periodosSemestre)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
                 modelo.FormulariosSemestre.Add(formulario);
             }
 
             foreach (var periodo in periodosPasados)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
-                modelo.FormulariosPasados.Add(formulario);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
+                modelo.InsertarPasado(formulario);
             }
 
             return View(modelo);
@@ -286,7 +309,7 @@ namespace AppIntegrador.Controllers
             return formularios;
         }
 
-        private DateTime ObtenerFechaInicioSemestre()
+        public DateTime ObtenerFechaInicioSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)
@@ -305,7 +328,7 @@ namespace AppIntegrador.Controllers
             }
         }
 
-        private DateTime ObtenerFechaFinSemestre()
+        public DateTime ObtenerFechaFinSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)

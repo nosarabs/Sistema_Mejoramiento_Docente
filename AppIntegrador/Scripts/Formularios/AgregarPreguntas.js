@@ -9,8 +9,9 @@ function selectPregunta(element) {
     }
 }
 
-function addPreguntaToSeccion(codSeccion) {
+function addPreguntaToSeccion() {
     var codPreguntas = agregarPreguntas.getArray();
+    var codSeccion = SeccionModalActual;
     var result = {codSeccion, codPreguntas};
 
     $.ajax({
@@ -24,7 +25,9 @@ function addPreguntaToSeccion(codSeccion) {
             console.log("todo bien")
             if (data.insertadoExitoso) {
                 console.log("todo bien x2")
+                $('#ModalAgregarPregunta').modal('hide');$('body').removeClass('modal-open');$('.modal-backdrop').remove();
                 ActualizarSecciones();
+                agregarPreguntas.removeAll();
             }
         }
     })

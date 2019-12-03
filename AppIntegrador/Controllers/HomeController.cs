@@ -69,7 +69,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
 
             }
-            return View();
+            return View("Index");
         }
 
         public ActionResult About()
@@ -79,7 +79,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
             }
             ViewBag.Message = "Your application description page.";
-            return View();
+            return View("About");
         }
 
         public ActionResult Contact()
@@ -90,7 +90,7 @@ namespace AppIntegrador.Controllers
             }
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View("Contact");
         }
 
         public ActionResult Login()
@@ -105,9 +105,10 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
+        /* TAM 16.1 Servicio de captcha*/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateGoogleCaptcha]
+        [ValidateGoogleCaptcha(type = "Login")] 
         public ActionResult Login(Usuario objUser, string returnUrl = null)
         {
 
@@ -133,6 +134,9 @@ namespace AppIntegrador.Controllers
                     // Credenciales correctos
                     if (result == 0)
                     {
+                        /* Remueve el contador de intentos fallidos cuando el usuario logro entrar al sistema */
+                        System.Web.HttpContext.Current.Application.Remove(objUser.Username);
+
                         /*Si la sesión puede ser configurada, es decir, el usuario tiene perfiles asociados, puede entrar.*/
                         if (ConfigureSession(objUser.Username))
                         {
@@ -175,7 +179,8 @@ namespace AppIntegrador.Controllers
         }
 
         /*User story TAM-1.3 Brute-force attack prevention.*/
-        private async Task<ActionResult> WrongPassword(Usuario objUser)
+        /* TAM 16.1 Servicio de captcha*/
+        private ActionResult WrongPassword(Usuario objUser)
         {
             int failedAttempts = 0;
             ModelState.AddModelError("Password", "Usuario y/o contraseña incorrectos");
@@ -201,39 +206,6 @@ namespace AppIntegrador.Controllers
                 CurrentUser.setLoginFailures(failedAttempts);
             }      
 
-            return null;
-        }
-
-        private async Task<Usuario> DeactivateUserTemporarily(Usuario objUser)
-        {
-            /*Removes the failed attempts count from the system for this user.*/
-            System.Web.HttpContext.Current.Application.Remove(objUser.Username);
-
-            /*To lock the user, first fetch it from the database.*/
-            using (var context = new DataIntegradorEntities())
-            {
-                var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
-                if (user != null)
-                {
-                    /*Sets the active/inactive bit to 0.*/
-                    user.Activo = false;
-                    db.SaveChanges();
-                }
-            }
-
-            /*Waits for the blocking time specified in the constant.*/
-            await Task.Delay(LOGIN_TIMEOUT).ConfigureAwait(false);
-
-            /*Then reactivates the user.*/
-            using (var context = new DataIntegradorEntities())
-            {
-                var user = db.Usuario.SingleOrDefault(u => u.Username == objUser.Username);
-                if (user != null)
-                {
-                    user.Activo = true;
-                    db.SaveChanges();
-                }
-            }
             return null;
         }
 
@@ -274,54 +246,142 @@ namespace AppIntegrador.Controllers
             return View();
         }
 
-        public ActionResult SendPasswordRequest(string correo)
+        /* TAM 16.1 Servicio de captcha*/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateGoogleCaptcha(type = "Always")]
+        public ActionResult PasswordReset(string correo)
         {
+            //var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == enlaceSeguroHash).FirstOrDefault();
+            //var correo = enlaceSeguro.UsuarioAsociado;
             var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
+
+            // Revisar también correo secundario
+            if (user == null)
+            {
+                Persona correoAlt = db.Persona.Where(p => p.CorreoAlt == correo).FirstOrDefault();
+                user = db.Usuario.Where(a => a.Username == correoAlt.Correo).FirstOrDefault();
+            }
 
             if (user != null)
             {
                 /*Prevencion del bloqueo de Adminsitrador*/
                 if (correo == "admin@mail.com")
                 {
-                    ViewBag.ErrorMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
+                    ViewBag.typeMessage = "alert";
+                    ViewBag.NotifyMessage = "Este correo solo es para fines de desarrollo, no puede recibir un correo de recuperacion";
                     ViewBag.EnableBS4NoNavBar = true;
                     return View("PasswordReset");
                 }
+                EnlaceSeguroController enlaceController = new EnlaceSeguroController();
 
+                //creamos un enlaceseguroanomimo de dos usos. Se ocupa que sea de dos ya que despues de utilizarlo para ser redireccionados a la pagina
+                //de reestablecer contraseña se necesita que usos no este en 0 para poder hacer el cambio de contraseña propio.
+                string enlaceParaReestablecer =  enlaceController.ObtenerEnlaceSeguroAnonimo(
+                    "/Home/ReestablecerContrasenna/",usuario: user.Username, reestablecerContrasenna: true, usos: 2);
 
-                /* Only for demo purposes, will be changed for a password reset link */
-                Random random = new Random();
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                var newPassword = new string(Enumerable.Repeat(chars, 16)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                //Creamos un timestamp para agregarlo al correo
+                var timestamp = DateTime.Now;
+                string fechaSalida = timestamp.ToString("dd/MM/yyyy"); //considerar añadir IFormatProvider
+                string horaSalida = timestamp.ToString("hh:mm tt");
 
-                db.ChangePassword(correo, newPassword);
-                db.SaveChanges();
-
+                //Enviamos un correo con el enlace y el timestamp
                 EmailNotification notification = new EmailNotification();
 
                 List<string> users = new List<string>();
                 users.Add(correo);
-                notification.SendNotification(users, "Recuperación de contraseña", "Su nueva contraseña es " + newPassword + " .", "Su nueva contraseña es " + newPassword + " .");
+                notification.SendNotification(users, "Restablecimiento de contraseña",
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor \n" +
+                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. \n\n" +
+                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer,
+                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + correo + ". El " + fechaSalida + " a las " + horaSalida + ". " +
+                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor " +
+                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. <br><br>" +
+                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer);
 
-                TempData["successMessage"] = "Se ha enviado un correo con su nueva contraseña a la dirección indicada.";
+                TempData["successMessage"] = "Se ha enviado un correo para reestablecer su contraseña a la dirección indicada.";
                 return RedirectToAction("Login");
             }
             else
             {
-                ViewBag.ErrorMessage = "Correo no encontrado";
+                ViewBag.typeMessage = "alert";
+                ViewBag.NotifyMessage = "Correo no encontrado";
             }
             ViewBag.EnableBS4NoNavBar = true;
             return View("PasswordReset");
         }
 
+        public ActionResult ReestablecerContrasenna(string enlaceSeguroHash)
+        {
+            ViewBag.EnableBS4NoNavBar = true;
+            ViewBag.Hash = enlaceSeguroHash;
+            return View("ReestablecerContrasenna");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ReestablecerContrasenna(string receivedHash, string contrasennaNueva, string contrasennaConfirmar)
+        {
+            string receivedHashExtra = ViewBag.Hash;
+            var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == receivedHash).FirstOrDefault();
+
+            DateTime momentoActual = DateTime.Now;
+            DateTime expira = (DateTime)enlaceSeguro.Expira;
+            int usos = enlaceSeguro.Usos;
+            bool reestablecerContrasenna = enlaceSeguro.ReestablecerContrasenna;
+            int fechaValida = DateTime.Compare(momentoActual, expira);
+
+            if (usos != 0 && fechaValida < 0 && reestablecerContrasenna)
+            {
+                var correo = enlaceSeguro.UsuarioAsociado;
+                var user = db.Usuario.Where(a => a.Username == correo).FirstOrDefault();
+                if (contrasennaNueva != contrasennaConfirmar)
+                {
+                    ModelState.AddModelError("Password", "Las contraseña nueva y su confirmacion no son iguales.");
+                }
+                else
+                {
+                    db.ChangePassword(correo, contrasennaNueva);
+                    //decrementamos los usos del enlace que acabamos de usar, estos se crean con dos usos en total, asi que debemos decrementarlo 
+                    //aqui tambien.
+                    db.EnlaceSeguro.Remove(enlaceSeguro);
+                    db.SaveChanges();
+
+                    //Enviamos un correo al usuario alertando del cambio
+                    EmailNotification notification = new EmailNotification();
+
+                    List<string> users = new List<string>();
+                    users.Add(correo);
+
+                    //Creamos un timestamp para agregarlo al correo
+                    var timestamp = DateTime.Now;
+                    string fechaSalida = timestamp.ToString("dd/MM/yyyy");
+                    string horaSalida = timestamp.ToString("hh:mm tt");
+
+                    notification.SendNotification(users,
+                        "Cambio de contraseña",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
+                        "Se ha realizado un cambio de contraseña para el usuario: " + correo + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
+                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
+
+                    ViewBag.typeMessage = "success";
+                    ViewBag.NotifyTitle = "Contraseña Cambiada";
+                    ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Username", "El enlace de restablecimiento de contraseña no es valido, por favor obtenga otro enlace");
+            }
+            ViewBag.EnableBS4NoNavBar = true;
+            return View();
+        }
+
+
         private bool ConfigureSession(string username)
         {
-            /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
-             énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
-             o la única que tenga si no tiene más opciones).*/
-
-            /*Por ahora, solo datos de prueba.*/
             ObjectParameter mejorPerfil = new ObjectParameter("PerfilPoderoso", typeof(string));
             ObjectParameter mejorCarrera = new ObjectParameter("CarreraPoderosa", typeof(string));
             ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
@@ -335,7 +395,14 @@ namespace AppIntegrador.Controllers
             /*Configura la sesión del usuario con la selección que le da más valor: la combinación de perfil, carrera y énfasis
              donde tiene más permisos asignados. Sino tiene perfil asignado, se asigna Superusuario por defecto, para efectos de pruebas
              y no atrasar a los demás equipos.*/
-            SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            try
+            {
+                SetUserData(username, (string)mejorPerfil.Value, (string)mejorCarrera.Value, (string)mejorEnfasis.Value);
+            } catch (Exception exception)
+            {
+                Console.WriteLine(exception.ToString());
+                return false;
+            }
             return true;
         }
 
@@ -343,7 +410,15 @@ namespace AppIntegrador.Controllers
          la interfaz de permisos con esa información.*/
         private void SetUserData(string correoUsuario, string perfil, string codCarrera, string codEnfasis)
         {
-            CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
+            try
+            {
+                CurrentUser.setCurrentUser(correoUsuario, perfil, codCarrera, codEnfasis);
+            }
+            catch (Exception exception) 
+            {
+                Console.WriteLine(exception.ToString());
+                throw;
+            }
         }
 
         public ActionResult CambiarContrasenna()
@@ -353,7 +428,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("Login");
             }
             //ViewBag.Message = "Your application description page.";
-            return View();
+            return View("CambiarContrasenna");
         }
 
         [HttpPost]

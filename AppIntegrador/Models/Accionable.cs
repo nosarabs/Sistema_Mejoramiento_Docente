@@ -27,11 +27,13 @@ namespace AppIntegrador.Models
         public Nullable<System.DateTime> fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
         public string tipo { get; set; }
+        public Nullable<int> peso { get; set; }
+        public Nullable<int> pesoPorcentaje { get; set; }
     
         public virtual AccionDeMejora AccionDeMejora { get; set; }
-        public virtual AccionableEscala1 AccionableEscala { get; set; }
-        public virtual AccionablePorcentaje1 AccionablePorcentaje { get; set; }
-        public virtual AccionableSiNo1 AccionableSiNo { get; set; }
+        public virtual AccionableEscala AccionableEscala { get; set; }
+        public virtual AccionablePorcentaje AccionablePorcentaje { get; set; }
+        public virtual AccionableSiNo AccionableSiNo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Funcionario> Funcionario { get; set; }
     }

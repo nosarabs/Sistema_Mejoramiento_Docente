@@ -21,7 +21,8 @@
 		BEGIN
 			if(not exists (select * from Pertenece_a where CodCarrera= @CodCarrera and @SiglaCurso = SiglaCurso and  CodEnfasis = @codEnf) and (@codEnf not like '' and @CodCarrera not like '' and @SiglaCurso not like ''))
 			begin
-				insert into Pertenece_a select * from inserted
+				insert into Pertenece_a (CodCarrera, SiglaCurso, CodEnfasis) 
+				values (@CodCarrera, @SiglaCurso, @codEnf)
 			end
 			FETCH NEXT FROM cursor_Pertenece_a INTO @CodCarrera, @SiglaCurso, @codEnf
 		END

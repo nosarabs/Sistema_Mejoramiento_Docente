@@ -12,12 +12,14 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AccionablePorcentaje1
+    public partial class AccionableEscala
     {
         public int codPlan { get; set; }
         public string nombreObj { get; set; }
         public string descripAcMej { get; set; }
         public string descripcion { get; set; }
+        public int valorMinimo { get; set; }
+        public int valorMaximo { get; set; }
         public Nullable<int> avance { get; set; }
     
         public virtual Accionable Accionable { get; set; }

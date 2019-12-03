@@ -12,7 +12,7 @@ namespace AppIntegrador.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AccionableSiNo1
+    public partial class AccionableSiNo
     {
         public int codPlan { get; set; }
         public string nombreObj { get; set; }

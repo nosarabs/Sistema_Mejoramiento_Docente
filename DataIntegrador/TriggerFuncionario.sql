@@ -19,7 +19,8 @@
 		BEGIN
 			IF(@correo NOT IN (SELECT Correo FROM Funcionario) and @correo not like '')
 			BEGIN
-				INSERT INTO Funcionario SELECT * FROM inserted
+				INSERT INTO Funcionario (Correo)
+				values (@correo)
 			END
 			FETCH NEXT FROM cursor_funcionario INTO @correo
 		END

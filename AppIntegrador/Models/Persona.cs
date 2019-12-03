@@ -35,6 +35,7 @@ namespace AppIntegrador.Models
         public virtual ICollection<EnlaceSeguro> EnlaceSeguro { get; set; }
         public virtual Estudiante Estudiante { get; set; }
         public virtual Funcionario Funcionario { get; set; }
+        public virtual UsuarioActual UsuarioActual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_a_formulario> Respuestas_a_formulario { get; set; }
         public virtual Usuario Usuario { get; set; }

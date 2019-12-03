@@ -339,3 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /AppIntegrador/Content
+/AppIntegrador/Models/Accionable1.cs
+/AppIntegrador/Estudiantes
+/AppIntegrador/Funcionarios/listaEstudianteTestMalo.csv

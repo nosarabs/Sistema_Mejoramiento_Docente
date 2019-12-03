@@ -1,7 +1,6 @@
 ﻿@model AppIntegrador.Models.Objetivo
 @{
-    var llamadoValidarPlan = "validarCampos('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', campoDescripcionObjetivo, 'campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'CrearObjetivoBoton')";
-    var llamadoValidarPlanFechas = "manejarFechasObjetivo('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', campoDescripcionObjetivo, 'campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'CrearObjetivoBoton')";
+    var llamadoValidarObjetivo = "manejarFechas('campoFechaInicioObjetivo', 'campoFechaFinObjetivo', 'campoNombreObjetivo', 'campoDescripcionObjetivo', 'campoFechaInicioPlanMejora', 'campoFechaFinPlanMejora', 'CrearObjetivoBoton', 'campoFechaInicioAccionMejora', 'campoFechaFinAccionMejora')";
 }
 
 <div class="form-horizontal card-group">
@@ -24,7 +23,7 @@
                                {
                                    @class = "form-control",
                                    id = "campoNombreObjetivo",
-                                   @onkeyup = llamadoValidarPlan,
+                                   @onkeyup = llamadoValidarObjetivo,
                                    @maxlength = "50",
                                    required = "required",
                                    placeholder = "Nombre del objetivo"
@@ -44,7 +43,7 @@
                                {
                                    @class = "form-control",
                                    id = "campoDescripcionObjetivo",
-                                   @onkeyup = llamadoValidarPlan,
+                                   @onkeyup = llamadoValidarObjetivo,
                                    @maxlength = "250",
                                    required = "required",
                                    placeholder = "Descripción del objetivo"
@@ -74,7 +73,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onchange = llamadoValidarPlanFechas,
+                                   @onchange = llamadoValidarObjetivo,
                                    id = "campoFechaInicioObjetivo"
                                }
                            }
@@ -90,7 +89,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @onchange = llamadoValidarPlanFechas,
+                                   @onchange = llamadoValidarObjetivo,
                                    id = "campoFechaFinObjetivo"
                                }
                            }

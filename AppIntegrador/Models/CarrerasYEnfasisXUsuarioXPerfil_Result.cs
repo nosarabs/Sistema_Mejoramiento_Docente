@@ -11,12 +11,11 @@ namespace AppIntegrador.Models
 {
     using System;
     
-    public partial class ObtenerFormulariosParaAsociar1_Result
+    public partial class CarrerasYEnfasisXUsuarioXPerfil_Result
     {
-        public string FCodigo { get; set; }
-        public string CSigla { get; set; }
-        public byte GNumero { get; set; }
-        public int GAnno { get; set; }
-        public byte GSemestre { get; set; }
+        public string NombreCarrera { get; set; }
+        public string CodCarrera { get; set; }
+        public string NombreEnfasis { get; set; }
+        public string CodEnfasis { get; set; }
     }
 }
