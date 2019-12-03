@@ -6,7 +6,8 @@
 	@tablaAccionables			 as dbo.AccionablesTabla 	 readonly,
 	@tablaAsocPlanFormularios	 as dbo.AsocPlanFormulario   readonly,
 	@tablaAsocObjetivosSecciones as dbo.AsocObjetivoSeccion  readonly,
-	@tablaAsocAccionesPreguntas  as dbo.AsocAccionPregunta   readonly
+	@tablaAsocAccionesPreguntas  as dbo.AsocAccionPregunta   readonly,
+	@tablaAsocPlanProfesores     as dbo.AsocPlanProfesores   readonly
 )
 AS
 BEGIN
@@ -33,6 +34,10 @@ BEGIN TRY
 
 		insert into AccionVsPregunta
 		select * from @tablaAsocAccionesPreguntas
+
+
+		insert into AsignadoA
+		select * from @tablaAsocPlanProfesores
 
 	COMMIT TRANSACTION
 END TRY

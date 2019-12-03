@@ -70,3 +70,10 @@ CREATE TYPE dbo.AsocAccionPregunta AS TABLE
 	codigoPregunta		varchar(8)
 )
 GO
+
+CREATE TYPE dbo.AsocPlanProfesores AS TABLE 
+(
+	codigoPlan	int,
+	corrProf	varchar(50)
+)
+GO
