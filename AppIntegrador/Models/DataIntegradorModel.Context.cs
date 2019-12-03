@@ -1764,5 +1764,27 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TienePermisoSinEnfasisNiCarrera", correoUsuarioParameter, perfilParameter, permisoParameter, resultado);
         }
+    
+        public virtual ObjectResult<string> ObtenerFormulariosAsociados(Nullable<int> idPlan)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerFormulariosAsociados", idPlanParameter);
+        }
+    
+        public virtual ObjectResult<string> ObtenerSeccionesAsociadasAObjetivo(Nullable<int> idPlan, string nombreObj)
+        {
+            var idPlanParameter = idPlan.HasValue ?
+                new ObjectParameter("idPlan", idPlan) :
+                new ObjectParameter("idPlan", typeof(int));
+    
+            var nombreObjParameter = nombreObj != null ?
+                new ObjectParameter("nombreObj", nombreObj) :
+                new ObjectParameter("nombreObj", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerSeccionesAsociadasAObjetivo", idPlanParameter, nombreObjParameter);
+        }
     }
 }

@@ -368,11 +368,6 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Detalles(int id)
         {
-            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
-                return RedirectToAction("../Home/Index");
-            }
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
 
@@ -388,6 +383,9 @@ namespace AppIntegrador.Controllers
                 ProfesoresNombreLista.Add(name_op.Value.ToString());
             }
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+
+            ViewBag.FormulariosLista = db.ObtenerFormulariosAsociados(id);
+
             return View("DetallesPlanDeMejora", planDeMejora);
         }
     }
