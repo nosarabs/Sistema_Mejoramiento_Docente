@@ -94,7 +94,8 @@
                         @{
                             if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_FORMULARIO) ||
                                 permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_SECCION) ||
-                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS))
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PREGUNTAS) ||
+                                permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.LLENAR_FORMULARIO))
                             {
                                 <li>
                                     <a href="">Formularios &#9660;</a>
