@@ -82,11 +82,6 @@
                                 {
                                     <span>En progreso</span>
                                 }
-
-                                @if (item.Estado == 1)
-                                {
-                                    @Html.ActionLink("Ver respuestas", "LlenarFormulario", "LlenarFormulario", new { id = item.Periodo.FCodigo, sigla = item.Periodo.CSigla, num = item.Periodo.GNumero, anno = item.Periodo.GAnno, semestre = item.Periodo.GSemestre }, new { @class = "btn-linkUCR" })
-                                }
                             </div>
                             @* If de prueba para no mostrar el footer cuando ya esté finalizado *@
                             @if (item.Estado != 1 && item.Estado != 2)

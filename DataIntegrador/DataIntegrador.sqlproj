@@ -80,6 +80,7 @@
     <Folder Include="Filtros\FiltrosFormulario\Indices" />
     <Folder Include="PlanesDeMejora\TableTypes" />
     <Folder Include="Formularios\Asignar" />
+    <Folder Include="Formularios\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="LoginUsuario.sql" />
@@ -277,6 +278,7 @@
     <Build Include="Formularios\Procedimientos\ObtenerEstudiantesAsociadosAFormulario.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionables.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerCorreosDeProfesoresDelPlan.sql" />
+    <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

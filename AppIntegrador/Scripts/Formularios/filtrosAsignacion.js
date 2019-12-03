@@ -33,7 +33,7 @@
     // Metodo que recupera todos los filtros seleccionados por
     // el usuario, con sus respectivas fechas, y le envia los
     // datos al controlador para que se asignen
-    asignarConFiltros(listaUA, listaCE, listaP, codigo) {
+    asignarConFiltros(listaUA, listaCE, listaP, codigo, extender) {
         // Extrae el codigo del formulario
         var codigoFormularioGet = codigo;
 
@@ -62,7 +62,8 @@
                 grupoSeleccionado: GValor, 
                 correoProfesorSeleccionado: PValor, 
                 fechaInicioSeleccionado: fechaInicio,
-                fechaFinSeleccionado: fechaFin
+                fechaFinSeleccionado: fechaFin,
+                extenderPeriodo: extender
             },
             type: 'post',
             dataType: 'json',
@@ -86,7 +87,25 @@
                     if (data.tipoError == 5) {
                         $(location).attr('href', '/Formularios/Index');
                     }
+                    if (data.tipoError == 6) {
+                        console.log(data);
+                        $("#modal-solapado").draggable({
+                            handle: ".modal-header"
+                        }); 
+
+                        $("#periodo-og-inicio").html(data.inicio);
+                        $("#periodo-og-fin").html(data.fin);
+                        $("#modal-solapado").modal('show');
+                    }
                 } else {
+                    if (data.inicio != null) {
+                        fechaInicio = data.inicio;
+                    }
+
+                    if (data.fin != null) {
+                        fechaFin = data.fin;
+                    }
+
                     // Sino, mensaje de exito. Y redirecciona al index de formularios
                     swal({
                         title: "¡El formulario " + codigo + " fue asignado con éxito!",
