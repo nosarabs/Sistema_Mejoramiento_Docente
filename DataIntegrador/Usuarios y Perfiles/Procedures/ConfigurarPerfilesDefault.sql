@@ -6,7 +6,7 @@ AS
 	MERGE INTO PerfilPermiso AS Target
 	USING (VALUES
 		-- Estudiante - Llenar formulario
-		('Estudiante', 213, @codCarrera, @codEnfasis),
+		('Estudiante', 215, @codCarrera, @codEnfasis),
 		-- Estudiante - Ver resultados de formularios de mis cursos
 		('Estudiante', 401, @codCarrera, @codEnfasis),
 		-- Administrador - Cargar datos desde CSV
