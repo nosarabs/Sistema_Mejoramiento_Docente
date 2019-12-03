@@ -271,7 +271,10 @@
     <Build Include="PlanesDeMejora\AccionableEscala.sql" />
     <Build Include="PlanesDeMejora\AccionableSiNo.sql" />
     <Build Include="PlanesDeMejora\AccionablePorcentaje.sql" />
+    <Build Include="Usuarios y Perfiles\Procedures\ConfigurarPerfilesDefault.sql" />
+    <Build Include="Usuarios y Perfiles\Functions\CarrerasYEnfasisXUsuarioXPerfil.sql" />
     <Build Include="Formularios\Asignar\ObtenerGruposAsociados.sql" />
+    <Build Include="Formularios\Procedimientos\ObtenerEstudiantesAsociadosAFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
