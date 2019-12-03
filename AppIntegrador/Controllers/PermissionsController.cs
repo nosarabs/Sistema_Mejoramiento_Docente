@@ -77,6 +77,7 @@ namespace AppIntegrador.Controllers
         /// o de permisos a perfiles.</param>
         /// <returns>ActionResult que recarga los datos de la página de administración de perfiles.</returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
             if (!permissionManager.IsAuthorized(Permission.EDITAR_PERMISOS_Y_PERFILES))
@@ -114,6 +115,7 @@ namespace AppIntegrador.Controllers
                     db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
                 }
             }
+            ViewBag.resultmessage = "Los cambios han sido guardados";
             return new EmptyResult();
         }
         /* Fin TAM 3.4-1.*/
@@ -217,7 +219,9 @@ namespace AppIntegrador.Controllers
                 foreach (var codigoEnfasis in listaEnfasis)
                 {
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
-                    enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
+                    if (permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERFILES_USUARIOS) ||
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERMISOS_PERFILES))
+                        enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
 
             }

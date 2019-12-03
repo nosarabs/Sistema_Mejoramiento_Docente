@@ -4,7 +4,7 @@
 }
 @Styles.Render("~/Content/users&profiles")
 
-@using (Html.BeginForm("Edit", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { action = "#", id = "dirrty-form" }))
+@using (Html.BeginForm("Edit", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "dirrty-form" }))
 {
     @Html.AntiForgeryToken()
 
