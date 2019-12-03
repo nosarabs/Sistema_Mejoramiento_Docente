@@ -8,9 +8,9 @@ namespace AppIntegrador.Controllers
 {
     public class ValidadorListaFuncionarios : Validador
     {
-        public Tuple<bool, string> Validar(ListaFuncionario lista)
+        public Tuple<bool, string> Validar(ListaFuncionario lista, int filaActual)
         {
-            int fila = 1;
+            int fila = filaActual;
             int columna = 0;
             string mensajeError = "";
             //Correo Persona
@@ -84,9 +84,15 @@ namespace AppIntegrador.Controllers
                 mensajeError = "El campo correo funcionario en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
                 return Tuple.Create(false, mensajeError);
             }
-            
-            //FALTA VALIDAR EL CODIGO UNIDAD ACADEMICA DONDE TRABAJA
-            fila++;
+
+            //CODIGO UNIDAD ACADEMICA
+            columna++;
+            if (!ValidarTamanoText(lista.CodigoUnidadTrabaja, 15) || checkForSQLInjection(lista.CodigoUnidadTrabaja))
+            {
+                mensajeError = "El campo código unidad persona en la fila " + fila.ToString() + " , columna " + columna.ToString() + " es invalido";
+                return Tuple.Create(false, mensajeError);
+            }
+
             return Tuple.Create(true, "");
         }
     }

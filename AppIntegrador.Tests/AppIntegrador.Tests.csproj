@@ -150,6 +150,7 @@
     <Compile Include="Controllers\LlenarFormularioTest.cs" />
     <Compile Include="Controllers\VistaPreviaFormularioTest.cs" />
     <Compile Include="Controllers\UsersControllerTest.cs" />
+    <Compile Include="Controllers\ValidadorControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\EmailNotificationTest.cs" />
   </ItemGroup>

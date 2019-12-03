@@ -532,7 +532,7 @@
 
     generarGraficoSeleccionCerrada(canvas, codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, tamano) {
 
-        var etiquetas = ["No", "Sí", "No responde"];
+        var etiquetas = ["Sí", "No", "No responde"];
         var valores = this.recuperarValoresSeleccion(codigoFormulario, siglaCurso, numeroGrupo, semestre, ano, fechaInicio, fechaFin, codigoSeccion, codigoPregunta, etiquetas.length);
 
         var resultado = this.revisarRespuestas(valores);

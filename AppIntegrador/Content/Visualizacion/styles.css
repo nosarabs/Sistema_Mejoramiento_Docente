@@ -167,9 +167,8 @@ div.row.estadisticas {
     clear: both;
 }
 
-.row h3 
+.row h3, h3 
 {
-    padding:3%;
     text-align: center;
     width: 100%;
 }
@@ -227,14 +226,16 @@ div.row.estadisticas {
     border-radius: 3px;
 }
 
+/*Estilo para la sección donde se despliegan los promedios de profesor y cursos*/
 #promedios {
     height: 30%;
     margin: 0 !important;
     padding: 0 !important;
     margin-bottom: 1% !important;
-    text-align:center;
+    text-align: center;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de promedios*/
 #promedios .col{
     height: 100%;
     margin:0 !important;
@@ -242,6 +243,7 @@ div.row.estadisticas {
     padding-top: 0 !important;
 }
 
+/*Estilo para la sección donde se despliega la cuadrícula con resultados de un formulario*/
 #cuadricula {
     height: 70%;
     margin: 0 !important;
@@ -250,6 +252,7 @@ div.row.estadisticas {
     padding-bottom: 1.5% !important;
 }
 
+/*Estilo para la columna que se despliega dentro de la sección de cuadrícula*/
 #cuadricula .col {
     height: 100%;
     margin: 0 !important;
@@ -278,6 +281,92 @@ div.row.estadisticas {
     font-size: small ;
 }
 
+/*Estilo para los multiselect*/
+/*Con este le puede cambiar el tamaño a todo el componente.*/
+div.btn-group {
+    width: 100% !important;
+    font-size: small;
+}
+
+button.multiselect.dropdown-toggle.btn-default {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    background-color: #f0f0f0 !important;
+    width: 100%;
+    padding:0;
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: white;
+    /*padding: 2% !important;*/
+    white-space: nowrap;
+    max-width: 200%;
+    min-width: 150%;
+    overflow: auto !important;
+}
+
+ul.multiselect-container.dropdown-menu.show {
+    white-space: nowrap;
+    overflow: auto !important;
+    max-width: 200%;
+    min-width: 150%;
+    padding: 3%;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+}
+
+label.checkbox {
+    /*padding-right: 1% !important;*/
+    font-size: small;
+    min-width: 100%;
+}
+
+label.checkbox:hover {
+    background-color: dodgerblue;
+    width: max-content;
+    min-width: 100%;
+}
+
+label.radio {
+    padding-left: 2% !important;
+    margin: 0;
+    font-size: small;
+    min-width: 100%;
+}
+
+label.radio:hover {
+    background-color: dodgerblue;
+    width: max-content;
+    min-width: 100%;
+}
+
+span.multiselect-selected-text {
+    font-size: small;
+    max-width: 90%;
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-remove-circle:before {
+    content: "X";
+}
+
+button.btn.btn-default.multiselect-clear-filter {
+    margin: 0;
+    padding-bottom: 9%;
+}
+
 /*Estilos para la vista parcial*/
 
 div.row.filaBase {
@@ -290,12 +379,14 @@ div.row.filaBase {
 div.col.columnaIzquierda {
     height: 100% !important;
     padding: 50px !important;
+    padding-right: 25px !important;
     flex: 1 !important;
 }
 
 div.col.columnaDerecha {
     height: 100% !important;
     padding: 50px !important;
+    padding-left: 25px !important;
     flex: 1 !important;
 }
 
@@ -313,4 +404,16 @@ div.col.columnaDerecha {
 
 .labelcito {
     font-size: 14px;
+}
+
+#secciones {
+    font-size: small;
+}
+
+#secciones.form-control {
+    font-size: small;
+}
+
+#secciones option {
+    font-size: small;
 }
