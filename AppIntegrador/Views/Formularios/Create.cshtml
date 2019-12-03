@@ -41,7 +41,8 @@
                                    @onkeyup = "contarCaracteres(this)",
                                    @title = "Código requerido",
                                    @Value = Model.Formulario.Codigo,
-                                   @onfocusout = "ValidarCodigo()"
+                                   @onfocusout = "ValidarCodigo()",
+                                   @onkeydown = "CambiosSinGuardar()"
                                }
                            })
                                 <div class="contador small float-right">0/8 caracteres usados</div>
@@ -66,7 +67,8 @@
                                        @onkeyup = "contarCaracteres(this)",
                                        @title = "Nombre del formulario requerido",
                                        @Value = Model.Formulario.Nombre,
-                                       @onfocusout = "ValidarCodigo()"
+                                       @onfocusout = "ValidarCodigo()",
+                                       @onkeydown = "CambiosSinGuardar()"
                                    }
                                })
 
