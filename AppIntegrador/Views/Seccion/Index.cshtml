@@ -33,9 +33,9 @@
 
                         @* Enviar el filtrado al controlador *@
                         <input type="submit"
-                                name="submit"
-                                value="Filtrar"
-                                class="btn" />
+                               name="submit"
+                               value="Filtrar"
+                               class="btn" />
                         <br />
                     </form>
                     @if (@ViewBag.filtro != "Ninguno")
@@ -48,33 +48,34 @@
         </div>
     }
     <br />
-    <table id="selectedColumn" class="table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
-        <tr>
-            <th>
-                Código
-            </th>
-            <th>
-                Nombre
-            </th>
-            <th>
-
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table id="selectedColumn" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%" style=" top: 0; border-collapse: separate;">
+        <thead class="thead-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codigo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.ActionLink("Vista previa", "VistaPrevia", new { id = item.Codigo })
-                </td>
+                <th>
+                    Código
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+
+                </th>
             </tr>
-        }
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Vista previa", "VistaPrevia", new { id = item.Codigo })
+                    </td>
+                </tr>
+            }
     </table>
 </div>
 
