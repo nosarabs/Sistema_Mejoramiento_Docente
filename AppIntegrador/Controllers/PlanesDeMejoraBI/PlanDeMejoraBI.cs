@@ -27,7 +27,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             // Primero analizamos tomamos la totalidad de los planes de mejora
             var totalPlanes = db.PlanDeMejora.ToList();
             var ultimoCodigo = -1;
-            if (totalPlanes) 
+            if (totalPlanes != null) 
             {
                 foreach (var item in totalPlanes)
                 {
