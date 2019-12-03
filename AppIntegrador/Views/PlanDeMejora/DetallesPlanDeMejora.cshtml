@@ -17,7 +17,7 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
                             <div class="row">
                                 <div class="col-md-12">
@@ -66,7 +66,15 @@
                             <br />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="button" value="Ver profesores" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresVer')" />
+                                    <input type="button" value="Profesores asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresVer')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="button" value="Formularios asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalFormulariosVer')" />
                                 </div>
                             </div>
                         </div>
@@ -116,6 +124,7 @@
 </div>
 
 @{Html.RenderPartial("_ModalListaProfesores");}
+@{Html.RenderPartial("_ModalListaFormularios", Model.Formulario);}
 
 @section Scripts{
 
@@ -150,7 +159,7 @@
 
         function seleccionaAccionLista(plan, obj, descr) {
             var content = '<h2>Accionables de la Acción de mejora</h2>';
-                document.getElementById('encabezadoAccionable').innerHTML = content;
+            document.getElementById('encabezadoAccionable').innerHTML = content;
             actualizarAccionables(plan, obj, descr);
         };
 

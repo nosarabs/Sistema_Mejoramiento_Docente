@@ -279,6 +279,8 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\AgregarMultiplesAccionables.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerCorreosDeProfesoresDelPlan.sql" />
     <Build Include="Formularios\Triggers\TriggerPeriodo.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerFormulariosAsociados.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerSeccionesAsociadasAObjetivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />
