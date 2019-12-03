@@ -162,15 +162,41 @@ namespace AppIntegrador.Controllers
         // GET: Formularios/Create
         public ActionResult Create()
         {
+            return CrearFormularioView(null, false);
+        }
+
+        public ActionResult Edit(string codForm)
+        {
+            return CrearFormularioView(codForm, true);
+        }
+
+        public ActionResult CrearFormularioView(string codForm, bool creado)
+        {
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
             }
+            
+            if(creado)
+            {
+                crearFormulario.Formulario = db.Formulario.Find(codForm);
+                if(crearFormulario.Formulario == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                SeccionController seccionController = new SeccionController();
+                crearFormulario.seccionesConPreguntas = seccionController.ObtenerSeccionesConPreguntasEditable(codForm);
+                seccionController.Dispose();
+            }
+            else
+            {
+                crearFormulario.Formulario = new Formulario();
+            }
             crearFormulario.seccion = db.Seccion;
             crearFormulario.crearSeccionModel = new CrearSeccionModel();
-            crearFormulario.Formulario = new Formulario();
-            crearFormulario.Creado = false;
+            crearFormulario.Creado = creado;
             ViewBag.Version = "Creacion";
             return View("Create", crearFormulario);
         }
@@ -224,28 +250,6 @@ namespace AppIntegrador.Controllers
             return Json(new { guardadoExitoso = seccion != null && InsertSeccion(seccion) });
         }
 
-        // GET: Formularios/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (!permissionManager.IsAuthorized(Permission.EDITAR_FORMULARIO))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
-                return RedirectToAction("../Home/Index");
-            }
-
-            crearFormulario.seccion = db.Seccion;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Formulario formulario = db.Formulario.Find(id);
-            if (formulario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(formulario);
-        }
-
         // Historia RIP-CF5
         // Se copió la función para filtrar preguntas.
         //        [HttpPost]
@@ -278,24 +282,6 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", crearFormulario.seccion);
         }
-
-        // POST: Formularios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Formulario formulario)
-        {
-            crearFormulario.seccion = db.Seccion;
-            if (ModelState.IsValid)
-            {
-                db.Entry(formulario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(formulario);
-        }
-
         /**
          * Este método valida si ya el formulario fue creado, de no ser así
          * lo crea y le asocia las secciones recibidas por parámetros
@@ -396,7 +382,7 @@ namespace AppIntegrador.Controllers
 
             for (int index = 0; index < secciones.Count; ++index)
             {
-                db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index], index);
+                db.AsociarSeccionConFormulario(formulario.Codigo, secciones[index]);
             }
             return true;
         }

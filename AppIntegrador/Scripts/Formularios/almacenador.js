@@ -11,9 +11,7 @@
     // Remueve la primera aparición de id en el arreglo
     // (En buena teoría solo debería existir un elemento)
     function remove(id) {
-        seccionesSeleccionadas.filter(function (ele) {
-            return ele != id;
-        });
+        seccionesSeleccionadas.splice(seccionesSeleccionadas.indexOf(id), 1);
     }
     // Borra todo el arreglo
     function removeAll() {

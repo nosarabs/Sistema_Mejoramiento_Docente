@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DataIntegradorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1898,9 +1898,8 @@
           <Parameter Name="CodigoPregunta" Type="varchar" Mode="In" />
         </Function>
         <Function Name="AsociarSeccionConFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="varchar" Mode="In" />
-          <Parameter Name="codigoSeccion" Type="varchar" Mode="In" />
-          <Parameter Name="orden" Type="int" Mode="In" />
+          <Parameter Name="CodigoFormulario" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoSeccion" Type="varchar" Mode="In" />
         </Function>
         <Function Name="BorrarAccionDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoPlan" Type="int" Mode="In" />
@@ -2224,6 +2223,9 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ObtenerEstudiantesAsociadosAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerFormulariosCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -2315,7 +2317,26 @@
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="ObtenerGruposAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ObtenerGruposAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUnidadAcademica" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="Semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="Anno" Type="int" Mode="In" />
+          <Parameter Name="CorreoProfesor" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="SiglaCurso" Type="varchar" MaxLength="10" Nullable="false" />
+                <Property Name="NumGrupo" Type="tinyint" Nullable="false" />
+                <Property Name="Semestre" Type="tinyint" Nullable="false" />
+                <Property Name="Anno" Type="int" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="ObtenerGruposCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -3007,13 +3028,20 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataIntegradorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <ComplexType Name="CarrerasXPerfilXUsuario_Result">
           <Property Name="codCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="nombreCarrera" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="CarrerasYEnfasisXUsuarioXPerfil_Result">
+          <Property Name="NombreCarrera" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreEnfasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </ComplexType>
         <ComplexType Name="EnfasisXCarrera_Result">
           <Property Name="codEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -3101,6 +3129,12 @@
           <Property Name="GAnno" Type="Int32" Nullable="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" />
           <Property Name="FechaFin" Type="DateTime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerGruposAsociados_Result">
+          <Property Name="SiglaCurso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumGrupo" Type="Byte" Nullable="false" />
+          <Property Name="Semestre" Type="Byte" Nullable="false" />
+          <Property Name="Anno" Type="Int32" Nullable="false" />
         </ComplexType>
         <ComplexType Name="ObtenerGruposCarreraEnfasis_Result">
           <Property Name="SiglaCurso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
@@ -4922,8 +4956,12 @@
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
             <Parameter Name="perfil" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="CarrerasYEnfasisXUsuarioXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result)">
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
-          <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EnfasisXCarreraXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarreraXPerfil_Result)">
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
@@ -4943,6 +4981,16 @@
           <FunctionImport Name="ObtenerFormulariosGrupo" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosGrupo_Result)" />
           <FunctionImport Name="ObtenerFormulariosProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosProfesor_Result)" />
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)" />
+          <FunctionImport Name="ObtenerGruposAsociados" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposAsociados_Result)">
+            <Parameter Name="CodigoUnidadAcademica" Mode="In" Type="String" />
+            <Parameter Name="CodigoCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodigoEnfasis" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerGruposCarreraEnfasis" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposCarreraEnfasis_Result)" />
           <FunctionImport Name="ObtenerGruposFiltros" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposFiltros_Result)" />
           <FunctionImport Name="ObtenerGruposProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposProfesor_Result)" />
@@ -4966,7 +5014,7 @@
           <FunctionImport Name="ObtenerUAsGrupo" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerUAsGrupo_Result)" />
           <FunctionImport Name="ObtenerUAsProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerUAsProfesor_Result)" />
           <FunctionImport Name="PerfilesXUsuario" IsComposable="true" ReturnType="Collection(DataIntegradorModel.PerfilesXUsuario_Result)">
-          <Parameter Name="correoUsuario" Mode="In" Type="String" />
+            <Parameter Name="correoUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ProfesoresXUsuarioXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ProfesoresXUsuarioXPerfil_Result)">
             <Parameter Name="usuarioActual" Mode="In" Type="String" />
@@ -5064,9 +5112,8 @@
             <Parameter Name="CodigoPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="AsociarSeccionConFormulario">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="codigoSeccion" Mode="In" Type="String" />
-            <Parameter Name="orden" Mode="In" Type="Int32" />
+            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BorrarAccionDeMejora">
             <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
@@ -5078,7 +5125,7 @@
             <Parameter Name="nombreObj" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BorrarPlan">
-          <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
+            <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ChangePassword">
             <Parameter Name="username" Mode="In" Type="String" />
@@ -5127,7 +5174,7 @@
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="getPlanFull" ReturnType="Collection(DataIntegradorModel.getPlanFull_Result)">
-          <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
+            <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTeacherName">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -5198,10 +5245,10 @@
             <Parameter Name="Nombre" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarEstudianteCSV">
-          <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarFuncionarioCSV">
-          <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarGrupoCSV">
             <Parameter Name="SiglaCurso" Mode="In" Type="String" />
@@ -5241,7 +5288,7 @@
             <Parameter Name="SiglaCurso" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarProfesorCSV">
-          <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertarTrabajaEn">
             <Parameter Name="CorreoFuncionario" Mode="In" Type="String" />
@@ -5279,6 +5326,9 @@
             <Parameter Name="nombre" Mode="In" Type="String" />
             <Parameter Name="modificacionexitosa" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerEstudiantesAsociadosAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result)">
+            <Parameter Name="codFormulario" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosDeEstudiante" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result)">
             <Parameter Name="correoEstudiante" Mode="In" Type="String" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
@@ -5290,9 +5340,8 @@
             <Parameter Name="anno" Mode="In" Type="Int32" />
             <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerGruposAsociados" />
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
-          <Parameter Name="questionCode" Mode="In" Type="String" />
+            <Parameter Name="questionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesSeleccionadas" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesSeleccionadas_Result)">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
@@ -5305,7 +5354,7 @@
             <Parameter Name="codPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPreguntasDeSeccion" ReturnType="Collection(DataIntegradorModel.ObtenerPreguntasDeSeccion_Result)">
-          <Parameter Name="sectionCode" Mode="In" Type="String" />
+            <Parameter Name="sectionCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerRespuestasAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerRespuestasAFormulario_Result)">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
@@ -5326,14 +5375,14 @@
             <Parameter Name="codPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerSeccionesDeFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerSeccionesDeFormulario_Result)">
-          <Parameter Name="CodForm" Mode="In" Type="String" />
+            <Parameter Name="CodForm" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PopularFormulariosConSecciones" />
           <FunctionImport Name="PopularFormulariosDePrueba">
-          <Parameter Name="NumeroError" Mode="InOut" Type="Int32" />
+            <Parameter Name="NumeroError" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PopularSeccionesConPreguntas">
-          <Parameter Name="NumeroError" Mode="InOut" Type="Int32" />
+            <Parameter Name="NumeroError" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PromedioCursos">
             <Parameter Name="promedio" Mode="InOut" Type="Double" />
@@ -5403,10 +5452,6 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="CarrerasYEnfasisXUsuarioXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result)">
-            <Parameter Name="usuario" Mode="In" Type="String" />
-            <Parameter Name="perfil" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -5436,6 +5481,28 @@
           <Property Type="DateTime" Name="fechaInicio3" Nullable="true" />
           <Property Type="DateTime" Name="fechaFin3" Nullable="true" />
           <Property Type="String" Name="tipo" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="ObtenerEstudiantesAsociadosAFormulario_Result">
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Carne" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="CorreoEstudiante" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
+          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CorreoProfesor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso1" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo1" Nullable="false" />
+          <Property Type="Byte" Name="Semestre1" Nullable="false" />
+          <Property Type="Int32" Name="Anno1" Nullable="false" />
+          <Property Type="String" Name="Correo1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
         </ComplexType>
         <ComplexType Name="ObtenerFormulariosDeEstudiante_Result">
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
@@ -5510,12 +5577,6 @@
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="CarrerasYEnfasisXUsuarioXPerfil_Result">
-          <Property Type="String" Name="NombreCarrera" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CodCarrera" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NombreEnfasis" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CodEnfasis" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -6106,6 +6167,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.CarrerasYEnfasisXUsuarioXPerfil" FunctionImportName="CarrerasYEnfasisXUsuarioXPerfil">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result">
+                <ScalarProperty Name="NombreCarrera" ColumnName="NombreCarrera" />
+                <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
+                <ScalarProperty Name="NombreEnfasis" ColumnName="NombreEnfasis" />
+                <ScalarProperty Name="CodEnfasis" ColumnName="CodEnfasis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" FunctionImportName="EnfasisXCarrera">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarrera_Result">
@@ -6238,6 +6309,16 @@
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.ObtenerGruposAsociados" FunctionImportName="ObtenerGruposAsociados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerGruposAsociados_Result">
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6489,6 +6570,32 @@
           <FunctionImportMapping FunctionImportName="Mediana" FunctionName="DataIntegradorModel.Store.Mediana" />
           <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
           <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerEstudiantesAsociadosAFormulario" FunctionName="DataIntegradorModel.Store.ObtenerEstudiantesAsociadosAFormulario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="CorreoEstudiante" ColumnName="CorreoEstudiante" />
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CorreoProfesor" ColumnName="CorreoProfesor" />
+                <ScalarProperty Name="SiglaCurso1" ColumnName="SiglaCurso1" />
+                <ScalarProperty Name="NumGrupo1" ColumnName="NumGrupo1" />
+                <ScalarProperty Name="Semestre1" ColumnName="Semestre1" />
+                <ScalarProperty Name="Anno1" ColumnName="Anno1" />
+                <ScalarProperty Name="Correo1" ColumnName="Correo1" />
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosDeEstudiante" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosDeEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result">
@@ -6526,7 +6633,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerGruposAsociados" FunctionName="DataIntegradorModel.Store.ObtenerGruposAsociados" />
           <FunctionImportMapping FunctionImportName="ObtenerOpcionesDePregunta" FunctionName="DataIntegradorModel.Store.ObtenerOpcionesDePregunta">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerOpcionesDePregunta_Result">
@@ -6613,16 +6719,6 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
-          <FunctionImportMapping FunctionImportName="CarrerasYEnfasisXUsuarioXPerfil" FunctionName="DataIntegradorModel.Store.CarrerasYEnfasisXUsuarioXPerfil">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result">
-                <ScalarProperty Name="NombreCarrera" ColumnName="NombreCarrera" />
-                <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
-                <ScalarProperty Name="NombreEnfasis" ColumnName="NombreEnfasis" />
-                <ScalarProperty Name="CodEnfasis" ColumnName="CodEnfasis" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

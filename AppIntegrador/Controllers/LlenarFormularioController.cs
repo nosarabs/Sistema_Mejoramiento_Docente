@@ -18,7 +18,7 @@ namespace AppIntegrador.Controllers
 
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
-        const string FinVerano = "07/03/";
+        public const string FinVerano = "07/03/";
 
         const string InicioPrimerSemestre = "08/03/";
         const string FinPrimerSemestre = "31/07/";
@@ -26,7 +26,7 @@ namespace AppIntegrador.Controllers
         const string InicioSegundoSemestre = "01/08/";
         const string FinSegundoSemestre = "31/12/";
 
-        byte SemestreActual;
+        public readonly byte SemestreActual;
 
         readonly DateTime FechaActual;
 
@@ -236,14 +236,14 @@ namespace AppIntegrador.Controllers
 
             foreach (var periodo in periodosSemestre)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
                 modelo.FormulariosSemestre.Add(formulario);
             }
 
             foreach (var periodo in periodosPasados)
             {
-                FormularioAsignado formulario = new FormularioAsignado(periodo);
-                modelo.FormulariosPasados.Add(formulario);
+                FormularioAsignado formulario = new FormularioAsignado(periodo, HttpContext.User.Identity.Name);
+                modelo.InsertarPasado(formulario);
             }
 
             return View(modelo);
@@ -303,7 +303,7 @@ namespace AppIntegrador.Controllers
             return formularios;
         }
 
-        private DateTime ObtenerFechaInicioSemestre()
+        public DateTime ObtenerFechaInicioSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)
@@ -322,7 +322,7 @@ namespace AppIntegrador.Controllers
             }
         }
 
-        private DateTime ObtenerFechaFinSemestre()
+        public DateTime ObtenerFechaFinSemestre()
         {
             // Verano
             if (FechaInicioVerano < FechaActual && FechaActual < FechaFinVerano)

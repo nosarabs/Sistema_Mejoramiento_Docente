@@ -48,7 +48,7 @@
                                     {
                                         htmlAttributes = new
                                         {
-                                            @class = "validar form-control",
+                                            @class = "validar-codigo-pregunta form-control",
                                             @maxlength = "8",
                                             required = "required",
                                             @onkeyup = "contarCaracteres(this)",
@@ -96,8 +96,8 @@
                 <br />
                 <div class="form-group float-right">
                     <div class="col-lg-offset-2 col-lg-10 ">
-                        <input type="submit" value="Crear" class="btn-azulUCR" id="Create" />
-                        @Html.ActionLink("Cancelar", "Create", "Controller", new { @class = "btn-blancoUCR" })
+                        <input type="button" value="Regresar al banco de Secciones" class="btn-blancoUCR" onclick="CerrarCrearPregunta()" />
+                        <input type="button" value="Guardar" class="btn-azulUCR" onclick="GuardarPregunta()" />
                     </div>
                 </div>
             }

@@ -4,7 +4,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Model.Creado ? "Edit" : "Create";
 }
 
 @*<form id="__AjaxAntiForgeryForm" action="#" method="post"><%= Html.AntiForgeryToken()%></form>*@
@@ -19,7 +19,7 @@
         @Html.Hidden("formulario.Codigo", null, new { @id = "codigoViejo" })
         @*RIP CF5: Creación de un tabla para organizar la información*@
         <div class="card card-body shadow">
-            <h3>Crear Formulario</h3>
+            <h3 id="titulo">@(Model.Creado ? "Editar" : "Crear") Formulario</h3>
             @*Acomodar el código y el nombre en el mismo nivel*@
             <div class="card card-default shadow">
                 <div class="card-body grisUCR2">
@@ -41,7 +41,7 @@
                                    @onkeyup = "contarCaracteres(this)",
                                    @title = "Código requerido",
                                    @Value = Model.Formulario.Codigo,
-                                   @onfocusout = "ValidarCodigo(0)"
+                                   @onfocusout = "ValidarCodigo()"
                                }
                            })
                                 <div class="contador small float-right">0/8 caracteres usados</div>
@@ -66,7 +66,7 @@
                                        @onkeyup = "contarCaracteres(this)",
                                        @title = "Nombre del formulario requerido",
                                        @Value = Model.Formulario.Nombre,
-                                       @onfocusout = "ValidarCodigo(0)"
+                                       @onfocusout = "ValidarCodigo()"
                                    }
                                })
 
@@ -87,18 +87,18 @@
                     <div class="form-group col-md-12" id="seccionesActuales">
                         @if (Model.seccionesConPreguntas != null)
                         {
-                            Html.RenderPartial("/Views/Seccion/SeccionConPreguntas.cshtml", Model.seccionesConPreguntas);
+                            Html.RenderPartial("../Seccion/SeccionConPreguntas", Model.seccionesConPreguntas);
                         }
                         else
                         {
-                            <div style="text-align:center;font-size:large;">Aún no ha añadido secciones</div>
+                            <div style="text-align:center;font-size:large;">Aún no ha agregado secciones</div>
                         }
                     </div>
 
                     <div class="form-group">
                         <div class="">
                             @*Posibilidad de agregar sección*@
-                            <input type="button" value="Añadir secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="ValidarCodigo(1)" />
+                            <input type="button" value="Agregar secciones" class="btn-azulUCR float-right" id="AgregarSeccion" onclick="AbrirSeccionesModal()" />
                         </div>
                     </div>
                     <div class="form-horizontal card-group">
@@ -170,42 +170,14 @@
     <script src="~/Scripts/Formularios/CrearPreguntas.js"></script>
 
 
-    <script>
-
-        $(document).ready(function () {
-            deshabilitarCamposBasicos(true)
-            validarEntradas();
-        })
-    </script>
-
 
 
     <script>
         $(document).ready(function () {
             agregarsecciones.init();
             agregarPreguntas.init();
-            GenerarModalPreguntas();
-            validarEntradasAgregarSecciones();
-            var msg = '@ViewBag.Message';
-            if (msg == "Fallido") {
-                document.getElementById("validacion-codigo").textContent = "Código en uso";
-                $("#textCode").addClass("error");
-            }
-            else if (msg == "Exitoso") {
-                const el = document.createElement('div')
-                swal({
-                    title: "¡Formulario guardado exitosamente!",
-                    type: "success",
-                    text: "Puede ser visto en el banco de formularios",
-                    icon: 'success',
-
-                    timer: 100000,
-                    showConfirmButton: true
-
-                });
-
-
-            }
+            DesactivarSeccionesAgregadas();
+            //validarEntradasAgregarSecciones();
         });
 
     </script>
