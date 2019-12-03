@@ -382,11 +382,6 @@ namespace AppIntegrador.Controllers
 
         private bool ConfigureSession(string username)
         {
-            /*TO-DO: Ejecutar un procedimiento almacenado que dé la combinación de perfil, carrera y 
-             énfasis que dé más valor al usuario (la combinación en la que el usuario tenga más permisos,
-             o la única que tenga si no tiene más opciones).*/
-
-            /*Por ahora, solo datos de prueba.*/
             ObjectParameter mejorPerfil = new ObjectParameter("PerfilPoderoso", typeof(string));
             ObjectParameter mejorCarrera = new ObjectParameter("CarreraPoderosa", typeof(string));
             ObjectParameter mejorEnfasis = new ObjectParameter("EnfasisPoderoso", typeof(string));
@@ -421,7 +416,8 @@ namespace AppIntegrador.Controllers
             }
             catch (Exception exception) 
             {
-                throw exception;
+                Console.WriteLine(exception.ToString());
+                throw;
             }
         }
 

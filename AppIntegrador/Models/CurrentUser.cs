@@ -106,7 +106,7 @@ namespace AppIntegrador.Models
         }
 
         //Método que guarda en la base de datos los datos del usuario loggeado. Busca primero si ya está en la tabla,
-        //si ya está lo borra, y luego lo inserta de nuevo para habilitar su sesión.
+        //si ya está no hace nada y si no está lo inserta para configurar su sesión.
         public static void setCurrentUser(string username, string profile, string majorId, string emphasisId)
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
@@ -242,7 +242,7 @@ namespace AppIntegrador.Models
                     HttpContext.Current.Session["MajorId"] = user.CodCarrera;
                     HttpContext.Current.Session["EmphasisId"] = user.CodEnfasis;
                 }
-                /*else /*Sino, se hace logout y se redirige a la pantalla de login.*/
+                else /*Sino, se hace logout y se redirige a la pantalla de login.*/
                 {
                     try
                     {
