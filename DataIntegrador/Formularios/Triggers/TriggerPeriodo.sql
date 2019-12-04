@@ -1,4 +1,4 @@
-﻿CREATE TRIGGER [TriggerPeriodo]
+﻿/*CREATE TRIGGER [TriggerPeriodo]
 ON [dbo].[Periodo_activa_por]
 INSTEAD OF INSERT
 AS
@@ -42,3 +42,4 @@ BEGIN
 		SELECT * FROM inserted
 	END
 END
+*/
