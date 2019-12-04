@@ -71,6 +71,7 @@ function checkSeccion(elem) {
 }
 
 function BorrarPregunta(Scod, Pcod) {
+    GuardandoCambios();
     var SCodigo = Scod
     var PCodigo = Pcod
     var resultado = { SCodigo, PCodigo };
@@ -84,6 +85,10 @@ function BorrarPregunta(Scod, Pcod) {
         success: function (data) {
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
+                CambiosGuardadosExitosamente();
+            }
+            else {
+                CambiosSinGuardar();
             }
         },
         error: function () {
@@ -93,6 +98,7 @@ function BorrarPregunta(Scod, Pcod) {
 }
 
 function BorrarSeccion(Scod) {
+    GuardandoCambios();
     // Arregla la vista cuando se deselecciona
     var seccionBanco = document.getElementById("sec(" + Scod + ")");
     $(seccionBanco).removeAttr("hidden");
@@ -116,6 +122,10 @@ function BorrarSeccion(Scod) {
             if (data.eliminadoExitoso) {
                 ActualizarSecciones();
                 HabilitarSeccionEnBanco(SCodigo);
+                CambiosGuardadosExitosamente();
+            }
+            else {
+                CambiosSinGuardar();
             }
         },
         error: function () {
@@ -153,7 +163,7 @@ function ValidarCodigo() {
 
     if (Codigo.length > 0 && Nombre.length > 0) {
         guardandoCambios = 1;
-        document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
+        GuardandoCambios();
         resultado = { Codigo, Nombre };
 
         if (document.getElementById("formularioCreado").value == 0) {
@@ -176,13 +186,13 @@ function ValidarCodigo() {
                         document.getElementById("formularioCreado").setAttribute("value", "1");
                         document.getElementById("codigoViejo").setAttribute("value", Codigo);
 
-                        document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+                        CambiosGuardadosExitosamente();
                         document.getElementById("titulo").innerHTML = "Editar formulario";
                     }
                     else {
                         document.getElementById("validacion-codigo").textContent = "Código en uso";
                         $("#textCode").addClass("error");
-                        document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+                        CambiosSinGuardar();
                     }
                 }
             });
@@ -207,7 +217,7 @@ function AbrirSeccionesModal() {
 }
 
 function ModificarFormulario() {
-    document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
+    GuardandoCambios();
     var codViejo = document.getElementById("codigoViejo").value;
     var codNuevo = document.getElementById("textCode").value;
     var nombre = document.getElementById("textName").value;
@@ -228,12 +238,12 @@ function ModificarFormulario() {
                 $("#textCode").removeClass("error");
                 document.getElementById("codigoViejo").setAttribute("value", codNuevo);
 
-                document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+                CambiosGuardadosExitosamente();
             }
             else {
                 document.getElementById("validacion-codigo").textContent = "Código en uso";
                 $("#textCode").addClass("error");
-                document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+                CambiosSinGuardar();
             }
         }
     });
@@ -241,4 +251,12 @@ function ModificarFormulario() {
 
 function CambiosSinGuardar() {
     document.getElementById("cambiosGuardados").innerHTML = "Cambios sin guardar";
+}
+
+function CambiosGuardadosExitosamente() {
+    document.getElementById("cambiosGuardados").innerHTML = "Cambios guardados exitosamente";
+}
+
+function GuardandoCambios() {
+    document.getElementById("cambiosGuardados").innerHTML = "Guardando cambios...";
 }

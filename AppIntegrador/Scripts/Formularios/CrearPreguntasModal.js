@@ -18,6 +18,7 @@ function ImportarBancoPreguntas() {
         dataType: "html",
         success: function (data) {
             $('#ModalPartialBancoPreguntas').html(data);
+            DesactivarPreguntasAgregadas();
         }
     });
 }

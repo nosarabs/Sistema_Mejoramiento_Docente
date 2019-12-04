@@ -22,109 +22,109 @@ namespace AppIntegrador.Tests.Controllers
     [TestClass]
     public class SeccionControllerTest
     {
-        [TestMethod]
-        // Prueba de que la vista no sea nula
-        public void TestIndexNotNull()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        //[TestMethod]
+        //// Prueba de que la vista no sea nula
+        //public void TestIndexNotNull()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Act
-            ViewResult result = seccionController.Index("","","") as ViewResult;
+        //    // Act
+        //    ViewResult result = seccionController.Index("","","") as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
 
-        [TestMethod]
-        // Prueba de que la vista no sea nula
-        public void TestCreateNotNull()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        //[TestMethod]
+        //// Prueba de que la vista no sea nula
+        //public void TestCreateNotNull()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Act
-            ViewResult result = seccionController.Create() as ViewResult;
+        //    // Act
+        //    ViewResult result = seccionController.Create() as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
-        [TestMethod]
-        //RIP CF5
-        // Prueba de que la vista no sea nula
-        public void TestCreateIndexFiltroCodigoNotNull()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
+        //[TestMethod]
+        ////RIP CF5
+        //// Prueba de que la vista no sea nula
+        //public void TestCreateIndexFiltroCodigoNotNull()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Act
-            ViewResult result = seccionController.Index("0000001","","") as ViewResult;
+        //    // Act
+        //    ViewResult result = seccionController.Index("0000001","","") as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
 
-        [TestMethod]
-        //RIP CF5
-        // Prueba de que la vista no sea nula
-        public void TestCreateIndexFiltroNotNull()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        //[TestMethod]
+        ////RIP CF5
+        //// Prueba de que la vista no sea nula
+        //public void TestCreateIndexFiltroNotNull()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Act
-            ViewResult result = seccionController.Index(null,null,null) as ViewResult;
+        //    // Act
+        //    ViewResult result = seccionController.Index(null,null,null) as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
 
-        [TestMethod]
-        //RIP CF5
-        // Prueba de que la vista no sea nula
-        public void TestIndexTipos()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        //[TestMethod]
+        ////RIP CF5
+        //// Prueba de que la vista no sea nula
+        //public void TestIndexTipos()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Se prueban las de si/no/nr
-            ViewResult result = seccionController.Index("", "", "S") as ViewResult;
-            Assert.IsNotNull(result);
+        //    // Se prueban las de si/no/nr
+        //    ViewResult result = seccionController.Index("", "", "S") as ViewResult;
+        //    Assert.IsNotNull(result);
 
-            // Se prueban las escalares
-            result = seccionController.Index("", "", "E") as ViewResult;
-            Assert.IsNotNull(result);
+        //    // Se prueban las escalares
+        //    result = seccionController.Index("", "", "E") as ViewResult;
+        //    Assert.IsNotNull(result);
 
-            // Se prueban las de respuesta libre
-            result = seccionController.Index("", "", "L") as ViewResult;
-            Assert.IsNotNull(result);
+        //    // Se prueban las de respuesta libre
+        //    result = seccionController.Index("", "", "L") as ViewResult;
+        //    Assert.IsNotNull(result);
 
-            // Se prueban las de seleccion multiple
-            result = seccionController.Index("", "", "M") as ViewResult;
-            Assert.IsNotNull(result);
+        //    // Se prueban las de seleccion multiple
+        //    result = seccionController.Index("", "", "M") as ViewResult;
+        //    Assert.IsNotNull(result);
 
-            // Se prueba las de seleccion unica
-            result = seccionController.Index("", "", "U") as ViewResult;
-            Assert.IsNotNull(result);
+        //    // Se prueba las de seleccion unica
+        //    result = seccionController.Index("", "", "U") as ViewResult;
+        //    Assert.IsNotNull(result);
 
-        }
+        //}
 
-        [TestMethod]
+        //[TestMethod]
 
 
-        //RIP CF5
-        // Prueba de que la vista no sea nula
-        public void TestCreateIndexFiltroEnunciadoNotNull()
-        {
-            // Arrange
-            SeccionController seccionController = new SeccionController();
+        ////RIP CF5
+        //// Prueba de que la vista no sea nula
+        //public void TestCreateIndexFiltroEnunciadoNotNull()
+        //{
+        //    // Arrange
+        //    SeccionController seccionController = new SeccionController();
 
-            // Act
-            ViewResult result = seccionController.Index("", "Info", "") as ViewResult;
+        //    // Act
+        //    ViewResult result = seccionController.Index("", "Info", "") as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //}
 
         [TestMethod]
         public void TestCreateFilterNullNotNull()
