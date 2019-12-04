@@ -31,6 +31,14 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         public ActionResult ObtenerPreguntas(List<String> SeccionSeleccionado)
         {
+            List<Seccion_tiene_pregunta> parejas = getParejas(SeccionSeleccionado);
+            
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
+
+        public virtual List<Seccion_tiene_pregunta> getParejas(List<String> SeccionSeleccionado)
+        {
             List<Seccion_tiene_pregunta> parejas = new List<Seccion_tiene_pregunta>();
             if (SeccionSeleccionado != null && SeccionSeleccionado.Count > 0)
             {
@@ -42,8 +50,7 @@ namespace AppIntegrador.Controllers
                     }
                 }
             }
-            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
-            return Json(new { error = true, message = result });
+            return parejas;
         }
 
         protected override void Dispose(bool disposing)
