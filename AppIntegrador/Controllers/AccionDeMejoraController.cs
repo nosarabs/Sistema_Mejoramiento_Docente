@@ -18,6 +18,7 @@ namespace AppIntegrador.Controllers
         private readonly IPerm permissionManager = new PermissionManager();
         private PlanesDeMejoraUtil util = new PlanesDeMejoraUtil();
 
+        public AccionDeMejoraController() { }
         public AccionDeMejoraController(DataIntegradorEntities db = null, PlanesDeMejoraUtil util = null)
         {
             if (db != null)
