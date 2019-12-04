@@ -123,6 +123,20 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void DetallesTest()
+        {
+            var controller = new PlanDeMejoraController();
+            var result = controller.Detalles(1);
+            PlanDeMejora retornado = (PlanDeMejora)result.ViewData.Model;
+
+            Assert.AreEqual("DetallesPlanDeMejora", result.ViewName);
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(PlanDeMejora));
+            Assert.AreEqual(1, retornado.codigo);
+            Assert.AreEqual("Plan prueba para la profesora Alexandra", retornado.nombre);
+            controller.Dispose();
+        }
+
         [TestInitialize]
         public void Init()
         {

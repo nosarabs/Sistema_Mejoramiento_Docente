@@ -370,7 +370,7 @@ namespace AppIntegrador.Controllers
         //Historia a la que pertenece: MOS-27 "tener una página que liste los planes de mejora"
         //Retorna la vista DetallesPlanDeMejora que muestra todos los detalles de un plan incluyendo sus objetivos acciones y accionables.
         [HttpGet]
-        public ActionResult Detalles(int id)
+        public ViewResult Detalles(int id)
         {
             ViewBag.IdPlan = id;
             PlanDeMejora planDeMejora = db.PlanDeMejora.Find(id);
