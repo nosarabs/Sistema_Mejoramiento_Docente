@@ -205,9 +205,9 @@ namespace AppIntegrador.Tests.Controllers
         public void ProbarVistaPreviaSeccNoExiste()
         {
             SeccionController controller = new SeccionController();
-            var result = controller.SeccionConPreguntas("NOEXISTE") as ViewResult;
+            var result = controller.SeccionConPreguntas("NOEXISTE") as HttpStatusCodeResult;
 
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
