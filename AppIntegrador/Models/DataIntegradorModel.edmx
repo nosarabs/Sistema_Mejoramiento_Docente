@@ -2411,6 +2411,11 @@
           <Parameter Name="codSeccion" Type="varchar" Mode="In" />
           <Parameter Name="codPregunta" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPreguntasDeAccionDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+          <Parameter Name="nombreObj" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
@@ -5329,6 +5334,11 @@
             <End Role="Accionable" EntitySet="Accionable" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <FunctionImport Name="ObtenerPreguntasDeAccionDeMejora" ReturnType="Collection(String)">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+            <Parameter Name="nombreObj" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -6754,6 +6764,7 @@
               <ScalarProperty Name="codPlan" ColumnName="codPlan" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeAccionDeMejora" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeAccionDeMejora" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

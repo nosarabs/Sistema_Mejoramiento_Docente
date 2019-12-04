@@ -8,10 +8,18 @@
         }, {
             // settings
                 type: type,
-            placement: {
-                from: "top",
-                align: "center"
-            }
+                placement: {
+                    from: 'bottom',
+                    align: 'center'
+                },
+                animate: {
+                    enter: "animated fadeInUp",
+                    exit: "animated fadeOutDown"
+                }
+
+
+            //    },
+            //position: absolute
         });
     }
 }

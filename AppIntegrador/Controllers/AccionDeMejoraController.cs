@@ -272,5 +272,19 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("_accionesDeUnObjetivo", acciones);
         }
+
+        public string TablaPreguntasAsociadas(int id, string objt, string des)
+        {
+
+            IEnumerable<string> CodigosPreguntas = db.ObtenerPreguntasDeAccionDeMejora(id, objt, des);
+            List<AppIntegrador.Models.Pregunta> preguntas = new List<Pregunta>();
+
+            foreach (var cod in CodigosPreguntas)
+            {
+                preguntas.Add(db.Pregunta.Find(cod));
+            }
+
+            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_ListaPreguntas", preguntas), this.ControllerContext);
+        }
     }
 }
