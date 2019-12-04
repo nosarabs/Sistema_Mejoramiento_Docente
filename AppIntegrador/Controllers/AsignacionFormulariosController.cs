@@ -16,6 +16,7 @@ using System.IO;
 using System.Web.SessionState;
 using System.Reflection;
 using AppIntegrador.Utilities;
+using System.Globalization;
 
 namespace AppIntegrador.Controllers
 {
@@ -72,7 +73,7 @@ namespace AppIntegrador.Controllers
          * necesarios para la asignar un formulario a uno o más grupos
          */
         [HttpPost]
-        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo, bool enviarCorreos)
+        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo/*, bool enviarCorreos*/)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
@@ -97,8 +98,8 @@ namespace AppIntegrador.Controllers
 
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
             {
-                fechaInicio = Convert.ToDateTime(fechaInicioSeleccionado);
-                fechaFin = Convert.ToDateTime(fechaFinSeleccionado);
+                fechaInicio = DateTime.ParseExact(fechaInicioSeleccionado, "yyyy-mm-dd", CultureInfo.InvariantCulture);
+                fechaFin = DateTime.ParseExact(fechaFinSeleccionado, "yyyy-mm-dd", CultureInfo.InvariantCulture);
             }
             else
             {
