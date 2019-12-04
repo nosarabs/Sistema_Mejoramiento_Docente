@@ -19,11 +19,25 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
         private readonly IPerm permissionManager = new PermissionManager();
+        private PlanesDeMejoraUtil util = new PlanesDeMejoraUtil();
+
+        public ObjetivosController(DataIntegradorEntities db = null, PlanesDeMejoraUtil util = null)
+        {
+            if(db != null)
+            {
+                this.db = db;
+            }
+            if(util != null)
+            {
+                this.util = util;
+            }
+        }
+
 
         [HttpPost]
         public ActionResult AnadirObjetivos(List<Objetivo> objetivos)
         {
-            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaObjetivos", objetivos), this.ControllerContext);
+            string result = util.getView(PartialView("_TablaObjetivos", objetivos), this.ControllerContext);
             return Json(new { error = true, message = result });
         }
 
@@ -41,7 +55,7 @@ namespace AppIntegrador.Controllers
                     }
                 }
             }
-            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirSecciones", parejas), this.ControllerContext);
+            string result = util.getView(PartialView("_AnadirSecciones", parejas), this.ControllerContext);
             return Json(new { error = true, message = result });
         }
 
@@ -66,7 +80,7 @@ namespace AppIntegrador.Controllers
                 Secciones.Add(db.Seccion.Find(cod));
             }
 
-            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_ListaSecciones", Secciones), this.ControllerContext);
+            return util.getView(PartialView("_ListaSecciones", Secciones), this.ControllerContext);
         }
 
         protected override void Dispose(bool disposing)
