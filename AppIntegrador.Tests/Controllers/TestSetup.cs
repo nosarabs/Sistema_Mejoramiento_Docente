@@ -43,6 +43,19 @@ namespace AppIntegrador.Tests.Controllers
             }
         }
 
+        public void SetupHttpContextPaco(Controller controller)
+        {
+            if (controller != null)
+            {
+                controller.ControllerContext = new ControllerContext
+                {
+                    Controller = controller,
+                    HttpContext = new MockHttpContext(new CustomPrincipal("paco@mail.com"))
+                };
+            }
+        }
+
+
         public class CustomPrincipal : IPrincipal
         {
             public IIdentity Identity { get; private set; }

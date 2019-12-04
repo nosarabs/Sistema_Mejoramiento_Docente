@@ -14,7 +14,7 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
 
-        private readonly IPerm permissionManager;
+        private IPerm permissionManager;
 
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
@@ -26,28 +26,43 @@ namespace AppIntegrador.Controllers
         const string InicioSegundoSemestre = "01/08/";
         const string FinSegundoSemestre = "31/12/";
 
-        public readonly byte SemestreActual;
+        private byte SemestreActual { get; set; }
 
         readonly DateTime FechaActual;
 
-        readonly DateTime FechaInicioVerano;
-        readonly DateTime FechaFinVerano;
+        DateTime FechaInicioVerano;
+        DateTime FechaFinVerano;
 
-        readonly DateTime FechaInicioSemestre1;
-        readonly DateTime FechaFinSemestre1;
+        DateTime FechaInicioSemestre1;
+        DateTime FechaFinSemestre1;
 
-        readonly DateTime FechaInicioSemestre2;
-        readonly DateTime FechaFinSemestre2;
+        DateTime FechaInicioSemestre2;
+        DateTime FechaFinSemestre2;
 
-        public LlenarFormularioController()
+        private void Init()
         {
             db = new DataIntegradorEntities();
             permissionManager = new PermissionManager();
+        }
 
+        public LlenarFormularioController()
+        {
+            Init();
             FechaActual = DateTime.Now;
+            DefinirFechas();
+        }
 
-            FechaInicioVerano = DateTime.ParseExact(s: InicioVerano + (FechaActual.Year - 1).ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            FechaFinVerano = DateTime.ParseExact(s: FinVerano + (FechaActual.Year - 1).ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        public LlenarFormularioController(DateTime fechaActual)
+        {
+            Init();
+            this.FechaActual = fechaActual;
+            DefinirFechas();
+        }
+
+        private void DefinirFechas()
+        {
+            FechaInicioVerano = DateTime.ParseExact(s: InicioVerano + FechaActual.Year.ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            FechaFinVerano = DateTime.ParseExact(s: FinVerano + FechaActual.Year.ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             FechaInicioSemestre1 = DateTime.ParseExact(s: InicioPrimerSemestre + FechaActual.Year.ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             FechaFinSemestre1 = DateTime.ParseExact(s: FinPrimerSemestre + FechaActual.Year.ToString(CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -72,7 +87,7 @@ namespace AppIntegrador.Controllers
                 return RedirectToAction("../Home/Index");
             }
 
-            if(num == null || anno == null || semestre == null)
+            if (num == null || anno == null || semestre == null)
             {
                 return RedirectToAction("MisFormularios");
             }
@@ -240,6 +255,11 @@ namespace AppIntegrador.Controllers
         // GET: LlenarFormulario
         public ActionResult MisFormularios()
         {
+            return View(GenerarModelo());
+        }
+
+        public MisFormulariosModel GenerarModelo()
+        {
             MisFormulariosModel modelo = new MisFormulariosModel();
 
             List<Periodo_activa_por> periodosSemestre = ObtenerFormulariosSemestre();
@@ -257,10 +277,10 @@ namespace AppIntegrador.Controllers
                 modelo.InsertarPasado(formulario);
             }
 
-            return View(modelo);
+            return modelo;
         }
 
-        private List<Periodo_activa_por> ObtenerFormulariosSemestre()
+        public List<Periodo_activa_por> ObtenerFormulariosSemestre()
         {
             List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
 
@@ -287,7 +307,7 @@ namespace AppIntegrador.Controllers
             return formularios;
         }
 
-        private List<Periodo_activa_por> ObtenerFormulariosDisponibles(DateTime? inicio, DateTime? fin)
+        public List<Periodo_activa_por> ObtenerFormulariosDisponibles(DateTime? inicio, DateTime? fin)
         {
             List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
 
