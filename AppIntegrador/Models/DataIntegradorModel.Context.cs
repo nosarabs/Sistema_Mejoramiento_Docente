@@ -1803,5 +1803,42 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPreguntasDeAccionDeMejora", idPlanParameter, nombreObjParameter, descripcionParameter);
         }
+    
+        public virtual ObjectResult<ObtenerEstudiantesAsociados_Result> ObtenerEstudiantesAsociados(string codigoUnidadAcademica, string codigoCarrera, string codigoEnfasis, string siglaCurso, Nullable<byte> numGrupo, Nullable<byte> semestre, Nullable<int> anno, string correoProfesor)
+        {
+            var codigoUnidadAcademicaParameter = codigoUnidadAcademica != null ?
+                new ObjectParameter("CodigoUnidadAcademica", codigoUnidadAcademica) :
+                new ObjectParameter("CodigoUnidadAcademica", typeof(string));
+    
+            var codigoCarreraParameter = codigoCarrera != null ?
+                new ObjectParameter("CodigoCarrera", codigoCarrera) :
+                new ObjectParameter("CodigoCarrera", typeof(string));
+    
+            var codigoEnfasisParameter = codigoEnfasis != null ?
+                new ObjectParameter("CodigoEnfasis", codigoEnfasis) :
+                new ObjectParameter("CodigoEnfasis", typeof(string));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("SiglaCurso", siglaCurso) :
+                new ObjectParameter("SiglaCurso", typeof(string));
+    
+            var numGrupoParameter = numGrupo.HasValue ?
+                new ObjectParameter("NumGrupo", numGrupo) :
+                new ObjectParameter("NumGrupo", typeof(byte));
+    
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("Semestre", semestre) :
+                new ObjectParameter("Semestre", typeof(byte));
+    
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("Anno", anno) :
+                new ObjectParameter("Anno", typeof(int));
+    
+            var correoProfesorParameter = correoProfesor != null ?
+                new ObjectParameter("CorreoProfesor", correoProfesor) :
+                new ObjectParameter("CorreoProfesor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEstudiantesAsociados_Result>("ObtenerEstudiantesAsociados", codigoUnidadAcademicaParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
+        }
     }
 }
