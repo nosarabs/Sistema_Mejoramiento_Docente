@@ -537,7 +537,7 @@ namespace AppIntegrador.Controllers
 
             ObtenerInformacionDePreguntas(listaPregunta, null, null);
 
-            return View(listaPregunta);
+            return View("../ResponderPreguntas/TodasLasPreguntas", listaPregunta);
         }
     }
 }

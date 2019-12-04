@@ -191,8 +191,8 @@ namespace AppIntegrador.Controllers
                 }
             }
 
-            if (enviarCorreos)
-                EnviarCorreoSobreAsignaciónCuestionario(db.Formulario.Find(codigoFormulario));
+            //if (enviarCorreos)
+               // EnviarCorreoSobreAsignaciónCuestionario(db.Formulario.Find(codigoFormulario));
 
             return Json(new { error = true, inicio = originalInicio, fin = originalFin });
         }
