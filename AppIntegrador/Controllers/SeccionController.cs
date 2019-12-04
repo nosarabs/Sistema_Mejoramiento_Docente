@@ -106,6 +106,39 @@ namespace AppIntegrador.Controllers
             return View(crearSeccion);
         }
 
+
+        // GET: Seccion
+        public ActionResult Index(string input0, string input1, string input2)
+        {
+            var seccion = db.Seccion;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
+            {
+                ViewBag.filtro = "Ninguno";
+                return View(seccion.ToList());
+            }
+            // si se selecionó el código  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(seccion.Where(x => x.Codigo.Contains(input1)).ToList());
+            }
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Nombre: " + input2;
+                return View(seccion.Where(x => x.Nombre.Contains(input2)).ToList());
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                return View(seccion.ToList());
+            }
+        }
+
+
         // Historia RIP-BKS1
         // Se copió la función para filtrar preguntas.
         [HttpGet]
