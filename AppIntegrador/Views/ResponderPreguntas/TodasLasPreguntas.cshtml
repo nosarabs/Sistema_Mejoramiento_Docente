@@ -19,7 +19,9 @@
         @Html.DisplayFor(model => pregunta.Pregunta.Enunciado)
         @if (pregunta.Edit)
         {
-            <button type="button" [disabled]="true" class="btn btn-danger" style="margin-left: 3%" id="borrarPreg" onclick="BorrarPregunta('@pregunta.CodigoSeccion', '@pregunta.Pregunta.Codigo')">X</button>
+        <button type="button" [disabled]="true" class="close" aria-label="Close" style="margin-left: 3%" id="borrarPreg" onclick="BorrarPregunta('@pregunta.CodigoSeccion', '@pregunta.Pregunta.Codigo')">
+            &times;
+        </button>
         }
         @if (pregunta.Pregunta.Tipo == "S")
         {
@@ -56,6 +58,8 @@
                 </div>
             }
         }
+
+        <hr />
     </div>
 }
 

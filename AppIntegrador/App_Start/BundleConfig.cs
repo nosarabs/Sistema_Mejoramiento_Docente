@@ -33,13 +33,13 @@ namespace AppIntegrador
 
             bundles.Add(new StyleBundle("~/Content/bs3").Include(
           "~/Content/bootstrap.css"));
-            bundles.Add(new StyleBundle("~/Content/bs4.3.1", "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css").Include(
+            bundles.Add(new StyleBundle("~/Content/bs4.3.1").Include(
                 "~/Content/Visualizacion/bootstrap.min.css"));
-            bundles.Add(new ScriptBundle("~/bundles/bs4.3.1", "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/bs4.3.1").Include(
           "~/Scripts/bootstrap4.3.min.js"));
-            bundles.Add(new ScriptBundle("~/bundles/jquery3.3.1", "https://code.jquery.com/jquery-3.3.1.slim.min.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery3.3.1").Include(
             "~/Scripts/jquery-3.3.1.slim.min.js"));
-            bundles.Add(new ScriptBundle("~/bundles/popper1.14.7", "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/popper1.14.7").Include(
             "~/Scripts/popper.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/users&profiles").Include(
