@@ -8,16 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
     public class AccionDeMejoraController : Controller
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
+        private readonly IPerm permissionManager = new PermissionManager();
 
         // GET: AccionDeMejora
         public ActionResult Index()
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             var objetivo = db.AccionDeMejora.Include(o => o.PlantillaAccionDeMejora).Include(o => o.Objetivo);
             return View("Index", objetivo.ToList());
         }
@@ -25,12 +32,22 @@ namespace AppIntegrador.Controllers
         // GET: AccionDeMejora/Details/5
         public ActionResult Details(int id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             return View();
         }
 
         // GET: AccionDeMejora/Create
         public ActionResult Create()
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.codPlan = new SelectList(db.PlanDeMejora, "codigo", "nombre");
             ViewBag.nombreObj = new SelectList(db.Objetivo, "nombre", "nombre");
             return View("_createAccionDeMejora");
@@ -47,11 +64,34 @@ namespace AppIntegrador.Controllers
             return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionMejora", misAccionesDeMejora), this.ControllerContext) });
         }
 
+        [HttpPost]
+        public ActionResult ObtenerPreguntas(List<String> SeccionSeleccionado)
+        {
+            List<Seccion_tiene_pregunta> parejas = new List<Seccion_tiene_pregunta>();
+            if (SeccionSeleccionado != null && SeccionSeleccionado.Count > 0)
+            {
+                foreach (var codigo in SeccionSeleccionado)
+                {
+                    foreach (var pareja in db.Seccion_tiene_pregunta.Where(x => x.SCodigo.Equals(codigo)))
+                    {
+                        parejas.Add(pareja);
+                    }
+                }
+            }
+            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
+
         // POST: AccionDeMejora/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,codPlantilla")] AccionDeMejora accionDeMejora)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             bool error = false;
 
             if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
@@ -106,6 +146,11 @@ namespace AppIntegrador.Controllers
         // Corresponde a MOS 1.3 (2)
         public ActionResult Edit(int plan, string obj, string descripcion)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (plan == null || obj == null || descripcion == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -124,6 +169,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "codPlan,nombreObj,descripcion,fechaInicio,fechaFin,,codPlantilla")] AccionDeMejora accionDeMejora)
         {
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             bool error = false;
 
             if (accionDeMejora.fechaInicio != null && accionDeMejora.fechaFin != null)
@@ -149,6 +199,11 @@ namespace AppIntegrador.Controllers
         // Corresponde a MOS 1.3 (2)
         public ActionResult Delete(int? plan, string nombObj, string descripcion)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             if (plan == null || nombObj == null || descripcion == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -167,6 +222,11 @@ namespace AppIntegrador.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? plan, string nombObj, string descripcion)
         {
+            if (!permissionManager.IsAuthorized(Permission.BORRAR_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             AccionDeMejora accion = db.AccionDeMejora.Find(plan, nombObj, descripcion);
             db.AccionDeMejora.Remove(accion);
             db.SaveChanges();
@@ -197,6 +257,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult AccionesDeObjetivo(int plan, string nombObj, bool edit = true)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
             ViewBag.idPlan = plan;
             ViewBag.nombreObj = nombObj;
 
@@ -206,6 +271,20 @@ namespace AppIntegrador.Controllers
                 return PartialView("_listarAcciones", acciones);
             }
             return PartialView("_accionesDeUnObjetivo", acciones);
+        }
+
+        public string TablaPreguntasAsociadas(int id, string objt, string des)
+        {
+
+            IEnumerable<string> CodigosPreguntas = db.ObtenerPreguntasDeAccionDeMejora(id, objt, des);
+            List<AppIntegrador.Models.Pregunta> preguntas = new List<Pregunta>();
+
+            foreach (var cod in CodigosPreguntas)
+            {
+                preguntas.Add(db.Pregunta.Find(cod));
+            }
+
+            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_ListaPreguntas", preguntas), this.ControllerContext);
         }
     }
 }

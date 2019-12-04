@@ -31,10 +31,11 @@ namespace AppIntegrador.Controllers
             this.db = db;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             /*Solo se puede acceder a este método si el usuario tiene un perfil con los permisos apropiados.*/
-            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.VER_PERMISOS_Y_PERFILES))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("Index", "Home");
@@ -46,6 +47,7 @@ namespace AppIntegrador.Controllers
 
         /*TAM-3.3-1, 3.7-1.*/
         /*Método que lanza a la página de selección de perfil. Todos los usuarios tienen acceso a esto.*/
+        [HttpGet]
         public ActionResult SeleccionarPerfil()
         {
             return View(new ConfigViewHolder());
@@ -77,9 +79,10 @@ namespace AppIntegrador.Controllers
         /// o de permisos a perfiles.</param>
         /// <returns>ActionResult que recarga los datos de la página de administración de perfiles.</returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
         {
-            if (!permissionManager.IsAuthorized(Permission.EDITAR_USUARIOS))
+            if (!permissionManager.IsAuthorized(Permission.EDITAR_PERMISOS_Y_PERFILES))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
                 return RedirectToAction("../Home/Index");
@@ -98,7 +101,7 @@ namespace AppIntegrador.Controllers
                 return new EmptyResult();
             }
 
-            if (isUser)
+            if (isUser && permissionManager.IsAuthorized(Permission.ASIGNAR_PERFILES_USUARIOS))
             {
                 //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
                 for (int i = 0; i < Personas.Count; ++i)
@@ -106,7 +109,7 @@ namespace AppIntegrador.Controllers
                     db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
                 }
             }
-            else
+            else if(permissionManager.IsAuthorized(Permission.ASIGNAR_PERMISOS_PERFILES))
             {
                 //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
                 for (int i = 0; i < Permisos.Count; ++i)
@@ -114,6 +117,7 @@ namespace AppIntegrador.Controllers
                     db.AgregarPerfilPermiso(perfil, Permisos[i].Id, codCarrera, codEnfasis, Permisos[i].ActiveInProfileEmph);
                 }
             }
+            ViewBag.resultmessage = "Los cambios han sido guardados";
             return new EmptyResult();
         }
         /* Fin TAM 3.4-1.*/
@@ -140,8 +144,8 @@ namespace AppIntegrador.Controllers
             ObjectParameter tienePerfil = new ObjectParameter("tienePerfil", typeof(bool));
             ObjectParameter tieneActivo = new ObjectParameter("tieneActivo", typeof(bool));
             // Para revisar si el usuario tiene todos esos perfiles
-            int total = 0;
-            int correct = 0;
+            int total;
+            int correct;
 
             // Revisa los checks de las personas
             foreach (Persona persona in model.Personas)
@@ -217,7 +221,10 @@ namespace AppIntegrador.Controllers
                 foreach (var codigoEnfasis in listaEnfasis)
                 {
                     string nombreEnfasis = db.Enfasis.Find(value, codigoEnfasis.codEnfasis).Nombre;
-                    enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
+                    /*TAM-11.1: En la página de administración de perfiles y permisos solo se muestran las carreras y énfasis en los que el usuario tiene potestad en los dropdowns.*/
+                    if (permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERFILES_USUARIOS) ||
+                        permissionManager.IsAllowed(CurrentUser.getUsername(), CurrentUser.getUserProfile(), value, codigoEnfasis.codEnfasis, Permission.ASIGNAR_PERMISOS_PERFILES))
+                        enfasis.Add(codigoEnfasis.codEnfasis + "," + nombreEnfasis);
                 }
 
             }

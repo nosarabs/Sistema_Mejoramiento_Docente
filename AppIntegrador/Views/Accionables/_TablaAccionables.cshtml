@@ -26,28 +26,50 @@ else
                     @Html.DisplayNameFor(model => model.fechaFin)
                 </th>
                 <th>
-                    Opciones
+                    @Html.DisplayNameFor(model => model.peso)
+                </th>
+                <th>
+                    Porcentaje
+                </th>
+                <th>
+                    Tipo
                 </th>
             </tr>
         </thead>
         <thead>
             @foreach (var accionable in Model)
             {
-                <tr>
-                    <td>
-                        @accionable.descripcion
-                    </td>
-                    <td>
-                        @accionable.fechaInicio
-                    </td>
-                    <td>
-                        @accionable.fechaFin
-                    </td>
-                    <td>
-                        <input type="button" value="Editar accionable" class="btn float-right" id="EditarAccionable" onclick="#" />
-                        <input type="button" value="Borrar accionable" class="btn btn-danger float-right" id="BorrarAccionable" onclick="#" />
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @accionable.descripcion
+                </td>
+                <td>
+                    @accionable.fechaInicio.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @accionable.fechaFin.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @accionable.peso
+                </td>
+                <td>
+                    @accionable.pesoPorcentaje
+                </td>
+                <td>
+                    @if (accionable.tipo == "P")
+                    {
+                        <p>Porcentaje</p>
+                    }
+                    else if (accionable.tipo == "S")
+                    {
+                        <p>Si/No</p>
+                    }
+                    else if (accionable.tipo == "E")
+                    {
+                        <p>Escala</p>
+                    }
+                </td>
+            </tr>
 
             }
         </thead>

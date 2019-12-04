@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -199,6 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Comparador.cs" />
     <Compile Include="Helpers\GoogleCaptchaHelper.cs" />
     <Compile Include="Helpers\InvalidGoogleCaptchaLabel.cs" />
     <Compile Include="Helpers\SiteSettings.cs" />
@@ -226,6 +228,9 @@
     </Compile>
     <Compile Include="Models\CarrerasEnfasisFiltros.cs" />
     <Compile Include="Models\CarrerasXPerfilXUsuario_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarrerasYEnfasisXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
@@ -269,6 +274,7 @@
     <Compile Include="Models\Estudiante.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FechasSolapadasInfo.cs" />
     <Compile Include="Models\FiltrosModelContext.cs" />
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
@@ -287,9 +293,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GruposFiltros.cs" />
-    <Compile Include="Models\GruposXPerfilXUsuario1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GruposXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -461,9 +464,6 @@
     <Compile Include="Models\PermissionManagerViewBuilder.cs" />
     <Compile Include="Models\PermissionsViewHolder.cs" />
     <Compile Include="Models\PersonProfileViewHolder.cs" />
-    <Compile Include="Models\ProfesoresXUsuarioXPerfil1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProfesoresXUsuarioXPerfil_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -490,9 +490,6 @@
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UAsFiltros.cs" />
-    <Compile Include="Models\UAXPerfilXUsuario1_Result.cs">
-      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UAXPerfilXUsuario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -530,6 +527,7 @@
     <Compile Include="Utilities\IAuth.cs" />
     <Compile Include="Utilities\IPerm.cs" />
     <Compile Include="Utilities\PermissionManager.cs" />
+    <Compile Include="Utilities\ProfilePicture.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -854,6 +852,18 @@
     <Content Include="Views\CSV\GuiaHorarios.cshtml" />
     <Content Include="Views\CSV\Funcionarios.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\Home\ReestablecerContrasenna.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalAnadirPreguntas.cshtml" />
+    <Content Include="Views\AccionDeMejora\_AnadirPreguntas.cshtml" />
+    <Content Include="Views\Objetivos\_TablaObjetivosLista.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaProfesores.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaFormularios.cshtml" />
+    <Content Include="Views\Objetivos\_ModalSeccionesLista.cshtml" />
+    <Content Include="Views\Objetivos\_ListaSecciones.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ListaPreguntas.cshtml" />
+    <Content Include="Views\AccionDeMejora\_ModalPreguntasLista.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaProfesoresDeUnPlan.cshtml" />
+    <Content Include="Views\PlanDeMejora\_ModalListaFormularioDeUnPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

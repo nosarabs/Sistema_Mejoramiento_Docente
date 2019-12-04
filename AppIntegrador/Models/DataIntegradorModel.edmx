@@ -25,6 +25,8 @@
           <Property Name="fechaInicio" Type="date" />
           <Property Name="fechaFin" Type="date" />
           <Property Name="tipo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="peso" Type="int" />
+          <Property Name="pesoPorcentaje" Type="int" />
         </EntityType>
         <EntityType Name="AccionableEscala">
           <Key>
@@ -165,6 +167,7 @@
           <Property Name="UrlReal" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="Expira" Type="datetime" />
           <Property Name="Usos" Type="int" Nullable="false" />
+          <Property Name="ReestablecerContrasenna" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Escalar">
           <Key>
@@ -625,7 +628,7 @@
           <Property Name="CodCarrera" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CodEnfasis" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Empadrona__Corre__37703C52">
+        <Association Name="FK__Empadrona__Corre__3F115E1A">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -639,7 +642,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Empadronado_en__3864608B">
+        <Association Name="FK__Empadronado_en__40058253">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -655,7 +658,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Enfasis__CodCarr__395884C4">
+        <Association Name="FK__Enfasis__CodCarr__40F9A68C">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -669,7 +672,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Funcionar__Corre__40F9A68C">
+        <Association Name="FK__Funcionar__Corre__489AC854">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -683,7 +686,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__43D61337">
+        <Association Name="FK__Imparte__4B7734FF">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -703,7 +706,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imparte__CorreoP__42E1EEFE">
+        <Association Name="FK__Imparte__CorreoP__4A8310C6">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -717,7 +720,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodCa__45BE5BA9">
+        <Association Name="FK__Inscrita___CodCa__4D5F7D71">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -731,7 +734,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inscrita___CodUn__44CA3770">
+        <Association Name="FK__Inscrita___CodUn__4C6B5938">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -745,7 +748,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Perfi__51300E55">
+        <Association Name="FK__PerfilPer__Perfi__58D1301D">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -759,7 +762,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Permi__5224328E">
+        <Association Name="FK__PerfilPer__Permi__59C55456">
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -773,7 +776,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPermiso__531856C7">
+        <Association Name="FK__PerfilPermiso__5AB9788F">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -789,7 +792,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece__Sigla__55F4C372">
+        <Association Name="FK__Pertenece__Sigla__5D95E53A">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -803,7 +806,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pertenece_a__55009F39">
+        <Association Name="FK__Pertenece_a__5CA1C101">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -819,7 +822,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profesor__Correo__5AB9788F">
+        <Association Name="FK__Profesor__Correo__625A9A57">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -833,7 +836,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__CodUn__6BE40491">
+        <Association Name="FK__Trabaja_e__CodUn__73852659">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -847,7 +850,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Trabaja_e__Corre__6AEFE058">
+        <Association Name="FK__Trabaja_e__Corre__72910220">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -861,7 +864,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__6CD828CA">
+        <Association Name="FK__UnidadAca__Super__74794A92">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -873,7 +876,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__6FB49575">
+        <Association Name="FK__UsuarioAc__Corre__76619304">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="CorreoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioAc__Perfi__7755B73D">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioActual__7849DB76">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="CodCarrera" />
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="CodCarrera" />
+              <PropertyRef Name="CodEnfasis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioPe__Perfi__7A3223E8">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -887,7 +934,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__6EC0713C">
+        <Association Name="FK__UsuarioPe__Usuar__793DFFAF">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -901,7 +948,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__70A8B9AE">
+        <Association Name="FK__UsuarioPerfil__7B264821">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1770,6 +1817,7 @@
           <Parameter Name="urlReal" Type="varchar" Mode="In" />
           <Parameter Name="expira" Type="datetime" Mode="In" />
           <Parameter Name="usos" Type="int" Mode="In" />
+          <Parameter Name="reestablecerContrasenna" Type="bit" Mode="In" />
           <Parameter Name="resultadohash" Type="varchar" Mode="InOut" />
           <Parameter Name="estado" Type="nvarchar" Mode="InOut" />
         </Function>
@@ -1777,6 +1825,7 @@
           <Parameter Name="codigo" Type="varchar" Mode="In" />
           <Parameter Name="nombre" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="AgregarMultiplesAccionables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AgregarMultiplesAccionesDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AgregarMultiplesObjetivos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AgregarOpcion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1879,6 +1928,20 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="CarrerasYEnfasisXUsuarioXPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+          <Parameter Name="perfil" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="NombreCarrera" Type="varchar" MaxLength="50" />
+                <Property Name="CodCarrera" Type="varchar" MaxLength="10" />
+                <Property Name="NombreEnfasis" Type="varchar" MaxLength="50" />
+                <Property Name="CodEnfasis" Type="varchar" MaxLength="10" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="varchar" Mode="In" />
           <Parameter Name="newpassword" Type="varchar" Mode="In" />
@@ -1886,6 +1949,10 @@
         <Function Name="CheckID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="identificacion" Type="varchar" Mode="In" />
           <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="ConfigurarPerfilesDefault" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="codEnfasis" Type="varchar" Mode="In" />
         </Function>
         <Function Name="DesviacionEstandarEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FCod" Type="varchar" Mode="In" />
@@ -2159,6 +2226,15 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ObtenerCorreosDeProfesoresDelPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ObtenerEstudiantesAsociadosAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ObtenerFormulariosAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+        </Function>
         <Function Name="ObtenerFormulariosCarreraEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -2335,6 +2411,11 @@
           <Parameter Name="codSeccion" Type="varchar" Mode="In" />
           <Parameter Name="codPregunta" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPreguntasDeAccionDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+          <Parameter Name="nombreObj" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sectionCode" Type="varchar" Mode="In" />
         </Function>
@@ -2433,6 +2514,10 @@
           <Parameter Name="anno" Type="int" Mode="In" />
           <Parameter Name="codSeccion" Type="varchar" Mode="In" />
           <Parameter Name="codPregunta" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ObtenerSeccionesAsociadasAObjetivo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPlan" Type="int" Mode="In" />
+          <Parameter Name="nombreObj" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObtenerSeccionesDeFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodForm" Type="varchar" Mode="In" />
@@ -2648,83 +2733,95 @@
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioActual" EntityType="Self.UsuarioActual" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioPerfil" EntityType="Self.UsuarioPerfil" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Empadrona__Corre__37703C52" Association="Self.FK__Empadrona__Corre__37703C52">
+          <AssociationSet Name="FK__Empadrona__Corre__3F115E1A" Association="Self.FK__Empadrona__Corre__3F115E1A">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Empadronado_en__3864608B" Association="Self.FK__Empadronado_en__3864608B">
+          <AssociationSet Name="FK__Empadronado_en__40058253" Association="Self.FK__Empadronado_en__40058253">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Empadronado_en" EntitySet="Empadronado_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Enfasis__CodCarr__395884C4" Association="Self.FK__Enfasis__CodCarr__395884C4">
+          <AssociationSet Name="FK__Enfasis__CodCarr__40F9A68C" Association="Self.FK__Enfasis__CodCarr__40F9A68C">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK__Funcionar__Corre__40F9A68C" Association="Self.FK__Funcionar__Corre__40F9A68C">
+          <AssociationSet Name="FK__Funcionar__Corre__489AC854" Association="Self.FK__Funcionar__Corre__489AC854">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__43D61337" Association="Self.FK__Imparte__43D61337">
+          <AssociationSet Name="FK__Imparte__4B7734FF" Association="Self.FK__Imparte__4B7734FF">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imparte__CorreoP__42E1EEFE" Association="Self.FK__Imparte__CorreoP__42E1EEFE">
+          <AssociationSet Name="FK__Imparte__CorreoP__4A8310C6" Association="Self.FK__Imparte__CorreoP__4A8310C6">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodCa__45BE5BA9" Association="Self.FK__Inscrita___CodCa__45BE5BA9">
+          <AssociationSet Name="FK__Inscrita___CodCa__4D5F7D71" Association="Self.FK__Inscrita___CodCa__4D5F7D71">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inscrita___CodUn__44CA3770" Association="Self.FK__Inscrita___CodUn__44CA3770">
+          <AssociationSet Name="FK__Inscrita___CodUn__4C6B5938" Association="Self.FK__Inscrita___CodUn__4C6B5938">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Inscrita_en" EntitySet="Inscrita_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Perfi__51300E55" Association="Self.FK__PerfilPer__Perfi__51300E55">
+          <AssociationSet Name="FK__PerfilPer__Perfi__58D1301D" Association="Self.FK__PerfilPer__Perfi__58D1301D">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Permi__5224328E" Association="Self.FK__PerfilPer__Permi__5224328E">
+          <AssociationSet Name="FK__PerfilPer__Permi__59C55456" Association="Self.FK__PerfilPer__Permi__59C55456">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPermiso__531856C7" Association="Self.FK__PerfilPermiso__531856C7">
+          <AssociationSet Name="FK__PerfilPermiso__5AB9788F" Association="Self.FK__PerfilPermiso__5AB9788F">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece__Sigla__55F4C372" Association="Self.FK__Pertenece__Sigla__55F4C372">
+          <AssociationSet Name="FK__Pertenece__Sigla__5D95E53A" Association="Self.FK__Pertenece__Sigla__5D95E53A">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pertenece_a__55009F39" Association="Self.FK__Pertenece_a__55009F39">
+          <AssociationSet Name="FK__Pertenece_a__5CA1C101" Association="Self.FK__Pertenece_a__5CA1C101">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Pertenece_a" EntitySet="Pertenece_a" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profesor__Correo__5AB9788F" Association="Self.FK__Profesor__Correo__5AB9788F">
+          <AssociationSet Name="FK__Profesor__Correo__625A9A57" Association="Self.FK__Profesor__Correo__625A9A57">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__CodUn__6BE40491" Association="Self.FK__Trabaja_e__CodUn__6BE40491">
+          <AssociationSet Name="FK__Trabaja_e__CodUn__73852659" Association="Self.FK__Trabaja_e__CodUn__73852659">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__Trabaja_e__Corre__6AEFE058" Association="Self.FK__Trabaja_e__Corre__6AEFE058">
+          <AssociationSet Name="FK__Trabaja_e__Corre__72910220" Association="Self.FK__Trabaja_e__Corre__72910220">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Trabaja_en" EntitySet="Trabaja_en" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__6CD828CA" Association="Self.FK__UnidadAca__Super__6CD828CA">
+          <AssociationSet Name="FK__UnidadAca__Super__74794A92" Association="Self.FK__UnidadAca__Super__74794A92">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__6FB49575" Association="Self.FK__UsuarioPe__Perfi__6FB49575">
+          <AssociationSet Name="FK__UsuarioAc__Corre__76619304" Association="Self.FK__UsuarioAc__Corre__76619304">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioAc__Perfi__7755B73D" Association="Self.FK__UsuarioAc__Perfi__7755B73D">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioActual__7849DB76" Association="Self.FK__UsuarioActual__7849DB76">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPe__Perfi__7A3223E8" Association="Self.FK__UsuarioPe__Perfi__7A3223E8">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__6EC0713C" Association="Self.FK__UsuarioPe__Usuar__6EC0713C">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__793DFFAF" Association="Self.FK__UsuarioPe__Usuar__793DFFAF">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__70A8B9AE" Association="Self.FK__UsuarioPerfil__70A8B9AE">
+          <AssociationSet Name="FK__UsuarioPerfil__7B264821" Association="Self.FK__UsuarioPerfil__7B264821">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -2957,6 +3054,12 @@
           <Property Name="codCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="nombreCarrera" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </ComplexType>
+        <ComplexType Name="CarrerasYEnfasisXUsuarioXPerfil_Result">
+          <Property Name="NombreCarrera" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreEnfasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </ComplexType>
         <ComplexType Name="EnfasisXCarrera_Result">
           <Property Name="codEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </ComplexType>
@@ -3043,6 +3146,12 @@
           <Property Name="GAnno" Type="Int32" Nullable="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" />
           <Property Name="FechaFin" Type="DateTime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerGruposAsociados_Result">
+          <Property Name="SiglaCurso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumGrupo" Type="Byte" Nullable="false" />
+          <Property Name="Semestre" Type="Byte" Nullable="false" />
+          <Property Name="Anno" Type="Int32" Nullable="false" />
         </ComplexType>
         <ComplexType Name="ObtenerGruposCarreraEnfasis_Result">
           <Property Name="SiglaCurso" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
@@ -3189,7 +3298,7 @@
           </Key>
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__32AB8735" FromRole="Carrera" ToRole="Enfasis" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__Enfasis__CodCarr__40F9A68C" FromRole="Carrera" ToRole="Enfasis" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Inscrita_en" FromRole="Carrera" ToRole="UnidadAcademica" />
         </EntityType>
         <EntityType Name="Curso">
@@ -3209,11 +3318,24 @@
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__32AB8735" FromRole="Enfasis" ToRole="Carrera" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__4C6B5938" FromRole="Enfasis" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__69FBBC1F" FromRole="Enfasis" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK__Enfasis__CodCarr__40F9A68C" FromRole="Enfasis" ToRole="Carrera" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPermiso__5AB9788F" FromRole="Enfasis" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioActual" Relationship="Self.FK__UsuarioActual__7849DB76" FromRole="Enfasis" ToRole="UsuarioActual" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPerfil__7B264821" FromRole="Enfasis" ToRole="UsuarioPerfil" />
           <NavigationProperty Name="Estudiante" Relationship="Self.Empadronado_en" FromRole="Enfasis" ToRole="Estudiante" />
           <NavigationProperty Name="Curso" Relationship="Self.Pertenece_a" FromRole="Enfasis" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="EnlaceSeguro">
+          <Key>
+            <PropertyRef Name="Hash" />
+          </Key>
+          <Property Name="Hash" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsuarioAsociado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UrlReal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Expira" Type="DateTime" Precision="3" />
+          <Property Name="Usos" Type="Int32" Nullable="false" />
+          <Property Name="ReestablecerContrasenna" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.fkEnlaceSeguroAPersonaCorreo" FromRole="EnlaceSeguro" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Escalar">
           <Key>
@@ -3263,8 +3385,8 @@
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__3A4CA8FD" FromRole="Funcionario" ToRole="Persona" />
-          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__540C7B00" FromRole="Funcionario" ToRole="Profesor" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Funcionar__Corre__489AC854" FromRole="Funcionario" ToRole="Persona" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Correo__625A9A57" FromRole="Funcionario" ToRole="Profesor" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.CreadoPor" FromRole="Funcionario" ToRole="PlanDeMejora" />
           <NavigationProperty Name="UnidadAcademica" Relationship="Self.Trabaja_en" FromRole="Funcionario" ToRole="UnidadAcademica" />
           <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.Responsable_De" FromRole="Funcionario" ToRole="Accionable" />
@@ -3346,8 +3468,9 @@
             <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__4A8310C6" FromRole="Perfil" ToRole="PerfilPermiso" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__690797E6" FromRole="Perfil" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Perfi__58D1301D" FromRole="Perfil" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="UsuarioActual" Relationship="Self.FK__UsuarioAc__Perfi__7755B73D" FromRole="Perfil" ToRole="UsuarioActual" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Perfi__7A3223E8" FromRole="Perfil" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="PerfilPermiso">
           <Key>
@@ -3360,9 +3483,9 @@
           <Property Name="PermisoId" Type="Int32" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__4C6B5938" FromRole="PerfilPermiso" ToRole="Enfasis" />
-          <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__4A8310C6" FromRole="PerfilPermiso" ToRole="Perfil" />
-          <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__4B7734FF" FromRole="PerfilPermiso" ToRole="Permiso" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__PerfilPermiso__5AB9788F" FromRole="PerfilPermiso" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__PerfilPer__Perfi__58D1301D" FromRole="PerfilPermiso" ToRole="Perfil" />
+          <NavigationProperty Name="Permiso" Relationship="Self.FK__PerfilPer__Permi__59C55456" FromRole="PerfilPermiso" ToRole="Permiso" />
         </EntityType>
         <EntityType Name="Periodo_activa_por">
           <Key>
@@ -3389,7 +3512,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__4B7734FF" FromRole="Permiso" ToRole="PerfilPermiso" />
+          <NavigationProperty Name="PerfilPermiso" Relationship="Self.FK__PerfilPer__Permi__59C55456" FromRole="Permiso" ToRole="PerfilPermiso" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -3404,11 +3527,12 @@
           <Property Name="Apellido2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="TipoIdentificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Borrado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EnlaceSeguro" Relationship="Self.fkEnlaceSeguroAPersonaCorreo" FromRole="Persona" ToRole="EnlaceSeguro" />
           <NavigationProperty Name="Estudiante" Relationship="Self.fkEstudentAPersonaCorreo" FromRole="Persona" ToRole="Estudiante" />
-          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__3A4CA8FD" FromRole="Persona" ToRole="Funcionario" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Funcionar__Corre__489AC854" FromRole="Persona" ToRole="Funcionario" />
+          <NavigationProperty Name="UsuarioActual" Relationship="Self.FK__UsuarioAc__Corre__76619304" FromRole="Persona" ToRole="UsuarioActual" />
           <NavigationProperty Name="Respuestas_a_formulario" Relationship="Self.fkRespuestasUsuario" FromRole="Persona" ToRole="Respuestas_a_formulario" />
           <NavigationProperty Name="Usuario" Relationship="Self.fkUsuarioAPersonaCorreo" FromRole="Persona" ToRole="Usuario" />
-          <NavigationProperty Name="EnlaceSeguro" Relationship="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" FromRole="Persona" ToRole="EnlaceSeguro" />
         </EntityType>
         <EntityType Name="PlanDeMejora">
           <Key>
@@ -3490,7 +3614,7 @@
             <PropertyRef Name="Correo" />
           </Key>
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__540C7B00" FromRole="Profesor" ToRole="Funcionario" />
+          <NavigationProperty Name="Funcionario" Relationship="Self.FK__Profesor__Correo__625A9A57" FromRole="Profesor" ToRole="Funcionario" />
           <NavigationProperty Name="PlanDeMejora" Relationship="Self.AsignadoA" FromRole="Profesor" ToRole="PlanDeMejora" />
           <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
         </EntityType>
@@ -3617,8 +3741,8 @@
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Superior" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__662B2B3B" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
-          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__662B2B3B" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
+          <NavigationProperty Name="UnidadAcademica1" Relationship="Self.FK__UnidadAca__Super__74794A92" FromRole="UnidadAcademica" ToRole="UnidadAcademica1" />
+          <NavigationProperty Name="UnidadAcademica2" Relationship="Self.FK__UnidadAca__Super__74794A92" FromRole="UnidadAcademica1" ToRole="UnidadAcademica" />
           <NavigationProperty Name="Carrera" Relationship="Self.Inscrita_en" FromRole="UnidadAcademica" ToRole="Carrera" />
           <NavigationProperty Name="Funcionario" Relationship="Self.Trabaja_en" FromRole="UnidadAcademica" ToRole="Funcionario" />
         </EntityType>
@@ -3631,7 +3755,7 @@
           <Property Name="Salt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.fkUsuarioAPersonaCorreo" FromRole="Usuario" ToRole="Persona" />
-          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__681373AD" FromRole="Usuario" ToRole="UsuarioPerfil" />
+          <NavigationProperty Name="UsuarioPerfil" Relationship="Self.FK__UsuarioPe__Usuar__793DFFAF" FromRole="Usuario" ToRole="UsuarioPerfil" />
         </EntityType>
         <EntityType Name="UsuarioActual">
           <Key>
@@ -3641,6 +3765,9 @@
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioActual__7849DB76" FromRole="UsuarioActual" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioAc__Perfi__7755B73D" FromRole="UsuarioActual" ToRole="Perfil" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__UsuarioAc__Corre__76619304" FromRole="UsuarioActual" ToRole="Persona" />
         </EntityType>
         <EntityType Name="UsuarioPerfil">
           <Key>
@@ -3653,9 +3780,9 @@
           <Property Name="Perfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodEnfasis" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__69FBBC1F" FromRole="UsuarioPerfil" ToRole="Enfasis" />
-          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__690797E6" FromRole="UsuarioPerfil" ToRole="Perfil" />
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__681373AD" FromRole="UsuarioPerfil" ToRole="Usuario" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK__UsuarioPerfil__7B264821" FromRole="UsuarioPerfil" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil1" Relationship="Self.FK__UsuarioPe__Perfi__7A3223E8" FromRole="UsuarioPerfil" ToRole="Perfil" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK__UsuarioPe__Usuar__793DFFAF" FromRole="UsuarioPerfil" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_AccionDeMejora_Objetivo">
           <End Role="Objetivo" Type="Self.Objetivo" Multiplicity="1">
@@ -3735,7 +3862,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Enfasis__CodCarr__32AB8735">
+        <Association Name="FK__Enfasis__CodCarr__40F9A68C">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3763,7 +3890,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPermiso__4C6B5938">
+        <Association Name="FK__PerfilPermiso__5AB9788F">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3779,7 +3906,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPerfil__69FBBC1F">
+        <Association Name="FK__UsuarioActual__7849DB76">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="CodCarrera" />
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="CodCarrera" />
+              <PropertyRef Name="CodEnfasis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioPerfil__7B264821">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3792,6 +3935,18 @@
             <Dependent Role="UsuarioPerfil">
               <PropertyRef Name="CodCarrera" />
               <PropertyRef Name="CodEnfasis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fkEnlaceSeguroAPersonaCorreo">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+          <End Role="EnlaceSeguro" Type="Self.EnlaceSeguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="EnlaceSeguro">
+              <PropertyRef Name="UsuarioAsociado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3861,7 +4016,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Funcionar__Corre__3A4CA8FD">
+        <Association Name="FK__Funcionar__Corre__489AC854">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3875,7 +4030,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profesor__Correo__540C7B00">
+        <Association Name="FK__Profesor__Correo__625A9A57">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -3991,7 +4146,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Perfi__4A8310C6">
+        <Association Name="FK__PerfilPer__Perfi__58D1301D">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -4005,7 +4160,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Perfi__690797E6">
+        <Association Name="FK__UsuarioAc__Perfi__7755B73D">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioPe__Perfi__7A3223E8">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -4019,7 +4188,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PerfilPer__Permi__4B7734FF">
+        <Association Name="FK__PerfilPer__Permi__59C55456">
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -4030,6 +4199,20 @@
             </Principal>
             <Dependent Role="PerfilPermiso">
               <PropertyRef Name="PermisoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioAc__Corre__76619304">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsuarioActual" Type="Self.UsuarioActual" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Correo" />
+            </Principal>
+            <Dependent Role="UsuarioActual">
+              <PropertyRef Name="CorreoUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4261,7 +4444,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnidadAca__Super__662B2B3B">
+        <Association Name="FK__UnidadAca__Super__74794A92">
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="0..1" />
           <End Role="UnidadAcademica1" Type="Self.UnidadAcademica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4273,7 +4456,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioPe__Usuar__681373AD">
+        <Association Name="FK__UsuarioPe__Usuar__793DFFAF">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -4339,13 +4522,14 @@
           <End Role="UnidadAcademica" Type="Self.UnidadAcademica" Multiplicity="*" />
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="DataIntegradorEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="AccionDeMejora" EntityType="Self.AccionDeMejora" />
           <EntitySet Name="Activa_por" EntityType="Self.Activa_por" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
           <EntitySet Name="Curso" EntityType="Self.Curso" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
+          <EntitySet Name="EnlaceSeguro" EntityType="Self.EnlaceSeguro" />
           <EntitySet Name="Escalar" EntityType="Self.Escalar" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
           <EntitySet Name="Formulario" EntityType="Self.Formulario" />
@@ -4399,7 +4583,7 @@
             <End Role="Activa_por" EntitySet="Activa_por" />
             <End Role="Periodo_activa_por" EntitySet="Periodo_activa_por" />
           </AssociationSet>
-          <AssociationSet Name="FK__Enfasis__CodCarr__32AB8735" Association="Self.FK__Enfasis__CodCarr__32AB8735">
+          <AssociationSet Name="FK__Enfasis__CodCarr__40F9A68C" Association="Self.FK__Enfasis__CodCarr__40F9A68C">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
@@ -4407,13 +4591,21 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPermiso__4C6B5938" Association="Self.FK__PerfilPermiso__4C6B5938">
+          <AssociationSet Name="FK__PerfilPermiso__5AB9788F" Association="Self.FK__PerfilPermiso__5AB9788F">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPerfil__69FBBC1F" Association="Self.FK__UsuarioPerfil__69FBBC1F">
+          <AssociationSet Name="FK__UsuarioActual__7849DB76" Association="Self.FK__UsuarioActual__7849DB76">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPerfil__7B264821" Association="Self.FK__UsuarioPerfil__7B264821">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="fkEnlaceSeguroAPersonaCorreo" Association="Self.fkEnlaceSeguroAPersonaCorreo">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="EnlaceSeguro" EntitySet="EnlaceSeguro" />
           </AssociationSet>
           <AssociationSet Name="fkEscalarCodigo" Association="Self.fkEscalarCodigo">
             <End Role="Pregunta_con_opciones" EntitySet="Pregunta_con_opciones" />
@@ -4435,11 +4627,11 @@
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Formulario_tiene_seccion" EntitySet="Formulario_tiene_seccion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Funcionar__Corre__3A4CA8FD" Association="Self.FK__Funcionar__Corre__3A4CA8FD">
+          <AssociationSet Name="FK__Funcionar__Corre__489AC854" Association="Self.FK__Funcionar__Corre__489AC854">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profesor__Correo__540C7B00" Association="Self.FK__Profesor__Correo__540C7B00">
+          <AssociationSet Name="FK__Profesor__Correo__625A9A57" Association="Self.FK__Profesor__Correo__625A9A57">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
@@ -4467,17 +4659,25 @@
             <End Role="Responde_respuesta_con_opciones" EntitySet="Responde_respuesta_con_opciones" />
             <End Role="Opciones_seleccionadas_respuesta_con_opciones" EntitySet="Opciones_seleccionadas_respuesta_con_opciones" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Perfi__4A8310C6" Association="Self.FK__PerfilPer__Perfi__4A8310C6">
+          <AssociationSet Name="FK__PerfilPer__Perfi__58D1301D" Association="Self.FK__PerfilPer__Perfi__58D1301D">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Perfi__690797E6" Association="Self.FK__UsuarioPe__Perfi__690797E6">
+          <AssociationSet Name="FK__UsuarioAc__Perfi__7755B73D" Association="Self.FK__UsuarioAc__Perfi__7755B73D">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioPe__Perfi__7A3223E8" Association="Self.FK__UsuarioPe__Perfi__7A3223E8">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
-          <AssociationSet Name="FK__PerfilPer__Permi__4B7734FF" Association="Self.FK__PerfilPer__Permi__4B7734FF">
+          <AssociationSet Name="FK__PerfilPer__Permi__59C55456" Association="Self.FK__PerfilPer__Permi__59C55456">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="PerfilPermiso" EntitySet="PerfilPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioAc__Corre__76619304" Association="Self.FK__UsuarioAc__Corre__76619304">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="UsuarioActual" EntitySet="UsuarioActual" />
           </AssociationSet>
           <AssociationSet Name="fkRespuestasUsuario" Association="Self.fkRespuestasUsuario">
             <End Role="Persona" EntitySet="Persona" />
@@ -4539,11 +4739,11 @@
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Seccion_tiene_pregunta" EntitySet="Seccion_tiene_pregunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnidadAca__Super__662B2B3B" Association="Self.FK__UnidadAca__Super__662B2B3B">
+          <AssociationSet Name="FK__UnidadAca__Super__74794A92" Association="Self.FK__UnidadAca__Super__74794A92">
             <End Role="UnidadAcademica" EntitySet="UnidadAcademica" />
             <End Role="UnidadAcademica1" EntitySet="UnidadAcademica" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioPe__Usuar__681373AD" Association="Self.FK__UsuarioPe__Usuar__681373AD">
+          <AssociationSet Name="FK__UsuarioPe__Usuar__793DFFAF" Association="Self.FK__UsuarioPe__Usuar__793DFFAF">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioPerfil" EntitySet="UsuarioPerfil" />
           </AssociationSet>
@@ -4603,6 +4803,10 @@
             <Parameter Name="correoUsuario" Mode="In" Type="String" />
             <Parameter Name="perfil" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="CarrerasYEnfasisXUsuarioXPerfil" IsComposable="true" ReturnType="Collection(DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result)">
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="EnfasisXCarrera" IsComposable="true" ReturnType="Collection(DataIntegradorModel.EnfasisXCarrera_Result)">
           <Parameter Name="codCarrera" Mode="In" Type="String" />
           </FunctionImport>
@@ -4624,6 +4828,16 @@
           <FunctionImport Name="ObtenerFormulariosGrupo" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosGrupo_Result)" />
           <FunctionImport Name="ObtenerFormulariosProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosProfesor_Result)" />
           <FunctionImport Name="ObtenerFormulariosUA" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosUA_Result)" />
+          <FunctionImport Name="ObtenerGruposAsociados" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposAsociados_Result)">
+            <Parameter Name="CodigoUnidadAcademica" Mode="In" Type="String" />
+            <Parameter Name="CodigoCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodigoEnfasis" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerGruposCarreraEnfasis" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposCarreraEnfasis_Result)" />
           <FunctionImport Name="ObtenerGruposFiltros" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposFiltros_Result)" />
           <FunctionImport Name="ObtenerGruposProfesor" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposProfesor_Result)" />
@@ -4662,6 +4876,7 @@
             <Parameter Name="urlReal" Mode="In" Type="String" />
             <Parameter Name="expira" Mode="In" Type="DateTime" />
             <Parameter Name="usos" Mode="In" Type="Int32" />
+            <Parameter Name="reestablecerContrasenna" Mode="In" Type="Boolean" />
             <Parameter Name="resultadohash" Mode="InOut" Type="String" />
             <Parameter Name="estado" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -4669,6 +4884,7 @@
             <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="AgregarMultiplesAccionables" />
           <FunctionImport Name="AgregarMultiplesAccionesDeMejora" />
           <FunctionImport Name="AgregarMultiplesObjetivos" />
           <FunctionImport Name="AgregarOpcion">
@@ -4689,7 +4905,7 @@
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="codigo" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="AgregarPlanCompleto" />
+          <FunctionImport Name="AgregarPlanComplete" />
           <FunctionImport Name="AgregarPreguntaConOpcion">
             <Parameter Name="cod" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="String" />
@@ -4730,9 +4946,22 @@
             <Parameter Name="codEnfasis" Mode="In" Type="String" />
             <Parameter Name="tienePerfil" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="AsignarFormulario">
+            <Parameter Name="FormularioCodigo" Mode="In" Type="String" />
+            <Parameter Name="CursoSigla" Mode="In" Type="String" />
+            <Parameter Name="GrupoNumero" Mode="In" Type="Byte" />
+            <Parameter Name="GrupoAnno" Mode="In" Type="Int32" />
+            <Parameter Name="GrupoSemestre" Mode="In" Type="Byte" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="AsociarPreguntaConSeccion">
             <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
             <Parameter Name="CodigoPregunta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AsociarSeccionConFormulario">
+            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="BorrarAccionDeMejora">
             <Parameter Name="codigoPlan" Mode="In" Type="Int32" />
@@ -4753,6 +4982,10 @@
           <FunctionImport Name="CheckID">
             <Parameter Name="identificacion" Mode="In" Type="String" />
             <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="ConfigurarPerfilesDefault">
+            <Parameter Name="codCarrera" Mode="In" Type="String" />
+            <Parameter Name="codEnfasis" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DesviacionEstandarEscalar">
             <Parameter Name="FCod" Mode="In" Type="String" />
@@ -4829,7 +5062,7 @@
             <Parameter Name="codseccion" Mode="In" Type="String" />
             <Parameter Name="justificacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GuardarRespuestaAPreguntaLibre">
+          <FunctionImport Name="GuardarRespuestaAPreguntaLibre" ReturnType="Collection(Int32)">
             <Parameter Name="codFormulario" Mode="In" Type="String" />
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
@@ -4935,10 +5168,28 @@
             <Parameter Name="nuevo" Mode="In" Type="String" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="ModificarFormulario">
+            <Parameter Name="codviejo" Mode="In" Type="String" />
+            <Parameter Name="codnuevo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="modificacionexitosa" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerCorreosDeProfesoresDelPlan" ReturnType="Collection(String)">
+          <Parameter Name="idPlan" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerEstudiantesAsociadosAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result)">
+          <Parameter Name="codFormulario" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerFormulariosDeEstudiante" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result)">
             <Parameter Name="correoEstudiante" Mode="In" Type="String" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerFormulariosParaAsociar" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosParaAsociar_Result)" />
+          <FunctionImport Name="ObtenerFormulariosPorSemestre" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosPorSemestre_Result)">
+            <Parameter Name="correoEstudiante" Mode="In" Type="String" />
+            <Parameter Name="anno" Mode="In" Type="Int32" />
+            <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="ObtenerOpcionesDePregunta" ReturnType="Collection(DataIntegradorModel.ObtenerOpcionesDePregunta_Result)">
           <Parameter Name="questionCode" Mode="In" Type="String" />
@@ -5052,72 +5303,17 @@
             <Parameter Name="permiso" Mode="In" Type="Int32" />
             <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerFormulariosPorSemestre" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosPorSemestre_Result)">
-            <Parameter Name="correoEstudiante" Mode="In" Type="String" />
-            <Parameter Name="anno" Mode="In" Type="Int32" />
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <FunctionImport Name="ObtenerFormulariosAsociados" ReturnType="Collection(String)">
+          <Parameter Name="idPlan" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="EnlaceSeguro" EntityType="DataIntegradorModel.EnlaceSeguro" />
-          <AssociationSet Name="fkEnlaceSeguroAPersonaCorreo" Association="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="EnlaceSeguro" EntitySet="EnlaceSeguro" />
-          </AssociationSet>
-          <FunctionImport Name="AsignarFormulario">
-            <Parameter Name="FormularioCodigo" Mode="In" Type="String" />
-            <Parameter Name="CursoSigla" Mode="In" Type="String" />
-            <Parameter Name="GrupoNumero" Mode="In" Type="Byte" />
-            <Parameter Name="GrupoAnno" Mode="In" Type="Int32" />
-            <Parameter Name="GrupoSemestre" Mode="In" Type="Byte" />
-            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          <FunctionImport Name="ObtenerSeccionesAsociadasAObjetivo" ReturnType="Collection(String)">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+            <Parameter Name="nombreObj" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="EstaEnCarreraYEnfasis1">
-            <Parameter Name="correoUsuario" Mode="In" Type="String" />
-            <Parameter Name="codCarrera" Mode="In" Type="String" />
-            <Parameter Name="codEnfasis" Mode="In" Type="String" />
-            <Parameter Name="resultado" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="GruposXPerfilXUsuario1" IsComposable="true" ReturnType="Collection(DataIntegradorModel.GruposXPerfilXUsuario1_Result)">
-            <Parameter Name="usuarioActual" Mode="In" Type="String" />
-            <Parameter Name="perfilActual" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ProfesoresXUsuarioXPerfil1" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ProfesoresXUsuarioXPerfil1_Result)">
-            <Parameter Name="usuarioActual" Mode="In" Type="String" />
-            <Parameter Name="perfilActual" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UAXPerfilXUsuario1" IsComposable="true" ReturnType="Collection(DataIntegradorModel.UAXPerfilXUsuario1_Result)">
-            <Parameter Name="usuarioActual" Mode="In" Type="String" />
-            <Parameter Name="perfilActual" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ModificarFormulario">
-            <Parameter Name="codviejo" Mode="In" Type="String" />
-            <Parameter Name="codnuevo" Mode="In" Type="String" />
-            <Parameter Name="nombre" Mode="In" Type="String" />
-            <Parameter Name="modificacionexitosa" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="ObtenerEstudiantesAsociadosAFormulario" ReturnType="Collection(DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result)">
-            <Parameter Name="codFormulario" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ObtenerGruposAsociados" IsComposable="true" ReturnType="Collection(DataIntegradorModel.ObtenerGruposAsociados_Result)">
-            <Parameter Name="CodigoUnidadAcademica" Mode="In" Type="String" />
-            <Parameter Name="CodigoCarrera" Mode="In" Type="String" />
-            <Parameter Name="CodigoEnfasis" Mode="In" Type="String" />
-            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
-            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="Semestre" Mode="In" Type="Byte" />
-            <Parameter Name="Anno" Mode="In" Type="Int32" />
-            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="AsociarSeccionConFormulario">
-            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="CodigoSeccion" Mode="In" Type="String" />
-          </FunctionImport>
+          <EntitySet Name="Accionable" EntityType="DataIntegradorModel.Accionable" />
           <EntitySet Name="AccionableEscala" EntityType="DataIntegradorModel.AccionableEscala" />
           <EntitySet Name="AccionablePorcentaje" EntityType="DataIntegradorModel.AccionablePorcentaje" />
           <EntitySet Name="AccionableSiNo" EntityType="DataIntegradorModel.AccionableSiNo" />
-          <FunctionImport Name="AgregarPlanComplete" />
-          <FunctionImport Name="ObtenerFormulariosParaAsociar" ReturnType="Collection(DataIntegradorModel.ObtenerFormulariosParaAsociar_Result)" />
-          <EntitySet Name="Accionable" EntityType="DataIntegradorModel.Accionable" />
           <AssociationSet Name="FK_Accionable_AccionDeMejora" Association="DataIntegradorModel.FK_Accionable_AccionDeMejora">
             <End Role="AccionDeMejora" EntitySet="AccionDeMejora" />
             <End Role="Accionable" EntitySet="Accionable" />
@@ -5138,6 +5334,11 @@
             <End Role="Accionable" EntitySet="Accionable" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <FunctionImport Name="ObtenerPreguntasDeAccionDeMejora" ReturnType="Collection(String)">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+            <Parameter Name="nombreObj" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -5166,9 +5367,49 @@
           <Property Type="String" Name="descripcion2" Nullable="false" MaxLength="250" />
           <Property Type="DateTime" Name="fechaInicio3" Nullable="true" />
           <Property Type="DateTime" Name="fechaFin3" Nullable="true" />
-          <Property Type="Int32" Name="progreso" Nullable="true" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="peso" Nullable="true" />
+          <Property Type="Int32" Name="pesoPorcentaje" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ObtenerEstudiantesAsociadosAFormulario_Result">
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Carne" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="CorreoEstudiante" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
+          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CorreoProfesor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SiglaCurso1" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo1" Nullable="false" />
+          <Property Type="Byte" Name="Semestre1" Nullable="false" />
+          <Property Type="Int32" Name="Anno1" Nullable="false" />
+          <Property Type="String" Name="Correo1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
         </ComplexType>
         <ComplexType Name="ObtenerFormulariosDeEstudiante_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
+          <Property Type="Byte" Name="Semestre" Nullable="false" />
+          <Property Type="Int32" Name="Anno" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerFormulariosParaAsociar_Result">
+          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="GNumero" Nullable="false" />
+          <Property Type="Int32" Name="GAnno" Nullable="false" />
+          <Property Type="Byte" Name="GSemestre" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ObtenerFormulariosPorSemestre_Result">
           <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
           <Property Type="Byte" Name="NumGrupo" Nullable="false" />
@@ -5226,84 +5467,28 @@
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
           <Property Type="Int32" Name="Orden" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="ObtenerFormulariosPorSemestre_Result">
-          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
-          <Property Type="Byte" Name="Semestre" Nullable="false" />
-          <Property Type="Int32" Name="Anno" Nullable="false" />
-          <Property Type="DateTime" Name="FechaInicio" Nullable="false" />
-          <Property Type="DateTime" Name="FechaFin" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="EnlaceSeguro">
+        <EntityType Name="Accionable">
           <Key>
-            <PropertyRef Name="Hash" />
+            <PropertyRef Name="codPlan" />
+            <PropertyRef Name="nombreObj" />
+            <PropertyRef Name="descripAcMej" />
+            <PropertyRef Name="descripcion" />
           </Key>
-          <Property Name="Hash" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="UsuarioAsociado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UrlReal" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Expira" Type="DateTime" Precision="3" />
-          <Property Name="Usos" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Persona" Relationship="DataIntegradorModel.fkEnlaceSeguroAPersonaCorreo" FromRole="EnlaceSeguro" ToRole="Persona" />
+          <Property Name="codPlan" Type="Int32" Nullable="false" />
+          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="fechaFin" Type="DateTime" Precision="0" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="peso" Type="Int32" />
+          <Property Name="pesoPorcentaje" Type="Int32" />
+          <NavigationProperty Name="AccionDeMejora" Relationship="DataIntegradorModel.FK_Accionable_AccionDeMejora" FromRole="Accionable" ToRole="AccionDeMejora" />
+          <NavigationProperty Name="AccionableEscala" Relationship="DataIntegradorModel.FK_AccionableEscala_Accionable" FromRole="Accionable" ToRole="AccionableEscala" />
+          <NavigationProperty Name="AccionablePorcentaje" Relationship="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" FromRole="Accionable" ToRole="AccionablePorcentaje" />
+          <NavigationProperty Name="AccionableSiNo" Relationship="DataIntegradorModel.FK_AccionableSiNo_Accionable" FromRole="Accionable" ToRole="AccionableSiNo" />
+          <NavigationProperty Name="Funcionario" Relationship="DataIntegradorModel.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
         </EntityType>
-        <Association Name="fkEnlaceSeguroAPersonaCorreo">
-          <End Type="DataIntegradorModel.Persona" Role="Persona" Multiplicity="0..1" />
-          <End Type="DataIntegradorModel.EnlaceSeguro" Role="EnlaceSeguro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="Correo" />
-            </Principal>
-            <Dependent Role="EnlaceSeguro">
-              <PropertyRef Name="UsuarioAsociado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="GruposXPerfilXUsuario1_Result">
-          <Property Type="String" Name="Sigla" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
-          <Property Type="Byte" Name="NumGrupo" Nullable="true" />
-          <Property Type="Byte" Name="Semestre" Nullable="true" />
-          <Property Type="Int32" Name="Anno" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ProfesoresXUsuarioXPerfil1_Result">
-          <Property Type="String" Name="Correo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Nombre1" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Nombre2" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Apellido1" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Apellido2" Nullable="true" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="UAXPerfilXUsuario1_Result">
-          <Property Type="String" Name="CodigoUA" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NombreUA" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="ObtenerEstudiantesAsociadosAFormulario_Result">
-          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Carne" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="CorreoEstudiante" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
-          <Property Type="Byte" Name="Semestre" Nullable="false" />
-          <Property Type="Int32" Name="Anno" Nullable="false" />
-          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CorreoProfesor" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SiglaCurso1" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="NumGrupo1" Nullable="false" />
-          <Property Type="Byte" Name="Semestre1" Nullable="false" />
-          <Property Type="Int32" Name="Anno1" Nullable="false" />
-          <Property Type="String" Name="Correo1" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="GNumero" Nullable="false" />
-          <Property Type="Int32" Name="GAnno" Nullable="false" />
-          <Property Type="Byte" Name="GSemestre" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="ObtenerGruposAsociados_Result">
-          <Property Type="String" Name="SiglaCurso" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="NumGrupo" Nullable="false" />
-          <Property Type="Byte" Name="Semestre" Nullable="false" />
-          <Property Type="Int32" Name="Anno" Nullable="false" />
-        </ComplexType>
         <EntityType Name="AccionableEscala">
           <Key>
             <PropertyRef Name="codPlan" />
@@ -5347,33 +5532,6 @@
           <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="avance" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Accionable" Relationship="DataIntegradorModel.FK_AccionableSiNo_Accionable" FromRole="AccionableSiNo" ToRole="Accionable" />
-        </EntityType>
-        <ComplexType Name="ObtenerFormulariosParaAsociar_Result">
-          <Property Type="String" Name="FCodigo" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="CSigla" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="GNumero" Nullable="false" />
-          <Property Type="Int32" Name="GAnno" Nullable="false" />
-          <Property Type="Byte" Name="GSemestre" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="Accionable">
-          <Key>
-            <PropertyRef Name="codPlan" />
-            <PropertyRef Name="nombreObj" />
-            <PropertyRef Name="descripAcMej" />
-            <PropertyRef Name="descripcion" />
-          </Key>
-          <Property Name="codPlan" Type="Int32" Nullable="false" />
-          <Property Name="nombreObj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="descripAcMej" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="fechaInicio" Type="DateTime" Precision="0" />
-          <Property Name="fechaFin" Type="DateTime" Precision="0" />
-          <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="AccionDeMejora" Relationship="DataIntegradorModel.FK_Accionable_AccionDeMejora" FromRole="Accionable" ToRole="AccionDeMejora" />
-          <NavigationProperty Name="AccionableEscala" Relationship="DataIntegradorModel.FK_AccionableEscala_Accionable" FromRole="Accionable" ToRole="AccionableEscala" />
-          <NavigationProperty Name="AccionablePorcentaje" Relationship="DataIntegradorModel.FK_AccionablePorcentaje_Accionable" FromRole="Accionable" ToRole="AccionablePorcentaje" />
-          <NavigationProperty Name="AccionableSiNo" Relationship="DataIntegradorModel.FK_AccionableSiNo_Accionable" FromRole="Accionable" ToRole="AccionableSiNo" />
-          <NavigationProperty Name="Funcionario" Relationship="DataIntegradorModel.Responsable_De" FromRole="Accionable" ToRole="Funcionario" />
         </EntityType>
         <Association Name="FK_Accionable_AccionDeMejora">
           <End Type="DataIntegradorModel.AccionDeMejora" Role="AccionDeMejora" Multiplicity="1">
@@ -5462,7 +5620,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="DataIntegradorEntities">
+        <EntityContainerMapping StorageEntityContainer="DataIntegradorModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="C__RefactorLog">
             <EntityTypeMapping TypeName="DataIntegradorModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
@@ -5516,6 +5674,18 @@
                 <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnlaceSeguro">
+            <EntityTypeMapping TypeName="DataIntegradorModel.EnlaceSeguro">
+              <MappingFragment StoreEntitySet="EnlaceSeguro">
+                <ScalarProperty Name="Hash" ColumnName="Hash" />
+                <ScalarProperty Name="UsuarioAsociado" ColumnName="UsuarioAsociado" />
+                <ScalarProperty Name="UrlReal" ColumnName="UrlReal" />
+                <ScalarProperty Name="Expira" ColumnName="Expira" />
+                <ScalarProperty Name="Usos" ColumnName="Usos" />
+                <ScalarProperty Name="ReestablecerContrasenna" ColumnName="ReestablecerContrasenna" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5975,6 +6145,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.CarrerasYEnfasisXUsuarioXPerfil" FunctionImportName="CarrerasYEnfasisXUsuarioXPerfil">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.CarrerasYEnfasisXUsuarioXPerfil_Result">
+                <ScalarProperty Name="NombreCarrera" ColumnName="NombreCarrera" />
+                <ScalarProperty Name="CodCarrera" ColumnName="CodCarrera" />
+                <ScalarProperty Name="NombreEnfasis" ColumnName="NombreEnfasis" />
+                <ScalarProperty Name="CodEnfasis" ColumnName="CodEnfasis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="DataIntegradorModel.Store.EnfasisXCarrera" FunctionImportName="EnfasisXCarrera">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarrera_Result">
@@ -5986,6 +6166,17 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.EnfasisXCarreraXPerfil_Result">
                 <ScalarProperty Name="codEnfasis" ColumnName="codEnfasis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.GruposXPerfilXUsuario" FunctionImportName="GruposXPerfilXUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.GruposXPerfilXUsuario_Result">
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6096,6 +6287,16 @@
                 <ScalarProperty Name="GAnno" ColumnName="GAnno" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.ObtenerGruposAsociados" FunctionImportName="ObtenerGruposAsociados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerGruposAsociados_Result">
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6242,13 +6443,34 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.ProfesoresXUsuarioXPerfil" FunctionImportName="ProfesoresXUsuarioXPerfil">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ProfesoresXUsuarioXPerfil_Result">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+                <ScalarProperty Name="Nombre2" ColumnName="Nombre2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="DataIntegradorModel.Store.UAXPerfilXUsuario" FunctionImportName="UAXPerfilXUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.UAXPerfilXUsuario_Result">
+                <ScalarProperty Name="CodigoUA" ColumnName="CodigoUA" />
+                <ScalarProperty Name="NombreUA" ColumnName="NombreUA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AgregarEnlaceSeguro" FunctionName="DataIntegradorModel.Store.AgregarEnlaceSeguro" />
           <FunctionImportMapping FunctionImportName="AgregarFormulario" FunctionName="DataIntegradorModel.Store.AgregarFormulario" />
+          <FunctionImportMapping FunctionImportName="AgregarMultiplesAccionables" FunctionName="DataIntegradorModel.Store.AgregarMultiplesAccionables" />
           <FunctionImportMapping FunctionImportName="AgregarMultiplesAccionesDeMejora" FunctionName="DataIntegradorModel.Store.AgregarMultiplesAccionesDeMejora" />
           <FunctionImportMapping FunctionImportName="AgregarMultiplesObjetivos" FunctionName="DataIntegradorModel.Store.AgregarMultiplesObjetivos" />
           <FunctionImportMapping FunctionImportName="AgregarOpcion" FunctionName="DataIntegradorModel.Store.AgregarOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPerfilPermiso" FunctionName="DataIntegradorModel.Store.AgregarPerfilPermiso" />
           <FunctionImportMapping FunctionImportName="AgregarPlan" FunctionName="DataIntegradorModel.Store.AgregarPlan" />
+          <FunctionImportMapping FunctionImportName="AgregarPlanComplete" FunctionName="DataIntegradorModel.Store.AgregarPlanComplete" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaConOpcion" FunctionName="DataIntegradorModel.Store.AgregarPreguntaConOpcion" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaEscalar" FunctionName="DataIntegradorModel.Store.AgregarPreguntaEscalar" />
           <FunctionImportMapping FunctionImportName="AgregarPreguntaRespuestaLibre" FunctionName="DataIntegradorModel.Store.AgregarPreguntaRespuestaLibre" />
@@ -6256,16 +6478,20 @@
           <FunctionImportMapping FunctionImportName="AgregarSeccion" FunctionName="DataIntegradorModel.Store.AgregarSeccion" />
           <FunctionImportMapping FunctionImportName="AgregarUsuario" FunctionName="DataIntegradorModel.Store.AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="AgregarUsuarioPerfil" FunctionName="DataIntegradorModel.Store.AgregarUsuarioPerfil" />
+          <FunctionImportMapping FunctionImportName="AsignarFormulario" FunctionName="DataIntegradorModel.Store.AsignarFormulario" />
           <FunctionImportMapping FunctionImportName="AsociarPreguntaConSeccion" FunctionName="DataIntegradorModel.Store.AsociarPreguntaConSeccion" />
+          <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
           <FunctionImportMapping FunctionImportName="BorrarAccionDeMejora" FunctionName="DataIntegradorModel.Store.BorrarAccionDeMejora" />
           <FunctionImportMapping FunctionImportName="BorrarObjetivo" FunctionName="DataIntegradorModel.Store.BorrarObjetivo" />
           <FunctionImportMapping FunctionImportName="BorrarPlan" FunctionName="DataIntegradorModel.Store.BorrarPlan" />
           <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="DataIntegradorModel.Store.ChangePassword" />
           <FunctionImportMapping FunctionImportName="CheckID" FunctionName="DataIntegradorModel.Store.CheckID" />
+          <FunctionImportMapping FunctionImportName="ConfigurarPerfilesDefault" FunctionName="DataIntegradorModel.Store.ConfigurarPerfilesDefault" />
           <FunctionImportMapping FunctionImportName="DesviacionEstandarEscalar" FunctionName="DataIntegradorModel.Store.DesviacionEstandarEscalar" />
           <FunctionImportMapping FunctionImportName="EliminarPreguntaDeSeccion" FunctionName="DataIntegradorModel.Store.EliminarPreguntaDeSeccion" />
           <FunctionImportMapping FunctionImportName="EliminarRespuestasDeFormulario" FunctionName="DataIntegradorModel.Store.EliminarRespuestasDeFormulario" />
           <FunctionImportMapping FunctionImportName="EliminarSeccionFormulario" FunctionName="DataIntegradorModel.Store.EliminarSeccionFormulario" />
+          <FunctionImportMapping FunctionImportName="EstaEnCarreraYEnfasis" FunctionName="DataIntegradorModel.Store.EstaEnCarreraYEnfasis" />
           <FunctionImportMapping FunctionImportName="getPlanFull" FunctionName="DataIntegradorModel.Store.getPlanFull">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.getPlanFull_Result">
@@ -6295,7 +6521,9 @@
                 <ScalarProperty Name="descripcion2" ColumnName="descripcion2" />
                 <ScalarProperty Name="fechaInicio3" ColumnName="fechaInicio3" />
                 <ScalarProperty Name="fechaFin3" ColumnName="fechaFin3" />
-                <ScalarProperty Name="progreso" ColumnName="progreso" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="pesoPorcentaje" ColumnName="pesoPorcentaje" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6322,9 +6550,61 @@
           <FunctionImportMapping FunctionImportName="LoginUsuario" FunctionName="DataIntegradorModel.Store.LoginUsuario" />
           <FunctionImportMapping FunctionImportName="Mediana" FunctionName="DataIntegradorModel.Store.Mediana" />
           <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
+          <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
+          <FunctionImportMapping FunctionImportName="ObtenerCorreosDeProfesoresDelPlan" FunctionName="DataIntegradorModel.Store.ObtenerCorreosDeProfesoresDelPlan" />
+          <FunctionImportMapping FunctionImportName="ObtenerEstudiantesAsociadosAFormulario" FunctionName="DataIntegradorModel.Store.ObtenerEstudiantesAsociadosAFormulario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="CorreoEstudiante" ColumnName="CorreoEstudiante" />
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CorreoProfesor" ColumnName="CorreoProfesor" />
+                <ScalarProperty Name="SiglaCurso1" ColumnName="SiglaCurso1" />
+                <ScalarProperty Name="NumGrupo1" ColumnName="NumGrupo1" />
+                <ScalarProperty Name="Semestre1" ColumnName="Semestre1" />
+                <ScalarProperty Name="Anno1" ColumnName="Anno1" />
+                <ScalarProperty Name="Correo1" ColumnName="Correo1" />
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosDeEstudiante" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosDeEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerFormulariosParaAsociar" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosParaAsociar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosParaAsociar_Result">
+                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
+                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
+                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
+                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
+                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerFormulariosPorSemestre" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosPorSemestre">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosPorSemestre_Result">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
@@ -6421,74 +6701,23 @@
           <FunctionImportMapping FunctionImportName="TienePermisoActivoEnEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoActivoEnEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasis" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasis" />
           <FunctionImportMapping FunctionImportName="TienePermisoSinEnfasisNiCarrera" FunctionName="DataIntegradorModel.Store.TienePermisoSinEnfasisNiCarrera" />
-          <FunctionImportMapping FunctionImportName="ObtenerFormulariosPorSemestre" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosPorSemestre">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosPorSemestre_Result">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
-                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="EnlaceSeguro">
-            <EntityTypeMapping TypeName="DataIntegradorModel.EnlaceSeguro">
-              <MappingFragment StoreEntitySet="EnlaceSeguro">
-                <ScalarProperty Name="Usos" ColumnName="Usos" />
-                <ScalarProperty Name="Expira" ColumnName="Expira" />
-                <ScalarProperty Name="UrlReal" ColumnName="UrlReal" />
-                <ScalarProperty Name="UsuarioAsociado" ColumnName="UsuarioAsociado" />
-                <ScalarProperty Name="Hash" ColumnName="Hash" />
+          <FunctionImportMapping FunctionImportName="ObtenerFormulariosAsociados" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosAsociados" />
+          <FunctionImportMapping FunctionImportName="ObtenerSeccionesAsociadasAObjetivo" FunctionName="DataIntegradorModel.Store.ObtenerSeccionesAsociadasAObjetivo" />
+          <EntitySetMapping Name="Accionable">
+            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
+              <MappingFragment StoreEntitySet="Accionable">
+                <ScalarProperty Name="pesoPorcentaje" ColumnName="pesoPorcentaje" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
+                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
+                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AsignarFormulario" FunctionName="DataIntegradorModel.Store.AsignarFormulario" />
-          <FunctionImportMapping FunctionImportName="EstaEnCarreraYEnfasis1" FunctionName="DataIntegradorModel.Store.EstaEnCarreraYEnfasis" />
-          <FunctionImportMapping FunctionImportName="GruposXPerfilXUsuario1" FunctionName="DataIntegradorModel.Store.GruposXPerfilXUsuario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.GruposXPerfilXUsuario1_Result">
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProfesoresXUsuarioXPerfil1" FunctionName="DataIntegradorModel.Store.ProfesoresXUsuarioXPerfil">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ProfesoresXUsuarioXPerfil1_Result">
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
-                <ScalarProperty Name="Nombre2" ColumnName="Nombre2" />
-                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
-                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="UAXPerfilXUsuario1" FunctionName="DataIntegradorModel.Store.UAXPerfilXUsuario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.UAXPerfilXUsuario1_Result">
-                <ScalarProperty Name="CodigoUA" ColumnName="CodigoUA" />
-                <ScalarProperty Name="NombreUA" ColumnName="NombreUA" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
-          <FunctionImportMapping FunctionImportName="AsociarSeccionConFormulario" FunctionName="DataIntegradorModel.Store.AsociarSeccionConFormulario" />
-          <FunctionImportMapping FunctionImportName="ObtenerGruposAsociados" FunctionName="DataIntegradorModel.Store.ObtenerGruposAsociados">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerGruposAsociados_Result">
-                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
-                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="AccionableEscala">
             <EntityTypeMapping TypeName="DataIntegradorModel.AccionableEscala">
               <MappingFragment StoreEntitySet="AccionableEscala">
@@ -6524,31 +6753,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AgregarPlanComplete" FunctionName="DataIntegradorModel.Store.AgregarPlanComplete" />
-          <FunctionImportMapping FunctionImportName="ObtenerFormulariosParaAsociar" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosParaAsociar">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosParaAsociar_Result">
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Accionable">
-            <EntityTypeMapping TypeName="DataIntegradorModel.Accionable">
-              <MappingFragment StoreEntitySet="Accionable">
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
-                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="descripAcMej" ColumnName="descripAcMej" />
-                <ScalarProperty Name="nombreObj" ColumnName="nombreObj" />
-                <ScalarProperty Name="codPlan" ColumnName="codPlan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="Responsable_De" TypeName="DataIntegradorModel.Responsable_De" StoreEntitySet="Responsable_De">
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="Correo" ColumnName="corrFunc" />
@@ -6560,6 +6764,7 @@
               <ScalarProperty Name="codPlan" ColumnName="codPlan" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeAccionDeMejora" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeAccionDeMejora" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -6577,7 +6782,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

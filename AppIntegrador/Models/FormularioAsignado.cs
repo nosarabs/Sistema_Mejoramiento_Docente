@@ -101,7 +101,7 @@ namespace AppIntegrador.Models
             return estado;
         }
 
-        private string FormatearFecha(DateTime fecha)
+        public static string FormatearFecha(DateTime fecha)
         {
             return fecha.Day.ToString(CultureInfo.CreateSpecificCulture("es")) + " de " +
                 fecha.ToString("MMMMMMMMMMMMM", CultureInfo.CreateSpecificCulture("es")) + " de " +

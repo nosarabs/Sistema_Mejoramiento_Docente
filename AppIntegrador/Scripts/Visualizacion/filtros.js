@@ -358,7 +358,7 @@
         var resultados = this.recuperarFs(listaUA, listaCE, listaG, listaP);
         var option = document.createElement("option");
         option.className = "option";
-        option.text = "None selected";
+        option.text = "Ninguno seleccionado";
         option.value = "null";
         filtro.appendChild(option);
 

@@ -1,20 +1,30 @@
-﻿
-function GenerarModalPreguntas() {
+﻿var SeccionModalActual;
+
+function GenerarModalPreguntas(codSeccion) {
+    SeccionModalActual = codSeccion;
     $('#ModalAgregarPregunta').modal();
     ImportarBancoPreguntas();
     GenerarCrearPreguntas();
     $('#ModalCrearPregunta').hide();
     $('#BancoDePreguntas').show();
 }
+
+
 function ImportarBancoPreguntas() {
     $.ajax({
         type: "post",
+        traditional: true,
         url: "/Preguntas/ActualizarBancoPreguntas",
         dataType: "html",
         success: function (data) {
             $('#ModalPartialBancoPreguntas').html(data);
+            DesactivarPreguntasAgregadas();
         }
     });
+}
+
+function CerrarModalPreguntas() {
+    $('ModalAgregarPregunta').modal("hide");
 }
 
 function CerrarCrearPregunta() {
@@ -64,8 +74,9 @@ function GuardarPregunta() {
                 $("#agregar-opcion").addClass("error");
             }
             if (data.MinMax) {
-                document.getElementById("min").textContent = "El primer número debe ser menor al segundo";
+
                 $("#min").addClass("error");
+                $("#max").addClass("error");
             }
             if (data.guardadoExitoso) {
                 $.ajax({
@@ -119,7 +130,6 @@ function FiltrarBancoPreguntas() {
         dataType: "html",
         traditional: true,
         success: function (data) {
-            resultado = [];
             $('#ModalPartialBancoPreguntas').html(data);
         },
         error: function () {

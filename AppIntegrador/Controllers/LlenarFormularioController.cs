@@ -1,4 +1,5 @@
 ﻿using AppIntegrador.Models;
+using AppIntegrador.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -12,6 +13,8 @@ namespace AppIntegrador.Controllers
     public class LlenarFormularioController : Controller
     {
         private DataIntegradorEntities db;
+
+        private readonly IPerm permissionManager;
 
         // Fechas en formato dd/MM
         const string InicioVerano = "01/01/";
@@ -39,6 +42,7 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController()
         {
             db = new DataIntegradorEntities();
+            permissionManager = new PermissionManager();
 
             FechaActual = DateTime.Now;
 
@@ -57,16 +61,28 @@ namespace AppIntegrador.Controllers
         public LlenarFormularioController(DataIntegradorEntities db)
         {
             this.db = db;
+            permissionManager = new PermissionManager();
         }
 
-        public ActionResult LlenarFormulario(string id, string sigla, byte num, int anno, byte semestre)
+        public ActionResult LlenarFormulario(string id, string sigla, byte? num, int? anno, byte? semestre)
         {
+            if (!permissionManager.IsAuthorized(Permission.LLENAR_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
+            if(num == null || anno == null || semestre == null)
+            {
+                return RedirectToAction("MisFormularios");
+            }
+
             Grupo grupo = new Grupo
             {
                 SiglaCurso = sigla,
-                Anno = anno,
-                NumGrupo = num,
-                Semestre = semestre
+                Anno = (int)anno,
+                NumGrupo = (byte)num,
+                Semestre = (byte)semestre
             };
             if (HttpContext == null)
             {
@@ -120,6 +136,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_FORMULARIO))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (HttpContext == null)
             {
                 return Redirect("~/");
@@ -171,7 +193,7 @@ namespace AppIntegrador.Controllers
             if (pregunta != null && !string.IsNullOrEmpty(CodigoSeccion) && respuestas != null)
             {
 
-                if (pregunta.Pregunta.Tipo == "L")
+                if (pregunta.Pregunta.Tipo == "L" && pregunta.RespuestaLibreOJustificacion != null)
                 {
                     db.GuardarRespuestaAPreguntaLibre(respuestas.FCodigo, respuestas.Correo, respuestas.CSigla, respuestas.GNumero, respuestas.GAnno, respuestas.GSemestre,
                                                             respuestas.Fecha, pregunta.Pregunta.Codigo, CodigoSeccion, pregunta.RespuestaLibreOJustificacion);

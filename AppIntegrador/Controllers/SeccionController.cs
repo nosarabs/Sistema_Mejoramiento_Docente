@@ -10,6 +10,7 @@ using AppIntegrador.Models;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data.Entity.Core.Objects;
+using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
 {
@@ -17,6 +18,7 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = null;
         public CrearSeccionModel crearSeccion = new CrearSeccionModel();
+        private readonly IPerm permissionManager = new PermissionManager();
 
         public SeccionController()
         {
@@ -27,6 +29,83 @@ namespace AppIntegrador.Controllers
         {
             this.db = db;
         }
+
+        // GET: Seccion
+        [HttpPost]
+        public ActionResult ActualizarBancoSecciones(string input0, string input1, string input2)
+        {
+            if(!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
+            var seccion = db.Seccion;
+
+            ViewBag.filtro = "Ninguno";
+            if (input0 == null && input1 == null && input2 == null)
+            {
+                ViewBag.filtro = "Ninguno";
+                return PartialView("_SeccionPartial", seccion.ToList());
+            }
+            // si se selecionó el código  
+            if (input1.Length > 0)
+            {
+                ViewBag.filtro = "Por código: " + input1;
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return PartialView("_SeccionPartial", seccion.Where(x => x.Codigo.Contains(input1)).ToList());
+            }
+            // si se selecionó el enunciado 
+            else if (input2.Length > 0)
+            {
+                ViewBag.filtro = "Nombre: " + input2;
+                return PartialView("_SeccionPartial", seccion.Where(x => x.Nombre.Contains(input2)).ToList());
+            }
+            else
+            {
+                ViewBag.filtro = "Ninguno";
+                return PartialView("_SeccionPartial", seccion.ToList());
+            }
+        }
+
+        // GET: Seccion/Create
+        public ActionResult Create()
+        {
+            if(!permissionManager.IsAuthorized(Permission.CREAR_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
+            crearSeccion.pregunta = db.Pregunta;
+            return View(crearSeccion);
+        }
+
+        // POST: Seccion/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
+        {
+            crearSeccion.pregunta = db.Pregunta;
+            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
+            {
+                if ( InsertSeccionTienePregunta(seccion, preguntas) )
+                {
+                    return RedirectToAction("Create");
+                }
+                else
+                {
+                    // Notifique que ocurrió un error
+                    ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
+                    return View(crearSeccion);
+                }
+            }
+
+            return View(crearSeccion);
+        }
+
 
         // GET: Seccion
         public ActionResult Index(string input0, string input1, string input2)
@@ -59,43 +138,18 @@ namespace AppIntegrador.Controllers
             }
         }
 
-        // GET: Seccion/Create
-        public ActionResult Create()
-        {
-            crearSeccion.pregunta = db.Pregunta;
-            return View(crearSeccion);
-        }
-
-        // POST: Seccion/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Seccion seccion, List<Pregunta_con_opciones_de_seleccion> preguntas)
-        {
-            crearSeccion.pregunta = db.Pregunta;
-            if (ModelState.IsValid && seccion.Codigo.Length > 0 && seccion.Nombre.Length > 0)
-            {
-                if ( InsertSeccionTienePregunta(seccion, preguntas) )
-                {
-                    return RedirectToAction("Create");
-                }
-                else
-                {
-                    // Notifique que ocurrió un error
-                    ModelState.AddModelError("Seccion.Codigo", "Código ya en uso.");
-                    return View(crearSeccion);
-                }
-            }
-
-            return View(crearSeccion);
-        }
 
         // Historia RIP-BKS1
         // Se copió la función para filtrar preguntas.
         [HttpGet]
         public ActionResult Create(string input0, string input1, string input2, string input3)
         {
+            if (!permissionManager.IsAuthorized(Permission.CREAR_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             crearSeccion.pregunta = db.Pregunta;
             ViewBag.filtro = "Ninguno";
             if (input0 == null && input1 == null && input2 == null && input3 == null)
@@ -177,6 +231,12 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult VistaPrevia(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -189,11 +249,6 @@ namespace AppIntegrador.Controllers
             return View(seccion);
         }
 
-        [HttpPost]
-        public ActionResult ActualizarBancoSecciones()
-        {
-            return PartialView("~/Views/Seccion/_SeccionPartial.cshtml", db.Seccion);
-        }
         [HttpPost]
         public ActionResult ActualizarCrearSeccion()
         {
@@ -290,6 +345,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult SeccionConPreguntas(string id)
         {
+            if (!permissionManager.IsAuthorized(Permission.VER_SECCION))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
             // Armar objeto independiente del formulario
             SeccionConPreguntas seccion = ArmarSeccion(id);
 
