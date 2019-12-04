@@ -98,8 +98,8 @@ namespace AppIntegrador.Controllers
 
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
             {
-                fechaInicio = DateTime.ParseExact(fechaInicioSeleccionado, "mm-dd-yyyy", CultureInfo.InvariantCulture);
-                fechaFin = DateTime.ParseExact(fechaFinSeleccionado, "mm-dd-yyyy", CultureInfo.InvariantCulture);
+                fechaInicio = DateTime.ParseExact(fechaInicioSeleccionado, "yyyy-mm-dd", CultureInfo.InvariantCulture);
+                fechaFin = DateTime.ParseExact(fechaFinSeleccionado, "yyyy-mm-dd", CultureInfo.InvariantCulture);
             }
             else
             {
