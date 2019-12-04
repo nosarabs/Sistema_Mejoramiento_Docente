@@ -16,6 +16,7 @@ using System.IO;
 using System.Web.SessionState;
 using System.Reflection;
 using AppIntegrador.Utilities;
+using System.Globalization;
 
 namespace AppIntegrador.Controllers
 {
@@ -97,8 +98,8 @@ namespace AppIntegrador.Controllers
 
             if (fechaInicioSeleccionado.Length > 0 && fechaFinSeleccionado.Length > 0)
             {
-                fechaInicio = Convert.ToDateTime(fechaInicioSeleccionado);
-                fechaFin = Convert.ToDateTime(fechaFinSeleccionado);
+                fechaInicio = DateTime.ParseExact(fechaInicioSeleccionado, "mm-dd-yyyy", CultureInfo.InvariantCulture);
+                fechaFin = DateTime.ParseExact(fechaFinSeleccionado, "mm-dd-yyyy", CultureInfo.InvariantCulture);
             }
             else
             {
