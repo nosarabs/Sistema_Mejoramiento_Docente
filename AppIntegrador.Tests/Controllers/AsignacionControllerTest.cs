@@ -68,15 +68,6 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-                private bool convertNullStringToNull(ref string convertedString)
-        {
-            if (convertedString == "null")
-            {
-                convertedString = null;
-            }
-            return false;
-        }
-
         [TestMethod]
         // Prueba el metodo que divide las carrera/enfasis, en dos separados
         public void TestDividirCarreraEnfasisNull()
