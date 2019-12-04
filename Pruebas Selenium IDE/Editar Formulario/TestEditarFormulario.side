@@ -7,32 +7,32 @@
     "id": "cf9d6c70-3402-4f42-b026-bea0aba6c743",
     "name": "TestEditarFormulario",
     "commands": [{
-      "id": "a9e370e8-4478-4e43-b31f-9d43b7877e77",
+      "id": "e7815806-6637-4034-8b81-4c94f93be047",
       "comment": "",
       "command": "open",
       "target": "/",
       "targets": [],
       "value": ""
     }, {
-      "id": "a4fe5b02-9680-4df8-8a18-cc3857234f22",
+      "id": "0c887488-6c20-43bc-b227-ce9d84d703fc",
       "comment": "",
       "command": "setWindowSize",
       "target": "1600x860",
       "targets": [],
       "value": ""
     }, {
-      "id": "4f2cf3b1-8fa5-4bc3-a331-80f6cbbf3a1a",
+      "id": "fc589bf0-7ddd-4989-8f9e-f52cc3f81a7b",
       "comment": "",
       "command": "click",
-      "target": "css=.blue-box",
+      "target": "css=.container-login100",
       "targets": [
-        ["css=.blue-box", "css:finder"],
-        ["xpath=//body[@id='greybg']/div/div/div", "xpath:idRelative"],
-        ["xpath=//div/div/div", "xpath:position"]
+        ["css=.container-login100", "css:finder"],
+        ["xpath=//body[@id='greybg']/div", "xpath:idRelative"],
+        ["xpath=//div", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "d2155de5-c43c-4616-8f6c-8e5f5b6b00a4",
+      "id": "512304d2-687e-42f3-a745-ef5dfd4a2a48",
       "comment": "",
       "command": "click",
       "target": "css=.btn-blancoUCR",
@@ -45,29 +45,21 @@
       ],
       "value": ""
     }, {
-      "id": "8f7f5e0c-fdc4-48a9-af2b-22ffe6c900b3",
+      "id": "99ec5dae-1acf-48dc-9f5a-af0b0c23ca83",
       "comment": "",
       "command": "open",
       "target": "/Formularios/Index",
       "targets": [],
       "value": ""
     }, {
-      "id": "d91b10eb-ae1b-4611-bf0e-eda9f7352d0f",
+      "id": "46e194e0-4c82-4efd-a108-daf9cb0c44bd",
       "comment": "",
       "command": "click",
       "target": "linkText=Editar",
-      "targets": [
-        ["linkText=Editar", "linkText"],
-        ["css=tr:nth-child(2) a:nth-child(2)", "css:finder"],
-        ["xpath=//a[contains(text(),'Editar')]", "xpath:link"],
-        ["xpath=//table[@id='selectedColumn']/tbody/tr[2]/td[3]/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '/Formularios/Edit?codForm=00000001')]", "xpath:href"],
-        ["xpath=//td[3]/a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Editar')]", "xpath:innerText"]
-      ],
+      "targets": [],
       "value": ""
     }, {
-      "id": "90fba453-3a96-47de-8bcb-ad4a382e389e",
+      "id": "5a60bebb-4110-48e0-88f9-b592e97fd59a",
       "comment": "",
       "command": "click",
       "target": "id=textName",
@@ -80,7 +72,7 @@
       ],
       "value": ""
     }, {
-      "id": "62c336e7-f399-4d35-916f-b4e9ec4393aa",
+      "id": "77b8b950-7a5c-42d7-933a-6991fb293dce",
       "comment": "",
       "command": "type",
       "target": "id=textName",
@@ -91,34 +83,21 @@
         ["xpath=//input[@id='textName']", "xpath:attributes"],
         ["xpath=//div[2]/div/input", "xpath:position"]
       ],
-      "value": "Formulario de PI de BD e IS test editar formulario"
+      "value": "Formulario de PI de BD e IS test editar"
     }, {
-      "id": "70459e91-fc09-43e8-825f-c09001abaac2",
+      "id": "ac8917fa-639e-49c6-8dcb-80aa9285544c",
       "comment": "",
       "command": "click",
-      "target": "css=.col-lg-11",
+      "target": "css=.card:nth-child(8) #borrarSec",
       "targets": [
-        ["css=.col-lg-11", "css:finder"],
-        ["xpath=//div[@id='seccionesActuales']/div/div/div/span", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/div/div/div/span", "xpath:position"]
+        ["css=.card:nth-child(8) #borrarSec", "css:finder"],
+        ["xpath=(//button[@id='borrarSec'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='seccionesActuales']/div[3]/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/button", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "1dd02325-93a5-4993-9154-48d8610fd5e3",
-      "comment": "",
-      "command": "click",
-      "target": "id=borrarSec",
-      "targets": [
-        ["id=borrarSec", "id"],
-        ["css=#borrarSec", "css:finder"],
-        ["xpath=//button[@id='borrarSec']", "xpath:attributes"],
-        ["xpath=//div[@id='seccionesActuales']/div/div/div/button", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/div/div/div/button", "xpath:position"],
-        ["xpath=//button[contains(.,'X')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "f7b5f971-1523-4cd5-9e53-917bdf6ea7a5",
+      "id": "088cc1dc-2188-4821-926e-ab66314ba9f4",
       "comment": "",
       "command": "click",
       "target": "id=AgregarSeccion",
@@ -131,33 +110,33 @@
       ],
       "value": ""
     }, {
-      "id": "885498fd-6193-41d5-8f56-e800f398fef3",
+      "id": "16a82dce-1d56-479b-9e32-90479c117085",
       "comment": "",
       "command": "click",
-      "target": "id=ch(00000001)",
+      "target": "id=ch(00000003)",
       "targets": [
-        ["id=ch(00000001)", "id"],
-        ["css=#ch\\(00000001\\)", "css:finder"],
-        ["xpath=//input[@id='ch(00000001)']", "xpath:attributes"],
-        ["xpath=//tr[@id='sec(00000001)']/td/center/input", "xpath:idRelative"],
-        ["xpath=//center/input", "xpath:position"]
+        ["id=ch(00000003)", "id"],
+        ["css=#ch\\(00000003\\)", "css:finder"],
+        ["xpath=//input[@id='ch(00000003)']", "xpath:attributes"],
+        ["xpath=//tr[@id='sec(00000003)']/td/center/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/center/input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "e47c258b-0011-49a8-9176-703de9f87280",
+      "id": "d6c7e26d-abb5-4dcc-be7e-4771b7758a84",
       "comment": "",
       "command": "click",
       "target": "css=#ExampleModal .modal-footer > .btn-azulUCR",
       "targets": [
         ["css=#ExampleModal .modal-footer > .btn-azulUCR", "css:finder"],
-        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=(//button[@type='button'])[12]", "xpath:attributes"],
         ["xpath=//div[@id='ExampleModal']/div/div/div[2]/button[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div/div/div/div[2]/button[2]", "xpath:position"],
+        ["xpath=//div[2]/div/div[3]/div/div/div/div[2]/button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Agregar secciones seleccionadas')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "09c105d4-cdb5-4737-9b90-d0aa012b9c3f",
+      "id": "d804a2e3-d8e8-4191-afea-79df002dcfc9",
       "comment": "",
       "command": "click",
       "target": "id=textName",
@@ -170,7 +149,7 @@
       ],
       "value": ""
     }, {
-      "id": "96a72d71-0107-4afc-af69-04b47e06769e",
+      "id": "e84eadc2-7c96-431b-b3be-e096ef92fbb2",
       "comment": "",
       "command": "type",
       "target": "id=textName",
@@ -183,18 +162,19 @@
       ],
       "value": "Formulario de PI de BD e IS"
     }, {
-      "id": "0063729b-f054-4ba7-a994-a6d996216a32",
+      "id": "e0892bb2-58d1-459d-b75e-7fb0eac66598",
       "comment": "",
       "command": "click",
-      "target": "css=.card-body:nth-child(2) > div",
+      "target": "css=.grisUCR2 > h3",
       "targets": [
-        ["css=.card-body:nth-child(2) > div", "css:finder"],
-        ["xpath=//div[@id='seccionesActuales']/div/div[2]/div", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/div/div[2]/div", "xpath:position"]
+        ["css=.grisUCR2 > h3", "css:finder"],
+        ["xpath=//div[@id='secciones']/div/h3", "xpath:idRelative"],
+        ["xpath=//div[2]/div/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Secciones del formulario')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "a5060a37-69d9-462c-ab17-c280c2bb8f2d",
+      "id": "628a13fc-ff51-47af-9822-e0680eae1bb7",
       "comment": "",
       "command": "click",
       "target": "linkText=Volver al banco de formularios",
