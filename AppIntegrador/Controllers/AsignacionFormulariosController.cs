@@ -208,7 +208,26 @@ namespace AppIntegrador.Controllers
             }
 
             if (enviarCorreos)
-               EnviarCorreoSobreAsignaciónCuestionario(db.Formulario.Find(codigoFormulario));
+            {
+                var estudiantes = db.ObtenerEstudiantesAsociados(codigoUASeleccionada, codigoCarrera, codigoEnfasis, siglaCursoGrupo, numeroGrupo, semestreGrupo, anno, correoProfesorSeleccionado);
+                List<ObtenerEstudiantesAsociados_Result> estudiantesAsociadosLista = null;
+                // Se convierte la tabla a lista
+                try
+                {
+                    estudiantesAsociadosLista = estudiantes.ToList();
+                    // Si no existen grupos asociados, pues no se pudo asignar
+                    if (estudiantesAsociadosLista.Count <= 0)
+                    {
+                        return Json(new { error = false, tipoError = 4 });
+                    }
+                }
+                catch
+                {
+                    return Json(new { error = false, tipoError = 4 });
+                }
+
+                EnviarCorreoSobreAsignaciónCuestionario(estudiantesAsociadosLista, db.Formulario.Find(codigoFormulario) );
+            }
 
             return Json(new { error = true, inicio = originalInicio, fin = originalFin });
         }
@@ -252,13 +271,11 @@ namespace AppIntegrador.Controllers
         // Modificado por: Jostin Álvarez
         // Historia a la que pertenece: RIP-AFC "Yo como administrativo quiero enviar un correo a los estudiantes para que llenen formularios cuando se los asigno"
         // Envía un correo cada estudiando que está asignado a un cuestionario pidiéndole que lo llene.
-        private void EnviarCorreoSobreAsignaciónCuestionario(Formulario formulario)
+        private void EnviarCorreoSobreAsignaciónCuestionario(List<ObtenerEstudiantesAsociados_Result> estudiantes, Formulario formulario)
         {
             List<string> involucrados = new List<string>();
 
-            // Se obtienen todos los estudiantes a los que les tiene que llegar el correo.
-            var estudiantes = db.ObtenerEstudiantesAsociadosAFormulario(formulario.Codigo).ToList();
-            foreach (ObtenerEstudiantesAsociadosAFormulario_Result estudiante in estudiantes)
+            foreach (ObtenerEstudiantesAsociados_Result estudiante in estudiantes)
             {
                 involucrados.Add(estudiante.Correo);
             }
