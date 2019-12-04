@@ -326,6 +326,9 @@
     <Compile Include="Models\ObtenerEstudiantesAsociadosAFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerEstudiantesAsociados_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -562,7 +565,6 @@
     <Content Include="Scripts\Formularios\almacenador.js" />
     <Content Include="Scripts\Formularios\filtrosAsignacion.js" />
     <Content Include="Scripts\PlanesDeMejora\CrearPlanDeMejora.js" />
-    <Content Include="Scripts\PlanesDeMejora\utilsPlanesDeMejora.js" />
     <Content Include="Scripts\PlanesDeMejora\Validator.js" />
     <Content Include="Scripts\UsuariosYPerfiles\bootstrap-select-min.js" />
     <Content Include="Content\UsuariosYPerfiles\login.css" />
@@ -783,7 +785,6 @@
     <Content Include="Views\Home\PasswordReset.cshtml" />
     <Content Include="Views\Objetivos\_TablaObjetivos.cshtml" />
     <Content Include="Views\PlanDeMejora\_borrarPlanDeMejora.cshtml" />
-    <Content Include="Views\PlanDeMejora\_editPlanDeMejora.cshtml" />
     <Content Include="Views\PlanDeMejora\_tablaPlanesDeMejora.cshtml" />
     <Content Include="Views\Preguntas\Create.cshtml" />
     <Content Include="Views\Preguntas\PreguntaConOpciones.cshtml" />
@@ -809,9 +810,7 @@
     <Content Include="Views\AccionDeMejora\_accionesDeUnObjetivo.cshtml" />
     <Content Include="Views\AccionDeMejora\_crearAccionDeMejora.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />
-    <Content Include="Views\PlanDeMejora\_crearObjetivo.cshtml" />
     <Content Include="Views\PlanDeMejora\_objetivosDelPlan.cshtml" />
-    <Content Include="Views\PlanDeMejora\EditarPlanDeMejora2.cshtml" />
     <Content Include="Views\TipoObjetivos\Create.cshtml" />
     <Content Include="Views\TipoObjetivos\Edit.cshtml" />
     <Content Include="Views\Objetivos\_EditPartialModal.cshtml" />

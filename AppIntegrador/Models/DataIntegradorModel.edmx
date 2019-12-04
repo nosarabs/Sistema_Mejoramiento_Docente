@@ -2229,8 +2229,15 @@
         <Function Name="ObtenerCorreosDeProfesoresDelPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPlan" Type="int" Mode="In" />
         </Function>
-        <Function Name="ObtenerEstudiantesAsociadosAFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codFormulario" Type="varchar" Mode="In" />
+        <Function Name="ObtenerEstudiantesAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUnidadAcademica" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoCarrera" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoEnfasis" Type="varchar" Mode="In" />
+          <Parameter Name="SiglaCurso" Type="varchar" Mode="In" />
+          <Parameter Name="NumGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="Semestre" Type="tinyint" Mode="In" />
+          <Parameter Name="Anno" Type="int" Mode="In" />
+          <Parameter Name="CorreoProfesor" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObtenerFormulariosAsociados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPlan" Type="int" Mode="In" />
@@ -5339,6 +5346,16 @@
             <Parameter Name="nombreObj" Mode="In" Type="String" />
             <Parameter Name="descripcion" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerEstudiantesAsociados" ReturnType="Collection(DataIntegradorModel.ObtenerEstudiantesAsociados_Result)">
+            <Parameter Name="CodigoUnidadAcademica" Mode="In" Type="String" />
+            <Parameter Name="CodigoCarrera" Mode="In" Type="String" />
+            <Parameter Name="CodigoEnfasis" Mode="In" Type="String" />
+            <Parameter Name="SiglaCurso" Mode="In" Type="String" />
+            <Parameter Name="NumGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="Semestre" Mode="In" Type="Byte" />
+            <Parameter Name="Anno" Mode="In" Type="Int32" />
+            <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
           <Property Type="Int32" Name="codigo" Nullable="false" />
@@ -5615,6 +5632,10 @@
           <End Type="DataIntegradorModel.Accionable" Role="Accionable" Multiplicity="*" />
           <End Type="DataIntegradorModel.Funcionario" Role="Funcionario" Multiplicity="*" />
         </Association>
+        <ComplexType Name="ObtenerEstudiantesAsociados_Result">
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Carne" Nullable="true" MaxLength="6" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6552,32 +6573,6 @@
           <FunctionImportMapping FunctionImportName="ModificarCorreo" FunctionName="DataIntegradorModel.Store.ModificarCorreo" />
           <FunctionImportMapping FunctionImportName="ModificarFormulario" FunctionName="DataIntegradorModel.Store.ModificarFormulario" />
           <FunctionImportMapping FunctionImportName="ObtenerCorreosDeProfesoresDelPlan" FunctionName="DataIntegradorModel.Store.ObtenerCorreosDeProfesoresDelPlan" />
-          <FunctionImportMapping FunctionImportName="ObtenerEstudiantesAsociadosAFormulario" FunctionName="DataIntegradorModel.Store.ObtenerEstudiantesAsociadosAFormulario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerEstudiantesAsociadosAFormulario_Result">
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Carne" ColumnName="Carne" />
-                <ScalarProperty Name="CorreoEstudiante" ColumnName="CorreoEstudiante" />
-                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
-                <ScalarProperty Name="NumGrupo" ColumnName="NumGrupo" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="CorreoProfesor" ColumnName="CorreoProfesor" />
-                <ScalarProperty Name="SiglaCurso1" ColumnName="SiglaCurso1" />
-                <ScalarProperty Name="NumGrupo1" ColumnName="NumGrupo1" />
-                <ScalarProperty Name="Semestre1" ColumnName="Semestre1" />
-                <ScalarProperty Name="Anno1" ColumnName="Anno1" />
-                <ScalarProperty Name="Correo1" ColumnName="Correo1" />
-                <ScalarProperty Name="FCodigo" ColumnName="FCodigo" />
-                <ScalarProperty Name="CSigla" ColumnName="CSigla" />
-                <ScalarProperty Name="GNumero" ColumnName="GNumero" />
-                <ScalarProperty Name="GAnno" ColumnName="GAnno" />
-                <ScalarProperty Name="GSemestre" ColumnName="GSemestre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerFormulariosDeEstudiante" FunctionName="DataIntegradorModel.Store.ObtenerFormulariosDeEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerFormulariosDeEstudiante_Result">
@@ -6765,6 +6760,14 @@
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPreguntasDeAccionDeMejora" FunctionName="DataIntegradorModel.Store.ObtenerPreguntasDeAccionDeMejora" />
+          <FunctionImportMapping FunctionImportName="ObtenerEstudiantesAsociados" FunctionName="DataIntegradorModel.Store.ObtenerEstudiantesAsociados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataIntegradorModel.ObtenerEstudiantesAsociados_Result">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

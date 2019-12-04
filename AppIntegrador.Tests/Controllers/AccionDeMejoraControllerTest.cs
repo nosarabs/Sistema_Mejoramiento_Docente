@@ -1,15 +1,18 @@
 ﻿using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.SessionState;
 
@@ -19,13 +22,77 @@ namespace AppIntegrador.Tests.Controllers
     /// Summary description for AccionDeMejora
     /// </summary>
     [TestClass]
-    public class AccionDeMejora
+    public class AccionDeMejoraControllerTest
     {
-        public AccionDeMejora()
+        public AccionDeMejoraControllerTest()
         {
             //
             // TODO: Add constructor logic here
             //
+        }
+
+        [TestMethod]
+        public void ObtenerPreguntasTest()
+        {
+            //var dbMock = new Mock<DataIntegradorEntities>();
+            var planesDeMejoraUtilMock = new Mock<PlanesDeMejoraUtil>();
+            List<string> codigosSecciones = new List<string> { "23", "34" };
+            var seccion_Tiene_Preguntas = new List<Seccion_tiene_pregunta>
+            {
+                new Seccion_tiene_pregunta{SCodigo = "23", PCodigo = "Q1"},
+                new Seccion_tiene_pregunta{SCodigo = "34", PCodigo = "Q2"}
+            };
+
+            //dbMock
+                //.Setup(m => m.Seccion_tiene_pregunta.Where());
+            planesDeMejoraUtilMock
+                .Setup(m => m.getView(It.IsAny<PartialViewResult>(), It.IsAny<ControllerContext>()))
+                .Returns("success");
+
+            var accionDeMejoraController = new AccionDeMejoraController(null, planesDeMejoraUtilMock.Object);
+
+            JsonResult result = (JsonResult) accionDeMejoraController.ObtenerPreguntas(codigosSecciones);
+
+            Assert.IsNotNull(result.Data);
+
+            accionDeMejoraController.Dispose();
+        }
+
+        [TestMethod]
+        public void AccionesDeObjetivoTest()
+        {
+            var accionDeMejoraController = new AccionDeMejoraController();
+
+            PartialViewResult result = (PartialViewResult) accionDeMejoraController.AccionesDeObjetivo(0, "prueba", false);
+
+            Assert.IsNotNull(result);
+
+            accionDeMejoraController.Dispose();
+        }
+
+        [TestMethod]
+        public void TablaPreguntasAsociadasTest()
+        {
+            //var dbMock = new Mock<DataIntegradorEntities>();
+            var planesDeMejoraUtilMock = new Mock<PlanesDeMejoraUtil>();
+            //List<string> codigosSecciones = new List<string> { "23", "34" };
+            //IEnumerable<string> codigosPreguntas = new List<string> { "53", "42" };
+
+            //dbMock
+            //.Setup(m => m.ObtenerPreguntasDeAccionDeMejora(10, "prueba", "desc prueba"))
+            //.Returns((ObjectResult) codigosPreguntas);
+            planesDeMejoraUtilMock
+            .Setup(m => m.getView(It.IsAny<PartialViewResult>(), It.IsAny<ControllerContext>()))
+            .Returns("success");
+
+            var admc = new AccionDeMejoraController(null, planesDeMejoraUtilMock.Object);
+
+
+            var result = admc.TablaPreguntasAsociadas(10, "prueba", "desc prueba");
+
+            Assert.IsNotNull(result);
+
+
         }
 
         private TestContext testContextInstance;
@@ -40,61 +107,6 @@ namespace AppIntegrador.Tests.Controllers
             {
                 testContextInstance = value;
             }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
-        public void TestMethod1()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-
-            // Arrange
-            var controller = new AccionDeMejoraController();
-
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-
-        }
-
-        [TestMethod]
-        public void IndexNotNull()
-        {
-            AccionDeMejoraController accion = new AccionDeMejoraController();
-            var indexResult = accion.Index();
-            Assert.IsNotNull(indexResult);
-        }
-
-        [TestMethod]
-        public void IndexName()
-        {
-            var accion = new AccionDeMejoraController();
-            var indexResult = accion.Index() as ViewResult;
-            Assert.AreEqual("Index", indexResult.ViewName);
-            accion.Dispose();
         }
 
         [TestInitialize]

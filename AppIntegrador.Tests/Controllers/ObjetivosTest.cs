@@ -1,7 +1,9 @@
 ﻿using AppIntegrador;
 using AppIntegrador.Controllers;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
 using AppIntegrador.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,6 +47,86 @@ namespace AppIntegrador.Tests.Controllers
             }
         }
 
+        [TestMethod]
+        public void AnadirObjetivosTest()
+        {
+            var planesDeMejoraUtilMock = new Mock<PlanesDeMejoraUtil>();
+            planesDeMejoraUtilMock
+            .Setup(m => m.getView(It.IsAny<PartialViewResult>(), It.IsAny<ControllerContext>()))
+            .Returns("success");
+
+            var oc = new ObjetivosController(null, planesDeMejoraUtilMock.Object);
+            List<Objetivo> objetivos = new List<Objetivo>
+            {
+                new Objetivo()
+            };
+
+
+            var result = oc.AnadirObjetivos(objetivos);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ObtenerSeccionesTest()
+        {
+            //var dbMock = new Mock<DataIntegradorEntities>();
+            var planesDeMejoraUtilMock = new Mock<PlanesDeMejoraUtil>();
+            List<string> codigosFormularios = new List<string> { "23", "34" };
+            var formulario_tiene_seccion = new List<Formulario_tiene_seccion>
+            {
+                new Formulario_tiene_seccion{FCodigo = "23", SCodigo = "S1"},
+                new Formulario_tiene_seccion{FCodigo = "34", SCodigo = "S2"}
+            };
+
+            //dbMock
+            //.Setup(m => m.Seccion_tiene_pregunta.Where());
+            planesDeMejoraUtilMock
+                .Setup(m => m.getView(It.IsAny<PartialViewResult>(), It.IsAny<ControllerContext>()))
+                .Returns("success");
+
+            var objetivosController = new ObjetivosController(null, planesDeMejoraUtilMock.Object);
+
+            JsonResult result = (JsonResult)objetivosController.ObtenerSecciones(codigosFormularios);
+
+            Assert.IsNotNull(result.Data);
+
+            objetivosController.Dispose();
+        }
+
+        [TestMethod]
+        public void TablaSeccionesAsociadasTest()
+        {
+            //var dbMock = new Mock<DataIntegradorEntities>();
+            var planesDeMejoraUtilMock = new Mock<PlanesDeMejoraUtil>();
+            //List<string> codigosSecciones = new List<string> { "23", "34" };
+            //IEnumerable<string> codigosPreguntas = new List<string> { "53", "42" };
+
+            //dbMock
+            //.Setup(m => m.ObtenerPreguntasDeAccionDeMejora(10, "prueba", "desc prueba"))
+            //.Returns((ObjectResult) codigosPreguntas);
+            planesDeMejoraUtilMock
+            .Setup(m => m.getView(It.IsAny<PartialViewResult>(), It.IsAny<ControllerContext>()))
+            .Returns("success");
+
+            var oc = new ObjetivosController(null, planesDeMejoraUtilMock.Object);
+
+
+            var result = oc.TablaSeccionesAsociadas(10, "prueba");
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void listaDeObjetivosTest()
+        {
+            var oc = new ObjetivosController();
+            var result = oc.listaDeObjetivos(1);
+
+            Assert.IsNotNull(result);
+
+        }
+
         #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
@@ -67,20 +149,6 @@ namespace AppIntegrador.Tests.Controllers
         //
         #endregion
 
-        [TestMethod]
-        public void TestIndexView()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-
-            // Arrange
-            var controller = new ObjetivosController();
-
-            // Act
-            ActionResult result = controller.Index() as ActionResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
 
         [TestInitialize]
         public void Init()
