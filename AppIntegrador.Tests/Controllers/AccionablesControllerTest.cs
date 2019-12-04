@@ -20,13 +20,20 @@ namespace AppIntegrador.Tests.Controllers
     public class AccionablesControllerTest
     {
         [TestMethod]
-        public void TablaAccionablesTest()
+        public void TablaAccionablesTrueTest()
+        {
+            var controller = new AccionablesController();
+            var result = controller.TablaAccionables(1, "Objetivo de plan de mejora - Alexandra", "Accion de mejora de objetivo - Alexandra") as PartialViewResult;
+            Assert.AreEqual("_Tabla", result.ViewName);
+            controller.Dispose();
+        }
+
+        [TestMethod]
+        public void TablaAccionablesIsNotNullTest()
         {
             int codPlan = 666;
             String nombreObj = "ObjPrueba";
             String descripAcMej = "AcMejPrueba";
-            //var mockdb = new Mock<DataIntegradorEntities>();
-            //mockdb.Setup(m => m.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombreObj && o.descripAcMej == descripAcMej));
 
             var controller = new AccionablesController();
 
@@ -35,6 +42,19 @@ namespace AppIntegrador.Tests.Controllers
             controller.Dispose();
         }
 
+        [TestMethod]
+        public void TablasAccionableEditTrue()
+        {
+            int codPlan = 666;
+            String nombreObj = "ObjPrueba";
+            String descripAcMej = "AcMejPrueba";
+            
+            var controller = new AccionablesController();
+
+            var result = controller.TablaAccionables(codPlan, nombreObj, descripAcMej, true);
+            Assert.IsNotNull(result);
+            controller.Dispose();
+        }
 
         [TestInitialize]
         public void Init()
