@@ -16,6 +16,7 @@ using System.Data.Entity;
 using System.Web.SessionState;
 using System.Reflection;
 using System.IO;
+using System.Globalization;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -806,6 +807,113 @@ namespace AppIntegrador.Tests.Controllers
         {
             //Nos aseguramos que admin quede deslogeado despues de cada test.
             CurrentUser.deleteCurrentUser("admin@mail.com");
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosInicioSem1()
+        {
+            DateTime semestre1 = DateTime.ParseExact("25/04/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre1);
+
+            DateTime inicioSem1 = DateTime.ParseExact("08/03/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaInicioSemestre(), inicioSem1);
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosFinSem1()
+        {
+            DateTime semestre1 = DateTime.ParseExact("25/04/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre1);
+
+            DateTime finSem1 = DateTime.ParseExact("31/07/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaFinSemestre(), finSem1);
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosInicioSem2()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+
+            DateTime inicioSem2 = DateTime.ParseExact("01/08/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaInicioSemestre(), inicioSem2);
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosFinSem2()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+
+            DateTime finSem2 = DateTime.ParseExact("31/12/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaFinSemestre(), finSem2);
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosInicioVerano()
+        {
+            DateTime verano = DateTime.ParseExact("01/02/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(verano);
+
+            DateTime inicioVerano = DateTime.ParseExact("01/01/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaInicioSemestre(), inicioVerano);
+        }
+
+        [TestMethod]
+        public void TestFechasMisFormulariosFinVerano()
+        {
+            DateTime verano = DateTime.ParseExact("01/02/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(verano);
+
+            DateTime finVerano = DateTime.ParseExact("07/03/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Assert.AreEqual(controller.ObtenerFechaFinSemestre(), finVerano);
+        }
+
+        [TestMethod]
+        public void TestMisFormsNoNulo()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+
+            TestSetup testSetup = new TestSetup();
+            testSetup.SetupHttpContextPaco(controller);
+
+            var result = controller.MisFormularios() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestFormsSemestreCantidad()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+            TestSetup testSetup = new TestSetup();
+            testSetup.SetupHttpContextPaco(controller);
+
+            MisFormulariosModel modelo = controller.GenerarModelo();
+
+            Assert.AreEqual(modelo.FormulariosSemestre.Count(), 1);
+        }
+
+
+        [TestMethod]
+        public void TestFormsPasadosCantidad()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+            TestSetup testSetup = new TestSetup();
+            testSetup.SetupHttpContextPaco(controller);
+
+            MisFormulariosModel modelo = controller.GenerarModelo();
+
+            Assert.AreEqual(modelo.FormulariosPasados.Count(), 0);
         }
     }
 }
