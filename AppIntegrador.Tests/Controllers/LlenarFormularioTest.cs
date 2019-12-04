@@ -890,6 +890,32 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void TestFormsPasadosUnitario()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+            TestSetup testSetup = new TestSetup();
+            testSetup.SetupHttpContextPaco(controller);
+
+            var formsDB = controller.ObtenerFormulariosDisponibles(controller.ObtenerFechaInicioSemestre(), null);
+
+            Assert.AreEqual(formsDB.Count(), 1);
+        }
+
+        [TestMethod]
+        public void TestFormsSemestreUnitario()
+        {
+            DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            LlenarFormularioController controller = new LlenarFormularioController(semestre2);
+            TestSetup testSetup = new TestSetup();
+            testSetup.SetupHttpContextPaco(controller);
+
+            var formsDB = controller.ObtenerFormulariosSemestre();
+
+            Assert.AreEqual(formsDB.Count(), 1);
+        }
+
+        [TestMethod]
         public void TestFormsSemestreCantidad()
         {
             DateTime semestre2 = DateTime.ParseExact("25/10/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);

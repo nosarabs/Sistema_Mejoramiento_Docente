@@ -280,7 +280,7 @@ namespace AppIntegrador.Controllers
             return modelo;
         }
 
-        private List<Periodo_activa_por> ObtenerFormulariosSemestre()
+        public List<Periodo_activa_por> ObtenerFormulariosSemestre()
         {
             List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
 
@@ -307,7 +307,7 @@ namespace AppIntegrador.Controllers
             return formularios;
         }
 
-        private List<Periodo_activa_por> ObtenerFormulariosDisponibles(DateTime? inicio, DateTime? fin)
+        public List<Periodo_activa_por> ObtenerFormulariosDisponibles(DateTime? inicio, DateTime? fin)
         {
             List<Periodo_activa_por> formularios = new List<Periodo_activa_por>();
 
