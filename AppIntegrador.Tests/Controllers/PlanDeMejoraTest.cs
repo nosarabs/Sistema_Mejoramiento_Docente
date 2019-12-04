@@ -167,6 +167,48 @@ namespace AppIntegrador.Tests.Controllers
             CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
         }
 
+        [TestMethod]
+        public void AnadirProfesName()
+        {
+            PlanDeMejoraController plan = new PlanDeMejoraController();
+            List<String> ProfeSeleccionado = new List<string>();
+            var AnadirProfesResult = plan.AnadirProfes(ProfeSeleccionado) as ViewResult;
+            Assert.AreEqual("_TablaProfesores", AnadirProfesResult.ViewName);
+            plan.Dispose();
+        }
+
+        [TestMethod]
+        public void AnadirFormulariosName()
+        {
+            PlanDeMejoraController plan = new PlanDeMejoraController();
+            List<String> FormularioSeleccionado = new List<string>();
+            var AnadirFormulariosResult = plan.AnadirFormularios(FormularioSeleccionado) as ViewResult;
+            Assert.AreEqual("_TablaProfesores", AnadirFormulariosResult.ViewName);
+            plan.Dispose();
+        }
+
+        [TestMethod]
+        public void FechasPlanInvalid()
+        {
+            PlanDeMejoraController planController = new PlanDeMejoraController();
+            int id = 20;
+            string nombrePlan = "Plan de mejora Test";
+            DateTime fechaInicioPlan = Convert.ToDateTime("01-12-2019");
+            DateTime fechaFinPlan = Convert.ToDateTime("01-11-2019");
+
+            PlanDeMejora plan = new PlanDeMejora()
+            {
+                codigo = id,
+                nombre = nombrePlan,
+                fechaInicio = fechaInicioPlan,
+                fechaFin = fechaFinPlan
+            };
+
+            var CrearPlanResult = planController.Crear(plan) as ViewResult;
+            Assert.IsNull(CrearPlanResult);
+            planController.Dispose();
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
