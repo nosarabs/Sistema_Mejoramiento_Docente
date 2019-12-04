@@ -33,7 +33,7 @@ namespace AppIntegrador.Tests.Controllers
         {
             var controller = new AccionablesController();
             var indexResult = controller.Index() as ViewResult;
-            Assert.AreEqual("Índice", indexResult.ViewName);
+            Assert.AreEqual("Index", indexResult.ViewName);
             controller.Dispose();
         }
 
@@ -113,6 +113,20 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.IsNotNull(result);
 
+        }
+
+        [TestMethod]
+        public void TablasAccionableEditTrue()
+        {
+            int codPlan = 666;
+            String nombreObj = "ObjPrueba";
+            String descripAcMej = "AcMejPrueba";
+            
+            var controller = new AccionablesController();
+
+            var result = controller.TablaAccionables(codPlan, nombreObj, descripAcMej, true);
+            Assert.IsNotNull(result);
+            controller.Dispose();
         }
 
         [TestInitialize]
