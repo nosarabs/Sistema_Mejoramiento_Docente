@@ -370,7 +370,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo) as JsonResult;
 
             Assert.IsNotNull(result);
         }
@@ -391,7 +391,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo) as JsonResult;
 
             Assert.IsNotNull(result);
         }
