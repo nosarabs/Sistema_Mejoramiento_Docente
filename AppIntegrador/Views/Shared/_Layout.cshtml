@@ -143,20 +143,26 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="">Sección &#9658;</a>
-                                            <ul>
-                                                <li><a href="/Seccion/Index">Ver Sección</a></li>
-                                            </ul>
+                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_SECCION))
+                                            {
+                                                <a href="">Sección &#9658;</a>
+                                                <ul>
+                                                    <li><a href="/Seccion/Index">Ver Sección</a></li>
+                                                </ul>
+                                            }
                                         </li>
                                         <li>
-                                            <a href="">Preguntas &#9658;</a>
-                                            <ul>
-                                                @*@if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
-                                                {
-                                                    <li><a href="/Preguntas/Create">Crear pregunta</a></li>
-                                                }*@
-                                                <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
-                                            </ul>
+                                            @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
+                                            {
+                                                <a href="">Preguntas &#9658;</a>
+                                                <ul>
+                                                    @*@if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PREGUNTA))
+                {
+                    <li><a href="/Preguntas/Create">Crear pregunta</a></li>
+                }*@
+                                                    <li><a href="/PreguntaConOpcionesDeSeleccion/Index">Ver Pregunta</a></li>
+                                                </ul>
+                                            }
                                         </li>
                                     </ul>
                                 </li>

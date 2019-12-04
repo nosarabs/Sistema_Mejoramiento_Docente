@@ -326,6 +326,9 @@
     <Compile Include="Models\ObtenerEstudiantesAsociadosAFormulario_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerEstudiantesAsociados_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerFormulariosCarreraEnfasis_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>

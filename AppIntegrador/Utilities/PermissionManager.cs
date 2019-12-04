@@ -80,8 +80,14 @@ namespace AppIntegrador.Utilities
             );
         }
 
+        /// <summary>
+        /// Verifica si el usuario en la sesión actual tiene el permiso indicado con la constante permission.
+        /// </summary>
+        /// <param name="permission">Número de permiso que se quiere verificar para el usuario actual.</param>
+        /// <returns>True si el usuario tiene el permiso dentro de su perfil, carrera y énfasis, o false en caso contrario.</returns>
         public bool IsAuthorized(Permission permission)
         {
+            /*Superusuario tiene permiso para todo, es innecesario consultarlo en la base de datos.*/
             if (CurrentUser.getUserProfile() == "Superusuario")
                 return true;
             else
