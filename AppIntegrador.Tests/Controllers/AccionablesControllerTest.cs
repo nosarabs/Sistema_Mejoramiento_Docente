@@ -27,6 +27,14 @@ namespace AppIntegrador.Tests.Controllers
             Assert.AreEqual("_Tabla", result.ViewName);
             controller.Dispose();
         }
+        [TestMethod]
+        public void TablaAccionablesFalseTest()
+        {
+            var controller = new AccionablesController();
+            var result = controller.TablaAccionables(1, "Objetivo de plan de mejora - Alexandra", "Accion de mejora de objetivo - Alexandra", false) as PartialViewResult;
+            Assert.AreEqual("_listarAccionables", result.ViewName);
+            controller.Dispose();
+        }
 
         [TestMethod]
         public void TablaAccionablesIsNotNullTest()
