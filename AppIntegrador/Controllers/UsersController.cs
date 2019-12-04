@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using AppIntegrador.Models;
-using System.Text;
 using System.Text.RegularExpressions;
 using AppIntegrador.Utilities;
 
@@ -208,11 +205,6 @@ namespace AppIntegrador.Controllers
                 TempData["successMessage"] = "El nuevo usuario ha sido creado.";
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Correo = new SelectList(db.Estudiante, "Correo", "Carne", persona.Correo);
-            ViewBag.Correo = new SelectList(db.Funcionario, "Correo", "Correo", persona.Correo);
-            ViewBag.Usuario = new SelectList(db.Usuario, "Username", "Password", persona.Usuario);
-
             return View(persona);
         }
         /*End of User Story TAM-2.2.*/

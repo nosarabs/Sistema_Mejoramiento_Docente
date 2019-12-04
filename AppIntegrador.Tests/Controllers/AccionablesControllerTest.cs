@@ -81,21 +81,6 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
-        public void EditDataMockTest()
-        {
-            Accionable acc = new Accionable() { codPlan = 666, nombreObj = "ObjPrueba", descripAcMej = "AcMejPrueba", descripcion = "descripcionPrueba", fechaInicio = Convert.ToDateTime("1995-09-29"), fechaFin = Convert.ToDateTime("2004-09-29") };
-            var mockdb = new Mock<DataIntegradorEntities>();
-            //mockdb.Setup(m => m.Entry(acc).State);
-            mockdb.Setup(m => m.SaveChanges());
-            var controller = new AccionablesController(mockdb.Object);
-
-            var result = controller.Edit(acc);
-
-            Assert.IsNotNull(result);
-
-        }
-
-        [TestMethod]
         public void DeleteAccionableMockTest()
         {
             int codPlan = 666;

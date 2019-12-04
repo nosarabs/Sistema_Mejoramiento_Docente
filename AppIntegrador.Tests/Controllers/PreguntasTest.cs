@@ -115,6 +115,19 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
+        public void EstudianteOpcionesDeSeleccionNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            CurrentUser.clearSession();
+
+            CurrentUser.setCurrentUser("paco@mail.com", "Estudiante", "0000000001", "0000000001");
+            ViewResult result = preguntas.OpcionesDeSeleccion(-1, 'U') as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        // Historia RIP-CBX
+        [TestMethod]
         public void OpcionesDeSeleccionNula()
         {
             PreguntasController preguntas = new PreguntasController();
@@ -134,15 +147,7 @@ namespace AppIntegrador.Tests.Controllers
             Assert.IsNull(result);
         }
 
-        [TestMethod]
-        public void IndexNula()
-        {
-            PreguntasController preguntas = new PreguntasController();
 
-            ViewResult result = preguntas.Index(null, null, null, null) as ViewResult;
-
-            Assert.IsNotNull(result);
-        }
 
         [TestMethod]
         public void ActualizarPreguntasNoNulo()
@@ -150,16 +155,6 @@ namespace AppIntegrador.Tests.Controllers
             PreguntasController preguntas = new PreguntasController();
 
             PartialViewResult result = preguntas.ActualizarBancoPreguntas("00000001", "00000001", "00000001") as PartialViewResult;
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void IndexNoNulo()
-        {
-            PreguntasController preguntas = new PreguntasController();
-
-            ViewResult result = preguntas.Index("00000001", "00000001", "00000001", "00000001") as ViewResult;
 
             Assert.IsNotNull(result);
         }
@@ -195,7 +190,7 @@ namespace AppIntegrador.Tests.Controllers
 
             ViewResult result = preguntas.GuardarRespuestaLibre(null) as ViewResult;
 
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
@@ -252,10 +247,13 @@ namespace AppIntegrador.Tests.Controllers
 
         // Historia RIP-CBX
         [TestMethod]
-        public void CreatePostNoNulaConPregunta()
+        public void EstudianteCreaPregunta()
         {
             PreguntasController preguntas = new PreguntasController();
             preguntas.ModelState.Clear();
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("paco@mail.com", "Estudiante", "0000000001", "0000000001");
+
 
             Pregunta pregunta = new Pregunta
             {
@@ -265,26 +263,11 @@ namespace AppIntegrador.Tests.Controllers
 
             ViewResult result = preguntas.Create() as ViewResult;
 
-            Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Datos incompletos");
+            Assert.IsNull(result);
         }
 
-        // Historia RIP-CBX
-        [TestMethod]
-        public void CreatePostNoNulaConPreguntaTipo()
-        {
-            PreguntasController preguntas = new PreguntasController();
-            preguntas.ModelState.Clear();
 
-            Pregunta pregunta = new Pregunta
-            {
-                Codigo = "chetos21",
-                Enunciado = "adsadsaa",
-            };
 
-            ViewResult result = preguntas.Create() as ViewResult;
-
-            Assert.IsTrue(preguntas.ViewData.ModelState.Count == 1, "Una pregunta de selección única necesita al menos una opción");
-        }
 
         // Historia RIP-CBX
         [TestMethod]
@@ -366,7 +349,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarRespuestaLibre(null) as ViewResult;
 
-            Assert.AreEqual("Create", result.ViewName);
+            Assert.IsNull(result);
         }
 
         // Historia RIP-CBX
@@ -406,6 +389,61 @@ namespace AppIntegrador.Tests.Controllers
         }
 
         [TestMethod]
+        public void EstudianteProbarVistaPreviaPregExiste()
+        {
+            PreguntasController controller = new PreguntasController();
+            CurrentUser.clearSession();
+
+            CurrentUser.setCurrentUser("paco@mail.com", "Estudiante", "0000000001", "0000000001");
+
+            var result = controller.VistaPrevia("00000001") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void TestEstudianteTodasLasPreguntas()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            CurrentUser.clearSession();
+
+            CurrentUser.setCurrentUser("paco@mail.com", "Estudiante", "0000000001", "0000000001");
+            ViewResult result = preguntas.TodasLasPreguntas("000001") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+
+        [TestMethod]
+        public void TestTodasLasPreguntasValida()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            CurrentUser.clearSession();
+
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
+            ViewResult result = preguntas.TodasLasPreguntas("00000001") as ViewResult;
+            Assert.IsNotNull(result);
+        }
+
+
+        [TestMethod]
+        public void TestTodasLasPreguntasNoValida()
+        {
+            PreguntasController preguntas = new PreguntasController();
+            preguntas.ModelState.Clear();
+
+            CurrentUser.clearSession();
+
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "00000001", "00000001");
+            ViewResult result = preguntas.TodasLasPreguntas("0000001") as ViewResult;
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
         public void ProbarVistaPreviaPregNoExiste()
         {
             PreguntasController controller = new PreguntasController();
@@ -413,6 +451,160 @@ namespace AppIntegrador.Tests.Controllers
 
             Assert.IsNull(result);
         }
+
+
+        // ------- index
+        [TestMethod]
+        public void IndexNula()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Index(null, null, null, null) as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void IndexNoNulo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            ViewResult result = preguntas.Index("00000001", "00000001", "00000001", "00000001") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void EstudianteIndex()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("paco@mail.com", "Estudiante", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("00000001", "00000001", "00000001", "00000001") as ViewResult;
+
+            Assert.IsNull(result);
+        }
+
+
+        [TestMethod]
+        public void TestIndexCodigo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "00000001", "", "") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexEnunciado()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "Enunciado", "") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoUnica()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "U") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoMultiple()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "M") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoLibre()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "L") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoSiNo()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "S") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoEscalar()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "E") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexTipoError()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "x") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestIndexVacio()
+        {
+            PreguntasController preguntas = new PreguntasController();
+
+            CurrentUser.clearSession();
+            CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            ViewResult result = preguntas.Index("", "", "", "") as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
 
         // ------------ ' si/no
 
@@ -444,7 +636,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarPreguntaSiNo(null) as ViewResult;
 
-            Assert.AreEqual("Create", result.ViewName);
+            Assert.IsNull(result);
         }
 
         // Historia RIP-CBX
@@ -455,7 +647,7 @@ namespace AppIntegrador.Tests.Controllers
 
             ViewResult result = preguntas.GuardarPreguntaSiNo(null) as ViewResult;
 
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
@@ -515,7 +707,7 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PreguntasController();
             var result = controller.GuardarPreguntaEscalar(null, 0, 0) as ViewResult;
 
-            Assert.AreEqual("Create", result.ViewName);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
@@ -525,7 +717,7 @@ namespace AppIntegrador.Tests.Controllers
 
             ViewResult result = preguntas.GuardarPreguntaEscalar(null, 0, 0) as ViewResult;
 
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]

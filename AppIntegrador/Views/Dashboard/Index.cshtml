@@ -41,12 +41,12 @@
 
             <div class="col">
                 <div class="row" id="promedios" style="overflow: auto">
-                    <div class="col">
+                    <div class="col" id="colP">
                         Calificación Promedio de Profesor
                         <canvas class="graficosPromedio" id="gP"></canvas>
                         <small id="pN"></small>
                     </div>
-                    <div class="col">
+                    <div class="col" id="colC">
                         Calificación Promedio de Cursos
                         <canvas class="graficosPromedio" id="gC"></canvas>
                         <small id="cN"></small>
@@ -311,25 +311,40 @@
         var nRegularC = curso[3];
         var nBuenoC = curso[4];
 
-        //Se recuperan los canvas del html donde se pintarán los gráficos.
-        var canvasP = document.getElementById('gP').getContext('2d'); 
-        var canvasC = document.getElementById('gC').getContext('2d');
+        //Se recuperan los canvas viejos del html los cuales deben ser reemplazados.
+        var canvasPViejo = document.getElementById('gP'); 
+        var canvasCViejo = document.getElementById('gC');
+
+        //Se crean los canvas del html donde se pintarán los gráficos.
+        var canvasP = document.createElement('canvas');
+        canvasP.className = "graficosPromedio";
+        canvasP.id = "gP";
+        var canvasC = document.createElement('canvas');
+        canvasC.className = "graficosPromedio";
+        canvasC.id = "gC";
+
+        //Se reemplaza el canvas viejo por el nuevo
+        document.getElementById('colP').replaceChild(canvasP, canvasPViejo);
+        document.getElementById('colC').replaceChild(canvasC, canvasCViejo);
+
+        var canvasPContext = canvasP.getContext('2d'); 
+        var canvasCContext = canvasC.getContext('2d');
 
         //Se pintan diferentes gráficos dependiendo de la existencia de calificaciones en los formularios filtrados.
         if (profeP >= 0) {
             $('#pN').text("Calificaciones Totales: " + profeN);
-            x.generarGrafico(canvasP, profeP, nMaloP, nRegularP, nBuenoP);
+            x.generarGrafico(canvasPContext, profeP, nMaloP, nRegularP, nBuenoP);
         } else {
             $('#pN').text("No existen calificaciones para los formularios filtrados.");
-            x.generarGraficoNulo(canvasP);
+            x.generarGraficoNulo(canvasPContext);
         }
 
         if (cursoP >= 0) {
             $('#cN').text("Calificaciones Totales: " + cursoN);           
-            x.generarGrafico(canvasC, cursoP, nMaloC, nRegularC, nBuenoC);
+            x.generarGrafico(canvasCContext, cursoP, nMaloC, nRegularC, nBuenoC);
         } else {
             $('#cN').text("No existen calificaciones para los formularios filtrados.");
-            x.generarGraficoNulo(canvasC);
+            x.generarGraficoNulo(canvasCContext);
         }
     }
 

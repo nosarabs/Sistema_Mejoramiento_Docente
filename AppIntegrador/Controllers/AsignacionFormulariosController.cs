@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
+using AppIntegrador;
+using AppIntegrador.Controllers;
 using AppIntegrador.Models;
+using Moq;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Routing;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
+using System.IO;
+using System.Web.SessionState;
+using System.Reflection;
 using AppIntegrador.Utilities;
 
 namespace AppIntegrador.Controllers
@@ -28,6 +38,11 @@ namespace AppIntegrador.Controllers
         [HttpGet]
         public ActionResult Index(string id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("../Formularios/Index");
+            }
+
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
                 TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
