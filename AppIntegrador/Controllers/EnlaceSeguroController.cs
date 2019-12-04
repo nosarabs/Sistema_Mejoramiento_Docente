@@ -24,7 +24,7 @@ namespace AppIntegrador.Controllers
         [AllowAnonymous]
         public ActionResult RedireccionSeguraAnonymous(string urlHash)
         {
-            return Redirigir(urlHash, true);
+            return Redirigir(urlHash, true);            
         }
 
         public ActionResult RedireccionSegura(string urlHash)
@@ -48,8 +48,10 @@ namespace AppIntegrador.Controllers
                 // Enlace válido
                 if (fechaValida < 0)
                 {
-                    // no se utiliza "> 0" ya que se desea que -1 haga que el enlace no tenga limite de uso 
-                    if (usos != 0) {
+                    // no se utiliza "> 0" ya que se desea que -1 haga que el enlace no tenga limite de uso
+                    //un enlace seguro necesita de dos usos como minimo para poder establecer una nueva contraseña
+                    //ya que se decrementa al redirijir y al cambiar la contraseña para un total de dos usos.
+                    if (usos != 0 && !(usos == 1 && reestablecerContrasenna)) {
                         // Revisar usuario válido
                         if (!anonimo && enlaceSeguro.UsuarioAsociado != null)
                         {
@@ -81,6 +83,10 @@ namespace AppIntegrador.Controllers
                                 return RedirectToAction("ReestablecerContrasenna", "Home", new { enlaceSeguroHash = enlaceSeguro.Hash });
                             }
                         }
+                    } else if (reestablecerContrasenna)
+                    {
+                        TempData["alertmessage"] = "Enlace no válido.";
+                        return RedirectToAction("Login", "Home");
                     }
                 }   
             }

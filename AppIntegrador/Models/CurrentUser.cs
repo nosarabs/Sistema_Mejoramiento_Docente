@@ -15,7 +15,7 @@ namespace AppIntegrador.Models
 
     public static class CurrentUser
     {
-        /*Max number of failed login attempts before temporarily locking the account.*/
+        /*Numero máximo de fallos permitidos en login antes de bloquear la cuenta.*/
         private const int MAX_FAILED_ATTEMPTS = 3;
 
         public static string getUsername()
@@ -105,8 +105,8 @@ namespace AppIntegrador.Models
             HttpContext.Current.Session["LoginFailures"] = failures;
         }
 
-        //Método que guarda en la base de datos los datos del usuario loggeado. Busca primero si ya está en la tabla,
-        //si ya está no hace nada y si no está lo inserta para configurar su sesión.
+        /*Método que guarda en la base de datos los datos del usuario loggeado. Busca primero si ya está en la tabla,
+        si ya está no hace nada y si no está lo inserta para configurar su sesión.*/
         public static void setCurrentUser(string username, string profile, string majorId, string emphasisId)
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
@@ -125,22 +125,11 @@ namespace AppIntegrador.Models
                 }
                 catch (Exception exception)
                 {
-                    //throw exception;
+                    Console.WriteLine(exception.ToString());
                 }
             }
-            /* Codigo que no permite dos sesiones simultaneas
-            else
-            {
-                deleteCurrentUser(newUser.CorreoUsuario);
-                db.UsuarioActual.Add(newUser);
-                try
-                {
-                    db.SaveChanges();
-                }//TO-DO: Por algún motivo genera excepciones aquí, arreglar esto.
-                catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                }
-            }*/
+            /* Codigo que no permite dos sesiones simultaneas*/
+
             // Preparar imagen de perfil predeterminada
             ProfilePicture picture = new ProfilePicture();
             Persona persona = db.Persona.Find(username);
@@ -156,6 +145,7 @@ namespace AppIntegrador.Models
             HttpContext.Current.Session["ProfileImage"] = imgSrc;
         }
 
+        /*Limpia las variables globales de sesión al cerrar la sesión de un usuario.*/
         public static void clearSession()
         {
             try
@@ -172,6 +162,8 @@ namespace AppIntegrador.Models
             }
         }
 
+        /*Borra el usuario con la sesión iniciada de la tabla de UsuarioActual de la base de datos
+         para cerrar su sesión.*/
         public static void deleteCurrentUser(string username)
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
@@ -205,6 +197,7 @@ namespace AppIntegrador.Models
             clearSession();
         }
 
+        /*Borra todos los usuarios de la tabla UsuarioActual.*/
         public static void deleteAllUsers()
         {
             DataIntegradorEntities db = new DataIntegradorEntities();
@@ -213,8 +206,8 @@ namespace AppIntegrador.Models
             db.SaveChanges();
         }
 
-        //Método para actualizar desde base de datos los datos del usuario actual, en caso de que se borren
-        //automáticamente. 
+        /*Método para actualizar desde base de datos los datos del usuario actual, en caso de que se borren
+        automáticamente. */
         private static void updateCurrentUser()
         {
             string sessionUsername;

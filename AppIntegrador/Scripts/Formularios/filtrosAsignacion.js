@@ -54,6 +54,7 @@
         var fechaFin = document.getElementById("fecha-fin").value;
 
         var correos = document.getElementById("enviarCorreos").checked;
+        console.log(correos);
         // Hace el llamado al metodoo del controlador con los paramaetros respectivos
         $.ajax({
             url: '/AsignacionFormularios/Asignar',

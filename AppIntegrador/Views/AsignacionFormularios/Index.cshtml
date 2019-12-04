@@ -11,7 +11,6 @@
 
 @Scripts.Render("~/Scripts/Formularios/filtrosAsignacion.js")
 
-
 @Styles.Render("~/Content/Visualizacion/bootstrap.min.css")
 @Styles.Render("~/Content/Visualizacion/bootstrap-multiselect.css")
 
@@ -39,20 +38,24 @@
                                 <input data-date-inline-picker="true" class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" />
                             </div>*@
 
-                        <div class="form-group col-lg-offset-5">
-                            <form class="form-inline">
-                                <h5>Fecha de inicio</h5>
-                                <div class="form-group ">
-                                    <label for="date" class="sr-only"></label>
-                                    <input type="date" data-date-inline-picker="true" class="form-control" id="fecha-inicio" />
-                                    <hr>
-                                    <h5>Fecha finalización</h5>
-                                    <label for="date" class="sr-only"></label>
-                                    <input type="date" data-date-inline-picker="true" class="form-control" id="fecha-fin" />
-                                    <hr>
-                                </div>
-                            </form>
+                    <div class="form-group col-lg-offset-5">
+                        <form class="form-inline">
+                            <h5>Fecha de inicio</h5>
+                            <div class="form-group ">
+                                <label for="date" class="sr-only"></label>
+                                <input type="date" data-date-inline-picker="true" class="form-control" id="fecha-inicio" />
+                                <hr>
+                                <h5>Fecha finalización</h5>
+                                <label for="date" class="sr-only"></label>
+                                <input type="date" data-date-inline-picker="true" class="form-control" id="fecha-fin" />
+                                <hr>
+                            </div>
+                        </form>
+                        <div class="float-right">
+                            Notificar a los estudiantes por correo
+                             <input type="checkbox" id="enviarCorreos" />
                         </div>
+                    </div>
                     </div>
 
 
