@@ -72,7 +72,7 @@ namespace AppIntegrador.Controllers
          * necesarios para la asignar un formulario a uno o más grupos
          */
         [HttpPost]
-        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo, bool enviarCorreos)
+        public JsonResult Asignar(string codigoFormulario, string codigoUASeleccionada, string codigoCarreraEnfasisSeleccionada, string grupoSeleccionado, string correoProfesorSeleccionado, string fechaInicioSeleccionado, string fechaFinSeleccionado, bool extenderPeriodo/*, bool enviarCorreos*/)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_FORMULARIO))
             {
