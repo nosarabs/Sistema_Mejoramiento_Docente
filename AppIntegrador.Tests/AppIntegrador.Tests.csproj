@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccionablesControllerTest.cs" />
-    <Compile Include="Controllers\AccionDeMejora.cs" />
+    <Compile Include="Controllers\AccionDeMejoraControllerTest.cs" />
     <Compile Include="Controllers\AsignacionControllerTest.cs" />
     <Compile Include="Controllers\CSVcontrollerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />

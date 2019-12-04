@@ -67,20 +67,6 @@ namespace AppIntegrador.Tests.Controllers
         //
         #endregion
 
-        [TestMethod]
-        public void TestIndexView()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-
-            // Arrange
-            var controller = new ObjetivosController();
-
-            // Act
-            ActionResult result = controller.Index() as ActionResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
 
         [TestInitialize]
         public void Init()
