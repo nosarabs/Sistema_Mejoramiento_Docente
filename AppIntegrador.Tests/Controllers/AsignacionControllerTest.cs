@@ -16,6 +16,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Web.SessionState;
 using System.Reflection;
+using System.Globalization;
 
 namespace AppIntegrador.Tests.Controllers
 {
@@ -65,15 +66,6 @@ namespace AppIntegrador.Tests.Controllers
             AsignacionFormulariosController asignacionController = new AsignacionFormulariosController();
             ActionResult result = asignacionController.Index("00000001") as ActionResult;
             Assert.IsNotNull(result);
-        }
-
-                private bool convertNullStringToNull(ref string convertedString)
-        {
-            if (convertedString == "null")
-            {
-                convertedString = null;
-            }
-            return false;
         }
 
         [TestMethod]
@@ -194,7 +186,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo/*, enviarCorreos*/) as JsonResult;
 
             Assert.IsNotNull(result);
         }
@@ -216,7 +208,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo/*, enviarCorreos*/) as JsonResult;
 
             Assert.IsNotNull(result);
         }
@@ -236,7 +228,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo/*, enviarCorreos*/) as JsonResult;
 
             Assert.IsNotNull(result);
         }
@@ -258,7 +250,7 @@ namespace AppIntegrador.Tests.Controllers
             JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
                 codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
                 correoProfesorSeleccionado, fechaInicioSeleccionado,
-                fechaFinSeleccionado, extenderPeriodo, enviarCorreos) as JsonResult;
+                fechaFinSeleccionado, extenderPeriodo/*, enviarCorreos*/) as JsonResult;
 
             Assert.IsNotNull(result);
         }
@@ -314,7 +306,85 @@ namespace AppIntegrador.Tests.Controllers
             CurrentUser.deleteCurrentUser("admin@mail.com");
         }
 
+        [TestMethod]
+        public void ProbarAsignacionNoSolapada()
+        {
+            AsignacionFormulariosController controller = new AsignacionFormulariosController();
 
+            DateTime inicio = DateTime.ParseExact("25/12/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime fin = DateTime.ParseExact("26/12/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
+            FechasSolapadasInfo fechas = controller.VerificarFechasSolapadas("00000001", 2019, 2, 1, inicio, fin);
+
+            Assert.IsNull(fechas);
+        }
+
+        [TestMethod]
+        public void ProbarAsignacionSolapadaInicio()
+        {
+            AsignacionFormulariosController controller = new AsignacionFormulariosController();
+
+            DateTime inicio = DateTime.ParseExact("05/06/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime fin = DateTime.ParseExact("10/06/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            FechasSolapadasInfo fechas = controller.VerificarFechasSolapadas("00000001", 2019, 2, 1, inicio, fin);
+
+            Assert.IsNotNull(fechas.FechaInicioNueva);
+        }
+
+        [TestMethod]
+        public void ProbarAsignacionSolapadaFin()
+        {
+            AsignacionFormulariosController controller = new AsignacionFormulariosController();
+
+            DateTime inicio = DateTime.ParseExact("10/06/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime fin = DateTime.ParseExact("15/06/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            FechasSolapadasInfo fechas = controller.VerificarFechasSolapadas("00000001", 2019, 2, 1, inicio, fin);
+
+            Assert.IsNotNull(fechas.FechaFinNueva);
+        }
+
+        [TestMethod]
+        public void ProbarAsignacionSolapadaConfirmada()
+        {
+            string codigoFormulario = "00000001";
+            string codigoUASeleccionada = "0000000001";
+            string codigoCarreraEnfasisSeleccionada = "null";
+            string grupoSeleccionado = "null";
+            string correoProfesorSeleccionado = null;
+            string fechaInicioSeleccionado = "06-10-2020";
+            string fechaFinSeleccionado = "06-15-2020";
+            bool extenderPeriodo = true;
+            bool enviarCorreos = false;
+            AsignacionFormulariosController asignacionController = new AsignacionFormulariosController();
+            JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
+                codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
+                correoProfesorSeleccionado, fechaInicioSeleccionado,
+                fechaFinSeleccionado, extenderPeriodo) as JsonResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ProbarAsignacionSinSolapar()
+        {
+            string codigoFormulario = "00000001";
+            string codigoUASeleccionada = "0000000001";
+            string codigoCarreraEnfasisSeleccionada = "null";
+            string grupoSeleccionado = "null";
+            string correoProfesorSeleccionado = null;
+            string fechaInicioSeleccionado = "12-10-2020";
+            string fechaFinSeleccionado = "12-15-2020";
+            bool extenderPeriodo = false;
+            bool enviarCorreos = false;
+            AsignacionFormulariosController asignacionController = new AsignacionFormulariosController();
+            JsonResult result = asignacionController.Asignar(codigoFormulario, codigoUASeleccionada,
+                codigoCarreraEnfasisSeleccionada, grupoSeleccionado,
+                correoProfesorSeleccionado, fechaInicioSeleccionado,
+                fechaFinSeleccionado, extenderPeriodo) as JsonResult;
+
+            Assert.IsNotNull(result);
+        }
     }
 }

@@ -53,7 +53,7 @@
         var fechaInicio = document.getElementById("fecha-inicio").value;
         var fechaFin = document.getElementById("fecha-fin").value;
 
-        var correos = document.getElementById("enviarCorreos").checked;
+        //var correos = document.getElementById("enviarCorreos").checked;
         // Hace el llamado al metodoo del controlador con los paramaetros respectivos
         $.ajax({
             url: '/AsignacionFormularios/Asignar',
@@ -66,7 +66,7 @@
                 fechaInicioSeleccionado: fechaInicio,
                 fechaFinSeleccionado: fechaFin,
                 extenderPeriodo: extender,
-                enviarCorreos: correos
+                //enviarCorreos: correos
             },
             type: 'post',
             dataType: 'json',
