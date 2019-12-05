@@ -67,38 +67,7 @@ namespace AppIntegrador.Tests.Controllers
 
         }
         /*Termina TAM-1.1.6 Redirección Login*/
-
-        //[TestMethod]
-        //public void LogoutTest()
-        //{
-        //    // arrange
-        //    var httpRequest = new HttpRequest("", "http://localhost/", "");
-        //    var stringWriter = new StringWriter();
-        //    var httpResponse = new HttpResponse(stringWriter);
-        //    var httpContext = new HttpContext(httpRequest, httpResponse);
-        //    var sessionContainer = new HttpSessionStateContainer(
-        //        "id",
-        //        new SessionStateItemCollection(),
-        //        new HttpStaticObjectsCollection(),
-        //        10,
-        //        true,
-        //        HttpCookieMode.AutoDetect,
-        //        SessionStateMode.InProc,
-        //        false);
-        //    SessionStateUtility.AddHttpSessionStateToContext(httpContext, sessionContainer);
-
-        //    var controller = new HomeController();
-        //    var requestContext = new RequestContext(new HttpContextWrapper(httpContext), new RouteData());
-        //    controller.ControllerContext = new ControllerContext(requestContext, controller);
-
-        //    // act
-        //    var result = controller.Logout() as RedirectToRouteResult;
-
-        //    //Assert
-        //    Assert.AreEqual("Index", result.RouteValues["action"]);
-        //}
-
-
+                          
         HomeController HomeControllerAs(string userName, bool authenticated)
         {
 
@@ -120,7 +89,52 @@ namespace AppIntegrador.Tests.Controllers
             return controller;
         }
 
+        [TestMethod]
+        public void HomeReestablecerContrasenna()
+        {
+            //Arrange
+            var adminContrasennaActual = "admin@mail.com";
+            var adminCorreoActual = "admin@mail.com";
+            var pruebaContrasenna = "nuevaContrasenna";
 
+            DataIntegradorEntities db = new DataIntegradorEntities();
+            EnlaceSeguroController enlaceController = new EnlaceSeguroController(db);
+            var controller = HomeControllerAs("admin@mail.com", false);
+            //CurrentUser.setCurrentUser("admin@mail.com", "Superusuario", "0000000001", "0000000001");
+
+            string url1 = enlaceController.ObtenerEnlaceSeguroAnonimo("/Home/ReestablecerContrasenna/",usuario: adminCorreoActual, reestablecerContrasenna: true, usos: 2);
+
+            // Obtener el hash solamente, deshacerse de /EnlaceSeguro/RedireccionSegura?urlHash=
+            string hashObtenido = url1.Substring(url1.LastIndexOf("=") + 1);
+
+            var result = controller.ReestablecerContrasenna(hashObtenido,adminContrasennaActual, adminContrasennaActual, false) as ViewResult;
+
+            // Eliminar las tuplas insertadas
+            EnlaceSeguro es1 = db.EnlaceSeguro.Find(hashObtenido);
+            if (es1 != null)
+            {
+                db.EnlaceSeguro.Remove(es1);
+                db.SaveChanges();
+            }
+
+            var resultadoObtenido = result.ViewBag.NotifyTitle;
+            var resultadoEsperado = "Contraseña Cambiada";
+
+            Assert.AreEqual(resultadoObtenido, resultadoEsperado);
+        }
+
+        [TestMethod]
+        public void HomePasswordReset()
+        {
+            //Arrange
+            var controller = HomeControllerAs("paco@mail.com", false);
+
+
+            var result = controller.PasswordReset("paco@mail.com", false) as RedirectToRouteResult;
+
+            Assert.AreEqual("Login", result.RouteValues["action"]);
+            
+        }
 
         [TestMethod]
         public void HomeIndexResultName()

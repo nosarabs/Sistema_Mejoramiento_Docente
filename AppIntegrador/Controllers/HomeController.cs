@@ -250,7 +250,7 @@ namespace AppIntegrador.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateGoogleCaptcha(type = "Always")]
-        public ActionResult PasswordReset(string correo)
+        public ActionResult PasswordReset(string correo, bool enviarCorreo = true)
         {
             //var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == enlaceSeguroHash).FirstOrDefault();
             //var correo = enlaceSeguro.UsuarioAsociado;
@@ -293,15 +293,24 @@ namespace AppIntegrador.Controllers
 
                 List<string> users = new List<string>();
                 users.Add(correo);
-                var notificationResult = notification.SendNotification(users, "Restablecimiento de contraseña",
-                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor \n" +
-                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. \n\n" +
-                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer,
-                     "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". " +
-                     "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor " +
-                     "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. <br><br>" +
-                     "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer);
+                int notificationResult;
+                if (enviarCorreo)
+                {
+                    notificationResult = notification.SendNotification(users, "Restablecimiento de contraseña",
+                         "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                         "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor \n" +
+                         "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. \n\n" +
+                         "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer,
+                         "Se ha pedido un  restablecimiento de contraseña para el usuario: " + user.Username + ". El " + fechaSalida + " a las " + horaSalida + ". " +
+                         "Si usted no realizó  la petición de restablecimiento puede ignorar este correo. Si no es la primera vez que recibe este correo por error, por favor " +
+                         "contacte al administrador del sitio por medio de sistemamejoramientodocente@gmail.com. <br><br>" +
+                         "Siga este enlace para reestablecer su contraseña: " + enlaceParaReestablecer);
+                }
+                else 
+                {
+                    //solo para fines de testing
+                    notificationResult = 0;
+                }
 
                 if (notificationResult == 0)
                 {
@@ -334,7 +343,7 @@ namespace AppIntegrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ReestablecerContrasenna(string receivedHash, string contrasennaNueva, string contrasennaConfirmar)
+        public ActionResult ReestablecerContrasenna(string receivedHash, string contrasennaNueva, string contrasennaConfirmar, bool enviarCorreo = true)
         {
             string receivedHashExtra = ViewBag.Hash;
             var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == receivedHash).FirstOrDefault();
@@ -372,13 +381,15 @@ namespace AppIntegrador.Controllers
                     string fechaSalida = timestamp.ToString("dd/MM/yyyy");
                     string horaSalida = timestamp.ToString("hh:mm tt");
 
-                    notification.SendNotification(users,
-                        "Cambio de contraseña",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
-                        "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
-                        "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
-
+                    if (enviarCorreo)
+                    {
+                        notification.SendNotification(users,
+                            "Cambio de contraseña",
+                            "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". \n " +
+                            "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com",
+                            "Se ha realizado un cambio de contraseña para el usuario: " + user.Username + " . El " + fechaSalida + " a las " + horaSalida + ". <br> " +
+                            "Si usted no realizó este cambio por favor contactarse de inmediato con el administrador por medio de sistemamejoramientodocente@gmail.com");
+                    }
                     ViewBag.typeMessage = "success";
                     ViewBag.NotifyTitle = "Contraseña Cambiada";
                     ViewBag.NotifyMessage = "Por seguridad se le va a redirigir al login.";
