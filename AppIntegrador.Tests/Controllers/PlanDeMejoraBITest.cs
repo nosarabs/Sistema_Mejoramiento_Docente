@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using AppIntegrador.Controllers.PlanesDeMejoraBI;
+using AppIntegrador.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace AppIntegrador.Tests.Controllers
 {
