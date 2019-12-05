@@ -336,6 +336,10 @@ namespace AppIntegrador.Controllers
 
         public ActionResult ReestablecerContrasenna(string enlaceSeguroHash)
         {
+            /*Si no entra por un enlaceSeguro, va para login.*/
+            if(enlaceSeguroHash == null)
+                return RedirectToAction("Login");
+
             ViewBag.EnableBS4NoNavBar = true;
             ViewBag.Hash = enlaceSeguroHash;
             return View("ReestablecerContrasenna");
@@ -347,6 +351,12 @@ namespace AppIntegrador.Controllers
         {
             string receivedHashExtra = ViewBag.Hash;
             var enlaceSeguro = db.EnlaceSeguro.Where(a => a.Hash == receivedHash).FirstOrDefault();
+            if (enlaceSeguro == null)
+            {
+                ViewBag.typeMessage = "alert";
+                ViewBag.NotifyMessage = "El enlace de restablecimiento de contraseña no es valido, por favor obtenga otro enlace";
+                return View();
+            }
 
             DateTime momentoActual = DateTime.Now;
             DateTime expira = (DateTime)enlaceSeguro.Expira;
