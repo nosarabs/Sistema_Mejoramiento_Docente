@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -36,6 +37,17 @@ namespace AppIntegrador.Controllers
         public ActionResult AnadirAccionables(List<Accionable> accionables)
         {
             List<Accionable> misAccionables = accionables;
+            List<String> FuncionariosNombreLista = new List<String>();
+            ViewBag.FuncionariosLista = db.Funcionario.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach (var funcionario in ViewBag.FuncionariosLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(funcionario.Correo, name_op);
+                FuncionariosNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.FuncionariosNombreLista = FuncionariosNombreLista;
             if (misAccionables == null)
             {
                 misAccionables = new List<Accionable>();

@@ -35,6 +35,16 @@ class Counter {
     }
 }
 
+function seleccionaCheckBoxGenAccionable(element, variable, key, counter, descripcion) {
+    var accionable = null;
+    for (let i = 0; i < currentAccMej.accionable.length; i++) {
+        if (currentAccMej.accionable[i].descripcion == descripcion) {
+            accionable = currentAccMej.accionable[i];
+        }
+    }
+    seleccionaCheckBoxGen(element, variable, correo, accionable.cantidadFunc);
+}
+
 function seleccionaCheckBoxGen(element, variable, key, counter) {
     /*console.log(element);
     console.log(variable);
@@ -217,7 +227,7 @@ function agregarAccionable() {
     let campoFechaFin = document.getElementById("campoFechaFinAccionable");
     let campoTipo = document.getElementById("TipoAccionableAnadir");
     let campoPeso = document.querySelector('#peso');
-    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, currentAccMej.descripcion,  campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value, campoTipo.value, campoPeso.value, 0));
+    currentAccMej.addAccionable(new Accionable(currentObjective.nombre, currentAccMej.descripcion,  campoDescripcion.value, campoFechaInicio.value, campoFechaFin.value, campoTipo.value, campoPeso.value, 0, null));
     for (var i = 0; i < currentAccMej.Accionable.length; i++) {
         console.log(currentAccMej.Accionable[i].peso);
     }
@@ -512,7 +522,9 @@ class Accionable {
     tipo = null;
     peso = null;
     pesoPorcentaje = null;
-    constructor(nombre, descripcionAcMej, descripcionAcc, fechaInicio, fechaFin, tipo, peso, pesoPorcentaje) {
+    correosResponsables = [];
+    cantidadFunc = new Counter();
+    constructor(nombre, descripcionAcMej, descripcionAcc, fechaInicio, fechaFin, tipo, peso, pesoPorcentaje, correosResponsables) {
         this.nombreObj = nombre;
         this.descripAcMej = descripcionAcMej;
         this.descripcion = descripcionAcc;

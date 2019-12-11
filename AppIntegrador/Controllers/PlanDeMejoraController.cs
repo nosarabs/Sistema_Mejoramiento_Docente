@@ -102,11 +102,12 @@ namespace AppIntegrador.Controllers
             }
             List<String> ProfesoresNombreLista = new List<String>();
             List<String> tiposDeObjetivo = new List<String>();
-            foreach(var tipo in db.TipoObjetivo)
+            List<String> FuncionariosNombreLista = new List<String>();
+            foreach (var tipo in db.TipoObjetivo)
             {
                 tiposDeObjetivo.Add(tipo.nombre);
             }
-
+            ViewBag.FuncionariosLista = db.Funcionario.ToList();
             ViewBag.ProfesoresLista = db.Profesor.ToList();
             String name = "NombreCompleto";
             ObjectParameter name_op;
@@ -116,7 +117,14 @@ namespace AppIntegrador.Controllers
                 db.GetTeacherName(profe.Correo, name_op);
                 ProfesoresNombreLista.Add(name_op.Value.ToString());
             }
+            foreach (var funcionario in ViewBag.FuncionariosLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(funcionario.Correo, name_op);
+                FuncionariosNombreLista.Add(name_op.Value.ToString());
+            }
             ViewBag.ProfesoresNombreLista = ProfesoresNombreLista;
+            ViewBag.FuncionariosNombreLista = FuncionariosNombreLista;
             ViewBag.FormulariosLista = db.Formulario.ToList();
             ViewBag.tiposDeObjetivo = tiposDeObjetivo.Select(x =>
                                   new SelectListItem()
@@ -219,7 +227,27 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("_TablaFormularios", formularios);
         }
-
+        [HttpPost]
+        public ActionResult AnadirResponsables(List<String> ResponsableSeleccionado)
+        {
+            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
+                return RedirectToAction("../Home/Index");
+            }
+            List<String> FuncionariosNombreLista = new List<String>();
+            ViewBag.FuncionariosLista = db.Funcionario.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach (var funcionario in ViewBag.FuncionariosLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(funcionario.Correo, name_op);
+                FuncionariosNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.FuncionariosNombreLista = FuncionariosNombreLista;
+            return PartialView("_TablaAccionables");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

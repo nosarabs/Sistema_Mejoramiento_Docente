@@ -80,8 +80,8 @@ BEGIN
 	/* Creando los accionables resepctivos*/
 	MERGE INTO Accionable AS Target
 	USING (VALUES
-		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 'P', 2, 50),
-		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 'S', 3, 50)
+		(1, 'Objetivo de plan de mejora - Alexandra', 'Accion de mejora de objetivo - Alexandra', 'Accionable de prof - Alexandra', '2019-12-12', '2019-12-13', 'P', 2, 100),
+		(2, 'Objetivo de plan de mejora - Cristian', 'Accion de mejora de objetivo - Cristian', 'Accionable de prof - Cristian', '2019-12-10', '2019-12-15', 'S', 3, 100)
 	)
 	AS SOURCE ([codPlan], [nombreObj], [descripAcMej], [descripcion], [fechaInicio], [fechaFin], [tipo], [peso], [pesoPorcentaje])
 	ON	Target.codPlan			= Source.codPlan		and 

@@ -45,5 +45,8 @@ namespace AppIntegrador.Models.Metadata
         [Display(Name = "Porcentaje de peso")]
         [Range(0, 100, ErrorMessage = "El porcentaje es un número entre 0 y 100")]
         public Nullable<int> pesoPorcentaje { get; set; }
+
+        [Display(Name = "Funcionarios Asignados")]
+        public virtual ICollection<Profesor> Funcionario { get; set; }
     }
 }

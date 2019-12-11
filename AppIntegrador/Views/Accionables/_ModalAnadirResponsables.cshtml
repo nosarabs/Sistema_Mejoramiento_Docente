@@ -1,0 +1,19 @@
+﻿@model AppIntegrador.Models.Accionable
+
+<div class="form-horizontal card-group">
+    <div class="modal fade" id="ModalResponsables" tabindex="-1" role="dialog" aria-labelledby="ModalResponsablesLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="ModalAgregarResponsablesInterno" style="width:auto">
+                        @{Html.RenderPartial("_AnadirResponsables", Model);}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blancoUCR" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn-azulUCR " onclick="agregarGen('funcionario', 'correo', cantidadFunc, 'AnadirResponsables', 'ResponsableSeleccionado', '#TablaMostrarAccionables', correosResponsables)" data-dismiss="modal">Agregar profesores seleccionados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

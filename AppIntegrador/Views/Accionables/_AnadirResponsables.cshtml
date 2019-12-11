@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Añadir Funcionarios";
+    var FuncionariosLista = (List<AppIntegrador.Models.Funcionario>)ViewBag.FuncionariosLista;
+    var FuncionariosNombreLista = (List<String>)ViewBag.FuncionariosNombreLista;
+    var totalFunc = 0;
+}
+
+<h4> Añadir profesores al plan </h4>
+
+<table id="TablaSeleccionarFuncionarios" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Correo
+            </th>
+        </tr>
+    </thead>
+    <thead>
+        @*@foreach(var profe in FuncionariosLista)*@
+        @for (int i = 0; i < FuncionariosLista.Count(); ++i)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" id="pr(@totalFunc)" class="SectionCheckbox" value="@FuncionariosLista[i].Correo" onclick="seleccionaCheckBoxGenAccionable(this, 'funcionario', 'correo', cantidadFunc, @Model.descripcion)" />
+                </td>
+                <td>
+                    @FuncionariosNombreLista[i]
+                </td>
+                <td>
+                    @FuncionariosLista[i].Correo
+                </td>
+            </tr>
+            totalFunc += 1;
+        }
+    </thead>
+</table>
