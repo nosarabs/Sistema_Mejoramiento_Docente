@@ -37,12 +37,13 @@ class Counter {
 
 function seleccionaCheckBoxGenAccionable(element, variable, key, counter, descripcion) {
     var accionable = null;
-    for (let i = 0; i < currentAccMej.accionable.length; i++) {
-        if (currentAccMej.accionable[i].descripcion == descripcion) {
-            accionable = currentAccMej.accionable[i];
+    for (let i = 0; i < currentAccMej.Accionable.length; i++) {
+        if (currentAccMej.Accionable[i].descripcion == descripcion) {
+            accionable = currentAccMej.Accionable[i];
         }
     }
-    seleccionaCheckBoxGen(element, variable, correo, accionable.cantidadFunc);
+    //Aquí dejé el error 12/11
+    seleccionaCheckBoxGen(element, variable, key, accionable.cantidadFunc);
 }
 
 function seleccionaCheckBoxGen(element, variable, key, counter) {
