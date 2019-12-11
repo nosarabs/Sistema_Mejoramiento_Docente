@@ -16,6 +16,21 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db = new DataIntegradorEntities();
         private readonly IPerm permissionManager = new PermissionManager();
+        private PlanesDeMejoraUtil util = new PlanesDeMejoraUtil();
+
+        public AccionDeMejoraController() { }
+        public AccionDeMejoraController(DataIntegradorEntities db = null, PlanesDeMejoraUtil util = null)
+        {
+            if (db != null)
+            {
+                this.db = db;
+            }
+            if (util != null)
+            {
+                this.util = util;
+            }
+        }
+
 
         [HttpPost]
         public ActionResult AnadirAccionesDeMejora(List<AccionDeMejora> accionesDeMejora)
@@ -25,19 +40,11 @@ namespace AppIntegrador.Controllers
             {
                 misAccionesDeMejora = new List<AccionDeMejora>();
             }
-            return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionMejora", misAccionesDeMejora), this.ControllerContext) });
+            return Json(new { error = true, message = util.getView(PartialView("_TablaAccionMejora", misAccionesDeMejora), this.ControllerContext) });
         }
 
         [HttpPost]
         public ActionResult ObtenerPreguntas(List<String> SeccionSeleccionado)
-        {
-            List<Seccion_tiene_pregunta> parejas = getParejas(SeccionSeleccionado);
-            
-            string result = PlanesDeMejoraUtil.RenderViewToString(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
-            return Json(new { error = true, message = result });
-        }
-
-        public virtual List<Seccion_tiene_pregunta> getParejas(List<String> SeccionSeleccionado)
         {
             List<Seccion_tiene_pregunta> parejas = new List<Seccion_tiene_pregunta>();
             if (SeccionSeleccionado != null && SeccionSeleccionado.Count > 0)
@@ -49,8 +56,9 @@ namespace AppIntegrador.Controllers
                         parejas.Add(pareja);
                     }
                 }
-            }
-            return parejas;
+            }            
+            string result = util.getView(PartialView("_AnadirPreguntas", parejas), this.ControllerContext);
+            return Json(new { error = true, message = result });
         }
 
         protected override void Dispose(bool disposing)
@@ -61,6 +69,7 @@ namespace AppIntegrador.Controllers
             }
             base.Dispose(disposing);
         }
+
         public ActionResult AccionesDeObjetivo(int plan, string nombObj, bool edit = true)
         {
             if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
@@ -90,7 +99,7 @@ namespace AppIntegrador.Controllers
                 preguntas.Add(db.Pregunta.Find(cod));
             }
 
-            return PlanesDeMejoraUtil.RenderViewToString(PartialView("_ListaPreguntas", preguntas), this.ControllerContext);
+            return util.getView(PartialView("_ListaPreguntas", preguntas), this.ControllerContext);
         }
     }
 }

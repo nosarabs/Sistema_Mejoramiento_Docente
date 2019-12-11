@@ -16,11 +16,13 @@ namespace AppIntegrador.Controllers
     {
         private DataIntegradorEntities db;
         private readonly IPerm permissionManager;
+        private PlanesDeMejoraUtil util;
 
         public AccionablesController()
         {
             db = new DataIntegradorEntities();
             permissionManager = new PermissionManager();
+            util = new PlanesDeMejoraUtil();
         }
 
         public AccionablesController(DataIntegradorEntities db)
@@ -38,7 +40,7 @@ namespace AppIntegrador.Controllers
             {
                 misAccionables = new List<Accionable>();
             }
-            return Json(new { error = true, message = PlanesDeMejoraUtil.RenderViewToString(PartialView("_TablaAccionables", misAccionables), this.ControllerContext) });
+            return Json(new { error = true, message = util.getView(PartialView("_TablaAccionables", misAccionables), this.ControllerContext) });
         }
 
         //Requiere refactorización para eliminar el .Where de aquí

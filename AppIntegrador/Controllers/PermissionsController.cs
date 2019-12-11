@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using AppIntegrador.Models.Metadata;
+using System.Threading.Tasks;
 
 namespace AppIntegrador.Controllers
 {
@@ -80,7 +81,7 @@ namespace AppIntegrador.Controllers
         /// <returns>ActionResult que recarga los datos de la página de administración de perfiles.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GuardarPermisos(PermissionsViewHolder model, bool isUser)
+        public ActionResult Index(PermissionsViewHolder model)
         {
             if (!permissionManager.IsAuthorized(Permission.EDITAR_PERMISOS_Y_PERFILES))
             {
@@ -98,10 +99,10 @@ namespace AppIntegrador.Controllers
             if ((perfil == null) || (codCarrera == null) || (codEnfasis == null))
             {
                 TempData["alertmessage"] = "Algo salió mal. Intente de nuevo.";
-                return new EmptyResult();
+                return RedirectToAction("Index", "Home");
             }
 
-            if (isUser && permissionManager.IsAuthorized(Permission.ASIGNAR_PERFILES_USUARIOS))
+            if (permissionManager.IsAuthorized(Permission.ASIGNAR_PERFILES_USUARIOS))
             {
                 //Guarda las asignaciones de un perfil en una carrera y un enfasis a los usuarios
                 for (int i = 0; i < Personas.Count; ++i)
@@ -109,7 +110,8 @@ namespace AppIntegrador.Controllers
                     db.AgregarUsuarioPerfil(Personas[i].Correo, perfil, codCarrera, codEnfasis, Personas[i].HasProfileInEmph);
                 }
             }
-            else if(permissionManager.IsAuthorized(Permission.ASIGNAR_PERMISOS_PERFILES))
+
+            if(permissionManager.IsAuthorized(Permission.ASIGNAR_PERMISOS_PERFILES))
             {
                 //Guarda las asignaciones de permisos a un perfil en una carrera y un enfasis
                 for (int i = 0; i < Permisos.Count; ++i)
@@ -118,7 +120,7 @@ namespace AppIntegrador.Controllers
                 }
             }
             ViewBag.resultmessage = "Los cambios han sido guardados";
-            return new EmptyResult();
+            return View(model);
         }
         /* Fin TAM 3.4-1.*/
 

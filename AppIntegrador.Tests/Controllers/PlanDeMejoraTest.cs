@@ -90,24 +90,6 @@ namespace AppIntegrador.Tests.Controllers
         //
         #endregion
 
-        [TestMethod]
-        public void CrearPlanDeMejoraDataMockTest()
-        {
-            DataIntegradorEntities test = new DataIntegradorEntities();
-            var db = new Mock<DataIntegradorEntities>();
-            String planNombre = "Plan de prueba";
-            DateTime inicio = new DateTime(2019,12,01);
-            DateTime Fin = new DateTime(2020, 12, 01);
-
-            PlanDeMejora plan = new PlanDeMejora() { nombre = planNombre, fechaInicio = inicio, fechaFin = Fin};
-
-            db.Setup(m => m.PlanDeMejora.Add(plan));
-            db.Setup(m => m.SaveChanges());
-            var controller = new PlanDeMejoraController(db.Object);
-            var result = controller.Crear(plan);
-            Assert.IsNotNull(result);
-            controller.Dispose();
-        }
 
         [TestMethod]
         public void CrearPlanDeMejoraIntegrationTest()
@@ -121,6 +103,56 @@ namespace AppIntegrador.Tests.Controllers
             var controller = new PlanDeMejoraController();
             var result = controller.Crear(plan);
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void DetallesTest()
+        {
+            var controller = new PlanDeMejoraController();
+            var result = controller.Detalles(1);
+            PlanDeMejora retornado = (PlanDeMejora)result.ViewData.Model;
+
+            Assert.AreEqual("DetallesPlanDeMejora", result.ViewName);
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(PlanDeMejora));
+            Assert.AreEqual(1, retornado.codigo);
+            Assert.AreEqual("Plan prueba para la profesora Alexandra", retornado.nombre);
+            controller.Dispose();
+        }
+
+        [TestMethod]
+        public void AnadirFormulariosTest()
+        {
+            var controller = new PlanDeMejoraController();
+            List<string> codigos = new List<string>();
+            codigos.Add("00000001");
+            codigos.Add("00000002");
+            var result = controller.AnadirFormularios(codigos) as PartialViewResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("_TablaFormularios", result.ViewName);
+        }
+
+        [TestMethod]
+        public void AnadirProfesTest()
+        {
+            var controller = new PlanDeMejoraController();
+            List<string> profes = new List<string>();
+            profes.Add("christian.asch4@gmail.com");
+            var result = controller.AnadirProfes(profes) as PartialViewResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("_TablaProfesores", result.ViewName);
+        }
+
+        [TestMethod]
+        public void IndexTest()
+        {
+            var controller = new PlanDeMejoraController();
+            List<PlanDeMejora> planes = new List<PlanDeMejora> {
+                new PlanDeMejora {codigo = 10, nombre = "plan para test 1"},
+                new PlanDeMejora {codigo = 11, nombre = "plan para test 2"}
+            };
+            var result = controller.Index(planes) as ViewResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Index", result.ViewName);
         }
 
         [TestInitialize]
