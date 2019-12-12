@@ -1,8 +1,8 @@
-﻿@{
+﻿@model IEnumerable<AppIntegrador.Models.Funcionario>
+@{
     ViewBag.Title = "Añadir Funcionarios";
-    var FuncionariosLista = (List<AppIntegrador.Models.Funcionario>)ViewBag.FuncionariosLista;
-    var FuncionariosNombreLista = (List<String>)ViewBag.FuncionariosNombreLista;
-    var totalFunc = 0;
+    List<string> nombresFuncionarios = ViewBag.FuncionariosNombreLista;
+    var totalFuncionarios = 0;
 }
 
 <h4> Añadir profesores al plan </h4>
@@ -23,21 +23,26 @@
         </tr>
     </thead>
     <thead>
-        @*@foreach(var profe in FuncionariosLista)*@
-        @for (int i = 0; i < FuncionariosLista.Count(); ++i)
+        @foreach (var func in Model)
         {
             <tr>
                 <td>
-                    <input type="checkbox" id="pr(@totalFunc)" class="SectionCheckbox" value="@FuncionariosLista[i].Correo" onclick="seleccionaCheckBoxGenAccionable(this, 'funcionario', 'correo', null, @Model.descripcion)" />
+                    <input type="checkbox"
+                           id="pr(@totalFuncionarios)"
+                           name="checkBoxPreguntaAccion"
+                           class="SectionCheckbox"
+                           value="@func.Correo" />
+                    @*onclick="seleccionaCheckBoxGen(this, 'secc', 'scodigo', cantidadSecc)" />*@
+                </td>
+
+                <td>
+                    @nombresFuncionarios[totalFuncionarios];
                 </td>
                 <td>
-                    @FuncionariosNombreLista[i]
-                </td>
-                <td>
-                    @FuncionariosLista[i].Correo
+                    @func.Correo
                 </td>
             </tr>
-            totalFunc += 1;
+            totalFuncionarios += 1;
         }
     </thead>
 </table>

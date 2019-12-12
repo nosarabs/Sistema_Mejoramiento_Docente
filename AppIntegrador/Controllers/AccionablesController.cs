@@ -75,6 +75,25 @@ namespace AppIntegrador.Controllers
             return PartialView("_Tabla", accionables);
         }
 
+        [HttpPost]
+        public ActionResult ObtenerFuncionarios(List<String> SeccionSeleccionado)
+        {
+            List<Funcionario> funcionarios = new List<Funcionario>();
+            funcionarios = db.Funcionario.ToList();
+            List<String> FuncionariosNombreLista = new List<String>();
+            ViewBag.FuncionariosLista = db.Funcionario.ToList();
+            String name = "NombreCompleto";
+            ObjectParameter name_op;
+            foreach (var funcionario in ViewBag.FuncionariosLista)
+            {
+                name_op = new ObjectParameter(name, "");
+                db.GetTeacherName(funcionario.Correo, name_op);
+                FuncionariosNombreLista.Add(name_op.Value.ToString());
+            }
+            ViewBag.FuncionariosNombreLista = FuncionariosNombreLista;
+            string result = util.getView(PartialView("_AnadirResponsables", funcionarios), this.ControllerContext);
+            return Json(new { error = true, message = result });
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

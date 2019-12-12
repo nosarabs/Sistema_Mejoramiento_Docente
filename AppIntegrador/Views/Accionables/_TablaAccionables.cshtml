@@ -42,40 +42,40 @@ else
         <thead>
             @foreach (var accionable in Model)
             {
-                <tr>
-                    <td>
-                        @accionable.descripcion
-                    </td>
-                    <td>
-                        @accionable.fechaInicio.Value.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @accionable.fechaFin.Value.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @accionable.peso
-                    </td>
-                    <td>
-                        @accionable.pesoPorcentaje
-                    </td>
-                    <td>
-                        @if (accionable.tipo == "P")
-                        {
-                            <p>Porcentaje</p>
-                        }
-                        else if (accionable.tipo == "S")
-                        {
-                            <p>Si/No</p>
-                        }
-                        else if (accionable.tipo == "E")
-                        {
-                            <p>Escala</p>
-                        }
-                    </td>
-                    <td>
-                        <input type="button" value="Añadir responsables" class="btn-azulUCR float-right" id="AgregarResponsablesAccionables" onclick="modalGen('#ModalResponsables')" />
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <input type="radio" name="acciones" value=@(position++) onclick="seleccionaAccionable(this)" />
+                </td>
+                <td>
+                    @accionable.descripcion
+                </td>
+                <td>
+                    @accionable.fechaInicio.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @accionable.fechaFin.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @accionable.peso
+                </td>
+                <td>
+                    @accionable.pesoPorcentaje
+                </td>
+                <td>
+                    @if (accionable.tipo == "P")
+                    {
+                        <p>Porcentaje</p>
+                    }
+                    else if (accionable.tipo == "S")
+                    {
+                        <p>Si/No</p>
+                    }
+                    else if (accionable.tipo == "E")
+                    {
+                        <p>Escala</p>
+                    }
+                </td>
+            </tr>
 
             }
         </thead>

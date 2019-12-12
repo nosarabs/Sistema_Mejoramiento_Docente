@@ -117,6 +117,8 @@
                             Aún no se han agregado accionables para esta acción de mejora.
                         </div>
                         <input type="button" value="Crear accionable" class="btn-azulUCR float-right" id="AgregarAccionableBoton" onclick="modalGen('#ModalAccionable')" />
+                        <input type="button" value="Asignar responsables" class="btn btn-azulUCR float-left" id="AsociarResponsableAccionableTabla" onclick="getFuncionarios()" hidden disabled />
+
                     </div>
                 </div>
             </div>
@@ -138,6 +140,8 @@
 @{Html.RenderPartial("~/Views/AccionDeMejora/_ModalAnadirPreguntas.cshtml");}
 @{Html.RenderPartial("~/Views/AccionDeMejora/_ModalAnadirAccionMejora.cshtml", new AppIntegrador.Models.AccionDeMejora());}
 @{Html.RenderPartial("~/Views/Accionables/_ModalAnadirAccionable.cshtml", new AppIntegrador.Models.Accionable());}
+@{Html.RenderPartial("~/Views/Accionables/_ModalAnadirResponsables.cshtml", new AppIntegrador.Models.Accionable());}
+
 
 @section Scripts{
     @Scripts.Render("~/Scripts/PlanesDeMejora/CrearPlanDeMejora.js")

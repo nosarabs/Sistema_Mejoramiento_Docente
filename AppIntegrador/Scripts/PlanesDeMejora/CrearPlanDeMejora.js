@@ -5,10 +5,12 @@
     codigosFormularios = [];
     SeccionConObjetivoDict = {};
     PreguntaConAccionDict = {};
+    FuncionariosConAccionableDict = {};
 
     currentPlan = new PlanMejora();
     currentObjective = null;
     currentAccMej = null;
+    currentAccionable = null;
 });
 
 function getPlan() {
@@ -124,6 +126,14 @@ function agregarPreguntasSeleccionadas() {
     console.log(PreguntaConAccionDict[currentAccMej.descripcion]);
 }
 
+function agregarResponsablesSeleccionados() {
+    ResponsableConAccionableDict[currentAccionable.descripcion] = [];
+    $("input:checkbox[name=checkBoxResponsableAccionable]:checked").each(function () {
+        console.log($(this).val());
+        ResponsableConAccionableDict[currentAccionable.descripcion].push($(this).val());
+    });
+}
+
 function agregarObjetivo() {
     let campoNombre = document.getElementById("campoNombreObjetivo");
     let campoDescripcion = document.getElementById("campoDescripcionObjetivo");
@@ -222,6 +232,14 @@ function seleccionaAccion(element) {
     boton.removeAttribute("disabled");
 }
 
+function seleccionaAccionable(element) {
+    let val = element.value;
+    currentAccionable = currentAccMej.Accionable[val];
+    console.log(currentAccionable.descripcion);
+    let boton = document.getElementById("AsociarResponsableAccionableTabla");
+    boton.removeAttribute("disabled");
+}
+
 function agregarAccionable() {
     let campoDescripcion = document.getElementById("campoDescripcionAccionable");
     let campoFechaInicio = document.getElementById("campoFechaInicioAccionable");
@@ -239,6 +257,9 @@ function agregarAccionable() {
     campoDescripcion.value = "";
 
     mostrarTablaAccionable();
+    let boton = document.getElementById("AsociarResponsableAccionableTabla");
+    boton.removeAttribute("hidden");
+    boton.setAttribute("disabled", "true");
 }
 
 function calcularPesosPorc(accionMej) {
@@ -246,7 +267,6 @@ function calcularPesosPorc(accionMej) {
     for (var i = 0; i < accionMej.Accionable.length; i++) {
         pesoTotal += accionMej.Accionable[i].peso / 1.0;
     }
-    console.log(pesoTotal);
     for (var i = 0; i < accionMej.Accionable.length; i++) {
         accionMej.Accionable[i].pesoPorcentaje = accionMej.Accionable[i].peso * 100 / pesoTotal;
     }
@@ -274,6 +294,21 @@ function getSecciones() {
             }
         });
     }
+}
+
+function getFuncionarios() {
+    modalGen('#ModalResponsables');
+    $.ajax({
+        type: 'POST',
+        url: '/Accionables/ObtenerFuncionarios',
+        contentType: "application/json; charset=utf-8",
+        accept: 'application/json',
+        traditional: true,
+        success: function (result) {
+            console.log("and i oop");
+            $('#ModalAgregarResponsablesInterno').html(result.message);
+        }
+    });
 }
 
 function getPreguntas() {
