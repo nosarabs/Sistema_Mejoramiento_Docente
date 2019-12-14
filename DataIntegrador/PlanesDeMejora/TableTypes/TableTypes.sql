@@ -77,3 +77,13 @@ CREATE TYPE dbo.AsocPlanProfesores AS TABLE
 	corrProf	varchar(50)
 )
 GO
+
+CREATE TYPE dbo.AsocFuncAccionables AS TABLE 
+(
+	codPlan int not null,
+	nombreObj varchar(50) not null,
+	descripAcMej varchar(250) not null,
+	descripAcci varchar(250) not null,
+	corrFunc varchar(50) not null
+)
+GO

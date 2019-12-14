@@ -132,6 +132,47 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
         }
 
         /*
+            EFE: Inserta los responsables que se encargan de cada accionable
+            REQ: 
+                ResponsableConAccionable: relaciones entre los funcionarios y los accionables
+                objetivos: colleccion de objetivos
+                db: instancia de la base de datos
+            MOD:
+               las acciones de mejora de los objetivos
+        */
+        public void insertResponsableEnAccionable(ICollection<Objetivo> objetivos, Dictionary<String, String> ResponsableConAccionable, DataIntegradorEntities db)
+        {
+            if (objetivos != null)
+            {
+                foreach (var obj in objetivos)
+                {
+                    foreach (var accionDeMejora in obj.AccionDeMejora)
+                    {
+                        ICollection<Accionable> coleccionAccionables = accionDeMejora.Accionable;
+                        if (coleccionAccionables != null && ResponsableConAccionable != null)
+                        {
+                            foreach (var accionable in coleccionAccionables)
+                            {
+                                foreach (var resp in ResponsableConAccionable)
+                                {
+                                    var accionableAsociado = resp.Key;
+                                    int size = accionableAsociado.Length;
+                                    accionableAsociado = accionableAsociado.Substring(0, size - 3);
+                                    var responsableAsociado = resp.Value;
+                                    if (accionable.descripcion == accionableAsociado)
+                                    {
+                                        var responsableEncontrado = db.Funcionario.Find(responsableAsociado);
+                                        accionable.Funcionario.Add(responsableEncontrado);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
          * EFE: hace la busqueda de los profesores y los agrega al plan
          * REQ: 
          *      plan: al que se le asignan los formularios
@@ -176,20 +217,23 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             DataTable asocAccionesPreguntasTable    = accionesYAsocAccionesPreguntas[1];
 
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
-            DataTable accionablesTable = this.getAccionablesTable(plan);
+            List<DataTable> accionablesYAsocAccionablesResponsables = this.getAccionablesTableYAsocAccionablesResponsables(plan);
+            DataTable accionablesTable = accionesYAsocAccionesPreguntas[0];
+            DataTable asocAccionablesResponsablesTable = accionesYAsocAccionesPreguntas[1];
 
             // Creacion de la tabla de asociacion de plan de mejora con profesores
             DataTable asocProfesPlanTable = this.getTablaProfesPlan(plan);
 
             this.enviarTablasAlmacenamiento(
-                planTable,                      "tablaPlan",
-                objetivosTable,                 "tablaObjetivos",
-                accionesDeMejoraTable,          "tablaAcciones",
-                accionablesTable,               "tablaAccionables",
-                asocPlanFormTable,              "tablaAsocPlanFormularios",
-                asocObjetivosSeccionesTable,    "tablaAsocObjetivosSecciones",
-                asocAccionesPreguntasTable,     "tablaAsocAccionesPreguntas",
-                asocProfesPlanTable,            "tablaAsocPlanProfesores"
+                planTable,                          "tablaPlan",
+                objetivosTable,                     "tablaObjetivos",
+                accionesDeMejoraTable,              "tablaAcciones",
+                accionablesTable,                   "tablaAccionables",
+                asocPlanFormTable,                  "tablaAsocPlanFormularios",
+                asocObjetivosSeccionesTable,        "tablaAsocObjetivosSecciones",
+                asocAccionesPreguntasTable,         "tablaAsocAccionesPreguntas",
+                asocProfesPlanTable,                "tablaAsocPlanProfesores",
+                asocAccionablesResponsablesTable,   "tablaAsocAccionablesResponsables"
             );
         }
 
@@ -202,15 +246,16 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          *      Estado de la base de datos
          */
         public void enviarTablasAlmacenamiento(
-                DataTable tablaPlan,        string tablaPlanName,
-                DataTable tablaObjetivos,   string tablaObjetivosName,
-                DataTable tablaAcciones,    string tableAccionesName,
-                DataTable tablaAccionables, string tablaAccionablesName,
+                DataTable tablaPlan,                        string tablaPlanName,
+                DataTable tablaObjetivos,                   string tablaObjetivosName,
+                DataTable tablaAcciones,                    string tableAccionesName,
+                DataTable tablaAccionables,                 string tablaAccionablesName,
 
-                DataTable tablaAsocPlanFormularios,     string AsocPlanFormulariosName,
-                DataTable tablaAsocObjSecciones,        string AsocObjSeccionesName,
-                DataTable tablaAsocAccionesPreguntas,   string AsocAccionesPreguntasName,
-                DataTable tablaAsocPlanProfesores,      string tablaAsocPlanProfesoresName)
+                DataTable tablaAsocPlanFormularios,         string AsocPlanFormulariosName,
+                DataTable tablaAsocObjSecciones,            string AsocObjSeccionesName,
+                DataTable tablaAsocAccionesPreguntas,       string AsocAccionesPreguntasName,
+                DataTable tablaAsocPlanProfesores,          string tablaAsocPlanProfesoresName,
+                DataTable tablaAsocAccionablesResponsables, string tablaAsocAccionablesResponsablesName)
         {
             //string cs = ConfigurationManager.ConnectionStrings["DataIntegradorEntities"].ConnectionString;
             SqlConnection connection = new SqlConnection("data source=(localdb)\\MSSQLLocalDB;initial catalog=DataIntegrador;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;");
@@ -232,6 +277,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             sqlParam = cmd.Parameters.AddWithValue(AsocAccionesPreguntasName, tablaAsocAccionesPreguntas);
 
             sqlParam = cmd.Parameters.AddWithValue(tablaAsocPlanProfesoresName, tablaAsocPlanProfesores);
+            sqlParam = cmd.Parameters.AddWithValue(tablaAsocAccionablesResponsablesName, tablaAsocAccionablesResponsables);
 
             sqlParam.SqlDbType = SqlDbType.Structured;
 
@@ -439,9 +485,10 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
          * MOD:
          *      ----
          */
-        public DataTable getAccionablesTable(PlanDeMejora plan)
+        public List<DataTable> getAccionablesTableYAsocAccionablesResponsables(PlanDeMejora plan)
         {
             DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
 
             // Creando las columnas
             dt.Columns.Add("codigoPlan");
@@ -453,6 +500,13 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             dt.Columns.Add("tipo");
             dt.Columns.Add("peso");
             dt.Columns.Add("pesoPorcentaje");
+
+            // Creando las columnas
+            dt2.Columns.Add("codPlan");
+            dt2.Columns.Add("nombreObj");
+            dt2.Columns.Add("descripAcMej");
+            dt2.Columns.Add("descripAcci");
+            dt2.Columns.Add("corrFunc");
 
             // Lista de los objetivos del plan
             ICollection<Objetivo> objetivos = plan.Objetivo;
@@ -487,13 +541,25 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                                         tipoTemp,
                                         pesoTemp,
                                         porTemp);
+                                    // Realizando la tupla de la asociacion 
+                                    ICollection<Funcionario> funcionarios = accio.Funcionario;
+                                    if (funcionarios != null)
+                                    {
+                                        foreach (var func in funcionarios)
+                                        {
+                                            dt2.Rows.Add(plan.codigo, obj.nombre, acc.descripcion, accio.descripcion, func.Correo);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            return dt;
+            List<DataTable> lista = new List<DataTable>();
+            lista.Add(dt);
+            lista.Add(dt2);
+            return lista;
         }
 
         private static int? GetPesoTemp(Accionable accio)

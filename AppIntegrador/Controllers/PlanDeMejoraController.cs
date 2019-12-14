@@ -136,7 +136,7 @@ namespace AppIntegrador.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null)
+        public ActionResult Crear([Bind(Include = "nombre,fechaInicio,fechaFin")]PlanDeMejora plan, List<String> ProfeSeleccionado = null, List<String> FormularioSeleccionado = null, List<Objetivo> Objetivo = null, Dictionary<String, String> SeccionConObjetivo = null, Dictionary<String, String> PreguntaConAccion = null, Dictionary<String, String> ResponsableConAccionable = null)
         {
             if (!permissionManager.IsAuthorized(Permission.CREAR_PLANES_MEJORA))
             {
@@ -157,6 +157,9 @@ namespace AppIntegrador.Controllers
 
             //Agregando las preguntas a las acciones
             planesHelper.insertPreguntasEnAcciones(plan.Objetivo, PreguntaConAccion, db);
+
+            //Agregando los responsables de cada accionable
+            planesHelper.insertResponsableEnAccionable(plan.Objetivo, ResponsableConAccionable, db);
 
             //Agrgando los formularios al plan de mejora
             planesHelper.insertFormularios(plan, FormularioSeleccionado, db);
