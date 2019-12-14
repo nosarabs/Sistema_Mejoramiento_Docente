@@ -5,7 +5,7 @@
     codigosFormularios = [];
     SeccionConObjetivoDict = {};
     PreguntaConAccionDict = {};
-    FuncionariosConAccionableDict = {};
+    ResponsableConAccionableDict = {};
 
     currentPlan = new PlanMejora();
     currentObjective = null;
@@ -127,11 +127,13 @@ function agregarPreguntasSeleccionadas() {
 }
 
 function agregarResponsablesSeleccionados() {
+    console.log(ResponsableConAccionableDict);
     ResponsableConAccionableDict[currentAccionable.descripcion] = [];
     $("input:checkbox[name=checkBoxResponsableAccionable]:checked").each(function () {
         console.log($(this).val());
         ResponsableConAccionableDict[currentAccionable.descripcion].push($(this).val());
     });
+    console.log(ResponsableConAccionableDict[currentAccionable.descripcion]);
 }
 
 function agregarObjetivo() {
@@ -354,6 +356,7 @@ function enviarDatosPlan() {
 
     currentPlan.setSeccionConObjetivo(SeccionConObjetivoDict);
     currentPlan.setPreguntaConAccion(PreguntaConAccionDict);
+    currentPlan.setResponsableConAccionable(ResponsableConAccionableDict);
     console.log(JSON.stringify(currentPlan));
 
     $.ajax({
@@ -473,6 +476,7 @@ class PlanMejora extends Base {
     Objetivo = [];
     SeccionConObjetivo = {};
     PreguntaConAccion = {};
+    ResponsableConAccionable = {};
 
     constructor() {
         super(null, null, null);
@@ -506,6 +510,10 @@ class PlanMejora extends Base {
 
     setPreguntaConAccion(nuevaPreguntaConAccion) {
         this.PreguntaConAccion = nuevaPreguntaConAccion;
+    }
+
+    setResponsableConAccionable(nuevoResponsableConAccionable) {
+        this.ResponsableConAccionable = nuevoResponsableConAccionable;
     }
 }
 

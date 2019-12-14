@@ -17,6 +17,9 @@ else
         <thead>
             <tr>
                 <th>
+
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.descripcion)
                 </th>
                 <th>
@@ -33,9 +36,6 @@ else
                 </th>
                 <th>
                     Tipo
-                </th>
-                <th>
-                    Responsables
                 </th>
             </tr>
         </thead>
@@ -81,8 +81,3 @@ else
         </thead>
     </table>
 }
-
-@{Html.RenderPartial("~/Views/Accionables/_ModalAnadirResponsables.cshtml", new AppIntegrador.Models.Accionable());}
-<!--
-Tengo que pasar el accionable.descripcion a la vista parcial
--->
