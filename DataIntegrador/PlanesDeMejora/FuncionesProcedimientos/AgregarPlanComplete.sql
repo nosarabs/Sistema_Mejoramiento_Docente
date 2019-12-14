@@ -1,14 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[AgregarPlanComplete]
 (
-	@tablaPlan					 as dbo.PlanTabla			 readonly,
-	@tablaObjetivos				 as dbo.ObjetivosTabla		 readonly,
-	@tablaAcciones				 as dbo.AccionDeMejoraTabla	 readonly,
-	@tablaAccionables			 as dbo.AccionablesTabla 	 readonly,
-	@tablaAsocPlanFormularios	 as dbo.AsocPlanFormulario   readonly,
-	@tablaAsocObjetivosSecciones as dbo.AsocObjetivoSeccion  readonly,
-	@tablaAsocAccionesPreguntas  as dbo.AsocAccionPregunta   readonly,
-	@tablaAsocPlanProfesores     as dbo.AsocPlanProfesores   readonly,
-	@tablaAsocFuncAccionables    as dbo.AsocFuncAccionables  readonly
+	@tablaPlan							as dbo.PlanTabla			 readonly,
+	@tablaObjetivos						as dbo.ObjetivosTabla		 readonly,
+	@tablaAcciones						as dbo.AccionDeMejoraTabla	 readonly,
+	@tablaAccionables					as dbo.AccionablesTabla 	 readonly,
+	@tablaAsocPlanFormularios			as dbo.AsocPlanFormulario   readonly,
+	@tablaAsocObjetivosSecciones		as dbo.AsocObjetivoSeccion  readonly,
+	@tablaAsocAccionesPreguntas			as dbo.AsocAccionPregunta   readonly,
+	@tablaAsocPlanProfesores			as dbo.AsocPlanProfesores   readonly,
+	@tablaAsocAccionablesResponsables   as dbo.AsocResponsablesAccionables  readonly
 )
 AS
 BEGIN
@@ -40,7 +40,7 @@ BEGIN TRY
 		select * from @tablaAsocPlanProfesores
 
 		insert into Responsable_De
-		select * from @tablaAsocFuncAccionables
+		select * from @tablaAsocAccionablesResponsables
 
 	COMMIT TRANSACTION
 END TRY

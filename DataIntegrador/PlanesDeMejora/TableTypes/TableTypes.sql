@@ -78,7 +78,7 @@ CREATE TYPE dbo.AsocPlanProfesores AS TABLE
 )
 GO
 
-CREATE TYPE dbo.AsocFuncAccionables AS TABLE 
+CREATE TYPE dbo.AsocResponsablesAccionables AS TABLE 
 (
 	codPlan int not null,
 	nombreObj varchar(50) not null,

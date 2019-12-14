@@ -230,27 +230,6 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("_TablaFormularios", formularios);
         }
-        [HttpPost]
-        public ActionResult AnadirResponsables(List<String> ResponsableSeleccionado)
-        {
-            if (!permissionManager.IsAuthorized(Permission.VER_PLANES_MEJORA))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página.";
-                return RedirectToAction("../Home/Index");
-            }
-            List<String> FuncionariosNombreLista = new List<String>();
-            ViewBag.FuncionariosLista = db.Funcionario.ToList();
-            String name = "NombreCompleto";
-            ObjectParameter name_op;
-            foreach (var funcionario in ViewBag.FuncionariosLista)
-            {
-                name_op = new ObjectParameter(name, "");
-                db.GetTeacherName(funcionario.Correo, name_op);
-                FuncionariosNombreLista.Add(name_op.Value.ToString());
-            }
-            ViewBag.FuncionariosNombreLista = FuncionariosNombreLista;
-            return PartialView("_TablaAccionables");
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

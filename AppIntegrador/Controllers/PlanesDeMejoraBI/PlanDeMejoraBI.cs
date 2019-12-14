@@ -218,8 +218,8 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
 
             // Creacion de la tabla de planDeMejora y Asociacion de plan de mejora con formulario
             List<DataTable> accionablesYAsocAccionablesResponsables = this.getAccionablesTableYAsocAccionablesResponsables(plan);
-            DataTable accionablesTable = accionesYAsocAccionesPreguntas[0];
-            DataTable asocAccionablesResponsablesTable = accionesYAsocAccionesPreguntas[1];
+            DataTable accionablesTable                 = accionablesYAsocAccionablesResponsables[0];
+            DataTable asocAccionablesResponsablesTable = accionablesYAsocAccionablesResponsables[1];
 
             // Creacion de la tabla de asociacion de plan de mejora con profesores
             DataTable asocProfesPlanTable = this.getTablaProfesPlan(plan);
