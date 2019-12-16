@@ -1,0 +1,134 @@
+﻿@model AppIntegrador.Models.ObtenerAccionablesPorEvaluar_Result
+
+@*
+    Modificado por: Christian Asch
+    Historia a la que pertenece: MOS-11 "Como Usuario administrativo
+        quiero agregar, modificar, borrar y listar los accionables de una acción de mejora para que los profesores puedan
+        describir pasos concretos para completar una acción de mejroa
+*@
+@{
+    var numAcc = 1;
+}
+
+<div>
+    @*
+        Modificado por: Christian Asch
+        Historia a la que pertenece: MOS-11 "Como Usuario administrativo
+            quiero agregar, modificar, borrar y listar los accionables de una acción de mejora para que los profesores puedan
+            describir pasos concretos para completar una acción de mejroa
+    *@
+        <table class="table">
+            <colgroup>
+                <col class="TablasDescripcion">
+                <col class="TablasFecha">
+                <col class="TablasFecha">
+                <col class="TablasOpciones">
+            </colgroup>
+
+            <thead>
+                <tr class="EncabezadoTabla">
+
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Fecha de Inicio
+                    </th>
+                    <th>
+                        Fecha de Fin
+                    </th>
+                    <th>
+                        Evaluación
+                    </th>
+                </tr>
+            </thead>
+                <tbody id="dataOb">
+                    <tr class="FilaTablasPlanesDeMejora">
+
+                        <td>
+                            @Html.DisplayFor(model => model.descripAcci)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.fechaInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.fechaFin)
+                        </td>
+                        <form>
+                            <td>
+                                @if (Model.tipo == "P")
+                                {
+                                    <input id="nota" type="number" name="porcentaje" placeholder="0-100" min="0" max="100">
+                                    @Html.ActionLink("Guardar", "PlanesPorEvaluar", "PlanDeMejora", null, new { @class = "btn-azulUCR" })
+                                }
+                                else if (Model.tipo == "S")
+                                {
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadiosSi" value="100" checked>
+                                                    <label class="form-check-label" for="gridRadiosSi">
+                                                        Si
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadiosNo" value="0">
+                                                    <label class="form-check-label" for="gridRadiosNo">
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    @Html.ActionLink("Guardar", "PlanesPorEvaluar", "PlanDeMejora", null, new { @class = "btn-azulUCR" })
+
+                                }
+                                else if (Model.tipo == "E")
+                                {
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="100" checked>
+                                                    <label class="form-check-label">
+                                                        Excelente
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="75">
+                                                    <label class="form-check-label">
+                                                        Casi completo
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="50">
+                                                    <label class="form-check-label">
+                                                        Semicompleto
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios5" value="25">
+                                                    <label class="form-check-label">
+                                                        Parcialmente completo
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="0">
+                                                    <label class="form-check-label">
+                                                        Incompleto
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    @Html.ActionLink("Guardar", "PlanesPorEvaluar", "PlanDeMejora", null, new { @class = "btn-azulUCR" })
+                                }
+                            </td>
+                        </form>
+                    </tr>
+                </tbody>
+        </table>
+    <hr />
+</div>
+

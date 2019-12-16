@@ -75,6 +75,25 @@ namespace AppIntegrador.Controllers
             return PartialView("_Tabla", accionables);
         }
 
+        public ActionResult AccionablePorEvaluar(int codPlan, string nombObj, string descripAcMej)
+        {
+            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            {
+                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+                return RedirectToAction("../Home/Index");
+            }
+            string correo = HttpContext.User.Identity.Name;
+            var accionables = db.ObtenerAccionablesPorEvaluar(correo).ToList();
+            var accionablePorEvaluar = new ObtenerAccionablesPorEvaluar_Result();
+            foreach (var accionable in accionables)
+            {
+                if(accionable.codPlan == codPlan && accionable.nombreObj == nombObj && accionable.descripAcMej == descripAcMej)
+                {
+                    accionablePorEvaluar = accionable;
+                }
+            }
+            return PartialView("_AccionablePorEvaluar", accionablePorEvaluar);
+        }
         [HttpPost]
         public ActionResult ObtenerFuncionarios(List<String> SeccionSeleccionado)
         {

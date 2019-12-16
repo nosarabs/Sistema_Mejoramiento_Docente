@@ -74,7 +74,18 @@
                             @Html.DisplayFor(modelItem => item.fechaFin)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.tipo)
+                            @if (item.tipo == "P")
+                            {
+                                <p>Porcentaje</p>
+                            }
+                            else if (item.tipo == "S")
+                            {
+                                <p>Si/No</p>
+                            }
+                            else if (item.tipo == "E")
+                            {
+                                <p>Escala</p>
+                            }
                         </td>
                         <td>
                             <div>

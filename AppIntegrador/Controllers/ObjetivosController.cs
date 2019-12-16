@@ -69,7 +69,6 @@ namespace AppIntegrador.Controllers
             //return PartialView("_listarObjetivos", objetivos);
             return PartialView("_TablaObjetivosLista", objetivos);
         }
-
         public string TablaSeccionesAsociadas(int id, string objt)
         {
 

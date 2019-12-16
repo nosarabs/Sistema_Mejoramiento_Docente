@@ -1,6 +1,6 @@
 ﻿@model AppIntegrador.Models.PlanDeMejora
 @*
-    Creado por: Luis Ramirez
+    Creado por: Johan Córdoba
     Historia a la que pertenece: MOS-25 "como usuario quiero tener una interfaz que muestre de forma clara las jerarquías entre las distintas partes del subsistema de creación de planes de mejora"
     Vista que contiene todo el plan de mejora después de creado y permite añadir objetivos, acciones y accionables
 *@
@@ -10,7 +10,7 @@
     <div class="card card-default">
         <div class="card-body">
 
-            <h2>Evaluación de Accionable</h2>
+            <h2>Detalles del Plan de mejora @ViewBag.IdPlan </h2>
 
             <form>
                 @Html.HiddenFor(model => model.codigo)
@@ -119,7 +119,7 @@
     </div>
 
     <div class="botonCentrado">
-        @Html.ActionLink("Volver", "Index", "PlanDeMejora", new { @class = "btn-blancoUCR" })
+        @Html.ActionLink("Volver", "PlanesPorEvaluar", "PlanDeMejora", new { @class = "btn-blancoUCR" })
     </div>
 </div>
 
@@ -168,16 +168,14 @@
         };
 
         function actualizarAccionables(plan, obj, desc) {
-            var edit = false;
             $.ajax({
                 type: 'GET',
-                url: '/Accionables/TablaAccionables',
+                url: '/Accionables/AccionablePorEvaluar',
                 data: {
                     //parámetros para el controlador
                     codPlan: plan,
                     nombObj: obj,
                     descripAcMej: desc,
-                    edit: edit
                 },
                 dataType: 'html',
                 success: function (result) {
