@@ -311,6 +311,9 @@
     <Compile Include="Models\Objetivo.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerAccionablesPorEvaluar_Result.cs">
+      <DependentUpon>DataIntegradorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObtenerCarrerasEnfasisFiltros_Result.cs">
       <DependentUpon>DataIntegradorModel.tt</DependentUpon>
     </Compile>
@@ -865,6 +868,8 @@
     <Content Include="Views\PlanDeMejora\_ModalListaFormularioDeUnPlan.cshtml" />
     <Content Include="Views\Accionables\_ModalAnadirResponsables.cshtml" />
     <Content Include="Views\Accionables\_AnadirResponsables.cshtml" />
+    <Content Include="Views\PlanDeMejora\_PlanesPorEvaluar.cshtml" />
+    <Content Include="Views\PlanDeMejora\_PlanesEvaluacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

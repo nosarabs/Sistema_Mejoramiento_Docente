@@ -304,5 +304,30 @@ namespace AppIntegrador.Controllers
             ViewBag.Formularios = formulariosNombreLista;
             return View("DetallesPlanDeMejora", planDeMejora);
         }
+        [HttpGet]
+        public ActionResult PlanesPorEvaluar()
+        {
+            string correo = HttpContext.User.Identity.Name;
+            var accionables = db.ObtenerAccionablesPorEvaluar(correo).ToList();
+            return PartialView("_PlanesPorEvaluar", accionables);
+        }
+        [HttpGet]
+        public ActionResult Evaluar(int codPlan, string nombreObj, string descripAcMej, string descripAcci, string tipo)
+        {
+            PlanDeMejora planDeMejoraTemporal = db.PlanDeMejora.Find(codPlan);
+            PlanDeMejora planConAccionablePorEvaluar = new PlanDeMejora();
+            
+            planConAccionablePorEvaluar.codigo = codPlan;
+            
+            var objetivo = (from x in planDeMejoraTemporal.Objetivo.OfType<Objetivo>() where x.nombre == nombreObj select x).FirstOrDefault();
+            planConAccionablePorEvaluar.Objetivo.Add(objetivo);
+
+            var accionDeMejora = (from x in objetivo.AccionDeMejora.OfType<AccionDeMejora>() where x.descripcion == descripAcMej select x).FirstOrDefault();
+            objetivo.AccionDeMejora.Add(accionDeMejora);
+
+            var accionable = (from x in accionDeMejora.Accionable.OfType<Accionable>() where x.descripcion == descripAcci select x).FirstOrDefault();
+            accionDeMejora.Accionable.Add(accionable);
+            return PartialView("_PlanesEvaluacion", planConAccionablePorEvaluar);
+        }
     }
 }

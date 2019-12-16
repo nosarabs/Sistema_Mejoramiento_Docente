@@ -1840,5 +1840,14 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEstudiantesAsociados_Result>("ObtenerEstudiantesAsociados", codigoUnidadAcademicaParameter, codigoCarreraParameter, codigoEnfasisParameter, siglaCursoParameter, numGrupoParameter, semestreParameter, annoParameter, correoProfesorParameter);
         }
+    
+        public virtual ObjectResult<ObtenerAccionablesPorEvaluar_Result> ObtenerAccionablesPorEvaluar(string correoFunc)
+        {
+            var correoFuncParameter = correoFunc != null ?
+                new ObjectParameter("correoFunc", correoFunc) :
+                new ObjectParameter("correoFunc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerAccionablesPorEvaluar_Result>("ObtenerAccionablesPorEvaluar", correoFuncParameter);
+        }
     }
 }

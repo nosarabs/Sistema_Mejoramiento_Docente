@@ -84,6 +84,7 @@ CREATE TYPE dbo.AsocResponsablesAccionables AS TABLE
 	nombreObj varchar(50) not null,
 	descripAcMej varchar(250) not null,
 	descripAcci varchar(250) not null,
-	corrFunc varchar(50) not null
+	corrFunc varchar(50) not null,
+	progreso INT NULL DEFAULT 0
 )
 GO
