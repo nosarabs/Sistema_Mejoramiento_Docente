@@ -1,47 +1,102 @@
 ﻿@model IEnumerable<AppIntegrador.Models.ObtenerAccionablesPorEvaluar_Result>
+@{
+    ViewBag.Title = "Planes Por Evaluar";
+    @*
+        Añadido por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.3 "agregar, modificar, borrar y consultar las acciones de mejora de un objetivo"
+        Permite pasar más de un pármetro al javascrip que actualiza las acciones de un plan.
+    *@
+    dynamic item = new System.Dynamic.ExpandoObject();
+    item.MultiLineString = @"a multi-line string";
+    item.SingleLineString = "a single-line string";
+}
 
-<table class="table">
-    <tr>
-        <th>
-            Nombre
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.descripAcci)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaInicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaFin)
-        </th>
-        <th></th>
-    </tr>
+<div class="fullWidth">
+    <div class="card card-default">
+        <div class="card-body">
+            <b>
+                Búsqueda
+            </b>
 
-    @foreach (var accionable in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => accionable.descripAcci)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => accionable.fechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => accionable.fechaFin)
-            </td>
-            <td>
-                @Html.ActionLink(
-                    "Evaluar",
-                    "Evaluar",
-                    "PlanDeMejora",
-                    new { 
-                        codPlan = accionable.codPlan,
-                        nombreObj = accionable.nombreObj,
-                        descripAcMej = accionable.descripAcMej,
-                        descripAcci = accionable.descripAcci,
-                        tipo = accionable.tipo
-                    },
-                    new { @class = "btn-blancoUCR" })
-            </td>
-        </tr>
-    }
-</table>
+            <form action="Buscar">
+                <input class="form-control" type="text" name="nombrePlan" placeholder="Buscar..." id="nombre-option" maxlength="50" />
+
+                <input type="submit"
+                       name="submit"
+                       value="Filtrar"
+                       class="btn btn-outline-light text-dark bg-white border-secondary" />
+
+            </form>
+
+        </div>
+        <div class="card-body">
+            @*
+        Modificado por: Johan Córdoba
+        Historia a la que pertenece: MOS-1.1 "agregar, modificar, borrar y consultar los planes de mejora"
+        Diversos cambios para que todas las vistas tengan la misma forma.
+            *@
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="impText">Planes de Mejora por Evaluar</h2>
+                </div>
+            </div>
+
+            @if (Model.Count() == 0)
+            {
+                <div>
+                    Aún no tienes planes por evaluar
+                </div>
+            }
+            else
+            {
+                <table class="table" id="TablaAccionablesPorEvaluar" class="table table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Accionable
+                        </th>
+                        <th>
+                            Fecha de Inicio
+                        </th>
+                        <th>
+                            Fecha de Fin
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var accionable in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => accionable.descripAcci)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => accionable.fechaInicio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => accionable.fechaFin)
+                            </td>
+                            <td>
+                                @Html.ActionLink(
+                                 "Evaluar",
+                                 "Evaluar",
+                                 "PlanDeMejora",
+                                 new
+                                 {
+                                     codPlan = accionable.codPlan,
+                                     nombreObj = accionable.nombreObj,
+                                     descripAcMej = accionable.descripAcMej,
+                                     descripAcci = accionable.descripAcci,
+                                     tipo = accionable.tipo
+                                 },
+                                 new { @class = "btn-blancoUCR" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>

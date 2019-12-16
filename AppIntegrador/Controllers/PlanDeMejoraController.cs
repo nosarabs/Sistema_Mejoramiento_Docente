@@ -309,7 +309,7 @@ namespace AppIntegrador.Controllers
         {
             string correo = HttpContext.User.Identity.Name;
             var accionables = db.ObtenerAccionablesPorEvaluar(correo).ToList();
-            return PartialView("_PlanesPorEvaluar", accionables);
+            return View("_PlanesPorEvaluar", accionables);
         }
         [HttpGet]
         public ActionResult Evaluar(int codPlan, string nombreObj, string descripAcMej, string descripAcci, string tipo)
