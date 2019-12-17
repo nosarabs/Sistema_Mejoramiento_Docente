@@ -868,8 +868,11 @@
     <Content Include="Views\PlanDeMejora\_ModalListaFormularioDeUnPlan.cshtml" />
     <Content Include="Views\Accionables\_ModalAnadirResponsables.cshtml" />
     <Content Include="Views\Accionables\_AnadirResponsables.cshtml" />
-    <Content Include="Views\PlanDeMejora\_PlanesPorEvaluar.cshtml" />
-    <Content Include="Views\PlanDeMejora\_PlanesEvaluacion.cshtml" />
+    <Content Include="Views\PlanDeMejora\PlanesPorEvaluar.cshtml" />
+    <Content Include="Views\PlanDeMejora\PlanesEvaluacion.cshtml" />
+    <Content Include="Views\Accionables\_AccionablePorEvaluar.cshtml" />
+    <Content Include="Views\PlanDeMejora\PlanesPorEjecutar.cshtml" />
+    <Content Include="Views\PlanDeMejora\PlanesEjecucion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

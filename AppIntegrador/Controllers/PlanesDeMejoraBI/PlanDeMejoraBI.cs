@@ -507,6 +507,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
             dt2.Columns.Add("descripAcMej");
             dt2.Columns.Add("descripAcci");
             dt2.Columns.Add("corrFunc");
+            dt2.Columns.Add("progreso");
 
             // Lista de los objetivos del plan
             ICollection<Objetivo> objetivos = plan.Objetivo;
@@ -547,7 +548,7 @@ namespace AppIntegrador.Controllers.PlanesDeMejoraBI
                                     {
                                         foreach (var func in funcionarios)
                                         {
-                                            dt2.Rows.Add(plan.codigo, obj.nombre, acc.descripcion, accio.descripcion, func.Correo);
+                                            dt2.Rows.Add(plan.codigo, obj.nombre, acc.descripcion, accio.descripcion, func.Correo, 0);
                                         }
                                     }
                                 }

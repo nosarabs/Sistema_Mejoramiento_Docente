@@ -1849,5 +1849,14 @@ namespace AppIntegrador.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerAccionablesPorEvaluar_Result>("ObtenerAccionablesPorEvaluar", correoFuncParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> ObtenerPlanesPorEjecutar(string correoProf)
+        {
+            var correoProfParameter = correoProf != null ?
+                new ObjectParameter("correoProf", correoProf) :
+                new ObjectParameter("correoProf", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ObtenerPlanesPorEjecutar", correoProfParameter);
+        }
     }
 }

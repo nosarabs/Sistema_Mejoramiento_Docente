@@ -309,25 +309,78 @@ namespace AppIntegrador.Controllers
         {
             string correo = HttpContext.User.Identity.Name;
             var accionables = db.ObtenerAccionablesPorEvaluar(correo).ToList();
-            return PartialView("_PlanesPorEvaluar", accionables);
+            return View("PlanesPorEvaluar", accionables);
         }
         [HttpGet]
-        public ActionResult Evaluar(int codPlan, string nombreObj, string descripAcMej, string descripAcci, string tipo)
+        public ActionResult Evaluar(int codPlan)
         {
-            PlanDeMejora planDeMejoraTemporal = db.PlanDeMejora.Find(codPlan);
-            PlanDeMejora planConAccionablePorEvaluar = new PlanDeMejora();
-            
-            planConAccionablePorEvaluar.codigo = codPlan;
-            
-            var objetivo = (from x in planDeMejoraTemporal.Objetivo.OfType<Objetivo>() where x.nombre == nombreObj select x).FirstOrDefault();
-            planConAccionablePorEvaluar.Objetivo.Add(objetivo);
+            PlanDeMejora planConAccionablePorEvaluar = db.PlanDeMejora.Find(codPlan);
+            ViewBag.IdPlan = codPlan;
 
-            var accionDeMejora = (from x in objetivo.AccionDeMejora.OfType<AccionDeMejora>() where x.descripcion == descripAcMej select x).FirstOrDefault();
-            objetivo.AccionDeMejora.Add(accionDeMejora);
+            List<AppIntegrador.Models.Persona> profesoresNombreLista = new List<Persona>();
 
-            var accionable = (from x in accionDeMejora.Accionable.OfType<Accionable>() where x.descripcion == descripAcci select x).FirstOrDefault();
-            accionDeMejora.Accionable.Add(accionable);
-            return PartialView("_PlanesEvaluacion", planConAccionablePorEvaluar);
+            List<string> profesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(codPlan).ToList();
+
+            foreach (var profe in profesoresLista)
+            {
+                profesoresNombreLista.Add(db.Persona.Find(profe));
+            }
+
+            ViewBag.ProfesoresNombreLista = profesoresNombreLista;
+
+            List<AppIntegrador.Models.Formulario> formulariosNombreLista = new List<Formulario>();
+            List<string> formulariosLista = db.ObtenerFormulariosAsociados(codPlan).ToList();
+
+            foreach (var form in formulariosLista)
+            {
+                formulariosNombreLista.Add(db.Formulario.Find(form));
+            }
+
+            ViewBag.Profesores = profesoresNombreLista;
+            ViewBag.Formularios = formulariosNombreLista;
+            return View("PlanesEvaluacion", planConAccionablePorEvaluar);
+        }
+        [HttpGet]
+        public ActionResult PlanesPorEjecutar()
+        {
+            string correo = HttpContext.User.Identity.Name;
+            var planes = db.ObtenerPlanesPorEjecutar(correo).ToList();
+            List<PlanDeMejora> planesPorEjecutar = new List<PlanDeMejora>();
+            for(int i = 0; i < planes.Count(); i++)
+            {
+                PlanDeMejora planPorEjecutar = db.PlanDeMejora.Find(planes[i]);
+                planesPorEjecutar.Add(planPorEjecutar);
+            }
+            return View("PlanesPorEjecutar", planesPorEjecutar);
+        }
+        [HttpGet]
+        public ActionResult Ejecutar(int codPlan)
+        {
+            PlanDeMejora planPorEjecutar = db.PlanDeMejora.Find(codPlan);
+            ViewBag.IdPlan = codPlan;
+
+            List<AppIntegrador.Models.Persona> profesoresNombreLista = new List<Persona>();
+
+            List<string> profesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(codPlan).ToList();
+
+            foreach (var profe in profesoresLista)
+            {
+                profesoresNombreLista.Add(db.Persona.Find(profe));
+            }
+
+            ViewBag.ProfesoresNombreLista = profesoresNombreLista;
+
+            List<AppIntegrador.Models.Formulario> formulariosNombreLista = new List<Formulario>();
+            List<string> formulariosLista = db.ObtenerFormulariosAsociados(codPlan).ToList();
+
+            foreach (var form in formulariosLista)
+            {
+                formulariosNombreLista.Add(db.Formulario.Find(form));
+            }
+
+            ViewBag.Profesores = profesoresNombreLista;
+            ViewBag.Formularios = formulariosNombreLista;
+            return View("PlanesEjecucion", planPorEjecutar);
         }
     }
 }
