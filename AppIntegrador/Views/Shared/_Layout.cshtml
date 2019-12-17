@@ -169,42 +169,23 @@
                                     }
                                     else
                                     {
-<li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
+                                        <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
                                             <span style="color:gray">Formularios &#9660;</span>
                                         </li>
-                                        }
-                                        }
-
-                                        @{
-                                            if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.VER_PLANES_MEJORA))
-                                            {
+                                    }
                                                 <li>
                                                     <a href="">Planes de mejora &#9660;</a>
                                                     <ul>
                                                         <li>
                                                             <a href="">Mis planes &#9658;</a>
                                                             <ul>
-                                                                <li><a href="/PlanDeMejora/Index">Ver mis planes</a></li>
-
-                                                                @if (permissionManager.IsAuthorized(AppIntegrador.Utilities.Permission.CREAR_PLANES_MEJORA))
-                                                                {
-                                                                    <li><a href="/PlanDeMejora/Crear">Crear plan</a></li>
-                                                                }
-                                                                <li><a href="/PlanDeMejora/PlanesPorEvaluar">Planes a Evaluar</a></li>
-
+                                                                <li><a href="/PlanDeMejora/Index">Mis Planes Creados</a></li>
+                                                                <li><a href="/PlanDeMejora/PlanesPorEvaluar">Mis Planes A Evaluar</a></li>
+                                                                <li><a href="/PlanDeMejora/PlanesPorEjecutar">Mis Planes Asignados</a></li>
                                                             </ul>
                                                         </li>
-
-
                                                     </ul>
                                                 </li>
-                                            }
-                                            else
-                                            {
-                                                <li class="align-self-center" data-toggle="tooltip" data-placement="bottom" title="No tiene permisos para accesar estas opciones">
-                                                    <span style="color:gray">Planes de mejora &#9660;</span>
-                                                </li>
-                                            }
                                         }
 
                                         @{

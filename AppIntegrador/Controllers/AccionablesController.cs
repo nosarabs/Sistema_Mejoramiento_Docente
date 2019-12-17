@@ -58,11 +58,11 @@ namespace AppIntegrador.Controllers
         //Requiere refactorización para eliminar el .Where de aquí
         public ActionResult TablaAccionables(int codPlan, string nombObj, string descripAcMej, bool edit = true)
         {
-            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
-                return RedirectToAction("../Home/Index");
-            }
+            //if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            //{
+            //    TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+            //    return RedirectToAction("../Home/Index");
+            //}
             ViewBag.IdPlan = codPlan;
             ViewBag.nomObj = nombObj;
             ViewBag.descripAcMej = descripAcMej;
@@ -77,11 +77,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult AccionablePorEvaluar(int codPlan, string nombObj, string descripAcMej)
         {
-            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
-                return RedirectToAction("../Home/Index");
-            }
+            //if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            //{
+            //    TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+            //    return RedirectToAction("../Home/Index");
+            //}
             string correo = HttpContext.User.Identity.Name;
             var accionables = db.ObtenerAccionablesPorEvaluar(correo).ToList();
             var accionablePorEvaluar = new ObtenerAccionablesPorEvaluar_Result();

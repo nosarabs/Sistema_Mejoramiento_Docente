@@ -340,5 +340,47 @@ namespace AppIntegrador.Controllers
             ViewBag.Formularios = formulariosNombreLista;
             return View("PlanesEvaluacion", planConAccionablePorEvaluar);
         }
+        [HttpGet]
+        public ActionResult PlanesPorEjecutar()
+        {
+            string correo = HttpContext.User.Identity.Name;
+            var planes = db.ObtenerPlanesPorEjecutar(correo).ToList();
+            List<PlanDeMejora> planesPorEjecutar = new List<PlanDeMejora>();
+            for(int i = 0; i < planes.Count(); i++)
+            {
+                PlanDeMejora planPorEjecutar = db.PlanDeMejora.Find(planes[i]);
+                planesPorEjecutar.Add(planPorEjecutar);
+            }
+            return View("PlanesPorEjecutar", planesPorEjecutar);
+        }
+        [HttpGet]
+        public ActionResult Ejecutar(int codPlan)
+        {
+            PlanDeMejora planPorEjecutar = db.PlanDeMejora.Find(codPlan);
+            ViewBag.IdPlan = codPlan;
+
+            List<AppIntegrador.Models.Persona> profesoresNombreLista = new List<Persona>();
+
+            List<string> profesoresLista = db.ObtenerCorreosDeProfesoresDelPlan(codPlan).ToList();
+
+            foreach (var profe in profesoresLista)
+            {
+                profesoresNombreLista.Add(db.Persona.Find(profe));
+            }
+
+            ViewBag.ProfesoresNombreLista = profesoresNombreLista;
+
+            List<AppIntegrador.Models.Formulario> formulariosNombreLista = new List<Formulario>();
+            List<string> formulariosLista = db.ObtenerFormulariosAsociados(codPlan).ToList();
+
+            foreach (var form in formulariosLista)
+            {
+                formulariosNombreLista.Add(db.Formulario.Find(form));
+            }
+
+            ViewBag.Profesores = profesoresNombreLista;
+            ViewBag.Formularios = formulariosNombreLista;
+            return View("PlanesEjecucion", planPorEjecutar);
+        }
     }
 }

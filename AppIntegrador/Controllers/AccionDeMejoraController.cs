@@ -72,11 +72,11 @@ namespace AppIntegrador.Controllers
 
         public ActionResult AccionesDeObjetivo(int plan, string nombObj, bool edit = true)
         {
-            if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
-            {
-                TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
-                return RedirectToAction("../Home/Index");
-            }
+            //if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            //{
+            //    TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+            //    return RedirectToAction("../Home/Index");
+            //}
             ViewBag.idPlan = plan;
             ViewBag.nombreObj = nombObj;
 

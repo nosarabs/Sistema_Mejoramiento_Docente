@@ -2422,6 +2422,9 @@
           <Parameter Name="codSeccion" Type="varchar" Mode="In" />
           <Parameter Name="codPregunta" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPlanesPorEjecutar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correoProf" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPreguntasDeAccionDeMejora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPlan" Type="int" Mode="In" />
           <Parameter Name="nombreObj" Type="varchar" Mode="In" />
@@ -5361,7 +5364,10 @@
             <Parameter Name="CorreoProfesor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerAccionablesPorEvaluar" ReturnType="Collection(DataIntegradorModel.ObtenerAccionablesPorEvaluar_Result)">
-            <Parameter Name="correoFunc" Mode="In" Type="String" />
+          <Parameter Name="correoFunc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPlanesPorEjecutar" ReturnType="Collection(Int32)">
+            <Parameter Name="correoProf" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">
@@ -6801,6 +6807,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerPlanesPorEjecutar" FunctionName="DataIntegradorModel.Store.ObtenerPlanesPorEjecutar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
