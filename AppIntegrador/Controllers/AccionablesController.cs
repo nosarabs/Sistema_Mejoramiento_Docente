@@ -94,6 +94,20 @@ namespace AppIntegrador.Controllers
             }
             return PartialView("_AccionablePorEvaluar", accionablePorEvaluar);
         }
+        public ActionResult AccionablesPorEjecutar(int codPlan, string nombObj, string descripAcMej, bool edit = true)
+        {
+            //if (!permissionManager.IsAuthorized(Permission.VER_ACCIONES_MEJORA))
+            //{
+            //    TempData["alertmessage"] = "No tiene permisos para acceder a esta página";
+            //    return RedirectToAction("../Home/Index");
+            //}
+            ViewBag.IdPlan = codPlan;
+            ViewBag.nomObj = nombObj;
+            ViewBag.descripAcMej = descripAcMej;
+
+            IEnumerable<AppIntegrador.Models.Accionable> accionables = db.Accionable.Where(o => o.codPlan == codPlan && o.nombreObj == nombObj && o.descripAcMej == descripAcMej);
+            return PartialView("_AccionablePorEjecutar", accionables);
+        }
         [HttpPost]
         public ActionResult ObtenerFuncionarios(List<String> SeccionSeleccionado)
         {

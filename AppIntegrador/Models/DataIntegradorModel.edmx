@@ -5367,7 +5367,7 @@
           <Parameter Name="correoFunc" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPlanesPorEjecutar" ReturnType="Collection(Int32)">
-            <Parameter Name="correoProf" Mode="In" Type="String" />
+          <Parameter Name="correoProf" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getPlanFull_Result">

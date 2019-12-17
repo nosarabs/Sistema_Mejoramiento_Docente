@@ -55,7 +55,17 @@ namespace AppIntegrador.Tests.Controllers
             }
         }
 
-
+        public void SetupHttpContextTina(Controller controller)
+        {
+            if (controller != null)
+            {
+                controller.ControllerContext = new ControllerContext
+                {
+                    Controller = controller,
+                    HttpContext = new MockHttpContext(new CustomPrincipal("tina@mail.com"))
+                };
+            }
+        }
         public class CustomPrincipal : IPrincipal
         {
             public IIdentity Identity { get; private set; }

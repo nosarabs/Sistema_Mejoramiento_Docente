@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AppIntegrador.Models.Accionable>
+
+@*
+    Modificado por: Christian Asch
+    Historia a la que pertenece: MOS-11 "Como Usuario administrativo
+        quiero agregar, modificar, borrar y listar los accionables de una acción de mejora para que los profesores puedan
+        describir pasos concretos para completar una acción de mejroa
+*@
+@{
+    ViewBag.Title = "AccionablePorEjecutar";
+    var numAcc = 1;
+}
+
+<div>
+    @*
+        Modificado por: Christian Asch
+        Historia a la que pertenece: MOS-11 "Como Usuario administrativo
+            quiero agregar, modificar, borrar y listar los accionables de una acción de mejora para que los profesores puedan
+            describir pasos concretos para completar una acción de mejroa
+    *@
+    <table class="table">
+        <colgroup>
+            <col class="TablasDescripcion">
+            <col class="TablasFecha">
+            <col class="TablasFecha">
+            <col class="TablasOpciones">
+        </colgroup>
+
+        <thead>
+            <tr class="EncabezadoTabla">
+
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Fecha de Inicio
+                </th>
+                <th>
+                    Fecha de Fin
+                </th>
+                <th>
+                    Enviar Resultados
+                </th>
+            </tr>
+        </thead>
+        <tbody id="dataOb">
+            <tr class="FilaTablasPlanesDeMejora">
+                @foreach (var accio in Model)
+                {
+                    <td>
+                        @Html.DisplayFor(model => accio.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => accio.fechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => accio.fechaFin)
+                    </td>
+                    <td>
+                        <input type="file" name="file" id="file" /><br><br>
+                        @Html.ActionLink("Guardar", "PlanesPorEjecutar", "PlanDeMejora", null, new { @class = "btn-azulUCR" })
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+</div>
+

@@ -13,12 +13,69 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
-
 namespace AppIntegrador.Tests.Controllers
 {
     [TestClass]
     public class AccionablesControllerTest
     {
+        [TestMethod]
+        public void AccionablePorEvaluarTest()
+        {
+            var controller = new AccionablesController();
+            var result = controller.AccionablePorEvaluar(1, "Objetivo de plan de mejora - Alexandra", "Accion de mejora de objetivo - Alexandra") as PartialViewResult;
+            Assert.AreEqual(result.ViewName, "_AccionablePorEvaluar");
+        }
+        [TestMethod]
+        public void AccionablePorEjecutarTestFail()
+        {
+            int codPlan = 666;
+            String nombreObj = "ObjPrueba";
+            String descripAcMej = "AcMejPrueba";
+
+            var controller = new AccionablesController();
+
+            var result = controller.AccionablesPorEjecutar(codPlan, nombreObj, descripAcMej, true);
+            Assert.IsNull(result);
+            controller.Dispose();
+        }
+        [TestMethod]
+        public void AccionablePorEjecutarPacoTest()
+        {
+            TestSetup testSetup = new TestSetup();
+            var mockDb = new Mock<DataIntegradorEntities>();
+            int codPlan = 1;
+            String nombreObj = "ObjPrueba";
+            String descripAcMej = "AcMejPrueba";
+            mockDb.Setup(m => m.PlanDeMejora.Find(codPlan));
+
+            AccionablesController controller = new AccionablesController(mockDb.Object);
+            testSetup.SetupHttpContextPaco(controller);
+
+            // Act
+            var result = controller.AccionablesPorEjecutar(codPlan, nombreObj, descripAcMej, true);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+        [TestMethod]
+        public void AccionablePorEvaluarTinaTest()
+        {
+            TestSetup testSetup = new TestSetup();
+            var mockDb = new Mock<DataIntegradorEntities>();
+            int codPlan = 3;
+            String nombreObj = "Objetivo 1";
+            String descripAcMej = "Accion de Mejora 1";
+            mockDb.Setup(m => m.PlanDeMejora.Find(codPlan));
+
+            AccionablesController controller = new AccionablesController(mockDb.Object);
+            testSetup.SetupHttpContextTina(controller);
+
+            // Act
+            var result = controller.AccionablePorEvaluar(codPlan, nombreObj, descripAcMej);
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
         [TestMethod]
         public void TablaAccionablesTrueTest()
         {

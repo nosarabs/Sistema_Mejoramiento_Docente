@@ -283,6 +283,7 @@
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerSeccionesAsociadasAObjetivo.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerPreguntasDeAccionDeMejora.sql" />
     <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerAccionablesPorEvaluar.sql" />
+    <Build Include="PlanesDeMejora\FuncionesProcedimientos\ObtenerPlanesPorEjecutar_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploymentData.sql" />

@@ -66,19 +66,12 @@
                             <br />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="button" value="Profesores asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalProfesoresDeUnPlanVer')" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <br />
-                            <div class="row">
-                                <div class="col-md-12">
                                     <input type="button" value="Formularios asociados" class="btn-azulUCR float-right" id="VerProfesoresBoton" onclick="modalGen('#ModalFormulariosVer')" />
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </form>
             <br />
             <div class="card card-default">
@@ -123,7 +116,6 @@
     </div>
 </div>
 
-@{Html.RenderPartial("_ModalListaProfesoresDeUnPlan");}
 @{Html.RenderPartial("_ModalListaFormularioDeUnPlan");}
 @{Html.RenderPartial("../Objetivos/_ModalSeccionesLista");}
 @{Html.RenderPartial("../AccionDeMejora/_ModalPreguntasLista");}

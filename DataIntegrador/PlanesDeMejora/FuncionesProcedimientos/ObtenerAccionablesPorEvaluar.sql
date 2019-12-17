@@ -16,6 +16,7 @@ BEGIN
 							 a.nombreObj = r.nombreObj AND
 							 a.descripAcMej = r.descripAcMej AND
 							 a.descripcion = r.descripAcci
-		WHERE r.corrFunc = @correoFunc
+		JOIN PlanDeMejora p ON r.codPlan = p.codigo
+		WHERE r.corrFunc = @correoFunc AND p.borrado = 0
 	END
 END
